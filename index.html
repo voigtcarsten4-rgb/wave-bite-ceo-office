@@ -2380,89 +2380,100 @@
   </div>
 </section>
 
-<!-- LIVE DATA -->
+<!-- LIVE DATA — WASSERLAGE COCKPIT -->
 <section>
   <div class="section-title">🌊 LIVE DATEN — WASSERLAGE COCKPIT</div>
-  <div class="panel">
+  <div style="display:grid;grid-template-columns:1fr 1.5fr;gap:1rem;align-items:start">
 
-    <!-- Navigation Status Banner -->
-    <div id="nav-status-bar" style="display:flex;align-items:center;gap:.75rem;padding:.6rem 1rem;background:rgba(0,255,136,0.05);border:1px solid rgba(0,255,136,0.18);border-radius:8px;margin-bottom:1rem">
-      <span id="nav-status-icon" style="font-size:1.1rem">🟢</span>
-      <div style="flex:1">
-        <div id="nav-status-text" style="font-size:.7rem;font-weight:700;color:var(--green)">NAVIGATION NORMAL — Alle Wasserstraßen frei befahrbar</div>
-        <div id="nav-status-sub" style="font-size:.6rem;color:var(--text-dim)">Spree Berlin · Havel Potsdam · Oder Frankfurt — Wave Bite Kernreviere</div>
+    <!-- LINKS: Mini-Wasserlage (Erste Sektion Wasserlage-Seite) -->
+    <div style="display:flex;flex-direction:column;gap:.6rem">
+
+      <!-- Wasserlagebewertung -->
+      <div id="wl-status-card" style="background:rgba(201,168,76,0.07);border:1px solid rgba(201,168,76,0.2);border-radius:10px;padding:.75rem">
+        <div style="font-size:.52rem;letter-spacing:.13em;color:var(--text-dim);margin-bottom:.4rem">WASSERLAGEBEWERTUNG</div>
+        <div style="display:flex;align-items:center;gap:.6rem">
+          <span id="wl-status-icon" style="font-size:1.6rem;line-height:1">⚠️</span>
+          <div>
+            <div id="wl-status-label" style="font-size:.9rem;font-weight:700;color:var(--gold)">Wird geladen...</div>
+            <div id="wl-status-sub" style="font-size:.58rem;color:var(--text-dim);margin-top:.1rem">Daten werden abgerufen</div>
+          </div>
+        </div>
       </div>
-      <div style="text-align:right;flex-shrink:0">
-        <div style="font-size:.55rem;color:var(--text-dim);letter-spacing:.06em">SAISON</div>
-        <div style="font-size:.7rem;color:var(--teal);font-weight:700">⛵ MAI — PEAK TOURISTIK</div>
+
+      <!-- Status-Zeilen: Pegel, Wind, Wetter -->
+      <div style="display:flex;flex-direction:column;gap:.35rem">
+        <div style="display:flex;justify-content:space-between;align-items:center;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:7px;padding:.45rem .7rem">
+          <span style="font-size:.68rem;color:var(--text-dim)">⚓ Pegelstände</span>
+          <span id="wl-pegel-status" style="font-size:.68rem;font-weight:600;color:var(--text-dim)">⟳ laden...</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:7px;padding:.45rem .7rem">
+          <span style="font-size:.68rem;color:var(--text-dim)">🌬️ Wind</span>
+          <span id="wl-wind-status" style="font-size:.68rem;font-weight:600;color:var(--text-dim)">⟳ laden...</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:7px;padding:.45rem .7rem">
+          <span style="font-size:.68rem;color:var(--text-dim)">☁️ Wetter</span>
+          <span id="wl-weather-status" style="font-size:.68rem;font-weight:600;color:var(--text-dim)">⟳ laden...</span>
+        </div>
+      </div>
+
+      <!-- Temperatur-Kacheln -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:.5rem">
+        <div style="background:rgba(0,200,255,0.05);border:1px solid rgba(0,200,255,0.12);border-radius:8px;padding:.55rem;text-align:center">
+          <div style="font-size:1.35rem;font-weight:700;color:var(--blue);line-height:1.1" id="wl-temp">—</div>
+          <div style="font-size:.52rem;color:var(--text-dim);margin-top:.15rem">LUFTTEMPERATUR</div>
+          <div style="font-size:.58rem;color:var(--text-dim)" id="wl-feels">Gefühlt —</div>
+        </div>
+        <div style="background:rgba(0,212,170,0.05);border:1px solid rgba(0,212,170,0.12);border-radius:8px;padding:.55rem;text-align:center">
+          <div style="font-size:1.35rem;font-weight:700;color:var(--teal);line-height:1.1" id="wl-water-temp">—</div>
+          <div style="font-size:.52rem;color:var(--text-dim);margin-top:.15rem">WASSERTEMPERATUR</div>
+          <div style="font-size:.52rem;color:var(--text-dim)">Spree · Berlin-Spandau</div>
+        </div>
+      </div>
+
+      <!-- Sonne + Tageslicht -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:.5rem">
+        <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:7px;padding:.4rem .5rem;text-align:center">
+          <div style="font-size:.52rem;color:var(--text-dim);margin-bottom:.1rem">🌅 SONNENAUFGANG</div>
+          <div style="font-size:.82rem;font-weight:700;color:var(--gold)" id="wl-sunrise">—:—</div>
+        </div>
+        <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:7px;padding:.4rem .5rem;text-align:center">
+          <div style="font-size:.52rem;color:var(--text-dim);margin-bottom:.1rem">🌇 SONNENUNTERGANG</div>
+          <div style="font-size:.82rem;font-weight:700;color:var(--blue)" id="wl-sunset">—:—</div>
+        </div>
+      </div>
+
+      <!-- Navigationsbedingungen -->
+      <div id="wl-nav-badge" style="background:rgba(0,255,136,0.07);border:1px solid rgba(0,255,136,0.18);border-radius:8px;padding:.45rem .7rem;text-align:center">
+        <div id="wl-nav-text" style="font-size:.7rem;font-weight:700;color:var(--green)">⟳ Navigationsbedingungen werden berechnet...</div>
+      </div>
+
+      <!-- Footer-Links + Disclaimer -->
+      <div style="display:flex;gap:.6rem;align-items:center;flex-wrap:wrap">
+        <span id="live-updated" style="font-size:.58rem;color:var(--teal)">⟳ Wird geladen...</span>
+        <a href="https://www.pegelonline.wsv.de" target="_blank" class="pc-link">→ Pegelonline</a>
+        <a href="https://www.elwis.de" target="_blank" class="pc-link">→ ELWIS</a>
+      </div>
+      <div style="font-size:.52rem;color:rgba(255,255,255,0.18);line-height:1.4">⚠ Kein amtlicher Informationsdienst — verbindliche Schifffahrtsmeldungen ausschließlich auf ELWIS.de</div>
+    </div>
+
+    <!-- RECHTS: Live-Wetterradar Windy.com -->
+    <div class="panel" style="padding:.65rem">
+      <div style="font-size:.58rem;letter-spacing:.12em;color:var(--blue);margin-bottom:.2rem">🛰️ LIVE-WETTERRADAR · BERLIN &amp; BRANDENBURG</div>
+      <div style="font-size:.55rem;color:var(--text-dim);margin-bottom:.5rem">Niederschlag · Wind · Satellit — via Windy.com</div>
+      <div style="border-radius:8px;overflow:hidden;border:1px solid rgba(0,200,255,0.12)">
+        <iframe
+          src="https://embed.windy.com/embed2.html?lat=52.5&lon=13.4&detailLat=52.5&detailLon=13.4&width=650&height=380&zoom=7&level=surface&overlay=rain&product=ecmwf&menu=&message=true&marker=&calendar=now&pressure=&type=map&location=coordinates&detail=&metricWind=km%2Fh&metricTemp=%C2%B0C&radarRange=-1"
+          width="100%" height="340" frameborder="0"
+          style="display:block;min-height:280px"
+          loading="lazy"
+          title="Live Wetterradar Berlin Brandenburg"></iframe>
+      </div>
+      <div style="margin-top:.5rem;display:flex;gap:.75rem;align-items:center;flex-wrap:wrap">
+        <span style="font-size:.55rem;color:var(--text-dim)">Quelle: Windy.com / ECMWF</span>
+        <a href="https://windy.com/?rain,52.5,13.4,7" target="_blank" class="pc-link">→ Windy.com öffnen</a>
       </div>
     </div>
 
-    <!-- 3 Gauges: Berlin/Brandenburg Kernreviere -->
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-bottom:1rem" id="live-gauges">
-
-      <!-- SPREE BERLIN -->
-      <div class="gauge-wrap">
-        <svg width="90" height="90" viewBox="0 0 90 90">
-          <circle cx="45" cy="45" r="36" fill="none" stroke="rgba(0,200,255,0.08)" stroke-width="6"/>
-          <circle id="gauge-spree" cx="45" cy="45" r="36" fill="none" stroke="var(--teal)" stroke-width="6" stroke-linecap="round"
-            stroke-dasharray="226.19" stroke-dashoffset="150" transform="rotate(-90 45 45)"/>
-          <text x="45" y="49" text-anchor="middle" fill="var(--teal)" font-size="12" font-weight="700" id="gauge-spree-val">...</text>
-        </svg>
-        <div class="gauge-val" id="lvl-spree">– cm</div>
-        <div class="gauge-label">SPREE BERLIN<br><span class="gauge-unit">🎯 Kernrevier Wave Bite</span></div>
-      </div>
-
-      <!-- HAVEL POTSDAM -->
-      <div class="gauge-wrap">
-        <svg width="90" height="90" viewBox="0 0 90 90">
-          <circle cx="45" cy="45" r="36" fill="none" stroke="rgba(0,200,255,0.08)" stroke-width="6"/>
-          <circle id="gauge-havel" cx="45" cy="45" r="36" fill="none" stroke="var(--blue)" stroke-width="6" stroke-linecap="round"
-            stroke-dasharray="226.19" stroke-dashoffset="120" transform="rotate(-90 45 45)"/>
-          <text x="45" y="49" text-anchor="middle" fill="var(--blue)" font-size="12" font-weight="700" id="gauge-havel-val">...</text>
-        </svg>
-        <div class="gauge-val" id="lvl-havel">– cm</div>
-        <div class="gauge-label">HAVEL POTSDAM<br><span class="gauge-unit">🚤 Partner-Revier aktiv</span></div>
-      </div>
-
-      <!-- ODER FRANKFURT/ODER -->
-      <div class="gauge-wrap">
-        <svg width="90" height="90" viewBox="0 0 90 90">
-          <circle cx="45" cy="45" r="36" fill="none" stroke="rgba(0,200,255,0.08)" stroke-width="6"/>
-          <circle id="gauge-oder" cx="45" cy="45" r="36" fill="none" stroke="var(--gold)" stroke-width="6" stroke-linecap="round"
-            stroke-dasharray="226.19" stroke-dashoffset="130" transform="rotate(-90 45 45)"/>
-          <text x="45" y="49" text-anchor="middle" fill="var(--gold)" font-size="12" font-weight="700" id="gauge-oder-val">...</text>
-        </svg>
-        <div class="gauge-val" id="lvl-oder">– cm</div>
-        <div class="gauge-label">ODER FRANKFURT<br><span class="gauge-unit">🗺️ Grenzrevier · Expansion</span></div>
-      </div>
-    </div>
-
-    <!-- CEO Intelligence Row -->
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:.75rem;margin-bottom:.75rem">
-      <div style="background:rgba(0,212,170,0.05);border:1px solid rgba(0,212,170,0.15);border-radius:8px;padding:.6rem;text-align:center">
-        <div style="font-size:.55rem;color:var(--text-dim);letter-spacing:.08em;margin-bottom:.2rem">SCHIFFBARKEIT</div>
-        <div style="font-size:.85rem;font-weight:700;color:var(--teal)" id="nav-schiffbarkeit">✅ FREI</div>
-        <div style="font-size:.55rem;color:var(--text-dim)">Alle 3 Reviere</div>
-      </div>
-      <div style="background:rgba(201,168,76,0.05);border:1px solid rgba(201,168,76,0.15);border-radius:8px;padding:.6rem;text-align:center">
-        <div style="font-size:.55rem;color:var(--text-dim);letter-spacing:.08em;margin-bottom:.2rem">TOURISTIK-SAISON</div>
-        <div style="font-size:.85rem;font-weight:700;color:var(--gold)">⛵ OPTIMAL</div>
-        <div style="font-size:.55rem;color:var(--text-dim)">Mai–Aug Peak aktiv</div>
-      </div>
-      <div style="background:rgba(0,200,255,0.05);border:1px solid rgba(0,200,255,0.12);border-radius:8px;padding:.6rem;text-align:center">
-        <div style="font-size:.55rem;color:var(--text-dim);letter-spacing:.08em;margin-bottom:.2rem">AKTIVE WARNUNGEN</div>
-        <div style="font-size:.85rem;font-weight:700;color:var(--green)" id="nav-warnings">0 AKTIV</div>
-        <div style="font-size:.55rem;color:var(--text-dim)" id="nav-warn-detail">Pegelstand normal</div>
-      </div>
-    </div>
-
-    <div style="display:flex;gap:1rem;align-items:center;flex-wrap:wrap">
-      <span style="font-size:.6rem;color:var(--text-dim)">Datenquelle: Pegelonline WSV API</span>
-      <span id="live-updated" style="font-size:.6rem;color:var(--teal)">⟳ Wird geladen...</span>
-      <a href="https://www.pegelonline.wsv.de" target="_blank" class="pc-link">→ Pegelonline</a>
-      <a href="https://www.elwis.de" target="_blank" class="pc-link">→ ELWIS</a>
-    </div>
   </div>
 </section>
 
@@ -3738,85 +3749,141 @@ setInterval(tick,1000); tick();
   }
 })();
 
-// ===================== PEGELONLINE LIVE — BERLIN/BRANDENBURG =====================
-(function loadPegel(){
-  // Stationen: Wave Bite Kernreviere Berlin/Brandenburg
-  var stations = [
-    { key:'spree', uuid:'BERLIN',          color:'var(--teal)', min:20,  max:100, warnAt:170 },
-    { key:'havel', uuid:'POTSDAM',         color:'var(--blue)', min:40,  max:130, warnAt:200 },
-    { key:'oder',  uuid:'FRANKFURT%2FODER',color:'var(--gold)', min:150, max:350, warnAt:500 }
-  ];
-  var BASE = 'https://www.pegelonline.wsv.de/webservices/rest-api/v2/stations/';
-  var done = 0, warns = 0;
+// ===================== WASSERLAGE COCKPIT — LIVE =====================
+(function loadWasserlage(){
+  var LAT=52.52, LON=13.41;
 
-  function calcOffset(val, s){
-    // stroke-dasharray=226.19, offset 195=empty, 30=full → map val in [min..max]
-    var pct = Math.min(1, Math.max(0, (val - s.min) / (s.max - s.min)));
-    return Math.round(195 - pct * 165);
+  function el(id){ return document.getElementById(id); }
+  function set(id,v){ var e=el(id); if(e&&v!=null) e.textContent=v; }
+
+  // ── Sonnenauf-/untergang (astronomische Berechnung Berlin) ──
+  function sunTime(type){
+    var now=new Date(), JD=now/86400000+2440587.5, n=JD-2451545.0;
+    var L=(280.46+0.9856474*n)%360;
+    var g=((357.528+0.9856003*n)%360)*Math.PI/180;
+    var lam=(L+1.915*Math.sin(g)+0.02*Math.sin(2*g))*Math.PI/180;
+    var dec=Math.asin(Math.sin(23.439*Math.PI/180)*Math.sin(lam));
+    var cosH=(Math.cos(90.833*Math.PI/180)-Math.sin(LAT*Math.PI/180)*Math.sin(dec))/(Math.cos(LAT*Math.PI/180)*Math.cos(dec));
+    if(cosH<-1||cosH>1) return '—';
+    var H=Math.acos(Math.max(-1,Math.min(1,cosH)))*180/Math.PI;
+    var noon=12-LON/15, t=type==='rise'?noon-H/15:noon+H/15;
+    // UTC → lokale Zeit (MESZ = UTC+2)
+    t = (t + 2 + 24) % 24;
+    var h=Math.floor(t), m=Math.round((t-h)*60); if(m===60){h++;m=0;}
+    return (h<10?'0':'')+h+':'+(m<10?'0':'')+m;
+  }
+  set('wl-sunrise', sunTime('rise'));
+  set('wl-sunset',  sunTime('set'));
+
+  function kmhToBft(k){
+    var lim=[1,6,12,20,29,39,50,62,75,89,103,118];
+    for(var i=0;i<lim.length;i++) if(k<lim[i]) return i;
+    return 12;
+  }
+  function wmoText(c){
+    if(c===0) return '☀️ Klar'; if(c<=1) return '🌤️ Heiter';
+    if(c<=3) return '☁️ Bewölkt'; if(c<=48) return '🌫️ Nebel';
+    if(c<=55) return '🌦️ Nieselregen'; if(c<=65) return '🌧️ Regen';
+    if(c<=75) return '❄️ Schnee'; if(c<=82) return '🌧️ Schauer';
+    return '⛈️ Gewitter';
   }
 
-  function finish(){
-    if(done < stations.length) return;
-    var now = new Date().toLocaleTimeString('de-DE',{hour:'2-digit',minute:'2-digit'});
-    var upd = document.getElementById('live-updated');
-    if(upd) upd.textContent = '⟳ Aktualisiert: ' + now + ' Uhr';
+  var bftVal=null, pegelWarns=0, weatherDone=false, pegelDone=false;
 
-    var bar  = document.getElementById('nav-status-bar');
-    var icon = document.getElementById('nav-status-icon');
-    var txt  = document.getElementById('nav-status-text');
-    var wEl  = document.getElementById('nav-warnings');
-    var wDet = document.getElementById('nav-warn-detail');
-    var schi = document.getElementById('nav-schiffbarkeit');
+  function updateOverall(){
+    if(!weatherDone||!pegelDone) return;
+    var now=new Date().toLocaleTimeString('de-DE',{hour:'2-digit',minute:'2-digit'});
+    set('live-updated','⟳ '+now+' Uhr');
 
-    if(warns === 0){
-      if(icon) icon.textContent = '🟢';
-      if(txt){ txt.textContent = 'NAVIGATION NORMAL — Alle Wasserstraßen frei befahrbar'; txt.style.color = 'var(--green)'; }
-      if(bar){ bar.style.background='rgba(0,255,136,0.05)'; bar.style.borderColor='rgba(0,255,136,0.18)'; }
-      if(wEl){ wEl.textContent='0 AKTIV'; wEl.style.color='var(--green)'; }
-      if(wDet) wDet.textContent = 'Pegelstand normal';
-      if(schi){ schi.textContent='✅ FREI'; schi.style.color='var(--teal)'; }
-    } else {
-      if(icon) icon.textContent = '🟡';
-      if(txt){ txt.textContent = warns + ' WARNUNG(EN) — Erhöhter Pegelstand, Navigation eingeschränkt'; txt.style.color = 'var(--gold)'; }
-      if(bar){ bar.style.background='rgba(201,168,76,0.07)'; bar.style.borderColor='rgba(201,168,76,0.25)'; }
-      if(wEl){ wEl.textContent=warns+' AKTIV'; wEl.style.color='var(--gold)'; }
-      if(wDet) wDet.textContent = 'Pegelstand prüfen';
-      if(schi){ schi.textContent='⚠️ PRÜFEN'; schi.style.color='var(--gold)'; }
+    // Navigationsbadge
+    var nb=el('wl-nav-badge'), nt=el('wl-nav-text');
+    if(bftVal!==null){
+      if(bftVal<=3){
+        if(nt){nt.textContent='✓ Bft '+bftVal+' — Ideale Bedingungen';nt.style.color='var(--green)';}
+        if(nb){nb.style.background='rgba(0,255,136,0.07)';nb.style.borderColor='rgba(0,255,136,0.18)';}
+      } else if(bftVal<=5){
+        if(nt){nt.textContent='⚠ Bft '+bftVal+' — Mit Vorsicht fahren';nt.style.color='var(--gold)';}
+        if(nb){nb.style.background='rgba(201,168,76,0.08)';nb.style.borderColor='rgba(201,168,76,0.2)';}
+      } else {
+        if(nt){nt.textContent='⛔ Bft '+bftVal+' — Bootsfahrt nicht empfohlen';nt.style.color='#ff6b6b';}
+        if(nb){nb.style.background='rgba(255,107,107,0.07)';nb.style.borderColor='rgba(255,107,107,0.2)';}
+      }
     }
-    if(wDet) wDet.textContent += ' · Stand: ' + now;
+
+    // Gesamtstatus-Karte
+    var sc=el('wl-status-card'), si=el('wl-status-icon'), sl=el('wl-status-label'), ss=el('wl-status-sub');
+    var windWarn = bftVal!==null && bftVal>4;
+    if(pegelWarns===0 && !windWarn){
+      if(si) si.textContent='✅';
+      if(sl){sl.textContent='Normale Lage';sl.style.color='var(--green)';}
+      if(ss) ss.textContent='Alle Parameter normal — Gute Bedingungen';
+      if(sc){sc.style.background='rgba(0,255,136,0.05)';sc.style.borderColor='rgba(0,255,136,0.15)';}
+    } else if(pegelWarns>0||bftVal>3){
+      if(si) si.textContent='⚠️';
+      if(sl){sl.textContent='Mit Vorsicht';sl.style.color='var(--gold)';}
+      var msg=[];
+      if(pegelWarns>0) msg.push(pegelWarns+' Pegel außerhalb Normal');
+      if(bftVal!==null&&bftVal>3) msg.push('Wind Bft '+bftVal);
+      if(ss) ss.textContent=(msg.join(' — '))+' — ELWIS prüfen';
+      if(sc){sc.style.background='rgba(201,168,76,0.07)';sc.style.borderColor='rgba(201,168,76,0.2)';}
+    } else {
+      if(si) si.textContent='🔴';
+      if(sl){sl.textContent='Eingeschränkt';sl.style.color='#ff6b6b';}
+      if(ss) ss.textContent='Starker Wind — Fahrt nicht empfohlen';
+      if(sc){sc.style.background='rgba(255,107,107,0.05)';sc.style.borderColor='rgba(255,107,107,0.15)';}
+    }
   }
 
-  stations.forEach(function(s){
-    fetch(BASE + s.uuid + '/W/currentmeasurement.json')
-      .then(function(r){ return r.json(); })
-      .then(function(d){
-        var cm  = Math.round(d.value);
-        var isW = cm >= s.warnAt;
-        if(isW) warns++;
+  // ── 1) Open-Meteo Wetter (kein API-Key nötig) ──
+  fetch('https://api.open-meteo.com/v1/forecast?latitude=52.52&longitude=13.41&current=temperature_2m,apparent_temperature,weathercode,windspeed_10m&windspeed_unit=kmh&timezone=Europe%2FBerlin')
+    .then(function(r){return r.json();})
+    .then(function(d){
+      var c=d.current;
+      var temp=Math.round(c.temperature_2m);
+      var feels=Math.round(c.apparent_temperature);
+      var wind=Math.round(c.windspeed_10m);
+      bftVal=kmhToBft(wind);
+      set('wl-temp',temp+'°C');
+      set('wl-feels','Gefühlt '+feels+'°C');
+      var wt=el('wl-wind-status');
+      if(wt){
+        wt.textContent='Bft '+bftVal+' ('+wind+' km/h)';
+        wt.style.color=bftVal<=3?'var(--green)':bftVal<=5?'var(--gold)':'#ff6b6b';
+      }
+      var ws=el('wl-weather-status');
+      if(ws){ws.textContent=wmoText(c.weathercode);ws.style.color='var(--green)';}
+      weatherDone=true; updateOverall();
+    })
+    .catch(function(){weatherDone=true;updateOverall();});
 
-        // Gauge-Text
-        var valEl = document.getElementById('gauge-'+s.key+'-val');
-        var lvlEl = document.getElementById('lvl-'+s.key);
-        var circ  = document.getElementById('gauge-'+s.key);
-        if(valEl){ valEl.textContent = cm; if(isW){ valEl.setAttribute('fill','#ff6b6b'); } }
-        if(lvlEl){ lvlEl.textContent = cm + ' cm'; if(isW){ lvlEl.style.color='#ff6b6b'; } }
+  // ── 2) Pegelonline: POTSDAM (Havel) — zuverlässigste Station ──
+  var pegelTotal=1, pegelLoaded=0;
+  function onPegel(cm,min,max){
+    pegelLoaded++;
+    if(cm!==null&&(cm<min||cm>max)) pegelWarns++;
+    var pe=el('wl-pegel-status');
+    if(pe){
+      if(pegelWarns===0){pe.textContent='Normal ✓';pe.style.color='var(--green)';}
+      else{pe.textContent=pegelWarns+' Hinweis'+(pegelWarns>1?'e':'');pe.style.color='var(--gold)';}
+    }
+    if(pegelLoaded>=pegelTotal){pegelDone=true;updateOverall();}
+  }
+  fetch('https://www.pegelonline.wsv.de/webservices/rest-api/v2/stations/POTSDAM/W/currentmeasurement.json')
+    .then(function(r){return r.json();})
+    .then(function(d){
+      var cm=parseFloat(d.value);
+      onPegel(isNaN(cm)?null:Math.round(cm),40,130);
+    })
+    .catch(function(){onPegel(null,40,130);});
 
-        // Gauge-Arc animieren
-        if(circ){
-          circ.setAttribute('stroke-dashoffset', calcOffset(cm, s));
-          if(isW) circ.style.stroke = '#ff6b6b';
-        }
-        done++; finish();
-      })
-      .catch(function(){
-        // API nicht erreichbar → Fallback-Anzeige
-        var valEl = document.getElementById('gauge-'+s.key+'-val');
-        var lvlEl = document.getElementById('lvl-'+s.key);
-        if(valEl) valEl.textContent = '—';
-        if(lvlEl) lvlEl.textContent = 'n/a';
-        done++; finish();
-      });
-  });
+  // ── 3) Wassertemperatur Spree Berlin-Spandau ──
+  fetch('https://www.pegelonline.wsv.de/webservices/rest-api/v2/stations/BERLIN-SPANDAU/WT/currentmeasurement.json')
+    .then(function(r){return r.json();})
+    .then(function(d){
+      var t=parseFloat(d.value);
+      set('wl-water-temp',isNaN(t)?'n/a':(Math.round(t*10)/10)+'°C');
+    })
+    .catch(function(){set('wl-water-temp','n/a');});
 })();
 </script>
 </body>
