@@ -695,8 +695,9 @@
       width:100%!important;
       height:auto!important;
     }
-    /* wl-kpi-strip: 4 Spalten → 2 Spalten (2×2) auf iPhone */
-    #wl-kpi-strip{
+    /* wl-kpi-strip + QR-Zeile: 4 Spalten → 2 Spalten auf iPhone */
+    #wl-kpi-strip,
+    #wl-kpi-strip + div[style*="grid-template-columns:repeat(4"]{
       grid-template-columns:1fr 1fr!important;
       gap:.6rem!important;
     }
@@ -1235,8 +1236,8 @@
   <!-- WAVE BITE SYSTEME -->
   <div style="font-size:.6rem;letter-spacing:.15em;color:var(--gold);margin-bottom:.5rem">🌊 WAVE BITE SYSTEME</div>
   <div style="display:flex;flex-direction:column;gap:.4rem;margin-bottom:1rem">
-    <a href="https://wavebite.de" target="_blank" class="tb-link"><span>🌐</span><div><div class="tb-name">Wave Bite Website</div><div class="tb-url">wavebite.de</div></div><span class="tb-arrow">↗</span></a>
-    <a href="https://wavebite.de/wp-admin" target="_blank" class="tb-link"><span>⚙</span><div><div class="tb-name">WordPress Admin</div><div class="tb-url">wavebite.de/wp-admin</div></div><span class="tb-arrow">↗</span></a>
+    <a href="https://wave-bite.com" target="_blank" class="tb-link"><span>🌐</span><div><div class="tb-name">Wave Bite Website</div><div class="tb-url">wave-bite.com</div></div><span class="tb-arrow">↗</span></a>
+    <a href="https://wave-bite.com/wp-admin" target="_blank" class="tb-link"><span>⚙</span><div><div class="tb-name">WordPress Admin</div><div class="tb-url">wave-bite.com/wp-admin</div></div><span class="tb-arrow">↗</span></a>
     <a href="https://www.pegelonline.wsv.de" target="_blank" class="tb-link"><span>🌊</span><div><div class="tb-name">Wasserlage Dashboard</div><div class="tb-url">pegelonline.wsv.de</div></div><span class="chip chip-success" style="font-size:.55rem;padding:.1rem .35rem">LIVE</span></a>
     <a href="https://www.elwis.de" target="_blank" class="tb-link"><span>⚓</span><div><div class="tb-name">ELWIS Wasserstraßen</div><div class="tb-url">elwis.de</div></div><span class="tb-arrow">↗</span></a>
   </div>
@@ -1470,7 +1471,7 @@
       <!-- Status indicators -->
       <div style="font-size:.46rem;letter-spacing:.14em;color:var(--text-dim)">▸ SYSTEM STATUS</div>
       <div class="b-stat-row">
-        <span class="b-stat-label">🌐 wavebite.de</span>
+        <span class="b-stat-label">🌐 wave-bite.com</span>
         <span style="color:var(--green);font-size:.62rem;font-weight:700">● LIVE</span>
       </div>
       <div class="b-stat-row">
@@ -1545,7 +1546,7 @@
           <div>
             <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:.28rem">
               <div style="display:flex;align-items:center;gap:.4rem">
-                <span style="font-size:.62rem">&#x1f30a;</span><span style="font-size:.62rem;color:var(--text)">wavebite.de</span>
+                <span style="font-size:.62rem">&#x1f30a;</span><span style="font-size:.62rem;color:var(--text)">wave-bite.com</span>
                 <span style="font-size:.46rem;padding:.1rem .3rem;background:rgba(0,255,136,0.1);border:1px solid rgba(0,255,136,0.22);border-radius:3px;color:var(--green)">LIVE</span>
               </div>
               <div style="display:flex;align-items:center;gap:.35rem">
@@ -1734,7 +1735,7 @@
 
         </div><!-- end grid -->
 
-        <!-- WASSERLAGE PWA INSTALL KPI -->
+        <!-- TRACKING KPI GRID — ZEILE 1: Wasserlage PWA -->
         <div id="wl-kpi-strip" style="display:grid;grid-template-columns:repeat(4,1fr);gap:.75rem;margin-top:1.1rem;padding-top:.9rem;border-top:1px solid rgba(0,200,255,0.08)">
           <div style="padding:.75rem;background:linear-gradient(135deg,rgba(0,200,255,0.06),rgba(0,200,255,0.02));border:1px solid rgba(0,200,255,0.18);border-radius:10px;position:relative;overflow:hidden">
             <div style="position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(0,200,255,0.45),transparent)"></div>
@@ -1744,12 +1745,12 @@
             <div style="font-size:.48rem;letter-spacing:.09em;color:var(--text-dim);margin-top:.15rem">INSTALLATIONEN</div>
           </div>
           <div style="padding:.75rem;background:rgba(0,212,170,0.04);border:1px solid rgba(0,212,170,0.15);border-radius:10px">
-            <div style="font-size:.45rem;letter-spacing:.12em;color:var(--text-dim);margin-bottom:.3rem">📊 PAGE VIEWS</div>
+            <div style="font-size:.45rem;letter-spacing:.12em;color:var(--text-dim);margin-bottom:.3rem">📊 WASSERLAGE VIEWS</div>
             <div style="font-size:1.5rem;font-weight:900;color:var(--teal);line-height:1;text-shadow:0 0 14px rgba(0,212,170,0.3)" id="wl-pageview-count">–</div>
             <div style="font-size:.48rem;letter-spacing:.09em;color:var(--text-dim);margin-top:.15rem">AUFRUFE GESAMT</div>
           </div>
           <div style="padding:.75rem;background:rgba(201,168,76,0.04);border:1px solid rgba(201,168,76,0.14);border-radius:10px">
-            <div style="font-size:.45rem;letter-spacing:.12em;color:var(--text-dim);margin-bottom:.3rem">⚡ CONV. RATE</div>
+            <div style="font-size:.45rem;letter-spacing:.12em;color:var(--text-dim);margin-bottom:.3rem">⚡ CONV. RATE PWA</div>
             <div style="font-size:1.2rem;font-weight:900;color:var(--gold);line-height:1" id="wl-conv-rate">–</div>
             <div style="font-size:.48rem;letter-spacing:.09em;color:var(--text-dim);margin-top:.15rem">INSTALL / VIEW</div>
           </div>
@@ -1759,12 +1760,53 @@
               <div style="font-size:.8rem;font-weight:700;color:var(--green)">INSTALLIERBAR</div>
               <div style="font-size:.46rem;color:var(--text-dim);margin-top:.15rem">manifest.json · sw.js · DSGVO ✓</div>
             </div>
-            <a href="file:///C:/Users/Startklar/Documents/Claude/Projects/Elwis/index.html" target="_blank"
+            <a href="https://voigtcarsten4-rgb.github.io/wasserlage/" target="_blank"
               style="display:block;text-align:center;padding:.35rem;background:rgba(0,255,136,0.08);border:1px solid rgba(0,255,136,0.22);border-radius:7px;color:var(--green);font-size:.48rem;letter-spacing:.08em;text-decoration:none;font-weight:700;margin-top:.45rem;transition:all .2s"
               onmouseover="this.style.background='rgba(0,255,136,0.18)'" onmouseout="this.style.background='rgba(0,255,136,0.08)'">
               🌊 WASSERLAGE ÖFFNEN ↗
             </a>
           </div>
+        </div>
+
+        <!-- TRACKING KPI GRID — ZEILE 2: QR-Codes + Apps -->
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:.75rem;margin-top:.65rem">
+          <!-- QR Wasserwerte -->
+          <div style="padding:.75rem;background:linear-gradient(135deg,rgba(201,168,76,0.07),rgba(201,168,76,0.02));border:1px solid rgba(201,168,76,0.22);border-radius:10px;position:relative;overflow:hidden">
+            <div style="position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(201,168,76,0.5),transparent)"></div>
+            <div style="font-size:.45rem;letter-spacing:.12em;color:var(--text-dim);margin-bottom:.3rem">📷 QR WASSERWERTE</div>
+            <div style="font-size:1.5rem;font-weight:900;color:var(--gold);line-height:1;text-shadow:0 0 12px rgba(201,168,76,0.35)" id="kpi-qr-ww">–</div>
+            <div style="font-size:.48rem;letter-spacing:.09em;color:var(--text-dim);margin-top:.15rem">SCANS GESAMT</div>
+            <div style="font-size:.4rem;color:rgba(201,168,76,0.45);margin-top:.2rem">→ wave-bite.com/gewässerinfo</div>
+          </div>
+          <!-- QR WB (Wave Bite App) -->
+          <div style="padding:.75rem;background:rgba(0,212,170,0.04);border:1px solid rgba(0,212,170,0.15);border-radius:10px">
+            <div style="font-size:.45rem;letter-spacing:.12em;color:var(--text-dim);margin-bottom:.3rem">📷 QR WAVE BITE APP</div>
+            <div style="font-size:1.5rem;font-weight:900;color:var(--teal);line-height:1;text-shadow:0 0 12px rgba(0,212,170,0.3)" id="kpi-qr-wb">–</div>
+            <div style="font-size:.48rem;letter-spacing:.09em;color:var(--text-dim);margin-top:.15rem">SCANS GESAMT</div>
+            <div style="font-size:.4rem;color:rgba(0,212,170,0.45);margin-top:.2rem">→ Glide / App Store</div>
+          </div>
+          <!-- Gewässerinfo Visits -->
+          <div style="padding:.75rem;background:rgba(0,200,255,0.04);border:1px solid rgba(0,200,255,0.14);border-radius:10px">
+            <div style="font-size:.45rem;letter-spacing:.12em;color:var(--text-dim);margin-bottom:.3rem">🌐 GEWÄSSERINFO SEITE</div>
+            <div style="font-size:1.5rem;font-weight:900;color:var(--blue);line-height:1;text-shadow:0 0 12px rgba(0,200,255,0.3)" id="kpi-gewaesser">–</div>
+            <div style="font-size:.48rem;letter-spacing:.09em;color:var(--text-dim);margin-top:.15rem">SEITENAUFRUFE</div>
+            <div style="font-size:.4rem;color:rgba(0,200,255,0.45);margin-top:.2rem">wave-bite.com GA4</div>
+          </div>
+          <!-- BunBo / Glide App -->
+          <div style="padding:.75rem;background:linear-gradient(135deg,rgba(255,100,50,0.06),rgba(201,168,76,0.03));border:1px solid rgba(255,100,50,0.18);border-radius:10px">
+            <div style="font-size:.45rem;letter-spacing:.12em;color:var(--text-dim);margin-bottom:.3rem">📱 BUNBO GLIDE APP</div>
+            <div style="font-size:1.5rem;font-weight:900;color:#ff6432;line-height:1;text-shadow:0 0 12px rgba(255,100,50,0.35)" id="kpi-bunbo-glide">–</div>
+            <div style="font-size:.48rem;letter-spacing:.09em;color:var(--text-dim);margin-top:.15rem">APP-NUTZER</div>
+            <div style="font-size:.4rem;color:rgba(255,100,50,0.45);margin-top:.2rem">Glide Analytics</div>
+          </div>
+        </div>
+
+        <!-- QR BRIDGE INFO BANNER -->
+        <div style="margin-top:.65rem;padding:.6rem 1rem;background:rgba(201,168,76,0.04);border:1px solid rgba(201,168,76,0.12);border-radius:8px;display:flex;align-items:center;gap:.75rem;flex-wrap:wrap">
+          <span style="font-size:.5rem;letter-spacing:.1em;color:var(--gold)">⚡ QR BRIDGE SCRIPT</span>
+          <span style="font-size:.5rem;color:var(--text-dim);flex:1">Google Apps Script Redirect-Bridge zählt QR-Scans automatisch in Google Sheets → CEO Office zeigt Live-Daten sobald Bridge deployed ist.</span>
+          <a href="https://script.google.com" target="_blank" style="font-size:.48rem;font-weight:700;color:var(--gold);text-decoration:none;padding:.2rem .6rem;border:1px solid rgba(201,168,76,0.3);border-radius:5px;white-space:nowrap">📋 Bridge öffnen ↗</a>
+          <span id="kpi-bridge-status" style="font-size:.48rem;font-weight:700;padding:.2rem .5rem;border-radius:5px;background:rgba(201,168,76,0.1);color:var(--gold)">SETUP AUSSTEHEND</span>
         </div>
 
   </div><!-- end panel -->
@@ -1959,7 +2001,7 @@
     <div class="dash-link" onclick="openDash('automation')"><div class="dash-icon-lg">⚙️</div><div><div class="dash-name">Automation Control</div><div class="dash-desc">N8N · Make · Apps Script</div></div><span class="chip chip-success" style="margin-left:auto">Aktiv</span></div>
     <div class="dash-link" onclick="openDash('elwis')"><div class="dash-icon-lg">⚓</div><div><div class="dash-name">ELWIS</div><div class="dash-desc">Wasserstraßen-Informationen</div></div><span class="chip chip-info" style="margin-left:auto">Extern</span></div>
     <div class="dash-link" onclick="openDash('flutterflow')"><div class="dash-icon-lg">📱</div><div><div class="dash-name">FlutterFlow</div><div class="dash-desc">BunBo App · Build</div></div><span class="chip chip-success" style="margin-left:auto">Aktiv</span></div>
-    <div class="dash-link" onclick="openDash('wordpress')"><div class="dash-icon-lg">🌐</div><div><div class="dash-name">Wave Bite Website</div><div class="dash-desc">WordPress · wavebite.de</div></div><span class="chip chip-success" style="margin-left:auto">Live</span></div>
+    <div class="dash-link" onclick="openDash('wordpress')"><div class="dash-icon-lg">🌐</div><div><div class="dash-name">Wave Bite Website</div><div class="dash-desc">WordPress · wave-bite.com</div></div><span class="chip chip-success" style="margin-left:auto">Live</span></div>
     <div class="dash-link" onclick="openDash('glide')"><div class="dash-icon-lg">⚡</div><div><div class="dash-name">Glide Apps</div><div class="dash-desc">No-Code · MVP · Tools</div></div><span class="chip chip-success" style="margin-left:auto">Aktiv</span></div>
   </div>
 </section>
@@ -3108,14 +3150,53 @@ function tick(){
 }
 setInterval(tick,1000); tick();
 
-// ===================== BRIDGE PANEL: PWA KPI MIRROR =====================
-(function bridgeWlKpi(){
-  var el = document.getElementById('bridge-wl-installs');
-  if(!el) return;
-  fetch('https://api.countapi.xyz/get/wavebite/wl-installs')
-    .then(function(r){return r.json()})
-    .then(function(d){ if(el) el.textContent = (d&&d.value!=null) ? d.value : 0; })
-    .catch(function(){});
+// ===================== KPI LOADER — localStorage basiert =====================
+(function loadAllKpis(){
+  function ls(key, fallback){ try{ return localStorage.getItem(key); }catch(e){ return fallback||null; } }
+  function set(id, val){ var el=document.getElementById(id); if(el&&val!=null) el.textContent=val; }
+
+  // ── Wasserlage PWA KPIs (from Wasserlage site, same browser) ──
+  var installs  = parseInt(ls('wb_wl_install_count')||'0');
+  var views     = parseInt(ls('wb_wl_total_views')||'0');
+  var dayViews  = parseInt(ls('wb_wl_day_views')||'0');
+  var convRate  = views>0 ? ((installs/views)*100).toFixed(1)+'%' : '—';
+  set('wl-install-count', installs || '—');
+  set('wl-pageview-count', views || '—');
+  set('wl-conv-rate', convRate);
+  set('bridge-wl-installs', installs || '—');
+
+  // ── QR Code Tracking (from QR Bridge localStorage) ──
+  var qrWW   = ls('wb_qr_ww_count');    // QR Wasserwerte Scans
+  var qrWB   = ls('wb_qr_wb_count');    // QR Wave Bite App Scans
+  var gInfo  = ls('wb_gewaesser_views'); // Gewässerinfo page views
+  var bunbo  = ls('wb_bunbo_glide');     // BunBo Glide App users
+  set('kpi-qr-ww',       qrWW   || '—');
+  set('kpi-qr-wb',       qrWB   || '—');
+  set('kpi-gewaesser',   gInfo  || '—');
+  set('kpi-bunbo-glide', bunbo  || '—');
+
+  // ── Bridge Status ──
+  var bridgeUrl = ls('wb_bridge_url');
+  var bridgeEl  = document.getElementById('kpi-bridge-status');
+  if(bridgeEl){
+    if(bridgeUrl){
+      bridgeEl.textContent='✓ AKTIV';
+      bridgeEl.style.background='rgba(0,255,136,0.1)';
+      bridgeEl.style.color='var(--green)';
+    }
+  }
+
+  // ── Last Update Timestamp ──
+  var lastVisit = ls('wb_wl_last_visit');
+  var el = document.getElementById('tracking-last-update');
+  if(el){
+    if(lastVisit){
+      var d = new Date(lastVisit);
+      el.textContent = d.toLocaleString('de-DE',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'});
+    } else {
+      el.textContent = 'Noch kein Besuch via Browser';
+    }
+  }
 })();
 
 // ===================== COUNTDOWN =====================
@@ -3159,7 +3240,7 @@ const DASHBOARDS = {
   finance:     { icon:'💶', name:'Finance Dashboard',        url:'https://sheets.google.com',                 desc:'Cashflow, Burn Rate & Runway. Investor-Pipeline & Funding.', status:'Geplant' },
   automation:  { icon:'⚙️', name:'Automation Control',       url:'https://script.google.com',                 desc:'N8N, Make.com & Apps Script. Aktive Automatisierungen & Trigger.', status:'Aktiv' },
   elwis:       { icon:'⚓',       name:'ELWIS',                    url:'https://www.elwis.de',                      desc:'Bundesanstalt für Gewässerkunde. Wasserstraßen-Daten & Nautik.', status:'Extern' },
-  wordpress:   { icon:'🌐', name:'Wave Bite Website',        url:'https://wavebite.de',                       desc:'Haupt-Website auf WordPress. Live unter wavebite.de.', status:'Live' },
+  wordpress:   { icon:'🌐', name:'Wave Bite Website',        url:'https://wave-bite.com',                     desc:'Haupt-Website auf WordPress. Live unter wave-bite.com.', status:'Live' },
   flutterflow: { icon:'📱', name:'FlutterFlow App',          url:'https://flutterflow.io',                    desc:'BunBo + Hausboot-App. Cross-Platform iOS/Android.', status:'Aktiv' },
   glide:       { icon:'⚡',       name:'Glide Apps',               url:'https://app.glideapps.com',                 desc:'No-Code Web-Apps, MVP & interne Tools.', status:'Aktiv' },
 };
