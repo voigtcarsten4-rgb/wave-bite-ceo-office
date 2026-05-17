@@ -1000,6 +1000,113 @@
   /* Section body max-height hack */
   .sec-body.open { max-height: 9999px; }
 
+  /* ════════════════════════════════════════════
+     MOBILE ANALYTICS + GLOBAL READABILITY FIXES
+     ════════════════════════════════════════════ */
+
+  /* ── Analytics 5-Spalten Grid → stacked auf Mobile ── */
+  @media(max-width:768px){
+    #analytics-grid{
+      display:flex!important;
+      flex-direction:column!important;
+      gap:1.1rem!important;
+    }
+    /* KPI strip: 2×2 statt 4×1 */
+    #wl-kpi-strip{
+      grid-template-columns:1fr 1fr!important;
+      gap:.55rem!important;
+    }
+    /* Vergosserte Labels in Analytics-Kacheln */
+    #analytics-grid div[style*="font-size:.4"],
+    #analytics-grid div[style*="font-size:.5"],
+    #wl-kpi-strip div[style*="font-size:.4"],
+    #wl-kpi-strip div[style*="font-size:.5"]{
+      font-size:.65rem!important;
+      letter-spacing:.05em!important;
+      white-space:normal!important;
+      word-break:break-word!important;
+    }
+    /* Große Zahlen in KPI-Kacheln: minimale Größe sichern */
+    #wl-kpi-strip div[style*="font-size:1.5rem"],
+    #analytics-grid div[style*="font-size:2.8rem"]{
+      font-size:1.8rem!important;
+    }
+    #wl-kpi-strip div[style*="font-size:1.2rem"]{
+      font-size:1.2rem!important;
+    }
+    /* Kleine Sub-Labels lesbarer */
+    #wl-kpi-strip div[style*="font-size:.48rem"],
+    #analytics-grid div[style*="font-size:.48rem"]{
+      font-size:.62rem!important;
+      letter-spacing:.04em!important;
+      white-space:normal!important;
+    }
+    /* Analytics Spalten-Header lesbarer */
+    #analytics-grid div[style*="font-size:.53rem"]{
+      font-size:.68rem!important;
+      letter-spacing:.1em!important;
+    }
+    /* Page-Performance Zeilen-Labels */
+    #analytics-grid span[style*="font-size:.62rem"],
+    #analytics-grid span[style*="font-size:.47rem"]{
+      font-size:.7rem!important;
+    }
+    /* Tracking dashboard button */
+    #analytics-grid a[style*="font-size:.58rem"]{
+      font-size:.65rem!important;
+      padding:1rem .75rem!important;
+      line-height:1.7!important;
+    }
+    /* Geografie-Labels */
+    #analytics-grid span[style*="font-size:.62rem"]{
+      font-size:.72rem!important;
+    }
+    /* Age group labels */
+    #analytics-grid div[style*="font-size:.41rem"]{
+      font-size:.56rem!important;
+    }
+    /* Donut legend */
+    #analytics-grid div[style*="font-size:.58rem"]{
+      font-size:.68rem!important;
+    }
+    /* NEUE NUTZER / MONAT label */
+    #analytics-grid div[style*="font-size:.45rem"]{
+      font-size:.63rem!important;
+      letter-spacing:.05em!important;
+      white-space:normal!important;
+    }
+    /* Section panel padding auf Mobile */
+    #sec-tracking-radar .panel{
+      padding:1rem .85rem!important;
+    }
+    /* Wasserlage-Link im PWA Kachel */
+    #wl-kpi-strip a[style*="font-size:.48rem"]{
+      font-size:.62rem!important;
+      padding:.5rem .4rem!important;
+      letter-spacing:.05em!important;
+    }
+    #wl-kpi-strip div[style*="font-size:.8rem"]{
+      font-size:.85rem!important;
+    }
+    #wl-kpi-strip div[style*="font-size:.46rem"]{
+      font-size:.6rem!important;
+      white-space:normal!important;
+    }
+  }
+
+  /* ── Extra klein: Mini-Fixes für ≤400px ── */
+  @media(max-width:400px){
+    #analytics-grid div[style*="font-size:2.8rem"]{
+      font-size:2.2rem!important;
+    }
+    #wl-kpi-strip{
+      grid-template-columns:1fr 1fr!important;
+    }
+  }
+
+  /* ── Viewport / No-Zoom sichern ── */
+  body{ touch-action: pan-x pan-y; }
+
 </style>
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#020810">
@@ -1363,7 +1470,7 @@
 <section id="sec-tracking-radar" style="margin-bottom:1.5rem">
   <div class="section-title">📊 SITE ANALYTICS — WAVE BITE TRAFFIC HUB</div>
   <div class="panel" style="border-color:rgba(0,200,255,0.2);background:linear-gradient(135deg,rgba(2,15,30,0.92),rgba(4,16,30,0.98));padding:1.5rem">
-    <div style="display:grid;grid-template-columns:170px 1fr 1fr 140px 180px;gap:1.5rem;align-items:start">
+    <div id="analytics-grid" style="display:grid;grid-template-columns:170px 1fr 1fr 140px 180px;gap:1.5rem;align-items:start">
 
 
       <!-- COL 1: TOTAL VISITORS + MINI STATS -->
@@ -1597,7 +1704,7 @@
         </div><!-- end grid -->
 
         <!-- WASSERLAGE PWA INSTALL KPI -->
-        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:.75rem;margin-top:1.1rem;padding-top:.9rem;border-top:1px solid rgba(0,200,255,0.08)">
+        <div id="wl-kpi-strip" style="display:grid;grid-template-columns:repeat(4,1fr);gap:.75rem;margin-top:1.1rem;padding-top:.9rem;border-top:1px solid rgba(0,200,255,0.08)">
           <div style="padding:.75rem;background:linear-gradient(135deg,rgba(0,200,255,0.06),rgba(0,200,255,0.02));border:1px solid rgba(0,200,255,0.18);border-radius:10px;position:relative;overflow:hidden">
             <div style="position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(0,200,255,0.45),transparent)"></div>
             <div style="position:absolute;top:.5rem;right:.5rem;width:6px;height:6px;background:var(--teal);border-radius:50%;box-shadow:0 0 8px var(--teal);animation:pulse 2s infinite"></div>
@@ -2483,26 +2590,32 @@
 
 </div><!-- /page -->
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <script>
 window._jsReadyAt = performance.now();
 // ===================== CANVAS 2D BOAT — Isometric 3D Houseboat =====================
-(function initBoatCanvas(){
-  const canvas = document.getElementById('boat-wireframe-canvas');
-  if (!canvas) return;
-  function setSize() {
-    canvas.width  = canvas.offsetWidth  || 128;
-    canvas.height = canvas.offsetHeight || 82;
-  }
-  setSize();
-  if (canvas.width < 2) { setTimeout(initBoatCanvas, 300); return; }
-  const ctx = canvas.getContext('2d');
-  let t = 0;
+(function(){
+  function initBoatCanvas(){
+    const canvas = document.getElementById('boat-wireframe-canvas');
+    if (!canvas) return;
+    const dpr = window.devicePixelRatio || 1;
+    function setSize() {
+      const cssW = canvas.offsetWidth  || 128;
+      const cssH = canvas.offsetHeight || 82;
+      canvas.width  = Math.round(cssW * dpr);
+      canvas.height = Math.round(cssH * dpr);
+    }
+    setSize();
+    if (canvas.width < 2) { setTimeout(initBoatCanvas, 300); return; }
+    const ctx = canvas.getContext('2d');
+    let t = 0;
 
   function drawBoat(floatY) {
-    const W = canvas.width, H = canvas.height;
-    ctx.clearRect(0, 0, W, H);
+    const W = Math.round(canvas.width / dpr);
+    const H = Math.round(canvas.height / dpr);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.save();
+    ctx.scale(dpr, dpr);
     const s  = W / 128;
     const ox = W * 0.56;
     const oy = H * 0.68 + floatY * s;
@@ -2663,6 +2776,7 @@ window._jsReadyAt = performance.now();
       ctx.lineWidth = 3.2*s; ctx.stroke();
     });
     ng();
+    ctx.restore();
   }
 
   function animate() {
@@ -2671,7 +2785,22 @@ window._jsReadyAt = performance.now();
     drawBoat(floatY);
     requestAnimationFrame(animate);
   }
+
+  // Handle resize: re-scale canvas, keep animation running
+  let _resizeTimer;
+  window.addEventListener('resize', function(){
+    clearTimeout(_resizeTimer);
+    _resizeTimer = setTimeout(setSize, 200);
+  });
+
   animate();
+  }
+  // Ensure layout is settled before first render
+  if (document.readyState === 'complete') {
+    requestAnimationFrame(initBoatCanvas);
+  } else {
+    window.addEventListener('load', function(){ requestAnimationFrame(initBoatCanvas); }, {once: true});
+  }
 })();
 
 
