@@ -668,8 +668,42 @@
     /* Floating Action Bar */
     #quick-actions-bar{bottom:16px;right:.6rem;gap:.35rem}
 
-    /* Tracking Radar — single column, balanced auf iPhone */
-    #analytics-grid{grid-template-columns:1fr!important;gap:.75rem}
+    /* ═══ TRACKING RADAR — vollständige Mobile-Anpassung ═══ */
+    /* 5-Spalten → 1 Spalte, volle Breite */
+    #analytics-grid{
+      grid-template-columns:1fr!important;
+      gap:.85rem!important;
+    }
+    /* Jede Spalte streckt sich über volle Breite */
+    #analytics-grid > div{
+      width:100%!important;
+      min-width:0!important;
+    }
+    /* Alle direkten Kinder der Spalten volle Breite */
+    #analytics-grid > div > div{
+      min-width:0!important;
+    }
+    /* Panel-Padding auf Mobile reduzieren */
+    #sec-tracking-radar .panel{
+      padding:1rem .75rem!important;
+    }
+    /* SVG Donut — responsive zentriert */
+    #analytics-grid svg{
+      display:block;
+      margin:0 auto .65rem;
+      max-width:140px;
+      width:100%!important;
+      height:auto!important;
+    }
+    /* wl-kpi-strip: 4 Spalten → 2 Spalten (2×2) auf iPhone */
+    #wl-kpi-strip{
+      grid-template-columns:1fr 1fr!important;
+      gap:.6rem!important;
+    }
+    /* Section-Header volle Breite, zentriert */
+    #sec-tracking-radar .section-title{
+      text-align:center;
+    }
   }
 
   /* Extra klein: iPhone SE / kleinere Geräte */
