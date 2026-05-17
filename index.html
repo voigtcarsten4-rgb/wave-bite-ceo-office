@@ -1174,6 +1174,28 @@
     }
   }
 
+  /* ── DASHBOARD MODAL ── */
+  #dash-modal{display:none;position:fixed;inset:0;z-index:9500;background:rgba(0,4,10,.82);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);align-items:center;justify-content:center;padding:1rem}
+  #dash-modal.open{display:flex}
+  #dash-modal-box{position:relative;background:linear-gradient(145deg,rgba(7,20,38,.97) 0%,rgba(2,8,16,.99) 100%);border:1px solid rgba(0,200,255,.22);border-radius:16px;padding:1.6rem 1.8rem 1.4rem;width:100%;max-width:480px;box-shadow:0 0 60px rgba(0,200,255,.08),0 0 120px rgba(0,0,0,.6);animation:dashModalIn .25s cubic-bezier(.34,1.36,.64,1)}
+  @keyframes dashModalIn{from{opacity:0;transform:scale(.92) translateY(10px)}to{opacity:1;transform:scale(1) translateY(0)}}
+  #dash-modal-close{position:absolute;top:.85rem;right:.9rem;background:none;border:1px solid rgba(255,255,255,.12);border-radius:6px;color:rgba(255,255,255,.5);font-size:.8rem;padding:.25rem .55rem;cursor:pointer;transition:all .2s}
+  #dash-modal-close:hover{border-color:rgba(0,200,255,.4);color:rgba(0,200,255,.8)}
+  .dmo-icon{font-size:2.2rem;margin-bottom:.55rem}
+  .dmo-title{font-size:1.05rem;font-weight:700;color:#fff;letter-spacing:.04em;margin-bottom:.3rem}
+  .dmo-status{display:inline-block;font-size:.58rem;letter-spacing:.14em;padding:.2rem .55rem;border-radius:20px;margin-bottom:.85rem;text-transform:uppercase}
+  .dmo-status.planned{background:rgba(0,200,255,.12);border:1px solid rgba(0,200,255,.3);color:rgba(0,200,255,.85)}
+  .dmo-status.building{background:rgba(255,190,0,.1);border:1px solid rgba(255,190,0,.3);color:rgba(255,190,0,.85)}
+  .dmo-desc{font-size:.77rem;color:rgba(255,255,255,.55);line-height:1.6;margin-bottom:1rem}
+  .dmo-steps{list-style:none;padding:0;margin:0 0 1.2rem}
+  .dmo-steps li{display:flex;align-items:flex-start;gap:.55rem;font-size:.73rem;color:rgba(255,255,255,.5);padding:.35rem 0;border-bottom:1px solid rgba(255,255,255,.05)}
+  .dmo-steps li:last-child{border-bottom:none}
+  .dmo-steps li .step-num{flex-shrink:0;width:18px;height:18px;border-radius:50%;background:rgba(0,200,255,.12);border:1px solid rgba(0,200,255,.25);color:rgba(0,200,255,.7);font-size:.6rem;display:flex;align-items:center;justify-content:center;margin-top:1px}
+  .dmo-cta{display:inline-flex;align-items:center;gap:.45rem;background:linear-gradient(135deg,rgba(0,200,255,.18),rgba(0,200,255,.08));border:1px solid rgba(0,200,255,.35);border-radius:8px;padding:.6rem 1.1rem;font-size:.76rem;font-weight:600;color:rgba(0,200,255,.9);cursor:pointer;text-decoration:none;transition:all .22s;letter-spacing:.04em;margin-top:.2rem}
+  .dmo-cta:hover{background:linear-gradient(135deg,rgba(0,200,255,.28),rgba(0,200,255,.14));border-color:rgba(0,200,255,.6);color:#fff;box-shadow:0 0 18px rgba(0,200,255,.2)}
+  .dmo-cta.gold{background:linear-gradient(135deg,rgba(201,168,76,.18),rgba(201,168,76,.08));border-color:rgba(201,168,76,.35);color:rgba(201,168,76,.9)}
+  .dmo-cta.gold:hover{background:linear-gradient(135deg,rgba(201,168,76,.28),rgba(201,168,76,.14));border-color:rgba(201,168,76,.6);color:#fff;box-shadow:0 0 18px rgba(201,168,76,.2)}
+
 </style>
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#020810">
@@ -2371,19 +2393,24 @@
 <section>
   <div class="section-title">📊 DASHBOARD-ZENTRALE — HUB</div>
   <div class="dash-grid">
-    <div class="dash-link" onclick="openDash('tracking')" style="border-color:rgba(0,212,170,0.35);background:linear-gradient(135deg,rgba(0,30,22,0.5),rgba(7,24,40,0.9))"><div class="dash-icon-lg">📡</div><div><div class="dash-name" style="color:var(--teal)">Tracking Dashboard</div><div class="dash-desc">Nutzer · Wachstum · Märkte</div></div><span class="chip chip-success" style="margin-left:auto;background:rgba(0,212,170,0.2);border-color:rgba(0,212,170,0.5);color:var(--teal)">AKTIV</span></div>
-    <div class="dash-link" onclick="openDash('wasserlage')"><div class="dash-icon-lg">🌊</div><div><div class="dash-name">Wasserlage Live</div><div class="dash-desc">Pegelonline · ELWIS · WSV</div></div><span class="chip chip-success" style="margin-left:auto">LIVE</span></div>
-    <div class="dash-link" onclick="openDash('ceo_briefing')"><div class="dash-icon-lg">☀️</div><div><div class="dash-name">CEO Briefing</div><div class="dash-desc">Daily · Gmail · Apps Script</div></div><span class="chip chip-success" style="margin-left:auto">Aktiv</span></div>
-    <div class="dash-link" onclick="openDash('playbook')"><div class="dash-icon-lg">📒</div><div><div class="dash-name">Daily Playbook</div><div class="dash-desc">Tagesstruktur · Focus</div></div><span class="chip chip-success" style="margin-left:auto">Aktiv</span></div>
+    <!-- ─── AKTIVE LIVE-DASHBOARDS ─── -->
+    <div class="dash-link" onclick="openDash('tracking')" style="border-color:rgba(0,212,170,0.35);background:linear-gradient(135deg,rgba(0,30,22,0.5),rgba(7,24,40,0.9))"><div class="dash-icon-lg">📡</div><div><div class="dash-name" style="color:var(--teal)">Tracking Dashboard</div><div class="dash-desc">Nutzer · Wachstum · QR-Scans</div></div><span class="chip chip-success" style="margin-left:auto;background:rgba(0,212,170,0.2);border-color:rgba(0,212,170,0.5);color:var(--teal)">AKTIV</span></div>
+    <div class="dash-link" onclick="openDash('wasserlage')" style="border-color:rgba(0,160,255,0.3);background:linear-gradient(135deg,rgba(0,20,40,0.55),rgba(7,24,40,0.9))"><div class="dash-icon-lg">🌊</div><div><div class="dash-name" style="color:var(--blue)">Wasserlage Live</div><div class="dash-desc">Pegelonline · ELWIS · WSV</div></div><span class="chip chip-success" style="margin-left:auto">LIVE</span></div>
+    <div class="dash-link" onclick="openDash('ceo_briefing')"><div class="dash-icon-lg">☀️</div><div><div class="dash-name">CEO Briefing</div><div class="dash-desc">Daily Report · Gmail · Apps Script</div></div><span class="chip chip-success" style="margin-left:auto">Aktiv</span></div>
+    <div class="dash-link" onclick="openDash('playbook')"><div class="dash-icon-lg">📒</div><div><div class="dash-name">Daily Playbook</div><div class="dash-desc">Tagesstruktur · OKRs · Focus</div></div><span class="chip chip-success" style="margin-left:auto">Aktiv</span></div>
+    <div class="dash-link" onclick="openDash('wordpress')" style="border-color:rgba(100,180,255,0.28)"><div class="dash-icon-lg">🌐</div><div><div class="dash-name">Wave Bite Website</div><div class="dash-desc">WordPress Admin · wave-bite.com</div></div><span class="chip chip-success" style="margin-left:auto">Live</span></div>
+    <div class="dash-link" onclick="openDash('flutterflow')"><div class="dash-icon-lg">📱</div><div><div class="dash-name">FlutterFlow</div><div class="dash-desc">BunBo App · UI Builder · Deploy</div></div><span class="chip chip-success" style="margin-left:auto">Aktiv</span></div>
+    <div class="dash-link" onclick="openDash('glide')"><div class="dash-icon-lg">⚡</div><div><div class="dash-name">Glide Apps</div><div class="dash-desc">No-Code · MVP-Tools · Prototypen</div></div><span class="chip chip-success" style="margin-left:auto">Aktiv</span></div>
+    <div class="dash-link" onclick="openDash('automation')"><div class="dash-icon-lg">⚙️</div><div><div class="dash-name">Automation Control</div><div class="dash-desc">N8N · Make · Apps Script</div></div><span class="chip chip-success" style="margin-left:auto">Aktiv</span></div>
+    <div class="dash-link" onclick="openDash('elwis')"><div class="dash-icon-lg">⚓</div><div><div class="dash-name">ELWIS</div><div class="dash-desc">Wasserstraßen · Schleusen · BSH</div></div><span class="chip chip-info" style="margin-left:auto">Extern</span></div>
+    <div class="dash-link" onclick="openDash('github')"><div class="dash-icon-lg">🐙</div><div><div class="dash-name">GitHub Repos</div><div class="dash-desc">CEO Office · Wave Bite · Code</div></div><span class="chip chip-success" style="margin-left:auto">Aktiv</span></div>
+    <div class="dash-link" onclick="openDash('drive')"><div class="dash-icon-lg">📁</div><div><div class="dash-name">Google Drive</div><div class="dash-desc">Dokumente · Sheets · Pitchdeck</div></div><span class="chip chip-success" style="margin-left:auto">Aktiv</span></div>
+    <div class="dash-link" onclick="openDash('appstore')"><div class="dash-icon-lg">🍎</div><div><div class="dash-name">App Store Connect</div><div class="dash-desc">iOS Releases · TestFlight · Analytics</div></div><span class="chip chip-success" style="margin-left:auto">Aktiv</span></div>
+    <!-- ─── IM AUFBAU / GEPLANT ─── -->
     <div class="dash-link" onclick="openDash('marketing')"><div class="dash-icon-lg">📣</div><div><div class="dash-name">Marketing Dashboard</div><div class="dash-desc">Social · Content · Kampagnen</div></div><span class="chip chip-warn" style="margin-left:auto">Aufbau</span></div>
     <div class="dash-link" onclick="openDash('kpi')"><div class="dash-icon-lg">📈</div><div><div class="dash-name">KPI Dashboard</div><div class="dash-desc">Metriken · Wachstum · OKRs</div></div><span class="chip chip-info" style="margin-left:auto">Geplant</span></div>
-    <div class="dash-link" onclick="openDash('partner')"><div class="dash-icon-lg">🤝</div><div><div class="dash-name">Partner Dashboard</div><div class="dash-desc">Sponsoring · Kooperationen</div></div><span class="chip chip-info" style="margin-left:auto">Geplant</span></div>
-    <div class="dash-link" onclick="openDash('finance')"><div class="dash-icon-lg">💶</div><div><div class="dash-name">Finance Dashboard</div><div class="dash-desc">Cashflow · Burn · Runway</div></div><span class="chip chip-info" style="margin-left:auto">Geplant</span></div>
-    <div class="dash-link" onclick="openDash('automation')"><div class="dash-icon-lg">⚙️</div><div><div class="dash-name">Automation Control</div><div class="dash-desc">N8N · Make · Apps Script</div></div><span class="chip chip-success" style="margin-left:auto">Aktiv</span></div>
-    <div class="dash-link" onclick="openDash('elwis')"><div class="dash-icon-lg">⚓</div><div><div class="dash-name">ELWIS</div><div class="dash-desc">Wasserstraßen-Informationen</div></div><span class="chip chip-info" style="margin-left:auto">Extern</span></div>
-    <div class="dash-link" onclick="openDash('flutterflow')"><div class="dash-icon-lg">📱</div><div><div class="dash-name">FlutterFlow</div><div class="dash-desc">BunBo App · Build</div></div><span class="chip chip-success" style="margin-left:auto">Aktiv</span></div>
-    <div class="dash-link" onclick="openDash('wordpress')"><div class="dash-icon-lg">🌐</div><div><div class="dash-name">Wave Bite Website</div><div class="dash-desc">WordPress · wave-bite.com</div></div><span class="chip chip-success" style="margin-left:auto">Live</span></div>
-    <div class="dash-link" onclick="openDash('glide')"><div class="dash-icon-lg">⚡</div><div><div class="dash-name">Glide Apps</div><div class="dash-desc">No-Code · MVP · Tools</div></div><span class="chip chip-success" style="margin-left:auto">Aktiv</span></div>
+    <div class="dash-link" onclick="openDash('partner')"><div class="dash-icon-lg">🤝</div><div><div class="dash-name">Partner & Sponsoring</div><div class="dash-desc">Kooperationen · CRM · Deals</div></div><span class="chip chip-info" style="margin-left:auto">Geplant</span></div>
+    <div class="dash-link" onclick="openDash('finance')"><div class="dash-icon-lg">💶</div><div><div class="dash-name">Finance Dashboard</div><div class="dash-desc">Cashflow · Burn Rate · Runway</div></div><span class="chip chip-info" style="margin-left:auto">Geplant</span></div>
   </div>
 </section>
 
@@ -3444,6 +3471,95 @@ window._jsReadyAt = performance.now();
 
 
 
+// ===================== DASHBOARD HUB — openDash() =====================
+(function(){
+  var DASH_CONFIG = {
+    tracking:    { action:'scroll', target:'sec-tracking-radar' },
+    wasserlage:  { action:'scroll', target:'sec-wasserlage' },
+    ceo_briefing:{ action:'url', url:'https://mail.google.com/mail/u/0/#search/label%3Aceo-briefing+OR+subject%3Abriefing', label:'Gmail öffnen' },
+    playbook:    { action:'url', url:'https://drive.google.com/drive/search?q=playbook', label:'Google Drive öffnen' },
+    wordpress:   { action:'url', url:'https://wave-bite.com/wp-admin/admin.php?page=ionos#overview', label:'WP Admin öffnen' },
+    flutterflow: { action:'url', url:'https://app.flutterflow.io', label:'FlutterFlow öffnen' },
+    glide:       { action:'url', url:'https://go.glideapps.com', label:'Glide Apps öffnen' },
+    automation:  { action:'url', url:'https://app.n8n.io', label:'N8N öffnen' },
+    elwis:       { action:'url', url:'https://www.elwis.de/DE/Freizeitschifffahrt/Wasserstrassen-info/index.html', label:'ELWIS öffnen' },
+    github:      { action:'url', url:'https://github.com/voigtcarsten4-rgb', label:'GitHub öffnen' },
+    drive:       { action:'url', url:'https://drive.google.com', label:'Google Drive öffnen' },
+    appstore:    { action:'url', url:'https://appstoreconnect.apple.com', label:'App Store Connect öffnen' },
+    marketing:   {
+      action:'modal', icon:'📣', title:'Marketing Dashboard', statusClass:'building', statusText:'Im Aufbau',
+      desc:'Das Marketing-Dashboard verbindet Meta Business Suite, Instagram Analytics, Google Ads und Content-Kalender zu einer zentralen Übersicht. Aktuell im Aufbau.',
+      steps:['Meta Business Suite als Hauptquelle verbinden','Instagram & TikTok Analytics integrieren','Content-Kalender in Google Sheets anlegen','KPI-Tracking: Reichweite · Leads · CPC einrichten'],
+      cta:'Meta Business Suite', ctaUrl:'https://business.facebook.com', ctaClass:'gold'
+    },
+    kpi:         {
+      action:'modal', icon:'📈', title:'KPI Dashboard', statusClass:'planned', statusText:'Geplant',
+      desc:'Zentrales KPI-Board für alle Wave Bite Metriken: App-Downloads, Nutzeraktivierung, QR-Scans, Revenue und Wachstums-OKRs. Basis: Google Sheets + Apps Script Bridge.',
+      steps:['KPI-Google-Sheet mit allen Metriken anlegen','Apps Script Webhook für Echtzeit-Daten einrichten','CEO Office Bridge-URL in Einstellungen eintragen','Wöchentliches Auto-Briefing per E-Mail aktivieren'],
+      cta:'Google Sheets öffnen', ctaUrl:'https://docs.google.com/spreadsheets/u/0/', ctaClass:''
+    },
+    partner:     {
+      action:'modal', icon:'🤝', title:'Partner & Sponsoring CRM', statusClass:'planned', statusText:'Geplant',
+      desc:'CRM für alle Partneranfragen, Sponsoring-Deals, Kooperationen und Behördenkontakte rund um Wave Bite und BunBo. Geplant als leichtgewichtiges Google Sheets CRM.',
+      steps:['Kontakt-Sheet mit Status-Pipeline anlegen','Kategorien: Marina · Sponsor · Medien · Investor · Behörde','E-Mail-Vorlagen für Outreach vorbereiten','Follow-up Erinnerungen via Google Calendar koppeln'],
+      cta:'CRM Sheet anlegen', ctaUrl:'https://docs.google.com/spreadsheets/u/0/create', ctaClass:''
+    },
+    finance:     {
+      action:'modal', icon:'💶', title:'Finance Dashboard', statusClass:'planned', statusText:'Geplant',
+      desc:'Finanzübersicht mit Cashflow, Burn Rate, Runway und Investoren-Reporting. Basis: Google Sheets mit monatlichem Update und Verknüpfung zur Buchhaltung.',
+      steps:['Finanz-Sheet: Einnahmen · Ausgaben · Burn Rate einrichten','Runway-Berechnung automatisieren (=Kasse/Burn)','Investor-Update Vorlage erstellen (monatlich)','Ziel: Seed-Runde Unterlagen Q3 2026 fertigstellen'],
+      cta:'Finance Sheet öffnen', ctaUrl:'https://docs.google.com/spreadsheets/u/0/', ctaClass:'gold'
+    }
+  };
+
+  function openDash(id){
+    var cfg = DASH_CONFIG[id];
+    if(!cfg){ showNotif('⚠ Dashboard "'+id+'" nicht konfiguriert','blue'); return; }
+
+    if(cfg.action === 'scroll'){
+      var el = document.getElementById(cfg.target);
+      if(el){ el.scrollIntoView({behavior:'smooth', block:'start'}); showNotif('⬇ Navigiere zu '+id,'blue'); }
+      else { showNotif('⚠ Sektion nicht gefunden','blue'); }
+      return;
+    }
+    if(cfg.action === 'url'){
+      window.open(cfg.url, '_blank', 'noopener');
+      return;
+    }
+    if(cfg.action === 'modal'){
+      var m = document.getElementById('dash-modal');
+      if(!m) return;
+      document.getElementById('dmo-icon').textContent  = cfg.icon  || '📊';
+      document.getElementById('dmo-title').textContent = cfg.title || id;
+      var st = document.getElementById('dmo-status');
+      st.textContent = cfg.statusText || '';
+      st.className = 'dmo-status ' + (cfg.statusClass || 'planned');
+      document.getElementById('dmo-desc').textContent = cfg.desc || '';
+      var ul = document.getElementById('dmo-steps');
+      ul.innerHTML = '';
+      (cfg.steps||[]).forEach(function(s,i){
+        ul.innerHTML += '<li><span class="step-num">'+(i+1)+'</span><span>'+s+'</span></li>';
+      });
+      var cta = document.getElementById('dmo-cta');
+      cta.textContent = cfg.cta || 'Öffnen';
+      cta.href = cfg.ctaUrl || '#';
+      cta.className = 'dmo-cta ' + (cfg.ctaClass||'');
+      m.classList.add('open');
+      return;
+    }
+  }
+  window.openDash = openDash;
+
+  // Modal close
+  document.addEventListener('DOMContentLoaded', function(){
+    var m   = document.getElementById('dash-modal');
+    var btn = document.getElementById('dash-modal-close');
+    if(btn) btn.addEventListener('click', function(){ m.classList.remove('open'); });
+    if(m)   m.addEventListener('click', function(e){ if(e.target===m) m.classList.remove('open'); });
+    document.addEventListener('keydown', function(e){ if(e.key==='Escape') m.classList.remove('open'); });
+  });
+})();
+
 // ===================== BUNBO MENTOR WIDGET =====================
 (function(){
   const LAUNCH = new Date('2026-07-01T09:00:00');
@@ -4135,5 +4251,19 @@ setInterval(tick,1000); tick();
     .catch(function(){set('wl-water-temp','n/a');});
 })();
 </script>
+
+<!-- ── DASHBOARD MODAL ── -->
+<div id="dash-modal">
+  <div id="dash-modal-box">
+    <button id="dash-modal-close">✕ Schließen</button>
+    <div class="dmo-icon" id="dmo-icon">📊</div>
+    <div class="dmo-title" id="dmo-title">Dashboard</div>
+    <span class="dmo-status planned" id="dmo-status">Geplant</span>
+    <div class="dmo-desc" id="dmo-desc"></div>
+    <ul class="dmo-steps" id="dmo-steps"></ul>
+    <a class="dmo-cta" id="dmo-cta" href="#" target="_blank" rel="noopener">Öffnen →</a>
+  </div>
+</div>
+
 </body>
 </html>
