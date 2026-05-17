@@ -3043,7 +3043,7 @@
 
 </div><!-- /page -->
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js" async></script>
 <script>
 window._jsReadyAt = performance.now();
 // ===================== CANVAS 2D — Holographic Orbit Command Center =====================
@@ -3622,4 +3622,348 @@ setTimeout(()=>showNotif('⚠ 2 ungelesene Investor-Mails','gold'),5200);
             data:[0,0,0,0,0,null,null,null,null,null,null,null],
             borderColor:'rgba(0,200,255,0.7)',
             backgroundColor:'rgba(0,200,255,0.07)',
-   
+            pointBackgroundColor:'rgba(0,200,255,0.9)',
+            pointRadius:3, borderWidth:2, tension:0.4, fill:true, spanGaps:false
+          }
+        ]
+      },
+      options:{
+        responsive:true, maintainAspectRatio:false,
+        plugins:{ legend:{
+          labels:{ color:'rgba(255,255,255,0.55)', font:{size:9}, boxWidth:10 }
+        }},
+        scales:{
+          x:{ grid:{color:'rgba(255,255,255,0.05)'}, ticks:{color:'rgba(255,255,255,0.4)',font:{size:8}} },
+          y:{ grid:{color:'rgba(255,255,255,0.05)'}, ticks:{color:'rgba(255,255,255,0.4)',font:{size:8}, callback: v => v>=1000 ? (v/1000).toFixed(v%1000===0?0:1)+'k' : v+'€'} }
+        }
+      }
+    });
+  }
+
+  // ── 4) Burn Rate & Runway (Bar) ──
+  var ctxF = document.getElementById('chart-finance');
+  if(ctxF && !ctxF._chartInited){
+    ctxF._chartInited = true;
+    new Chart(ctxF, {
+      type:'bar',
+      data:{
+        labels:['Jan','Feb','Mär','Apr','Mai','Jun','Jul','Aug','Sep','Okt','Nov','Dez'],
+        datasets:[
+          {
+            label:'Burn Rate (€)',
+            data:[2800,2800,3100,3400,3200,3500,3800,4000,4200,4500,4800,5000],
+            backgroundColor:'rgba(201,168,76,0.45)',
+            borderColor:'rgba(201,168,76,0.85)',
+            borderWidth:1, borderRadius:3
+          },
+          {
+            label:'Revenue (€)',
+            data:[0,0,0,0,0,200,600,1200,2000,3200,4500,6000],
+            backgroundColor:'rgba(0,200,255,0.35)',
+            borderColor:'rgba(0,200,255,0.75)',
+            borderWidth:1, borderRadius:3
+          }
+        ]
+      },
+      options:{
+        responsive:true, maintainAspectRatio:false,
+        plugins:{ legend:{ labels:{ color:'rgba(255,255,255,0.55)', font:{size:9}, boxWidth:10 } } },
+        scales:{
+          x:{ grid:{color:'rgba(255,255,255,0.04)'}, ticks:{color:'rgba(255,255,255,0.4)',font:{size:8}} },
+          y:{ grid:{color:'rgba(255,255,255,0.05)'}, ticks:{color:'rgba(255,255,255,0.4)',font:{size:8}, callback: v => v>=1000?(v/1000)+'k€':v+'€'} }
+        }
+      }
+    });
+  }
+})();
+
+// ===================== PWA — SERVICE WORKER + INSTALL =====================
+(function initPWA(){
+  // 1) Service Worker registrieren
+  if('serviceWorker' in navigator){
+    navigator.serviceWorker.register('./sw.js').catch(function(){});
+  }
+
+  var isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
+  var isStandalone = window.navigator.standalone === true || window.matchMedia('(display-mode: standalone)').matches;
+
+  // Bereits installiert → nichts zeigen
+  if(isStandalone) return;
+
+  // 2) iOS Safari → unteres Banner mit Anleitung
+  if(isIOS){
+    if(localStorage.getItem('ios-install-dismissed')) return;
+    // Kurz verzögert zeigen, damit Seite erst lädt
+    setTimeout(function(){
+      var bar = document.getElementById('ios-install-bar');
+      if(bar) bar.style.display = 'flex';
+    }, 3000);
+    return;
+  }
+
+  // 3) Chrome / Edge / Android → beforeinstallprompt
+  var deferredPrompt = null;
+  window.addEventListener('beforeinstallprompt', function(e){
+    e.preventDefault();
+    deferredPrompt = e;
+    var bar = document.getElementById('pwa-install-bar');
+    if(bar) bar.style.display = 'flex';
+  });
+
+  var installBtn = document.getElementById('pwa-install-btn');
+  if(installBtn){
+    installBtn.addEventListener('click', function(){
+      if(!deferredPrompt) return;
+      deferredPrompt.prompt();
+      deferredPrompt.userChoice.then(function(result){
+        deferredPrompt = null;
+        var bar = document.getElementById('pwa-install-bar');
+        if(bar) bar.style.display = 'none';
+      });
+    });
+  }
+
+  window.addEventListener('appinstalled', function(){
+    var bar = document.getElementById('pwa-install-bar');
+    if(bar) bar.style.display = 'none';
+  });
+})();
+
+// ===================== CLOCK =====================
+function tick(){
+  const el = document.getElementById('nav-clock');
+  if(el) el.textContent = new Date().toLocaleTimeString('de-DE',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
+  // Bridge date display
+  const bd = document.getElementById('bridge-date');
+  if(bd && bd.textContent === '—') {
+    const d = new Date();
+    bd.textContent = d.toLocaleDateString('de-DE',{weekday:'short',day:'2-digit',month:'short'});
+  }
+}
+setInterval(tick,1000); tick();
+
+// ===================== KPI LOADER — localStorage basiert =====================
+(function loadAllKpis(){
+  function ls(key, fallback){ try{ return localStorage.getItem(key); }catch(e){ return fallback||null; } }
+  function set(id, val){ var el=document.getElementById(id); if(el&&val!=null) el.textContent=val; }
+
+  // ── Wasserlage PWA KPIs (from Wasserlage site, same browser) ──
+  var installs  = parseInt(ls('wb_wl_install_count')||'0');
+  var views     = parseInt(ls('wb_wl_total_views')||'0');
+  var dayViews  = parseInt(ls('wb_wl_day_views')||'0');
+  var convRate  = views>0 ? ((installs/views)*100).toFixed(1)+'%' : '—';
+  set('wl-install-count', installs || '—');
+  set('wl-pageview-count', views || '—');
+  set('wl-conv-rate', convRate);
+  set('bridge-wl-installs', installs || '—');
+
+  // ── QR Code Tracking (from QR Bridge localStorage) ──
+  var qrWW   = ls('wb_qr_ww_count');    // QR Wasserwerte Scans
+  var qrWB   = ls('wb_qr_wb_count');    // QR Wave Bite App Scans
+  var gInfo  = ls('wb_wl_total_views') || ls('wb_gewaesser_views'); // Gewässerinfo/Wasserlage Seitenaufrufe
+  var bunbo  = ls('wb_bunbo_glide');     // BunBo Glide App users
+  set('kpi-qr-ww',       qrWW   || '281+');
+  set('kpi-qr-wb',       qrWB   || '—');
+  set('kpi-gewaesser',   gInfo  || '—');
+  set('kpi-bunbo-glide', bunbo  || '—');
+  // QR Movement Intelligence panel
+  set('qr-total-scans',  qrWW   || '281+');
+
+  // ── Bridge Status ──
+  var bridgeUrl = ls('wb_bridge_url');
+  var bridgeEl  = document.getElementById('kpi-bridge-status');
+  if(bridgeEl){
+    if(bridgeUrl){
+      bridgeEl.textContent='✓ AKTIV';
+      bridgeEl.style.background='rgba(0,255,136,0.1)';
+      bridgeEl.style.color='var(--green)';
+    }
+  }
+
+  // ── Wave Bite App KPI (Glide) ──
+  var wbApp = ls('wb_app_users');        // Wave Bite Glide App users
+  set('kpi-wb-app', wbApp || '—');
+
+  // ── QR Bridge Live-Fetch (falls Web-App URL bekannt) ──
+  var BRIDGE_URL = ls('wb_bridge_exec_url'); // Eintragen: ls.setItem('wb_bridge_exec_url', 'https://script.google.com/macros/s/[ID]/exec')
+  if(BRIDGE_URL){
+    fetch(BRIDGE_URL + '?action=stats', {mode:'cors'}).then(function(r){ return r.json(); })
+      .then(function(d){
+        if(d.ww != null){
+          set('kpi-qr-ww', d.ww);
+          localStorage.setItem('wb_qr_ww_count', d.ww);
+        }
+        if(d.wb != null){
+          set('kpi-qr-wb', d.wb);
+          localStorage.setItem('wb_qr_wb_count', d.wb);
+        }
+        if(d.bunbo != null){
+          set('kpi-bunbo-glide', d.bunbo);
+          localStorage.setItem('wb_bunbo_glide', d.bunbo);
+        }
+        var bridgeEl2 = document.getElementById('kpi-bridge-status');
+        if(bridgeEl2){ bridgeEl2.textContent='✓ LIVE'; bridgeEl2.style.color='var(--green)'; bridgeEl2.style.background='rgba(0,255,136,0.1)'; }
+      }).catch(function(){ /* Bridge offline oder CORS - silent fail */ });
+  }
+
+  // ── Seiten-Performance Bars (Gewässerinfo + QR Bridge) ──
+  var gwNum = parseInt(gInfo || '0');
+  var gwPct = gwNum > 0 ? Math.min(100, Math.round(gwNum / 71 * 100)) : 7;
+  var gwBar = document.getElementById('perf-gewaesser-bar');
+  if(gwBar) gwBar.style.width = gwPct + '%';
+  if(gInfo) set('perf-gewaesser', gInfo);
+  // QR Bridge: 281+ scans > 71 monthly visitors → always full bar
+  var qrBar = document.getElementById('perf-qr-bridge-bar');
+  if(qrBar) qrBar.style.width = '100%';
+  set('perf-qr-bridge', qrWW || '281+');
+
+  // ── Last Update Timestamp ──
+  var lastVisit = ls('wb_wl_last_visit');
+  var el = document.getElementById('tracking-last-update');
+  if(el && lastVisit){
+    var d = new Date(lastVisit);
+    el.textContent = d.toLocaleString('de-DE',{day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'});
+  } else if(el){
+    el.textContent = 'Noch kein Besuch via Browser';
+  }
+})();
+
+// ===================== WASSERLAGE COCKPIT — LIVE =====================
+(function loadWasserlage(){
+  var LAT=52.52, LON=13.41;
+
+  function el(id){ return document.getElementById(id); }
+  function set(id,v){ var e=el(id); if(e&&v!=null) e.textContent=v; }
+
+  // ── Sonnenauf-/untergang (astronomische Berechnung Berlin) ──
+  function sunTime(type){
+    var now=new Date(), JD=now/86400000+2440587.5, n=JD-2451545.0;
+    var L=(280.46+0.9856474*n)%360;
+    var g=((357.528+0.9856003*n)%360)*Math.PI/180;
+    var lam=(L+1.915*Math.sin(g)+0.02*Math.sin(2*g))*Math.PI/180;
+    var dec=Math.asin(Math.sin(23.439*Math.PI/180)*Math.sin(lam));
+    var cosH=(Math.cos(90.833*Math.PI/180)-Math.sin(LAT*Math.PI/180)*Math.sin(dec))/(Math.cos(LAT*Math.PI/180)*Math.cos(dec));
+    if(cosH<-1||cosH>1) return '—';
+    var H=Math.acos(Math.max(-1,Math.min(1,cosH)))*180/Math.PI;
+    var noon=12-LON/15, t=type==='rise'?noon-H/15:noon+H/15;
+    // UTC → lokale Zeit (MESZ = UTC+2)
+    t = (t + 2 + 24) % 24;
+    var h=Math.floor(t), m=Math.round((t-h)*60); if(m===60){h++;m=0;}
+    return (h<10?'0':'')+h+':'+(m<10?'0':'')+m;
+  }
+  set('wl-sunrise', sunTime('rise'));
+  set('wl-sunset',  sunTime('set'));
+
+  function kmhToBft(k){
+    var lim=[1,6,12,20,29,39,50,62,75,89,103,118];
+    for(var i=0;i<lim.length;i++) if(k<lim[i]) return i;
+    return 12;
+  }
+  function wmoText(c){
+    if(c===0) return '☀️ Klar'; if(c<=1) return '🌤️ Heiter';
+    if(c<=3) return '☁️ Bewölkt'; if(c<=48) return '🌫️ Nebel';
+    if(c<=55) return '🌦️ Nieselregen'; if(c<=65) return '🌧️ Regen';
+    if(c<=75) return '❄️ Schnee'; if(c<=82) return '🌧️ Schauer';
+    return '⛈️ Gewitter';
+  }
+
+  var bftVal=null, pegelWarns=0, weatherDone=false, pegelDone=false;
+
+  function updateOverall(){
+    if(!weatherDone||!pegelDone) return;
+    var now=new Date().toLocaleTimeString('de-DE',{hour:'2-digit',minute:'2-digit'});
+    set('live-updated','⟳ '+now+' Uhr');
+
+    // Navigationsbadge
+    var nb=el('wl-nav-badge'), nt=el('wl-nav-text');
+    if(bftVal!==null){
+      if(bftVal<=3){
+        if(nt){nt.textContent='✓ Bft '+bftVal+' — Ideale Bedingungen';nt.style.color='var(--green)';}
+        if(nb){nb.style.background='rgba(0,255,136,0.07)';nb.style.borderColor='rgba(0,255,136,0.18)';}
+      } else if(bftVal<=5){
+        if(nt){nt.textContent='⚠ Bft '+bftVal+' — Mit Vorsicht fahren';nt.style.color='var(--gold)';}
+        if(nb){nb.style.background='rgba(201,168,76,0.08)';nb.style.borderColor='rgba(201,168,76,0.2)';}
+      } else {
+        if(nt){nt.textContent='⛔ Bft '+bftVal+' — Bootsfahrt nicht empfohlen';nt.style.color='#ff6b6b';}
+        if(nb){nb.style.background='rgba(255,107,107,0.07)';nb.style.borderColor='rgba(255,107,107,0.2)';}
+      }
+    }
+
+    // Gesamtstatus-Karte
+    var sc=el('wl-status-card'), si=el('wl-status-icon'), sl=el('wl-status-label'), ss=el('wl-status-sub');
+    var windWarn = bftVal!==null && bftVal>4;
+    if(pegelWarns===0 && !windWarn){
+      if(si) si.textContent='✅';
+      if(sl){sl.textContent='Normale Lage';sl.style.color='var(--green)';}
+      if(ss) ss.textContent='Alle Parameter normal — Gute Bedingungen';
+      if(sc){sc.style.background='rgba(0,255,136,0.05)';sc.style.borderColor='rgba(0,255,136,0.15)';}
+    } else if(pegelWarns>0||bftVal>3){
+      if(si) si.textContent='⚠️';
+      if(sl){sl.textContent='Mit Vorsicht';sl.style.color='var(--gold)';}
+      var msg=[];
+      if(pegelWarns>0) msg.push(pegelWarns+' Pegel außerhalb Normal');
+      if(bftVal!==null&&bftVal>3) msg.push('Wind Bft '+bftVal);
+      if(ss) ss.textContent=(msg.join(' — '))+' — ELWIS prüfen';
+      if(sc){sc.style.background='rgba(201,168,76,0.07)';sc.style.borderColor='rgba(201,168,76,0.2)';}
+    } else {
+      if(si) si.textContent='🔴';
+      if(sl){sl.textContent='Eingeschränkt';sl.style.color='#ff6b6b';}
+      if(ss) ss.textContent='Starker Wind — Fahrt nicht empfohlen';
+      if(sc){sc.style.background='rgba(255,107,107,0.05)';sc.style.borderColor='rgba(255,107,107,0.15)';}
+    }
+  }
+
+  // ── 1) Open-Meteo Wetter (kein API-Key nötig) ──
+  fetch('https://api.open-meteo.com/v1/forecast?latitude=52.52&longitude=13.41&current=temperature_2m,apparent_temperature,weathercode,windspeed_10m&windspeed_unit=kmh&timezone=Europe%2FBerlin')
+    .then(function(r){return r.json();})
+    .then(function(d){
+      var c=d.current;
+      var temp=Math.round(c.temperature_2m);
+      var feels=Math.round(c.apparent_temperature);
+      var wind=Math.round(c.windspeed_10m);
+      bftVal=kmhToBft(wind);
+      set('wl-temp',temp+'°C');
+      set('wl-feels','Gefühlt '+feels+'°C');
+      var wt=el('wl-wind-status');
+      if(wt){
+        wt.textContent='Bft '+bftVal+' ('+wind+' km/h)';
+        wt.style.color=bftVal<=3?'var(--green)':bftVal<=5?'var(--gold)':'#ff6b6b';
+      }
+      var ws=el('wl-weather-status');
+      if(ws){ws.textContent=wmoText(c.weathercode);ws.style.color='var(--green)';}
+      weatherDone=true; updateOverall();
+    })
+    .catch(function(){weatherDone=true;updateOverall();});
+
+  // ── 2) Pegelonline: POTSDAM (Havel) — zuverlässigste Station ──
+  var pegelTotal=1, pegelLoaded=0;
+  function onPegel(cm,min,max){
+    pegelLoaded++;
+    if(cm!==null&&(cm<min||cm>max)) pegelWarns++;
+    var pe=el('wl-pegel-status');
+    if(pe){
+      if(pegelWarns===0){pe.textContent='Normal ✓';pe.style.color='var(--green)';}
+      else{pe.textContent=pegelWarns+' Hinweis'+(pegelWarns>1?'e':'');pe.style.color='var(--gold)';}
+    }
+    if(pegelLoaded>=pegelTotal){pegelDone=true;updateOverall();}
+  }
+  fetch('https://www.pegelonline.wsv.de/webservices/rest-api/v2/stations/POTSDAM/W/currentmeasurement.json')
+    .then(function(r){return r.json();})
+    .then(function(d){
+      var cm=parseFloat(d.value);
+      onPegel(isNaN(cm)?null:Math.round(cm),40,130);
+    })
+    .catch(function(){onPegel(null,40,130);});
+
+  // ── 3) Wassertemperatur Spree Berlin-Spandau ──
+  fetch('https://www.pegelonline.wsv.de/webservices/rest-api/v2/stations/BERLIN-SPANDAU/WT/currentmeasurement.json')
+    .then(function(r){return r.json();})
+    .then(function(d){
+      var t=parseFloat(d.value);
+      set('wl-water-temp',isNaN(t)?'n/a':(Math.round(t*10)/10)+'°C');
+    })
+    .catch(function(){set('wl-water-temp','n/a');});
+})();
+</script>
+</body>
+</html>
