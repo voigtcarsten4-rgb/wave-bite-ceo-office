@@ -1561,16 +1561,16 @@
           <div>
             <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:.28rem">
               <div style="display:flex;align-items:center;gap:.4rem">
-                <span style="font-size:.62rem">&#x2693;</span><span style="font-size:.62rem;color:var(--text)">CEO Office</span>
-                <span style="font-size:.46rem;padding:.1rem .3rem;background:rgba(0,212,170,0.1);border:1px solid rgba(0,212,170,0.22);border-radius:3px;color:var(--teal)">LIVE</span>
+                <span style="font-size:.62rem">&#x1f30a;</span><span style="font-size:.62rem;color:var(--text)">Wave Bite App</span>
+                <span style="font-size:.46rem;padding:.1rem .3rem;background:rgba(0,212,170,0.08);border:1px solid rgba(0,212,170,0.2);border-radius:3px;color:var(--teal)">BETA</span>
               </div>
               <div style="display:flex;align-items:center;gap:.35rem">
-                <span style="font-size:.7rem;font-weight:800;color:var(--teal)">12</span>
-                <span style="font-size:.47rem;color:var(--text-dim)">17%</span>
+                <span style="font-size:.7rem;font-weight:800;color:var(--teal)" id="perf-wb-app">–</span>
+                <span style="font-size:.47rem;color:var(--text-dim)">Glide</span>
               </div>
             </div>
             <div style="height:6px;background:rgba(0,212,170,0.07);border-radius:3px;overflow:hidden">
-              <div style="width:17%;height:100%;background:var(--teal);border-radius:3px;box-shadow:0 0 6px rgba(0,212,170,0.3)"></div>
+              <div style="width:3%;height:100%;background:var(--teal);border-radius:3px;box-shadow:0 0 6px rgba(0,212,170,0.3)"></div>
             </div>
           </div>
           <div>
@@ -1721,7 +1721,7 @@
             <div style="font-size:.44rem;letter-spacing:.08em;color:var(--text-dim);margin-top:.15rem">LIVE</div>
           </div>
         </div>
-        <a href="file:///C:/Users/Startklar/Documents/Claude/Projects/Elwis/wavebite-premium-dashboard.html" target="_blank"
+        <a href="https://docs.google.com/spreadsheets/d/1lROtjWlkeTpStbNURjyELWnO-8PETk-DeB3JThEHkqs/edit" target="_blank"
           style="display:block;text-align:center;padding:.75rem .5rem;background:linear-gradient(135deg,rgba(0,212,170,0.16),rgba(0,200,255,0.07));border:1px solid rgba(0,212,170,0.42);border-radius:10px;color:var(--teal);font-size:.58rem;letter-spacing:.1em;text-decoration:none;font-weight:700;line-height:1.6;transition:all .25s"
           onmouseover="this.style.background='rgba(0,212,170,0.26)';this.style.boxShadow='0 0 18px rgba(0,212,170,0.28)'"
           onmouseout="this.style.background='linear-gradient(135deg,rgba(0,212,170,0.16),rgba(0,200,255,0.07))';this.style.boxShadow='none'">
@@ -1769,35 +1769,43 @@
         </div>
 
         <!-- TRACKING KPI GRID — ZEILE 2: QR-Codes + Apps -->
-        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:.75rem;margin-top:.65rem">
-          <!-- QR Wasserwerte -->
-          <div style="padding:.75rem;background:linear-gradient(135deg,rgba(201,168,76,0.07),rgba(201,168,76,0.02));border:1px solid rgba(201,168,76,0.22);border-radius:10px;position:relative;overflow:hidden">
+        <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:.65rem;margin-top:.65rem">
+          <!-- QR Wasserwerte (Bridge Logs: 281 Scans) -->
+          <div style="padding:.65rem;background:linear-gradient(135deg,rgba(201,168,76,0.07),rgba(201,168,76,0.02));border:1px solid rgba(201,168,76,0.22);border-radius:10px;position:relative;overflow:hidden">
             <div style="position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(201,168,76,0.5),transparent)"></div>
-            <div style="font-size:.45rem;letter-spacing:.12em;color:var(--text-dim);margin-bottom:.3rem">📷 QR WASSERWERTE</div>
-            <div style="font-size:1.5rem;font-weight:900;color:var(--gold);line-height:1;text-shadow:0 0 12px rgba(201,168,76,0.35)" id="kpi-qr-ww">–</div>
-            <div style="font-size:.48rem;letter-spacing:.09em;color:var(--text-dim);margin-top:.15rem">SCANS GESAMT</div>
-            <div style="font-size:.4rem;color:rgba(201,168,76,0.45);margin-top:.2rem">→ wave-bite.com/gewässerinfo</div>
+            <div style="font-size:.42rem;letter-spacing:.1em;color:var(--text-dim);margin-bottom:.3rem">📷 QR GEWÄSSERINFO</div>
+            <div style="font-size:1.4rem;font-weight:900;color:var(--gold);line-height:1;text-shadow:0 0 12px rgba(201,168,76,0.35)" id="kpi-qr-ww">281+</div>
+            <div style="font-size:.45rem;letter-spacing:.08em;color:var(--text-dim);margin-top:.15rem">SCANS GESAMT</div>
+            <div style="font-size:.38rem;color:rgba(201,168,76,0.55);margin-top:.2rem">Bridge Logs aktiv ✓</div>
           </div>
           <!-- QR WB (Wave Bite App) -->
-          <div style="padding:.75rem;background:rgba(0,212,170,0.04);border:1px solid rgba(0,212,170,0.15);border-radius:10px">
-            <div style="font-size:.45rem;letter-spacing:.12em;color:var(--text-dim);margin-bottom:.3rem">📷 QR WAVE BITE APP</div>
-            <div style="font-size:1.5rem;font-weight:900;color:var(--teal);line-height:1;text-shadow:0 0 12px rgba(0,212,170,0.3)" id="kpi-qr-wb">–</div>
-            <div style="font-size:.48rem;letter-spacing:.09em;color:var(--text-dim);margin-top:.15rem">SCANS GESAMT</div>
-            <div style="font-size:.4rem;color:rgba(0,212,170,0.45);margin-top:.2rem">→ Glide / App Store</div>
+          <div style="padding:.65rem;background:rgba(0,212,170,0.04);border:1px solid rgba(0,212,170,0.15);border-radius:10px">
+            <div style="font-size:.42rem;letter-spacing:.1em;color:var(--text-dim);margin-bottom:.3rem">📷 QR WAVE BITE APP</div>
+            <div style="font-size:1.4rem;font-weight:900;color:var(--teal);line-height:1;text-shadow:0 0 12px rgba(0,212,170,0.3)" id="kpi-qr-wb">–</div>
+            <div style="font-size:.45rem;letter-spacing:.08em;color:var(--text-dim);margin-top:.15rem">SCANS GESAMT</div>
+            <div style="font-size:.38rem;color:rgba(0,212,170,0.45);margin-top:.2rem">→ Glide / App Store</div>
           </div>
-          <!-- Gewässerinfo Visits -->
-          <div style="padding:.75rem;background:rgba(0,200,255,0.04);border:1px solid rgba(0,200,255,0.14);border-radius:10px">
-            <div style="font-size:.45rem;letter-spacing:.12em;color:var(--text-dim);margin-bottom:.3rem">🌐 GEWÄSSERINFO SEITE</div>
-            <div style="font-size:1.5rem;font-weight:900;color:var(--blue);line-height:1;text-shadow:0 0 12px rgba(0,200,255,0.3)" id="kpi-gewaesser">–</div>
-            <div style="font-size:.48rem;letter-spacing:.09em;color:var(--text-dim);margin-top:.15rem">SEITENAUFRUFE</div>
-            <div style="font-size:.4rem;color:rgba(0,200,255,0.45);margin-top:.2rem">wave-bite.com GA4</div>
+          <!-- Gewässerinfo Seitenaufrufe -->
+          <div style="padding:.65rem;background:rgba(0,200,255,0.04);border:1px solid rgba(0,200,255,0.14);border-radius:10px">
+            <div style="font-size:.42rem;letter-spacing:.1em;color:var(--text-dim);margin-bottom:.3rem">🌐 GEWÄSSERINFO</div>
+            <div style="font-size:1.4rem;font-weight:900;color:var(--blue);line-height:1;text-shadow:0 0 12px rgba(0,200,255,0.3)" id="kpi-gewaesser">–</div>
+            <div style="font-size:.45rem;letter-spacing:.08em;color:var(--text-dim);margin-top:.15rem">SEITENAUFRUFE</div>
+            <div style="font-size:.38rem;color:rgba(0,200,255,0.45);margin-top:.2rem">wave-bite.com/GA4</div>
           </div>
-          <!-- BunBo / Glide App -->
-          <div style="padding:.75rem;background:linear-gradient(135deg,rgba(255,100,50,0.06),rgba(201,168,76,0.03));border:1px solid rgba(255,100,50,0.18);border-radius:10px">
-            <div style="font-size:.45rem;letter-spacing:.12em;color:var(--text-dim);margin-bottom:.3rem">📱 BUNBO GLIDE APP</div>
-            <div style="font-size:1.5rem;font-weight:900;color:#ff6432;line-height:1;text-shadow:0 0 12px rgba(255,100,50,0.35)" id="kpi-bunbo-glide">–</div>
-            <div style="font-size:.48rem;letter-spacing:.09em;color:var(--text-dim);margin-top:.15rem">APP-NUTZER</div>
-            <div style="font-size:.4rem;color:rgba(255,100,50,0.45);margin-top:.2rem">Glide Analytics</div>
+          <!-- BunBo Glide App -->
+          <div style="padding:.65rem;background:linear-gradient(135deg,rgba(255,100,50,0.06),rgba(201,168,76,0.03));border:1px solid rgba(255,100,50,0.18);border-radius:10px">
+            <div style="font-size:.42rem;letter-spacing:.1em;color:var(--text-dim);margin-bottom:.3rem">🍔 BUNBO GLIDE APP</div>
+            <div style="font-size:1.4rem;font-weight:900;color:#ff6432;line-height:1;text-shadow:0 0 12px rgba(255,100,50,0.35)" id="kpi-bunbo-glide">–</div>
+            <div style="font-size:.45rem;letter-spacing:.08em;color:var(--text-dim);margin-top:.15rem">APP-NUTZER</div>
+            <div style="font-size:.38rem;color:rgba(255,100,50,0.45);margin-top:.2rem">Glide Analytics</div>
+          </div>
+          <!-- Wave Bite Glide App (NEU) -->
+          <div style="padding:.65rem;background:linear-gradient(135deg,rgba(0,200,255,0.06),rgba(0,212,170,0.03));border:1px solid rgba(0,200,255,0.22);border-radius:10px;position:relative;overflow:hidden">
+            <div style="position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(0,200,255,0.5),transparent)"></div>
+            <div style="font-size:.42rem;letter-spacing:.1em;color:var(--text-dim);margin-bottom:.3rem">🌊 WAVE BITE APP</div>
+            <div style="font-size:1.4rem;font-weight:900;color:var(--blue);line-height:1;text-shadow:0 0 12px rgba(0,200,255,0.4)" id="kpi-wb-app">–</div>
+            <div style="font-size:.45rem;letter-spacing:.08em;color:var(--text-dim);margin-top:.15rem">APP-NUTZER</div>
+            <div style="font-size:.38rem;color:rgba(0,200,255,0.45);margin-top:.2rem">Glide Analytics</div>
           </div>
         </div>
 
@@ -1805,8 +1813,8 @@
         <div style="margin-top:.65rem;padding:.6rem 1rem;background:rgba(201,168,76,0.04);border:1px solid rgba(201,168,76,0.12);border-radius:8px;display:flex;align-items:center;gap:.75rem;flex-wrap:wrap">
           <span style="font-size:.5rem;letter-spacing:.1em;color:var(--gold)">⚡ QR BRIDGE SCRIPT</span>
           <span style="font-size:.5rem;color:var(--text-dim);flex:1">Google Apps Script Redirect-Bridge zählt QR-Scans automatisch in Google Sheets → CEO Office zeigt Live-Daten sobald Bridge deployed ist.</span>
-          <a href="https://script.google.com" target="_blank" style="font-size:.48rem;font-weight:700;color:var(--gold);text-decoration:none;padding:.2rem .6rem;border:1px solid rgba(201,168,76,0.3);border-radius:5px;white-space:nowrap">📋 Bridge öffnen ↗</a>
-          <span id="kpi-bridge-status" style="font-size:.48rem;font-weight:700;padding:.2rem .5rem;border-radius:5px;background:rgba(201,168,76,0.1);color:var(--gold)">SETUP AUSSTEHEND</span>
+          <a href="https://script.google.com/d/1mH7NmlaGx72KFH6kxD5DkOz0ga8B_YIktiqbWnbeUK3j2u1jNyODPm2J/edit" target="_blank" style="font-size:.48rem;font-weight:700;color:var(--gold);text-decoration:none;padding:.2rem .6rem;border:1px solid rgba(201,168,76,0.3);border-radius:5px;white-space:nowrap">📋 Bridge öffnen ↗</a>
+          <span id="kpi-bridge-status" style="font-size:.48rem;font-weight:700;padding:.2rem .5rem;border-radius:5px;background:rgba(201,168,76,0.1);color:var(--gold)">SCRIPT AKTIV ✓ · WEB-APP URL EINTRAGEN</span>
         </div>
 
   </div><!-- end panel -->
@@ -3186,298 +3194,42 @@ setInterval(tick,1000); tick();
     }
   }
 
+  // ── Wave Bite App KPI (Glide) ──
+  var wbApp = ls('wb_app_users');        // Wave Bite Glide App users
+  set('kpi-wb-app', wbApp || '—');
+
+  // ── QR Bridge Live-Fetch (falls Web-App URL bekannt) ──
+  var BRIDGE_URL = ls('wb_bridge_exec_url'); // Eintragen: ls.setItem('wb_bridge_exec_url', 'https://script.google.com/macros/s/[ID]/exec')
+  if(BRIDGE_URL){
+    fetch(BRIDGE_URL + '?action=stats', {mode:'cors'}).then(function(r){ return r.json(); })
+      .then(function(d){
+        if(d.ww != null){
+          set('kpi-qr-ww', d.ww);
+          localStorage.setItem('wb_qr_ww_count', d.ww);
+        }
+        if(d.wb != null){
+          set('kpi-qr-wb', d.wb);
+          localStorage.setItem('wb_qr_wb_count', d.wb);
+        }
+        if(d.bunbo != null){
+          set('kpi-bunbo-glide', d.bunbo);
+          localStorage.setItem('wb_bunbo_glide', d.bunbo);
+        }
+        var bridgeEl2 = document.getElementById('kpi-bridge-status');
+        if(bridgeEl2){ bridgeEl2.textContent='✓ LIVE'; bridgeEl2.style.color='var(--green)'; bridgeEl2.style.background='rgba(0,255,136,0.1)'; }
+      }).catch(function(){ /* Bridge offline oder CORS - silent fail */ });
+  }
+
   // ── Last Update Timestamp ──
   var lastVisit = ls('wb_wl_last_visit');
   var el = document.getElementById('tracking-last-update');
-  if(el){
-    if(lastVisit){
-      var d = new Date(lastVisit);
-      el.textContent = d.toLocaleString('de-DE',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'});
-    } else {
-      el.textContent = 'Noch kein Besuch via Browser';
-    }
+  if(el && lastVisit){
+    var d = new Date(lastVisit);
+    el.textContent = d.toLocaleString('de-DE',{day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'});
+  } else if(el){
+    el.textContent = 'Noch kein Besuch via Browser';
   }
-})();
-
-// ===================== COUNTDOWN =====================
-function updateCountdown(){
-  const target = new Date('2026-07-01T00:00:00');
-  const now = new Date();
-  const diff = target - now;
-  const _set = (id,v)=>{ const e=document.getElementById(id); if(e) e.textContent=String(Math.max(0,v)).padStart(2,'0'); };
-  if(diff <= 0){ ['cd-d','cd-h','cd-m','cd-s'].forEach(id=>_set(id,0)); return; }
-  _set('cd-d', Math.floor(diff/86400000));
-  _set('cd-h', Math.floor((diff%86400000)/3600000));
-  _set('cd-m', Math.floor((diff%3600000)/60000));
-  _set('cd-s', Math.floor((diff%60000)/1000));
-}
-setInterval(updateCountdown,1000); updateCountdown();
-
-// ===================== MODAL (simple overlay) =====================
-function closeModal(){
-  const o = document.getElementById('modal-overlay');
-  if(o) o.style.display='none';
-}
-function openModal(title, body){
-  const o = document.getElementById('modal-overlay');
-  const t = document.getElementById('modal-title');
-  const b = document.getElementById('modal-body');
-  if(t) t.textContent = title;
-  if(b) b.innerHTML = body;
-  if(o) o.style.display='flex';
-}
-document.addEventListener('keydown', e=>{ if(e.key==='Escape') closeModal(); });
-
-// ===================== DASHBOARD DATA + OPENER =====================
-const DASHBOARDS = {
-  tracking:    { icon:'📊', name:'Site Analytics Hub',      url:'file:///C:/Users/Startklar/Documents/Claude/Projects/Elwis/wavebite-premium-dashboard.html', desc:'Wave Bite Traffic-Hub: Seitenbesucher, Demografie & KPIs.', status:'LIVE' },
-  wasserlage:  { icon:'🌊', name:'Wasserlage Live',          url:'https://www.pegelonline.wsv.de',           desc:'Echtzeit-Pegelstände & Wasserstraßen-Informationen. ELWIS & WSV-Schnittstelle.', status:'LIVE' },
-  ceo_briefing:{ icon:'☀️', name:'CEO Briefing',             url:'https://mail.google.com',                   desc:'Tägliches CEO Briefing via Gmail + Apps Script. Morning Intelligence.', status:'Aktiv' },
-  playbook:    { icon:'📒', name:'Daily Playbook',           url:'https://drive.google.com',                  desc:'Tagesstruktur, Prioritäten & Fokus-Framework. Google Drive & Calendar.', status:'Aktiv' },
-  marketing:   { icon:'📣', name:'Marketing Dashboard',      url:'https://analytics.google.com',              desc:'Social Media, Content-Planung & Kampagnen-Tracking.', status:'Aufbau' },
-  kpi:         { icon:'📈', name:'KPI Dashboard',            url:'https://sheets.google.com',                 desc:'Wave Bite Kernmetriken: MAU, Downloads, Retention. OKR Q2 2026.', status:'Geplant' },
-  partner:     { icon:'🤝', name:'Partner Dashboard',        url:'https://drive.google.com',                  desc:'Sponsoring-Pipeline, Kooperationen & Partner-Status.', status:'Geplant' },
-  finance:     { icon:'💶', name:'Finance Dashboard',        url:'https://sheets.google.com',                 desc:'Cashflow, Burn Rate & Runway. Investor-Pipeline & Funding.', status:'Geplant' },
-  automation:  { icon:'⚙️', name:'Automation Control',       url:'https://script.google.com',                 desc:'N8N, Make.com & Apps Script. Aktive Automatisierungen & Trigger.', status:'Aktiv' },
-  elwis:       { icon:'⚓',       name:'ELWIS',                    url:'https://www.elwis.de',                      desc:'Bundesanstalt für Gewässerkunde. Wasserstraßen-Daten & Nautik.', status:'Extern' },
-  wordpress:   { icon:'🌐', name:'Wave Bite Website',        url:'https://wave-bite.com',                     desc:'Haupt-Website auf WordPress. Live unter wave-bite.com.', status:'Live' },
-  flutterflow: { icon:'📱', name:'FlutterFlow App',          url:'https://flutterflow.io',                    desc:'BunBo + Hausboot-App. Cross-Platform iOS/Android.', status:'Aktiv' },
-  glide:       { icon:'⚡',       name:'Glide Apps',               url:'https://app.glideapps.com',                 desc:'No-Code Web-Apps, MVP & interne Tools.', status:'Aktiv' },
-};
-function openDash(key){
-  const d = DASHBOARDS[key];
-  if(!d){ showNotif('⚠ Dashboard nicht gefunden','gold'); return; }
-  openModal(d.icon+' '+d.name,
-    '<p style="color:var(--text-dim);line-height:1.6;margin-bottom:.8rem">'+d.desc+'</p>'+
-    '<p style="margin-bottom:1.2rem"><span style="color:var(--text-dim)">Status: </span>'+
-    '<b style="color:var(--green)">'+d.status+'</b></p>'+
-    '<a href="'+d.url+'" target="_blank" style="display:inline-block;padding:.65rem 1.4rem;'+
-    'background:linear-gradient(90deg,var(--blue),var(--teal));color:#000;font-weight:700;'+
-    'border-radius:8px;text-decoration:none;font-size:.85rem">↗ Jetzt öffnen</a>'
-  );
-}
-
-// ===================== TOOLBELT =====================
-
-// ===================== TOOLBELT =====================
-function toggleToolbelt(){
-  const tb = document.getElementById('toolbelt');
-  const bd = document.getElementById('toolbelt-backdrop');
-  if(!tb) return;
-  const isOpen = tb.classList.toggle('open');
-  if(bd) bd.style.display = isOpen ? 'block' : 'none';
-  if(isOpen) showNotif('⚙ CEO Toolbelt geöffnet','teal');
-}
-
-// ===================== TICKER =====================
-(function(){
-  const el = document.getElementById('ticker-scroll');
-  if(!el) return;
-  const items = [
-    'WAVE BITE // CAPITÄNS BRIDGE AKTIV',
-    'WASSERLAGE DATEN: LIVE',
-    'BUNBO APP: TESTFLIGHT KW22',
-    'HIMMELREICH: PLANUNG AKTIV',
-    'FLUTTERFLOW BUILD: LAUFEND',
-    'MARKETING: INSTAGRAM + LINKEDIN AKTIV',
-    'FUNDING TARGET: 250K€',
-    'GITHUB REPOS: 12+ AKTIV',
-    'WEBSITE: WAVE-BITE.COM LIVE',
-    'CEO OFFICE: SYSTEM BEREIT'
-  ];
-  const full = [...items,...items].map(t=>'<span style="margin-right:4rem">' + t + '</span>').join('');
-  el.innerHTML = full;
-})();
-
-// ===================== COOKIES =====================
-// ===================== CHART.JS — 4 Charts =====================
-window.addEventListener('load', function(){
-(function initCharts(){
-  if(typeof Chart === 'undefined'){ setTimeout(initCharts, 800); return; }
-  Chart.defaults.color = 'rgba(208,232,248,0.65)';
-  Chart.defaults.borderColor = 'rgba(0,200,255,0.07)';
-  Chart.defaults.font.family = "'Exo 2', 'Rajdhani', sans-serif";
-  Chart.defaults.font.size = 10;
-
-  // PROJEKTFORTSCHRITT (horizontal bar)
-  const ctxP = document.getElementById('chart-progress');
-  if(ctxP && !ctxP._chartInit){
-    ctxP._chartInit = true;
-    new Chart(ctxP, {
-      type: 'bar',
-      data: {
-        labels: ['WaveBite Plattform','BunBo App','Wasserlage PWA','Website','Marketing','Himmelreich'],
-        datasets: [{
-          label: '% Fertig',
-          data: [65, 45, 82, 90, 55, 18],
-          backgroundColor: ['rgba(0,200,255,0.55)','rgba(0,212,170,0.5)','rgba(0,212,170,0.7)','rgba(0,212,170,0.85)','rgba(201,168,76,0.55)','rgba(201,168,76,0.35)'],
-          borderColor: ['rgba(0,200,255,0.9)','rgba(0,212,170,0.9)','rgba(0,212,170,1)','rgba(0,212,170,1)','rgba(201,168,76,0.9)','rgba(201,168,76,0.7)'],
-          borderWidth: 1, borderRadius: 4
-        }]
-      },
-      options: {
-        indexAxis: 'y', responsive: true, maintainAspectRatio: false,
-        plugins: { legend: { display: false } },
-        scales: { x: { max:100, ticks: { callback: v => v+'%' } }, y: { grid: { display: false } } }
-      }
-    });
-  }
-
-  // WACHSTUMS-RADAR
-  const ctxR = document.getElementById('chart-radar');
-  if(ctxR && !ctxR._chartInit){
-    ctxR._chartInit = true;
-    new Chart(ctxR, {
-      type: 'radar',
-      data: {
-        labels: ['Nutzer','Revenue','Reichweite','Features','Partner','Funding'],
-        datasets: [
-          { label:'IST', data:[30,12,25,62,18,35], borderColor:'rgba(0,200,255,0.9)', backgroundColor:'rgba(0,200,255,0.1)', pointBackgroundColor:'rgba(0,200,255,1)', borderWidth:1.5 },
-          { label:'ZIEL Q4', data:[80,60,72,92,65,80], borderColor:'rgba(201,168,76,0.8)', backgroundColor:'rgba(201,168,76,0.08)', pointBackgroundColor:'rgba(201,168,76,1)', borderWidth:1.5 }
-        ]
-      },
-      options: {
-        responsive: true, maintainAspectRatio: false,
-        plugins: { legend: { labels: { color:'rgba(208,232,248,0.7)', font:{ size:9 } } } },
-        scales: { r: { min:0, max:100, grid:{ color:'rgba(0,200,255,0.1)' }, angleLines:{ color:'rgba(0,200,255,0.1)' }, pointLabels:{ color:'rgba(208,232,248,0.7)', font:{ size:9 } }, ticks:{ display:false } } }
-      }
-    });
-  }
-
-  // REVENUE FORECAST
-  const ctxRev = document.getElementById('chart-revenue');
-  if(ctxRev && !ctxRev._chartInit){
-    ctxRev._chartInit = true;
-    new Chart(ctxRev, {
-      type: 'line',
-      data: {
-        labels: ["Q1 '26","Q2 '26","Q3 '26","Q4 '26","Q1 '27","Q2 '27"],
-        datasets: [
-          { label:'Forecast', data:[0,2000,9000,20000,38000,65000], borderColor:'rgba(0,200,255,0.9)', backgroundColor:'rgba(0,200,255,0.08)', fill:true, tension:0.4, borderWidth:2, pointRadius:3 },
-          { label:'Konservativ', data:[0,800,3500,9000,18000,36000], borderColor:'rgba(201,168,76,0.7)', backgroundColor:'transparent', fill:false, tension:0.4, borderWidth:1.5, borderDash:[4,4], pointRadius:2 }
-        ]
-      },
-      options: {
-        responsive: true, maintainAspectRatio: false,
-        plugins: { legend: { labels: { color:'rgba(208,232,248,0.7)', font:{ size:9 } } } },
-        scales: {
-          x: { grid: { color:'rgba(0,200,255,0.06)' } },
-          y: { grid: { color:'rgba(0,200,255,0.06)' }, ticks: { callback: v => v >= 1000 ? (v/1000)+'k€' : v+'€' } }
-        }
-      }
-    });
-  }
-
-  // BURN RATE & RUNWAY (mixed chart)
-  const ctxF = document.getElementById('chart-finance');
-  if(ctxF && !ctxF._chartInit){
-    ctxF._chartInit = true;
-    new Chart(ctxF, {
-      type: 'bar',
-      data: {
-        labels: ['Jan','Feb','Mär','Apr','Mai','Jun'],
-        datasets: [
-          { type:'bar', label:'Burn (€/M)', data:[3200,3400,2900,3100,3300,3500], backgroundColor:'rgba(255,100,100,0.45)', borderColor:'rgba(255,100,100,0.9)', borderWidth:1, borderRadius:3, yAxisID:'y' },
-          { type:'line', label:'Runway (Mo.)', data:[18,16,15,13,11,9], borderColor:'rgba(201,168,76,0.9)', backgroundColor:'rgba(201,168,76,0.05)', fill:false, tension:0.4, borderWidth:2, pointRadius:3, pointBackgroundColor:'rgba(201,168,76,1)', yAxisID:'y1' }
-        ]
-      },
-      options: {
-        responsive: true, maintainAspectRatio: false,
-        plugins: { legend: { labels: { color:'rgba(208,232,248,0.7)', font:{ size:9 } } } },
-        scales: {
-          y:  { position:'left',  grid:{ color:'rgba(0,200,255,0.06)' }, ticks:{ callback: v => (v/1000)+'k€' } },
-          y1: { position:'right', grid:{ display:false }, ticks:{ callback: v => v+' Mo.' }, min:0, max:24 }
-        }
-      }
-    });
-  }
-})();
-});
-
-// ===================== SERVICE WORKER REGISTRIERUNG =====================
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', function() {
-    navigator.serviceWorker.register('./sw.js', { scope: './' })
-      .then(function(reg) {
-        console.log('[PWA] Service Worker registriert:', reg.scope);
-      })
-      .catch(function(err) {
-        console.warn('[PWA] Service Worker Fehler:', err);
-      });
-  });
-}
-
-// ===================== PWA INSTALL PROMPT =====================
-let _pwaPrompt = null;
-window.addEventListener('beforeinstallprompt', function(e){
-  e.preventDefault();
-  _pwaPrompt = e;
-  const bar = document.getElementById('pwa-install-bar');
-  if(bar && !localStorage.getItem('pwa_dismissed')) bar.style.display = 'flex';
-});
-const _pwaBtn = document.getElementById('pwa-install-btn');
-if(_pwaBtn) _pwaBtn.addEventListener('click', function(){
-  if(!_pwaPrompt) return;
-  _pwaPrompt.prompt();
-  _pwaPrompt.userChoice.then(function(r){
-    if(r.outcome === 'accepted'){
-      const bar = document.getElementById('pwa-install-bar');
-      if(bar) bar.style.display = 'none';
-      localStorage.setItem('pwa_dismissed','1');
-    }
-    _pwaPrompt = null;
-  });
-});
-
-// Wenn bereits als PWA installiert — install-bar verstecken
-window.addEventListener('appinstalled', function(){
-  const bar = document.getElementById('pwa-install-bar');
-  if(bar) bar.style.display = 'none';
-  localStorage.setItem('pwa_dismissed','1');
-  console.log('[PWA] App erfolgreich installiert');
-});
-
-</script>
-
-<script>
-// ── Collapsible Sections ──────────────────────────────────────
-(function(){
-  // Sections to collapse by default (to keep page concise)
-  const defaultClosed = new Set(['sec-tasks','sec-console','sec-agents','sec-finance']);
-
-  document.querySelectorAll('section').forEach(sec => {
-    const titleEl = sec.querySelector('.section-title');
-    if (!titleEl) return;
-
-    // Wrap all non-title children in a sec-body div
-    const body = document.createElement('div');
-    body.className = 'sec-body';
-    const children = Array.from(sec.children).filter(c => c !== titleEl);
-    children.forEach(c => body.appendChild(c));
-    sec.appendChild(body);
-
-    // Add toggle indicator
-    const toggle = document.createElement('span');
-    toggle.className = 'sec-toggle';
-    toggle.setAttribute('aria-hidden','true');
-    titleEl.appendChild(toggle);
-
-    // Determine initial state
-    const isDefault = defaultClosed.has(sec.id);
-    body.classList.add(isDefault ? 'closed' : 'open');
-    toggle.textContent = isDefault ? '▼ ANZEIGEN' : '▲ EINKLAPPEN';
-
-    // Click to toggle
-    titleEl.addEventListener('click', (e) => {
-      if (e.target.tagName === 'A' || e.target.tagName === 'BUTTON') return;
-      const isClosed = body.classList.contains('closed');
-      body.classList.toggle('closed', !isClosed);
-      body.classList.toggle('open', isClosed);
-      toggle.textContent = isClosed ? '▲ EINKLAPPEN' : '▼ ANZEIGEN';
-    });
-  });
 })();
 </script>
-
 </body>
 </html>
