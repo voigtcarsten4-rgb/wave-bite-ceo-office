@@ -4755,6 +4755,41 @@ setInterval(loadCommunityKPIs, 60000);
 
 // Pegelonline refresh every 10min
 setInterval(loadWasserlage, 600000);
+
+// ─── COLLAPSIBLE SECTIONS ────────────────────────────────────
+(function initCollapsible() {
+  document.querySelectorAll('section').forEach(function(sec) {
+    var title = sec.querySelector('.section-title');
+    if (!title || title.querySelector('.sec-toggle')) return;
+    // Collect all sibling elements after section-title
+    var siblings = [], node = title.nextElementSibling;
+    while (node) { siblings.push(node); node = node.nextElementSibling; }
+    if (!siblings.length) return;
+    // Wrap in .sec-body
+    var body = document.createElement('div');
+    body.className = 'sec-body open';
+    siblings.forEach(function(s) { body.appendChild(s); });
+    sec.appendChild(body);
+    // Stable localStorage key
+    var key = 'collapse-' + (sec.id || title.textContent.trim().replace(/\W+/g,'_').slice(0,28));
+    if (localStorage.getItem(key) === 'closed') body.classList.replace('open','closed');
+    // Toggle button
+    var btn = document.createElement('span');
+    btn.className = 'sec-toggle';
+    btn.textContent = body.classList.contains('closed') ? '▶ AUSKLAPPEN' : '▼ EINKLAPPEN';
+    title.appendChild(btn);
+    title.style.cursor = 'pointer';
+    // Click handler
+    title.addEventListener('click', function(e) {
+      // Don't interfere with links or buttons inside title
+      if (e.target.tagName === 'A' || e.target.tagName === 'BUTTON') return;
+      var isOpen = body.classList.contains('open');
+      body.classList.replace(isOpen ? 'open' : 'closed', isOpen ? 'closed' : 'open');
+      btn.textContent = isOpen ? '▶ AUSKLAPPEN' : '▼ EINKLAPPEN';
+      localStorage.setItem(key, isOpen ? 'closed' : 'open');
+    });
+  });
+})();
 </script>
 
 <!-- ════ DASH MODAL ════ -->
