@@ -456,22 +456,22 @@
   .bridge-sub{font-size:.58rem;letter-spacing:.25em;color:var(--teal);text-align:center;opacity:.8}
 
   /* === ORBIT SYSTEM === */
-  .orbit-system{position:relative;width:284px;height:284px;flex-shrink:0;margin:.25rem 0}
+  .orbit-system{position:relative;width:480px;height:480px;flex-shrink:0;margin:.25rem 0}
 
   /* Boat centerpiece */
-  .orbit-boat{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:5;width:128px;height:82px;display:flex;align-items:center;justify-content:center;border-radius:12px;overflow:visible;background:transparent}
-  .orbit-boat-img{width:128px;height:82px;border-radius:8px;display:block;position:relative;z-index:4}
+  .orbit-boat{position:absolute;inset:0;z-index:5;overflow:visible;background:transparent}
+  .orbit-boat-img{width:100%;height:100%;display:block;position:absolute;top:0;left:0;z-index:4}
   .boat-fallback-icon{display:none;width:100%;height:100%;align-items:center;justify-content:center;font-size:2.8rem;color:var(--blue);text-shadow:0 0 20px rgba(0,200,255,0.5)}
 
   /* Ring decorations */
-  .orbit-ring-deco{position:absolute;border-radius:50%;top:50%;left:50%;transform:translate(-50%,-50%)}
+  .orbit-ring-deco{position:absolute;border-radius:50%;top:50%;left:50%;transform:translate(-50%,-50%);display:none}
   .orbit-ring-inner{width:155px;height:155px;border:1px solid rgba(0,200,255,0.1);animation:orbitSpin 40s linear infinite reverse}
   .orbit-ring-outer{width:266px;height:266px;border:1px solid rgba(201,168,76,0.07);animation:orbitSpin 60s linear infinite}
   /* center glow */
   .orbit-system::before{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:100px;height:70px;border-radius:50%;background:radial-gradient(ellipse,rgba(0,200,255,0.12) 0%,transparent 70%);z-index:1;pointer-events:none}
 
   /* Rotating orbit wrapper */
-  .orbit-wrapper{position:absolute;inset:0;animation:orbitSpin 22s linear infinite;z-index:4}
+  .orbit-wrapper{position:absolute;inset:0;animation:orbitSpin 22s linear infinite;z-index:4;display:none}
 
   /* Individual orbit nodes */
   .onode{position:absolute;z-index:6}
@@ -485,7 +485,7 @@
   /* === RESPONSIVE === */
   @media(max-width:1100px){.bridge-cockpit{grid-template-columns:210px 1fr 210px}}
   @media(max-width:860px){.bridge-left,.bridge-right{display:none}.bridge-cockpit{grid-template-columns:1fr}}
-  @media(max-width:600px){.orbit-system{width:220px;height:220px}.bridge-title{font-size:1.4rem}}
+  @media(max-width:600px){.orbit-system{width:320px;height:320px}.bridge-title{font-size:1.4rem}}
 
   /* ════════════════════════════════════════════
      BOAT IMAGE — LIVE ANIMATIONS
@@ -519,11 +519,10 @@
     }
   }
 
-  /* Apply both animations to the boat image */
+  /* Boat canvas manages its own animation */
   .orbit-boat-img {
-    animation: boatFloat 5s ease-in-out infinite, boatGlowPulse 3.5s ease-in-out infinite;
-    will-change: transform, box-shadow;
-    transform-origin: center bottom;
+    animation: none;
+    will-change: auto;
   }
 
   /* 3. RIPPLE RINGS: water expanding outward */
@@ -541,6 +540,7 @@
     animation: boatRipple 3.6s ease-out infinite;
     pointer-events: none;
     z-index: 2;
+    display: none;
   }
   .boat-ripple-1 { animation-delay: 0s;    border-color: rgba(0,200,255,0.45); }
   .boat-ripple-2 { animation-delay: 1.2s;  border-color: rgba(0,180,220,0.3);  }
@@ -553,19 +553,7 @@
   }
 
   .boat-reflection {
-    position: absolute;
-    bottom: -18px; left: 50%;
-    transform: translateX(-50%) scaleY(-1);
-    width: 110px; height: 40px;
-    background: linear-gradient(180deg,
-      rgba(0,200,255,0.25) 0%,
-      rgba(0,200,255,0.06) 60%,
-      transparent 100%);
-    border-radius: 50%;
-    filter: blur(4px);
-    animation: reflectionShimmer 3.5s ease-in-out infinite;
-    pointer-events: none;
-    z-index: 1;
+    display: none;
   }
 
   /* 5. ORBIT-BOAT container tweaks for animation layering */
@@ -606,8 +594,8 @@
     .bridge-title{font-size:1.3rem;letter-spacing:.1em}
     .bridge-sub{font-size:.5rem;letter-spacing:.15em}
 
-    /* Orbit system kleiner auf iPhone */
-    .orbit-system{width:230px;height:230px}
+    /* Orbit system auf iPhone */
+    .orbit-system{width:340px;height:340px}
     .orbit-ring-inner{width:126px;height:126px}
     .orbit-ring-outer{width:218px;height:218px}
 
@@ -615,9 +603,9 @@
     .onode-in{min-width:42px;padding:.35rem .45rem;border-radius:8px;min-height:44px;justify-content:center}
     .onode-label{font-size:.42rem;letter-spacing:.06em}
 
-    /* Boat canvas zentriert */
-    .orbit-boat{width:104px;height:66px}
-    .orbit-boat-img{width:104px;height:66px}
+    /* Boat canvas fills container */
+    .orbit-boat{inset:0;width:100%;height:100%}
+    .orbit-boat-img{width:100%;height:100%}
 
     /* Countdown kleiner */
     .countdown-strip{padding:.4rem .8rem;gap:.8rem}
@@ -684,10 +672,10 @@
   /* Extra klein: iPhone SE / kleinere Geräte */
   @media(max-width:375px){
     .bridge-title{font-size:1.1rem}
-    .orbit-system{width:200px;height:200px}
+    .orbit-system{width:260px;height:260px}
     .kpi-strip{grid-template-columns:repeat(2,1fr)!important}
-    .orbit-boat{width:86px;height:55px}
-    .orbit-boat-img{width:86px;height:55px}
+    .orbit-boat{inset:0;width:100%;height:100%}
+    .orbit-boat-img{width:100%;height:100%}
   }
 
   /* === CLICKABLE ELEMENTS — HIGH CONTRAST === */
@@ -1470,7 +1458,7 @@
 <section id="sec-tracking-radar" style="margin-bottom:1.5rem">
   <div class="section-title">📊 SITE ANALYTICS — WAVE BITE TRAFFIC HUB</div>
   <div class="panel" style="border-color:rgba(0,200,255,0.2);background:linear-gradient(135deg,rgba(2,15,30,0.92),rgba(4,16,30,0.98));padding:1.5rem">
-    <div id="analytics-grid" style="display:grid;grid-template-columns:170px 1fr 1fr 140px 180px;gap:1.5rem;align-items:start">
+    <div id="analytics-grid" style="display:grid;grid-template-columns:repeat(5,1fr);gap:1.5rem;align-items:start">
 
 
       <!-- COL 1: TOTAL VISITORS + MINI STATS -->
@@ -2593,15 +2581,15 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <script>
 window._jsReadyAt = performance.now();
-// ===================== CANVAS 2D BOAT — Isometric 3D Houseboat =====================
+// ===================== CANVAS 2D — Holographic Orbit Command Center =====================
 (function(){
   function initBoatCanvas(){
     const canvas = document.getElementById('boat-wireframe-canvas');
     if (!canvas) return;
     const dpr = window.devicePixelRatio || 1;
     function setSize() {
-      const cssW = canvas.offsetWidth  || 128;
-      const cssH = canvas.offsetHeight || 82;
+      const cssW = canvas.offsetWidth  || 480;
+      const cssH = canvas.offsetHeight || 480;
       canvas.width  = Math.round(cssW * dpr);
       canvas.height = Math.round(cssH * dpr);
     }
@@ -2610,196 +2598,249 @@ window._jsReadyAt = performance.now();
     const ctx = canvas.getContext('2d');
     let t = 0;
 
-  function drawBoat(floatY) {
-    const W = Math.round(canvas.width / dpr);
-    const H = Math.round(canvas.height / dpr);
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.save();
-    ctx.scale(dpr, dpr);
-    const s  = W / 128;
-    const ox = W * 0.56;
-    const oy = H * 0.68 + floatY * s;
+    /* ── Deterministic star field ── */
+    const STARS = Array.from({length:72}, (_,i) => ({
+      x: Math.cos(i*2.4+0.6)*(55+(i*9)%130) + (i*17)%90-45,
+      y: Math.sin(i*1.618+1.1)*(38+(i*7)%90) - 68,
+      r: 0.35 + (i%4)*0.22,
+      b: 0.11 + (i%6)*0.085,
+    }));
 
-    // Isometric projection: x=right, y=up, z=depth(back)
-    function p3(x, y, z) {
-      return [
-        ox + (x - z) * 0.75 * s,
-        oy + (-y * 0.9 + (x + z) * 0.35) * s
-      ];
+    const LABELS = ['WASSERLAGE','BUNBO','HIMMELREICH','FINANZEN','PARTNER','MARKETING'];
+    const NCOLS  = ['#00c8ff','#00d4aa','#c9a84c','#c9a84c','#00c8ff','#00d4aa'];
+    const TILT   = 0.34; // orbit ring 3D-tilt: ry = rx * TILT
+
+    /* ── Node icons ── */
+    function drawIcon(idx, nx, ny, r) {
+      const c = NCOLS[idx]; const f = r * 0.52;
+      const lw = Math.max(0.5, 1.1*(r/8));
+      ctx.strokeStyle=c; ctx.lineWidth=lw; ctx.lineCap='round'; ctx.lineJoin='round';
+      ctx.shadowColor=c; ctx.shadowBlur=3*(r/8);
+      if (idx===0) {
+        ctx.beginPath(); ctx.moveTo(nx-f,ny-f*.2); ctx.bezierCurveTo(nx-f*.3,ny-f*.8,nx+f*.3,ny+f*.4,nx+f,ny-f*.2); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(nx-f,ny+f*.4); ctx.bezierCurveTo(nx-f*.3,ny-f*.2,nx+f*.3,ny+f,nx+f,ny+f*.4); ctx.stroke();
+      } else if (idx===1) {
+        ctx.beginPath(); ctx.moveTo(nx-f*.85,ny+f*.7); ctx.lineTo(nx-f*.85,ny+f*.05); ctx.lineTo(nx,ny-f*.8); ctx.lineTo(nx+f*.85,ny+f*.05); ctx.lineTo(nx+f*.85,ny+f*.7); ctx.closePath(); ctx.stroke();
+      } else if (idx===2) {
+        ctx.beginPath(); ctx.moveTo(nx,ny-f*.85); ctx.lineTo(nx,ny+f*.85); ctx.moveTo(nx-f*.5,ny-f*.25); ctx.lineTo(nx+f*.5,ny-f*.25); ctx.stroke();
+      } else if (idx===3) {
+        ctx.beginPath(); ctx.moveTo(nx-f*.85,ny+f*.75); ctx.lineTo(nx+f*.85,ny+f*.75); ctx.moveTo(nx-f*.6,ny+f*.75); ctx.lineTo(nx-f*.6,ny+f*.15); ctx.moveTo(nx,ny+f*.75); ctx.lineTo(nx,ny-f*.25); ctx.moveTo(nx+f*.6,ny+f*.75); ctx.lineTo(nx+f*.6,ny-f*.75); ctx.stroke();
+      } else if (idx===4) {
+        ctx.beginPath(); ctx.arc(nx-f*.5,ny,f*.38,0,Math.PI*2); ctx.stroke();
+        ctx.beginPath(); ctx.arc(nx+f*.5,ny,f*.38,0,Math.PI*2); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(nx-f*.12,ny); ctx.lineTo(nx+f*.12,ny); ctx.stroke();
+      } else {
+        ctx.beginPath(); ctx.moveTo(nx-f*.8,ny+f*.45); ctx.lineTo(nx-f*.2,ny+f*.45); ctx.lineTo(nx+f*.45,ny-f*.75); ctx.lineTo(nx+f*.45,ny+f*.75); ctx.lineTo(nx-f*.2,ny+f*.45); ctx.stroke();
+        ctx.beginPath(); ctx.arc(nx+f*.45,ny,f*.85,-0.6,0.6); ctx.stroke();
+      }
+      ctx.shadowBlur=0;
     }
 
-    function glow(col, b) { ctx.shadowColor = col; ctx.shadowBlur = b * s; }
-    function ng() { ctx.shadowBlur = 0; }
+    function drawScene() {
+      const W = Math.round(canvas.width / dpr);
+      const H = Math.round(canvas.height / dpr);
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.save(); ctx.scale(dpr, dpr);
 
-    // Draw filled+stroked polygon from 3D points
-    function face(pts, fill, stroke, lw) {
-      ctx.beginPath();
-      const q = p3(...pts[0]); ctx.moveTo(q[0], q[1]);
-      for (let i = 1; i < pts.length; i++) { const r = p3(...pts[i]); ctx.lineTo(r[0], r[1]); }
-      ctx.closePath();
-      if (fill)   { ctx.fillStyle = fill; ctx.fill(); }
-      if (stroke) { ctx.strokeStyle = stroke; ctx.lineWidth = lw * s; ctx.stroke(); }
+      const sc = W / 480;
+      const cx = W * 0.5, cy = H * 0.5;
+
+      /* BACKGROUND */
+      const bg = ctx.createRadialGradient(cx,cy*.72,0,cx,cy,W*.75);
+      bg.addColorStop(0,'rgba(5,20,44,.98)'); bg.addColorStop(.55,'rgba(2,10,24,.99)'); bg.addColorStop(1,'rgba(1,4,12,1)');
+      ctx.fillStyle=bg; ctx.fillRect(0,0,W,H);
+
+      /* STARS */
+      STARS.forEach(st => {
+        const sx=cx+st.x*sc, sy=cy+st.y*sc;
+        const op=Math.max(.07,st.b+.06*Math.sin(t*.65+st.x*.1));
+        ctx.beginPath(); ctx.arc(sx,sy,st.r*sc,0,Math.PI*2);
+        ctx.fillStyle=`rgba(205,225,255,${op.toFixed(2)})`; ctx.fill();
+      });
+
+      /* ORBIT RINGS — 3D-tilted ellipses */
+      [[76*sc,.65*sc,'rgba(0,200,255,.13)',[2*sc,5*sc]],
+       [137*sc,1.0*sc,'rgba(0,200,255,.26)',[4*sc,7*sc]],
+       [190*sc,.72*sc,'rgba(201,168,76,.16)',[2.5*sc,5.5*sc]]].forEach(([rx,lw,col,da])=>{
+        ctx.beginPath(); ctx.ellipse(cx,cy,rx,rx*TILT,0,0,Math.PI*2);
+        ctx.strokeStyle=col; ctx.lineWidth=lw; ctx.setLineDash(da); ctx.stroke(); ctx.setLineDash([]);
+      });
+
+      /* CENTRAL GLOW */
+      const gp=.5+.5*Math.sin(t*1.15);
+      const cg=ctx.createRadialGradient(cx,cy+4*sc,0,cx,cy,80*sc);
+      cg.addColorStop(0,`rgba(0,200,255,${(.09+.04*gp).toFixed(3)})`);
+      cg.addColorStop(.65,`rgba(0,200,255,${(.02+.01*gp).toFixed(3)})`);
+      cg.addColorStop(1,'transparent');
+      ctx.fillStyle=cg; ctx.beginPath(); ctx.ellipse(cx,cy,80*sc,80*sc*TILT,0,0,Math.PI*2); ctx.fill();
+
+      /* ORBIT NODES */
+      const oRx=137*sc, oRy=oRx*TILT, iRx=76*sc, iRy=iRx*TILT;
+      const nodeR=12.5*sc;
+      LABELS.forEach((lbl,i) => {
+        const ang=(i/6)*Math.PI*2-Math.PI*.5+t*.022;
+        const nx=cx+oRx*Math.cos(ang), ny=cy+oRy*Math.sin(ang);
+        const pulse=.5+.5*Math.sin(t*2+i*Math.PI/3);
+        const col=NCOLS[i];
+        /* dot on inner ring */
+        const ix=cx+iRx*Math.cos(ang), iy=cy+iRy*Math.sin(ang);
+        ctx.beginPath(); ctx.arc(ix,iy,2*sc,0,Math.PI*2);
+        ctx.fillStyle=col; ctx.globalAlpha=.35+.25*pulse; ctx.fill(); ctx.globalAlpha=1;
+        /* spoke */
+        ctx.beginPath(); ctx.moveTo(ix,iy); ctx.lineTo(nx,ny);
+        ctx.strokeStyle=col; ctx.lineWidth=.55*sc; ctx.globalAlpha=.16+.1*pulse; ctx.stroke(); ctx.globalAlpha=1;
+        /* outer glow ring */
+        ctx.beginPath(); ctx.arc(nx,ny,nodeR+(2.5+2*pulse)*sc,0,Math.PI*2);
+        ctx.strokeStyle=col; ctx.lineWidth=1.2*sc; ctx.globalAlpha=.14+.1*pulse; ctx.stroke(); ctx.globalAlpha=1;
+        /* node bg */
+        ctx.beginPath(); ctx.arc(nx,ny,nodeR,0,Math.PI*2);
+        ctx.fillStyle='rgba(2,10,26,.94)'; ctx.fill();
+        ctx.strokeStyle=col; ctx.lineWidth=1.25*sc;
+        ctx.shadowColor=col; ctx.shadowBlur=(4+3*pulse)*sc; ctx.stroke(); ctx.shadowBlur=0;
+        drawIcon(i,nx,ny,nodeR);
+        /* label */
+        const dx=nx-cx, dy=ny-cy, dl=Math.sqrt(dx*dx+dy*dy)||1;
+        const lx=nx+(dx/dl)*(nodeR+9*sc), ly=ny+(dy/dl)*(nodeR+9*sc);
+        ctx.fillStyle=col;
+        ctx.font=`700 ${Math.max(6,Math.round(7.5*sc))}px monospace`;
+        ctx.textAlign=dx>.1?'left':dx<-.1?'right':'center';
+        ctx.textBaseline=dy>.1?'top':dy<-.1?'bottom':'middle';
+        ctx.shadowColor=col; ctx.shadowBlur=3*sc;
+        ctx.fillText(lbl,lx,ly); ctx.shadowBlur=0;
+      });
+
+      /* BOAT */
+      const s=W/128;
+      const oy=cy+(22+Math.sin(t)*2.5)*sc;
+      drawBoat(s,cx,oy,t);
+
+      ctx.restore();
     }
 
-    // Draw a line between two 3D points
-    function ln(a, b, col, lw) {
-      const pa = p3(...a), pb = p3(...b);
-      ctx.beginPath(); ctx.moveTo(pa[0], pa[1]); ctx.lineTo(pb[0], pb[1]);
-      ctx.strokeStyle = col; ctx.lineWidth = lw * s; ctx.stroke();
+    function drawBoat(s, ox, oy, t) {
+      function p3(x,y,z){ return [ox+(x-z)*.75*s, oy+(-y*.9+(x+z)*.35)*s]; }
+      function glow(c,b){ ctx.shadowColor=c; ctx.shadowBlur=b*s; }
+      function ng(){ ctx.shadowBlur=0; }
+      function face(pts,fill,stroke,lw){
+        ctx.beginPath(); const q=p3(...pts[0]); ctx.moveTo(q[0],q[1]);
+        for(let i=1;i<pts.length;i++){const r=p3(...pts[i]);ctx.lineTo(r[0],r[1]);} ctx.closePath();
+        if(fill){ctx.fillStyle=fill;ctx.fill();}
+        if(stroke){ctx.strokeStyle=stroke;ctx.lineWidth=lw*s;ctx.stroke();}
+      }
+      function ln(a,b,col,lw){ const pa=p3(...a),pb=p3(...b); ctx.beginPath(); ctx.moveTo(pa[0],pa[1]); ctx.lineTo(pb[0],pb[1]); ctx.strokeStyle=col; ctx.lineWidth=lw*s; ctx.stroke(); }
+
+      const CY='rgba(0,200,255,',GL='rgba(201,168,76,',TL='rgba(0,212,170,',OR='rgba(255,110,50,',WH='rgba(255,240,200,';
+      const PX=26,PZ=22,PY0=-3,PY1=4,CX=19,CZ=20,CZO=1,CY0=4,CY1=32,MX=0,MZ=5,MY0=32,MY1=55;
+
+      /* Water ellipse */
+      glow(CY+'.18)',3);
+      const wc=p3(0,0,PZ*.5); ctx.beginPath(); ctx.ellipse(wc[0],wc[1],PX*1.35*s,PX*.28*s,0,0,Math.PI*2);
+      ctx.strokeStyle=CY+'.10)'; ctx.lineWidth=.45*s; ctx.stroke(); ng();
+
+      /* Pontoon back faces */
+      glow(CY+'.18)',3);
+      face([[-PX,PY0,PZ],[PX,PY0,PZ],[PX,PY1,PZ],[-PX,PY1,PZ]],CY+'.03)',CY+'.24)',.62);
+      face([[-PX,PY0,0],[-PX,PY0,PZ],[-PX,PY1,PZ],[-PX,PY1,0]],CY+'.02)',CY+'.18)',.52);
+      face([[-PX,PY0,0],[PX,PY0,0],[PX,PY0,PZ],[-PX,PY0,PZ]],CY+'.02)',CY+'.11)',.43);
+      glow(CY+'.33)',4);
+      face([[PX,PY0,0],[PX,PY0,PZ],[PX,PY1,PZ],[PX,PY1,0]],CY+'.04)',CY+'.38)',.82);
+      glow(CY+'.52)',6);
+      face([[-PX,PY0,0],[PX,PY0,0],[PX,PY1,0],[-PX,PY1,0]],CY+'.06)',CY+'.66)',1.0);
+      glow(CY+'.33)',4);
+      face([[-PX,PY1,0],[PX,PY1,0],[PX,PY1,PZ],[-PX,PY1,PZ]],CY+'.05)',CY+'.44)',.82);
+      /* Deck grid */
+      ng();
+      for(let xi=-16;xi<=16;xi+=11){ln([xi,PY1,0],[xi,PY1,PZ],CY+'.11)',.38);ln([xi,PY0,0],[xi,PY1,0],CY+'.08)',.33);}
+      for(let zi=5;zi<PZ;zi+=7)ln([-PX,PY1,zi],[PX,PY1,zi],CY+'.11)',.38);
+
+      /* Railing */
+      const RL=PY1+4;
+      glow(CY+'.26)',3);
+      ln([-PX,RL,0],[-CX-1,RL,0],CY+'.30)',.52); ln([CX+1,RL,0],[PX,RL,0],CY+'.30)',.52);
+      ln([PX,RL,0],[PX,RL,PZ],CY+'.20)',.44); ln([-PX,RL,PZ],[PX,RL,PZ],CY+'.16)',.38);
+      [-PX,PX].forEach(xi=>ln([xi,PY1,0],[xi,RL,0],CY+'.26)',.52));
+      [-20,0,20].forEach(xi=>{if(xi<-CX||xi>CX)ln([xi,PY1,0],[xi,RL,0],CY+'.17)',.4);});
+      ln([-PX,PY1,PZ],[-PX,RL,PZ],CY+'.17)',.4); ln([PX,PY1,PZ],[PX,RL,PZ],CY+'.20)',.4);
+      ng();
+
+      /* Cabin */
+      glow(CY+'.2)',3);
+      face([[-CX,CY0,CZO+CZ],[CX,CY0,CZO+CZ],[CX,CY1,CZO+CZ],[-CX,CY1,CZO+CZ]],CY+'.03)',CY+'.23)',.62);
+      face([[-CX,CY0,CZO],[-CX,CY0,CZO+CZ],[-CX,CY1,CZO+CZ],[-CX,CY1,CZO]],CY+'.03)',CY+'.24)',.62);
+      glow(CY+'.38)',5);
+      face([[CX,CY0,CZO],[CX,CY0,CZO+CZ],[CX,CY1,CZO+CZ],[CX,CY1,CZO]],CY+'.07)',CY+'.46)',.82);
+      ng();
+      for(let yi=CY0+9;yi<CY1;yi+=9)ln([CX,yi,CZO],[CX,yi,CZO+CZ],CY+'.18)',.38);
+      for(let zi=CZO+5;zi<CZO+CZ;zi+=5)ln([CX,CY0,zi],[CX,CY1,zi],CY+'.14)',.35);
+      /* Front face gold */
+      glow(GL+'.52)',8);
+      face([[-CX,CY0,CZO],[CX,CY0,CZO],[CX,CY1,CZO],[-CX,CY1,CZO]],GL+'.05)',GL+'.72)',1.05);
+      ng();
+      /* Windows with warm interior glow */
+      [[-9,13],[9,13],[-9,23],[9,23]].forEach(([wx,wy])=>{
+        glow(WH+'.38)',4);
+        face([[wx-4.5,wy-3.5,CZO],[wx+4.5,wy-3.5,CZO],[wx+4.5,wy+3,CZO],[wx-4.5,wy+3,CZO]],WH+'.09)',null,0);
+        glow(CY+'.48)',3);
+        face([[wx-4.5,wy-3.5,CZO],[wx+4.5,wy-3.5,CZO],[wx+4.5,wy+3,CZO],[wx-4.5,wy+3,CZO]],null,CY+'.52)',.62);
+        ng(); ln([wx,wy-3.5,CZO],[wx,wy+3,CZO],CY+'.22)',.28); ln([wx-4.5,wy-.3,CZO],[wx+4.5,wy-.3,CZO],CY+'.22)',.28);
+      });
+      /* Roof with solar grid */
+      glow(GL+'.42)',6);
+      face([[-CX,CY1,CZO],[CX,CY1,CZO],[CX,CY1,CZO+CZ],[-CX,CY1,CZO+CZ]],GL+'.07)',GL+'.62)',.95);
+      ng();
+      for(let xi=-15;xi<=15;xi+=10)ln([xi,CY1+.1,CZO+2],[xi,CY1+.1,CZO+CZ-2],GL+'.25)',.36);
+      for(let zi=CZO+3;zi<CZO+CZ;zi+=6)ln([-CX+2,CY1+.1,zi],[CX-2,CY1+.1,zi],GL+'.2)',.32);
+      ln([0,CY1,CZO],[0,CY1,CZO+CZ],GL+'.30)',.42);
+      /* Upper deck rail */
+      glow(CY+'.18)',2);
+      ln([-CX,CY1+3,CZO],[CX,CY1+3,CZO],CY+'.20)',.38); ln([-CX,CY1+3,CZO+CZ],[CX,CY1+3,CZO+CZ],CY+'.14)',.34);
+      [[-CX,CZO],[CX,CZO]].forEach(([xi,zi])=>ln([xi,CY1,zi],[xi,CY1+3,zi],CY+'.16)',.36));
+      ng();
+
+      /* Mast */
+      glow(TL+'.62)',5); ln([MX,MY0,MZ],[MX,MY1,MZ],TL+'.78)',.82);
+      ln([MX-7,MY1-9,MZ],[MX+7,MY1-9,MZ],TL+'.42)',.55);
+      glow(TL+'.28)',2);
+      ln([MX,MY0,MZ],[MX-4,MY0-8,MZ],TL+'.20)',.36); ln([MX,MY0,MZ],[MX+4,MY0-8,MZ],TL+'.20)',.36); ng();
+      /* Radar dome */
+      const radP=p3(MX,MY1-5,MZ);
+      ctx.beginPath(); ctx.arc(radP[0],radP[1],3.5*s,0,Math.PI*2);
+      ctx.strokeStyle=TL+'.5)'; ctx.lineWidth=.6*s; ctx.shadowColor=TL+'.7)'; ctx.shadowBlur=4*s; ctx.stroke(); ng();
+      /* Flag */
+      const fTip=p3(MX+10,MY1-4,MZ),fTop=p3(MX,MY1,MZ),fBot=p3(MX,MY1-9,MZ);
+      ctx.beginPath(); ctx.moveTo(fTop[0],fTop[1]); ctx.lineTo(fTip[0],fTip[1]); ctx.lineTo(fBot[0],fBot[1]); ctx.closePath();
+      ctx.fillStyle=GL+'.70)'; glow(GL+'.78)',4); ctx.fill();
+      ctx.strokeStyle=GL+'.84)'; ctx.lineWidth=.62*s; ctx.stroke(); ng();
+      /* Mast tip pulse */
+      const pa=.5+.5*Math.sin(t*3.2), mt=p3(MX,MY1,MZ);
+      ctx.beginPath(); ctx.arc(mt[0],mt[1],1.9*s,0,Math.PI*2);
+      ctx.fillStyle=TL+pa+')'; glow(TL+'.9)',8); ctx.fill(); ng();
+      /* Life preserver */
+      const lpc=p3(PX+1.5,PY1+5,PZ*.45), lr=3.5*s;
+      glow(OR+'.58)',5);
+      ctx.beginPath(); ctx.arc(lpc[0],lpc[1],lr,0,Math.PI*2); ctx.strokeStyle=OR+'.17)'; ctx.lineWidth=3.5*s; ctx.stroke();
+      [0,Math.PI*.5,Math.PI,Math.PI*1.5].forEach((sa,k)=>{ ctx.beginPath(); ctx.arc(lpc[0],lpc[1],lr,sa,sa+Math.PI*.44); ctx.strokeStyle=k%2===0?OR+'.74)':'rgba(255,255,255,.38)'; ctx.lineWidth=3.5*s; ctx.stroke(); }); ng();
+      /* Anchor chain */
+      const bc=p3(-PX,PY0,0),bc2=p3(-PX-3,PY0-7,0);
+      ctx.beginPath(); ctx.moveTo(bc[0],bc[1]); ctx.lineTo(bc2[0],bc2[1]);
+      ctx.setLineDash([1.5*s,2*s]); ctx.strokeStyle=CY+'.16)'; ctx.lineWidth=.45*s; ctx.stroke(); ctx.setLineDash([]);
     }
 
-    const CY = 'rgba(0,200,255,';   // cyan
-    const GL = 'rgba(201,168,76,';  // gold
-    const TL = 'rgba(0,212,170,';   // teal
-    const OR = 'rgba(255,110,50,';  // orange
+    function animate() {
+      t += 0.018;
+      drawScene();
+      requestAnimationFrame(animate);
+    }
 
-    // ── DIMENSIONS ─────────────────────────────────────────────────
-    const PX=25,PZ=21,PY0=-3,PY1=4;        // pontoon half-width, depth, y range
-    const CX=18,CZ=19,CZO=1,CY0=4,CY1=30; // cabin
-    const MX=0, MZ=5, MY0=30,MY1=52;       // mast
-
-    // ── WATERLINE ──────────────────────────────────────────────────
-    glow(CY+'0.3)', 4);
-    ln([-PX-3,0,-2],[PX+3,0,-2], CY+'0.16)', 0.8);
-    ng();
-
-    // ── PONTOON — back faces first (painter's algorithm) ──────────
-    glow(CY+'0.2)', 3);
-    face([[-PX,PY0,PZ],[PX,PY0,PZ],[PX,PY1,PZ],[-PX,PY1,PZ]], CY+'0.03)', CY+'0.28)', 0.7);
-    face([[-PX,PY0,0],[-PX,PY0,PZ],[-PX,PY1,PZ],[-PX,PY1,0]], CY+'0.02)', CY+'0.20)', 0.6);
-    face([[-PX,PY0,0],[PX,PY0,0],[PX,PY0,PZ],[-PX,PY0,PZ]], CY+'0.02)', CY+'0.14)', 0.5);
-
-    glow(CY+'0.4)', 4);
-    face([[PX,PY0,0],[PX,PY0,PZ],[PX,PY1,PZ],[PX,PY1,0]], CY+'0.04)', CY+'0.44)', 0.9);
-
-    glow(CY+'0.6)', 6);
-    face([[-PX,PY0,0],[PX,PY0,0],[PX,PY1,0],[-PX,PY1,0]], CY+'0.06)', CY+'0.72)', 1.1);
-
-    glow(CY+'0.4)', 4);
-    face([[-PX,PY1,0],[PX,PY1,0],[PX,PY1,PZ],[-PX,PY1,PZ]], CY+'0.05)', CY+'0.50)', 0.9);
-
-    // Pontoon deck grid lines
-    ng();
-    for (let xi=-15;xi<=15;xi+=10) ln([xi,PY1,0],[xi,PY1,PZ], CY+'0.13)', 0.45);
-    for (let zi=5;zi<PZ;zi+=7)    ln([-PX,PY1,zi],[PX,PY1,zi], CY+'0.13)', 0.45);
-
-    // Pontoon vertical hull grid lines (front face)
-    for (let xi=-15;xi<=15;xi+=10) ln([xi,PY0,0],[xi,PY1,0], CY+'0.10)', 0.4);
-
-    // ── RAILING (deck edges, skip cabin zone) ──────────────────────
-    const RL = PY1 + 3.5;
-    glow(CY+'0.3)', 3);
-    // Front top rail (left portion and right portion)
-    ln([-PX,RL,0],[-CX-1,RL,0], CY+'0.35)', 0.6);
-    ln([CX+1,RL,0],[PX,RL,0],   CY+'0.35)', 0.6);
-    // Right side top rail
-    ln([PX,RL,0],[PX,RL,PZ],    CY+'0.25)', 0.5);
-    // Corner posts
-    ln([-PX,PY1,0],[-PX,RL,0],  CY+'0.32)', 0.6);
-    ln([PX,PY1,0],[PX,RL,0],    CY+'0.32)', 0.6);
-    // Mid posts (front, outside cabin)
-    [-18,18].forEach(xi => {
-      if(xi < -CX || xi > CX) ln([xi,PY1,0],[xi,RL,0], CY+'0.22)', 0.5);
-    });
-    ng();
-
-    // ── CABIN — back-to-front ──────────────────────────────────────
-    glow(CY+'0.22)', 3);
-    face([[-CX,CY0,CZO+CZ],[CX,CY0,CZO+CZ],[CX,CY1,CZO+CZ],[-CX,CY1,CZO+CZ]],
-         CY+'0.03)', CY+'0.26)', 0.7);
-    face([[-CX,CY0,CZO],[-CX,CY0,CZO+CZ],[-CX,CY1,CZO+CZ],[-CX,CY1,CZO]],
-         CY+'0.03)', CY+'0.28)', 0.7);
-
-    // Cabin right glass face + window grid
-    glow(CY+'0.45)', 5);
-    face([[CX,CY0,CZO],[CX,CY0,CZO+CZ],[CX,CY1,CZO+CZ],[CX,CY1,CZO]],
-         CY+'0.06)', CY+'0.50)', 0.9);
-    ng();
-    for (let yi=CY0+8; yi<CY1; yi+=8)   ln([CX,yi,CZO],[CX,yi,CZO+CZ], CY+'0.22)', 0.45);
-    for (let zi=CZO+5; zi<CZO+CZ; zi+=5) ln([CX,CY0,zi],[CX,CY1,zi],   CY+'0.18)', 0.4);
-
-    // Cabin front face (gold)
-    glow(GL+'0.6)', 8);
-    face([[-CX,CY0,CZO],[CX,CY0,CZO],[CX,CY1,CZO],[-CX,CY1,CZO]],
-         GL+'0.06)', GL+'0.78)', 1.2);
-
-    // Windows on front face (2 columns × 2 rows = 4 panes)
-    [[-8,13],[8,13],[-8,22],[8,22]].forEach(([wx,wy]) => {
-      glow(CY+'0.5)', 4);
-      face([[wx-5,wy-4,CZO],[wx+5,wy-4,CZO],[wx+5,wy+3,CZO],[wx-5,wy+3,CZO]],
-           CY+'0.08)', CY+'0.52)', 0.7);
-    });
-
-    // Cabin roof (gold accent)
-    ng();
-    glow(GL+'0.5)', 6);
-    face([[-CX,CY1,CZO],[CX,CY1,CZO],[CX,CY1,CZO+CZ],[-CX,CY1,CZO+CZ]],
-         GL+'0.09)', GL+'0.70)', 1.1);
-    // Roof ridge line
-    ln([0,CY1,CZO],[0,CY1,CZO+CZ], GL+'0.40)', 0.5);
-    ng();
-
-    // ── MAST ───────────────────────────────────────────────────────
-    glow(TL+'0.7)', 5);
-    ln([MX,MY0,MZ],[MX,MY1,MZ], TL+'0.82)', 0.9);
-    // Horizontal yardarm
-    ln([MX-6,MY1-8,MZ],[MX+6,MY1-8,MZ], TL+'0.50)', 0.6);
-
-    // Wave Bite flag (triangle)
-    const fTip = p3(MX+9, MY1-4, MZ);
-    const fTop = p3(MX,   MY1,   MZ);
-    const fBot = p3(MX,   MY1-8, MZ);
-    ctx.beginPath();
-    ctx.moveTo(fTop[0],fTop[1]);
-    ctx.lineTo(fTip[0],fTip[1]);
-    ctx.lineTo(fBot[0],fBot[1]);
-    ctx.closePath();
-    ctx.fillStyle = GL+'0.74)'; glow(GL+'0.8)',4); ctx.fill();
-    ctx.strokeStyle = GL+'0.88)'; ctx.lineWidth = 0.7*s; ctx.stroke();
-
-    // Pulsing radar dot at mast tip
-    const pa = 0.5 + 0.5 * Math.sin(t * 3);
-    const mt = p3(MX, MY1, MZ);
-    ctx.beginPath(); ctx.arc(mt[0], mt[1], 1.8*s, 0, Math.PI*2);
-    ctx.fillStyle = TL+pa+')'; glow(TL+'0.9)',7); ctx.fill();
-
-    // ── LIFE PRESERVER ─────────────────────────────────────────────
-    ng();
-    const lpc = p3(PX+1, PY1+5, PZ*0.5);
-    const lr  = 3.2 * s;
-    glow(OR+'0.65)', 5);
-    ctx.beginPath(); ctx.arc(lpc[0], lpc[1], lr, 0, Math.PI*2);
-    ctx.strokeStyle = OR+'0.20)'; ctx.lineWidth = 3.2*s; ctx.stroke();
-    [0, Math.PI*0.5, Math.PI, Math.PI*1.5].forEach((sa, i) => {
-      ctx.beginPath(); ctx.arc(lpc[0], lpc[1], lr, sa, sa+Math.PI*0.44);
-      ctx.strokeStyle = i%2===0 ? OR+'0.78)' : 'rgba(255,255,255,0.42)';
-      ctx.lineWidth = 3.2*s; ctx.stroke();
-    });
-    ng();
-    ctx.restore();
+    let _rt;
+    window.addEventListener('resize', ()=>{clearTimeout(_rt);_rt=setTimeout(setSize,180);});
+    animate();
   }
 
-  function animate() {
-    t += 0.025;
-    const floatY = Math.sin(t) * 2.8;
-    drawBoat(floatY);
-    requestAnimationFrame(animate);
-  }
-
-  // Handle resize: re-scale canvas, keep animation running
-  let _resizeTimer;
-  window.addEventListener('resize', function(){
-    clearTimeout(_resizeTimer);
-    _resizeTimer = setTimeout(setSize, 200);
-  });
-
-  animate();
-  }
-  // Ensure layout is settled before first render
-  if (document.readyState === 'complete') {
+  if (document.readyState==='complete') {
     requestAnimationFrame(initBoatCanvas);
   } else {
-    window.addEventListener('load', function(){ requestAnimationFrame(initBoatCanvas); }, {once: true});
+    window.addEventListener('load', ()=>requestAnimationFrame(initBoatCanvas), {once:true});
   }
 })();
 
