@@ -24,17 +24,30 @@
   *{margin:0;padding:0;box-sizing:border-box}
   html,body{width:100%;overflow-x:hidden;background:var(--void);color:var(--text);font-family:'Segoe UI',system-ui,sans-serif;font-size:14px}
 
-  /* BOOT SEQUENCE */
-  #boot{position:fixed;inset:0;background:var(--void);z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;animation:bootDismiss 1.5s ease forwards;animation-delay:1s}
-@keyframes bootDismiss{0%{opacity:1;visibility:visible}80%{opacity:0;visibility:visible}100%{opacity:0;visibility:hidden;pointer-events:none;display:none}}
+  /* BOOT SEQUENCE — PREMIUM */
+  #boot{position:fixed;inset:0;background:rgba(2,8,16,0.97);z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;animation:bootDismiss 1.4s cubic-bezier(.4,0,1,1) forwards;animation-delay:4.4s}
+  #boot::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,200,255,0.018) 3px,rgba(0,200,255,0.018) 4px);pointer-events:none;z-index:0}
+  #boot::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% 50%,rgba(0,200,255,0.07) 0%,rgba(0,40,80,0.04) 50%,transparent 75%);pointer-events:none;z-index:0}
+  @keyframes bootDismiss{0%{opacity:1;visibility:visible}85%{opacity:0;visibility:visible}100%{opacity:0;visibility:hidden;pointer-events:none}}
   #boot.fade{opacity:0;pointer-events:none;visibility:hidden}
-  .boot-logo{font-size:3rem;font-weight:900;letter-spacing:.25em;color:var(--blue);text-shadow:var(--glow-blue)}
-  .boot-sub{font-size:.9rem;letter-spacing:.3em;color:var(--gold);margin-top:.5rem}
-  .boot-bar-wrap{width:320px;height:2px;background:rgba(0,200,255,0.1);margin-top:2rem;border-radius:2px;overflow:hidden}
-  .boot-bar{height:100%;width:0;background:linear-gradient(90deg,var(--blue),var(--teal));animation:bootfill 2.6s ease-out forwards}
-  .boot-lines{margin-top:1.5rem;font-size:.7rem;color:var(--text-dim);letter-spacing:.05em;line-height:1.8;text-align:left}
+  .boot-corner{position:absolute;width:44px;height:44px;border-color:rgba(0,200,255,0.45);border-style:solid;border-width:0;z-index:1}
+  .boot-corner.tl{top:28px;left:28px;border-top-width:2px;border-left-width:2px;animation:bootCorner .6s ease .15s both}
+  .boot-corner.tr{top:28px;right:28px;border-top-width:2px;border-right-width:2px;animation:bootCorner .6s ease .25s both}
+  .boot-corner.bl{bottom:28px;left:28px;border-bottom-width:2px;border-left-width:2px;animation:bootCorner .6s ease .3s both}
+  .boot-corner.br{bottom:28px;right:28px;border-bottom-width:2px;border-right-width:2px;animation:bootCorner .6s ease .2s both}
+  @keyframes bootCorner{from{opacity:0;transform:scale(0.7)}to{opacity:1;transform:scale(1)}}
+  .boot-inner{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center}
+  .boot-logo{font-size:3.4rem;font-weight:900;letter-spacing:.32em;color:var(--blue);text-shadow:0 0 24px rgba(0,200,255,0.95),0 0 55px rgba(0,200,255,0.55),0 0 110px rgba(0,200,255,0.22);animation:bootLogoPulse 2s ease-in-out infinite,showline .5s ease .05s both}
+  @keyframes bootLogoPulse{0%,100%{text-shadow:0 0 24px rgba(0,200,255,0.95),0 0 55px rgba(0,200,255,0.55)}55%{text-shadow:0 0 36px rgba(0,200,255,1),0 0 80px rgba(0,200,255,0.75),0 0 140px rgba(0,200,255,0.3)}}
+  .boot-sub{font-size:.8rem;letter-spacing:.32em;color:var(--gold);margin-top:.55rem;text-shadow:0 0 14px rgba(201,168,76,0.75);opacity:0;animation:showline .45s ease .35s forwards}
+  .boot-divider{width:220px;height:1px;background:linear-gradient(90deg,transparent,rgba(0,200,255,0.45),rgba(201,168,76,0.45),transparent);margin:.85rem 0 .6rem;opacity:0;animation:showline .4s ease .55s forwards}
+  .boot-bar-wrap{width:380px;height:4px;background:rgba(0,200,255,0.07);border-radius:2px;overflow:hidden;box-shadow:0 0 14px rgba(0,200,255,0.12),inset 0 0 4px rgba(0,0,0,0.5);opacity:0;animation:showline .4s ease .75s forwards}
+  .boot-bar{height:100%;width:0;background:linear-gradient(90deg,rgba(0,150,200,0.9),rgba(0,200,255,1),rgba(0,220,180,0.9),rgba(201,168,76,0.6));animation:bootfill 3.8s cubic-bezier(.06,0,.15,1) .75s forwards;box-shadow:0 0 10px rgba(0,200,255,0.9)}
+  .boot-lines{margin-top:1.1rem;font-size:.68rem;color:var(--text-dim);letter-spacing:.07em;line-height:2;text-align:left;min-width:340px}
+  .boot-status{margin-top:.9rem;font-size:.6rem;letter-spacing:.18em;color:rgba(0,200,255,0.5);opacity:0;animation:showline .5s ease 4.0s forwards}
   @keyframes bootfill{to{width:100%}}
-  .boot-line{opacity:0;animation:showline 0.3s ease forwards}
+  .boot-line{opacity:0;animation:showline 0.28s ease forwards}
+  @keyframes showline{from{opacity:0;transform:translateX(-8px)}to{opacity:1;transform:translateX(0)}}
 
   /* HEX GRID */
   .hex-bg{position:fixed;top:0;left:0;width:100%;height:100%;opacity:.04;pointer-events:none;z-index:0;
@@ -1314,11 +1327,17 @@
 
 
 <!-- BOOT -->
-<div id="boot" style="display:none">
-  <div class="boot-logo glitch">WAVE BITE</div>
-  <div class="boot-sub">CEO COMMAND CENTER // JARVIS v3.0</div>
-  <div class="boot-bar-wrap"><div class="boot-bar"></div></div>
-  <div class="boot-lines" id="boot-lines"></div>
+<div id="boot">
+  <div class="boot-corner tl"></div><div class="boot-corner tr"></div>
+  <div class="boot-corner bl"></div><div class="boot-corner br"></div>
+  <div class="boot-inner">
+    <div class="boot-logo glitch">WAVE BITE</div>
+    <div class="boot-sub">CEO COMMAND CENTER &nbsp;//&nbsp; JARVIS v3.0</div>
+    <div class="boot-divider"></div>
+    <div class="boot-bar-wrap"><div class="boot-bar"></div></div>
+    <div class="boot-lines" id="boot-lines"></div>
+    <div class="boot-status" id="boot-status">◆ &nbsp;SYSTEM BEREIT</div>
+  </div>
 </div>
 
 <!-- OCEAN + SCANLINE -->
@@ -3979,141 +3998,166 @@ function drawWireframeBoat(ctx, cx, cy, sc, t) {
     ctx.lineTo(x2*sc, y2*sc);
     ctx.strokeStyle = `rgba(${r},${g},${b},${a})`;
     ctx.lineWidth = lw * sc;
-    if (blur > 0) { ctx.shadowColor = `rgba(${r},${g},${b},0.9)`; ctx.shadowBlur = blur * sc; }
+    if (blur > 0) { ctx.shadowColor = `rgba(${r},${g},${b},0.98)`; ctx.shadowBlur = blur * sc; }
     ctx.stroke(); ctx.shadowBlur = 0;
   }
 
-  // 3D depth offset (front→back perspective vector)
   const DDX = 34, DDY = -13;
-
-  // Geometry (boat centered at origin; y negative = up)
   const CW=54, CH=44, RO=7, RT=6, HW=63, HD=21;
   const RoTY=-(CH+RT), DeckY=0, HBotY=HD;
   const FL=-CW, FR=CW, HL=-HW, HR=HW;
   const RoFL=FL-RO, RoFR=FR+RO;
-  // Back face (depth offset applied)
   const BL=FL+DDX, BR=FR+DDX;
   const BHL=HL+DDX, BHR=HR+DDX;
   const BRoFL=RoFL+DDX, BRoFR=RoFR+DDX;
   const BCT=RoTY+DDY, BDeck=DeckY+DDY, BHBot=HBotY+DDY;
 
   // — BACK FACES (dim) —
-  ln(BL,BCT, BR,BCT, 0,200,255,0.17,0.5,0); ln(BR,BCT,BR,BDeck,0,200,255,0.17,0.5,0);
-  ln(BR,BDeck,BL,BDeck,0,200,255,0.17,0.5,0); ln(BL,BDeck,BL,BCT,0,200,255,0.17,0.5,0);
-  ln(BRoFL,BCT,BRoFR,BCT,201,168,76,0.14,0.6,0);
-  ln(BHL,BDeck,BHR,BDeck,0,200,255,0.14,0.5,0); ln(BHR,BDeck,BHR,BHBot,0,200,255,0.14,0.5,0);
-  ln(BHR,BHBot,BHL,BHBot,0,200,255,0.14,0.5,0); ln(BHL,BHBot,BHL,BDeck,0,200,255,0.14,0.5,0);
+  ln(BL,BCT, BR,BCT, 0,200,255,0.22,0.5,0); ln(BR,BCT,BR,BDeck,0,200,255,0.22,0.5,0);
+  ln(BR,BDeck,BL,BDeck,0,200,255,0.22,0.5,0); ln(BL,BDeck,BL,BCT,0,200,255,0.22,0.5,0);
+  ln(BRoFL,BCT,BRoFR,BCT,201,168,76,0.18,0.6,0);
+  ln(BHL,BDeck,BHR,BDeck,0,200,255,0.18,0.5,0); ln(BHR,BDeck,BHR,BHBot,0,200,255,0.18,0.5,0);
+  ln(BHR,BHBot,BHL,BHBot,0,200,255,0.18,0.5,0); ln(BHL,BHBot,BHL,BDeck,0,200,255,0.18,0.5,0);
 
   // — DEPTH EDGES —
-  ln(FL,RoTY,BL,BCT,0,200,255,0.17,0.45,0); ln(FR,RoTY,BR,BCT,0,200,255,0.17,0.45,0);
-  ln(FR,DeckY,BR,BDeck,0,200,255,0.17,0.45,0); ln(FL,DeckY,BL,BDeck,0,200,255,0.17,0.45,0);
-  ln(RoFL,RoTY,BRoFL,BCT,201,168,76,0.14,0.4,0); ln(RoFR,RoTY,BRoFR,BCT,201,168,76,0.14,0.4,0);
-  ln(HL,DeckY,BHL,BDeck,0,200,255,0.14,0.4,0); ln(HR,DeckY,BHR,BDeck,0,200,255,0.14,0.4,0);
-  ln(HR,HBotY,BHR,BHBot,0,200,255,0.14,0.4,0); ln(HL,HBotY,BHL,BHBot,0,200,255,0.14,0.4,0);
+  ln(FL,RoTY,BL,BCT,0,200,255,0.22,0.5,0); ln(FR,RoTY,BR,BCT,0,200,255,0.22,0.5,0);
+  ln(FR,DeckY,BR,BDeck,0,200,255,0.22,0.5,0); ln(FL,DeckY,BL,BDeck,0,200,255,0.22,0.5,0);
+  ln(RoFL,RoTY,BRoFL,BCT,201,168,76,0.18,0.4,0); ln(RoFR,RoTY,BRoFR,BCT,201,168,76,0.18,0.4,0);
+  ln(HL,DeckY,BHL,BDeck,0,200,255,0.18,0.4,0); ln(HR,DeckY,BHR,BDeck,0,200,255,0.18,0.4,0);
+  ln(HR,HBotY,BHR,BHBot,0,200,255,0.18,0.4,0); ln(HL,HBotY,BHL,BHBot,0,200,255,0.18,0.4,0);
 
   // — RIGHT VISIBLE SIDE FACE —
-  ln(FR,RoTY,BR,BCT,0,200,255,0.45,0.8,5); ln(FR,DeckY,BR,BDeck,0,200,255,0.45,0.8,5);
-  ln(RoFR,RoTY,BRoFR,BCT,201,168,76,0.4,0.7,6);
-  ln(HR,DeckY,BHR,BDeck,0,200,255,0.38,0.7,4); ln(HR,HBotY,BHR,BHBot,0,200,255,0.35,0.7,4);
+  ln(FR,RoTY,BR,BCT,0,200,255,0.60,0.9,9); ln(FR,DeckY,BR,BDeck,0,200,255,0.60,0.9,9);
+  ln(RoFR,RoTY,BRoFR,BCT,201,168,76,0.54,0.8,10);
+  ln(HR,DeckY,BHR,BDeck,0,200,255,0.50,0.8,6); ln(HR,HBotY,BHR,BHBot,0,200,255,0.46,0.8,6);
 
   // — ROOF PLANE (top visible) —
   ctx.beginPath();
   ctx.moveTo(RoFL*sc,RoTY*sc); ctx.lineTo(RoFR*sc,RoTY*sc);
   ctx.lineTo(BRoFR*sc,BCT*sc); ctx.lineTo(BRoFL*sc,BCT*sc); ctx.closePath();
-  ctx.strokeStyle='rgba(201,168,76,0.35)'; ctx.lineWidth=0.7*sc;
-  ctx.shadowColor='rgba(201,168,76,0.8)'; ctx.shadowBlur=10*sc; ctx.stroke(); ctx.shadowBlur=0;
-  ctx.fillStyle='rgba(201,168,76,0.05)'; ctx.fill();
+  ctx.strokeStyle='rgba(201,168,76,0.48)'; ctx.lineWidth=0.9*sc;
+  ctx.shadowColor='rgba(201,168,76,0.95)'; ctx.shadowBlur=16*sc; ctx.stroke(); ctx.shadowBlur=0;
+  ctx.fillStyle='rgba(201,168,76,0.08)'; ctx.fill();
 
-  // — FRONT CABIN FACE (bright) —
+  // — FRONT CABIN FACE — glow halo pass first
   ctx.beginPath();
   ctx.moveTo(FL*sc,RoTY*sc); ctx.lineTo(FR*sc,RoTY*sc);
   ctx.lineTo(FR*sc,DeckY*sc); ctx.lineTo(FL*sc,DeckY*sc); ctx.closePath();
-  ctx.strokeStyle='rgba(0,200,255,0.88)'; ctx.lineWidth=1.3*sc;
-  ctx.shadowColor='rgba(0,200,255,1)'; ctx.shadowBlur=14*sc; ctx.stroke(); ctx.shadowBlur=0;
+  ctx.strokeStyle='rgba(0,200,255,0.28)'; ctx.lineWidth=5*sc;
+  ctx.shadowColor='rgba(0,200,255,1)'; ctx.shadowBlur=32*sc; ctx.stroke(); ctx.shadowBlur=0;
+  // crisp edge pass
+  ctx.beginPath();
+  ctx.moveTo(FL*sc,RoTY*sc); ctx.lineTo(FR*sc,RoTY*sc);
+  ctx.lineTo(FR*sc,DeckY*sc); ctx.lineTo(FL*sc,DeckY*sc); ctx.closePath();
+  ctx.strokeStyle='rgba(0,200,255,1.0)'; ctx.lineWidth=1.4*sc;
+  ctx.shadowColor='rgba(0,200,255,1)'; ctx.shadowBlur=20*sc; ctx.stroke(); ctx.shadowBlur=0;
 
-  // — ROOF FRONT EDGE —
-  ln(RoFL,RoTY,RoFR,RoTY,201,168,76,0.82,1.1,16);
-  ln(RoFL,RoTY,FL,RoTY+RT,201,168,76,0.38,0.7,5);
-  ln(RoFR,RoTY,FR,RoTY+RT,201,168,76,0.38,0.7,5);
-  ln(FL,RoTY+RT,FR,RoTY+RT,0,200,255,0.3,0.5,3);
+  // — ROOF FRONT EDGE — glow halo + crisp
+  ln(RoFL,RoTY,RoFR,RoTY,201,168,76,0.38,4,24);
+  ln(RoFL,RoTY,RoFR,RoTY,201,168,76,1.0,1.2,22);
+  ln(RoFL,RoTY,FL,RoTY+RT,201,168,76,0.50,0.8,7);
+  ln(RoFR,RoTY,FR,RoTY+RT,201,168,76,0.50,0.8,7);
+  ln(FL,RoTY+RT,FR,RoTY+RT,0,200,255,0.40,0.6,5);
 
-  // — HULL FRONT —
+  // — HULL FRONT — glow halo + crisp
   ctx.beginPath();
   ctx.moveTo(HL*sc,DeckY*sc); ctx.lineTo(HR*sc,DeckY*sc);
   ctx.lineTo(HR*sc,HBotY*sc); ctx.lineTo(HL*sc,HBotY*sc); ctx.closePath();
-  ctx.strokeStyle='rgba(0,200,255,0.7)'; ctx.lineWidth=1.1*sc;
-  ctx.shadowColor='rgba(0,200,255,0.9)'; ctx.shadowBlur=8*sc; ctx.stroke(); ctx.shadowBlur=0;
+  ctx.strokeStyle='rgba(0,200,255,0.28)'; ctx.lineWidth=4.5*sc;
+  ctx.shadowColor='rgba(0,200,255,1)'; ctx.shadowBlur=22*sc; ctx.stroke(); ctx.shadowBlur=0;
+  ctx.beginPath();
+  ctx.moveTo(HL*sc,DeckY*sc); ctx.lineTo(HR*sc,DeckY*sc);
+  ctx.lineTo(HR*sc,HBotY*sc); ctx.lineTo(HL*sc,HBotY*sc); ctx.closePath();
+  ctx.strokeStyle='rgba(0,200,255,0.92)'; ctx.lineWidth=1.2*sc;
+  ctx.shadowColor='rgba(0,200,255,0.9)'; ctx.shadowBlur=14*sc; ctx.stroke(); ctx.shadowBlur=0;
 
-  // — DECK LINE (hull–cabin junction) —
-  ln(HL,DeckY,HR,DeckY,0,212,170,0.55,1.0,8);
+  // — DECK LINE —
+  ln(HL,DeckY,HR,DeckY,0,212,170,0.75,1.2,14);
+
+  // — HULL SIDE TRIM LINES —
+  ln(HL,DeckY+4,HL,HBotY-4,0,200,255,0.28,0.5,5);
+  ln(HR,DeckY+4,HR,HBotY-4,0,200,255,0.28,0.5,5);
 
   // — PONTOON DETAILS —
   [HL+10, HR-10].forEach((px, pi) => {
     const pd = pi===0 ? 8 : -8;
-    ln(px, HBotY-3, px+pd, HBotY, 0,212,170,0.28,0.5,3);
-    ln(px, HBotY, px+pd*3, HBotY, 0,212,170,0.28,0.5,3);
+    ln(px, HBotY-3, px+pd, HBotY, 0,212,170,0.38,0.5,4);
+    ln(px, HBotY, px+pd*3, HBotY, 0,212,170,0.38,0.5,4);
   });
+  // Keel bottom line
+  ln(HL+6,HBotY,HR-6,HBotY,0,212,170,0.35,0.8,8);
 
   // — WINDOWS (3 on front face) —
   const WW=16,WH=12;
   const WY = RoTY + RT + (CH - RT - WH)*0.4;
   [-CW*0.58, 0, CW*0.58].forEach((wx, wi) => {
     const [r,g,b] = wi===1 ? [201,168,76]:[0,212,170];
-    const aW = 0.52;
-    ln(wx-WW/2,WY,wx+WW/2,WY,r,g,b,aW,0.6,5);
-    ln(wx+WW/2,WY,wx+WW/2,WY+WH,r,g,b,aW,0.6,5);
-    ln(wx+WW/2,WY+WH,wx-WW/2,WY+WH,r,g,b,aW,0.6,5);
-    ln(wx-WW/2,WY+WH,wx-WW/2,WY,r,g,b,aW,0.6,5);
-    ctx.fillStyle=`rgba(${r},${g},${b},0.07)`;
+    const aW = 0.70;
+    // window glow fill
+    ctx.fillStyle=`rgba(${r},${g},${b},0.12)`;
     ctx.fillRect((wx-WW/2)*sc,WY*sc,WW*sc,WH*sc);
+    // window frame
+    ln(wx-WW/2,WY,wx+WW/2,WY,r,g,b,aW,0.7,8);
+    ln(wx+WW/2,WY,wx+WW/2,WY+WH,r,g,b,aW,0.7,8);
+    ln(wx+WW/2,WY+WH,wx-WW/2,WY+WH,r,g,b,aW,0.7,8);
+    ln(wx-WW/2,WY+WH,wx-WW/2,WY,r,g,b,aW,0.7,8);
+    // center divider
+    ln(wx,WY,wx,WY+WH,r,g,b,aW*0.4,0.4,0);
   });
 
-  // — FLAGPOLE (center-right on roof) —
+  // — FLAGPOLE —
   const fpX=DDX*0.4, fpBaseY=RoTY+DDY*0.4;
   const fpH=30;
-  ln(fpX,fpBaseY,fpX,fpBaseY-fpH,220,235,255,0.7,0.6,5);
-  // Wave Bite flag (gold triangle with wave)
+  ln(fpX,fpBaseY,fpX,fpBaseY-fpH,220,235,255,0.90,0.7,8);
+  // Wave Bite flag
   const ftY=fpBaseY-fpH;
   ctx.beginPath();
   ctx.moveTo(fpX*sc,ftY*sc);
   ctx.lineTo((fpX+17)*sc,(ftY+6)*sc);
   ctx.lineTo(fpX*sc,(ftY+12)*sc);
   ctx.closePath();
-  ctx.strokeStyle='rgba(201,168,76,0.88)'; ctx.lineWidth=0.7*sc;
-  ctx.shadowColor='rgba(201,168,76,1)'; ctx.shadowBlur=10*sc;
+  ctx.strokeStyle='rgba(201,168,76,1.0)'; ctx.lineWidth=0.8*sc;
+  ctx.shadowColor='rgba(201,168,76,1)'; ctx.shadowBlur=16*sc;
   ctx.stroke(); ctx.shadowBlur=0;
-  ctx.fillStyle='rgba(201,168,76,0.13)'; ctx.fill();
-  // wave detail on flag
-  ln(fpX+3,ftY+5,fpX+12,ftY+5,0,200,255,0.28,0.4,0);
-  ln(fpX+3,ftY+9,fpX+10,ftY+9,0,200,255,0.22,0.4,0);
+  ctx.fillStyle='rgba(201,168,76,0.22)'; ctx.fill();
+  ln(fpX+3,ftY+5,fpX+12,ftY+5,0,200,255,0.40,0.4,0);
+  ln(fpX+3,ftY+9,fpX+10,ftY+9,0,200,255,0.32,0.4,0);
+  // Antenna detail
+  ln(fpX,fpBaseY-fpH,fpX-4,fpBaseY-fpH-6,0,200,255,0.60,0.5,5);
+  ln(fpX,fpBaseY-fpH,fpX+4,fpBaseY-fpH-4,0,200,255,0.48,0.5,4);
 
   // — CABIN INTERIOR GLOW —
   const igp=0.5+0.5*Math.sin(t*0.88);
-  ctx.fillStyle=`rgba(0,200,255,${(0.022+0.012*igp).toFixed(3)})`;
+  ctx.fillStyle=`rgba(0,200,255,${(0.040+0.020*igp).toFixed(3)})`;
   ctx.fillRect(FL*sc,(RoTY+RT)*sc,(CW*2)*sc,(CH-RT)*sc);
-  ctx.fillStyle=`rgba(201,168,76,${(0.014+0.007*igp).toFixed(3)})`;
+  ctx.fillStyle=`rgba(201,168,76,${(0.024+0.014*igp).toFixed(3)})`;
   ctx.fillRect(FL*sc,(RoTY+RT)*sc,(CW*2)*sc,(CH-RT)*sc);
 
-  // — WATER RIPPLES —
+  // — HULL INTERIOR GLOW —
+  ctx.fillStyle=`rgba(0,200,255,${(0.020+0.010*igp).toFixed(3)})`;
+  ctx.fillRect(HL*sc,DeckY*sc,(HW*2)*sc,HD*sc);
+
+  // — WATER RIPPLES (4 waves) —
   const wBaseY=HBotY+7;
-  for (let w=0;w<3;w++) {
+  for (let w=0;w<4;w++) {
     ctx.beginPath();
-    for (let wx2=-HW*1.2;wx2<=HW*1.2;wx2+=3.5) {
-      const wwy=wBaseY+w*5+Math.sin(wx2*0.12+t*1.9+w*0.9)*2.2;
-      wx2===-HW*1.2 ? ctx.moveTo(wx2*sc,wwy*sc) : ctx.lineTo(wx2*sc,wwy*sc);
+    for (let wx2=-HW*1.3;wx2<=HW*1.3;wx2+=3) {
+      const wwy=wBaseY+w*5+Math.sin(wx2*0.12+t*1.9+w*0.9)*2.5;
+      wx2===-HW*1.3 ? ctx.moveTo(wx2*sc,wwy*sc) : ctx.lineTo(wx2*sc,wwy*sc);
     }
-    ctx.strokeStyle=`rgba(0,212,170,${Math.max(0.04,0.13-w*0.04).toFixed(3)})`;
-    ctx.lineWidth=0.5*sc; ctx.stroke();
+    ctx.strokeStyle=`rgba(0,212,170,${Math.max(0.06,0.20-w*0.05).toFixed(3)})`;
+    ctx.lineWidth=0.55*sc; ctx.stroke();
   }
 
-  // — BOAT AURA (center glow) —
+  // — BOAT AURA (pulsing center glow) —
   const gp2=0.5+0.5*Math.sin(t*1.15);
-  const auraG=ctx.createRadialGradient(DDX*0.25*sc,(RoTY*0.3-5)*sc,0,DDX*0.25*sc,(RoTY*0.3-5)*sc,62*sc);
-  auraG.addColorStop(0,`rgba(0,200,255,${(0.045+0.02*gp2).toFixed(3)})`);
-  auraG.addColorStop(0.6,`rgba(0,200,255,${(0.012+0.006*gp2).toFixed(3)})`);
+  const auraG=ctx.createRadialGradient(DDX*0.25*sc,(RoTY*0.3-5)*sc,0,DDX*0.25*sc,(RoTY*0.3-5)*sc,76*sc);
+  auraG.addColorStop(0,`rgba(0,200,255,${(0.075+0.035*gp2).toFixed(3)})`);
+  auraG.addColorStop(0.45,`rgba(0,200,255,${(0.026+0.014*gp2).toFixed(3)})`);
+  auraG.addColorStop(0.75,`rgba(201,168,76,${(0.010+0.007*gp2).toFixed(3)})`);
   auraG.addColorStop(1,'transparent');
   ctx.fillStyle=auraG;
-  ctx.beginPath(); ctx.ellipse(DDX*0.25*sc,(RoTY*0.3)*sc,62*sc,44*sc,0,0,Math.PI*2); ctx.fill();
+  ctx.beginPath(); ctx.ellipse(DDX*0.25*sc,(RoTY*0.3)*sc,76*sc,54*sc,0,0,Math.PI*2); ctx.fill();
 
   ctx.restore();
 }
@@ -4183,61 +4227,65 @@ function drawWireframeBoat(ctx, cx, cy, sc, t) {
         ctx.beginPath(); ctx.arc(gx,gy,g.sz*sc,0,Math.PI*2);
         ctx.fillStyle=`rgba(${g.col},${gop.toFixed(3)})`; ctx.fill();
       });
-      // Orbit rings
-      [[248*sc,'rgba(0,200,255,.025)'],[180*sc,'rgba(201,168,76,.018)']].forEach(([rx,fill])=>{
+      // Orbit rings (scaled 1.3×)
+      [[322*sc,'rgba(0,200,255,.034)'],[234*sc,'rgba(201,168,76,.026)']].forEach(([rx,fill])=>{
         const rg=ctx.createRadialGradient(cx,cy,rx*.5,cx,cy,rx);
         rg.addColorStop(0,'transparent'); rg.addColorStop(0.7,'transparent');
         rg.addColorStop(0.88,fill); rg.addColorStop(1,'transparent');
         ctx.fillStyle=rg; ctx.beginPath(); ctx.ellipse(cx,cy,rx,rx*TILT,0,0,Math.PI*2); ctx.fill();
       });
-      [[95*sc,.8*sc,'rgba(0,200,255,.28)',[2.5*sc,3.5*sc],'rgba(0,200,255,.55)'],
-       [180*sc,1.3*sc,'rgba(0,200,255,.55)',[3*sc,5.5*sc],'rgba(0,200,255,.9)'],
-       [220*sc,.9*sc,'rgba(201,168,76,.35)',[2*sc,4.5*sc],'rgba(201,168,76,.65)'],
-       [248*sc,.6*sc,'rgba(0,212,170,.22)',[2.5*sc,8*sc],'rgba(0,212,170,.4)']].forEach(([rx,lw,col,da,gc])=>{
-        ctx.shadowColor=gc; ctx.shadowBlur=6*sc;
+      [[124*sc,.9*sc,'rgba(0,200,255,.36)',[2.5*sc,3.5*sc],'rgba(0,200,255,.70)'],
+       [234*sc,1.4*sc,'rgba(0,200,255,.68)',[3*sc,5.5*sc],'rgba(0,200,255,1.0)'],
+       [286*sc,1.0*sc,'rgba(201,168,76,.45)',[2*sc,4.5*sc],'rgba(201,168,76,.80)'],
+       [322*sc,.7*sc,'rgba(0,212,170,.30)',[2.5*sc,8*sc],'rgba(0,212,170,.55)']].forEach(([rx,lw,col,da,gc])=>{
+        ctx.shadowColor=gc; ctx.shadowBlur=8*sc;
         ctx.beginPath(); ctx.ellipse(cx,cy,rx,rx*TILT,0,0,Math.PI*2);
         ctx.strokeStyle=col; ctx.lineWidth=lw; ctx.setLineDash(da); ctx.stroke();
         ctx.setLineDash([]); ctx.shadowBlur=0;
       });
-      // Scan line
+      // Scan line (radius scaled 1.3×)
       const sa=t*.38;
-      const sx1=cx+178*sc*Math.cos(sa),sy1=cy+178*sc*TILT*Math.sin(sa);
-      const sx2=cx+183*sc*Math.cos(sa),sy2=cy+183*sc*TILT*Math.sin(sa);
+      const sx1=cx+231*sc*Math.cos(sa),sy1=cy+231*sc*TILT*Math.sin(sa);
+      const sx2=cx+238*sc*Math.cos(sa),sy2=cy+238*sc*TILT*Math.sin(sa);
       ctx.beginPath(); ctx.moveTo(sx1,sy1); ctx.lineTo(sx2,sy2);
-      ctx.strokeStyle='rgba(0,200,255,.9)'; ctx.lineWidth=2.5*sc;
-      ctx.shadowColor='rgba(0,200,255,1)'; ctx.shadowBlur=12*sc; ctx.stroke(); ctx.shadowBlur=0;
+      ctx.strokeStyle='rgba(0,200,255,.95)'; ctx.lineWidth=3*sc;
+      ctx.shadowColor='rgba(0,200,255,1)'; ctx.shadowBlur=16*sc; ctx.stroke(); ctx.shadowBlur=0;
 
-      // Central glow
+      // Central glow (scaled 1.3×)
       const gp=.5+.5*Math.sin(t*1.15);
-      const ch=ctx.createRadialGradient(cx,cy,0,cx,cy,140*sc);
-      ch.addColorStop(0,`rgba(0,200,255,${(.04+.03*gp).toFixed(3)})`);
-      ch.addColorStop(.35,`rgba(0,200,255,${(.012+.008*gp).toFixed(3)})`);
-      ch.addColorStop(.75,`rgba(201,168,76,${(.006+.004*gp).toFixed(3)})`);
+      const ch=ctx.createRadialGradient(cx,cy,0,cx,cy,182*sc);
+      ch.addColorStop(0,`rgba(0,200,255,${(.055+.04*gp).toFixed(3)})`);
+      ch.addColorStop(.35,`rgba(0,200,255,${(.016+.010*gp).toFixed(3)})`);
+      ch.addColorStop(.75,`rgba(201,168,76,${(.008+.005*gp).toFixed(3)})`);
       ch.addColorStop(1,'transparent');
-      ctx.fillStyle=ch; ctx.beginPath(); ctx.ellipse(cx,cy,140*sc,140*sc*TILT,0,0,Math.PI*2); ctx.fill();
-      // Wireframe Boat (replaces core pulse)
-      drawWireframeBoat(ctx, cx, cy, sc, t);
+      ctx.fillStyle=ch; ctx.beginPath(); ctx.ellipse(cx,cy,182*sc,182*sc*TILT,0,0,Math.PI*2); ctx.fill();
+      // Wireframe Boat (30% größer via sc*1.3)
+      drawWireframeBoat(ctx, cx, cy, sc * 1.3, t);
 
-      // Orbital nodes
+      // Orbital nodes (radii scaled 1.3×, dot sizes boosted)
       const orbitConfigs=[
-        {r:95*sc,n:6,spd:.18,labels:true},
-        {r:180*sc,n:4,spd:-.11,labels:false}
+        {r:124*sc,n:6,spd:.18,labels:true},
+        {r:234*sc,n:4,spd:-.11,labels:false}
       ];
       orbitConfigs.forEach((cfg,oi)=>{
         for(let i=0;i<cfg.n;i++){
           const ang=(i/cfg.n)*Math.PI*2+t*cfg.spd+(oi*.8);
           const nx=cx+cfg.r*Math.cos(ang), ny=cy+cfg.r*TILT*Math.sin(ang);
-          const col=NCOLS[i%NCOLS.length], nr=oi===0?7*sc:5*sc;
+          const col=NCOLS[i%NCOLS.length], nr=oi===0?9*sc:6.5*sc;
+          // glow halo
+          ctx.beginPath(); ctx.arc(nx,ny,nr*1.8,0,Math.PI*2);
+          ctx.fillStyle=col+'18'; ctx.fill();
+          // main dot
           ctx.beginPath(); ctx.arc(nx,ny,nr,0,Math.PI*2);
-          ctx.fillStyle=col+'33'; ctx.shadowColor=col; ctx.shadowBlur=8*sc; ctx.fill();
-          ctx.strokeStyle=col+'cc'; ctx.lineWidth=1.5*sc; ctx.stroke(); ctx.shadowBlur=0;
+          ctx.fillStyle=col+'44'; ctx.shadowColor=col; ctx.shadowBlur=12*sc; ctx.fill();
+          ctx.strokeStyle=col+'dd'; ctx.lineWidth=1.6*sc; ctx.stroke(); ctx.shadowBlur=0;
           if(cfg.labels && sc>0.6){
-            ctx.fillStyle='rgba(255,255,255,0.7)'; ctx.font=`${Math.round(7*sc)}px -apple-system,sans-serif`;
-            ctx.textAlign='center'; ctx.fillText(LABELS[i],nx,ny+nr+9*sc);
+            ctx.fillStyle='rgba(255,255,255,0.75)'; ctx.font=`${Math.round(7.5*sc)}px -apple-system,sans-serif`;
+            ctx.textAlign='center'; ctx.fillText(LABELS[i],nx,ny+nr+10*sc);
           }
           // Connection line to center
           ctx.beginPath(); ctx.moveTo(cx,cy); ctx.lineTo(nx,ny);
-          ctx.strokeStyle=col+'18'; ctx.lineWidth=0.6*sc; ctx.stroke();
+          ctx.strokeStyle=col+'22'; ctx.lineWidth=0.7*sc; ctx.stroke();
         }
       });
 
@@ -4251,7 +4299,7 @@ function drawWireframeBoat(ctx, cx, cy, sc, t) {
       // KPI overlays on outer ring
       [['BunBo','65%','#c9a84c'],['Revenue','€0 MRR','#ff4757'],['Runway','~5 Mo','#ff4757'],['Leads','3 Inv.','#c9a84c']].forEach((item,i)=>{
         const a=(i/4)*Math.PI*2-Math.PI/4;
-        const rx=248*sc*Math.cos(a), ry=248*sc*TILT*Math.sin(a);
+        const rx=322*sc*Math.cos(a), ry=322*sc*TILT*Math.sin(a);
         ctx.fillStyle='rgba(0,4,10,0.6)'; ctx.fillRect(cx+rx-22*sc,cy+ry-10*sc,44*sc,20*sc);
         ctx.fillStyle='rgba(255,255,255,0.5)'; ctx.font=`${Math.round(5.5*sc)}px monospace`;
         ctx.textAlign='center'; ctx.fillText(item[0].toUpperCase(),cx+rx,cy+ry-2*sc);
@@ -4274,6 +4322,39 @@ function drawWireframeBoat(ctx, cx, cy, sc, t) {
     const c = document.getElementById('boat-wireframe-canvas');
     if (c && !c._bcInited) initBoatCanvas();
   }, 600);
+})();
+
+// ════════════════════════════════════════════════════════════
+// BOOT SEQUENCE — Premium Initialization
+// ════════════════════════════════════════════════════════════
+(function(){
+  const BOOT_LINES = [
+    [0.7,  '▸ JARVIS v3.0 INITIALISIERUNG...'],
+    [1.1,  '▸ SECURE CEO BRIDGE AUFGEBAUT'],
+    [1.55, '▸ DATENPIPELINE SYNCHRONISIERT'],
+    [2.0,  '▸ LIVE-DATEN VERBUNDEN'],
+    [2.4,  '▸ NAVIGATIONS-KI GELADEN'],
+    [2.85, '▸ MARITIME COMMAND AKTIV'],
+    [3.3,  '◆ WAVE BITE CEO OFFICE BEREIT — WILLKOMMEN, CARSTEN'],
+  ];
+  function initBoot() {
+    const bl = document.getElementById('boot-lines');
+    if (!bl) return;
+    BOOT_LINES.forEach(([delay, txt]) => {
+      setTimeout(() => {
+        const d = document.createElement('div');
+        d.className = 'boot-line';
+        const isLast = txt.startsWith('◆');
+        if (isLast) {
+          d.style.cssText = 'color:rgba(0,200,255,0.95);font-weight:600;margin-top:.3rem';
+        }
+        d.textContent = txt;
+        bl.appendChild(d);
+      }, delay * 1000);
+    });
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initBoot);
+  else initBoot();
 })();
 
 // ════════════════════════════════════════════════════════════
