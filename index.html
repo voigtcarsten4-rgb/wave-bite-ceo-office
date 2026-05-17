@@ -2679,29 +2679,6 @@ window._jsReadyAt = performance.now();
         ctx.fillStyle=`rgba(205,225,255,${op.toFixed(2)})`; ctx.fill();
       });
 
-      /* TITLE — integrated into canvas */
-      if (W > 220) {
-        const tsz = Math.max(9, Math.round(15*sc));
-        const ssz = Math.max(5, Math.round(6.5*sc));
-        const ty  = H * 0.040 + tsz;
-        const tg  = ctx.createLinearGradient(cx-90*sc, 0, cx+90*sc, 0);
-        tg.addColorStop(0,   'rgba(0,200,255,0)');
-        tg.addColorStop(0.18,'rgba(0,200,255,0.88)');
-        tg.addColorStop(0.5, 'rgba(180,200,255,0.95)');
-        tg.addColorStop(0.82,'rgba(201,168,76,0.88)');
-        tg.addColorStop(1,   'rgba(201,168,76,0)');
-        ctx.save();
-        ctx.textAlign='center'; ctx.textBaseline='top';
-        ctx.font=`900 ${tsz}px 'Segoe UI',sans-serif`;
-        ctx.shadowColor='rgba(0,200,255,0.85)'; ctx.shadowBlur=10*sc;
-        ctx.fillStyle=tg; ctx.fillText('CAPITÄNS BRIDGE', cx, ty);
-        ctx.font=`600 ${ssz}px monospace`;
-        ctx.shadowColor='rgba(201,168,76,0.7)'; ctx.shadowBlur=6*sc;
-        ctx.fillStyle='rgba(201,168,76,0.60)';
-        ctx.fillText('WAVE BITE  //  MARITIME TECH  //  WAVEBYTE', cx, ty + tsz*1.3);
-        ctx.shadowBlur=0; ctx.restore();
-      }
-
       /* GALAXY DUST — rotating spiral particles */
       GAL.forEach((g, i) => {
         const ang = g.baseAng + t * g.spd;
