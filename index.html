@@ -1155,12 +1155,25 @@
     <button onclick="declineCookies()" style="padding:.5rem 1rem;background:transparent;color:var(--text-dim,#4a7a9b);border:1px solid rgba(74,122,155,0.3);border-radius:6px;cursor:pointer;font-size:.8rem">Ablehnen</button>
   </div>
 </div>
-<!-- PWA INSTALL PROMPT -->
-<div id="pwa-install-bar" style="display:none;position:fixed;top:0;left:0;right:0;z-index:99998;background:linear-gradient(90deg,rgba(0,200,255,0.1),rgba(0,212,170,0.08));border-bottom:1px solid rgba(0,200,255,0.15);padding:.6rem 1.5rem;backdrop-filter:blur(8px);display:flex;align-items:center;gap:1rem">
+<!-- PWA INSTALL PROMPT (Chrome/Android/Windows) -->
+<div id="pwa-install-bar" style="display:none;position:fixed;top:0;left:0;right:0;z-index:99998;background:linear-gradient(90deg,rgba(0,200,255,0.1),rgba(0,212,170,0.08));border-bottom:1px solid rgba(0,200,255,0.15);padding:.6rem 1.5rem;backdrop-filter:blur(8px);align-items:center;gap:1rem">
   <img src="Dashboard_Icon.png" style="width:28px;height:28px;border-radius:6px" alt="Icon">
   <span style="flex:1;font-size:.8rem;color:var(--text-dim,#4a7a9b)">Wave Bite CEO Office als App installieren — jederzeit offline verfügbar</span>
   <button id="pwa-install-btn" style="padding:.4rem 1rem;background:linear-gradient(90deg,#00c8ff,#00d4aa);color:#000;border:none;border-radius:6px;font-weight:700;cursor:pointer;font-size:.8rem">📲 Installieren</button>
   <button onclick="document.getElementById('pwa-install-bar').style.display='none'" style="background:none;border:none;color:var(--text-dim,#4a7a9b);cursor:pointer;font-size:1.2rem;padding:0 .25rem">✕</button>
+</div>
+
+<!-- PWA INSTALL PROMPT (iOS Safari) -->
+<div id="ios-install-bar" style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:99998;background:linear-gradient(135deg,rgba(2,8,16,0.97),rgba(0,20,40,0.97));border-top:1px solid rgba(0,200,255,0.2);padding:.75rem 1.25rem 1.2rem;backdrop-filter:blur(12px);align-items:flex-start;gap:.9rem">
+  <img src="Dashboard_Icon.png" style="width:44px;height:44px;border-radius:10px;flex-shrink:0;margin-top:.1rem" alt="Icon">
+  <div style="flex:1">
+    <div style="font-size:.8rem;font-weight:700;color:#fff;margin-bottom:.3rem">Wave Bite CEO Office installieren</div>
+    <div style="font-size:.72rem;color:rgba(255,255,255,0.6);line-height:1.5;margin-bottom:.5rem">
+      Tippe auf <span style="display:inline-block;background:rgba(0,200,255,0.15);border:1px solid rgba(0,200,255,0.3);border-radius:4px;padding:.05rem .3rem;font-size:.7rem">⬆️ Teilen</span> und dann auf <span style="display:inline-block;background:rgba(0,200,255,0.15);border:1px solid rgba(0,200,255,0.3);border-radius:4px;padding:.05rem .3rem;font-size:.7rem">„Zum Home-Bildschirm"</span> um die App zu installieren.
+    </div>
+    <div style="font-size:.62rem;color:rgba(255,255,255,0.35)">Das App-Icon erscheint dann auf deinem Home-Bildschirm · Öffnet direkt ohne Browser-Adressleiste</div>
+  </div>
+  <button onclick="document.getElementById('ios-install-bar').style.display='none';localStorage.setItem('ios-install-dismissed','1')" style="background:none;border:none;color:rgba(255,255,255,0.4);cursor:pointer;font-size:1.3rem;padding:0;flex-shrink:0;line-height:1">✕</button>
 </div>
 
 
@@ -3648,6 +3661,58 @@ setTimeout(()=>showNotif('⚠ 2 ungelesene Investor-Mails','gold'),5200);
       }
     });
   }
+})();
+
+// ===================== PWA — SERVICE WORKER + INSTALL =====================
+(function initPWA(){
+  // 1) Service Worker registrieren
+  if('serviceWorker' in navigator){
+    navigator.serviceWorker.register('./sw.js').catch(function(){});
+  }
+
+  var isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
+  var isStandalone = window.navigator.standalone === true || window.matchMedia('(display-mode: standalone)').matches;
+
+  // Bereits installiert → nichts zeigen
+  if(isStandalone) return;
+
+  // 2) iOS Safari → unteres Banner mit Anleitung
+  if(isIOS){
+    if(localStorage.getItem('ios-install-dismissed')) return;
+    // Kurz verzögert zeigen, damit Seite erst lädt
+    setTimeout(function(){
+      var bar = document.getElementById('ios-install-bar');
+      if(bar) bar.style.display = 'flex';
+    }, 3000);
+    return;
+  }
+
+  // 3) Chrome / Edge / Android → beforeinstallprompt
+  var deferredPrompt = null;
+  window.addEventListener('beforeinstallprompt', function(e){
+    e.preventDefault();
+    deferredPrompt = e;
+    var bar = document.getElementById('pwa-install-bar');
+    if(bar) bar.style.display = 'flex';
+  });
+
+  var installBtn = document.getElementById('pwa-install-btn');
+  if(installBtn){
+    installBtn.addEventListener('click', function(){
+      if(!deferredPrompt) return;
+      deferredPrompt.prompt();
+      deferredPrompt.userChoice.then(function(result){
+        deferredPrompt = null;
+        var bar = document.getElementById('pwa-install-bar');
+        if(bar) bar.style.display = 'none';
+      });
+    });
+  }
+
+  window.addEventListener('appinstalled', function(){
+    var bar = document.getElementById('pwa-install-bar');
+    if(bar) bar.style.display = 'none';
+  });
 })();
 
 // ===================== CLOCK =====================
