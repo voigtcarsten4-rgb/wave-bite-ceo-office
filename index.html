@@ -1211,27 +1211,76 @@
   <link rel="icon" type="image/png" sizes="512x512" href="icon-512.png">
   <link rel="shortcut icon" href="favicon.ico">
 <style id="ck-styles">
-#ck-panel{margin:2rem 1.5rem;background:linear-gradient(145deg,rgba(0,200,255,.05),rgba(0,10,25,.6));border:1px solid rgba(0,200,255,.15);border-radius:16px;overflow:hidden}
-.ck-hdr{display:flex;align-items:center;gap:.6rem;padding:1.1rem 1.4rem .9rem;border-bottom:1px solid rgba(0,200,255,.1)}
-.ck-hdr-title{font-size:.75rem;font-weight:700;letter-spacing:.14em;color:rgba(0,200,255,.9);text-transform:uppercase}
-.ck-live-dot{width:7px;height:7px;border-radius:50%;background:#22c55e;flex-shrink:0;animation:ckPulse 2.5s infinite}
+/* ══════════════════════════════════════════════════════
+   COMMUNITY INTELLIGENCE — PREMIUM REDESIGN
+   ══════════════════════════════════════════════════════ */
+#ck-panel{margin:0}
+
+/* Header */
+.ck2-header{display:flex;align-items:center;justify-content:space-between;padding:0 0 1rem}
+.ck2-live{display:flex;align-items:center;gap:.5rem;font-size:.6rem;letter-spacing:.14em;color:rgba(0,212,170,.9);font-weight:700;text-transform:uppercase}
+.ck2-live-dot{width:7px;height:7px;border-radius:50%;background:#22c55e;box-shadow:0 0 8px #22c55e;animation:ckPulse 2.5s infinite;flex-shrink:0}
 @keyframes ckPulse{0%,100%{opacity:1}50%{opacity:.4}}
-.ck-cards{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border-bottom:1px solid rgba(0,200,255,.1)}
-.ck-card{padding:1.1rem 1rem;border-right:1px solid rgba(0,200,255,.08);text-align:center}
-.ck-card:last-child{border-right:none}
-.ck-icon{font-size:1.3rem;margin-bottom:.35rem}
-.ck-val{font-size:1.8rem;font-weight:800;color:#fff;line-height:1}
-.ck-lbl{font-size:.6rem;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,.35);margin-top:.25rem}
-.ck-sub{font-size:.68rem;color:rgba(0,200,255,.7);margin-top:.3rem;font-weight:600}
-.ck-stars{color:#fbbf24;font-size:1rem;letter-spacing:.08rem;margin-top:.25rem}
-.ck-feed-wrap{padding:1rem 1.4rem 1.2rem}
-.ck-feed-lbl{font-size:.62rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.3);margin-bottom:.8rem}
-.ck-post{display:flex;gap:.6rem;padding:.6rem 0;border-bottom:1px solid rgba(255,255,255,.05)}
-.ck-post-ic{font-size:1.1rem;flex-shrink:0}
-.ck-post-txt{font-size:.75rem;color:rgba(255,255,255,.72);line-height:1.5}
-.ck-post-meta{font-size:.62rem;color:rgba(255,255,255,.28);margin-top:.15rem}
-.ck-sent{display:flex;align-items:center;gap:.5rem;margin-top:.9rem;font-size:.7rem;color:rgba(255,255,255,.45)}
-.ck-sent-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.ck2-refresh{font-size:.58rem;color:rgba(255,255,255,.2);letter-spacing:.06em}
+
+/* KPI Row */
+.ck2-kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:1.25rem}
+.ck2-kpi{background:linear-gradient(145deg,rgba(7,24,40,.9),rgba(4,16,30,.95));border:1px solid rgba(0,200,255,.12);border-radius:12px;padding:1rem .75rem;text-align:center;transition:all .3s;position:relative;overflow:hidden}
+.ck2-kpi::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(0,200,255,.4),transparent)}
+.ck2-kpi:hover{border-color:rgba(0,200,255,.3);box-shadow:0 4px 20px rgba(0,200,255,.08)}
+.ck2-kpi-arc-wrap{position:relative;width:90px;height:90px;margin:0 auto .4rem;display:flex;align-items:center;justify-content:center}
+.ck2-arc-canvas{position:absolute;inset:0;width:100%!important;height:100%!important}
+.ck2-kpi-center{position:relative;z-index:2;text-align:center;line-height:1}
+.ck2-kpi-val{font-size:1.3rem;font-weight:800;color:#fff;display:block}
+.ck2-kpi-unit{font-size:.62rem;color:var(--text-dim);margin-top:.1rem;display:block}
+.ck2-kpi-lbl{font-size:.55rem;letter-spacing:.14em;color:rgba(255,255,255,.3);text-transform:uppercase;margin-top:.4rem}
+.ck2-kpi-sub{font-size:.65rem;color:rgba(0,200,255,.8);font-weight:600;margin-top:.2rem;min-height:1em}
+.ck2-stars{font-size:1.05rem;color:#fbbf24;letter-spacing:.06rem;margin-top:.1rem;min-height:1.2em}
+
+/* Bottom layout */
+.ck2-bottom{display:grid;grid-template-columns:280px 1fr;gap:1.25rem}
+
+/* Distribution panel */
+.ck2-dist-panel{display:flex;flex-direction:column;gap:.6rem}
+.ck2-sub-title{font-size:.6rem;letter-spacing:.16em;color:rgba(0,200,255,.6);text-transform:uppercase;font-weight:700;margin-bottom:.5rem;display:flex;align-items:center;justify-content:space-between;gap:.5rem}
+.ck2-posts-count{font-size:.58rem;background:rgba(0,212,170,.1);color:var(--teal);border:1px solid rgba(0,212,170,.2);border-radius:12px;padding:.1rem .45rem;font-weight:700}
+
+/* Rating bars */
+.ck2-dist-bars{display:flex;flex-direction:column;gap:.42rem}
+.ck2-dist-row{display:grid;grid-template-columns:24px 1fr 24px;align-items:center;gap:.5rem}
+.ck2-dist-row>span{font-size:.62rem;color:rgba(255,255,255,.45);text-align:right;white-space:nowrap}
+.ck2-dist-row>span:last-child{text-align:left;color:rgba(0,200,255,.7);font-weight:600}
+.ck2-dist-bar-wrap{height:6px;background:rgba(0,200,255,.07);border-radius:3px;overflow:hidden}
+.ck2-dist-bar{height:100%;border-radius:3px;background:linear-gradient(90deg,var(--blue),var(--teal));transition:width 1.2s cubic-bezier(.4,0,.2,1)}
+.ck2-dist-bar.star5{background:linear-gradient(90deg,#22c55e,#00d4aa)}
+.ck2-dist-bar.star4{background:linear-gradient(90deg,#84cc16,#22c55e)}
+.ck2-dist-bar.star3{background:linear-gradient(90deg,#f59e0b,#eab308)}
+.ck2-dist-bar.star2{background:linear-gradient(90deg,#f97316,#fb923c)}
+.ck2-dist-bar.star1{background:linear-gradient(90deg,#ef4444,#f87171)}
+
+/* Sentiment */
+.ck2-sentiment{display:flex;align-items:center;gap:.65rem;padding:.7rem .85rem;border-radius:8px;background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.04);margin-top:.6rem}
+.ck2-sent-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0;background:#6b7280;box-shadow:0 0 8px currentColor;transition:background .5s}
+.ck2-sent-label{font-size:.52rem;letter-spacing:.12em;color:rgba(255,255,255,.3);text-transform:uppercase}
+.ck2-sent-val{font-size:.72rem;color:rgba(255,255,255,.7);margin-top:.1rem}
+
+/* Feed panel */
+.ck2-feed-panel{display:flex;flex-direction:column}
+.ck2-feed-list{display:flex;flex-direction:column;gap:.4rem;flex:1}
+.ck2-post{display:flex;gap:.65rem;padding:.65rem .8rem;border-radius:8px;background:rgba(0,200,255,.03);border:1px solid rgba(0,200,255,.06);transition:all .2s}
+.ck2-post:hover{background:rgba(0,200,255,.06);border-color:rgba(0,200,255,.14)}
+.ck2-post-emoji{font-size:1.1rem;flex-shrink:0;line-height:1.3}
+.ck2-post-text{font-size:.75rem;color:rgba(255,255,255,.76);line-height:1.5;margin-bottom:.2rem}
+.ck2-post-meta{font-size:.6rem;color:rgba(255,255,255,.28);display:flex;gap:.5rem;align-items:center}
+.ck2-post-type{padding:.05rem .3rem;border-radius:4px;background:rgba(0,200,255,.1);color:rgba(0,200,255,.75);font-size:.55rem;letter-spacing:.06em}
+.ck2-empty{color:rgba(255,255,255,.25);font-size:.78rem;padding:.75rem 0;font-style:italic}
+
+/* Rating card with stars gets gold border */
+.ck2-kpi.rating-kpi{border-color:rgba(201,168,76,.2)}
+.ck2-kpi.rating-kpi::before{background:linear-gradient(90deg,transparent,rgba(201,168,76,.4),transparent)}
+
+@media(max-width:900px){.ck2-kpis{grid-template-columns:repeat(2,1fr)}.ck2-bottom{grid-template-columns:1fr}}
+@media(max-width:600px){.ck2-kpis{grid-template-columns:repeat(2,1fr)}.ck2-dist-panel{display:none}}
 </style>
 </head>
 <body>
@@ -2438,24 +2487,110 @@
   </div>
 </section>
 
-<!-- COMMUNITY INTELLIGENCE PANEL -->
+<!-- COMMUNITY INTELLIGENCE PANEL — PREMIUM -->
 <section id="ck-panel">
-  <div class="ck-hdr">
-    <div class="ck-live-dot"></div>
-    <div class="ck-hdr-title">🌊 Community Intelligence · Wasserlage-Feed</div>
-  </div>
-  <div class="ck-cards">
-    <div class="ck-card"><div class="ck-icon">⭐</div><div class="ck-val" id="ck-avg-rating">–</div><div class="ck-lbl">Ø Bewertung</div><div class="ck-stars" id="ck-stars-display">☆☆☆☆☆</div></div>
-    <div class="ck-card"><div class="ck-icon">📝</div><div class="ck-val" id="ck-total-ratings">0</div><div class="ck-lbl">Bewertungen gesamt</div><div class="ck-sub" id="ck-rating-trend">–</div></div>
-    <div class="ck-card"><div class="ck-icon">💬</div><div class="ck-val" id="ck-community-posts">0</div><div class="ck-lbl">Community-Posts</div><div class="ck-sub" id="ck-posts-today">Heute: 0</div></div>
-    <div class="ck-card"><div class="ck-icon">😊</div><div class="ck-val" id="ck-satisfaction">–%</div><div class="ck-lbl">Zufriedenheit</div><div class="ck-sub" id="ck-satisfaction-label">aus ≥ 4⭐</div></div>
-  </div>
-  <div class="ck-feed-wrap">
-    <div class="ck-feed-lbl">📡 Neueste Posts aus Wasserlage Heute</div>
-    <div id="ck-posts-feed"><div style="color:rgba(255,255,255,.25);font-size:.75rem">Besuche Wasserlage Heute und hinterlasse eine Bewertung.</div></div>
-    <div class="ck-sent">
-      <div class="ck-sent-dot" id="ck-sentiment-dot" style="background:#4b5563"></div>
-      <span id="ck-sentiment-text">Noch keine Daten verfügbar</span>
+  <div class="section-title">🌊 COMMUNITY INTELLIGENCE // WASSERLAGE-FEED</div>
+  <div class="panel" style="background:linear-gradient(145deg,rgba(0,40,80,.12),rgba(2,8,16,.96));border-color:rgba(0,200,255,.18)">
+
+    <!-- Header -->
+    <div class="ck2-header">
+      <div class="ck2-live">
+        <div class="ck2-live-dot"></div>
+        <span>Live Community Feed Aktiv</span>
+      </div>
+      <div class="ck2-refresh">Auto-Refresh alle 60 Sekunden</div>
+    </div>
+
+    <!-- KPI Arc Gauges Row -->
+    <div class="ck2-kpis">
+      <!-- Ø Bewertung -->
+      <div class="ck2-kpi rating-kpi">
+        <div class="ck2-kpi-arc-wrap">
+          <canvas class="ck2-arc-canvas" id="ck2-arc-rating" width="90" height="90"></canvas>
+          <div class="ck2-kpi-center">
+            <span class="ck2-kpi-val" id="ck-avg-rating">–</span>
+            <span class="ck2-kpi-unit">/ 5.0</span>
+          </div>
+        </div>
+        <div class="ck2-stars" id="ck-stars-display">☆☆☆☆☆</div>
+        <div class="ck2-kpi-lbl">Ø Bewertung</div>
+      </div>
+
+      <!-- Bewertungen gesamt -->
+      <div class="ck2-kpi">
+        <div class="ck2-kpi-arc-wrap">
+          <canvas class="ck2-arc-canvas" id="ck2-arc-total" width="90" height="90"></canvas>
+          <div class="ck2-kpi-center">
+            <span class="ck2-kpi-val" id="ck-total-ratings">0</span>
+            <span class="ck2-kpi-unit">gesamt</span>
+          </div>
+        </div>
+        <div class="ck2-kpi-sub" id="ck-rating-trend">–</div>
+        <div class="ck2-kpi-lbl">Bewertungen</div>
+      </div>
+
+      <!-- Community Posts -->
+      <div class="ck2-kpi">
+        <div class="ck2-kpi-arc-wrap">
+          <canvas class="ck2-arc-canvas" id="ck2-arc-posts" width="90" height="90"></canvas>
+          <div class="ck2-kpi-center">
+            <span class="ck2-kpi-val" id="ck-community-posts">0</span>
+            <span class="ck2-kpi-unit">posts</span>
+          </div>
+        </div>
+        <div class="ck2-kpi-sub" id="ck-posts-today">Heute: 0</div>
+        <div class="ck2-kpi-lbl">Community</div>
+      </div>
+
+      <!-- Zufriedenheit -->
+      <div class="ck2-kpi">
+        <div class="ck2-kpi-arc-wrap">
+          <canvas class="ck2-arc-canvas" id="ck2-arc-sat" width="90" height="90"></canvas>
+          <div class="ck2-kpi-center">
+            <span class="ck2-kpi-val" id="ck-satisfaction">–</span>
+            <span class="ck2-kpi-unit">%</span>
+          </div>
+        </div>
+        <div class="ck2-kpi-sub" id="ck-satisfaction-label">aus ≥ 4 ⭐</div>
+        <div class="ck2-kpi-lbl">Zufriedenheit</div>
+      </div>
+    </div>
+
+    <!-- Bottom: Distribution + Feed -->
+    <div class="ck2-bottom">
+
+      <!-- Rating Distribution -->
+      <div class="ck2-dist-panel">
+        <div class="ck2-sub-title">Bewertungs-Verteilung</div>
+        <div class="ck2-dist-bars" id="ck2-dist-bars">
+          <div class="ck2-dist-row"><span>5★</span><div class="ck2-dist-bar-wrap"><div class="ck2-dist-bar star5" id="ck2-bar-5" style="width:0%"></div></div><span id="ck2-cnt-5">0</span></div>
+          <div class="ck2-dist-row"><span>4★</span><div class="ck2-dist-bar-wrap"><div class="ck2-dist-bar star4" id="ck2-bar-4" style="width:0%"></div></div><span id="ck2-cnt-4">0</span></div>
+          <div class="ck2-dist-row"><span>3★</span><div class="ck2-dist-bar-wrap"><div class="ck2-dist-bar star3" id="ck2-bar-3" style="width:0%"></div></div><span id="ck2-cnt-3">0</span></div>
+          <div class="ck2-dist-row"><span>2★</span><div class="ck2-dist-bar-wrap"><div class="ck2-dist-bar star2" id="ck2-bar-2" style="width:0%"></div></div><span id="ck2-cnt-2">0</span></div>
+          <div class="ck2-dist-row"><span>1★</span><div class="ck2-dist-bar-wrap"><div class="ck2-dist-bar star1" id="ck2-bar-1" style="width:0%"></div></div><span id="ck2-cnt-1">0</span></div>
+        </div>
+
+        <!-- Sentiment Panel -->
+        <div class="ck2-sentiment">
+          <div class="ck2-sent-dot" id="ck-sentiment-dot" style="background:#4b5563"></div>
+          <div>
+            <div class="ck2-sent-label">Gesamt-Sentiment</div>
+            <div class="ck2-sent-val" id="ck-sentiment-text">Noch keine Daten</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Post Feed -->
+      <div class="ck2-feed-panel">
+        <div class="ck2-sub-title">
+          <span>📡 Neueste Posts aus Wasserlage Heute</span>
+          <span class="ck2-posts-count" id="ck2-posts-badge">0 heute</span>
+        </div>
+        <div id="ck-posts-feed" class="ck2-feed-list">
+          <div class="ck2-empty">Besuche <a href="https://voigtcarsten4-rgb.github.io/wasserlage/" target="_blank" style="color:var(--blue)">Wasserlage Heute</a> und hinterlasse einen Post oder eine Bewertung.</div>
+        </div>
+      </div>
+
     </div>
   </div>
 </section>
@@ -3828,6 +3963,161 @@ function loadWasserlage() {
 // ════════════════════════════════════════════════════════════
 // BOAT CANVAS — Holographic Orbit Command Center
 // ════════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════════
+// WIREFRAME BOAT — Wave Bite Houseboat 3D
+// ═══════════════════════════════════════════════
+function drawWireframeBoat(ctx, cx, cy, sc, t) {
+  const bob = Math.sin(t * 0.65) * 3;
+  const rock = Math.sin(t * 0.43 + 0.5) * 0.016;
+  ctx.save();
+  ctx.translate(cx, cy + bob * sc);
+  ctx.rotate(rock);
+
+  function ln(x1,y1,x2,y2,r,g,b,a,lw,blur) {
+    ctx.beginPath();
+    ctx.moveTo(x1*sc, y1*sc);
+    ctx.lineTo(x2*sc, y2*sc);
+    ctx.strokeStyle = `rgba(${r},${g},${b},${a})`;
+    ctx.lineWidth = lw * sc;
+    if (blur > 0) { ctx.shadowColor = `rgba(${r},${g},${b},0.9)`; ctx.shadowBlur = blur * sc; }
+    ctx.stroke(); ctx.shadowBlur = 0;
+  }
+
+  // 3D depth offset (front→back perspective vector)
+  const DDX = 34, DDY = -13;
+
+  // Geometry (boat centered at origin; y negative = up)
+  const CW=54, CH=44, RO=7, RT=6, HW=63, HD=21;
+  const RoTY=-(CH+RT), DeckY=0, HBotY=HD;
+  const FL=-CW, FR=CW, HL=-HW, HR=HW;
+  const RoFL=FL-RO, RoFR=FR+RO;
+  // Back face (depth offset applied)
+  const BL=FL+DDX, BR=FR+DDX;
+  const BHL=HL+DDX, BHR=HR+DDX;
+  const BRoFL=RoFL+DDX, BRoFR=RoFR+DDX;
+  const BCT=RoTY+DDY, BDeck=DeckY+DDY, BHBot=HBotY+DDY;
+
+  // — BACK FACES (dim) —
+  ln(BL,BCT, BR,BCT, 0,200,255,0.17,0.5,0); ln(BR,BCT,BR,BDeck,0,200,255,0.17,0.5,0);
+  ln(BR,BDeck,BL,BDeck,0,200,255,0.17,0.5,0); ln(BL,BDeck,BL,BCT,0,200,255,0.17,0.5,0);
+  ln(BRoFL,BCT,BRoFR,BCT,201,168,76,0.14,0.6,0);
+  ln(BHL,BDeck,BHR,BDeck,0,200,255,0.14,0.5,0); ln(BHR,BDeck,BHR,BHBot,0,200,255,0.14,0.5,0);
+  ln(BHR,BHBot,BHL,BHBot,0,200,255,0.14,0.5,0); ln(BHL,BHBot,BHL,BDeck,0,200,255,0.14,0.5,0);
+
+  // — DEPTH EDGES —
+  ln(FL,RoTY,BL,BCT,0,200,255,0.17,0.45,0); ln(FR,RoTY,BR,BCT,0,200,255,0.17,0.45,0);
+  ln(FR,DeckY,BR,BDeck,0,200,255,0.17,0.45,0); ln(FL,DeckY,BL,BDeck,0,200,255,0.17,0.45,0);
+  ln(RoFL,RoTY,BRoFL,BCT,201,168,76,0.14,0.4,0); ln(RoFR,RoTY,BRoFR,BCT,201,168,76,0.14,0.4,0);
+  ln(HL,DeckY,BHL,BDeck,0,200,255,0.14,0.4,0); ln(HR,DeckY,BHR,BDeck,0,200,255,0.14,0.4,0);
+  ln(HR,HBotY,BHR,BHBot,0,200,255,0.14,0.4,0); ln(HL,HBotY,BHL,BHBot,0,200,255,0.14,0.4,0);
+
+  // — RIGHT VISIBLE SIDE FACE —
+  ln(FR,RoTY,BR,BCT,0,200,255,0.45,0.8,5); ln(FR,DeckY,BR,BDeck,0,200,255,0.45,0.8,5);
+  ln(RoFR,RoTY,BRoFR,BCT,201,168,76,0.4,0.7,6);
+  ln(HR,DeckY,BHR,BDeck,0,200,255,0.38,0.7,4); ln(HR,HBotY,BHR,BHBot,0,200,255,0.35,0.7,4);
+
+  // — ROOF PLANE (top visible) —
+  ctx.beginPath();
+  ctx.moveTo(RoFL*sc,RoTY*sc); ctx.lineTo(RoFR*sc,RoTY*sc);
+  ctx.lineTo(BRoFR*sc,BCT*sc); ctx.lineTo(BRoFL*sc,BCT*sc); ctx.closePath();
+  ctx.strokeStyle='rgba(201,168,76,0.35)'; ctx.lineWidth=0.7*sc;
+  ctx.shadowColor='rgba(201,168,76,0.8)'; ctx.shadowBlur=10*sc; ctx.stroke(); ctx.shadowBlur=0;
+  ctx.fillStyle='rgba(201,168,76,0.05)'; ctx.fill();
+
+  // — FRONT CABIN FACE (bright) —
+  ctx.beginPath();
+  ctx.moveTo(FL*sc,RoTY*sc); ctx.lineTo(FR*sc,RoTY*sc);
+  ctx.lineTo(FR*sc,DeckY*sc); ctx.lineTo(FL*sc,DeckY*sc); ctx.closePath();
+  ctx.strokeStyle='rgba(0,200,255,0.88)'; ctx.lineWidth=1.3*sc;
+  ctx.shadowColor='rgba(0,200,255,1)'; ctx.shadowBlur=14*sc; ctx.stroke(); ctx.shadowBlur=0;
+
+  // — ROOF FRONT EDGE —
+  ln(RoFL,RoTY,RoFR,RoTY,201,168,76,0.82,1.1,16);
+  ln(RoFL,RoTY,FL,RoTY+RT,201,168,76,0.38,0.7,5);
+  ln(RoFR,RoTY,FR,RoTY+RT,201,168,76,0.38,0.7,5);
+  ln(FL,RoTY+RT,FR,RoTY+RT,0,200,255,0.3,0.5,3);
+
+  // — HULL FRONT —
+  ctx.beginPath();
+  ctx.moveTo(HL*sc,DeckY*sc); ctx.lineTo(HR*sc,DeckY*sc);
+  ctx.lineTo(HR*sc,HBotY*sc); ctx.lineTo(HL*sc,HBotY*sc); ctx.closePath();
+  ctx.strokeStyle='rgba(0,200,255,0.7)'; ctx.lineWidth=1.1*sc;
+  ctx.shadowColor='rgba(0,200,255,0.9)'; ctx.shadowBlur=8*sc; ctx.stroke(); ctx.shadowBlur=0;
+
+  // — DECK LINE (hull–cabin junction) —
+  ln(HL,DeckY,HR,DeckY,0,212,170,0.55,1.0,8);
+
+  // — PONTOON DETAILS —
+  [HL+10, HR-10].forEach((px, pi) => {
+    const pd = pi===0 ? 8 : -8;
+    ln(px, HBotY-3, px+pd, HBotY, 0,212,170,0.28,0.5,3);
+    ln(px, HBotY, px+pd*3, HBotY, 0,212,170,0.28,0.5,3);
+  });
+
+  // — WINDOWS (3 on front face) —
+  const WW=16,WH=12;
+  const WY = RoTY + RT + (CH - RT - WH)*0.4;
+  [-CW*0.58, 0, CW*0.58].forEach((wx, wi) => {
+    const [r,g,b] = wi===1 ? [201,168,76]:[0,212,170];
+    const aW = 0.52;
+    ln(wx-WW/2,WY,wx+WW/2,WY,r,g,b,aW,0.6,5);
+    ln(wx+WW/2,WY,wx+WW/2,WY+WH,r,g,b,aW,0.6,5);
+    ln(wx+WW/2,WY+WH,wx-WW/2,WY+WH,r,g,b,aW,0.6,5);
+    ln(wx-WW/2,WY+WH,wx-WW/2,WY,r,g,b,aW,0.6,5);
+    ctx.fillStyle=`rgba(${r},${g},${b},0.07)`;
+    ctx.fillRect((wx-WW/2)*sc,WY*sc,WW*sc,WH*sc);
+  });
+
+  // — FLAGPOLE (center-right on roof) —
+  const fpX=DDX*0.4, fpBaseY=RoTY+DDY*0.4;
+  const fpH=30;
+  ln(fpX,fpBaseY,fpX,fpBaseY-fpH,220,235,255,0.7,0.6,5);
+  // Wave Bite flag (gold triangle with wave)
+  const ftY=fpBaseY-fpH;
+  ctx.beginPath();
+  ctx.moveTo(fpX*sc,ftY*sc);
+  ctx.lineTo((fpX+17)*sc,(ftY+6)*sc);
+  ctx.lineTo(fpX*sc,(ftY+12)*sc);
+  ctx.closePath();
+  ctx.strokeStyle='rgba(201,168,76,0.88)'; ctx.lineWidth=0.7*sc;
+  ctx.shadowColor='rgba(201,168,76,1)'; ctx.shadowBlur=10*sc;
+  ctx.stroke(); ctx.shadowBlur=0;
+  ctx.fillStyle='rgba(201,168,76,0.13)'; ctx.fill();
+  // wave detail on flag
+  ln(fpX+3,ftY+5,fpX+12,ftY+5,0,200,255,0.28,0.4,0);
+  ln(fpX+3,ftY+9,fpX+10,ftY+9,0,200,255,0.22,0.4,0);
+
+  // — CABIN INTERIOR GLOW —
+  const igp=0.5+0.5*Math.sin(t*0.88);
+  ctx.fillStyle=`rgba(0,200,255,${(0.022+0.012*igp).toFixed(3)})`;
+  ctx.fillRect(FL*sc,(RoTY+RT)*sc,(CW*2)*sc,(CH-RT)*sc);
+  ctx.fillStyle=`rgba(201,168,76,${(0.014+0.007*igp).toFixed(3)})`;
+  ctx.fillRect(FL*sc,(RoTY+RT)*sc,(CW*2)*sc,(CH-RT)*sc);
+
+  // — WATER RIPPLES —
+  const wBaseY=HBotY+7;
+  for (let w=0;w<3;w++) {
+    ctx.beginPath();
+    for (let wx2=-HW*1.2;wx2<=HW*1.2;wx2+=3.5) {
+      const wwy=wBaseY+w*5+Math.sin(wx2*0.12+t*1.9+w*0.9)*2.2;
+      wx2===-HW*1.2 ? ctx.moveTo(wx2*sc,wwy*sc) : ctx.lineTo(wx2*sc,wwy*sc);
+    }
+    ctx.strokeStyle=`rgba(0,212,170,${Math.max(0.04,0.13-w*0.04).toFixed(3)})`;
+    ctx.lineWidth=0.5*sc; ctx.stroke();
+  }
+
+  // — BOAT AURA (center glow) —
+  const gp2=0.5+0.5*Math.sin(t*1.15);
+  const auraG=ctx.createRadialGradient(DDX*0.25*sc,(RoTY*0.3-5)*sc,0,DDX*0.25*sc,(RoTY*0.3-5)*sc,62*sc);
+  auraG.addColorStop(0,`rgba(0,200,255,${(0.045+0.02*gp2).toFixed(3)})`);
+  auraG.addColorStop(0.6,`rgba(0,200,255,${(0.012+0.006*gp2).toFixed(3)})`);
+  auraG.addColorStop(1,'transparent');
+  ctx.fillStyle=auraG;
+  ctx.beginPath(); ctx.ellipse(DDX*0.25*sc,(RoTY*0.3)*sc,62*sc,44*sc,0,0,Math.PI*2); ctx.fill();
+
+  ctx.restore();
+}
+
 (function(){
   function initBoatCanvas(){
     const canvas = document.getElementById('boat-wireframe-canvas');
@@ -3925,13 +4215,8 @@ function loadWasserlage() {
       ch.addColorStop(.75,`rgba(201,168,76,${(.006+.004*gp).toFixed(3)})`);
       ch.addColorStop(1,'transparent');
       ctx.fillStyle=ch; ctx.beginPath(); ctx.ellipse(cx,cy,140*sc,140*sc*TILT,0,0,Math.PI*2); ctx.fill();
-      // Core pulse
-      [[14*sc,`rgba(0,200,255,${.45+.3*gp})`,'rgba(0,200,255,1)',18*sc],
-       [9*sc,`rgba(201,168,76,${.55+.35*gp})`,'rgba(201,168,76,.9)',14*sc],
-       [5.5*sc,`rgba(255,255,255,${.7+.25*gp})`,'rgba(255,255,255,.7)',10*sc]].forEach(([r,fill,sc2,blur])=>{
-        ctx.beginPath(); ctx.arc(cx,cy,r,0,Math.PI*2);
-        ctx.fillStyle=fill; ctx.shadowColor=sc2; ctx.shadowBlur=blur; ctx.fill(); ctx.shadowBlur=0;
-      });
+      // Wireframe Boat (replaces core pulse)
+      drawWireframeBoat(ctx, cx, cy, sc, t);
 
       // Orbital nodes
       const orbitConfigs=[
@@ -4172,9 +4457,48 @@ setTimeout(function() {
 
 
 // ════════════════════════════════════════════════════════════
-// COMMUNITY KPI PANEL — reads from shared localStorage
-// (same domain: voigtcarsten4-rgb.github.io)
+// COMMUNITY KPI PANEL — Premium redesign
+// Reads from shared localStorage (voigtcarsten4-rgb.github.io)
 // ════════════════════════════════════════════════════════════
+
+// Draw an arc gauge on a canvas element
+function drawArcGauge(canvasId, pct, colorStops, label) {
+  const c = document.getElementById(canvasId);
+  if (!c) return;
+  const dpr = window.devicePixelRatio || 1;
+  const size = 90;
+  c.width = size * dpr; c.height = size * dpr;
+  c.style.width = size + 'px'; c.style.height = size + 'px';
+  const ctx = c.getContext('2d');
+  ctx.scale(dpr, dpr);
+  const cx = size/2, cy = size/2, r = 34;
+  const startA = Math.PI * 0.75, endA = Math.PI * 2.25;
+
+  // BG track
+  ctx.beginPath(); ctx.arc(cx,cy,r,startA,endA);
+  ctx.strokeStyle='rgba(255,255,255,0.06)'; ctx.lineWidth=6; ctx.lineCap='round'; ctx.stroke();
+
+  // Value arc
+  if (pct > 0) {
+    const vEnd = startA + (endA - startA) * Math.min(pct, 1);
+    const grad = ctx.createLinearGradient(cx-r,cy,cx+r,cy);
+    colorStops.forEach(([stop, col]) => grad.addColorStop(stop, col));
+    ctx.beginPath(); ctx.arc(cx,cy,r,startA,vEnd);
+    ctx.strokeStyle = grad; ctx.lineWidth = 6; ctx.lineCap = 'round';
+    ctx.shadowColor = colorStops[colorStops.length-1][1];
+    ctx.shadowBlur = 8;
+    ctx.stroke(); ctx.shadowBlur = 0;
+  }
+  // Tick marks
+  for (let i=0; i<=4; i++) {
+    const a = startA + (endA-startA)*(i/4);
+    const x1 = cx+(r-10)*Math.cos(a), y1 = cy+(r-10)*Math.sin(a);
+    const x2 = cx+(r-7)*Math.cos(a), y2 = cy+(r-7)*Math.sin(a);
+    ctx.beginPath(); ctx.moveTo(x1,y1); ctx.lineTo(x2,y2);
+    ctx.strokeStyle='rgba(255,255,255,0.15)'; ctx.lineWidth=1; ctx.stroke();
+  }
+}
+
 function loadCommunityKPIs() {
   try {
     // ── Ratings ─────────────────────────────────────────────
@@ -4195,7 +4519,30 @@ function loadCommunityKPIs() {
     const today = new Date().toISOString().slice(0,10);
     const postsToday = posts.filter(p => p.ts && p.ts.startsWith(today)).length;
 
-    // ── Update DOM ───────────────────────────────────────────
+    // ── Arc Gauges ───────────────────────────────────────────
+    // Rating arc (0–5 mapped to 0–1)
+    const ratingPct = avgRating !== null ? parseFloat(avgRating)/5 : 0;
+    const ratingColor = ratingPct >= 0.8 ? '#22c55e' : ratingPct >= 0.6 ? '#eab308' : '#f97316';
+    drawArcGauge('ck2-arc-rating', ratingPct,
+      [[0,'rgba(201,168,76,0.8)'],[1,ratingColor]]);
+
+    // Total ratings arc (logarithmic feel: 0=0, 10=50%, 100=100%)
+    const totalPct = totalRatings > 0 ? Math.min(1, Math.log10(totalRatings+1)/2) : 0;
+    drawArcGauge('ck2-arc-total', totalPct,
+      [[0,'rgba(0,200,255,0.5)'],[1,'rgba(0,200,255,1)']]);
+
+    // Posts arc (0=0, 20=50%, 200=100%)
+    const postsPct = posts.length > 0 ? Math.min(1, Math.log10(posts.length+1)/2.3) : 0;
+    drawArcGauge('ck2-arc-posts', postsPct,
+      [[0,'rgba(0,212,170,0.5)'],[1,'rgba(0,212,170,1)']]);
+
+    // Satisfaction arc (0–100%)
+    const satPct = satisfaction !== null ? satisfaction/100 : 0;
+    const satCol = satPct >= 0.8 ? '#22c55e' : satPct >= 0.6 ? '#eab308' : '#ef4444';
+    drawArcGauge('ck2-arc-sat', satPct,
+      [[0,satCol+'88'],[1,satCol]]);
+
+    // ── DOM Updates ──────────────────────────────────────────
     const avgEl = document.getElementById('ck-avg-rating');
     const starsEl = document.getElementById('ck-stars-display');
     const totalEl = document.getElementById('ck-total-ratings');
@@ -4205,9 +4552,9 @@ function loadCommunityKPIs() {
     const satEl = document.getElementById('ck-satisfaction');
     const satLblEl = document.getElementById('ck-satisfaction-label');
     const feedEl = document.getElementById('ck-posts-feed');
-    const sentBadge = document.getElementById('ck-sentiment-badge');
     const sentDot = document.getElementById('ck-sentiment-dot');
     const sentText = document.getElementById('ck-sentiment-text');
+    const badgeEl = document.getElementById('ck2-posts-badge');
 
     if (avgEl) avgEl.textContent = avgRating !== null ? avgRating : '–';
     if (starsEl && avgRating !== null) {
@@ -4219,62 +4566,85 @@ function loadCommunityKPIs() {
     if (trendEl) {
       const recent = ratings.filter(r => r.ts && r.ts.startsWith(today)).length;
       trendEl.textContent = recent > 0 ? `+${recent} heute` : 'Keine neuen heute';
+      trendEl.style.color = recent > 0 ? 'var(--green)' : 'rgba(0,200,255,.6)';
     }
     if (postsEl) postsEl.textContent = posts.length;
     if (postsTodayEl) postsTodayEl.textContent = `Heute: ${postsToday}`;
-    if (satEl) satEl.textContent = satisfaction !== null ? satisfaction + '%' : '–%';
+    if (satEl) satEl.textContent = satisfaction !== null ? satisfaction : '–';
     if (satLblEl && satisfaction !== null) {
       satLblEl.textContent = satisfaction >= 80 ? '🟢 Exzellent' : satisfaction >= 60 ? '🟡 Gut' : '🔴 Nachbessern';
+    }
+    if (badgeEl) {
+      badgeEl.textContent = postsToday > 0 ? `${postsToday} heute` : '0 heute';
+      badgeEl.style.color = postsToday > 0 ? 'var(--teal)' : 'rgba(255,255,255,0.3)';
+    }
+
+    // ── Rating Distribution Bars ─────────────────────────────
+    if (totalRatings > 0) {
+      const maxCount = Math.max(1, ...([5,4,3,2,1].map(s => ratings.filter(r=>r.stars===s).length)));
+      [5,4,3,2,1].forEach(star => {
+        const cnt = ratings.filter(r => r.stars === star).length;
+        const pct = (cnt / maxCount) * 100;
+        const barEl = document.getElementById(`ck2-bar-${star}`);
+        const cntEl = document.getElementById(`ck2-cnt-${star}`);
+        if (barEl) setTimeout(()=>{ barEl.style.width = pct + '%'; }, 200);
+        if (cntEl) cntEl.textContent = cnt;
+      });
     }
 
     // ── Sentiment ────────────────────────────────────────────
     if (sentDot && sentText) {
       if (avgRating === null) {
         sentDot.style.background = '#6b7280';
-        sentText.textContent = 'Noch keine Daten';
-      } else if (parseFloat(avgRating) >= 4) {
+        sentText.textContent = 'Noch keine Daten verfügbar';
+      } else if (parseFloat(avgRating) >= 4.2) {
         sentDot.style.background = '#22c55e';
-        sentText.textContent = `Positiv · Ø ${avgRating}⭐ von ${totalRatings} Bewertungen`;
-      } else if (parseFloat(avgRating) >= 3) {
+        sentText.textContent = `✦ Sehr positiv — Ø ${avgRating} ⭐ aus ${totalRatings} Bewertungen`;
+      } else if (parseFloat(avgRating) >= 3.5) {
+        sentDot.style.background = '#22c55e';
+        sentText.textContent = `Positiv — Ø ${avgRating} ⭐ | ${satisfied} von ${totalRatings} zufrieden`;
+      } else if (parseFloat(avgRating) >= 2.5) {
         sentDot.style.background = '#f59e0b';
-        sentText.textContent = `Neutral · Verbesserungspotenzial erkannt`;
+        sentText.textContent = `Neutral — Verbesserungspotenzial erkannt (Ø ${avgRating} ⭐)`;
       } else {
         sentDot.style.background = '#ef4444';
-        sentText.textContent = `Kritisch · Sofortmaßnahmen prüfen`;
+        sentText.textContent = `Kritisch — Sofortmaßnahmen prüfen (Ø ${avgRating} ⭐)`;
       }
     }
 
     // ── Post Feed ────────────────────────────────────────────
     if (feedEl) {
-      if (posts.length === 0 && totalRatings === 0) {
-        feedEl.innerHTML = '<div style="color:rgba(255,255,255,.3);font-size:.8rem;padding:.5rem 0">Noch keine Community-Daten. Besuche die <a href="https://voigtcarsten4-rgb.github.io/wasserlage/" target="_blank" style="color:var(--blue)">Wasserlage Heute</a> Seite und hinterlasse eine Bewertung.</div>';
-      } else {
-        const recentPosts = [...posts].reverse().slice(0, 5);
-        feedEl.innerHTML = recentPosts.map(p => {
-          const ago = p.ts ? timeAgo(p.ts) : '';
-          return `<div class="ck-post">
-            <div class="ck-post-emoji">${p.emoji || '💬'}</div>
-            <div class="ck-post-body">
-              <div class="ck-post-text">${escHtml(p.text)}</div>
-              <div class="ck-post-meta">${ago} · ${p.type || 'Nutzer'}</div>
-            </div>
-          </div>`;
-        }).join('') || '<div style="color:rgba(255,255,255,.3);font-size:.8rem">Noch keine Posts</div>';
+      // Combine posts and ratings into unified feed
+      const feedItems = [];
+      posts.forEach(p => feedItems.push({...p, _type:'post'}));
+      ratings.filter(r => r.comment).forEach(r => feedItems.push({...r, _type:'rating'}));
+      feedItems.sort((a,b) => new Date(b.ts||0) - new Date(a.ts||0));
 
-        // Also show latest rating if any
-        if (ratings.length > 0) {
-          const lastRating = ratings[ratings.length - 1];
-          const stars = '★'.repeat(lastRating.stars) + '☆'.repeat(5 - lastRating.stars);
-          if (lastRating.comment) {
-            feedEl.innerHTML += `<div class="ck-post" style="border-top:1px solid rgba(251,191,36,.15);margin-top:.5rem">
-              <div class="ck-post-emoji">⭐</div>
-              <div class="ck-post-body">
-                <div class="ck-post-text" style="color:#fbbf24">${stars} · "${escHtml(lastRating.comment)}"</div>
-                <div class="ck-post-meta">Letzte Bewertung · ${timeAgo(lastRating.ts)}</div>
+      if (feedItems.length === 0) {
+        feedEl.innerHTML = `<div class="ck2-empty">Besuche <a href="https://voigtcarsten4-rgb.github.io/wasserlage/" target="_blank" style="color:var(--blue)">Wasserlage Heute</a> und hinterlasse einen Post oder eine Bewertung.</div>`;
+      } else {
+        feedEl.innerHTML = feedItems.slice(0, 7).map(item => {
+          const ago = item.ts ? timeAgo(item.ts) : '';
+          if (item._type === 'rating') {
+            const stars = '★'.repeat(item.stars) + '☆'.repeat(5 - item.stars);
+            const sc2 = item.stars >= 4 ? '#fbbf24' : item.stars >= 3 ? '#f97316' : '#ef4444';
+            return `<div class="ck2-post">
+              <div class="ck2-post-emoji">⭐</div>
+              <div>
+                <div class="ck2-post-text"><span style="color:${sc2}">${stars}</span>${item.comment ? ' — "'+escHtml(item.comment)+'"' : ''}</div>
+                <div class="ck2-post-meta">${ago} <span class="ck2-post-type">Bewertung</span></div>
+              </div>
+            </div>`;
+          } else {
+            return `<div class="ck2-post">
+              <div class="ck2-post-emoji">${item.emoji || '💬'}</div>
+              <div>
+                <div class="ck2-post-text">${escHtml(item.text || '')}</div>
+                <div class="ck2-post-meta">${ago} <span class="ck2-post-type">${item.type || 'Nutzer'}</span></div>
               </div>
             </div>`;
           }
-        }
+        }).join('');
       }
     }
   } catch(e) {
