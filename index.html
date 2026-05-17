@@ -1615,6 +1615,38 @@
               <div style="width:0%;height:100%;background:rgba(201,168,76,0.3);border-radius:3px"></div>
             </div>
           </div>
+          <!-- Gewässerinfo — Wasserlage Seitenaufrufe -->
+          <div>
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:.28rem">
+              <div style="display:flex;align-items:center;gap:.4rem">
+                <span style="font-size:.62rem">&#x1f30a;</span><span style="font-size:.62rem;color:var(--text)">Gewässerinfo</span>
+                <span style="font-size:.46rem;padding:.1rem .3rem;background:rgba(0,200,255,0.1);border:1px solid rgba(0,200,255,0.22);border-radius:3px;color:var(--blue)">LIVE</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:.35rem">
+                <span style="font-size:.7rem;font-weight:800;color:var(--blue)" id="perf-gewaesser">–</span>
+                <span style="font-size:.47rem;color:var(--text-dim)">Besuche</span>
+              </div>
+            </div>
+            <div style="height:6px;background:rgba(0,200,255,0.07);border-radius:3px;overflow:hidden">
+              <div style="height:100%;background:var(--blue);border-radius:3px;box-shadow:0 0 6px rgba(0,200,255,0.25)" id="perf-gewaesser-bar"></div>
+            </div>
+          </div>
+          <!-- QR Bridge — Gewässerinfo Scan-Tracker -->
+          <div>
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:.28rem">
+              <div style="display:flex;align-items:center;gap:.4rem">
+                <span style="font-size:.62rem">&#x1f4f7;</span><span style="font-size:.62rem;color:var(--text)">QR Bridge</span>
+                <span style="font-size:.46rem;padding:.1rem .3rem;background:rgba(201,168,76,0.12);border:1px solid rgba(201,168,76,0.35);border-radius:3px;color:var(--gold)">AKTIV</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:.35rem">
+                <span style="font-size:.7rem;font-weight:800;color:var(--gold)" id="perf-qr-bridge">281+</span>
+                <span style="font-size:.47rem;color:var(--text-dim)">Scans</span>
+              </div>
+            </div>
+            <div style="height:6px;background:rgba(201,168,76,0.07);border-radius:3px;overflow:hidden">
+              <div style="height:100%;background:linear-gradient(90deg,var(--gold),rgba(201,168,76,0.55));border-radius:3px;box-shadow:0 0 8px rgba(201,168,76,0.35)" id="perf-qr-bridge-bar"></div>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -3145,6 +3177,130 @@ function showNotif(msg, type='blue'){
 setTimeout(()=>showNotif('🤖 JARVIS Online — Maritime Bridge aktiv','blue'),3600);
 setTimeout(()=>showNotif('⚠ 2 ungelesene Investor-Mails','gold'),5200);
 
+// ===================== CHART.JS — PROJEKTFORTSCHRITT =====================
+(function initCharts(){
+  if(typeof Chart === 'undefined'){ setTimeout(initCharts, 400); return; }
+
+  // ── 1) Projektfortschritt (Horizontal Bar) ──
+  var ctxP = document.getElementById('chart-progress');
+  if(ctxP && !ctxP._chartInited){
+    ctxP._chartInited = true;
+    new Chart(ctxP, {
+      type: 'bar',
+      data: {
+        labels: ['Wave Bite Platform','Wasserlage App','BunBo Connect','Himmelreich','Marketing','Investor Deck'],
+        datasets:[{
+          label: 'Fortschritt %',
+          data: [68, 82, 41, 18, 55, 74],
+          backgroundColor:[
+            'rgba(0,200,255,0.55)','rgba(0,200,255,0.45)','rgba(0,212,170,0.45)',
+            'rgba(201,168,76,0.35)','rgba(0,255,136,0.4)','rgba(201,168,76,0.55)'
+          ],
+          borderColor:[
+            'rgba(0,200,255,0.9)','rgba(0,200,255,0.7)','rgba(0,212,170,0.8)',
+            'rgba(201,168,76,0.6)','rgba(0,255,136,0.7)','rgba(201,168,76,0.9)'
+          ],
+          borderWidth:1, borderRadius:4
+        }]
+      },
+      options:{
+        indexAxis:'y',
+        responsive:true, maintainAspectRatio:false,
+        plugins:{ legend:{display:false}, tooltip:{ callbacks:{
+          label: ctx => ' ' + ctx.parsed.x + '%'
+        }}},
+        scales:{
+          x:{ min:0, max:100, grid:{color:'rgba(255,255,255,0.05)'}, ticks:{color:'rgba(255,255,255,0.45)',font:{size:9}, callback: v=>v+'%'} },
+          y:{ grid:{display:false}, ticks:{color:'rgba(255,255,255,0.6)',font:{size:9}} }
+        }
+      }
+    });
+  }
+
+  // ── 2) Wachstums-Radar IST vs. ZIEL Q4 ──
+  var ctxR = document.getElementById('chart-radar');
+  if(ctxR && !ctxR._chartInited){
+    ctxR._chartInited = true;
+    new Chart(ctxR, {
+      type: 'radar',
+      data:{
+        labels:['Website Traffic','App-Nutzer','QR-Scans','Partner','Funding','Social Reach'],
+        datasets:[
+          {
+            label:'IST (Mai 2026)',
+            data:[71,12,281,3,0,420],
+            borderColor:'rgba(0,200,255,0.85)',
+            backgroundColor:'rgba(0,200,255,0.1)',
+            pointBackgroundColor:'rgba(0,200,255,0.9)',
+            pointRadius:3, borderWidth:2
+          },
+          {
+            label:'ZIEL Q4 2026',
+            data:[500,150,1200,10,50000,5000],
+            borderColor:'rgba(201,168,76,0.75)',
+            backgroundColor:'rgba(201,168,76,0.07)',
+            pointBackgroundColor:'rgba(201,168,76,0.9)',
+            pointRadius:3, borderWidth:2, borderDash:[4,3]
+          }
+        ]
+      },
+      options:{
+        responsive:true, maintainAspectRatio:false,
+        plugins:{ legend:{
+          labels:{ color:'rgba(255,255,255,0.55)', font:{size:9}, boxWidth:10 }
+        }},
+        scales:{ r:{
+          angleLines:{color:'rgba(255,255,255,0.06)'},
+          grid:{color:'rgba(255,255,255,0.07)'},
+          pointLabels:{color:'rgba(255,255,255,0.55)',font:{size:8}},
+          ticks:{display:false},
+          suggestedMin:0
+        }}
+      }
+    });
+  }
+
+  // ── 3) Revenue Forecast (Line) ──
+  var ctxV = document.getElementById('chart-revenue');
+  if(ctxV && !ctxV._chartInited){
+    ctxV._chartInited = true;
+    new Chart(ctxV, {
+      type:'line',
+      data:{
+        labels:['Jan','Feb','Mär','Apr','Mai','Jun','Jul','Aug','Sep','Okt','Nov','Dez'],
+        datasets:[
+          {
+            label:'Prognose (€)',
+            data:[0,0,0,200,400,800,1500,2800,4200,6500,9000,14000],
+            borderColor:'rgba(201,168,76,0.9)',
+            backgroundColor:'rgba(201,168,76,0.08)',
+            pointBackgroundColor:'rgba(201,168,76,0.9)',
+            pointRadius:3, borderWidth:2, tension:0.4, fill:true
+          },
+          {
+            label:'IST (€)',
+            data:[0,0,0,0,0,null,null,null,null,null,null,null],
+            borderColor:'rgba(0,200,255,0.7)',
+            backgroundColor:'rgba(0,200,255,0.07)',
+            pointBackgroundColor:'rgba(0,200,255,0.9)',
+            pointRadius:3, borderWidth:2, tension:0.4, fill:true, spanGaps:false
+          }
+        ]
+      },
+      options:{
+        responsive:true, maintainAspectRatio:false,
+        plugins:{ legend:{
+          labels:{ color:'rgba(255,255,255,0.55)', font:{size:9}, boxWidth:10 }
+        }},
+        scales:{
+          x:{ grid:{color:'rgba(255,255,255,0.05)'}, ticks:{color:'rgba(255,255,255,0.4)',font:{size:8}} },
+          y:{ grid:{color:'rgba(255,255,255,0.05)'}, ticks:{color:'rgba(255,255,255,0.4)',font:{size:8}, callback: v => v>=1000 ? (v/1000).toFixed(v%1000===0?0:1)+'k' : v+'€'} }
+        }
+      }
+    });
+  }
+})();
+
 // ===================== CLOCK =====================
 function tick(){
   const el = document.getElementById('nav-clock');
@@ -3219,6 +3375,17 @@ setInterval(tick,1000); tick();
         if(bridgeEl2){ bridgeEl2.textContent='✓ LIVE'; bridgeEl2.style.color='var(--green)'; bridgeEl2.style.background='rgba(0,255,136,0.1)'; }
       }).catch(function(){ /* Bridge offline oder CORS - silent fail */ });
   }
+
+  // ── Seiten-Performance Bars (Gewässerinfo + QR Bridge) ──
+  var gwNum = parseInt(gInfo || '0');
+  var gwPct = gwNum > 0 ? Math.min(100, Math.round(gwNum / 71 * 100)) : 7;
+  var gwBar = document.getElementById('perf-gewaesser-bar');
+  if(gwBar) gwBar.style.width = gwPct + '%';
+  if(gInfo) set('perf-gewaesser', gInfo);
+  // QR Bridge: 281+ scans > 71 monthly visitors → always full bar
+  var qrBar = document.getElementById('perf-qr-bridge-bar');
+  if(qrBar) qrBar.style.width = '100%';
+  set('perf-qr-bridge', qrWW || '281+');
 
   // ── Last Update Timestamp ──
   var lastVisit = ls('wb_wl_last_visit');
