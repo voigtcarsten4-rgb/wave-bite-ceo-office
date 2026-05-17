@@ -1265,7 +1265,7 @@
 
 
 <!-- BOOT -->
-<div id="boot">
+<div id="boot" style="display:none">
   <div class="boot-logo glitch">WAVE BITE</div>
   <div class="boot-sub">CEO COMMAND CENTER // JARVIS v3.0</div>
   <div class="boot-bar-wrap"><div class="boot-bar"></div></div>
@@ -4014,23 +4014,18 @@ window.toggleToolbelt = function() {
 // INIT ALL
 // ════════════════════════════════════════════════════════════
 function initAll() {
-  // ── Boot sequence dismiss ─────────────────────────────────
+  // ── Boot sequence: show briefly then dismiss ─────────────
   const bootEl = document.getElementById('boot');
-  const bootLines = document.getElementById('boot-lines');
-  const bootMsgs = ['JARVIS v3.0 initialisiert …','Pegelonline verbunden …','12 Projekte geladen …','Neural Network online …','CEO Office bereit ✓'];
-  let bi = 0;
-  (function nextLine() {
-    if (!bootLines || bi >= bootMsgs.length) {
-      setTimeout(() => { if(bootEl){bootEl.classList.add('fade');setTimeout(()=>{bootEl.style.display='none';},400);} }, 200);
-      return;
-    }
-    const el = document.createElement('div');
-    el.className = 'boot-line';
-    el.textContent = '> ' + bootMsgs[bi++];
-    el.style.animationDelay = '0s';
-    bootLines.appendChild(el);
-    setTimeout(nextLine, 120);
-  })();
+  if (bootEl) {
+    // Show the boot screen
+    bootEl.style.display = 'flex';
+    // Dismiss after 800ms — fast, clean
+    setTimeout(function() {
+      bootEl.style.transition = 'opacity 0.4s';
+      bootEl.style.opacity = '0';
+      setTimeout(function() { bootEl.style.display = 'none'; }, 420);
+    }, 800);
+  }
 
   initKpiStrip();
   renderProjects('all');
