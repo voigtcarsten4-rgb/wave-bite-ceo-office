@@ -1209,6 +1209,29 @@
   <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
   <link rel="icon" type="image/png" sizes="512x512" href="icon-512.png">
   <link rel="shortcut icon" href="favicon.ico">
+<style id="ck-styles">
+#ck-panel{margin:2rem 1.5rem;background:linear-gradient(145deg,rgba(0,200,255,.05),rgba(0,10,25,.6));border:1px solid rgba(0,200,255,.15);border-radius:16px;overflow:hidden}
+.ck-hdr{display:flex;align-items:center;gap:.6rem;padding:1.1rem 1.4rem .9rem;border-bottom:1px solid rgba(0,200,255,.1)}
+.ck-hdr-title{font-size:.75rem;font-weight:700;letter-spacing:.14em;color:rgba(0,200,255,.9);text-transform:uppercase}
+.ck-live-dot{width:7px;height:7px;border-radius:50%;background:#22c55e;flex-shrink:0;animation:ckPulse 2.5s infinite}
+@keyframes ckPulse{0%,100%{opacity:1}50%{opacity:.4}}
+.ck-cards{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border-bottom:1px solid rgba(0,200,255,.1)}
+.ck-card{padding:1.1rem 1rem;border-right:1px solid rgba(0,200,255,.08);text-align:center}
+.ck-card:last-child{border-right:none}
+.ck-icon{font-size:1.3rem;margin-bottom:.35rem}
+.ck-val{font-size:1.8rem;font-weight:800;color:#fff;line-height:1}
+.ck-lbl{font-size:.6rem;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,.35);margin-top:.25rem}
+.ck-sub{font-size:.68rem;color:rgba(0,200,255,.7);margin-top:.3rem;font-weight:600}
+.ck-stars{color:#fbbf24;font-size:1rem;letter-spacing:.08rem;margin-top:.25rem}
+.ck-feed-wrap{padding:1rem 1.4rem 1.2rem}
+.ck-feed-lbl{font-size:.62rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.3);margin-bottom:.8rem}
+.ck-post{display:flex;gap:.6rem;padding:.6rem 0;border-bottom:1px solid rgba(255,255,255,.05)}
+.ck-post-ic{font-size:1.1rem;flex-shrink:0}
+.ck-post-txt{font-size:.75rem;color:rgba(255,255,255,.72);line-height:1.5}
+.ck-post-meta{font-size:.62rem;color:rgba(255,255,255,.28);margin-top:.15rem}
+.ck-sent{display:flex;align-items:center;gap:.5rem;margin-top:.9rem;font-size:.7rem;color:rgba(255,255,255,.45)}
+.ck-sent-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+</style>
 </head>
 <body>
 <!-- COOKIE & PWA CONSENT BANNER -->
@@ -2411,6 +2434,28 @@
     <div class="dash-link" onclick="openDash('kpi')"><div class="dash-icon-lg">📈</div><div><div class="dash-name">KPI Dashboard</div><div class="dash-desc">Metriken · Wachstum · OKRs</div></div><span class="chip chip-info" style="margin-left:auto">Geplant</span></div>
     <div class="dash-link" onclick="openDash('partner')"><div class="dash-icon-lg">🤝</div><div><div class="dash-name">Partner & Sponsoring</div><div class="dash-desc">Kooperationen · CRM · Deals</div></div><span class="chip chip-info" style="margin-left:auto">Geplant</span></div>
     <div class="dash-link" onclick="openDash('finance')"><div class="dash-icon-lg">💶</div><div><div class="dash-name">Finance Dashboard</div><div class="dash-desc">Cashflow · Burn Rate · Runway</div></div><span class="chip chip-info" style="margin-left:auto">Geplant</span></div>
+  </div>
+</section>
+
+<!-- COMMUNITY INTELLIGENCE PANEL -->
+<section id="ck-panel">
+  <div class="ck-hdr">
+    <div class="ck-live-dot"></div>
+    <div class="ck-hdr-title">🌊 Community Intelligence · Wasserlage-Feed</div>
+  </div>
+  <div class="ck-cards">
+    <div class="ck-card"><div class="ck-icon">⭐</div><div class="ck-val" id="ck-avg-rating">–</div><div class="ck-lbl">Ø Bewertung</div><div class="ck-stars" id="ck-stars-display">☆☆☆☆☆</div></div>
+    <div class="ck-card"><div class="ck-icon">📝</div><div class="ck-val" id="ck-total-ratings">0</div><div class="ck-lbl">Bewertungen gesamt</div><div class="ck-sub" id="ck-rating-trend">–</div></div>
+    <div class="ck-card"><div class="ck-icon">💬</div><div class="ck-val" id="ck-community-posts">0</div><div class="ck-lbl">Community-Posts</div><div class="ck-sub" id="ck-posts-today">Heute: 0</div></div>
+    <div class="ck-card"><div class="ck-icon">😊</div><div class="ck-val" id="ck-satisfaction">–%</div><div class="ck-lbl">Zufriedenheit</div><div class="ck-sub" id="ck-satisfaction-label">aus ≥ 4⭐</div></div>
+  </div>
+  <div class="ck-feed-wrap">
+    <div class="ck-feed-lbl">📡 Neueste Posts aus Wasserlage Heute</div>
+    <div id="ck-posts-feed"><div style="color:rgba(255,255,255,.25);font-size:.75rem">Besuche Wasserlage Heute und hinterlasse eine Bewertung.</div></div>
+    <div class="ck-sent">
+      <div class="ck-sent-dot" id="ck-sentiment-dot" style="background:#4b5563"></div>
+      <span id="ck-sentiment-text">Noch keine Daten verfügbar</span>
+    </div>
   </div>
 </section>
 
