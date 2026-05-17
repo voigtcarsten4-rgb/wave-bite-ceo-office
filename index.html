@@ -25,7 +25,7 @@
   html,body{width:100%;overflow-x:hidden;background:var(--void);color:var(--text);font-family:'Segoe UI',system-ui,sans-serif;font-size:14px}
 
   /* BOOT SEQUENCE */
-  #boot{position:fixed;inset:0;background:var(--void);z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;transition:opacity 0.8s}
+  #boot{position:fixed;inset:0;background:var(--void);z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;transition:opacity 0.4s}
   #boot.fade{opacity:0;pointer-events:none}
   .boot-logo{font-size:3rem;font-weight:900;letter-spacing:.25em;color:var(--blue);text-shadow:var(--glow-blue)}
   .boot-sub{font-size:.9rem;letter-spacing:.3em;color:var(--gold);margin-top:.5rem}
@@ -4020,7 +4020,7 @@ function initAll() {
   let bi = 0;
   (function nextLine() {
     if (!bootLines || bi >= bootMsgs.length) {
-      setTimeout(() => { if(bootEl){bootEl.classList.add('fade');setTimeout(()=>{bootEl.style.display='none';},800);} }, 400);
+      setTimeout(() => { if(bootEl){bootEl.classList.add('fade');setTimeout(()=>{bootEl.style.display='none';},400);} }, 200);
       return;
     }
     const el = document.createElement('div');
@@ -4028,7 +4028,7 @@ function initAll() {
     el.textContent = '> ' + bootMsgs[bi++];
     el.style.animationDelay = '0s';
     bootLines.appendChild(el);
-    setTimeout(nextLine, 420);
+    setTimeout(nextLine, 120);
   })();
 
   initKpiStrip();
@@ -4052,6 +4052,16 @@ function initAll() {
 
 if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initAll);
 else initAll();
+
+// ── Boot safety: dismiss boot screen after 2s no matter what ──
+setTimeout(function() {
+  var b = document.getElementById('boot');
+  if (b && b.style.display !== 'none' && !b.classList.contains('fade')) {
+    b.classList.add('fade');
+    setTimeout(function(){ b.style.display = 'none'; }, 400);
+  }
+}, 2000);
+
 
 
 // ════════════════════════════════════════════════════════════
