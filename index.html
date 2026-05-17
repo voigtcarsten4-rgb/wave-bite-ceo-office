@@ -2384,53 +2384,84 @@
 <section>
   <div class="section-title">🌊 LIVE DATEN — WASSERLAGE COCKPIT</div>
   <div class="panel">
-    <div class="grid-4" id="live-gauges">
-      <div class="gauge-wrap">
-        <svg width="90" height="90" viewBox="0 0 90 90">
-          <circle cx="45" cy="45" r="36" fill="none" stroke="rgba(0,200,255,0.08)" stroke-width="6"/>
-          <circle id="gauge-rhein" cx="45" cy="45" r="36" fill="none" stroke="var(--teal)" stroke-width="6" stroke-linecap="round"
-            stroke-dasharray="226.19" stroke-dashoffset="113" transform="rotate(-90 45 45)"/>
-          <text x="45" y="49" text-anchor="middle" fill="var(--teal)" font-size="13" font-weight="700" id="gauge-rhein-val">---</text>
-        </svg>
-        <div class="gauge-val" id="lvl-rhein">– cm</div>
-        <div class="gauge-label">RHEIN DÜSSELDORF<br><span class="gauge-unit">Pegel live</span></div>
+
+    <!-- Navigation Status Banner -->
+    <div id="nav-status-bar" style="display:flex;align-items:center;gap:.75rem;padding:.6rem 1rem;background:rgba(0,255,136,0.05);border:1px solid rgba(0,255,136,0.18);border-radius:8px;margin-bottom:1rem">
+      <span id="nav-status-icon" style="font-size:1.1rem">🟢</span>
+      <div style="flex:1">
+        <div id="nav-status-text" style="font-size:.7rem;font-weight:700;color:var(--green)">NAVIGATION NORMAL — Alle Wasserstraßen frei befahrbar</div>
+        <div id="nav-status-sub" style="font-size:.6rem;color:var(--text-dim)">Spree Berlin · Havel Potsdam · Oder Frankfurt — Wave Bite Kernreviere</div>
       </div>
-      <div class="gauge-wrap">
-        <svg width="90" height="90" viewBox="0 0 90 90">
-          <circle cx="45" cy="45" r="36" fill="none" stroke="rgba(0,200,255,0.08)" stroke-width="6"/>
-          <circle id="gauge-moselle" cx="45" cy="45" r="36" fill="none" stroke="var(--blue)" stroke-width="6" stroke-linecap="round"
-            stroke-dasharray="226.19" stroke-dashoffset="150" transform="rotate(-90 45 45)"/>
-          <text x="45" y="49" text-anchor="middle" fill="var(--blue)" font-size="13" font-weight="700" id="gauge-moselle-val">---</text>
-        </svg>
-        <div class="gauge-val" id="lvl-moselle">– cm</div>
-        <div class="gauge-label">MOSEL KOBLENZ<br><span class="gauge-unit">Pegel live</span></div>
-      </div>
-      <div class="gauge-wrap">
-        <svg width="90" height="90" viewBox="0 0 90 90">
-          <circle cx="45" cy="45" r="36" fill="none" stroke="rgba(0,200,255,0.08)" stroke-width="6"/>
-          <circle id="gauge-bodensee" cx="45" cy="45" r="36" fill="none" stroke="var(--gold)" stroke-width="6" stroke-linecap="round"
-            stroke-dasharray="226.19" stroke-dashoffset="80" transform="rotate(-90 45 45)"/>
-          <text x="45" y="49" text-anchor="middle" fill="var(--gold)" font-size="13" font-weight="700" id="gauge-bodensee-val">---</text>
-        </svg>
-        <div class="gauge-val" id="lvl-bodensee">– cm</div>
-        <div class="gauge-label">BODENSEE KONSTANZ<br><span class="gauge-unit">Pegel live</span></div>
-      </div>
-      <div class="gauge-wrap">
-        <svg width="90" height="90" viewBox="0 0 90 90">
-          <circle cx="45" cy="45" r="36" fill="none" stroke="rgba(0,200,255,0.08)" stroke-width="6"/>
-          <circle id="gauge-elbe" cx="45" cy="45" r="36" fill="none" stroke="#a78bfa" stroke-width="6" stroke-linecap="round"
-            stroke-dasharray="226.19" stroke-dashoffset="130" transform="rotate(-90 45 45)"/>
-          <text x="45" y="49" text-anchor="middle" fill="#a78bfa" font-size="13" font-weight="700" id="gauge-elbe-val">---</text>
-        </svg>
-        <div class="gauge-val" id="lvl-elbe">– cm</div>
-        <div class="gauge-label">ELBE HAMBURG<br><span class="gauge-unit">Pegel live</span></div>
+      <div style="text-align:right;flex-shrink:0">
+        <div style="font-size:.55rem;color:var(--text-dim);letter-spacing:.06em">SAISON</div>
+        <div style="font-size:.7rem;color:var(--teal);font-weight:700">⛵ MAI — PEAK TOURISTIK</div>
       </div>
     </div>
-    <div style="margin-top:1rem;display:flex;gap:1rem;align-items:center;flex-wrap:wrap">
-      <span style="font-size:.65rem;color:var(--text-dim)">Datenquelle: Pegelonline WSV API</span>
-      <span id="live-updated" style="font-size:.65rem;color:var(--teal)">Wird geladen...</span>
-      <a href="https://www.pegelonline.wsv.de" target="_blank" class="pc-link">→ Pegelonline öffnen</a>
-      <a href="https://www.elwis.de" target="_blank" class="pc-link">→ ELWIS öffnen</a>
+
+    <!-- 3 Gauges: Berlin/Brandenburg Kernreviere -->
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-bottom:1rem" id="live-gauges">
+
+      <!-- SPREE BERLIN -->
+      <div class="gauge-wrap">
+        <svg width="90" height="90" viewBox="0 0 90 90">
+          <circle cx="45" cy="45" r="36" fill="none" stroke="rgba(0,200,255,0.08)" stroke-width="6"/>
+          <circle id="gauge-spree" cx="45" cy="45" r="36" fill="none" stroke="var(--teal)" stroke-width="6" stroke-linecap="round"
+            stroke-dasharray="226.19" stroke-dashoffset="150" transform="rotate(-90 45 45)"/>
+          <text x="45" y="49" text-anchor="middle" fill="var(--teal)" font-size="12" font-weight="700" id="gauge-spree-val">...</text>
+        </svg>
+        <div class="gauge-val" id="lvl-spree">– cm</div>
+        <div class="gauge-label">SPREE BERLIN<br><span class="gauge-unit">🎯 Kernrevier Wave Bite</span></div>
+      </div>
+
+      <!-- HAVEL POTSDAM -->
+      <div class="gauge-wrap">
+        <svg width="90" height="90" viewBox="0 0 90 90">
+          <circle cx="45" cy="45" r="36" fill="none" stroke="rgba(0,200,255,0.08)" stroke-width="6"/>
+          <circle id="gauge-havel" cx="45" cy="45" r="36" fill="none" stroke="var(--blue)" stroke-width="6" stroke-linecap="round"
+            stroke-dasharray="226.19" stroke-dashoffset="120" transform="rotate(-90 45 45)"/>
+          <text x="45" y="49" text-anchor="middle" fill="var(--blue)" font-size="12" font-weight="700" id="gauge-havel-val">...</text>
+        </svg>
+        <div class="gauge-val" id="lvl-havel">– cm</div>
+        <div class="gauge-label">HAVEL POTSDAM<br><span class="gauge-unit">🚤 Partner-Revier aktiv</span></div>
+      </div>
+
+      <!-- ODER FRANKFURT/ODER -->
+      <div class="gauge-wrap">
+        <svg width="90" height="90" viewBox="0 0 90 90">
+          <circle cx="45" cy="45" r="36" fill="none" stroke="rgba(0,200,255,0.08)" stroke-width="6"/>
+          <circle id="gauge-oder" cx="45" cy="45" r="36" fill="none" stroke="var(--gold)" stroke-width="6" stroke-linecap="round"
+            stroke-dasharray="226.19" stroke-dashoffset="130" transform="rotate(-90 45 45)"/>
+          <text x="45" y="49" text-anchor="middle" fill="var(--gold)" font-size="12" font-weight="700" id="gauge-oder-val">...</text>
+        </svg>
+        <div class="gauge-val" id="lvl-oder">– cm</div>
+        <div class="gauge-label">ODER FRANKFURT<br><span class="gauge-unit">🗺️ Grenzrevier · Expansion</span></div>
+      </div>
+    </div>
+
+    <!-- CEO Intelligence Row -->
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:.75rem;margin-bottom:.75rem">
+      <div style="background:rgba(0,212,170,0.05);border:1px solid rgba(0,212,170,0.15);border-radius:8px;padding:.6rem;text-align:center">
+        <div style="font-size:.55rem;color:var(--text-dim);letter-spacing:.08em;margin-bottom:.2rem">SCHIFFBARKEIT</div>
+        <div style="font-size:.85rem;font-weight:700;color:var(--teal)" id="nav-schiffbarkeit">✅ FREI</div>
+        <div style="font-size:.55rem;color:var(--text-dim)">Alle 3 Reviere</div>
+      </div>
+      <div style="background:rgba(201,168,76,0.05);border:1px solid rgba(201,168,76,0.15);border-radius:8px;padding:.6rem;text-align:center">
+        <div style="font-size:.55rem;color:var(--text-dim);letter-spacing:.08em;margin-bottom:.2rem">TOURISTIK-SAISON</div>
+        <div style="font-size:.85rem;font-weight:700;color:var(--gold)">⛵ OPTIMAL</div>
+        <div style="font-size:.55rem;color:var(--text-dim)">Mai–Aug Peak aktiv</div>
+      </div>
+      <div style="background:rgba(0,200,255,0.05);border:1px solid rgba(0,200,255,0.12);border-radius:8px;padding:.6rem;text-align:center">
+        <div style="font-size:.55rem;color:var(--text-dim);letter-spacing:.08em;margin-bottom:.2rem">AKTIVE WARNUNGEN</div>
+        <div style="font-size:.85rem;font-weight:700;color:var(--green)" id="nav-warnings">0 AKTIV</div>
+        <div style="font-size:.55rem;color:var(--text-dim)" id="nav-warn-detail">Pegelstand normal</div>
+      </div>
+    </div>
+
+    <div style="display:flex;gap:1rem;align-items:center;flex-wrap:wrap">
+      <span style="font-size:.6rem;color:var(--text-dim)">Datenquelle: Pegelonline WSV API</span>
+      <span id="live-updated" style="font-size:.6rem;color:var(--teal)">⟳ Wird geladen...</span>
+      <a href="https://www.pegelonline.wsv.de" target="_blank" class="pc-link">→ Pegelonline</a>
+      <a href="https://www.elwis.de" target="_blank" class="pc-link">→ ELWIS</a>
     </div>
   </div>
 </section>
@@ -3705,6 +3736,87 @@ setInterval(tick,1000); tick();
   } else if(el){
     el.textContent = 'Noch kein Besuch via Browser';
   }
+})();
+
+// ===================== PEGELONLINE LIVE — BERLIN/BRANDENBURG =====================
+(function loadPegel(){
+  // Stationen: Wave Bite Kernreviere Berlin/Brandenburg
+  var stations = [
+    { key:'spree', uuid:'BERLIN',          color:'var(--teal)', min:20,  max:100, warnAt:170 },
+    { key:'havel', uuid:'POTSDAM',         color:'var(--blue)', min:40,  max:130, warnAt:200 },
+    { key:'oder',  uuid:'FRANKFURT%2FODER',color:'var(--gold)', min:150, max:350, warnAt:500 }
+  ];
+  var BASE = 'https://www.pegelonline.wsv.de/webservices/rest-api/v2/stations/';
+  var done = 0, warns = 0;
+
+  function calcOffset(val, s){
+    // stroke-dasharray=226.19, offset 195=empty, 30=full → map val in [min..max]
+    var pct = Math.min(1, Math.max(0, (val - s.min) / (s.max - s.min)));
+    return Math.round(195 - pct * 165);
+  }
+
+  function finish(){
+    if(done < stations.length) return;
+    var now = new Date().toLocaleTimeString('de-DE',{hour:'2-digit',minute:'2-digit'});
+    var upd = document.getElementById('live-updated');
+    if(upd) upd.textContent = '⟳ Aktualisiert: ' + now + ' Uhr';
+
+    var bar  = document.getElementById('nav-status-bar');
+    var icon = document.getElementById('nav-status-icon');
+    var txt  = document.getElementById('nav-status-text');
+    var wEl  = document.getElementById('nav-warnings');
+    var wDet = document.getElementById('nav-warn-detail');
+    var schi = document.getElementById('nav-schiffbarkeit');
+
+    if(warns === 0){
+      if(icon) icon.textContent = '🟢';
+      if(txt){ txt.textContent = 'NAVIGATION NORMAL — Alle Wasserstraßen frei befahrbar'; txt.style.color = 'var(--green)'; }
+      if(bar){ bar.style.background='rgba(0,255,136,0.05)'; bar.style.borderColor='rgba(0,255,136,0.18)'; }
+      if(wEl){ wEl.textContent='0 AKTIV'; wEl.style.color='var(--green)'; }
+      if(wDet) wDet.textContent = 'Pegelstand normal';
+      if(schi){ schi.textContent='✅ FREI'; schi.style.color='var(--teal)'; }
+    } else {
+      if(icon) icon.textContent = '🟡';
+      if(txt){ txt.textContent = warns + ' WARNUNG(EN) — Erhöhter Pegelstand, Navigation eingeschränkt'; txt.style.color = 'var(--gold)'; }
+      if(bar){ bar.style.background='rgba(201,168,76,0.07)'; bar.style.borderColor='rgba(201,168,76,0.25)'; }
+      if(wEl){ wEl.textContent=warns+' AKTIV'; wEl.style.color='var(--gold)'; }
+      if(wDet) wDet.textContent = 'Pegelstand prüfen';
+      if(schi){ schi.textContent='⚠️ PRÜFEN'; schi.style.color='var(--gold)'; }
+    }
+    if(wDet) wDet.textContent += ' · Stand: ' + now;
+  }
+
+  stations.forEach(function(s){
+    fetch(BASE + s.uuid + '/W/currentmeasurement.json')
+      .then(function(r){ return r.json(); })
+      .then(function(d){
+        var cm  = Math.round(d.value);
+        var isW = cm >= s.warnAt;
+        if(isW) warns++;
+
+        // Gauge-Text
+        var valEl = document.getElementById('gauge-'+s.key+'-val');
+        var lvlEl = document.getElementById('lvl-'+s.key);
+        var circ  = document.getElementById('gauge-'+s.key);
+        if(valEl){ valEl.textContent = cm; if(isW){ valEl.setAttribute('fill','#ff6b6b'); } }
+        if(lvlEl){ lvlEl.textContent = cm + ' cm'; if(isW){ lvlEl.style.color='#ff6b6b'; } }
+
+        // Gauge-Arc animieren
+        if(circ){
+          circ.setAttribute('stroke-dashoffset', calcOffset(cm, s));
+          if(isW) circ.style.stroke = '#ff6b6b';
+        }
+        done++; finish();
+      })
+      .catch(function(){
+        // API nicht erreichbar → Fallback-Anzeige
+        var valEl = document.getElementById('gauge-'+s.key+'-val');
+        var lvlEl = document.getElementById('lvl-'+s.key);
+        if(valEl) valEl.textContent = '—';
+        if(lvlEl) lvlEl.textContent = 'n/a';
+        done++; finish();
+      });
+  });
 })();
 </script>
 </body>
