@@ -1787,10 +1787,10 @@
           </div>
           <!-- Gewässerinfo Seitenaufrufe -->
           <div style="padding:.65rem;background:rgba(0,200,255,0.04);border:1px solid rgba(0,200,255,0.14);border-radius:10px">
-            <div style="font-size:.42rem;letter-spacing:.1em;color:var(--text-dim);margin-bottom:.3rem">🌐 GEWÄSSERINFO</div>
+            <div style="font-size:.42rem;letter-spacing:.1em;color:var(--text-dim);margin-bottom:.3rem">🌊 WASSERLAGE BESUCHE</div>
             <div style="font-size:1.4rem;font-weight:900;color:var(--blue);line-height:1;text-shadow:0 0 12px rgba(0,200,255,0.3)" id="kpi-gewaesser">–</div>
             <div style="font-size:.45rem;letter-spacing:.08em;color:var(--text-dim);margin-top:.15rem">SEITENAUFRUFE</div>
-            <div style="font-size:.38rem;color:rgba(0,200,255,0.45);margin-top:.2rem">wave-bite.com/GA4</div>
+            <div style="font-size:.38rem;color:rgba(0,200,255,0.45);margin-top:.2rem">Eigener Browser · localStorage</div>
           </div>
           <!-- BunBo Glide App -->
           <div style="padding:.65rem;background:linear-gradient(135deg,rgba(255,100,50,0.06),rgba(201,168,76,0.03));border:1px solid rgba(255,100,50,0.18);border-radius:10px">
@@ -3176,7 +3176,7 @@ setInterval(tick,1000); tick();
   // ── QR Code Tracking (from QR Bridge localStorage) ──
   var qrWW   = ls('wb_qr_ww_count');    // QR Wasserwerte Scans
   var qrWB   = ls('wb_qr_wb_count');    // QR Wave Bite App Scans
-  var gInfo  = ls('wb_gewaesser_views'); // Gewässerinfo page views
+  var gInfo  = ls('wb_wl_total_views') || ls('wb_gewaesser_views'); // Gewässerinfo/Wasserlage Seitenaufrufe
   var bunbo  = ls('wb_bunbo_glide');     // BunBo Glide App users
   set('kpi-qr-ww',       qrWW   || '281+');
   set('kpi-qr-wb',       qrWB   || '—');
