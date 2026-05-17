@@ -1,5 +1,15 @@
-const CACHE = 'wavebite-ceo-v5';
-const ASSETS = ['./', './index.html', './favicon.ico', './icon-192.png', './icon-512.png', './Dashboard_Icon.png'];
+const CACHE = 'wavebite-ceo-v6';
+const ASSETS = [
+  './',
+  './index.html',
+  './manifest.json',
+  './favicon.ico',
+  './icon-192.png',
+  './icon-512.png',
+  './Dashboard_Icon.png',
+  './wasserlage-icon-192.png',
+  './wasserlage-icon-512.png'
+];
 
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(ASSETS)));
@@ -15,7 +25,7 @@ self.addEventListener('activate', e => {
   self.clients.claim();
 });
 
-// Network-first for HTML — always fetch fresh index.html
+// Network-first für HTML — immer frische index.html laden
 self.addEventListener('fetch', e => {
   if (e.request.url.includes('index.html') || e.request.mode === 'navigate') {
     e.respondWith(

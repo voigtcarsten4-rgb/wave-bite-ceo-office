@@ -1102,9 +1102,15 @@
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#020810">
   <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="WaveBite CEO">
+  <link rel="apple-touch-icon" sizes="192x192" href="icon-192.png">
+  <link rel="apple-touch-icon" sizes="512x512" href="icon-512.png">
   <link rel="apple-touch-icon" href="Dashboard_Icon.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="icon-512.png">
+  <link rel="shortcut icon" href="favicon.ico">
 </head>
 <body>
 <!-- COOKIE & PWA CONSENT BANNER -->
@@ -3273,6 +3279,19 @@ window.addEventListener('load', function(){
 })();
 });
 
+// ===================== SERVICE WORKER REGISTRIERUNG =====================
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', function() {
+    navigator.serviceWorker.register('./sw.js', { scope: './' })
+      .then(function(reg) {
+        console.log('[PWA] Service Worker registriert:', reg.scope);
+      })
+      .catch(function(err) {
+        console.warn('[PWA] Service Worker Fehler:', err);
+      });
+  });
+}
+
 // ===================== PWA INSTALL PROMPT =====================
 let _pwaPrompt = null;
 window.addEventListener('beforeinstallprompt', function(e){
@@ -3293,6 +3312,14 @@ if(_pwaBtn) _pwaBtn.addEventListener('click', function(){
     }
     _pwaPrompt = null;
   });
+});
+
+// Wenn bereits als PWA installiert — install-bar verstecken
+window.addEventListener('appinstalled', function(){
+  const bar = document.getElementById('pwa-install-bar');
+  if(bar) bar.style.display = 'none';
+  localStorage.setItem('pwa_dismissed','1');
+  console.log('[PWA] App erfolgreich installiert');
 });
 
 </script>
