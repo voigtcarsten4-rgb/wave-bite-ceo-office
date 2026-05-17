@@ -4252,13 +4252,13 @@ function loadCommunityKPIs() {
         const recentPosts = [...posts].reverse().slice(0, 5);
         feedEl.innerHTML = recentPosts.map(p => {
           const ago = p.ts ? timeAgo(p.ts) : '';
-          return \`<div class="ck-post">
+          return `<div class="ck-post">
             <div class="ck-post-emoji">\${p.emoji || '💬'}</div>
             <div class="ck-post-body">
               <div class="ck-post-text">\${escHtml(p.text)}</div>
               <div class="ck-post-meta">\${ago} · \${p.type || 'Nutzer'}</div>
             </div>
-          </div>\`;
+          </div>`;
         }).join('') || '<div style="color:rgba(255,255,255,.3);font-size:.8rem">Noch keine Posts</div>';
 
         // Also show latest rating if any
@@ -4266,13 +4266,13 @@ function loadCommunityKPIs() {
           const lastRating = ratings[ratings.length - 1];
           const stars = '★'.repeat(lastRating.stars) + '☆'.repeat(5 - lastRating.stars);
           if (lastRating.comment) {
-            feedEl.innerHTML += \`<div class="ck-post" style="border-top:1px solid rgba(251,191,36,.15);margin-top:.5rem">
+            feedEl.innerHTML += `<div class="ck-post" style="border-top:1px solid rgba(251,191,36,.15);margin-top:.5rem">
               <div class="ck-post-emoji">⭐</div>
               <div class="ck-post-body">
                 <div class="ck-post-text" style="color:#fbbf24">\${stars} · "\${escHtml(lastRating.comment)}"</div>
                 <div class="ck-post-meta">Letzte Bewertung · \${timeAgo(lastRating.ts)}</div>
               </div>
-            </div>\`;
+            </div>`;
           }
         }
       }
