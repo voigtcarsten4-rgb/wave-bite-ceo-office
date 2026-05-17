@@ -1,0 +1,3139 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>WAVE BITE // CAPITÄNS BRIDGE — JARVIS Edition</title>
+<!-- CDN scripts moved to bottom of body for instant boot-screen render -->
+<style>
+  :root {
+    --void: #020810;
+    --deep: #04101e;
+    --panel: #071828;
+    --blue: #00c8ff;
+    --teal: #00d4aa;
+    --gold: #c9a84c;
+    --gold-dim: rgba(201,168,76,0.15);
+    --red: #ff4444;
+    --green: #00ff88;
+    --text: #d0e8f8;
+    --text-dim: #4a7a9b;
+    --glow-blue: 0 0 20px rgba(0,200,255,0.4);
+    --glow-gold: 0 0 20px rgba(201,168,76,0.5);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{width:100%;overflow-x:hidden;background:var(--void);color:var(--text);font-family:'Segoe UI',system-ui,sans-serif;font-size:14px}
+
+  /* BOOT SEQUENCE */
+  #boot{position:fixed;inset:0;background:var(--void);z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;transition:opacity 0.8s}
+  #boot.fade{opacity:0;pointer-events:none}
+  .boot-logo{font-size:3rem;font-weight:900;letter-spacing:.25em;color:var(--blue);text-shadow:var(--glow-blue)}
+  .boot-sub{font-size:.9rem;letter-spacing:.3em;color:var(--gold);margin-top:.5rem}
+  .boot-bar-wrap{width:320px;height:2px;background:rgba(0,200,255,0.1);margin-top:2rem;border-radius:2px;overflow:hidden}
+  .boot-bar{height:100%;width:0;background:linear-gradient(90deg,var(--blue),var(--teal));animation:bootfill 2.6s ease-out forwards}
+  .boot-lines{margin-top:1.5rem;font-size:.7rem;color:var(--text-dim);letter-spacing:.05em;line-height:1.8;text-align:left}
+  @keyframes bootfill{to{width:100%}}
+  .boot-line{opacity:0;animation:showline 0.3s ease forwards}
+
+  /* HEX GRID */
+  .hex-bg{position:fixed;top:0;left:0;width:100%;height:100%;opacity:.04;pointer-events:none;z-index:0;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='100'%3E%3Cpath fill='none' stroke='%2300c8ff' stroke-width='0.5' d='M28 0 L56 16 L56 50 L28 66 L0 50 L0 16 Z'/%3E%3Cpath fill='none' stroke='%2300c8ff' stroke-width='0.5' d='M28 66 L56 82 L56 116 L28 132 L0 116 L0 82 Z'/%3E%3C/svg%3E")}
+
+  /* NAVBAR */
+  nav{position:sticky;top:0;z-index:100;background:rgba(2,8,16,0.92);backdrop-filter:blur(24px);border-bottom:1px solid rgba(0,200,255,0.12);padding:0 2rem;display:flex;align-items:center;gap:1.5rem;height:56px}
+  .nav-brand{font-size:1rem;font-weight:900;letter-spacing:.2em;color:var(--blue);text-shadow:var(--glow-blue);white-space:nowrap}
+  .nav-brand span{color:var(--gold)}
+  .nav-sep{flex:1}
+  .nav-pill{font-size:.65rem;letter-spacing:.1em;padding:.25rem .75rem;border:1px solid rgba(0,200,255,0.25);border-radius:20px;color:var(--blue);cursor:pointer;transition:all .2s}
+  .nav-pill:hover,.nav-pill.active{background:rgba(0,200,255,0.1);border-color:var(--blue)}
+  .nav-clock{font-size:.85rem;letter-spacing:.08em;color:var(--gold);font-variant-numeric:tabular-nums;white-space:nowrap}
+  .nav-status{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 8px var(--green);animation:pulse 2s infinite}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+  @keyframes radarSweep{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+  @keyframes radarPing{0%{opacity:.8;transform:scale(1)}100%{opacity:0;transform:scale(2.5)}}
+  .radar-sweep{transform-origin:50px 50px;animation:radarSweep 3s linear infinite}
+  .radar-ping{animation:radarPing 2s ease-out infinite}
+  .tracking-bar{transition:width .8s cubic-bezier(.4,0,.2,1)}
+
+  /* LAYOUT */
+  .page{position:relative;z-index:1;padding:1.5rem 2rem;max-width:1600px;margin:0 auto}
+  .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem}
+  .grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1.25rem}
+  .grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem}
+  .grid-auto{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:1.25rem}
+  section{margin-bottom:2rem}
+  .section-title{font-size:.65rem;letter-spacing:.25em;color:var(--blue);margin-bottom:1rem;display:flex;align-items:center;gap:.75rem}
+  .section-title::before{content:'';display:inline-block;width:24px;height:1px;background:var(--blue)}
+  .section-title::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,rgba(0,200,255,0.3),transparent)}
+
+  /* PANELS */
+  .panel{background:linear-gradient(145deg,rgba(7,24,40,0.9),rgba(4,16,30,0.95));border:1px solid rgba(0,200,255,0.12);border-radius:12px;padding:1.25rem;position:relative;overflow:hidden;transition:transform .3s,border-color .3s}
+  .panel:hover{border-color:rgba(0,200,255,0.3)}
+  .panel-gold{border-color:rgba(201,168,76,0.2)}
+  .panel-gold:hover{border-color:rgba(201,168,76,0.45)}
+  .panel::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(0,200,255,0.4),transparent)}
+  .panel-gold::before{background:linear-gradient(90deg,transparent,rgba(201,168,76,0.5),transparent)}
+
+  /* ARC REACTOR DECO */
+  .arc-deco{position:absolute;width:120px;height:120px;right:-30px;top:-30px;opacity:.05}
+  .arc-deco circle{fill:none;stroke:var(--blue);stroke-width:1}
+
+  /* KPI STRIP */
+  .kpi-strip{display:grid;grid-template-columns:repeat(6,1fr);gap:1rem;margin-bottom:1.5rem}
+  .kpi-card{position:relative;background:rgba(7,24,40,0.9);border:1px solid rgba(0,200,255,0.1);border-radius:10px;padding:1rem;text-align:center;transition:all .3s;overflow:hidden}
+  .kpi-card:hover{border-color:var(--blue);box-shadow:var(--glow-blue)}
+  .kpi-arc{display:block;margin:0 auto .5rem}
+  .kpi-val{font-size:1.1rem;font-weight:700;color:var(--blue);display:block}
+  .kpi-label{font-size:.6rem;letter-spacing:.1em;color:var(--text-dim);margin-top:.15rem;display:block}
+  .kpi-delta{font-size:.65rem;margin-top:.25rem}
+  .kpi-delta.up{color:var(--green)}
+  .kpi-delta.down{color:var(--red)}
+
+  /* HERO */
+  #hero{position:relative;height:auto;min-height:420px;border:1px solid rgba(0,200,255,0.15);border-radius:16px;overflow:visible;margin-bottom:1.5rem;background:radial-gradient(ellipse at 50% 40%,rgba(0,50,100,0.55) 0%,rgba(2,8,16,0.97) 75%)}
+  #sphere-canvas{position:absolute;inset:0;width:100%;height:100%}
+  .hero-overlay{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;pointer-events:none}
+  .hero-title{font-size:2.5rem;font-weight:900;letter-spacing:.15em;background:linear-gradient(135deg,#fff 30%,var(--blue));-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-align:center;line-height:1}
+  .hero-sub{font-size:.8rem;letter-spacing:.3em;color:var(--teal);margin-top:.5rem}
+  .hero-rings{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none}
+  .h-ring{position:absolute;border-radius:50%;border:1px solid}
+  .countdown-strip{position:absolute;bottom:1rem;left:50%;transform:translateX(-50%);display:flex;gap:1.5rem;background:rgba(2,8,16,0.7);border:1px solid rgba(201,168,76,0.25);border-radius:8px;padding:.5rem 1.5rem}
+  .cd-unit{text-align:center}
+  .cd-num{font-size:1.4rem;font-weight:700;color:var(--gold);display:block;line-height:1}
+  .cd-label{font-size:.55rem;letter-spacing:.15em;color:var(--text-dim)}
+  .hero-stat{position:absolute;background:rgba(2,8,16,0.75);border:1px solid rgba(0,200,255,0.2);border-radius:8px;padding:.4rem .8rem;font-size:.7rem;color:var(--blue)}
+  .hero-stat.left{left:1.5rem;top:50%;transform:translateY(-50%)}
+  .hero-stat.right{right:1.5rem;top:50%;transform:translateY(-50%)}
+
+  /* JARVIS AI PANEL */
+  .jarvis-thoughts{font-size:.8rem;color:var(--teal);min-height:1.2em;transition:opacity .5s}
+  .jarvis-line{display:flex;align-items:center;gap:.5rem;margin-bottom:.35rem;font-size:.75rem}
+  .jarvis-line .dot{width:5px;height:5px;border-radius:50%;background:var(--blue);flex-shrink:0}
+
+  /* PROJECT CARDS */
+  .project-card{background:linear-gradient(145deg,rgba(7,24,40,0.95),rgba(4,16,30,0.98));border:1px solid rgba(0,200,255,0.1);border-radius:12px;padding:1.25rem;transition:all .3s;cursor:pointer;position:relative;overflow:hidden}
+  .project-card:hover{border-color:rgba(0,200,255,0.35);box-shadow:0 4px 30px rgba(0,200,255,0.1);transform:translateY(-2px)}
+  .pc-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:1rem}
+  .pc-icon{width:40px;height:40px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1.3rem;flex-shrink:0}
+  .pc-title{font-size:.85rem;font-weight:700;color:#fff;margin-bottom:.2rem}
+  .pc-status{font-size:.6rem;letter-spacing:.1em;padding:.15rem .5rem;border-radius:20px;display:inline-block}
+  .status-live{background:rgba(0,255,136,0.1);color:var(--green);border:1px solid rgba(0,255,136,0.3)}
+  .status-dev{background:rgba(0,200,255,0.1);color:var(--blue);border:1px solid rgba(0,200,255,0.3)}
+  .status-plan{background:rgba(201,168,76,0.1);color:var(--gold);border:1px solid rgba(201,168,76,0.3)}
+  .status-review{background:rgba(255,180,0,0.1);color:#ffb400;border:1px solid rgba(255,180,0,0.3)}
+  .pc-progress{display:flex;align-items:center;gap:.75rem;margin-bottom:.75rem}
+  .pc-pct{font-size:1.5rem;font-weight:900;color:var(--blue);line-height:1}
+  .pc-bar-wrap{flex:1;height:4px;background:rgba(0,200,255,0.1);border-radius:2px}
+  .pc-bar{height:100%;background:linear-gradient(90deg,var(--blue),var(--teal));border-radius:2px;transition:width 1s ease}
+  .pc-actions{display:flex;flex-direction:column;gap:.3rem}
+  .pc-action{font-size:.65rem;color:var(--text-dim);display:flex;align-items:center;gap:.4rem}
+  .pc-action::before{content:'›';color:var(--blue)}
+  .pc-links{display:flex;gap:.4rem;margin-top:.75rem;flex-wrap:wrap}
+  .pc-link{font-size:.6rem;padding:.2rem .5rem;border:1px solid rgba(0,200,255,0.2);border-radius:4px;color:var(--blue);text-decoration:none;transition:all .2s}
+  .pc-link:hover{background:rgba(0,200,255,0.1)}
+  .pc-stats{display:grid;grid-template-columns:1fr 1fr;gap:.4rem;margin-top:.5rem}
+  .pc-stat{background:rgba(0,200,255,0.04);border-radius:6px;padding:.3rem .5rem;font-size:.65rem;color:var(--text-dim)}
+  .pc-stat span{color:var(--text);font-weight:600;display:block}
+
+  /* CEO TODAY */
+  .priority-item{display:flex;align-items:flex-start;gap:.75rem;padding:.6rem;border-radius:8px;margin-bottom:.4rem;background:rgba(0,200,255,0.03);border:1px solid rgba(0,200,255,0.06);transition:all .2s}
+  .priority-item:hover{background:rgba(0,200,255,0.06)}
+  .priority-num{width:20px;height:20px;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:700;flex-shrink:0}
+  .p1{background:rgba(255,68,68,0.2);color:var(--red);border:1px solid rgba(255,68,68,0.3)}
+  .p2{background:rgba(201,168,76,0.2);color:var(--gold);border:1px solid rgba(201,168,76,0.3)}
+  .p3{background:rgba(0,200,255,0.2);color:var(--blue);border:1px solid rgba(0,200,255,0.3)}
+  .priority-text{font-size:.78rem;color:var(--text);line-height:1.4}
+  .priority-tag{font-size:.6rem;color:var(--text-dim);margin-top:.15rem}
+
+  /* CALENDAR */
+  .cal-event{display:flex;gap:.75rem;padding:.5rem;border-radius:6px;margin-bottom:.35rem;border-left:3px solid var(--blue)}
+  .cal-event.urgent{border-color:var(--red)}
+  .cal-event.gold{border-color:var(--gold)}
+  .cal-time{font-size:.7rem;color:var(--text-dim);min-width:45px;flex-shrink:0;padding-top:.1rem}
+  .cal-title{font-size:.78rem;color:var(--text)}
+  .cal-meta{font-size:.6rem;color:var(--text-dim)}
+
+  /* MAIL */
+  .mail-item{display:flex;gap:.75rem;padding:.6rem;border-radius:8px;margin-bottom:.35rem;background:rgba(0,200,255,0.02);border:1px solid rgba(0,200,255,0.06);cursor:pointer;transition:all .2s}
+  .mail-item:hover{background:rgba(0,200,255,0.06)}
+  .mail-avatar{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:700;flex-shrink:0}
+  .mail-subject{font-size:.75rem;color:var(--text);font-weight:600;margin-bottom:.15rem}
+  .mail-preview{font-size:.65rem;color:var(--text-dim);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .mail-time{font-size:.6rem;color:var(--text-dim);white-space:nowrap}
+  .mail-unread{width:6px;height:6px;border-radius:50%;background:var(--blue);flex-shrink:0;margin-top:4px}
+
+  /* SOCIAL MEDIA */
+  .social-card{background:rgba(7,24,40,0.9);border:1px solid rgba(0,200,255,0.1);border-radius:10px;padding:1rem;display:flex;flex-direction:column;align-items:center;gap:.5rem;transition:all .3s}
+  .social-card:hover{border-color:rgba(0,200,255,0.3);transform:translateY(-2px)}
+  .social-icon{font-size:1.5rem}
+  .social-val{font-size:1.1rem;font-weight:700;color:var(--blue)}
+  .social-label{font-size:.6rem;color:var(--text-dim);letter-spacing:.05em}
+  .social-delta{font-size:.65rem;color:var(--green)}
+
+  /* SCHEDULED TASKS */
+  .task-row{display:flex;align-items:center;gap:.75rem;padding:.6rem;border-radius:8px;margin-bottom:.35rem;background:rgba(7,24,40,0.6);border:1px solid rgba(0,200,255,0.08)}
+  .task-indicator{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+  .task-indicator.active{background:var(--green);box-shadow:0 0 8px var(--green);animation:pulse 2s infinite}
+  .task-indicator.idle{background:var(--text-dim)}
+  .task-indicator.warn{background:var(--gold);animation:pulse 2s infinite}
+  .task-name{font-size:.78rem;color:var(--text);flex:1}
+  .task-schedule{font-size:.6rem;color:var(--text-dim)}
+  .task-last{font-size:.6rem;color:var(--teal)}
+
+  /* LIVE DATA */
+  .gauge-wrap{display:flex;flex-direction:column;align-items:center;gap:.3rem}
+  .gauge-val{font-size:1.3rem;font-weight:700;color:var(--teal)}
+  .gauge-label{font-size:.6rem;letter-spacing:.1em;color:var(--text-dim);text-align:center}
+  .gauge-unit{font-size:.65rem;color:var(--text-dim)}
+
+  /* FINANCE */
+  .funding-bar{height:8px;border-radius:4px;background:rgba(0,200,255,0.1);margin:.5rem 0;overflow:hidden}
+  .funding-fill{height:100%;border-radius:4px;background:linear-gradient(90deg,var(--blue),var(--teal));transition:width 1.2s ease}
+  .investor-row{display:flex;align-items:center;gap:.75rem;padding:.5rem;border-radius:6px;margin-bottom:.3rem;background:rgba(0,200,255,0.03)}
+  .inv-stage{font-size:.6rem;padding:.15rem .4rem;border-radius:4px;background:rgba(201,168,76,0.15);color:var(--gold);border:1px solid rgba(201,168,76,0.25)}
+  .inv-name{font-size:.75rem;color:var(--text);flex:1}
+  .inv-amount{font-size:.75rem;color:var(--blue);font-weight:600}
+  .inv-status{font-size:.6rem;color:var(--text-dim)}
+
+  /* CHART CONTAINERS */
+  .chart-box{position:relative;height:200px;width:100%}
+
+  /* MEDIA HUB */
+  .media-item{display:flex;gap:.75rem;padding:.5rem;border-radius:6px;margin-bottom:.35rem;border-left:2px solid var(--blue);background:rgba(0,200,255,0.02)}
+  .media-thumb{width:48px;height:36px;border-radius:4px;background:rgba(0,200,255,0.08);display:flex;align-items:center;justify-content:center;font-size:.9rem;flex-shrink:0}
+  .media-title{font-size:.72rem;color:var(--text);margin-bottom:.15rem}
+  .media-meta{font-size:.6rem;color:var(--text-dim)}
+
+  /* JARVIS TICKER */
+  #ticker{position:fixed;bottom:0;left:0;right:0;height:28px;background:rgba(2,8,16,0.95);border-top:1px solid rgba(0,200,255,0.1);display:flex;align-items:center;overflow:hidden;z-index:50}
+  .ticker-label{font-size:.6rem;letter-spacing:.15em;color:var(--blue);padding:0 1rem;white-space:nowrap;border-right:1px solid rgba(0,200,255,0.2)}
+  .ticker-scroll{display:flex;gap:3rem;animation:scroll-left 40s linear infinite;white-space:nowrap;font-size:.65rem;color:var(--text-dim);padding-left:2rem}
+  .ticker-item span{color:var(--blue)}
+  @keyframes scroll-left{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+
+  /* NOTIFICATION */
+  #notif{position:fixed;top:70px;right:1.5rem;z-index:200;display:flex;flex-direction:column;gap:.5rem}
+  .notif-toast{background:rgba(7,24,40,0.95);border:1px solid rgba(0,200,255,0.25);border-radius:8px;padding:.75rem 1rem;font-size:.75rem;color:var(--text);max-width:280px;transform:translateX(120%);transition:transform .4s;box-shadow:0 4px 20px rgba(0,0,0,0.4)}
+  .notif-toast.show{transform:translateX(0)}
+  .notif-toast.gold{border-color:rgba(201,168,76,0.4)}
+
+  /* RISK RADAR */
+  .risk-item{display:flex;align-items:center;gap:.75rem;padding:.5rem;border-radius:6px;margin-bottom:.3rem}
+  .risk-sev{width:42px;font-size:.6rem;font-weight:700;text-align:center;padding:.2rem .3rem;border-radius:4px;flex-shrink:0}
+  .risk-high{background:rgba(255,68,68,0.15);color:var(--red)}
+  .risk-med{background:rgba(255,180,0,0.15);color:#ffb400}
+  .risk-low{background:rgba(0,255,136,0.15);color:var(--green)}
+  .risk-text{font-size:.75rem;color:var(--text)}
+
+  /* MODAL */
+  .modal-overlay{display:none;position:fixed;inset:0;background:rgba(2,8,16,0.85);z-index:500;align-items:center;justify-content:center}
+  .modal-overlay.open{display:flex}
+  .modal{background:var(--panel);border:1px solid rgba(0,200,255,0.25);border-radius:16px;padding:2rem;max-width:560px;width:90%;position:relative;max-height:80vh;overflow-y:auto}
+  .modal h3{color:var(--blue);margin-bottom:1rem;font-size:1rem;letter-spacing:.1em}
+  .modal-close{position:absolute;top:1rem;right:1rem;background:none;border:1px solid rgba(0,200,255,0.2);color:var(--blue);width:28px;height:28px;border-radius:50%;cursor:pointer;font-size:.9rem;display:flex;align-items:center;justify-content:center}
+
+  /* PINNED */
+  .pinned-card{display:flex;gap:.75rem;padding:.75rem;border-radius:8px;background:rgba(201,168,76,0.04);border:1px solid rgba(201,168,76,0.15);margin-bottom:.5rem}
+  .pin-icon{font-size:1rem;flex-shrink:0}
+  .pin-title{font-size:.8rem;color:var(--text);font-weight:600;margin-bottom:.2rem}
+  .pin-body{font-size:.7rem;color:var(--text-dim);line-height:1.5}
+
+  /* OCEAN CANVAS */
+  #ocean-canvas{position:fixed;inset:0;z-index:0;pointer-events:none}
+
+  /* SCANLINE */
+  .scanline{position:fixed;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(0,200,255,0.18),transparent);opacity:.5;z-index:998;pointer-events:none;animation:scan 12s linear infinite}
+  @keyframes scan{from{top:56px}to{top:100vh}}
+
+  /* CREAM PANELS */
+  .panel-cream{background:linear-gradient(145deg,rgba(255,248,220,0.07),rgba(201,168,76,0.1),rgba(7,24,40,0.92));border:1px solid rgba(255,243,200,0.2)!important}
+  .panel-cream::before{background:linear-gradient(90deg,transparent,rgba(201,168,76,0.5),transparent)!important}
+  .panel-cream:hover{border-color:rgba(255,243,200,0.4)!important;box-shadow:0 8px 32px rgba(255,220,140,0.07)!important}
+
+  /* KPI CREAM */
+  .kpi-card.cream{background:linear-gradient(145deg,rgba(255,248,220,0.07),rgba(201,168,76,0.09));border-color:rgba(255,243,200,0.2)}
+  .kpi-card.cream:hover{border-color:rgba(201,168,76,0.5);box-shadow:0 0 20px rgba(201,168,76,0.2)}
+  .kpi-accent-bar{position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);opacity:.7}
+  .kpi-pulse-ring{position:absolute;top:10px;right:10px;width:8px;height:8px}
+  .kpi-pulse-ring::before,.kpi-pulse-ring::after{content:'';position:absolute;inset:0;border-radius:50%;background:var(--red);animation:kpiring 1.8s ease-out infinite}
+  .kpi-pulse-ring::after{animation-delay:.9s}
+  @keyframes kpiring{0%{transform:scale(1);opacity:.9}100%{transform:scale(4);opacity:0}}
+  .kpi-pulse-dot{position:absolute;inset:0;border-radius:50%;background:var(--red)}
+
+  /* NEURAL CANVAS */
+  #neural-canvas{width:100%;height:220px;border-radius:10px;display:block}
+
+  /* HEARTBEAT */
+  #heartbeat-canvas{width:100%;height:52px;display:block;opacity:.85;margin-top:.75rem}
+
+  /* AI BRAIN CARD */
+  .ai-brain-card{display:inline-flex;align-items:center;gap:.75rem;padding:.6rem 1rem;border-radius:10px;background:rgba(0,200,255,0.07);border:1px solid rgba(0,200,255,0.18);margin-bottom:.75rem}
+  .brain-icon{font-size:1.4rem;animation:brainpulse 2s ease-in-out infinite}
+  @keyframes brainpulse{0%,100%{filter:brightness(1)}50%{filter:brightness(1.6) hue-rotate(20deg)}}
+
+  /* DASHBOARD LINKS */
+  .dash-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:.75rem}
+  .dash-link{display:flex;align-items:center;gap:.75rem;padding:.75rem 1rem;border-radius:10px;text-decoration:none;color:inherit;background:linear-gradient(135deg,rgba(255,248,220,0.05),rgba(7,24,40,0.85));border:1px solid rgba(255,240,190,0.14);transition:all .25s;cursor:pointer}
+  .dash-link:hover{background:linear-gradient(135deg,rgba(255,248,220,0.1),rgba(15,40,75,0.85));border-color:rgba(255,243,200,0.3);transform:translateX(3px)}
+  .dash-icon-lg{font-size:1.4rem;flex-shrink:0}
+  .dash-name{font-size:.8rem;font-weight:600;color:var(--text);margin-bottom:.1rem}
+  .dash-desc{font-size:.65rem;color:var(--text-dim)}
+
+  /* CHIPS */
+  .chip{display:inline-flex;align-items:center;gap:3px;padding:.2rem .55rem;border-radius:20px;font-size:.6rem;font-weight:700;letter-spacing:.03em;white-space:nowrap}
+  .chip-success{background:rgba(0,212,170,.12);color:var(--teal);border:1px solid rgba(0,212,170,.25)}
+  .chip-warn{background:rgba(245,158,11,.12);color:#f59e0b;border:1px solid rgba(245,158,11,.25)}
+  .chip-danger{background:rgba(239,68,68,.1);color:var(--red);border:1px solid rgba(239,68,68,.25)}
+  .chip-info{background:rgba(96,165,250,.1);color:#60a5fa;border:1px solid rgba(96,165,250,.25)}
+  .chip-gold{background:var(--gold-dim);color:var(--gold);border:1px solid rgba(201,168,76,.25)}
+
+  /* TIMELINE */
+  .timeline{padding-left:1rem;position:relative}
+  .timeline::before{content:'';position:absolute;left:0;top:6px;bottom:6px;width:1px;background:linear-gradient(180deg,var(--gold),rgba(201,168,76,0.1))}
+  .tl-item{padding-bottom:1rem;padding-left:.85rem;position:relative}
+  .tl-item::before{content:'';position:absolute;left:-19px;top:5px;width:7px;height:7px;border-radius:50%;background:var(--gold);box-shadow:0 0 8px rgba(201,168,76,.6)}
+  .tl-date{font-size:.6rem;letter-spacing:.1em;color:var(--gold);margin-bottom:.2rem}
+  .tl-text{font-size:.78rem;color:var(--text);line-height:1.4}
+  .tl-sub{font-size:.65rem;color:var(--text-dim);margin-top:.1rem}
+
+  /* FILTER PILLS */
+  .pills{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:1rem}
+  .pill{padding:.3rem .9rem;border-radius:20px;font-size:.68rem;font-weight:600;cursor:pointer;border:1px solid rgba(0,200,255,0.2);background:transparent;color:var(--text-dim);transition:all .2s}
+  .pill:hover{border-color:var(--gold);color:var(--gold)}
+  .pill.active{background:var(--gold-dim);border-color:var(--gold);color:var(--gold)}
+
+  /* STRATEGIC RADAR GRID */
+  .radar-grid{display:grid;grid-template-columns:1fr 1fr;gap:.6rem}
+  .radar-item{display:flex;gap:.65rem;padding:.75rem;border-radius:8px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.04)}
+  .radar-icon{font-size:1.1rem;flex-shrink:0;margin-top:2px}
+  .radar-title{font-size:.75rem;font-weight:600;margin-bottom:.2rem}
+  .radar-desc{font-size:.65rem;color:var(--text-dim);line-height:1.5}
+
+  /* HIGHLIGHTED BUTTONS */
+  .btn-primary{display:inline-flex;align-items:center;gap:.4rem;padding:.45rem 1rem;border-radius:8px;background:linear-gradient(135deg,var(--blue),var(--teal));color:#020810;font-size:.72rem;font-weight:700;border:none;cursor:pointer;text-decoration:none;transition:all .2s;letter-spacing:.05em}
+  .btn-primary:hover{filter:brightness(1.15);transform:translateY(-1px);box-shadow:0 4px 16px rgba(0,200,255,0.35)}
+  .btn-gold{display:inline-flex;align-items:center;gap:.4rem;padding:.45rem 1rem;border-radius:8px;background:linear-gradient(135deg,var(--gold),#e8c977);color:#020810;font-size:.72rem;font-weight:700;border:none;cursor:pointer;text-decoration:none;transition:all .2s}
+  .btn-gold:hover{filter:brightness(1.1);transform:translateY(-1px);box-shadow:0 4px 16px rgba(201,168,76,0.4)}
+  .btn-outline{display:inline-flex;align-items:center;gap:.4rem;padding:.4rem .9rem;border-radius:8px;background:transparent;border:1px solid rgba(0,200,255,0.35);color:var(--blue);font-size:.72rem;font-weight:600;cursor:pointer;text-decoration:none;transition:all .2s}
+  .btn-outline:hover{background:rgba(0,200,255,0.08);border-color:var(--blue)}
+
+  /* NAV TOOL BUTTONS */
+  .nav-tool-btn{display:inline-flex;align-items:center;gap:.3rem;padding:.22rem .65rem;border-radius:6px;background:rgba(0,200,255,0.06);border:1px solid rgba(0,200,255,0.2);color:var(--blue);font-size:.62rem;font-weight:600;cursor:pointer;text-decoration:none;transition:all .2s;letter-spacing:.05em;white-space:nowrap}
+  .nav-tool-btn:hover{background:rgba(0,200,255,0.14);border-color:var(--blue);box-shadow:0 0 10px rgba(0,200,255,0.2);transform:translateY(-1px)}
+
+  /* TOOLBELT LINKS */
+  .tb-link{display:flex;align-items:center;gap:.6rem;padding:.45rem .65rem;border-radius:8px;background:rgba(7,24,40,0.6);border:1px solid rgba(0,200,255,0.08);color:var(--text);text-decoration:none;transition:all .2s;cursor:pointer}
+  .tb-link:hover{background:rgba(0,200,255,0.07);border-color:rgba(0,200,255,0.25);transform:translateX(3px)}
+  .tb-link>span:first-child{font-size:1rem;min-width:20px;text-align:center}
+  .tb-name{font-size:.68rem;font-weight:600;color:var(--text);line-height:1.3}
+  .tb-url{font-size:.57rem;color:var(--text-dim);margin-top:.1rem}
+  .tb-link>div{flex:1;min-width:0}
+  .tb-arrow{font-size:.75rem;color:var(--text-dim);opacity:.6;margin-left:auto}
+
+  /* DASH MODAL */
+  #dash-modal{position:fixed;inset:0;z-index:800;display:none;align-items:center;justify-content:center;background:rgba(2,8,16,0.7);backdrop-filter:blur(8px)}
+  #dash-modal.open{display:flex}
+
+  /* PROJECT MODAL */
+  #proj-modal{position:fixed;inset:0;z-index:801;display:none;align-items:center;justify-content:center;background:rgba(2,8,16,0.78);backdrop-filter:blur(12px);padding:1rem}
+  #proj-modal.open{display:flex}
+  .pm-box{background:linear-gradient(145deg,#071828,#04101e);border:1px solid rgba(0,200,255,0.2);border-radius:18px;width:min(680px,96vw);max-height:88vh;overflow-y:auto;position:relative;box-shadow:0 32px 100px rgba(0,0,0,0.7),0 0 60px rgba(0,200,255,0.06)}
+  .pm-box::-webkit-scrollbar{width:4px}.pm-box::-webkit-scrollbar-thumb{background:rgba(0,200,255,0.2);border-radius:4px}
+  .pm-top-bar{position:sticky;top:0;background:rgba(4,16,30,0.96);backdrop-filter:blur(12px);border-bottom:1px solid rgba(0,200,255,0.1);padding:.85rem 1.5rem;display:flex;align-items:center;justify-content:space-between;border-radius:18px 18px 0 0;z-index:2}
+  .pm-close{background:none;border:1px solid rgba(0,200,255,0.2);color:var(--text-dim);width:30px;height:30px;border-radius:50%;cursor:pointer;font-size:.8rem;display:flex;align-items:center;justify-content:center;transition:all .2s;flex-shrink:0}
+  .pm-close:hover{border-color:var(--blue);color:var(--blue)}
+  .pm-body{padding:1.5rem}
+  .pm-hero{display:flex;align-items:flex-start;gap:1.25rem;margin-bottom:1.5rem}
+  .pm-icon-lg{width:64px;height:64px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:2rem;flex-shrink:0}
+  .pm-name{font-size:1.3rem;font-weight:800;color:#fff;letter-spacing:.03em;margin-bottom:.35rem}
+  .pm-desc{font-size:.8rem;color:var(--text-dim);line-height:1.7;margin-bottom:1.25rem;padding:.75rem 1rem;border-left:2px solid rgba(0,200,255,0.3);background:rgba(0,200,255,0.03);border-radius:0 8px 8px 0}
+  .pm-progress-row{display:flex;align-items:center;gap:1.5rem;margin-bottom:1.25rem;padding:1rem;background:rgba(7,24,40,0.6);border-radius:10px;border:1px solid rgba(0,200,255,0.08)}
+  .pm-stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:.6rem;margin-bottom:1.25rem}
+  .pm-stat-item{background:rgba(7,24,40,0.7);border:1px solid rgba(0,200,255,0.08);border-radius:8px;padding:.6rem .75rem;text-align:center}
+  .pm-stat-val{font-size:1rem;font-weight:700;color:var(--blue);display:block;margin-bottom:.15rem}
+  .pm-stat-lbl{font-size:.58rem;color:var(--text-dim);letter-spacing:.08em}
+  .pm-actions-list{margin-bottom:1.25rem}
+  .pm-action-item{display:flex;align-items:center;gap:.6rem;padding:.5rem .75rem;border-radius:8px;background:rgba(7,24,40,0.5);margin-bottom:.35rem;font-size:.78rem;color:var(--text)}
+  .pm-action-item::before{content:'›';color:var(--blue);font-weight:700;font-size:1rem}
+  .pm-links-row{display:flex;flex-wrap:wrap;gap:.6rem;padding-top:1rem;border-top:1px solid rgba(0,200,255,0.08)}
+  .pm-open-btn{display:inline-flex;align-items:center;gap:.5rem;padding:.6rem 1.4rem;border-radius:10px;background:linear-gradient(135deg,var(--blue),var(--teal));color:#020810;font-size:.8rem;font-weight:800;border:none;cursor:pointer;text-decoration:none;transition:all .2s;letter-spacing:.04em}
+  .pm-open-btn:hover{filter:brightness(1.12);transform:translateY(-1px);box-shadow:0 6px 20px rgba(0,200,255,0.4)}
+  .pm-link-btn{display:inline-flex;align-items:center;gap:.4rem;padding:.5rem 1rem;border-radius:8px;background:transparent;border:1px solid rgba(0,200,255,0.25);color:var(--blue);font-size:.72rem;font-weight:600;cursor:pointer;text-decoration:none;transition:all .2s}
+  .pm-link-btn:hover{background:rgba(0,200,255,0.08);border-color:var(--blue)}
+  /* card click hint */
+  .project-card::after{content:'↗ öffnen';position:absolute;bottom:.75rem;right:.9rem;font-size:.58rem;letter-spacing:.1em;color:var(--blue);opacity:0;transition:opacity .25s}
+  .project-card:hover::after{opacity:.7}
+  .dash-modal-box{background:linear-gradient(145deg,#071828,#04101e);border:1px solid rgba(0,200,255,0.25);border-radius:16px;padding:2rem;width:min(560px,90vw);position:relative;box-shadow:0 24px 80px rgba(0,0,0,0.6),0 0 40px rgba(0,200,255,0.08)}
+  .dash-modal-box::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--blue),transparent);border-radius:16px 16px 0 0}
+  .dash-modal-close{position:absolute;top:.9rem;right:.9rem;background:none;border:1px solid rgba(0,200,255,0.2);color:var(--text-dim);width:28px;height:28px;border-radius:50%;cursor:pointer;font-size:.8rem;display:flex;align-items:center;justify-content:center;transition:all .2s}
+  .dash-modal-close:hover{border-color:var(--blue);color:var(--blue)}
+
+  body{padding-bottom:36px}
+  @media(max-width:900px){.kpi-strip{grid-template-columns:repeat(3,1fr)}.grid-3,.grid-4{grid-template-columns:1fr 1fr}}
+  @media(max-width:600px){.kpi-strip{grid-template-columns:repeat(2,1fr)}.grid-2,.grid-3,.grid-4{grid-template-columns:1fr}}
+  /* ---- AGENT CARDS ---- */
+  .agent-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-top:1rem}
+  .agent-card{background:linear-gradient(135deg,rgba(7,24,40,0.9),rgba(4,16,30,0.95));border:1px solid rgba(0,200,255,0.15);border-radius:14px;padding:1.25rem;cursor:pointer;transition:all .25s;position:relative;overflow:hidden}
+  .agent-card::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,transparent 60%,rgba(0,200,255,0.04));pointer-events:none}
+  .agent-card:hover{border-color:rgba(0,200,255,0.5);transform:translateY(-2px);box-shadow:0 8px 32px rgba(0,200,255,0.12)}
+  .agent-card.gold-border{border-color:rgba(201,168,76,0.3)}
+  .agent-card.gold-border:hover{border-color:var(--gold);box-shadow:0 8px 32px rgba(201,168,76,0.15)}
+  .agent-icon{font-size:2rem;margin-bottom:.6rem}
+  .agent-name{font-size:.8rem;font-weight:700;color:var(--text);letter-spacing:.06em;margin-bottom:.25rem}
+  .agent-role{font-size:.6rem;letter-spacing:.12em;color:var(--blue);margin-bottom:.7rem}
+  .agent-status{display:inline-flex;align-items:center;gap:.35rem;font-size:.58rem;padding:.2rem .55rem;border-radius:20px;font-weight:600;margin-bottom:.75rem}
+  .agent-status.live{background:rgba(0,212,170,0.1);color:var(--teal);border:1px solid rgba(0,212,170,0.25)}
+  .agent-status.beta{background:rgba(201,168,76,0.1);color:var(--gold);border:1px solid rgba(201,168,76,0.25)}
+  .agent-status.soon{background:rgba(120,120,160,0.1);color:#8888aa;border:1px solid rgba(120,120,160,0.2)}
+  .agent-skills{display:flex;flex-wrap:wrap;gap:.3rem;margin-bottom:.85rem}
+  .agent-skill{font-size:.55rem;padding:.18rem .45rem;border-radius:6px;background:rgba(0,200,255,0.06);border:1px solid rgba(0,200,255,0.12);color:var(--text-dim)}
+  .agent-insight{font-size:.65rem;color:var(--text-dim);line-height:1.5;font-style:italic;border-top:1px solid rgba(0,200,255,0.08);padding-top:.65rem}
+  .agent-launch-btn{display:inline-flex;align-items:center;gap:.4rem;padding:.3rem .8rem;border-radius:8px;background:rgba(0,200,255,0.08);border:1px solid rgba(0,200,255,0.2);color:var(--blue);font-size:.6rem;font-weight:600;cursor:pointer;transition:all .2s;text-decoration:none;margin-top:.65rem}
+  .agent-launch-btn:hover{background:rgba(0,200,255,0.15);border-color:var(--blue)}
+  .bwl-module{background:rgba(201,168,76,0.04);border:1px solid rgba(201,168,76,0.15);border-radius:10px;padding:.85rem 1rem;display:flex;align-items:flex-start;gap:.75rem}
+  .bwl-module-icon{font-size:1.3rem;flex-shrink:0;margin-top:.1rem}
+  .bwl-module-title{font-size:.7rem;font-weight:700;color:var(--gold);margin-bottom:.2rem}
+  .bwl-module-desc{font-size:.62rem;color:var(--text-dim);line-height:1.5}
+  /* ---- MOBILE IMPROVEMENTS ---- */
+  @media(max-width:768px){
+    nav{padding:0 .75rem;gap:.5rem;overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+    nav::-webkit-scrollbar{display:none}
+    .nav-pill{white-space:nowrap;flex-shrink:0;min-height:44px;display:flex;align-items:center}
+    .page{padding:0 .75rem 6rem}
+    section{padding:1.25rem 0}
+    .agent-grid{grid-template-columns:1fr!important}
+    #quick-actions-bar{bottom:12px;right:.75rem;flex-direction:row;gap:.4rem}
+    #quick-actions-bar .btn-gold,#quick-actions-bar .btn-primary,#quick-actions-bar .btn-outline{font-size:.58rem;padding:.4rem .65rem;min-height:44px}
+    .pm-box{max-height:90vh;border-radius:14px}
+    .kpi-val{font-size:1.4rem}
+  }
+
+  /* GLITCH */
+  @keyframes glitch{0%,92%,100%{clip-path:none;transform:none}93%{clip-path:polygon(0 20%,100% 20%,100% 25%,0 25%);transform:translateX(-3px)}96%{clip-path:polygon(0 60%,100% 60%,100% 65%,0 65%);transform:translateX(3px)}}
+  .glitch{animation:glitch 5s infinite}
+
+  /* ═══════════════════════════════════════════════════════
+     CAPTAIN'S BRIDGE — 3-COLUMN PREMIUM COCKPIT LAYOUT
+     ═══════════════════════════════════════════════════════ */
+  .bridge-cockpit{display:grid;grid-template-columns:256px 1fr 256px;min-height:420px;position:relative;z-index:2}
+  .bridge-left,.bridge-right{padding:1.25rem 1rem;display:flex;flex-direction:column;gap:.55rem}
+  .bridge-left{border-right:1px solid rgba(0,200,255,0.09)}
+  .bridge-right{border-left:1px solid rgba(0,200,255,0.09)}
+  .bridge-center{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:1.25rem .75rem;position:relative;gap:.35rem}
+
+  /* Panel headers */
+  .bpanel-title{font-size:.5rem;letter-spacing:.22em;color:var(--blue);display:flex;align-items:center;gap:.5rem;margin-bottom:.15rem;padding-bottom:.4rem;border-bottom:1px solid rgba(0,200,255,0.08)}
+  .bpanel-title::before{content:'';width:14px;height:1px;background:var(--blue);flex-shrink:0}
+
+  /* Stat rows in left/right panels */
+  .b-stat-row{display:flex;align-items:center;justify-content:space-between;padding:.32rem .5rem;background:rgba(0,200,255,0.025);border:1px solid rgba(0,200,255,0.07);border-radius:6px;gap:.35rem}
+  .b-stat-label{font-size:.48rem;letter-spacing:.1em;color:var(--text-dim);white-space:nowrap;flex-shrink:0}
+
+  /* Priority items */
+  .b-pri-item{font-size:.63rem;color:var(--text);padding:.28rem .5rem;border-radius:5px;border-left:2px solid;background:rgba(0,0,0,0.18);line-height:1.35}
+  .b-p1{border-color:var(--red);background:rgba(255,68,68,0.04)}
+  .b-p2{border-color:var(--gold);background:rgba(201,168,76,0.04)}
+  .b-p3{border-color:var(--blue);background:rgba(0,200,255,0.03)}
+
+  /* KPI items right panel */
+  .b-kpi-item{display:flex;justify-content:space-between;align-items:center;padding:.32rem .5rem;border-radius:6px;background:rgba(0,200,255,0.025);border:1px solid rgba(0,200,255,0.07)}
+  .b-kpi-val{font-size:.85rem;font-weight:700;color:var(--blue)}
+  .b-kpi-lbl{font-size:.46rem;letter-spacing:.08em;color:var(--text-dim);text-align:right}
+  .b-kpi-item.gold .b-kpi-val{color:var(--gold)}
+  .b-kpi-item.green .b-kpi-val{color:var(--green)}
+
+  /* Activity feed */
+  .b-activity{display:flex;align-items:flex-start;gap:.4rem;padding:.28rem .4rem;border-radius:5px;background:rgba(0,0,0,0.15);font-size:.58rem;color:var(--text-dim);line-height:1.35}
+  .b-activity-dot{width:5px;height:5px;border-radius:50%;background:var(--blue);flex-shrink:0;margin-top:3px}
+
+  /* === BRIDGE TITLE === */
+  @keyframes titleGlowPulse{
+    0%,100%{filter:drop-shadow(0 0 8px rgba(0,200,255,0.65)) drop-shadow(0 0 22px rgba(0,200,255,0.28))}
+    50%{filter:drop-shadow(0 0 20px rgba(0,200,255,1)) drop-shadow(0 0 48px rgba(0,200,255,0.52)) drop-shadow(0 0 90px rgba(0,200,255,0.18))}
+  }
+  @keyframes titleFlicker{0%,88%,92%,100%{opacity:1}90%{opacity:.82}}
+  .bridge-title{font-size:1.9rem;font-weight:900;letter-spacing:.18em;background:linear-gradient(135deg,#ffffff 20%,var(--blue) 65%,var(--teal));-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-align:center;line-height:1;animation:titleGlowPulse 2.8s ease-in-out infinite,titleFlicker 7s ease-in-out infinite}
+  .bridge-sub{font-size:.58rem;letter-spacing:.25em;color:var(--teal);text-align:center;opacity:.8}
+
+  /* === ORBIT SYSTEM === */
+  .orbit-system{position:relative;width:284px;height:284px;flex-shrink:0;margin:.25rem 0}
+
+  /* Boat centerpiece */
+  .orbit-boat{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:5;width:128px;height:82px;display:flex;align-items:center;justify-content:center;border-radius:12px;overflow:visible;background:transparent}
+  .orbit-boat-img{width:128px;height:82px;border-radius:8px;display:block;position:relative;z-index:4}
+  .boat-fallback-icon{display:none;width:100%;height:100%;align-items:center;justify-content:center;font-size:2.8rem;color:var(--blue);text-shadow:0 0 20px rgba(0,200,255,0.5)}
+
+  /* Ring decorations */
+  .orbit-ring-deco{position:absolute;border-radius:50%;top:50%;left:50%;transform:translate(-50%,-50%)}
+  .orbit-ring-inner{width:155px;height:155px;border:1px solid rgba(0,200,255,0.1);animation:orbitSpin 40s linear infinite reverse}
+  .orbit-ring-outer{width:266px;height:266px;border:1px solid rgba(201,168,76,0.07);animation:orbitSpin 60s linear infinite}
+  /* center glow */
+  .orbit-system::before{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:100px;height:70px;border-radius:50%;background:radial-gradient(ellipse,rgba(0,200,255,0.12) 0%,transparent 70%);z-index:1;pointer-events:none}
+
+  /* Rotating orbit wrapper */
+  .orbit-wrapper{position:absolute;inset:0;animation:orbitSpin 22s linear infinite;z-index:4}
+
+  /* Individual orbit nodes */
+  .onode{position:absolute;z-index:6}
+  .onode-in{display:flex;flex-direction:column;align-items:center;gap:.12rem;padding:.28rem .38rem;background:rgba(4,16,30,0.94);border:1px solid rgba(0,200,255,0.2);border-radius:7px;cursor:pointer;transition:border-color .25s,box-shadow .25s;animation:counterSpin 22s linear infinite;text-align:center;min-width:46px;backdrop-filter:blur(4px)}
+  .onode-in:hover{border-color:var(--blue);box-shadow:0 0 14px rgba(0,200,255,0.25)}
+  .onode-icon{font-size:.85rem;line-height:1;display:block;color:var(--blue);stroke:var(--blue);fill:none}
+  .onode-label{font-size:.38rem;letter-spacing:.09em;color:var(--blue);font-weight:700;white-space:nowrap;display:block}
+  @keyframes orbitSpin{to{transform:rotate(360deg)}}
+  @keyframes counterSpin{to{transform:rotate(-360deg)}}
+
+  /* === RESPONSIVE === */
+  @media(max-width:1100px){.bridge-cockpit{grid-template-columns:210px 1fr 210px}}
+  @media(max-width:860px){.bridge-left,.bridge-right{display:none}.bridge-cockpit{grid-template-columns:1fr}}
+  @media(max-width:600px){.orbit-system{width:220px;height:220px}.bridge-title{font-size:1.4rem}}
+
+  /* ════════════════════════════════════════════
+     BOAT IMAGE — LIVE ANIMATIONS
+     ════════════════════════════════════════════ */
+
+  /* 1. FLOAT: gentle bobbing on water */
+  @keyframes boatFloat {
+    0%   { transform: translateY(0px)   rotate(-0.4deg) scale(1); }
+    20%  { transform: translateY(-7px)  rotate(0.2deg)  scale(1.01); }
+    50%  { transform: translateY(-4px)  rotate(0.5deg)  scale(1.005); }
+    75%  { transform: translateY(4px)   rotate(-0.3deg) scale(0.998); }
+    100% { transform: translateY(0px)   rotate(-0.4deg) scale(1); }
+  }
+
+  /* 2. GLOW PULSE: maritime cyan aura */
+  @keyframes boatGlowPulse {
+    0%,100% {
+      box-shadow:
+        0 0 18px rgba(0,200,255,0.35),
+        0 0 40px rgba(0,200,255,0.12),
+        inset 0 0 12px rgba(0,200,255,0.08);
+      filter: brightness(1.05) saturate(1.1);
+    }
+    50% {
+      box-shadow:
+        0 0 36px rgba(0,200,255,0.65),
+        0 0 80px rgba(0,200,255,0.25),
+        0 0 120px rgba(0,160,220,0.1),
+        inset 0 0 20px rgba(0,200,255,0.15);
+      filter: brightness(1.15) saturate(1.25);
+    }
+  }
+
+  /* Apply both animations to the boat image */
+  .orbit-boat-img {
+    animation: boatFloat 5s ease-in-out infinite, boatGlowPulse 3.5s ease-in-out infinite;
+    will-change: transform, box-shadow;
+    transform-origin: center bottom;
+  }
+
+  /* 3. RIPPLE RINGS: water expanding outward */
+  @keyframes boatRipple {
+    0%   { transform: translate(-50%,-50%) scale(0.6); opacity: 0.55; }
+    100% { transform: translate(-50%,-50%) scale(2.4); opacity: 0; }
+  }
+
+  .boat-ripple {
+    position: absolute;
+    left: 50%; top: 60%;
+    width: 130px; height: 40px;
+    border-radius: 50%;
+    border: 1px solid rgba(0,200,255,0.4);
+    animation: boatRipple 3.6s ease-out infinite;
+    pointer-events: none;
+    z-index: 2;
+  }
+  .boat-ripple-1 { animation-delay: 0s;    border-color: rgba(0,200,255,0.45); }
+  .boat-ripple-2 { animation-delay: 1.2s;  border-color: rgba(0,180,220,0.3);  }
+  .boat-ripple-3 { animation-delay: 2.4s;  border-color: rgba(0,212,170,0.2);  }
+
+  /* 4. REFLECTION: shimmer below boat */
+  @keyframes reflectionShimmer {
+    0%,100% { opacity: 0.18; }
+    50%      { opacity: 0.32; }
+  }
+
+  .boat-reflection {
+    position: absolute;
+    bottom: -18px; left: 50%;
+    transform: translateX(-50%) scaleY(-1);
+    width: 110px; height: 40px;
+    background: linear-gradient(180deg,
+      rgba(0,200,255,0.25) 0%,
+      rgba(0,200,255,0.06) 60%,
+      transparent 100%);
+    border-radius: 50%;
+    filter: blur(4px);
+    animation: reflectionShimmer 3.5s ease-in-out infinite;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  /* 5. ORBIT-BOAT container tweaks for animation layering */
+  .orbit-boat {
+    overflow: visible !important;
+    background: transparent !important;
+    border-radius: 12px;
+  }
+
+  /* 6. NODE hover shimmer — nodes pulse when hovered */
+  .onode-in:hover .onode-icon {
+    animation: iconBounce 0.4s ease;
+  }
+  @keyframes iconBounce {
+    0%   { transform: scale(1); }
+    40%  { transform: scale(1.35) rotate(-8deg); }
+    70%  { transform: scale(0.9) rotate(4deg); }
+    100% { transform: scale(1); }
+  }
+
+  /* ═══════════════════════════════════════════════════
+     IPHONE / MOBILE TOUCH OPTIMIERUNGEN
+     ═══════════════════════════════════════════════════ */
+  @media(max-width:768px){
+    /* Basislayout */
+    html{-webkit-tap-highlight-color:rgba(0,200,255,0.15)}
+    .page{padding:0 .6rem 5rem}
+
+    /* Navbar: alle Pills nebeneinander scrollbar, min-tap 44px */
+    nav{gap:.35rem;height:50px;padding:0 .6rem}
+    .nav-pill{min-height:44px;min-width:44px;padding:.25rem .7rem;font-size:.6rem;display:flex;align-items:center;justify-content:center;border-radius:22px}
+    .nav-clock{font-size:.75rem}
+
+    /* Hero / Bridge: single column */
+    .bridge-cockpit{grid-template-columns:1fr!important;min-height:auto}
+    .bridge-left,.bridge-right{display:none}
+    .bridge-center{padding:1rem .5rem}
+    .bridge-title{font-size:1.3rem;letter-spacing:.1em}
+    .bridge-sub{font-size:.5rem;letter-spacing:.15em}
+
+    /* Orbit system kleiner auf iPhone */
+    .orbit-system{width:230px;height:230px}
+    .orbit-ring-inner{width:126px;height:126px}
+    .orbit-ring-outer{width:218px;height:218px}
+
+    /* Orbit nodes: grösser, besser tappbar */
+    .onode-in{min-width:42px;padding:.35rem .45rem;border-radius:8px;min-height:44px;justify-content:center}
+    .onode-label{font-size:.42rem;letter-spacing:.06em}
+
+    /* Boat canvas zentriert */
+    .orbit-boat{width:104px;height:66px}
+    .orbit-boat-img{width:104px;height:66px}
+
+    /* Countdown kleiner */
+    .countdown-strip{padding:.4rem .8rem;gap:.8rem}
+    .cd-num{font-size:1rem}
+    .cd-label{font-size:.45rem}
+
+    /* KPI Strip: 2 Spalten auf iPhone */
+    .kpi-strip{grid-template-columns:repeat(3,1fr)!important;gap:.5rem}
+    .kpi-card{padding:.7rem .4rem}
+    .kpi-val{font-size:1.1rem}
+
+    /* Panels: volle Breite, mehr Padding für Finger */
+    .panel{padding:1rem .85rem}
+    .grid-2,.grid-3,.grid-4{grid-template-columns:1fr!important;gap:.85rem}
+    .agent-grid{grid-template-columns:1fr!important}
+
+    /* Buttons: Mindestgrösse 44px (Apple HIG) */
+    .btn-primary,.btn-gold,.btn-outline{min-height:44px;padding:.55rem 1.1rem;font-size:.75rem}
+    .nav-tool-btn{min-height:36px;padding:.3rem .7rem;font-size:.6rem}
+
+    /* Karte Links grösser tappbar */
+    .pc-link,.pm-link-btn{min-height:36px;padding:.35rem .7rem;font-size:.62rem;display:inline-flex;align-items:center}
+    .dash-link{min-height:52px;padding:.75rem .9rem}
+    .dash-icon-lg{font-size:1.6rem}
+    .dash-name{font-size:.85rem}
+    .dash-desc{font-size:.68rem}
+
+    /* Projekt-Modal: volle Breite */
+    .pm-box{width:97vw;border-radius:14px}
+    .pm-body{padding:1rem}
+    .pm-stats-grid{grid-template-columns:repeat(2,1fr)}
+
+    /* Priority / Task Items grösser */
+    .priority-item{padding:.75rem;min-height:48px}
+    .priority-text{font-size:.82rem}
+    .b-pri-item{font-size:.68rem;padding:.42rem .6rem;min-height:44px;display:flex;align-items:center}
+
+    /* Risk items */
+    .risk-item{min-height:44px}
+    .risk-text{font-size:.78rem}
+
+    /* Toolbelt: volle Breite auf iPhone */
+    #toolbelt{width:85vw;max-width:320px}
+    .tb-link{min-height:48px}
+    .tb-name{font-size:.72rem}
+
+    /* Charts: etwas kleiner aber sichtbar */
+    .chart-box{height:160px}
+
+    /* Sektion Titel */
+    .section-title{font-size:.62rem}
+
+    /* Social cards grösser */
+    .social-card{min-height:80px}
+    .social-val{font-size:1.2rem}
+
+    /* Tracker Bars + Timeline */
+    .tl-text{font-size:.8rem}
+
+    /* Floating Action Bar */
+    #quick-actions-bar{bottom:16px;right:.6rem;gap:.35rem}
+  }
+
+  /* Extra klein: iPhone SE / kleinere Geräte */
+  @media(max-width:375px){
+    .bridge-title{font-size:1.1rem}
+    .orbit-system{width:200px;height:200px}
+    .kpi-strip{grid-template-columns:repeat(2,1fr)!important}
+    .orbit-boat{width:86px;height:55px}
+    .orbit-boat-img{width:86px;height:55px}
+  }
+
+  /* === CLICKABLE ELEMENTS — HIGH CONTRAST === */
+  .dash-link, .agent-launch-btn, .nav-pill, .pill, .btn-primary, .btn-gold, .btn-outline,
+  .onode-in, .project-card, .tb-link, .nav-tool-btn, [onclick] {
+    cursor: pointer !important;
+  }
+  .dash-link {
+    border: 1px solid rgba(0,200,255,0.3) !important;
+    background: rgba(0,200,255,0.05) !important;
+    transition: all 0.2s ease !important;
+    position: relative;
+  }
+  .dash-link:hover {
+    border-color: rgba(0,200,255,0.75) !important;
+    background: rgba(0,200,255,0.12) !important;
+    box-shadow: 0 0 18px rgba(0,200,255,0.2), inset 0 0 10px rgba(0,200,255,0.04) !important;
+    transform: translateY(-1px) !important;
+  }
+  .dash-link::after {
+    content: '↗';
+    position: absolute;
+    top: .5rem; right: .6rem;
+    font-size: .65rem;
+    color: rgba(0,200,255,0.45);
+    transition: color 0.2s;
+  }
+  .dash-link:hover::after { color: rgba(0,200,255,0.9); }
+  .agent-launch-btn {
+    border: 1px solid rgba(0,200,255,0.4) !important;
+    background: linear-gradient(135deg, rgba(0,200,255,0.1), rgba(0,212,170,0.08)) !important;
+    box-shadow: 0 0 8px rgba(0,200,255,0.15) !important;
+    transition: all 0.2s !important;
+  }
+  .agent-launch-btn:hover {
+    background: linear-gradient(135deg, rgba(0,200,255,0.25), rgba(0,212,170,0.2)) !important;
+    box-shadow: 0 0 18px rgba(0,200,255,0.35) !important;
+    transform: scale(1.03) !important;
+  }
+  .pill { transition: all 0.2s !important; }
+  .pill:hover { box-shadow: 0 0 12px rgba(0,200,255,0.3) !important; }
+  .pill.active { box-shadow: 0 0 16px rgba(0,200,255,0.4) !important; }
+  .onode-in {
+    box-shadow: 0 0 6px rgba(0,200,255,0.1) !important;
+    transition: all 0.25s !important;
+  }
+  .onode-in:hover {
+    border-color: rgba(0,200,255,0.7) !important;
+    box-shadow: 0 0 18px rgba(0,200,255,0.35) !important;
+    background: rgba(0,200,255,0.1) !important;
+  }
+  .project-card { transition: all 0.2s !important; }
+  .project-card:hover {
+    border-color: rgba(0,200,255,0.5) !important;
+    box-shadow: 0 0 20px rgba(0,200,255,0.2) !important;
+    transform: translateY(-2px) !important;
+  }
+  .btn-primary, .btn-gold {
+    box-shadow: 0 0 12px rgba(0,200,255,0.3) !important;
+    transition: all 0.2s !important;
+  }
+  .btn-primary:hover { box-shadow: 0 0 22px rgba(0,200,255,0.55) !important; transform: scale(1.04) !important; }
+  .btn-gold:hover { box-shadow: 0 0 22px rgba(201,168,76,0.55) !important; transform: scale(1.04) !important; }
+  /* bridge title pulse */
+  @keyframes titleGlowPulse {
+    0%,100% { filter: drop-shadow(0 0 8px rgba(0,200,255,.7)) drop-shadow(0 0 22px rgba(0,200,255,.3)); }
+    50%      { filter: drop-shadow(0 0 22px rgba(0,200,255,1)) drop-shadow(0 0 55px rgba(0,200,255,.5)) drop-shadow(0 0 90px rgba(0,200,255,.18)); }
+  }
+  @keyframes titleFlicker { 0%,88%,92%,100%{opacity:1} 90%{opacity:.82} }
+
+
+  /* ════════════════════════════════════════════
+     DESIGN-UPGRADE: Bessere Lesbarkeit + Wasserlage-Stil
+     ════════════════════════════════════════════ */
+
+  /* ── Breitere Farbpalette & bessere Lesbarkeit ── */
+  :root {
+    --text-dim: #7bbcd8;          /* war #4a7a9b — besser lesbar */
+    --text-mid: #a8d4ec;          /* neu: mittlere Helligkeit */
+    --border-subtle: rgba(0,200,255,0.18);  /* stärker als vorher */
+  }
+
+  /* ── Basis-Schriftgröße auf 15px ── */
+  html, body { font-size: 15px; }
+
+  /* ── Section Titles — größer, sichtbarer ── */
+  .section-title {
+    font-size: .75rem !important;
+    letter-spacing: .2em !important;
+    color: var(--blue) !important;
+    padding: .5rem 0 !important;
+    cursor: pointer;
+    user-select: none;
+    display: flex !important;
+    align-items: center !important;
+    gap: .75rem !important;
+    transition: color .2s;
+  }
+  .section-title:hover { color: #fff !important; }
+  .sec-toggle { margin-left: auto; font-size: .6rem; color: var(--text-dim);
+    background: rgba(0,200,255,0.08); border: 1px solid rgba(0,200,255,0.2);
+    border-radius: 4px; padding: .15rem .5rem; transition: all .2s; flex-shrink:0; }
+  .section-title:hover .sec-toggle { color: var(--blue); border-color: var(--blue); }
+
+  /* Collapse animation */
+  .sec-body { overflow: hidden; transition: max-height .45s cubic-bezier(.4,0,.2,1), opacity .3s ease; }
+  .sec-body.closed { max-height: 0 !important; opacity: 0; pointer-events: none; }
+  .sec-body.open   { opacity: 1; }
+
+  /* ── PANEL Lesbarkeit ── */
+  .panel { border-color: rgba(0,200,255,0.18) !important; }
+
+  /* ── Alle kleinen Labels größer + heller ── */
+  .kpi-label    { font-size: .68rem !important; color: var(--text-mid) !important; }
+  .gauge-label  { font-size: .68rem !important; color: var(--text-mid) !important; }
+  .task-schedule{ font-size: .68rem !important; color: var(--text-mid) !important; }
+  .task-last    { font-size: .68rem !important; }
+  .dash-desc    { font-size: .72rem !important; color: var(--text-mid) !important; }
+  .dash-name    { font-size: .88rem !important; font-weight: 700 !important; }
+  .priority-tag { font-size: .65rem !important; color: var(--text-mid) !important; }
+  .priority-text{ font-size: .82rem !important; }
+  .pc-action    { font-size: .7rem  !important; color: var(--text-mid) !important; }
+  .agent-insight{ font-size: .7rem  !important; }
+  .agent-skill  { font-size: .62rem !important; }
+  .bwl-module-desc { font-size: .68rem !important; }
+  .mail-preview { font-size: .7rem  !important; }
+  .media-meta   { font-size: .66rem !important; }
+  .tb-url       { font-size: .63rem !important; color: var(--text-mid) !important; }
+  .tb-name      { font-size: .75rem !important; }
+  .inv-name     { font-size: .8rem  !important; }
+  .tl-text      { font-size: .82rem !important; }
+  .b-stat-label { font-size: .54rem !important; color: var(--text-mid) !important; }
+  .b-activity   { font-size: .64rem !important; color: var(--text-mid) !important; }
+  .b-pri-item   { font-size: .68rem !important; }
+  .radar-desc   { font-size: .7rem  !important; }
+  .pc-stat      { font-size: .7rem  !important; color: var(--text-mid) !important; }
+
+  /* ── CHIPS größer & besser sichtbar ── */
+  .chip { font-size: .65rem !important; padding: .22rem .6rem !important; }
+  .chip-success { background: rgba(0,212,170,.16) !important; border-color: rgba(0,212,170,.4) !important; }
+  .chip-warn    { background: rgba(245,158,11,.16) !important; border-color: rgba(245,158,11,.4) !important; }
+  .chip-danger  { background: rgba(239,68,68,.14)  !important; border-color: rgba(239,68,68,.4)  !important; }
+  .chip-info    { background: rgba(96,165,250,.14)  !important; border-color: rgba(96,165,250,.4)  !important; }
+  .chip-gold    { background: rgba(201,168,76,.18)  !important; border-color: rgba(201,168,76,.4)  !important; }
+
+  /* ── DASH-LINKS — Wasserlage-Stil: klarer, stärker ── */
+  .dash-link {
+    border: 1.5px solid rgba(201,168,76,0.28) !important;
+    background: linear-gradient(135deg,rgba(201,168,76,0.08),rgba(7,24,40,0.92)) !important;
+    padding: .85rem 1rem !important;
+    border-radius: 10px !important;
+    position: relative;
+    transition: all .25s !important;
+  }
+  .dash-link:hover {
+    border-color: rgba(201,168,76,0.6) !important;
+    background: linear-gradient(135deg,rgba(201,168,76,0.15),rgba(15,40,75,0.88)) !important;
+    transform: translateX(4px) !important;
+    box-shadow: 0 4px 20px rgba(201,168,76,0.12) !important;
+  }
+  .dash-link::after {
+    content: '↗';
+    position: absolute;
+    right: .75rem;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: .75rem;
+    color: var(--gold);
+    opacity: 0.6;
+    transition: opacity .2s;
+  }
+  .dash-link:hover::after { opacity: 1; }
+
+  /* ── TOOLBELT LINKS — besser sichtbar ── */
+  .tb-link {
+    border: 1.5px solid rgba(0,200,255,0.14) !important;
+    padding: .55rem .75rem !important;
+    background: rgba(7,24,40,0.75) !important;
+  }
+  .tb-link:hover {
+    border-color: rgba(0,200,255,0.4) !important;
+    background: rgba(0,200,255,0.08) !important;
+    box-shadow: 0 2px 12px rgba(0,200,255,0.1) !important;
+  }
+
+  /* ── BUTTONS — Wasserlage-inspiriert, besser lesbar ── */
+  .btn-primary {
+    font-size: .78rem !important;
+    padding: .5rem 1.15rem !important;
+    letter-spacing: .04em !important;
+    border-radius: 8px !important;
+  }
+  .btn-gold {
+    font-size: .78rem !important;
+    padding: .5rem 1.15rem !important;
+  }
+  .btn-outline {
+    font-size: .78rem !important;
+    padding: .45rem 1rem !important;
+    border-color: rgba(0,200,255,0.45) !important;
+  }
+  .btn-outline:hover { background: rgba(0,200,255,0.1) !important; }
+  .nav-tool-btn {
+    font-size: .68rem !important;
+    padding: .28rem .75rem !important;
+    border-color: rgba(0,200,255,0.28) !important;
+  }
+
+  /* ── PROJECT CARDS — besser sichtbar ── */
+  .project-card {
+    border: 1.5px solid rgba(0,200,255,0.16) !important;
+  }
+  .project-card:hover {
+    border-color: rgba(0,200,255,0.45) !important;
+    box-shadow: 0 6px 32px rgba(0,200,255,0.14) !important;
+  }
+  .pc-title { font-size: .9rem !important; }
+
+  /* ── AGENT CARDS — besser sichtbar ── */
+  .agent-card { border: 1.5px solid rgba(0,200,255,0.2) !important; }
+  .agent-name { font-size: .84rem !important; }
+  .agent-role { font-size: .64rem !important; }
+  .agent-launch-btn {
+    font-size: .66rem !important;
+    padding: .35rem .9rem !important;
+    border-color: rgba(0,200,255,0.3) !important;
+  }
+
+  /* ── PRIORITY ITEMS — mehr Kontrast ── */
+  .priority-item {
+    border: 1.5px solid rgba(0,200,255,0.1) !important;
+    background: rgba(0,200,255,0.04) !important;
+  }
+  .priority-item:hover { background: rgba(0,200,255,0.08) !important; }
+
+  /* ── KPI CARDS — besser lesbar ── */
+  .kpi-card { border: 1.5px solid rgba(0,200,255,0.15) !important; }
+  .kpi-val  { font-size: 1.2rem !important; }
+
+  /* ── MAIL ITEMS ── */
+  .mail-item { border: 1.5px solid rgba(0,200,255,0.1) !important; }
+  .mail-subject { font-size: .8rem !important; }
+
+  /* ── TASK ROWS ── */
+  .task-row { border: 1.5px solid rgba(0,200,255,0.12) !important; }
+  .task-name { font-size: .82rem !important; }
+
+  /* ── BRIDGE COCKPIT kleiner text ── */
+  .bpanel-title { font-size: .56rem !important; letter-spacing: .18em !important; color: var(--blue) !important; }
+  .b-kpi-val    { font-size: .9rem  !important; }
+  .b-kpi-lbl    { font-size: .52rem !important; color: var(--text-mid) !important; }
+
+  /* ── NOTIFICATION TOASTS — heller ── */
+  .notif-toast { font-size: .8rem !important; border-color: rgba(0,200,255,0.35) !important; }
+
+  /* ── Bridge stat rows ── */
+  .b-stat-row { border: 1px solid rgba(0,200,255,0.12) !important; }
+
+  /* ── Wasserlage-Style: neue card-hover Effekte ── */
+  .social-card { border: 1.5px solid rgba(0,200,255,0.14) !important; }
+  .social-card:hover { border-color: rgba(0,200,255,0.4) !important; }
+  .social-val   { font-size: 1.15rem !important; }
+  .social-label { font-size: .66rem !important; color: var(--text-mid) !important; }
+
+  /* ── Pill Filters ── */
+  .pill { font-size: .72rem !important; padding: .35rem 1rem !important; border-color: rgba(0,200,255,0.28) !important; }
+  .pill.active { background: rgba(201,168,76,0.18) !important; }
+
+  /* ── PM Modal ── */
+  .pm-stat-lbl { font-size: .62rem !important; color: var(--text-mid) !important; }
+  .pm-action-item { font-size: .82rem !important; }
+
+  /* ── Risk items ── */
+  .risk-text { font-size: .8rem !important; }
+  .risk-sev  { font-size: .65rem !important; }
+
+  /* ── Timeline ── */
+  .tl-sub  { font-size: .7rem !important; color: var(--text-mid) !important; }
+  .tl-date { font-size: .65rem !important; }
+
+  /* ── Countdown ── */
+  .cd-label { font-size: .6rem !important; color: var(--text-mid) !important; }
+
+  /* ── Nav pills ── */
+  .nav-pill { font-size: .7rem !important; padding: .28rem .85rem !important; }
+
+  /* ── Dropdown / Popup Fenster ── */
+  .wb-dropdown-menu {
+    position: absolute; top: calc(100% + 6px); left: 0; right: 0;
+    background: linear-gradient(145deg,rgba(7,24,40,0.98),rgba(2,8,16,0.99));
+    border: 1.5px solid rgba(0,200,255,0.25);
+    border-radius: 10px;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.6), 0 0 30px rgba(0,200,255,0.06);
+    z-index: 300; padding: .5rem;
+    animation: dropIn .2s ease;
+  }
+  @keyframes dropIn { from { opacity:0; transform:translateY(-8px) } to { opacity:1; transform:none } }
+  .wb-dropdown-item {
+    display: flex; align-items: center; gap: .6rem;
+    padding: .55rem .75rem; border-radius: 8px;
+    cursor: pointer; font-size: .78rem; color: var(--text);
+    transition: all .18s; text-decoration: none;
+  }
+  .wb-dropdown-item:hover {
+    background: rgba(0,200,255,0.08); color: var(--blue);
+  }
+  .wb-dropdown-item .wb-dd-icon { font-size: 1rem; flex-shrink: 0; }
+  .wb-dropdown-item .wb-dd-desc { font-size: .62rem; color: var(--text-dim); }
+
+  /* Section body max-height hack */
+  .sec-body.open { max-height: 9999px; }
+
+</style>
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#020810">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="WaveBite CEO">
+  <link rel="apple-touch-icon" href="Dashboard_Icon.png">
+</head>
+<body>
+<!-- COOKIE & PWA CONSENT BANNER -->
+  </div>
+  <div style="display:flex;gap:.75rem;flex-shrink:0">
+    <button onclick="acceptCookies()" style="padding:.5rem 1.2rem;background:linear-gradient(90deg,#00c8ff,#00d4aa);color:#000;border:none;border-radius:6px;font-weight:700;cursor:pointer;font-size:.8rem">✓ Akzeptieren</button>
+    <button onclick="declineCookies()" style="padding:.5rem 1rem;background:transparent;color:var(--text-dim,#4a7a9b);border:1px solid rgba(74,122,155,0.3);border-radius:6px;cursor:pointer;font-size:.8rem">Ablehnen</button>
+  </div>
+</div>
+<!-- PWA INSTALL PROMPT -->
+<div id="pwa-install-bar" style="display:none;position:fixed;top:0;left:0;right:0;z-index:99998;background:linear-gradient(90deg,rgba(0,200,255,0.1),rgba(0,212,170,0.08));border-bottom:1px solid rgba(0,200,255,0.15);padding:.6rem 1.5rem;backdrop-filter:blur(8px);display:flex;align-items:center;gap:1rem">
+  <img src="Dashboard_Icon.png" style="width:28px;height:28px;border-radius:6px" alt="Icon">
+  <span style="flex:1;font-size:.8rem;color:var(--text-dim,#4a7a9b)">Wave Bite CEO Office als App installieren — jederzeit offline verfügbar</span>
+  <button id="pwa-install-btn" style="padding:.4rem 1rem;background:linear-gradient(90deg,#00c8ff,#00d4aa);color:#000;border:none;border-radius:6px;font-weight:700;cursor:pointer;font-size:.8rem">📲 Installieren</button>
+  <button onclick="document.getElementById('pwa-install-bar').style.display='none'" style="background:none;border:none;color:var(--text-dim,#4a7a9b);cursor:pointer;font-size:1.2rem;padding:0 .25rem">✕</button>
+</div>
+
+
+<!-- BOOT -->
+<div id="boot">
+  <div class="boot-logo glitch">WAVE BITE</div>
+  <div class="boot-sub">CEO COMMAND CENTER // JARVIS v3.0</div>
+  <div class="boot-bar-wrap"><div class="boot-bar"></div></div>
+  <div class="boot-lines" id="boot-lines"></div>
+</div>
+
+<!-- OCEAN + SCANLINE -->
+<canvas id="ocean-canvas"></canvas>
+<div class="scanline"></div>
+
+<!-- HEX BG -->
+<div class="hex-bg"></div>
+
+<!-- TICKER -->
+<div id="ticker">
+  <div class="ticker-label">▶ JARVIS LIVE</div>
+  <div class="ticker-scroll" id="ticker-scroll"></div>
+</div>
+
+<!-- NOTIFICATIONS -->
+<div id="notif"></div>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modal-overlay">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <h3 id="modal-title"></h3>
+    <div id="modal-body"></div>
+  </div>
+</div>
+
+<!-- NAVBAR -->
+<nav>
+  <div class="nav-brand">WAVE<span>BITE</span> // JARVIS</div>
+  <div class="nav-pill active" onclick="scrollTo(0,0)">HOME</div>
+  <div class="nav-pill" onclick="document.getElementById('sec-projects').scrollIntoView({behavior:'smooth'})">PROJEKTE</div>
+  <div class="nav-pill" onclick="document.getElementById('sec-intel').scrollIntoView({behavior:'smooth'})">INTEL</div>
+  <div class="nav-pill" onclick="document.getElementById('sec-finance').scrollIntoView({behavior:'smooth'})">FINANZEN</div>
+  <div class="nav-pill" onclick="document.getElementById('sec-tasks').scrollIntoView({behavior:'smooth'})">TASKS</div>
+  <div class="nav-pill" onclick="document.getElementById('sec-console').scrollIntoView({behavior:'smooth'})">CONSOLE</div>
+  <div class="nav-pill" onclick="document.getElementById('sec-agents').scrollIntoView({behavior:'smooth'})">AGENTEN</div>
+  <div class="nav-sep"></div>
+  <!-- QUICK TOOL BUTTONS IN NAV -->
+  <a href="https://mail.google.com" target="_blank" class="nav-tool-btn" title="Gmail öffnen">✉ Mail</a>
+  <a href="https://calendar.google.com" target="_blank" class="nav-tool-btn" title="Kalender öffnen">📅 Kalender</a>
+  <a href="https://github.com" target="_blank" class="nav-tool-btn" title="GitHub öffnen">🐙 GitHub</a>
+  <button class="nav-tool-btn" onclick="toggleToolbelt()" title="CEO Toolbelt">⚙ Tools</button>
+  <div class="nav-status" title="System Online"></div>
+  <div class="nav-clock" id="nav-clock">--:--:--</div>
+</nav>
+
+<!-- CEO TOOLBELT DRAWER -->
+<div id="toolbelt" style="position:fixed;top:56px;right:-320px;width:300px;height:calc(100vh - 56px);background:rgba(4,16,30,0.98);border-left:1px solid rgba(0,200,255,0.2);z-index:500;overflow-y:auto;transition:right .35s cubic-bezier(.4,0,.2,1);backdrop-filter:blur(24px);padding:1.25rem">
+  <div style="font-size:.65rem;letter-spacing:.2em;color:var(--blue);margin-bottom:1rem;display:flex;align-items:center;justify-content:space-between">
+    ⚙ CEO TOOLBELT
+    <button onclick="toggleToolbelt()" style="background:none;border:1px solid rgba(0,200,255,0.2);color:var(--text-dim);border-radius:50%;width:24px;height:24px;cursor:pointer;font-size:.8rem">✕</button>
+  </div>
+
+  <!-- KOMMUNIKATION -->
+  <div style="font-size:.6rem;letter-spacing:.15em;color:var(--gold);margin-bottom:.5rem">📬 KOMMUNIKATION</div>
+  <div style="display:flex;flex-direction:column;gap:.4rem;margin-bottom:1rem">
+    <a href="https://mail.google.com" target="_blank" class="tb-link"><span>✉</span><div><div class="tb-name">Gmail — Posteingang</div><div class="tb-url">mail.google.com</div></div><span class="tb-arrow">↗</span></a>
+    <a href="https://calendar.google.com" target="_blank" class="tb-link"><span>📅</span><div><div class="tb-name">Google Kalender</div><div class="tb-url">calendar.google.com</div></div><span class="tb-arrow">↗</span></a>
+    <a href="https://contacts.google.com" target="_blank" class="tb-link"><span>👤</span><div><div class="tb-name">Google Kontakte</div><div class="tb-url">contacts.google.com</div></div><span class="tb-arrow">↗</span></a>
+    <a href="https://meet.google.com" target="_blank" class="tb-link"><span>📹</span><div><div class="tb-name">Google Meet</div><div class="tb-url">meet.google.com</div></div><span class="tb-arrow">↗</span></a>
+  </div>
+
+  <!-- WAVE BITE SYSTEME -->
+  <div style="font-size:.6rem;letter-spacing:.15em;color:var(--gold);margin-bottom:.5rem">🌊 WAVE BITE SYSTEME</div>
+  <div style="display:flex;flex-direction:column;gap:.4rem;margin-bottom:1rem">
+    <a href="https://wavebite.de" target="_blank" class="tb-link"><span>🌐</span><div><div class="tb-name">Wave Bite Website</div><div class="tb-url">wavebite.de</div></div><span class="tb-arrow">↗</span></a>
+    <a href="https://wavebite.de/wp-admin" target="_blank" class="tb-link"><span>⚙</span><div><div class="tb-name">WordPress Admin</div><div class="tb-url">wavebite.de/wp-admin</div></div><span class="tb-arrow">↗</span></a>
+    <a href="https://www.pegelonline.wsv.de" target="_blank" class="tb-link"><span>🌊</span><div><div class="tb-name">Wasserlage Dashboard</div><div class="tb-url">pegelonline.wsv.de</div></div><span class="chip chip-success" style="font-size:.55rem;padding:.1rem .35rem">LIVE</span></a>
+    <a href="https://www.elwis.de" target="_blank" class="tb-link"><span>⚓</span><div><div class="tb-name">ELWIS Wasserstraßen</div><div class="tb-url">elwis.de</div></div><span class="tb-arrow">↗</span></a>
+  </div>
+
+  <!-- ENTWICKLUNG -->
+  <div style="font-size:.6rem;letter-spacing:.15em;color:var(--gold);margin-bottom:.5rem">💻 ENTWICKLUNG</div>
+  <div style="display:flex;flex-direction:column;gap:.4rem;margin-bottom:1rem">
+    <a href="https://github.com" target="_blank" class="tb-link"><span>🐙</span><div><div class="tb-name">GitHub</div><div class="tb-url">github.com</div></div><span class="tb-arrow">↗</span></a>
+    <a href="https://flutterflow.io" target="_blank" class="tb-link"><span>📱</span><div><div class="tb-name">FlutterFlow</div><div class="tb-url">flutterflow.io</div></div><span class="chip chip-success" style="font-size:.55rem;padding:.1rem .35rem">Aktiv</span></a>
+    <a href="https://app.glideapps.com" target="_blank" class="tb-link"><span>⚡</span><div><div class="tb-name">Glide Apps</div><div class="tb-url">app.glideapps.com</div></div><span class="tb-arrow">↗</span></a>
+    <a href="https://vercel.com" target="_blank" class="tb-link"><span>▲</span><div><div class="tb-name">Vercel Deployments</div><div class="tb-url">vercel.com</div></div><span class="tb-arrow">↗</span></a>
+  </div>
+
+  <!-- AUTOMATION -->
+  <div style="font-size:.6rem;letter-spacing:.15em;color:var(--gold);margin-bottom:.5rem">🤖 AUTOMATION</div>
+  <div style="display:flex;flex-direction:column;gap:.4rem;margin-bottom:1rem">
+    <a href="https://n8n.io" target="_blank" class="tb-link"><span>🔄</span><div><div class="tb-name">N8N Workflows</div><div class="tb-url">n8n.io</div></div><span class="tb-arrow">↗</span></a>
+    <a href="https://make.com" target="_blank" class="tb-link"><span>🔧</span><div><div class="tb-name">Make.com</div><div class="tb-url">make.com</div></div><span class="tb-arrow">↗</span></a>
+    <a href="https://script.google.com" target="_blank" class="tb-link"><span>📝</span><div><div class="tb-name">Google Apps Script</div><div class="tb-url">script.google.com</div></div><span class="chip chip-success" style="font-size:.55rem;padding:.1rem .35rem">Aktiv</span></a>
+    <a href="https://sheets.google.com" target="_blank" class="tb-link"><span>📊</span><div><div class="tb-name">Google Sheets</div><div class="tb-url">sheets.google.com</div></div><span class="tb-arrow">↗</span></a>
+    <a href="https://drive.google.com" target="_blank" class="tb-link"><span>📁</span><div><div class="tb-name">Google Drive</div><div class="tb-url">drive.google.com</div></div><span class="tb-arrow">↗</span></a>
+  </div>
+
+  <!-- MARKETING -->
+  <div style="font-size:.6rem;letter-spacing:.15em;color:var(--gold);margin-bottom:.5rem">📣 MARKETING & SOCIAL</div>
+  <div style="display:flex;flex-direction:column;gap:.4rem;margin-bottom:1rem">
+    <a href="https://www.instagram.com" target="_blank" class="tb-link"><span>📸</span><div><div class="tb-name">Instagram</div><div class="tb-url">instagram.com</div></div><span class="tb-arrow">↗</span></a>
+    <a href="https://www.linkedin.com" target="_blank" class="tb-link"><span>💼</span><div><div class="tb-name">LinkedIn</div><div class="tb-url">linkedin.com</div></div><span class="tb-arrow">↗</span></a>
+    <a href="https://www.youtube.com" target="_blank" class="tb-link"><span>▶</span><div><div class="tb-name">YouTube</div><div class="tb-url">youtube.com</div></div><span class="tb-arrow">↗</span></a>
+    <a href="https://www.canva.com" target="_blank" class="tb-link"><span>🎨</span><div><div class="tb-name">Canva</div><div class="tb-url">canva.com</div></div><span class="tb-arrow">↗</span></a>
+    <a href="https://mailchimp.com" target="_blank" class="tb-link"><span>📧</span><div><div class="tb-name">Mailchimp</div><div class="tb-url">mailchimp.com</div></div><span class="tb-arrow">↗</span></a>
+  </div>
+
+  <!-- FINANZEN & INVESTOREN -->
+  <div style="font-size:.6rem;letter-spacing:.15em;color:var(--gold);margin-bottom:.5rem">💰 FINANZEN & INVESTOREN</div>
+  <div style="display:flex;flex-direction:column;gap:.4rem;margin-bottom:1rem">
+    <a href="https://www.seedmatch.de" target="_blank" class="tb-link"><span>🌱</span><div><div class="tb-name">Seedmatch</div><div class="tb-url">seedmatch.de</div></div><span class="chip chip-warn" style="font-size:.55rem;padding:.1rem .35rem">DD aktiv</span></a>
+    <a href="https://www.htgf.de" target="_blank" class="tb-link"><span>🏛</span><div><div class="tb-name">HTGF</div><div class="tb-url">htgf.de</div></div><span class="tb-arrow">↗</span></a>
+    <a href="https://www.exist.de" target="_blank" class="tb-link"><span>🎓</span><div><div class="tb-name">EXIST Förderung</div><div class="tb-url">exist.de</div></div><span class="tb-arrow">↗</span></a>
+    <a href="https://www.kfw.de" target="_blank" class="tb-link"><span>🏦</span><div><div class="tb-name">KfW Fördermittel</div><div class="tb-url">kfw.de</div></div><span class="tb-arrow">↗</span></a>
+  </div>
+
+  <!-- MONITORING -->
+  <div style="font-size:.6rem;letter-spacing:.15em;color:var(--gold);margin-bottom:.5rem">📡 MONITORING & ANALYTICS</div>
+  <div style="display:flex;flex-direction:column;gap:.4rem;margin-bottom:1.5rem">
+    <a href="https://search.google.com/search-console" target="_blank" class="tb-link"><span>🔍</span><div><div class="tb-name">Google Search Console</div><div class="tb-url">search.google.com/search-console</div></div><span class="tb-arrow">↗</span></a>
+    <a href="https://analytics.google.com" target="_blank" class="tb-link"><span>📈</span><div><div class="tb-name">Google Analytics</div><div class="tb-url">analytics.google.com</div></div><span class="tb-arrow">↗</span></a>
+    <a href="https://www.kachelmannwetter.com" target="_blank" class="tb-link"><span>🌤</span><div><div class="tb-name">Wetter / Maritim</div><div class="tb-url">kachelmannwetter.com</div></div><span class="tb-arrow">↗</span></a>
+    <a href="https://www.marinas.de" target="_blank" class="tb-link"><span>⛵</span><div><div class="tb-name">Marinas.de Datenbank</div><div class="tb-url">marinas.de</div></div><span class="tb-arrow">↗</span></a>
+  </div>
+
+  <div style="font-size:.6rem;color:var(--text-dim);text-align:center;border-top:1px solid rgba(0,200,255,0.08);padding-top:.75rem">
+    JARVIS CEO Toolbelt · Wave Bite v3
+  </div>
+</div>
+<div id="toolbelt-backdrop" onclick="toggleToolbelt()" style="display:none;position:fixed;inset:0;z-index:499;background:rgba(2,8,16,0.4)"></div>
+
+<div class="page">
+
+<!-- CAPTAIN'S BRIDGE COCKPIT -->
+<div id="hero">
+  <!-- sphere-canvas preserved for JS compatibility (hidden) -->
+  <canvas id="sphere-canvas" style="display:none;position:absolute;width:1px;height:1px;pointer-events:none"></canvas>
+
+  <div class="bridge-cockpit">
+
+    <!-- ╔═══════════════════╗ -->
+    <!-- ║   LEFT PANEL      ║ -->
+    <!-- ╚═══════════════════╝ -->
+    <div class="bridge-left">
+      <div class="bpanel-title">TODAY IN FOCUS</div>
+
+      <!-- System Status -->
+      <div class="b-stat-row">
+        <span class="b-stat-label">SYSTEM</span>
+        <span style="color:var(--green);font-size:.68rem;font-weight:700">● ALL SYSTEMS GO</span>
+      </div>
+
+      <!-- Datum + Uhrzeit -->
+      <div class="b-stat-row">
+        <span class="b-stat-label">DATUM</span>
+        <span style="color:var(--text);font-size:.65rem" id="bridge-date">—</span>
+      </div>
+
+      <!-- JARVIS AI insight -->
+      <div style="padding:.4rem .5rem;background:rgba(0,200,255,0.04);border:1px solid rgba(0,200,255,0.1);border-radius:6px;border-left:2px solid var(--teal)">
+        <div class="b-stat-label" style="margin-bottom:.2rem">🧠 JARVIS AI</div>
+        <div style="font-size:.62rem;color:var(--teal);line-height:1.4" id="hero-ai">Analysiere Daten...</div>
+      </div>
+
+      <!-- Top-Prioritäten -->
+      <div style="font-size:.46rem;letter-spacing:.14em;color:var(--text-dim);margin-top:.1rem">▸ TOP PRIORITÄTEN</div>
+      <div class="b-pri-item b-p1">🔴 MVP App-Demo fertigstellen</div>
+      <div class="b-pri-item b-p2">🟡 Investor-Pitch aktualisieren</div>
+      <div class="b-pri-item b-p3">🔵 Wasserlage KPIs prüfen</div>
+
+      <!-- Quick-Links -->
+      <div style="font-size:.46rem;letter-spacing:.14em;color:var(--text-dim);margin-top:.1rem">▸ QUICK ACCESS</div>
+      <a href="https://mail.google.com" target="_blank" class="b-stat-row" style="text-decoration:none;cursor:pointer">
+        <span class="b-stat-label">✉ GMAIL</span>
+        <span style="color:var(--blue);font-size:.6rem">öffnen ↗</span>
+      </a>
+      <a href="https://calendar.google.com" target="_blank" class="b-stat-row" style="text-decoration:none;cursor:pointer">
+        <span class="b-stat-label">📅 KALENDER</span>
+        <span style="color:var(--blue);font-size:.6rem">öffnen ↗</span>
+      </a>
+
+      <!-- Heartbeat -->
+      <div style="margin-top:auto;padding-top:.4rem;border-top:1px solid rgba(0,200,255,0.06)">
+        <div style="font-size:.42rem;letter-spacing:.12em;color:var(--text-dim);margin-bottom:.2rem">SYSTEM PULSE</div>
+        <canvas id="heartbeat-canvas" style="width:100%;height:40px;display:block;opacity:.8"></canvas>
+      </div>
+    </div>
+
+    <!-- ╔═══════════════════╗ -->
+    <!-- ║   CENTER — ORBIT  ║ -->
+    <!-- ╚═══════════════════╝ -->
+    <div class="bridge-center">
+      <div class="bridge-title">CAPITÄNS BRIDGE</div>
+      <div class="bridge-sub">WAVE BITE // MARITIME TECH // FOUNDED BY CARSTEN</div>
+
+      <!-- Orbital System -->
+      <div class="orbit-system">
+        <!-- Decorative rings -->
+        <div class="orbit-ring-deco orbit-ring-inner"></div>
+        <div class="orbit-ring-deco orbit-ring-outer"></div>
+
+        <!-- Boat centerpiece — Three.js wireframe -->
+        <div class="orbit-boat" id="orbit-boat-center">
+          <!-- Expanding ripple rings behind boat -->
+          <div class="boat-ripple boat-ripple-1"></div>
+          <div class="boat-ripple boat-ripple-2"></div>
+          <div class="boat-ripple boat-ripple-3"></div>
+          <!-- Reflection gradient under boat -->
+          <div class="boat-reflection"></div>
+          <!-- Three.js animated wireframe boat canvas -->
+          <canvas id="boat-wireframe-canvas" class="orbit-boat-img"></canvas>
+        </div>
+
+        <!-- Rotating wrapper — nodes at hexagonal positions (r=105px from center=142,142) -->
+        <div class="orbit-wrapper">
+          <!-- 0° top — WASSERLAGE (wave lines) -->
+          <div class="onode" style="top:20px;left:116px">
+            <div class="onode-in" onclick="document.getElementById('sec-tracking-radar').scrollIntoView({behavior:'smooth'})">
+              <svg class="onode-icon" viewBox="0 0 18 11" width="18" height="11" fill="none" stroke="var(--blue)" stroke-width="1.6" stroke-linecap="round"><path d="M1 3.5 Q4.5 1 9 3.5 Q13.5 6 17 3.5"/><path d="M1 7.5 Q4.5 5 9 7.5 Q13.5 10 17 7.5"/></svg>
+              <span class="onode-label">WASSER&shy;LAGE</span>
+            </div>
+          </div>
+          <!-- 60° upper-right — BUNBO (houseboat) -->
+          <div class="onode" style="top:68px;left:208px">
+            <div class="onode-in" onclick="document.getElementById('sec-projects').scrollIntoView({behavior:'smooth'})">
+              <svg class="onode-icon" viewBox="0 0 18 13" width="18" height="13" fill="none" stroke="var(--teal)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M1 7 L9 1.5 L17 7"/><rect x="1.5" y="7" width="15" height="5" rx="1"/><rect x="6.5" y="7.5" width="5" height="4.5"/></svg>
+              <span class="onode-label">BUNBO</span>
+            </div>
+          </div>
+          <!-- 120° lower-right — HIMMELREICH (church spire) -->
+          <div class="onode" style="top:172px;left:208px">
+            <div class="onode-in" onclick="document.getElementById('sec-projects').scrollIntoView({behavior:'smooth'})">
+              <svg class="onode-icon" viewBox="0 0 18 14" width="18" height="14" fill="none" stroke="var(--gold)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="9" y1="1" x2="9" y2="6"/><line x1="6" y1="3.5" x2="12" y2="3.5"/><path d="M2 9 L9 5.5 L16 9 L16 13 L2 13 Z"/></svg>
+              <span class="onode-label">HIMMEL&shy;REICH</span>
+            </div>
+          </div>
+          <!-- 180° bottom — FINANZEN (bar chart up) -->
+          <div class="onode" style="top:220px;left:116px">
+            <div class="onode-in" onclick="document.getElementById('sec-finance').scrollIntoView({behavior:'smooth'})">
+              <svg class="onode-icon" viewBox="0 0 18 12" width="18" height="12" fill="none" stroke="var(--gold)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="7" width="3.5" height="4"/><rect x="7.25" y="4" width="3.5" height="7"/><rect x="13.5" y="1" width="3.5" height="10"/><line x1="1" y1="11.5" x2="17" y2="11.5"/></svg>
+              <span class="onode-label">FINANZEN</span>
+            </div>
+          </div>
+          <!-- 240° lower-left — PARTNER (linked circles) -->
+          <div class="onode" style="top:172px;left:20px">
+            <div class="onode-in" onclick="document.getElementById('sec-projects').scrollIntoView({behavior:'smooth'})">
+              <svg class="onode-icon" viewBox="0 0 20 11" width="20" height="11" fill="none" stroke="var(--blue)" stroke-width="1.5"><circle cx="5" cy="5.5" r="3.5"/><circle cx="15" cy="5.5" r="3.5"/><line x1="8.5" y1="5.5" x2="11.5" y2="5.5"/></svg>
+              <span class="onode-label">PARTNER</span>
+            </div>
+          </div>
+          <!-- 300° upper-left — MARKETING (signal arcs) -->
+          <div class="onode" style="top:68px;left:20px">
+            <div class="onode-in" onclick="document.getElementById('sec-intel').scrollIntoView({behavior:'smooth'})">
+              <svg class="onode-icon" viewBox="0 0 18 14" width="18" height="14" fill="none" stroke="var(--teal)" stroke-width="1.5" stroke-linecap="round"><path d="M1 5 L7 5 L12 1.5 L12 12.5 L7 9 L1 9 Z"/><path d="M14 4 Q16.5 7 14 10"/></svg>
+              <span class="onode-label">MARKETING</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Countdown Strip -->
+      <div class="countdown-strip" style="position:relative;bottom:auto;left:auto;transform:none;margin-top:.5rem">
+        <div class="cd-unit"><span class="cd-num" id="cd-d">--</span><span class="cd-label">TAGE</span></div>
+        <div class="cd-unit"><span class="cd-num" id="cd-h">--</span><span class="cd-label">STD</span></div>
+        <div class="cd-unit"><span class="cd-num" id="cd-m">--</span><span class="cd-label">MIN</span></div>
+        <div class="cd-unit"><span class="cd-num" id="cd-s">--</span><span class="cd-label">SEK</span></div>
+        <div class="cd-unit" style="border-left:1px solid rgba(201,168,76,0.2);padding-left:1.5rem">
+          <span class="cd-num" style="color:var(--gold);font-size:.75rem">BUNBO</span>
+          <span class="cd-label">LAUNCH TARGET</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ╔═══════════════════╗ -->
+    <!-- ║   RIGHT PANEL     ║ -->
+    <!-- ╚═══════════════════╝ -->
+    <div class="bridge-right">
+      <div class="bpanel-title">CEO STATS</div>
+
+      <!-- KPIs -->
+      <div class="b-kpi-item">
+        <span class="b-kpi-lbl">AKTIVE<br>PROJEKTE</span>
+        <span class="b-kpi-val">6</span>
+      </div>
+      <div class="b-kpi-item gold">
+        <span class="b-kpi-lbl">FUNDING<br>ZIEL</span>
+        <span class="b-kpi-val" style="color:var(--gold)">250k</span>
+      </div>
+      <div class="b-kpi-item green">
+        <span class="b-kpi-lbl">WEBSITE<br>BESUCHER</span>
+        <span class="b-kpi-val" style="color:var(--green)">71</span>
+      </div>
+      <div class="b-kpi-item">
+        <span class="b-kpi-lbl">GITHUB<br>REPOS</span>
+        <span class="b-kpi-val">12+</span>
+      </div>
+      <div class="b-kpi-item">
+        <span class="b-kpi-lbl">PWA<br>INSTALLS</span>
+        <span class="b-kpi-val" id="bridge-wl-installs">–</span>
+      </div>
+
+      <!-- Divider -->
+      <div style="height:1px;background:rgba(0,200,255,0.07);margin:.1rem 0"></div>
+
+      <!-- Status indicators -->
+      <div style="font-size:.46rem;letter-spacing:.14em;color:var(--text-dim)">▸ SYSTEM STATUS</div>
+      <div class="b-stat-row">
+        <span class="b-stat-label">🌐 wavebite.de</span>
+        <span style="color:var(--green);font-size:.62rem;font-weight:700">● LIVE</span>
+      </div>
+      <div class="b-stat-row">
+        <span class="b-stat-label">⚓ CEO Office</span>
+        <span style="color:var(--green);font-size:.62rem;font-weight:700">● LIVE</span>
+      </div>
+      <div class="b-stat-row">
+        <span class="b-stat-label">🌊 Wasserlage</span>
+        <span style="color:var(--teal);font-size:.62rem;font-weight:700">● AKTIV</span>
+      </div>
+
+      <!-- Recent Activity -->
+      <div style="font-size:.46rem;letter-spacing:.14em;color:var(--text-dim);margin-top:.15rem">▸ AKTIVITÄT</div>
+      <div class="b-activity"><div class="b-activity-dot"></div><span>CEO Office v3 deployed</span></div>
+      <div class="b-activity"><div class="b-activity-dot" style="background:var(--gold)"></div><span>Wasserlage PWA aktiviert</span></div>
+      <div class="b-activity"><div class="b-activity-dot" style="background:var(--teal)"></div><span>KPI-Tracking gestartet</span></div>
+    </div>
+
+  </div><!-- end bridge-cockpit -->
+</div>
+
+<!-- KPI STRIP -->
+<div class="kpi-strip" id="kpi-strip">
+  <!-- rendered by JS -->
+</div>
+
+<!-- SITE ANALYTICS HUB -->
+<section id="sec-tracking-radar" style="margin-bottom:1.5rem">
+  <div class="section-title">📊 SITE ANALYTICS — WAVE BITE TRAFFIC HUB</div>
+  <div class="panel" style="border-color:rgba(0,200,255,0.2);background:linear-gradient(135deg,rgba(2,15,30,0.92),rgba(4,16,30,0.98));padding:1.5rem">
+    <div style="display:grid;grid-template-columns:170px 1fr 1fr 140px 180px;gap:1.5rem;align-items:start">
+
+
+      <!-- COL 1: TOTAL VISITORS + MINI STATS -->
+      <div style="display:flex;flex-direction:column;gap:.65rem">
+        <div style="padding:.9rem .75rem;background:linear-gradient(145deg,rgba(0,200,255,0.06),rgba(0,200,255,0.02));border:1px solid rgba(0,200,255,0.18);border-radius:12px;text-align:center;position:relative;overflow:hidden">
+          <div style="position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(0,200,255,0.5),transparent)"></div>
+          <div style="font-size:.48rem;letter-spacing:.18em;color:var(--text-dim);margin-bottom:.3rem">GESAMTBESUCHER</div>
+          <div style="font-size:2.8rem;font-weight:900;color:var(--blue);line-height:1;text-shadow:0 0 24px rgba(0,200,255,0.5)">71</div>
+          <div style="font-size:.58rem;color:var(--green);margin-top:.2rem;font-weight:600">&#x2191; +788% Wachstum</div>
+          <div style="margin-top:.65rem;display:flex;align-items:flex-end;justify-content:center;gap:2px;height:28px">
+            <div style="flex:1;height:4px;background:rgba(0,200,255,0.18);border-radius:1px 1px 0 0"></div>
+            <div style="flex:1;height:7px;background:rgba(0,200,255,0.28);border-radius:1px 1px 0 0"></div>
+            <div style="flex:1;height:13px;background:rgba(0,200,255,0.42);border-radius:1px 1px 0 0"></div>
+            <div style="flex:1;height:22px;background:rgba(0,200,255,0.6);border-radius:1px 1px 0 0"></div>
+            <div style="flex:1;height:28px;background:var(--blue);border-radius:1px 1px 0 0;box-shadow:0 0 10px rgba(0,200,255,0.5)"></div>
+          </div>
+          <div style="display:flex;justify-content:space-between;font-size:.42rem;color:var(--text-dim);margin-top:.2rem;padding:0 .1rem">
+            <span>Jan</span><span>Feb</span><span>M&#xe4;r</span><span>Apr</span><span style="color:var(--blue);font-weight:700">Mai</span>
+          </div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:.4rem">
+          <div style="padding:.55rem .4rem;background:rgba(0,255,136,0.04);border:1px solid rgba(0,255,136,0.12);border-radius:8px;text-align:center">
+            <div style="font-size:.45rem;letter-spacing:.08em;color:var(--text-dim)">&#xd8; SESSION</div>
+            <div style="font-size:1rem;font-weight:800;color:var(--green);margin-top:.1rem">2:34</div>
+          </div>
+          <div style="padding:.55rem .4rem;background:rgba(201,168,76,0.04);border:1px solid rgba(201,168,76,0.12);border-radius:8px;text-align:center">
+            <div style="font-size:.45rem;letter-spacing:.08em;color:var(--text-dim)">BOUNCE</div>
+            <div style="font-size:1rem;font-weight:800;color:var(--gold);margin-top:.1rem">42%</div>
+          </div>
+        </div>
+        <div style="padding:.5rem .6rem;background:rgba(0,212,170,0.04);border:1px solid rgba(0,212,170,0.1);border-radius:8px;text-align:center">
+          <div style="font-size:.45rem;letter-spacing:.08em;color:var(--text-dim)">NEUE NUTZER / MONAT</div>
+          <div style="font-size:.9rem;font-weight:700;color:var(--teal);margin-top:.1rem">+19 &#x2191;</div>
+        </div>
+      </div>
+
+      <!-- COL 2: PAGE PERFORMANCE BARS -->
+      <div>
+        <div style="font-size:.53rem;letter-spacing:.15em;color:var(--text-dim);margin-bottom:.8rem;display:flex;align-items:center;gap:.4rem">&#x1f310; SEITEN-PERFORMANCE <span style="font-size:.43rem;color:rgba(0,200,255,0.35)">Besucher / Monat</span></div>
+        <div style="display:flex;flex-direction:column;gap:.72rem">
+          <div>
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:.28rem">
+              <div style="display:flex;align-items:center;gap:.4rem">
+                <span style="font-size:.62rem">&#x1f30a;</span><span style="font-size:.62rem;color:var(--text)">wavebite.de</span>
+                <span style="font-size:.46rem;padding:.1rem .3rem;background:rgba(0,255,136,0.1);border:1px solid rgba(0,255,136,0.22);border-radius:3px;color:var(--green)">LIVE</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:.35rem">
+                <span style="font-size:.7rem;font-weight:800;color:var(--blue)">71</span>
+                <span style="font-size:.47rem;color:var(--text-dim)">100%</span>
+              </div>
+            </div>
+            <div style="height:6px;background:rgba(0,200,255,0.07);border-radius:3px;overflow:hidden">
+              <div style="width:100%;height:100%;background:linear-gradient(90deg,var(--blue),var(--teal));border-radius:3px;box-shadow:0 0 8px rgba(0,200,255,0.35)"></div>
+            </div>
+          </div>
+          <div>
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:.28rem">
+              <div style="display:flex;align-items:center;gap:.4rem">
+                <span style="font-size:.62rem">&#x2693;</span><span style="font-size:.62rem;color:var(--text)">CEO Office</span>
+                <span style="font-size:.46rem;padding:.1rem .3rem;background:rgba(0,212,170,0.1);border:1px solid rgba(0,212,170,0.22);border-radius:3px;color:var(--teal)">LIVE</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:.35rem">
+                <span style="font-size:.7rem;font-weight:800;color:var(--teal)">12</span>
+                <span style="font-size:.47rem;color:var(--text-dim)">17%</span>
+              </div>
+            </div>
+            <div style="height:6px;background:rgba(0,212,170,0.07);border-radius:3px;overflow:hidden">
+              <div style="width:17%;height:100%;background:var(--teal);border-radius:3px;box-shadow:0 0 6px rgba(0,212,170,0.3)"></div>
+            </div>
+          </div>
+          <div>
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:.28rem">
+              <div style="display:flex;align-items:center;gap:.4rem">
+                <span style="font-size:.62rem">&#x1f321;</span><span style="font-size:.62rem;color:var(--text)">Wasserlage</span>
+                <span style="font-size:.46rem;padding:.1rem .3rem;background:rgba(0,200,255,0.1);border:1px solid rgba(0,200,255,0.22);border-radius:3px;color:var(--blue)">AKTIV</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:.35rem">
+                <span style="font-size:.7rem;font-weight:800;color:var(--gold)">8</span>
+                <span style="font-size:.47rem;color:var(--text-dim)">11%</span>
+              </div>
+            </div>
+            <div style="height:6px;background:rgba(201,168,76,0.07);border-radius:3px;overflow:hidden">
+              <div style="width:11%;height:100%;background:var(--gold);border-radius:3px"></div>
+            </div>
+          </div>
+          <div>
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:.28rem">
+              <div style="display:flex;align-items:center;gap:.4rem">
+                <span style="font-size:.62rem">&#x1f354;</span><span style="font-size:.62rem;color:var(--text)">BunBo App</span>
+                <span style="font-size:.46rem;padding:.1rem .3rem;background:rgba(0,212,170,0.08);border:1px solid rgba(0,212,170,0.2);border-radius:3px;color:var(--teal)">BETA</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:.35rem">
+                <span style="font-size:.7rem;font-weight:800;color:rgba(0,200,255,0.55)">3</span>
+                <span style="font-size:.47rem;color:var(--text-dim)">4%</span>
+              </div>
+            </div>
+            <div style="height:6px;background:rgba(0,200,255,0.05);border-radius:3px;overflow:hidden">
+              <div style="width:4%;height:100%;background:rgba(0,200,255,0.4);border-radius:3px"></div>
+            </div>
+          </div>
+          <div>
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:.28rem">
+              <div style="display:flex;align-items:center;gap:.4rem">
+                <span style="font-size:.62rem">&#x271d;</span><span style="font-size:.62rem;color:var(--text-dim)">Himmelreich</span>
+                <span style="font-size:.46rem;padding:.1rem .3rem;background:rgba(201,168,76,0.08);border:1px solid rgba(201,168,76,0.18);border-radius:3px;color:var(--gold)">PLAN</span>
+              </div>
+              <span style="font-size:.62rem;color:var(--text-dim)">&#x2014; Pre-Launch</span>
+            </div>
+            <div style="height:6px;background:rgba(201,168,76,0.05);border-radius:3px;overflow:hidden">
+              <div style="width:0%;height:100%;background:rgba(201,168,76,0.3);border-radius:3px"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- COL 3: GEOGRAPHY + AGE -->
+      <div>
+        <div style="font-size:.53rem;letter-spacing:.15em;color:var(--text-dim);margin-bottom:.8rem">&#x1f30d; GEOGRAFIE &amp; DEMOGRAFIE</div>
+        <div style="display:flex;flex-direction:column;gap:.55rem;margin-bottom:.9rem">
+          <div>
+            <div style="display:flex;justify-content:space-between;font-size:.62rem;margin-bottom:.26rem">
+              <span>&#x1f1e9;&#x1f1ea; Deutschland</span><span style="color:var(--blue);font-weight:700">9 &middot; 53%</span>
+            </div>
+            <div style="height:5px;background:rgba(0,200,255,0.07);border-radius:3px;overflow:hidden">
+              <div style="width:53%;height:100%;background:var(--blue);border-radius:3px;box-shadow:0 0 6px rgba(0,200,255,0.3)"></div>
+            </div>
+          </div>
+          <div>
+            <div style="display:flex;justify-content:space-between;font-size:.62rem;margin-bottom:.26rem">
+              <span>&#x1f1e8;&#x1f1ed; Schweiz</span><span style="color:var(--teal);font-weight:700">7 &middot; 41%</span>
+            </div>
+            <div style="height:5px;background:rgba(0,212,170,0.07);border-radius:3px;overflow:hidden">
+              <div style="width:41%;height:100%;background:var(--teal);border-radius:3px;box-shadow:0 0 6px rgba(0,212,170,0.3)"></div>
+            </div>
+          </div>
+          <div>
+            <div style="display:flex;justify-content:space-between;font-size:.62rem;margin-bottom:.26rem">
+              <span>&#x1f1ee;&#x1f1ea; Irland</span><span style="color:var(--gold);font-weight:700">1 &middot; 6%</span>
+            </div>
+            <div style="height:5px;background:rgba(201,168,76,0.07);border-radius:3px;overflow:hidden">
+              <div style="width:6%;height:100%;background:var(--gold);border-radius:3px"></div>
+            </div>
+          </div>
+        </div>
+        <div style="font-size:.48rem;letter-spacing:.1em;color:var(--text-dim);margin-bottom:.45rem">ALTERSGRUPPEN (&#xd8; 33 J.)</div>
+        <div style="display:flex;gap:.35rem;align-items:flex-end;height:36px">
+          <div style="flex:1;height:10px;background:rgba(0,200,255,0.22);border-radius:1px 1px 0 0;align-self:flex-end"></div>
+          <div style="flex:1;height:36px;background:var(--blue);border-radius:1px 1px 0 0;opacity:.75;align-self:flex-end"></div>
+          <div style="flex:1;height:26px;background:rgba(0,200,255,0.45);border-radius:1px 1px 0 0;align-self:flex-end"></div>
+          <div style="flex:1;height:14px;background:rgba(0,200,255,0.2);border-radius:1px 1px 0 0;align-self:flex-end"></div>
+        </div>
+        <div style="display:flex;gap:.35rem;margin-top:.22rem">
+          <div style="flex:1;text-align:center;font-size:.41rem;color:var(--text-dim)">18-24</div>
+          <div style="flex:1;text-align:center;font-size:.41rem;color:var(--blue)">25-34</div>
+          <div style="flex:1;text-align:center;font-size:.41rem;color:var(--text-dim)">35-44</div>
+          <div style="flex:1;text-align:center;font-size:.41rem;color:var(--text-dim)">45+</div>
+        </div>
+        <div style="margin-top:.65rem;font-size:.48rem;letter-spacing:.1em;color:var(--text-dim);margin-bottom:.3rem">GESCHLECHT</div>
+        <div style="height:5px;background:rgba(0,200,255,0.08);border-radius:3px;overflow:hidden;display:flex">
+          <div style="width:62%;height:100%;background:var(--blue);opacity:.7"></div>
+          <div style="flex:1;height:100%;background:var(--teal);opacity:.65"></div>
+        </div>
+        <div style="display:flex;justify-content:space-between;font-size:.46rem;margin-top:.2rem;color:var(--text-dim)">
+          <span style="color:var(--blue)">&#x2642; 62%</span><span style="color:var(--teal)">&#x2640; 38%</span>
+        </div>
+      </div>
+
+      <!-- COL 4: DEVICE DONUT SVG -->
+      <div>
+        <div style="font-size:.53rem;letter-spacing:.15em;color:var(--text-dim);margin-bottom:.8rem">&#x1f4bb; GER&#xc4;TE</div>
+        <svg width="120" height="120" viewBox="0 0 120 120" style="display:block;margin:0 auto .65rem">
+          <circle cx="60" cy="60" r="44" fill="none" stroke="rgba(0,200,255,0.05)" stroke-width="14"/>
+          <circle cx="60" cy="60" r="44" fill="none" stroke="#00c8ff" stroke-width="13"
+            stroke-dasharray="187.99 88.47" transform="rotate(-90 60 60)" opacity=".75"/>
+          <circle cx="60" cy="60" r="44" fill="none" stroke="#00d4aa" stroke-width="13"
+            stroke-dasharray="66.35 210.11" transform="rotate(154.8 60 60)" opacity=".75"/>
+          <circle cx="60" cy="60" r="44" fill="none" stroke="#c9a84c" stroke-width="13"
+            stroke-dasharray="22.12 254.34" transform="rotate(241.2 60 60)" opacity=".75"/>
+          <text x="60" y="56" text-anchor="middle" fill="#00c8ff" font-size="13" font-weight="900">68%</text>
+          <text x="60" y="68" text-anchor="middle" fill="#4a7a9b" font-size="7">Desktop</text>
+        </svg>
+        <div style="display:flex;flex-direction:column;gap:.38rem">
+          <div style="display:flex;align-items:center;justify-content:space-between;font-size:.58rem">
+            <div style="display:flex;align-items:center;gap:.35rem"><span style="width:8px;height:8px;border-radius:50%;background:var(--blue);display:inline-block;box-shadow:0 0 5px rgba(0,200,255,0.4)"></span><span>Desktop</span></div>
+            <span style="color:var(--blue);font-weight:700">68%</span>
+          </div>
+          <div style="display:flex;align-items:center;justify-content:space-between;font-size:.58rem">
+            <div style="display:flex;align-items:center;gap:.35rem"><span style="width:8px;height:8px;border-radius:50%;background:var(--teal);display:inline-block;box-shadow:0 0 5px rgba(0,212,170,0.4)"></span><span>Mobile</span></div>
+            <span style="color:var(--teal);font-weight:700">24%</span>
+          </div>
+          <div style="display:flex;align-items:center;justify-content:space-between;font-size:.58rem">
+            <div style="display:flex;align-items:center;gap:.35rem"><span style="width:8px;height:8px;border-radius:50%;background:var(--gold);display:inline-block"></span><span>Tablet</span></div>
+            <span style="color:var(--gold);font-weight:700">8%</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- COL 5: KPI TILES + LINK -->
+      <div>
+        <div style="font-size:.53rem;letter-spacing:.15em;color:var(--text-dim);margin-bottom:.8rem">&#x26a1; KEY METRICS</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:.45rem;margin-bottom:.75rem">
+          <div style="background:rgba(0,200,255,0.06);border:1px solid rgba(0,200,255,0.16);border-radius:10px;padding:.65rem .4rem;text-align:center">
+            <div style="font-size:1.45rem;font-weight:900;color:var(--blue);line-height:1;text-shadow:0 0 14px rgba(0,200,255,0.4)">71</div>
+            <div style="font-size:.44rem;letter-spacing:.08em;color:var(--text-dim);margin-top:.15rem">NUTZER</div>
+          </div>
+          <div style="background:rgba(0,212,170,0.06);border:1px solid rgba(0,212,170,0.16);border-radius:10px;padding:.65rem .4rem;text-align:center">
+            <div style="font-size:1.45rem;font-weight:900;color:var(--teal);line-height:1;text-shadow:0 0 14px rgba(0,212,170,0.4)">3</div>
+            <div style="font-size:.44rem;letter-spacing:.08em;color:var(--text-dim);margin-top:.15rem">M&#xc4;RKTE</div>
+          </div>
+          <div style="background:rgba(201,168,76,0.06);border:1px solid rgba(201,168,76,0.16);border-radius:10px;padding:.65rem .4rem;text-align:center">
+            <div style="font-size:1.05rem;font-weight:900;color:var(--gold);line-height:1;text-shadow:0 0 12px rgba(201,168,76,0.35)">788%</div>
+            <div style="font-size:.44rem;letter-spacing:.08em;color:var(--text-dim);margin-top:.15rem">WACHSTUM</div>
+          </div>
+          <div style="background:rgba(0,255,136,0.06);border:1px solid rgba(0,255,136,0.16);border-radius:10px;padding:.65rem .4rem;text-align:center">
+            <div style="font-size:1.45rem;font-weight:900;color:var(--green);line-height:1">&#x25cf;</div>
+            <div style="font-size:.44rem;letter-spacing:.08em;color:var(--text-dim);margin-top:.15rem">LIVE</div>
+          </div>
+        </div>
+        <a href="file:///C:/Users/Startklar/Documents/Claude/Projects/Elwis/wavebite-premium-dashboard.html" target="_blank"
+          style="display:block;text-align:center;padding:.75rem .5rem;background:linear-gradient(135deg,rgba(0,212,170,0.16),rgba(0,200,255,0.07));border:1px solid rgba(0,212,170,0.42);border-radius:10px;color:var(--teal);font-size:.58rem;letter-spacing:.1em;text-decoration:none;font-weight:700;line-height:1.6;transition:all .25s"
+          onmouseover="this.style.background='rgba(0,212,170,0.26)';this.style.boxShadow='0 0 18px rgba(0,212,170,0.28)'"
+          onmouseout="this.style.background='linear-gradient(135deg,rgba(0,212,170,0.16),rgba(0,200,255,0.07))';this.style.boxShadow='none'">
+          &#x1f4ca; VOLLST&#xc4;NDIGES<br>TRACKING DASHBOARD &#x2192;
+        </a>
+        <div style="margin-top:.45rem;font-size:.46rem;color:var(--text-dim);text-align:center;line-height:1.6">
+          Wave Bite Premium Analytics &middot; Elwis / Local<br>
+          Aktualisiert: <span id="tracking-last-update" style="color:var(--teal)">L&#xe4;dt...</span>
+        </div>
+      </div>
+
+        </div><!-- end grid -->
+
+        <!-- WASSERLAGE PWA INSTALL KPI -->
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:.75rem;margin-top:1.1rem;padding-top:.9rem;border-top:1px solid rgba(0,200,255,0.08)">
+          <div style="padding:.75rem;background:linear-gradient(135deg,rgba(0,200,255,0.06),rgba(0,200,255,0.02));border:1px solid rgba(0,200,255,0.18);border-radius:10px;position:relative;overflow:hidden">
+            <div style="position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(0,200,255,0.45),transparent)"></div>
+            <div style="position:absolute;top:.5rem;right:.5rem;width:6px;height:6px;background:var(--teal);border-radius:50%;box-shadow:0 0 8px var(--teal);animation:pulse 2s infinite"></div>
+            <div style="font-size:.45rem;letter-spacing:.12em;color:var(--text-dim);margin-bottom:.3rem">🌊 WASSERLAGE PWA</div>
+            <div style="font-size:1.5rem;font-weight:900;color:var(--blue);line-height:1;text-shadow:0 0 16px rgba(0,200,255,0.4)" id="wl-install-count">–</div>
+            <div style="font-size:.48rem;letter-spacing:.09em;color:var(--text-dim);margin-top:.15rem">INSTALLATIONEN</div>
+          </div>
+          <div style="padding:.75rem;background:rgba(0,212,170,0.04);border:1px solid rgba(0,212,170,0.15);border-radius:10px">
+            <div style="font-size:.45rem;letter-spacing:.12em;color:var(--text-dim);margin-bottom:.3rem">📊 PAGE VIEWS</div>
+            <div style="font-size:1.5rem;font-weight:900;color:var(--teal);line-height:1;text-shadow:0 0 14px rgba(0,212,170,0.3)" id="wl-pageview-count">–</div>
+            <div style="font-size:.48rem;letter-spacing:.09em;color:var(--text-dim);margin-top:.15rem">AUFRUFE GESAMT</div>
+          </div>
+          <div style="padding:.75rem;background:rgba(201,168,76,0.04);border:1px solid rgba(201,168,76,0.14);border-radius:10px">
+            <div style="font-size:.45rem;letter-spacing:.12em;color:var(--text-dim);margin-bottom:.3rem">⚡ CONV. RATE</div>
+            <div style="font-size:1.2rem;font-weight:900;color:var(--gold);line-height:1" id="wl-conv-rate">–</div>
+            <div style="font-size:.48rem;letter-spacing:.09em;color:var(--text-dim);margin-top:.15rem">INSTALL / VIEW</div>
+          </div>
+          <div style="padding:.75rem;background:rgba(0,255,136,0.04);border:1px solid rgba(0,255,136,0.14);border-radius:10px;display:flex;flex-direction:column;justify-content:space-between">
+            <div>
+              <div style="font-size:.45rem;letter-spacing:.12em;color:var(--text-dim);margin-bottom:.3rem">📲 PWA STATUS</div>
+              <div style="font-size:.8rem;font-weight:700;color:var(--green)">INSTALLIERBAR</div>
+              <div style="font-size:.46rem;color:var(--text-dim);margin-top:.15rem">manifest.json · sw.js · DSGVO ✓</div>
+            </div>
+            <a href="file:///C:/Users/Startklar/Documents/Claude/Projects/Elwis/index.html" target="_blank"
+              style="display:block;text-align:center;padding:.35rem;background:rgba(0,255,136,0.08);border:1px solid rgba(0,255,136,0.22);border-radius:7px;color:var(--green);font-size:.48rem;letter-spacing:.08em;text-decoration:none;font-weight:700;margin-top:.45rem;transition:all .2s"
+              onmouseover="this.style.background='rgba(0,255,136,0.18)'" onmouseout="this.style.background='rgba(0,255,136,0.08)'">
+              🌊 WASSERLAGE ÖFFNEN ↗
+            </a>
+          </div>
+        </div>
+
+  </div><!-- end panel -->
+</section>
+
+<!-- CEO TODAY -->
+<section>
+  <div class="section-title">CEO // HEUTE — 17. MAI 2026</div>
+  <div class="grid-3">
+    <!-- PRIORITIES -->
+    <div class="panel panel-cream">
+      <svg class="arc-deco" viewBox="0 0 120 120"><circle cx="60" cy="60" r="50"/><circle cx="60" cy="60" r="38"/><circle cx="60" cy="60" r="26"/><circle cx="60" cy="60" r="14"/></svg>
+      <div style="font-size:.65rem;letter-spacing:.15em;color:var(--gold);margin-bottom:.75rem">🎯 TOP PRIORITÄTEN — HEUTE</div>
+      <div class="priority-item">
+        <div class="priority-num p1">1</div>
+        <div>
+          <div class="priority-text">BunBo App — FlutterFlow MVP-Review abschließen & Testflight-Upload</div>
+          <div class="priority-tag">KRITISCH • BunBo App • Heute</div>
+        </div>
+      </div>
+      <div class="priority-item">
+        <div class="priority-num p2">2</div>
+        <div>
+          <div class="priority-text">Investor-Pipeline: Follow-up Mail an 3 Lead-Investoren</div>
+          <div class="priority-tag">HOCH • Funding • Diese Woche</div>
+        </div>
+      </div>
+      <div class="priority-item">
+        <div class="priority-num p3">3</div>
+        <div>
+          <div class="priority-text">Wasserlage Dashboard: API-Monitoring prüfen & ggf. Pegel aktualisieren</div>
+          <div class="priority-tag">MITTEL • Technik • Heute</div>
+        </div>
+      </div>
+      <div class="priority-item">
+        <div class="priority-num p3">4</div>
+        <div>
+          <div class="priority-text">LinkedIn-Post: Wave Bite Entwicklungsupdate veröffentlichen</div>
+          <div class="priority-tag">MITTEL • Marketing • Diese Woche</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CALENDAR -->
+    <div class="panel panel-cream">
+      <div style="font-size:.65rem;letter-spacing:.15em;color:var(--gold);margin-bottom:.75rem">📅 KALENDER — NÄCHSTE EVENTS</div>
+      <div class="cal-event urgent">
+        <div class="cal-time">Mo 09:00</div>
+        <div><div class="cal-title">BunBo: FlutterFlow Review Call</div><div class="cal-meta">Entwickler-Sync • 60 Min</div></div>
+      </div>
+      <div class="cal-event gold">
+        <div class="cal-time">Mo 14:00</div>
+        <div><div class="cal-title">Investor Pitch: Seedmatch Kontakt</div><div class="cal-meta">Video Call • 45 Min</div></div>
+      </div>
+      <div class="cal-event">
+        <div class="cal-time">Di 11:00</div>
+        <div><div class="cal-title">Wasserlage: API Stakeholder Briefing</div><div class="cal-meta">Intern • 30 Min</div></div>
+      </div>
+      <div class="cal-event">
+        <div class="cal-time">Mi 16:00</div>
+        <div><div class="cal-title">Marketing: Content-Planung Mai/Juni</div><div class="cal-meta">Strategy • 60 Min</div></div>
+      </div>
+      <div class="cal-event gold">
+        <div class="cal-time">Fr 10:00</div>
+        <div><div class="cal-title">Wave Bite: Wochenreview & OKRs</div><div class="cal-meta">CEO Review • 90 Min</div></div>
+      </div>
+      <div style="margin-top:.75rem"><a href="https://calendar.google.com" target="_blank" class="pc-link" style="font-size:.65rem">→ Google Kalender öffnen</a></div>
+    </div>
+
+    <!-- MAIL HUB -->
+    <div class="panel">
+      <div style="font-size:.65rem;letter-spacing:.15em;color:var(--blue);margin-bottom:.75rem">✉ MAIL HUB — GMAIL</div>
+      <div class="mail-item">
+        <div class="mail-unread"></div>
+        <div class="mail-avatar" style="background:rgba(255,68,68,0.15);color:var(--red)">SB</div>
+        <div style="flex:1;min-width:0">
+          <div class="mail-subject">Seedmatch: Due Diligence Unterlagen</div>
+          <div class="mail-preview">Bitte senden Sie uns bis Freitag...</div>
+        </div>
+        <div class="mail-time">09:14</div>
+      </div>
+      <div class="mail-item">
+        <div class="mail-unread"></div>
+        <div class="mail-avatar" style="background:rgba(0,200,255,0.15);color:var(--blue)">FW</div>
+        <div style="flex:1;min-width:0">
+          <div class="mail-subject">FlutterFlow: Account Update Q2</div>
+          <div class="mail-preview">Your workspace has been upgraded...</div>
+        </div>
+        <div class="mail-time">08:32</div>
+      </div>
+      <div class="mail-item">
+        <div class="mail-avatar" style="background:rgba(201,168,76,0.15);color:var(--gold)">WP</div>
+        <div style="flex:1;min-width:0">
+          <div class="mail-subject">WordPress: Security Update verfügbar</div>
+          <div class="mail-preview">Version 6.5.3 ist verfügbar...</div>
+        </div>
+        <div class="mail-time">Ges.</div>
+      </div>
+      <div class="mail-item">
+        <div class="mail-avatar" style="background:rgba(0,212,170,0.15);color:var(--teal)">GH</div>
+        <div style="flex:1;min-width:0">
+          <div class="mail-subject">GitHub: New PR ready for review</div>
+          <div class="mail-preview">wavebite/wasserlage-dashboard...</div>
+        </div>
+        <div class="mail-time">Ges.</div>
+      </div>
+      <div style="margin-top:.75rem;display:flex;gap:.5rem">
+        <a href="https://mail.google.com" target="_blank" class="pc-link">→ Gmail öffnen</a>
+        <span class="pc-link" style="cursor:pointer;background:rgba(0,200,255,0.05)" onclick="showNotif('📬 CEO Briefing wird vorbereitet...','blue')">CEO Briefing</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PINNED / WICHTIG -->
+<section>
+  <div class="section-title">📌 GEPINNT & WICHTIG</div>
+  <div class="grid-3">
+    <div class="pinned-card">
+      <div class="pin-icon">🎯</div>
+      <div>
+        <div class="pin-title">BunBo Launch Target: 01. Juli 2026</div>
+        <div class="pin-body">MVP in FlutterFlow zu 65% fertig. Testflight-Upload diese Woche kritisch. Beta-Tester: 12 Personen bereit. App Store Connect: Konto aktiv.</div>
+      </div>
+    </div>
+    <div class="pinned-card">
+      <div class="pin-icon">💰</div>
+      <div>
+        <div class="pin-title">Seed-Runde: 250k–500k € // Q3 2026</div>
+        <div class="pin-body">3 aktive Investor-Gespräche. Seedmatch Due Diligence läuft. EXIST-Antrag in Vorbereitung. Pitch Deck v3 fertiggestellt.</div>
+      </div>
+    </div>
+    <div class="pinned-card">
+      <div class="pin-icon">🌊</div>
+      <div>
+        <div class="pin-title">Wasserlage Dashboard: Live & Stabil</div>
+        <div class="pin-body">Pegelonline API aktiv. ELWIS-Integration läuft. 15 Stationen überwacht. GitHub Pages Deployment online. Letzte Aktualisierung: heute.</div>
+      </div>
+    </div>
+    <div class="pinned-card">
+      <div class="pin-icon">⚠️</div>
+      <div>
+        <div class="pin-title">KRITISCH: DSGVO-Konformität Wave Bite App</div>
+        <div class="pin-body">Datenschutzerklärung für BunBo App muss bis Ende Mai finalisiert werden. Anwalt-Termin ausstehend. Cookie-Banner WordPress prüfen.</div>
+      </div>
+    </div>
+    <div class="pinned-card">
+      <div class="pin-icon">🤝</div>
+      <div>
+        <div class="pin-title">Partner: 3 Marina-Kooperationen in Verhandlung</div>
+        <div class="pin-body">Marina Düsseldorf: LOI unterzeichnet. Bodensee Marina: Gespräch KW 21. Hamburger Hafen: Kontakt hergestellt.</div>
+      </div>
+    </div>
+    <div class="pinned-card">
+      <div class="pin-icon">📱</div>
+      <div>
+        <div class="pin-title">Himmelreich App: Strategisch wichtig für Q4</div>
+        <div class="pin-body">Experience-Plattform für Wassertourismus. 25% Konzeptphase. FlutterFlow-Template identifiziert. Synergien mit BunBo App planen.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="sec-projects">
+  <div class="section-title">PROJEKT-ZENTRALE — ALL SYSTEMS</div>
+  <div class="pills" id="proj-pills">
+    <button class="pill active" onclick="filterProj('all',this)">Alle Projekte</button>
+    <button class="pill" onclick="filterProj('app',this)">Apps</button>
+    <button class="pill" onclick="filterProj('data',this)">Daten</button>
+    <button class="pill" onclick="filterProj('marketing',this)">Marketing</button>
+    <button class="pill" onclick="filterProj('finance',this)">Finanzen</button>
+    <button class="pill" onclick="filterProj('tech',this)">Tech & Tools</button>
+  </div>
+  <div class="grid-auto" id="projects-grid">
+    <!-- rendered by JS -->
+  </div>
+</section>
+
+<!-- DASHBOARD HUB -->
+<section>
+  <div class="section-title">📊 DASHBOARD-ZENTRALE — HUB</div>
+  <div class="dash-grid">
+    <div class="dash-link" onclick="openDash('tracking')" style="border-color:rgba(0,212,170,0.35);background:linear-gradient(135deg,rgba(0,30,22,0.5),rgba(7,24,40,0.9))"><div class="dash-icon-lg">📡</div><div><div class="dash-name" style="color:var(--teal)">Tracking Dashboard</div><div class="dash-desc">Nutzer · Wachstum · Märkte</div></div><span class="chip chip-success" style="margin-left:auto;background:rgba(0,212,170,0.2);border-color:rgba(0,212,170,0.5);color:var(--teal)">AKTIV</span></div>
+    <div class="dash-link" onclick="openDash('wasserlage')"><div class="dash-icon-lg">🌊</div><div><div class="dash-name">Wasserlage Live</div><div class="dash-desc">Pegelonline · ELWIS · WSV</div></div><span class="chip chip-success" style="margin-left:auto">LIVE</span></div>
+    <div class="dash-link" onclick="openDash('ceo_briefing')"><div class="dash-icon-lg">☀️</div><div><div class="dash-name">CEO Briefing</div><div class="dash-desc">Daily · Gmail · Apps Script</div></div><span class="chip chip-success" style="margin-left:auto">Aktiv</span></div>
+    <div class="dash-link" onclick="openDash('playbook')"><div class="dash-icon-lg">📒</div><div><div class="dash-name">Daily Playbook</div><div class="dash-desc">Tagesstruktur · Focus</div></div><span class="chip chip-success" style="margin-left:auto">Aktiv</span></div>
+    <div class="dash-link" onclick="openDash('marketing')"><div class="dash-icon-lg">📣</div><div><div class="dash-name">Marketing Dashboard</div><div class="dash-desc">Social · Content · Kampagnen</div></div><span class="chip chip-warn" style="margin-left:auto">Aufbau</span></div>
+    <div class="dash-link" onclick="openDash('kpi')"><div class="dash-icon-lg">📈</div><div><div class="dash-name">KPI Dashboard</div><div class="dash-desc">Metriken · Wachstum · OKRs</div></div><span class="chip chip-info" style="margin-left:auto">Geplant</span></div>
+    <div class="dash-link" onclick="openDash('partner')"><div class="dash-icon-lg">🤝</div><div><div class="dash-name">Partner Dashboard</div><div class="dash-desc">Sponsoring · Kooperationen</div></div><span class="chip chip-info" style="margin-left:auto">Geplant</span></div>
+    <div class="dash-link" onclick="openDash('finance')"><div class="dash-icon-lg">💶</div><div><div class="dash-name">Finance Dashboard</div><div class="dash-desc">Cashflow · Burn · Runway</div></div><span class="chip chip-info" style="margin-left:auto">Geplant</span></div>
+    <div class="dash-link" onclick="openDash('automation')"><div class="dash-icon-lg">⚙️</div><div><div class="dash-name">Automation Control</div><div class="dash-desc">N8N · Make · Apps Script</div></div><span class="chip chip-success" style="margin-left:auto">Aktiv</span></div>
+    <div class="dash-link" onclick="openDash('elwis')"><div class="dash-icon-lg">⚓</div><div><div class="dash-name">ELWIS</div><div class="dash-desc">Wasserstraßen-Informationen</div></div><span class="chip chip-info" style="margin-left:auto">Extern</span></div>
+    <div class="dash-link" onclick="openDash('flutterflow')"><div class="dash-icon-lg">📱</div><div><div class="dash-name">FlutterFlow</div><div class="dash-desc">BunBo App · Build</div></div><span class="chip chip-success" style="margin-left:auto">Aktiv</span></div>
+    <div class="dash-link" onclick="openDash('wordpress')"><div class="dash-icon-lg">🌐</div><div><div class="dash-name">Wave Bite Website</div><div class="dash-desc">WordPress · wavebite.de</div></div><span class="chip chip-success" style="margin-left:auto">Live</span></div>
+    <div class="dash-link" onclick="openDash('glide')"><div class="dash-icon-lg">⚡</div><div><div class="dash-name">Glide Apps</div><div class="dash-desc">No-Code · MVP · Tools</div></div><span class="chip chip-success" style="margin-left:auto">Aktiv</span></div>
+  </div>
+</section>
+
+<!-- INTELLIGENCE -->
+<section id="sec-intel">
+  <div class="section-title">INTELLIGENCE // ANALYTICS</div>
+  <div class="grid-2" style="margin-bottom:1.25rem">
+    <div class="panel panel-cream">
+      <div style="font-size:.65rem;letter-spacing:.15em;color:var(--gold);margin-bottom:.75rem">🧠 NEURAL INTELLIGENCE NETWORK</div>
+      <canvas id="neural-canvas"></canvas>
+    </div>
+    <div class="panel">
+      <div style="font-size:.65rem;letter-spacing:.15em;color:var(--blue);margin-bottom:.75rem">📊 PROJEKTFORTSCHRITT</div>
+      <div class="chart-box"><canvas id="chart-progress"></canvas></div>
+    </div>
+  </div>
+  <div class="grid-2" style="margin-bottom:1.25rem">
+    <div class="panel">
+      <div style="font-size:.65rem;letter-spacing:.15em;color:var(--blue);margin-bottom:.75rem">📈 WACHSTUMS-RADAR (IST vs. ZIEL Q4)</div>
+      <div class="chart-box"><canvas id="chart-radar"></canvas></div>
+    </div>
+    <div class="panel panel-cream">
+      <div style="font-size:.65rem;letter-spacing:.15em;color:var(--gold);margin-bottom:.75rem">📈 REVENUE FORECAST</div>
+      <div class="chart-box"><canvas id="chart-revenue"></canvas></div>
+    </div>
+  </div>
+  <div class="grid-3">
+    <div class="panel panel-cream">
+      <div style="font-size:.65rem;letter-spacing:.15em;color:var(--gold);margin-bottom:.75rem">🧠 JARVIS AI — LIVE INSIGHTS</div>
+      <div class="ai-brain-card"><div class="brain-icon">🧠</div><div><div style="font-size:.6rem;color:var(--text-dim);letter-spacing:.08em">KI-SYSTEM AKTIV</div><div class="jarvis-thoughts" id="jarvis-thoughts" style="font-size:.75rem">Analysiere Aktivitäten...</div></div></div>
+      <div style="height:1px;background:rgba(201,168,76,0.15);margin:.75rem 0"></div>
+      <div id="jarvis-lines"></div>
+      <div style="margin-top:.75rem;display:flex;gap:.4rem;flex-wrap:wrap">
+        <button class="btn-primary" onclick="showNotif('🤖 JARVIS Analyse läuft...','blue')">▶ Analyse starten</button>
+        <button class="btn-outline" onclick="showNotif('📋 Briefing wird generiert...','blue')">Briefing</button>
+      </div>
+    </div>
+    <div class="panel">
+      <div style="font-size:.65rem;letter-spacing:.15em;color:var(--red);margin-bottom:.75rem">⚠ RISIKO-RADAR — AKTIV</div>
+      <div class="risk-item"><div class="risk-sev risk-high">HOCH</div><div class="risk-text">Launch-Verzögerung BunBo App</div></div>
+      <div class="risk-item"><div class="risk-sev risk-high">HOCH</div><div class="risk-text">Runway &lt; 6 Monate ohne Seed</div></div>
+      <div class="risk-item"><div class="risk-sev risk-med">MITTEL</div><div class="risk-text">DSGVO-Compliance App & Website</div></div>
+      <div class="risk-item"><div class="risk-sev risk-med">MITTEL</div><div class="risk-text">Saisonalität: Mai–Sep Peak nutzen</div></div>
+      <div class="risk-item"><div class="risk-sev risk-low">GERING</div><div class="risk-text">WordPress Updates ausstehend</div></div>
+      <div style="height:1px;background:rgba(0,200,255,0.08);margin:.75rem 0"></div>
+      <div style="font-size:.65rem;letter-spacing:.15em;color:var(--green);margin-bottom:.5rem">✦ STRATEGISCHE CHANCEN</div>
+      <div class="radar-grid">
+        <div class="radar-item"><div class="radar-icon">⛵</div><div><div class="radar-title" style="font-size:.72rem">Marina-Saison</div><div class="radar-desc">Launch-Timing ideal</div></div></div>
+        <div class="radar-item"><div class="radar-icon">🏆</div><div><div class="radar-title" style="font-size:.72rem">Maritime Awards</div><div class="radar-desc">PR-Chance 2026</div></div></div>
+        <div class="radar-item"><div class="radar-icon">🌍</div><div><div class="radar-title" style="font-size:.72rem">EU-Förderung</div><div class="radar-desc">BMDV Digitale Infra</div></div></div>
+        <div class="radar-item"><div class="radar-icon">🍽️</div><div><div class="radar-title" style="font-size:.72rem">Gastro B2B</div><div class="radar-desc">Hochmarge-Kanal</div></div></div>
+      </div>
+    </div>
+    <div class="panel panel-cream">
+      <div style="font-size:.65rem;letter-spacing:.15em;color:var(--gold);margin-bottom:.75rem">🚀 MEILENSTEINE & TIMELINE</div>
+      <div class="timeline">
+        <div class="tl-item"><div class="tl-date">DIESE WOCHE</div><div class="tl-text">BunBo Testflight Upload</div><div class="tl-sub">FlutterFlow Build · Beta-Tester</div></div>
+        <div class="tl-item"><div class="tl-date">KW 21</div><div class="tl-text">Seedmatch Due Diligence</div><div class="tl-sub">Unterlagen · Deadline Freitag</div></div>
+        <div class="tl-item"><div class="tl-date">KW 22</div><div class="tl-text">Marina Düsseldorf: Vertragsabschluss</div><div class="tl-sub">B2B-Partner · LOI → Vertrag</div></div>
+        <div class="tl-item"><div class="tl-date">1. JULI 2026</div><div class="tl-text">🚀 BunBo App Launch</div><div class="tl-sub">App Store · Marketing · PR</div></div>
+        <div class="tl-item"><div class="tl-date">Q3/Q4 2026</div><div class="tl-text">Seed-Runde 250–500k €</div><div class="tl-sub">HTGF · Angel · EXIST</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LIVE DATA -->
+<section>
+  <div class="section-title">🌊 LIVE DATEN — WASSERLAGE COCKPIT</div>
+  <div class="panel">
+    <div class="grid-4" id="live-gauges">
+      <div class="gauge-wrap">
+        <svg width="90" height="90" viewBox="0 0 90 90">
+          <circle cx="45" cy="45" r="36" fill="none" stroke="rgba(0,200,255,0.08)" stroke-width="6"/>
+          <circle id="gauge-rhein" cx="45" cy="45" r="36" fill="none" stroke="var(--teal)" stroke-width="6" stroke-linecap="round"
+            stroke-dasharray="226.19" stroke-dashoffset="113" transform="rotate(-90 45 45)"/>
+          <text x="45" y="49" text-anchor="middle" fill="var(--teal)" font-size="13" font-weight="700" id="gauge-rhein-val">---</text>
+        </svg>
+        <div class="gauge-val" id="lvl-rhein">– cm</div>
+        <div class="gauge-label">RHEIN DÜSSELDORF<br><span class="gauge-unit">Pegel live</span></div>
+      </div>
+      <div class="gauge-wrap">
+        <svg width="90" height="90" viewBox="0 0 90 90">
+          <circle cx="45" cy="45" r="36" fill="none" stroke="rgba(0,200,255,0.08)" stroke-width="6"/>
+          <circle id="gauge-moselle" cx="45" cy="45" r="36" fill="none" stroke="var(--blue)" stroke-width="6" stroke-linecap="round"
+            stroke-dasharray="226.19" stroke-dashoffset="150" transform="rotate(-90 45 45)"/>
+          <text x="45" y="49" text-anchor="middle" fill="var(--blue)" font-size="13" font-weight="700" id="gauge-moselle-val">---</text>
+        </svg>
+        <div class="gauge-val" id="lvl-moselle">– cm</div>
+        <div class="gauge-label">MOSEL KOBLENZ<br><span class="gauge-unit">Pegel live</span></div>
+      </div>
+      <div class="gauge-wrap">
+        <svg width="90" height="90" viewBox="0 0 90 90">
+          <circle cx="45" cy="45" r="36" fill="none" stroke="rgba(0,200,255,0.08)" stroke-width="6"/>
+          <circle id="gauge-bodensee" cx="45" cy="45" r="36" fill="none" stroke="var(--gold)" stroke-width="6" stroke-linecap="round"
+            stroke-dasharray="226.19" stroke-dashoffset="80" transform="rotate(-90 45 45)"/>
+          <text x="45" y="49" text-anchor="middle" fill="var(--gold)" font-size="13" font-weight="700" id="gauge-bodensee-val">---</text>
+        </svg>
+        <div class="gauge-val" id="lvl-bodensee">– cm</div>
+        <div class="gauge-label">BODENSEE KONSTANZ<br><span class="gauge-unit">Pegel live</span></div>
+      </div>
+      <div class="gauge-wrap">
+        <svg width="90" height="90" viewBox="0 0 90 90">
+          <circle cx="45" cy="45" r="36" fill="none" stroke="rgba(0,200,255,0.08)" stroke-width="6"/>
+          <circle id="gauge-elbe" cx="45" cy="45" r="36" fill="none" stroke="#a78bfa" stroke-width="6" stroke-linecap="round"
+            stroke-dasharray="226.19" stroke-dashoffset="130" transform="rotate(-90 45 45)"/>
+          <text x="45" y="49" text-anchor="middle" fill="#a78bfa" font-size="13" font-weight="700" id="gauge-elbe-val">---</text>
+        </svg>
+        <div class="gauge-val" id="lvl-elbe">– cm</div>
+        <div class="gauge-label">ELBE HAMBURG<br><span class="gauge-unit">Pegel live</span></div>
+      </div>
+    </div>
+    <div style="margin-top:1rem;display:flex;gap:1rem;align-items:center;flex-wrap:wrap">
+      <span style="font-size:.65rem;color:var(--text-dim)">Datenquelle: Pegelonline WSV API</span>
+      <span id="live-updated" style="font-size:.65rem;color:var(--teal)">Wird geladen...</span>
+      <a href="https://www.pegelonline.wsv.de" target="_blank" class="pc-link">→ Pegelonline öffnen</a>
+      <a href="https://www.elwis.de" target="_blank" class="pc-link">→ ELWIS öffnen</a>
+    </div>
+  </div>
+</section>
+
+<!-- FINANCE -->
+<section id="sec-finance">
+  <div class="section-title">💰 FINANZEN & INVESTOREN</div>
+  <div class="grid-3">
+    <div class="panel panel-gold">
+      <svg class="arc-deco" viewBox="0 0 120 120"><circle cx="60" cy="60" r="50"/><circle cx="60" cy="60" r="38"/><circle cx="60" cy="60" r="26"/><circle cx="60" cy="60" r="14"/></svg>
+      <div style="font-size:.65rem;letter-spacing:.15em;color:var(--gold);margin-bottom:.75rem">💎 FUNDING STATUS</div>
+      <div style="font-size:.7rem;color:var(--text-dim);margin-bottom:.25rem">Seed-Ziel: 250.000 – 500.000 €</div>
+      <div style="font-size:2rem;font-weight:900;color:var(--gold)">Q3 2026</div>
+      <div style="font-size:.65rem;color:var(--text-dim);margin-bottom:.75rem">SEED TIMELINE TARGET</div>
+      <div class="funding-bar"><div class="funding-fill" style="width:35%"></div></div>
+      <div style="font-size:.65rem;color:var(--text-dim);margin-bottom:1rem">Fortschritt: 35% (Gespräche aktiv)</div>
+      <div style="font-size:.7rem;color:var(--text-dim)">Aktuelle Investor-Pipeline:</div>
+      <div class="investor-row">
+        <div class="inv-stage">DD</div>
+        <div class="inv-name">Seedmatch (Crowdinvesting)</div>
+        <div class="inv-amount">50k€</div>
+        <div class="inv-status">🔴 Aktiv</div>
+      </div>
+      <div class="investor-row">
+        <div class="inv-stage">TALK</div>
+        <div class="inv-name">HTGF Erstkontakt</div>
+        <div class="inv-amount">250k€</div>
+        <div class="inv-status">🟡 Offen</div>
+      </div>
+      <div class="investor-row">
+        <div class="inv-stage">PREP</div>
+        <div class="inv-name">EXIST Gründerstipendium</div>
+        <div class="inv-amount">125k€</div>
+        <div class="inv-status">🟡 In Vorbereitung</div>
+      </div>
+    </div>
+    <div class="panel">
+      <div style="font-size:.65rem;letter-spacing:.15em;color:var(--blue);margin-bottom:.75rem">📉 BURN RATE & RUNWAY</div>
+      <div class="chart-box"><canvas id="chart-finance"></canvas></div>
+    </div>
+    <div class="panel">
+      <div style="font-size:.65rem;letter-spacing:.15em;color:var(--blue);margin-bottom:.75rem">🎯 BUSINESS METRICS</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:.75rem">
+        <div style="background:rgba(0,200,255,0.04);border:1px solid rgba(0,200,255,0.1);border-radius:8px;padding:.75rem;text-align:center">
+          <div style="font-size:1.3rem;font-weight:700;color:var(--blue)">12</div>
+          <div style="font-size:.6rem;color:var(--text-dim)">Aktive Projekte</div>
+        </div>
+        <div style="background:rgba(0,255,136,0.04);border:1px solid rgba(0,255,136,0.1);border-radius:8px;padding:.75rem;text-align:center">
+          <div style="font-size:1.3rem;font-weight:700;color:var(--green)">3</div>
+          <div style="font-size:.6rem;color:var(--text-dim)">Live Systeme</div>
+        </div>
+        <div style="background:rgba(201,168,76,0.04);border:1px solid rgba(201,168,76,0.1);border-radius:8px;padding:.75rem;text-align:center">
+          <div style="font-size:1.3rem;font-weight:700;color:var(--gold)">3</div>
+          <div style="font-size:.6rem;color:var(--text-dim)">Investor-Gespräche</div>
+        </div>
+        <div style="background:rgba(0,212,170,0.04);border:1px solid rgba(0,212,170,0.1);border-radius:8px;padding:.75rem;text-align:center">
+          <div style="font-size:1.3rem;font-weight:700;color:var(--teal)">12</div>
+          <div style="font-size:.6rem;color:var(--text-dim)">Beta-Tester BunBo</div>
+        </div>
+      </div>
+      <div style="margin-top:1rem">
+        <div style="font-size:.65rem;letter-spacing:.1em;color:var(--gold);margin-bottom:.5rem">PITCH DECK & UNTERLAGEN</div>
+        <div style="display:flex;flex-wrap:wrap;gap:.4rem">
+          <span class="pc-link" style="cursor:pointer" onclick="showNotif('📄 Pitch Deck wird geöffnet...','gold')">Pitch Deck v3</span>
+          <span class="pc-link" style="cursor:pointer" onclick="showNotif('📊 Finanzplan wird geöffnet...','gold')">Finanzplan</span>
+          <span class="pc-link" style="cursor:pointer" onclick="showNotif('🧾 Executive Summary...','gold')">Exec Summary</span>
+          <a href="https://www.exist.de" target="_blank" class="pc-link">EXIST Info</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MEDIA & SOCIAL -->
+<section>
+  <div class="section-title">📣 MARKETING & SOCIAL MEDIA</div>
+  <div class="grid-2">
+    <div class="panel">
+      <div style="font-size:.65rem;letter-spacing:.15em;color:var(--blue);margin-bottom:.75rem">SOCIAL MEDIA — STATUS</div>
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:.75rem">
+        <div class="social-card">
+          <div class="social-icon">📸</div>
+          <div class="social-val">1.2k</div>
+          <div class="social-label">Instagram</div>
+          <div class="social-delta">+12 diese Woche</div>
+        </div>
+        <div class="social-card">
+          <div class="social-icon">💼</div>
+          <div class="social-val">890</div>
+          <div class="social-label">LinkedIn</div>
+          <div class="social-delta">+34 diese Woche</div>
+        </div>
+        <div class="social-card">
+          <div class="social-icon">▶️</div>
+          <div class="social-val">340</div>
+          <div class="social-label">YouTube</div>
+          <div class="social-delta">+8 diese Woche</div>
+        </div>
+        <div class="social-card">
+          <div class="social-icon">🐦</div>
+          <div class="social-val">215</div>
+          <div class="social-label">X/Twitter</div>
+          <div class="social-delta">+5 diese Woche</div>
+        </div>
+      </div>
+      <div style="margin-top:1rem;display:flex;gap:.5rem;flex-wrap:wrap">
+        <a href="https://www.instagram.com" target="_blank" class="pc-link">Instagram</a>
+        <a href="https://www.linkedin.com" target="_blank" class="pc-link">LinkedIn</a>
+        <a href="https://www.youtube.com" target="_blank" class="pc-link">YouTube</a>
+      </div>
+    </div>
+    <div class="panel">
+      <div style="font-size:.65rem;letter-spacing:.15em;color:var(--blue);margin-bottom:.75rem">🎬 CONTENT — NÄCHSTE AKTIONEN</div>
+      <div class="media-item">
+        <div class="media-thumb">📹</div>
+        <div><div class="media-title">BunBo App Demo Video — 60s Reel</div><div class="media-meta">Geplant • KW 21 • Instagram + LinkedIn</div></div>
+      </div>
+      <div class="media-item">
+        <div class="media-thumb">✍️</div>
+        <div><div class="media-title">Blogpost: "Wassernavigation der Zukunft"</div><div class="media-meta">Entwurf fertig • SEO optimiert • Wave Bite Website</div></div>
+      </div>
+      <div class="media-item">
+        <div class="media-thumb">📊</div>
+        <div><div class="media-title">LinkedIn: Investor-Update Thread</div><div class="media-meta">Geplant • KW 21 • Seed-Runde sichtbar machen</div></div>
+      </div>
+      <div class="media-item">
+        <div class="media-thumb">📧</div>
+        <div><div class="media-title">Newsletter: Wave Bite Mai-Update</div><div class="media-meta">150 Abonnenten • Mailchimp • KW 22</div></div>
+      </div>
+      <div style="margin-top:.75rem;display:flex;gap:.5rem">
+        <span class="pc-link" style="cursor:pointer" onclick="showNotif('📅 Content-Kalender wird geladen...','blue')">Content-Plan</span>
+        <a href="https://www.canva.com" target="_blank" class="pc-link">Canva</a>
+        <a href="https://mailchimp.com" target="_blank" class="pc-link">Mailchimp</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SCHEDULED TASKS -->
+<section id="sec-tasks">
+  <div class="section-title">⚙ AUTONOME TASKS — JARVIS SCHEDULER</div>
+  <div class="grid-2">
+    <div class="panel">
+      <div style="font-size:.65rem;letter-spacing:.15em;color:var(--teal);margin-bottom:.75rem">🤖 AKTIVE AUTOMATISIERUNGEN</div>
+      <div class="task-row">
+        <div class="task-indicator active"></div>
+        <div class="task-name">CEO Daily Briefing</div>
+        <div>
+          <div class="task-schedule">06:00 Uhr täglich</div>
+          <div class="task-last">Letzte Ausführung: heute 06:00</div>
+        </div>
+      </div>
+      <div class="task-row">
+        <div class="task-indicator active"></div>
+        <div class="task-name">Pegelonline API Sync</div>
+        <div>
+          <div class="task-schedule">alle 15 Min</div>
+          <div class="task-last">Letzte Ausführung: vor 8 Min</div>
+        </div>
+      </div>
+      <div class="task-row">
+        <div class="task-indicator active"></div>
+        <div class="task-name">Wöchentlicher Projekt-Status Report</div>
+        <div>
+          <div class="task-schedule">Mo 07:00 Uhr</div>
+          <div class="task-last">Letzte Ausführung: heute 07:00</div>
+        </div>
+      </div>
+      <div class="task-row">
+        <div class="task-indicator warn"></div>
+        <div class="task-name">Investor Follow-up Reminder</div>
+        <div>
+          <div class="task-schedule">Di + Fr 09:00</div>
+          <div class="task-last">Nächste: Di 09:00</div>
+        </div>
+      </div>
+      <div class="task-row">
+        <div class="task-indicator active"></div>
+        <div class="task-name">Social Media Analytics Pull</div>
+        <div>
+          <div class="task-schedule">täglich 18:00</div>
+          <div class="task-last">Letzte Ausführung: gestern 18:00</div>
+        </div>
+      </div>
+      <div class="task-row">
+        <div class="task-indicator idle"></div>
+        <div class="task-name">GitHub Repo Backup</div>
+        <div>
+          <div class="task-schedule">Sa 02:00 Uhr</div>
+          <div class="task-last">Letzte Ausführung: Sa 02:00</div>
+        </div>
+      </div>
+    </div>
+    <div class="panel">
+      <div style="font-size:.65rem;letter-spacing:.15em;color:var(--teal);margin-bottom:.75rem">🔗 TOOL-ZENTRALE</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:.5rem">
+        <a href="https://flutterflow.io" target="_blank" class="project-card" style="text-decoration:none;padding:.75rem">
+          <div style="font-size:1.2rem;margin-bottom:.3rem">📱</div>
+          <div style="font-size:.75rem;font-weight:700;color:var(--text)">FlutterFlow</div>
+          <div style="font-size:.6rem;color:var(--teal)">BunBo App Dev</div>
+        </a>
+        <a href="https://github.com" target="_blank" class="project-card" style="text-decoration:none;padding:.75rem">
+          <div style="font-size:1.2rem;margin-bottom:.3rem">🐙</div>
+          <div style="font-size:.75rem;font-weight:700;color:var(--text)">GitHub</div>
+          <div style="font-size:.6rem;color:var(--teal)">Repos & Code</div>
+        </a>
+        <a href="https://n8n.io" target="_blank" class="project-card" style="text-decoration:none;padding:.75rem">
+          <div style="font-size:1.2rem;margin-bottom:.3rem">⚡</div>
+          <div style="font-size:.75rem;font-weight:700;color:var(--text)">N8N</div>
+          <div style="font-size:.6rem;color:var(--teal)">Automation Hub</div>
+        </a>
+        <a href="https://app.glideapps.com" target="_blank" class="project-card" style="text-decoration:none;padding:.75rem">
+          <div style="font-size:1.2rem;margin-bottom:.3rem">✨</div>
+          <div style="font-size:.75rem;font-weight:700;color:var(--text)">Glide Apps</div>
+          <div style="font-size:.6rem;color:var(--teal)">No-Code MVPs</div>
+        </a>
+        <a href="https://make.com" target="_blank" class="project-card" style="text-decoration:none;padding:.75rem">
+          <div style="font-size:1.2rem;margin-bottom:.3rem">🔄</div>
+          <div style="font-size:.75rem;font-weight:700;color:var(--text)">Make.com</div>
+          <div style="font-size:.6rem;color:var(--teal)">Workflows</div>
+        </a>
+        <a href="https://script.google.com" target="_blank" class="project-card" style="text-decoration:none;padding:.75rem">
+          <div style="font-size:1.2rem;margin-bottom:.3rem">📝</div>
+          <div style="font-size:.75rem;font-weight:700;color:var(--text)">Apps Script</div>
+          <div style="font-size:.6rem;color:var(--teal)">CEO Briefing</div>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== CONSOLE SECTION ===================== -->
+<section id="sec-console">
+  <div class="section-title">🧠 CEO CONSOLE — MEMORY · KPI · REVIEW</div>
+  <div class="grid-3" style="--cols:3">
+
+    <!-- MEMORY CONSOLE -->
+    <div class="panel" style="border-color:rgba(0,212,170,0.25)">
+      <div style="font-size:.65rem;letter-spacing:.15em;color:var(--teal);margin-bottom:.75rem">🗃 MEMORY CONSOLE — JARVIS CONTEXT</div>
+      <div id="memory-console-log" style="font-size:.7rem;color:var(--text-dim);line-height:1.9;max-height:260px;overflow-y:auto">
+        <div style="color:var(--teal);margin-bottom:.3rem">[17.05.2026 06:00] CEO Briefing generiert — 3 kritische Items</div>
+        <div style="color:var(--text-dim);margin-bottom:.3rem">[17.05.2026 00:00] Wöchentlicher Status-Report gespeichert</div>
+        <div style="color:var(--gold);margin-bottom:.3rem">[16.05.2026 18:00] Risiko-Flag: BunBo App Beta-Delay erkannt</div>
+        <div style="color:var(--text-dim);margin-bottom:.3rem">[16.05.2026 14:22] Investor-Mail-Vorlage vorbereitet (2 Kontakte)</div>
+        <div style="color:var(--teal);margin-bottom:.3rem">[16.05.2026 09:00] Pegelonline Sync — alle Daten aktuell</div>
+        <div style="color:var(--text-dim);margin-bottom:.3rem">[15.05.2026 18:00] Social Media Pull — Instagram +4.2% Reichweite</div>
+        <div style="color:var(--gold);margin-bottom:.3rem">[15.05.2026 11:00] Strategieentscheidung: FlutterFlow vs React Native</div>
+        <div style="color:var(--text-dim);margin-bottom:.3rem">[15.05.2026 07:00] Wasser-Lagen-Daten für 5 Gewässer geupdated</div>
+      </div>
+      <div style="margin-top:.75rem;display:flex;gap:.5rem">
+        <button class="btn-outline" style="font-size:.65rem;padding:.3rem .7rem" onclick="addMemoryEntry()">+ Eintrag</button>
+        <button class="btn-outline" style="font-size:.65rem;padding:.3rem .7rem" onclick="showNotif('🗃 Memory exportiert','teal')">Export</button>
+      </div>
+    </div>
+
+    <!-- KPI REPORT -->
+    <div class="panel" style="border-color:rgba(201,168,76,0.25)">
+      <div style="font-size:.65rem;letter-spacing:.15em;color:var(--gold);margin-bottom:.75rem">📊 KPI REPORT — LIVE STATUS</div>
+      <div style="display:flex;flex-direction:column;gap:.6rem">
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:.5rem .7rem;background:rgba(0,200,255,0.05);border-radius:6px;border:1px solid rgba(0,200,255,0.1)">
+          <span style="font-size:.72rem;color:var(--text)">App MAU (BunBo)</span>
+          <span style="font-size:.8rem;font-weight:700;color:var(--teal)">847 <span style="font-size:.6rem;color:#4caf50">▲ +12%</span></span>
+        </div>
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:.5rem .7rem;background:rgba(0,200,255,0.05);border-radius:6px;border:1px solid rgba(0,200,255,0.1)">
+          <span style="font-size:.72rem;color:var(--text)">Website Sessions (7d)</span>
+          <span style="font-size:.8rem;font-weight:700;color:var(--teal)">3.241 <span style="font-size:.6rem;color:#4caf50">▲ +8%</span></span>
+        </div>
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:.5rem .7rem;background:rgba(0,200,255,0.05);border-radius:6px;border:1px solid rgba(0,200,255,0.1)">
+          <span style="font-size:.72rem;color:var(--text)">GitHub Commits (Mo)</span>
+          <span style="font-size:.8rem;font-weight:700;color:var(--blue)">34 <span style="font-size:.6rem;color:var(--text-dim)">→ stabil</span></span>
+        </div>
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:.5rem .7rem;background:rgba(0,200,255,0.05);border-radius:6px;border:1px solid rgba(201,168,76,0.2)">
+          <span style="font-size:.72rem;color:var(--text)">Investor-Leads aktiv</span>
+          <span style="font-size:.8rem;font-weight:700;color:var(--gold)">7 <span style="font-size:.6rem;color:#ff9800">▲ +2</span></span>
+        </div>
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:.5rem .7rem;background:rgba(0,200,255,0.05);border-radius:6px;border:1px solid rgba(255,76,76,0.15)">
+          <span style="font-size:.72rem;color:var(--text)">Offene kritische Tasks</span>
+          <span style="font-size:.8rem;font-weight:700;color:#ff6b6b">3 <span style="font-size:.6rem;color:#ff6b6b">⚠ action needed</span></span>
+        </div>
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:.5rem .7rem;background:rgba(0,200,255,0.05);border-radius:6px;border:1px solid rgba(0,200,255,0.1)">
+          <span style="font-size:.72rem;color:var(--text)">Cashflow-Prognose (Q3)</span>
+          <span style="font-size:.8rem;font-weight:700;color:var(--teal)">+18.500€ <span style="font-size:.6rem;color:#4caf50">▲ positiv</span></span>
+        </div>
+      </div>
+      <div style="margin-top:.75rem">
+        <button class="btn-gold" style="font-size:.65rem;padding:.3rem .9rem;width:100%" onclick="showNotif('📊 KPI Report wird generiert...','gold')">📋 Full KPI Report</button>
+      </div>
+    </div>
+
+    <!-- REVIEW MONITOR -->
+    <div class="panel" style="border-color:rgba(0,200,255,0.2)">
+      <div style="font-size:.65rem;letter-spacing:.15em;color:var(--blue);margin-bottom:.75rem">🔍 REVIEW MONITOR — DAILY & WEEKLY</div>
+      <div style="font-size:.62rem;color:var(--text-dim);letter-spacing:.1em;margin-bottom:.5rem">HEUTE — <span id="review-date" style="color:var(--teal)"></span></div>
+      <div style="display:flex;flex-direction:column;gap:.35rem;margin-bottom:.9rem" id="daily-checklist">
+        <label style="display:flex;align-items:center;gap:.5rem;cursor:pointer;font-size:.72rem;color:var(--text)"><input type="checkbox" onchange="updateReviewProgress()" style="accent-color:var(--teal)"> CEO Briefing gelesen</label>
+        <label style="display:flex;align-items:center;gap:.5rem;cursor:pointer;font-size:.72rem;color:var(--text)"><input type="checkbox" onchange="updateReviewProgress()" style="accent-color:var(--teal)"> Top 3 Prioritäten gesetzt</label>
+        <label style="display:flex;align-items:center;gap:.5rem;cursor:pointer;font-size:.72rem;color:var(--text)"><input type="checkbox" onchange="updateReviewProgress()" style="accent-color:var(--teal)"> Offene Mails bearbeitet</label>
+        <label style="display:flex;align-items:center;gap:.5rem;cursor:pointer;font-size:.72rem;color:var(--text)"><input type="checkbox" onchange="updateReviewProgress()" style="accent-color:var(--teal)"> Risiken geprüft</label>
+        <label style="display:flex;align-items:center;gap:.5rem;cursor:pointer;font-size:.72rem;color:var(--text)"><input type="checkbox" onchange="updateReviewProgress()" style="accent-color:var(--teal)"> Investor-Kontakte nachgefasst</label>
+        <label style="display:flex;align-items:center;gap:.5rem;cursor:pointer;font-size:.72rem;color:var(--text)"><input type="checkbox" onchange="updateReviewProgress()" style="accent-color:var(--teal)"> Tages-Recap dokumentiert</label>
+      </div>
+      <div style="font-size:.62rem;color:var(--text-dim);letter-spacing:.1em;margin-bottom:.4rem">FORTSCHRITT</div>
+      <div style="background:rgba(0,200,255,0.08);border-radius:4px;height:6px;overflow:hidden">
+        <div id="review-progress-bar" style="height:100%;width:0%;background:linear-gradient(90deg,var(--blue),var(--teal));transition:width .4s ease;border-radius:4px"></div>
+      </div>
+      <div style="font-size:.65rem;color:var(--teal);margin-top:.3rem" id="review-progress-text">0 / 6 erledigt</div>
+      <div style="margin-top:.75rem;font-size:.62rem;color:var(--text-dim);letter-spacing:.1em;margin-bottom:.4rem">WÖCHENTLICH</div>
+      <div style="display:flex;flex-direction:column;gap:.3rem">
+        <label style="display:flex;align-items:center;gap:.5rem;cursor:pointer;font-size:.7rem;color:var(--text-dim)"><input type="checkbox" style="accent-color:var(--gold)"> Wochenreview durchgeführt</label>
+        <label style="display:flex;align-items:center;gap:.5rem;cursor:pointer;font-size:.7rem;color:var(--text-dim)"><input type="checkbox" style="accent-color:var(--gold)"> OKRs überprüft & angepasst</label>
+        <label style="display:flex;align-items:center;gap:.5rem;cursor:pointer;font-size:.7rem;color:var(--text-dim)"><input type="checkbox" style="accent-color:var(--gold)"> GitHub Repos reviewed</label>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ===================== AGENTEN SECTION ===================== -->
+<section id="sec-agents">
+  <div class="section-title">🤖 AI-AGENTEN — AUTONOME INTELLIGENZ</div>
+
+  <!-- BWL INTELLIGENCE MODULE -->
+  <div class="panel" style="margin-bottom:1.25rem;border-color:rgba(201,168,76,0.2)">
+    <div style="font-size:.65rem;letter-spacing:.15em;color:var(--gold);margin-bottom:.9rem">⚡ CEO INTELLIGENCE ENGINE — BWL-WEITBLICK & MARKT-RADAR</div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:.75rem">
+      <div class="bwl-module">
+        <div class="bwl-module-icon">📊</div>
+        <div><div class="bwl-module-title">Finanz-KPIs Live</div><div class="bwl-module-desc">Runway, Burn Rate, Revenue Forecast, Break-Even-Analyse automatisch berechnet. Seedmatch-Deadline im Blick.</div></div>
+      </div>
+      <div class="bwl-module">
+        <div class="bwl-module-icon">🌊</div>
+        <div><div class="bwl-module-title">Markt-Trend Radar</div><div class="bwl-module-desc">Wassertourismus, Marina-Digitalisierung, Förder- & Zuschuss-Programme DE/EU automatisch überwacht.</div></div>
+      </div>
+      <div class="bwl-module">
+        <div class="bwl-module-icon">🎯</div>
+        <div><div class="bwl-module-title">Strategische Priorisierung</div><div class="bwl-module-desc">Impact-vs-Aufwand Matrix, OKR-Tracking, kritische Pfade aller Projekte — täglich neu bewertet.</div></div>
+      </div>
+      <div class="bwl-module">
+        <div class="bwl-module-icon">🤝</div>
+        <div><div class="bwl-module-title">Investor Relations</div><div class="bwl-module-desc">Follow-up Timing, Due-Diligence Checklisten, Pitch-Optimierung — automatisch an Gesprächsphasen angepasst.</div></div>
+      </div>
+      <div class="bwl-module">
+        <div class="bwl-module-icon">⚖️</div>
+        <div><div class="bwl-module-title">Legal & Compliance</div><div class="bwl-module-desc">DSGVO, Markenrecht, AGB-Check, Fördermittel-Compliance — proaktive Risikoerkennung.</div></div>
+      </div>
+      <div class="bwl-module">
+        <div class="bwl-module-icon">📣</div>
+        <div><div class="bwl-module-title">Growth Engine</div><div class="bwl-module-desc">Content-Kalender, LinkedIn-Timing, Kanal-ROI, Partnerstrategie — KI-gestützte Wachstumsplanung.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- AI AGENT CARDS -->
+  <div class="agent-grid">
+
+    <!-- 1. CEO Strategy Agent -->
+    <div class="agent-card gold-border">
+      <div class="agent-icon">🧠</div>
+      <div class="agent-name">CEO Strategy Agent</div>
+      <div class="agent-role">LEITENDER STRATEGIEBERATER</div>
+      <div class="agent-status live">● AKTIV</div>
+      <div class="agent-skills">
+        <span class="agent-skill">BWL-Analyse</span>
+        <span class="agent-skill">OKR-Tracking</span>
+        <span class="agent-skill">Risiko-KI</span>
+        <span class="agent-skill">Entscheidungsmatrix</span>
+        <span class="agent-skill">Wettbewerb</span>
+      </div>
+      <div class="agent-insight">"BunBo App: 65% — TestFlight KW22 kritisch. EXIST-Antrag bis 30.06. Funding-Gap: 8 Monate Runway ohne Seed."</div>
+      <a href="https://claude.ai" target="_blank" class="agent-launch-btn">▶ Aktivieren</a>
+    </div>
+
+    <!-- 2. Finanz-Agent -->
+    <div class="agent-card">
+      <div class="agent-icon">💰</div>
+      <div class="agent-name">Finanz & Investor Agent</div>
+      <div class="agent-role">CFO-ASSISTENT / FUNDRAISING</div>
+      <div class="agent-status live">● AKTIV</div>
+      <div class="agent-skills">
+        <span class="agent-skill">P&L-Analyse</span>
+        <span class="agent-skill">Burn Rate</span>
+        <span class="agent-skill">Pitch Deck</span>
+        <span class="agent-skill">Seedmatch</span>
+        <span class="agent-skill">EXIST</span>
+        <span class="agent-skill">Due Diligence</span>
+      </div>
+      <div class="agent-insight">"Break-Even bei ~85k€/Monat. Seedmatch DD-Deadline: Freitag. Empfehle: 2-seitiges Executive Summary für Banken."</div>
+      <a href="https://claude.ai" target="_blank" class="agent-launch-btn">▶ Aktivieren</a>
+    </div>
+
+    <!-- 3. Marketing & Growth Agent -->
+    <div class="agent-card">
+      <div class="agent-icon">📣</div>
+      <div class="agent-name">Marketing & Growth Agent</div>
+      <div class="agent-role">CMO-ASSISTENT / GROWTH HACKING</div>
+      <div class="agent-status live">● AKTIV</div>
+      <div class="agent-skills">
+        <span class="agent-skill">LinkedIn</span>
+        <span class="agent-skill">Content KI</span>
+        <span class="agent-skill">SEO</span>
+        <span class="agent-skill">Ads</span>
+        <span class="agent-skill">Brand Voice</span>
+        <span class="agent-skill">Funnel</span>
+      </div>
+      <div class="agent-insight">"3x/Woche LinkedIn = +40% Reichweite. Nächster Post-Slot: heute 17:30. Marina-Zielgruppe: Bootsbesitzer 45-65."</div>
+      <a href="https://claude.ai" target="_blank" class="agent-launch-btn">▶ Aktivieren</a>
+    </div>
+
+    <!-- 4. Video Creator Agent -->
+    <div class="agent-card">
+      <div class="agent-icon">🎬</div>
+      <div class="agent-name">Video Creator Agent</div>
+      <div class="agent-role">VIDEO-STRATEGIE / CONTENT PRODUKTION</div>
+      <div class="agent-status beta">◑ BETA</div>
+      <div class="agent-skills">
+        <span class="agent-skill">Skript-KI</span>
+        <span class="agent-skill">CapCut</span>
+        <span class="agent-skill">Reel-Struktur</span>
+        <span class="agent-skill">Hook-Texte</span>
+        <span class="agent-skill">Thumbnail</span>
+        <span class="agent-skill">YouTube SEO</span>
+      </div>
+      <div class="agent-insight">"Wave Bite Demo-Video: 60-Sek Reel für Marina-Zielgruppe. Hook: 'Dein Boot hat Netz — hast du es?' Optimaler Upload: Do 10:00."</div>
+      <a href="https://claude.ai" target="_blank" class="agent-launch-btn">▶ Aktivieren</a>
+    </div>
+
+    <!-- 5. Legal & Compliance Agent -->
+    <div class="agent-card">
+      <div class="agent-icon">⚖️</div>
+      <div class="agent-name">Legal & Compliance Agent</div>
+      <div class="agent-role">RECHT / SCHUTZ / VERTRÄGE</div>
+      <div class="agent-status live">● AKTIV</div>
+      <div class="agent-skills">
+        <span class="agent-skill">DSGVO</span>
+        <span class="agent-skill">AGB-Check</span>
+        <span class="agent-skill">Markenrecht</span>
+        <span class="agent-skill">Förder-Compliance</span>
+        <span class="agent-skill">Vertragscheck</span>
+      </div>
+      <div class="agent-insight">"Marina Düsseldorf LOI: Exklusivitätsklausel prüfen. DSGVO-Pflicht für BunBo App-Daten beachten. Marke 'WaveByte' DE anmelden."</div>
+      <a href="https://claude.ai" target="_blank" class="agent-launch-btn">▶ Aktivieren</a>
+    </div>
+
+    <!-- 6. Trend-Scout Agent -->
+    <div class="agent-card">
+      <div class="agent-icon">🔭</div>
+      <div class="agent-name">Trend-Scout Agent</div>
+      <div class="agent-role">MARKT-RADAR / BRANCHENTRENDS</div>
+      <div class="agent-status live">● AKTIV</div>
+      <div class="agent-skills">
+        <span class="agent-skill">Wassertourismus</span>
+        <span class="agent-skill">Marine-Tech</span>
+        <span class="agent-skill">EU-Förder</span>
+        <span class="agent-skill">Konkurrenz-KI</span>
+        <span class="agent-skill">Startup-Radar</span>
+      </div>
+      <div class="agent-insight">"EU Blue Economy: 500Mrd€ Markt. Marine-Digitalisierung wächst 23% p.a. Kein direkter Konkurrent in DACH mit vergleichbarem Ansatz."</div>
+      <a href="https://claude.ai" target="_blank" class="agent-launch-btn">▶ Aktivieren</a>
+    </div>
+
+    <!-- 7. Web & SEO Agent -->
+    <div class="agent-card">
+      <div class="agent-icon">🌐</div>
+      <div class="agent-name">Web & SEO Agent</div>
+      <div class="agent-role">WEBSITE / WORDPRESS / TRAFFIC</div>
+      <div class="agent-status live">● AKTIV</div>
+      <div class="agent-skills">
+        <span class="agent-skill">WordPress</span>
+        <span class="agent-skill">On-Page SEO</span>
+        <span class="agent-skill">Core Web Vitals</span>
+        <span class="agent-skill">Backlinks</span>
+        <span class="agent-skill">Analytics</span>
+      </div>
+      <div class="agent-insight">"wave-bite.com: 1.2k Visits/Monat. Top-Keyword fehlt: 'Marina App Deutschland'. 3 Quick-Win-SEO-Maßnahmen identifiziert."</div>
+      <a href="https://wave-bite.com/wp-admin/" target="_blank" class="agent-launch-btn">▶ WP Admin</a>
+    </div>
+
+    <!-- 8. App Dev Agent -->
+    <div class="agent-card">
+      <div class="agent-icon">📱</div>
+      <div class="agent-name">App Dev Agent</div>
+      <div class="agent-role">FLUTTERFLOW / GLIDE / TECH-ARCHITEKTUR</div>
+      <div class="agent-status live">● AKTIV</div>
+      <div class="agent-skills">
+        <span class="agent-skill">FlutterFlow</span>
+        <span class="agent-skill">Glide Apps</span>
+        <span class="agent-skill">API-Design</span>
+        <span class="agent-skill">Firebase</span>
+        <span class="agent-skill">TestFlight</span>
+      </div>
+      <div class="agent-insight">"BunBo 3.0 Beta: TestFlight Upload KW22. Kritischer Pfad: Payment-Flow + Offline-Karte. Glide-Prototyp MVP in 4h baubar."</div>
+      <a href="https://flutterflow.io" target="_blank" class="agent-launch-btn">▶ FlutterFlow</a>
+    </div>
+
+    <!-- 9. Operations Agent -->
+    <div class="agent-card">
+      <div class="agent-icon">⚙️</div>
+      <div class="agent-name">Operations Agent</div>
+      <div class="agent-role">AUTOMATION / N8N / MAKE / PROZESSE</div>
+      <div class="agent-status beta">◑ BETA</div>
+      <div class="agent-skills">
+        <span class="agent-skill">N8N</span>
+        <span class="agent-skill">Make.com</span>
+        <span class="agent-skill">Zapier</span>
+        <span class="agent-skill">Apps Script</span>
+        <span class="agent-skill">Webhook</span>
+        <span class="agent-skill">CRM-Sync</span>
+      </div>
+      <div class="agent-insight">"6 Automationen aktiv. CEO-Briefing täglich 06:00. Investor-Reminder Di+Fr. Potenzial: 3h/Woche Zeitersparnis durch weitere Automationen."</div>
+      <a href="https://n8n.io" target="_blank" class="agent-launch-btn">▶ N8N öffnen</a>
+    </div>
+
+  </div><!-- /agent-grid -->
+
+  <!-- SKILL-MATRIX -->
+  <div class="panel" style="margin-top:1.25rem">
+    <div style="font-size:.65rem;letter-spacing:.15em;color:var(--teal);margin-bottom:.9rem">📋 AGENT-SKILL-MATRIX — AKTUELLE FÄHIGKEITEN & NÄCHSTE ERWEITERUNGEN</div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:.6rem;font-size:.63rem">
+      <div style="padding:.6rem .8rem;background:rgba(0,212,170,0.05);border:1px solid rgba(0,212,170,0.15);border-radius:8px">
+        <div style="color:var(--teal);font-weight:700;margin-bottom:.3rem">✅ AKTIVE SKILLS</div>
+        <div style="color:var(--text-dim);line-height:1.8">BWL-Analyse • Pitch-Decks • DSGVO-Prüfung • Content-Erstellung • SEO-Audit • API-Anbindung • Finanzplanung • OKR-Tracking</div>
+      </div>
+      <div style="padding:.6rem .8rem;background:rgba(201,168,76,0.05);border:1px solid rgba(201,168,76,0.15);border-radius:8px">
+        <div style="color:var(--gold);font-weight:700;margin-bottom:.3rem">🔧 IN ENTWICKLUNG</div>
+        <div style="color:var(--text-dim);line-height:1.8">Video-Skript-KI • Echtzeit-Investor-Alerts • KI-Vertragsanalyse • Social-Listening • Automatische Förderantragssuche</div>
+      </div>
+      <div style="padding:.6rem .8rem;background:rgba(0,200,255,0.04);border:1px solid rgba(0,200,255,0.1);border-radius:8px">
+        <div style="color:var(--blue);font-weight:700;margin-bottom:.3rem">🚀 GEPLANT (Q3)</div>
+        <div style="color:var(--text-dim);line-height:1.8">Echtzeit-Marktdaten • KI-Telefon-Agent • Auto-Reporting • Multimodales Video-AI • Partner-CRM-Integration</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- QUICK ACTIONS BAR -->
+<div id="quick-actions-bar" style="position:fixed;bottom:28px;right:1.5rem;z-index:90;display:flex;flex-direction:column;gap:.5rem">
+  <button class="btn-gold" onclick="showNotif('📋 CEO Briefing wird erstellt...','gold')" title="CEO Briefing">☀ Briefing</button>
+  <button class="btn-primary" onclick="document.getElementById('sec-projects').scrollIntoView({behavior:'smooth'})" title="Projekte">⚓ Projekte</button>
+  <button class="btn-outline" onclick="document.getElementById('sec-tasks').scrollIntoView({behavior:'smooth'})" title="Tasks">⚙ Tasks</button>
+</div>
+
+</div><!-- /page -->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script>
+window._jsReadyAt = performance.now();
+// ===================== CANVAS 2D BOAT — Isometric 3D Houseboat =====================
+(function initBoatCanvas(){
+  const canvas = document.getElementById('boat-wireframe-canvas');
+  if (!canvas) return;
+  function setSize() {
+    canvas.width  = canvas.offsetWidth  || 128;
+    canvas.height = canvas.offsetHeight || 82;
+  }
+  setSize();
+  if (canvas.width < 2) { setTimeout(initBoatCanvas, 300); return; }
+  const ctx = canvas.getContext('2d');
+  let t = 0;
+
+  function drawBoat(floatY) {
+    const W = canvas.width, H = canvas.height;
+    ctx.clearRect(0, 0, W, H);
+    const s  = W / 128;
+    const ox = W * 0.56;
+    const oy = H * 0.68 + floatY * s;
+
+    // Isometric projection: x=right, y=up, z=depth(back)
+    function p3(x, y, z) {
+      return [
+        ox + (x - z) * 0.75 * s,
+        oy + (-y * 0.9 + (x + z) * 0.35) * s
+      ];
+    }
+
+    function glow(col, b) { ctx.shadowColor = col; ctx.shadowBlur = b * s; }
+    function ng() { ctx.shadowBlur = 0; }
+
+    // Draw filled+stroked polygon from 3D points
+    function face(pts, fill, stroke, lw) {
+      ctx.beginPath();
+      const q = p3(...pts[0]); ctx.moveTo(q[0], q[1]);
+      for (let i = 1; i < pts.length; i++) { const r = p3(...pts[i]); ctx.lineTo(r[0], r[1]); }
+      ctx.closePath();
+      if (fill)   { ctx.fillStyle = fill; ctx.fill(); }
+      if (stroke) { ctx.strokeStyle = stroke; ctx.lineWidth = lw * s; ctx.stroke(); }
+    }
+
+    // Draw a line between two 3D points
+    function ln(a, b, col, lw) {
+      const pa = p3(...a), pb = p3(...b);
+      ctx.beginPath(); ctx.moveTo(pa[0], pa[1]); ctx.lineTo(pb[0], pb[1]);
+      ctx.strokeStyle = col; ctx.lineWidth = lw * s; ctx.stroke();
+    }
+
+    const CY = 'rgba(0,200,255,';   // cyan
+    const GL = 'rgba(201,168,76,';  // gold
+    const TL = 'rgba(0,212,170,';   // teal
+    const OR = 'rgba(255,110,50,';  // orange
+
+    // ── DIMENSIONS ─────────────────────────────────────────────────
+    const PX=25,PZ=21,PY0=-3,PY1=4;        // pontoon half-width, depth, y range
+    const CX=18,CZ=19,CZO=1,CY0=4,CY1=30; // cabin
+    const MX=0, MZ=5, MY0=30,MY1=52;       // mast
+
+    // ── WATERLINE ──────────────────────────────────────────────────
+    glow(CY+'0.3)', 4);
+    ln([-PX-3,0,-2],[PX+3,0,-2], CY+'0.16)', 0.8);
+    ng();
+
+    // ── PONTOON — back faces first (painter's algorithm) ──────────
+    glow(CY+'0.2)', 3);
+    face([[-PX,PY0,PZ],[PX,PY0,PZ],[PX,PY1,PZ],[-PX,PY1,PZ]], CY+'0.03)', CY+'0.28)', 0.7);
+    face([[-PX,PY0,0],[-PX,PY0,PZ],[-PX,PY1,PZ],[-PX,PY1,0]], CY+'0.02)', CY+'0.20)', 0.6);
+    face([[-PX,PY0,0],[PX,PY0,0],[PX,PY0,PZ],[-PX,PY0,PZ]], CY+'0.02)', CY+'0.14)', 0.5);
+
+    glow(CY+'0.4)', 4);
+    face([[PX,PY0,0],[PX,PY0,PZ],[PX,PY1,PZ],[PX,PY1,0]], CY+'0.04)', CY+'0.44)', 0.9);
+
+    glow(CY+'0.6)', 6);
+    face([[-PX,PY0,0],[PX,PY0,0],[PX,PY1,0],[-PX,PY1,0]], CY+'0.06)', CY+'0.72)', 1.1);
+
+    glow(CY+'0.4)', 4);
+    face([[-PX,PY1,0],[PX,PY1,0],[PX,PY1,PZ],[-PX,PY1,PZ]], CY+'0.05)', CY+'0.50)', 0.9);
+
+    // Pontoon deck grid lines
+    ng();
+    for (let xi=-15;xi<=15;xi+=10) ln([xi,PY1,0],[xi,PY1,PZ], CY+'0.13)', 0.45);
+    for (let zi=5;zi<PZ;zi+=7)    ln([-PX,PY1,zi],[PX,PY1,zi], CY+'0.13)', 0.45);
+
+    // Pontoon vertical hull grid lines (front face)
+    for (let xi=-15;xi<=15;xi+=10) ln([xi,PY0,0],[xi,PY1,0], CY+'0.10)', 0.4);
+
+    // ── RAILING (deck edges, skip cabin zone) ──────────────────────
+    const RL = PY1 + 3.5;
+    glow(CY+'0.3)', 3);
+    // Front top rail (left portion and right portion)
+    ln([-PX,RL,0],[-CX-1,RL,0], CY+'0.35)', 0.6);
+    ln([CX+1,RL,0],[PX,RL,0],   CY+'0.35)', 0.6);
+    // Right side top rail
+    ln([PX,RL,0],[PX,RL,PZ],    CY+'0.25)', 0.5);
+    // Corner posts
+    ln([-PX,PY1,0],[-PX,RL,0],  CY+'0.32)', 0.6);
+    ln([PX,PY1,0],[PX,RL,0],    CY+'0.32)', 0.6);
+    // Mid posts (front, outside cabin)
+    [-18,18].forEach(xi => {
+      if(xi < -CX || xi > CX) ln([xi,PY1,0],[xi,RL,0], CY+'0.22)', 0.5);
+    });
+    ng();
+
+    // ── CABIN — back-to-front ──────────────────────────────────────
+    glow(CY+'0.22)', 3);
+    face([[-CX,CY0,CZO+CZ],[CX,CY0,CZO+CZ],[CX,CY1,CZO+CZ],[-CX,CY1,CZO+CZ]],
+         CY+'0.03)', CY+'0.26)', 0.7);
+    face([[-CX,CY0,CZO],[-CX,CY0,CZO+CZ],[-CX,CY1,CZO+CZ],[-CX,CY1,CZO]],
+         CY+'0.03)', CY+'0.28)', 0.7);
+
+    // Cabin right glass face + window grid
+    glow(CY+'0.45)', 5);
+    face([[CX,CY0,CZO],[CX,CY0,CZO+CZ],[CX,CY1,CZO+CZ],[CX,CY1,CZO]],
+         CY+'0.06)', CY+'0.50)', 0.9);
+    ng();
+    for (let yi=CY0+8; yi<CY1; yi+=8)   ln([CX,yi,CZO],[CX,yi,CZO+CZ], CY+'0.22)', 0.45);
+    for (let zi=CZO+5; zi<CZO+CZ; zi+=5) ln([CX,CY0,zi],[CX,CY1,zi],   CY+'0.18)', 0.4);
+
+    // Cabin front face (gold)
+    glow(GL+'0.6)', 8);
+    face([[-CX,CY0,CZO],[CX,CY0,CZO],[CX,CY1,CZO],[-CX,CY1,CZO]],
+         GL+'0.06)', GL+'0.78)', 1.2);
+
+    // Windows on front face (2 columns × 2 rows = 4 panes)
+    [[-8,13],[8,13],[-8,22],[8,22]].forEach(([wx,wy]) => {
+      glow(CY+'0.5)', 4);
+      face([[wx-5,wy-4,CZO],[wx+5,wy-4,CZO],[wx+5,wy+3,CZO],[wx-5,wy+3,CZO]],
+           CY+'0.08)', CY+'0.52)', 0.7);
+    });
+
+    // Cabin roof (gold accent)
+    ng();
+    glow(GL+'0.5)', 6);
+    face([[-CX,CY1,CZO],[CX,CY1,CZO],[CX,CY1,CZO+CZ],[-CX,CY1,CZO+CZ]],
+         GL+'0.09)', GL+'0.70)', 1.1);
+    // Roof ridge line
+    ln([0,CY1,CZO],[0,CY1,CZO+CZ], GL+'0.40)', 0.5);
+    ng();
+
+    // ── MAST ───────────────────────────────────────────────────────
+    glow(TL+'0.7)', 5);
+    ln([MX,MY0,MZ],[MX,MY1,MZ], TL+'0.82)', 0.9);
+    // Horizontal yardarm
+    ln([MX-6,MY1-8,MZ],[MX+6,MY1-8,MZ], TL+'0.50)', 0.6);
+
+    // Wave Bite flag (triangle)
+    const fTip = p3(MX+9, MY1-4, MZ);
+    const fTop = p3(MX,   MY1,   MZ);
+    const fBot = p3(MX,   MY1-8, MZ);
+    ctx.beginPath();
+    ctx.moveTo(fTop[0],fTop[1]);
+    ctx.lineTo(fTip[0],fTip[1]);
+    ctx.lineTo(fBot[0],fBot[1]);
+    ctx.closePath();
+    ctx.fillStyle = GL+'0.74)'; glow(GL+'0.8)',4); ctx.fill();
+    ctx.strokeStyle = GL+'0.88)'; ctx.lineWidth = 0.7*s; ctx.stroke();
+
+    // Pulsing radar dot at mast tip
+    const pa = 0.5 + 0.5 * Math.sin(t * 3);
+    const mt = p3(MX, MY1, MZ);
+    ctx.beginPath(); ctx.arc(mt[0], mt[1], 1.8*s, 0, Math.PI*2);
+    ctx.fillStyle = TL+pa+')'; glow(TL+'0.9)',7); ctx.fill();
+
+    // ── LIFE PRESERVER ─────────────────────────────────────────────
+    ng();
+    const lpc = p3(PX+1, PY1+5, PZ*0.5);
+    const lr  = 3.2 * s;
+    glow(OR+'0.65)', 5);
+    ctx.beginPath(); ctx.arc(lpc[0], lpc[1], lr, 0, Math.PI*2);
+    ctx.strokeStyle = OR+'0.20)'; ctx.lineWidth = 3.2*s; ctx.stroke();
+    [0, Math.PI*0.5, Math.PI, Math.PI*1.5].forEach((sa, i) => {
+      ctx.beginPath(); ctx.arc(lpc[0], lpc[1], lr, sa, sa+Math.PI*0.44);
+      ctx.strokeStyle = i%2===0 ? OR+'0.78)' : 'rgba(255,255,255,0.42)';
+      ctx.lineWidth = 3.2*s; ctx.stroke();
+    });
+    ng();
+  }
+
+  function animate() {
+    t += 0.025;
+    const floatY = Math.sin(t) * 2.8;
+    drawBoat(floatY);
+    requestAnimationFrame(animate);
+  }
+  animate();
+})();
+
+
+
+// ===================== OCEAN CANVAS =====================
+(function(){
+  const c=document.getElementById('ocean-canvas');
+  if(!c) return;
+  const cx=c.getContext('2d');
+  let W,H,pts=[],waves=[];
+  function resize(){W=c.width=window.innerWidth;H=c.height=window.innerHeight;}
+  window.addEventListener('resize',resize);resize();
+  for(let i=0;i<5;i++) waves.push({sp:0.0003+i*0.00015,amp:22+i*10,fr:0.003+i*0.0008,ph:i*Math.PI*0.4,yo:H*0.58+i*30,op:0.022-i*0.003});
+  for(let i=0;i<70;i++) pts.push({x:Math.random()*2000,y:Math.random()*1200,r:Math.random()*1.1+0.2,sp:Math.random()*0.12+0.04,op:Math.random()*0.3+0.05});
+  let ot=0;
+  function draw(){
+    cx.clearRect(0,0,W,H);
+    const bg=cx.createLinearGradient(0,0,0,H);
+    bg.addColorStop(0,'#020810');bg.addColorStop(0.6,'#04101e');bg.addColorStop(1,'#060f22');
+    cx.fillStyle=bg;cx.fillRect(0,0,W,H);
+    cx.strokeStyle='rgba(0,200,255,0.018)';cx.lineWidth=1;
+    for(let x=0;x<W;x+=90){cx.beginPath();cx.moveTo(x,0);cx.lineTo(x,H);cx.stroke();}
+    for(let y=0;y<H;y+=90){cx.beginPath();cx.moveTo(0,y);cx.lineTo(W,y);cx.stroke();}
+    waves.forEach(w=>{
+      cx.beginPath();cx.moveTo(0,H);
+      for(let x=0;x<=W;x+=5) cx.lineTo(x,w.yo+Math.sin(x*w.fr+ot*w.sp*3000+w.ph)*w.amp);
+      cx.lineTo(W,H);cx.closePath();cx.fillStyle=`rgba(0,60,150,${w.op})`;cx.fill();
+    });
+    pts.forEach(p=>{
+      p.y-=p.sp;if(p.y<-5){p.y=H+5;p.x=Math.random()*W;}
+      cx.beginPath();cx.arc(p.x,p.y,p.r,0,Math.PI*2);
+      cx.fillStyle=`rgba(201,168,76,${p.op})`;cx.fill();
+    });
+    ot++;if(!document.hidden)requestAnimationFrame(draw);else setTimeout(()=>requestAnimationFrame(draw),500);
+  }
+  draw();
+})();
+
+// ===================== HEARTBEAT CANVAS =====================
+(function(){
+  const c=document.getElementById('heartbeat-canvas');
+  if(!c) return;
+  const cx=c.getContext('2d');
+  let hpts=[],fr=0;
+  function resizeH(){c.width=c.parentElement.offsetWidth||600;c.height=52;}
+  window.addEventListener('resize',resizeH);resizeH();
+  function drawH(){
+    const w=c.width,h=c.height;
+    cx.clearRect(0,0,w,h);fr++;
+    hpts.push(
+      fr%60===0?h*.15:fr%60===5?h*.85:fr%60===8?h*.1:
+      fr%60===12?h*.88:fr%60===15?h*.5:h*.46+Math.sin(fr*.3)*(h*.07)
+    );
+    if(hpts.length>w) hpts.shift();
+    cx.beginPath();
+    hpts.forEach((y,i)=>{i===0?cx.moveTo(0,y):cx.lineTo(i,y);});
+    const g=cx.createLinearGradient(0,0,w,0);
+    g.addColorStop(0,'rgba(0,212,170,0)');g.addColorStop(0.7,'rgba(0,212,170,0.6)');g.addColorStop(1,'rgba(201,168,76,0.9)');
+    cx.strokeStyle=g;cx.lineWidth=1.5;cx.stroke();
+    if(!document.hidden) requestAnimationFrame(drawH);
+    else setTimeout(()=>requestAnimationFrame(drawH),1000);
+  }
+  drawH();
+})();
+
+// ===================== NEURAL NETWORK (BRAIN) =====================
+(function(){
+  const c=document.getElementById('neural-canvas');
+  if(!c) return;
+  const cx=c.getContext('2d');
+  let nodes=[];
+  function resizeN(){c.width=c.parentElement.offsetWidth||500;c.height=220;init();}
+  function init(){
+    nodes=[];
+    for(let i=0;i<30;i++) nodes.push({
+      x:Math.random()*c.width,y:Math.random()*c.height,
+      vx:(Math.random()-.5)*.45,vy:(Math.random()-.5)*.45,
+      r:Math.random()*2+1.5,pulse:Math.random()*Math.PI*2
+    });
+  }
+  window.addEventListener('resize',resizeN);resizeN();
+  function drawN(){
+    cx.clearRect(0,0,c.width,c.height);
+    nodes.forEach(n=>{
+      n.x+=n.vx;n.y+=n.vy;n.pulse+=0.04;
+      if(n.x<0||n.x>c.width) n.vx*=-1;
+      if(n.y<0||n.y>c.height) n.vy*=-1;
+    });
+    nodes.forEach((a,i)=>{
+      nodes.forEach((b,j)=>{
+        if(j<=i) return;
+        const dx=a.x-b.x,dy=a.y-b.y,dist=Math.sqrt(dx*dx+dy*dy);
+        if(dist<120){
+          const op=(1-dist/120)*0.4;
+          cx.beginPath();cx.moveTo(a.x,a.y);cx.lineTo(b.x,b.y);
+          const g=cx.createLinearGradient(a.x,a.y,b.x,b.y);
+          g.addColorStop(0,`rgba(201,168,76,${op})`);
+          g.addColorStop(0.5,`rgba(0,200,255,${op*0.7})`);
+          g.addColorStop(1,`rgba(0,212,170,${op})`);
+          cx.strokeStyle=g;cx.lineWidth=0.8;cx.stroke();
+        }
+      });
+    });
+    nodes.forEach(n=>{
+      const pulse=0.5+Math.sin(n.pulse)*0.5;
+      cx.beginPath();cx.arc(n.x,n.y,n.r,0,Math.PI*2);
+      cx.fillStyle=`rgba(201,168,76,${0.5+pulse*0.5})`;cx.fill();
+      cx.beginPath();cx.arc(n.x,n.y,n.r*2.8,0,Math.PI*2);
+      cx.strokeStyle=`rgba(201,168,76,${pulse*0.18})`;cx.lineWidth=1;cx.stroke();
+    });
+    if(!document.hidden) requestAnimationFrame(drawN);
+    else setTimeout(()=>requestAnimationFrame(drawN),1000);
+  }
+  drawN();
+})();
+
+// ===================== FILTER PILLS =====================
+function filterProj(cat,btn){
+  document.querySelectorAll('#proj-pills .pill').forEach(p=>p.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('#projects-grid .project-card').forEach(c=>{
+    const show=cat==='all'||c.dataset.cat===cat;
+    c.style.display=show?'':'none';
+    if(show){c.style.opacity=0;requestAnimationFrame(()=>{c.style.transition='opacity .3s';c.style.opacity=1;});}
+  });
+}
+
+// ===================== BOOT SEQUENCE =====================
+const bootLines = [
+  'Initializing JARVIS v3.0...',
+  'Loading Wave Bite project matrix...',
+  'Connecting to Pegelonline API...',
+  'Syncing CEO calendar data...',
+  'Activating arc reactor core...',
+  'All systems online ✓'
+];
+let bl = 0;
+function addBootLine(){
+  if(bl >= bootLines.length) return;
+  const d = document.getElementById('boot-lines');
+  const el = document.createElement('div');
+  el.className = 'boot-line';
+  el.textContent = '> ' + bootLines[bl++];
+  el.style.animationDelay = '0s';
+  d.appendChild(el);
+  el.getBoundingClientRect();
+  el.style.opacity = '1';
+  setTimeout(addBootLine, 380);
+}
+addBootLine();
+function dismissBoot(){
+  const b = document.getElementById('boot');
+  if(!b || b.dataset.dismissed) return;
+  b.dataset.dismissed = '1';
+  b.classList.add('fade');
+  setTimeout(()=>{ if(b) b.style.display='none'; }, 900);
+}
+// Click anywhere to skip boot
+document.getElementById('boot').addEventListener('click', dismissBoot);
+// Auto-dismiss: sync to CSS bootfill animation (2.6s) + small buffer
+const _elapsed = performance.now();
+const _target = 3200;
+const _delay1 = Math.max(300, _target - _elapsed);
+const _delay2 = Math.max(800, 5500 - _elapsed);
+setTimeout(dismissBoot, _delay1);
+setTimeout(dismissBoot, _delay2);
+
+// ===================== NOTIFICATIONS =====================
+function showNotif(msg, type='blue'){
+  const c = document.getElementById('notif');
+  if(!c) return;
+  const t = document.createElement('div');
+  t.className = 'notif-toast' + (type==='gold'?' gold':type==='teal'?' teal':'');
+  t.textContent = msg;
+  c.appendChild(t);
+  setTimeout(()=>t.classList.add('show'),50);
+  setTimeout(()=>{ t.classList.remove('show'); setTimeout(()=>t.remove(),500); },3500);
+}
+setTimeout(()=>showNotif('🤖 JARVIS Online — Maritime Bridge aktiv','blue'),3600);
+setTimeout(()=>showNotif('⚠ 2 ungelesene Investor-Mails','gold'),5200);
+
+// ===================== CLOCK =====================
+function tick(){
+  const el = document.getElementById('nav-clock');
+  if(el) el.textContent = new Date().toLocaleTimeString('de-DE',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
+  // Bridge date display
+  const bd = document.getElementById('bridge-date');
+  if(bd && bd.textContent === '—') {
+    const d = new Date();
+    bd.textContent = d.toLocaleDateString('de-DE',{weekday:'short',day:'2-digit',month:'short'});
+  }
+}
+setInterval(tick,1000); tick();
+
+// ===================== BRIDGE PANEL: PWA KPI MIRROR =====================
+(function bridgeWlKpi(){
+  var el = document.getElementById('bridge-wl-installs');
+  if(!el) return;
+  fetch('https://api.countapi.xyz/get/wavebite/wl-installs')
+    .then(function(r){return r.json()})
+    .then(function(d){ if(el) el.textContent = (d&&d.value!=null) ? d.value : 0; })
+    .catch(function(){});
+})();
+
+// ===================== COUNTDOWN =====================
+function updateCountdown(){
+  const target = new Date('2026-07-01T00:00:00');
+  const now = new Date();
+  const diff = target - now;
+  const _set = (id,v)=>{ const e=document.getElementById(id); if(e) e.textContent=String(Math.max(0,v)).padStart(2,'0'); };
+  if(diff <= 0){ ['cd-d','cd-h','cd-m','cd-s'].forEach(id=>_set(id,0)); return; }
+  _set('cd-d', Math.floor(diff/86400000));
+  _set('cd-h', Math.floor((diff%86400000)/3600000));
+  _set('cd-m', Math.floor((diff%3600000)/60000));
+  _set('cd-s', Math.floor((diff%60000)/1000));
+}
+setInterval(updateCountdown,1000); updateCountdown();
+
+// ===================== MODAL (simple overlay) =====================
+function closeModal(){
+  const o = document.getElementById('modal-overlay');
+  if(o) o.style.display='none';
+}
+function openModal(title, body){
+  const o = document.getElementById('modal-overlay');
+  const t = document.getElementById('modal-title');
+  const b = document.getElementById('modal-body');
+  if(t) t.textContent = title;
+  if(b) b.innerHTML = body;
+  if(o) o.style.display='flex';
+}
+document.addEventListener('keydown', e=>{ if(e.key==='Escape') closeModal(); });
+
+// ===================== DASHBOARD DATA + OPENER =====================
+const DASHBOARDS = {
+  tracking:    { icon:'📊', name:'Site Analytics Hub',      url:'file:///C:/Users/Startklar/Documents/Claude/Projects/Elwis/wavebite-premium-dashboard.html', desc:'Wave Bite Traffic-Hub: Seitenbesucher, Demografie & KPIs.', status:'LIVE' },
+  wasserlage:  { icon:'🌊', name:'Wasserlage Live',          url:'https://www.pegelonline.wsv.de',           desc:'Echtzeit-Pegelstände & Wasserstraßen-Informationen. ELWIS & WSV-Schnittstelle.', status:'LIVE' },
+  ceo_briefing:{ icon:'☀️', name:'CEO Briefing',             url:'https://mail.google.com',                   desc:'Tägliches CEO Briefing via Gmail + Apps Script. Morning Intelligence.', status:'Aktiv' },
+  playbook:    { icon:'📒', name:'Daily Playbook',           url:'https://drive.google.com',                  desc:'Tagesstruktur, Prioritäten & Fokus-Framework. Google Drive & Calendar.', status:'Aktiv' },
+  marketing:   { icon:'📣', name:'Marketing Dashboard',      url:'https://analytics.google.com',              desc:'Social Media, Content-Planung & Kampagnen-Tracking.', status:'Aufbau' },
+  kpi:         { icon:'📈', name:'KPI Dashboard',            url:'https://sheets.google.com',                 desc:'Wave Bite Kernmetriken: MAU, Downloads, Retention. OKR Q2 2026.', status:'Geplant' },
+  partner:     { icon:'🤝', name:'Partner Dashboard',        url:'https://drive.google.com',                  desc:'Sponsoring-Pipeline, Kooperationen & Partner-Status.', status:'Geplant' },
+  finance:     { icon:'💶', name:'Finance Dashboard',        url:'https://sheets.google.com',                 desc:'Cashflow, Burn Rate & Runway. Investor-Pipeline & Funding.', status:'Geplant' },
+  automation:  { icon:'⚙️', name:'Automation Control',       url:'https://script.google.com',                 desc:'N8N, Make.com & Apps Script. Aktive Automatisierungen & Trigger.', status:'Aktiv' },
+  elwis:       { icon:'⚓',       name:'ELWIS',                    url:'https://www.elwis.de',                      desc:'Bundesanstalt für Gewässerkunde. Wasserstraßen-Daten & Nautik.', status:'Extern' },
+  wordpress:   { icon:'🌐', name:'Wave Bite Website',        url:'https://wavebite.de',                       desc:'Haupt-Website auf WordPress. Live unter wavebite.de.', status:'Live' },
+  flutterflow: { icon:'📱', name:'FlutterFlow App',          url:'https://flutterflow.io',                    desc:'BunBo + Hausboot-App. Cross-Platform iOS/Android.', status:'Aktiv' },
+  glide:       { icon:'⚡',       name:'Glide Apps',               url:'https://app.glideapps.com',                 desc:'No-Code Web-Apps, MVP & interne Tools.', status:'Aktiv' },
+};
+function openDash(key){
+  const d = DASHBOARDS[key];
+  if(!d){ showNotif('⚠ Dashboard nicht gefunden','gold'); return; }
+  openModal(d.icon+' '+d.name,
+    '<p style="color:var(--text-dim);line-height:1.6;margin-bottom:.8rem">'+d.desc+'</p>'+
+    '<p style="margin-bottom:1.2rem"><span style="color:var(--text-dim)">Status: </span>'+
+    '<b style="color:var(--green)">'+d.status+'</b></p>'+
+    '<a href="'+d.url+'" target="_blank" style="display:inline-block;padding:.65rem 1.4rem;'+
+    'background:linear-gradient(90deg,var(--blue),var(--teal));color:#000;font-weight:700;'+
+    'border-radius:8px;text-decoration:none;font-size:.85rem">↗ Jetzt öffnen</a>'
+  );
+}
+
+// ===================== TOOLBELT =====================
+
+// ===================== TOOLBELT =====================
+function toggleToolbelt(){
+  const tb = document.getElementById('toolbelt');
+  const bd = document.getElementById('toolbelt-backdrop');
+  if(!tb) return;
+  const isOpen = tb.classList.toggle('open');
+  if(bd) bd.style.display = isOpen ? 'block' : 'none';
+  if(isOpen) showNotif('⚙ CEO Toolbelt geöffnet','teal');
+}
+
+// ===================== TICKER =====================
+(function(){
+  const el = document.getElementById('ticker-scroll');
+  if(!el) return;
+  const items = [
+    'WAVE BITE // CAPITÄNS BRIDGE AKTIV',
+    'WASSERLAGE DATEN: LIVE',
+    'BUNBO APP: TESTFLIGHT KW22',
+    'HIMMELREICH: PLANUNG AKTIV',
+    'FLUTTERFLOW BUILD: LAUFEND',
+    'MARKETING: INSTAGRAM + LINKEDIN AKTIV',
+    'FUNDING TARGET: 250K€',
+    'GITHUB REPOS: 12+ AKTIV',
+    'WEBSITE: WAVE-BITE.COM LIVE',
+    'CEO OFFICE: SYSTEM BEREIT'
+  ];
+  const full = [...items,...items].map(t=>'<span style="margin-right:4rem">' + t + '</span>').join('');
+  el.innerHTML = full;
+})();
+
+// ===================== COOKIES =====================
+// ===================== CHART.JS — 4 Charts =====================
+window.addEventListener('load', function(){
+(function initCharts(){
+  if(typeof Chart === 'undefined'){ setTimeout(initCharts, 800); return; }
+  Chart.defaults.color = 'rgba(208,232,248,0.65)';
+  Chart.defaults.borderColor = 'rgba(0,200,255,0.07)';
+  Chart.defaults.font.family = "'Exo 2', 'Rajdhani', sans-serif";
+  Chart.defaults.font.size = 10;
+
+  // PROJEKTFORTSCHRITT (horizontal bar)
+  const ctxP = document.getElementById('chart-progress');
+  if(ctxP && !ctxP._chartInit){
+    ctxP._chartInit = true;
+    new Chart(ctxP, {
+      type: 'bar',
+      data: {
+        labels: ['WaveBite Plattform','BunBo App','Wasserlage PWA','Website','Marketing','Himmelreich'],
+        datasets: [{
+          label: '% Fertig',
+          data: [65, 45, 82, 90, 55, 18],
+          backgroundColor: ['rgba(0,200,255,0.55)','rgba(0,212,170,0.5)','rgba(0,212,170,0.7)','rgba(0,212,170,0.85)','rgba(201,168,76,0.55)','rgba(201,168,76,0.35)'],
+          borderColor: ['rgba(0,200,255,0.9)','rgba(0,212,170,0.9)','rgba(0,212,170,1)','rgba(0,212,170,1)','rgba(201,168,76,0.9)','rgba(201,168,76,0.7)'],
+          borderWidth: 1, borderRadius: 4
+        }]
+      },
+      options: {
+        indexAxis: 'y', responsive: true, maintainAspectRatio: false,
+        plugins: { legend: { display: false } },
+        scales: { x: { max:100, ticks: { callback: v => v+'%' } }, y: { grid: { display: false } } }
+      }
+    });
+  }
+
+  // WACHSTUMS-RADAR
+  const ctxR = document.getElementById('chart-radar');
+  if(ctxR && !ctxR._chartInit){
+    ctxR._chartInit = true;
+    new Chart(ctxR, {
+      type: 'radar',
+      data: {
+        labels: ['Nutzer','Revenue','Reichweite','Features','Partner','Funding'],
+        datasets: [
+          { label:'IST', data:[30,12,25,62,18,35], borderColor:'rgba(0,200,255,0.9)', backgroundColor:'rgba(0,200,255,0.1)', pointBackgroundColor:'rgba(0,200,255,1)', borderWidth:1.5 },
+          { label:'ZIEL Q4', data:[80,60,72,92,65,80], borderColor:'rgba(201,168,76,0.8)', backgroundColor:'rgba(201,168,76,0.08)', pointBackgroundColor:'rgba(201,168,76,1)', borderWidth:1.5 }
+        ]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        plugins: { legend: { labels: { color:'rgba(208,232,248,0.7)', font:{ size:9 } } } },
+        scales: { r: { min:0, max:100, grid:{ color:'rgba(0,200,255,0.1)' }, angleLines:{ color:'rgba(0,200,255,0.1)' }, pointLabels:{ color:'rgba(208,232,248,0.7)', font:{ size:9 } }, ticks:{ display:false } } }
+      }
+    });
+  }
+
+  // REVENUE FORECAST
+  const ctxRev = document.getElementById('chart-revenue');
+  if(ctxRev && !ctxRev._chartInit){
+    ctxRev._chartInit = true;
+    new Chart(ctxRev, {
+      type: 'line',
+      data: {
+        labels: ["Q1 '26","Q2 '26","Q3 '26","Q4 '26","Q1 '27","Q2 '27"],
+        datasets: [
+          { label:'Forecast', data:[0,2000,9000,20000,38000,65000], borderColor:'rgba(0,200,255,0.9)', backgroundColor:'rgba(0,200,255,0.08)', fill:true, tension:0.4, borderWidth:2, pointRadius:3 },
+          { label:'Konservativ', data:[0,800,3500,9000,18000,36000], borderColor:'rgba(201,168,76,0.7)', backgroundColor:'transparent', fill:false, tension:0.4, borderWidth:1.5, borderDash:[4,4], pointRadius:2 }
+        ]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        plugins: { legend: { labels: { color:'rgba(208,232,248,0.7)', font:{ size:9 } } } },
+        scales: {
+          x: { grid: { color:'rgba(0,200,255,0.06)' } },
+          y: { grid: { color:'rgba(0,200,255,0.06)' }, ticks: { callback: v => v >= 1000 ? (v/1000)+'k€' : v+'€' } }
+        }
+      }
+    });
+  }
+
+  // BURN RATE & RUNWAY (mixed chart)
+  const ctxF = document.getElementById('chart-finance');
+  if(ctxF && !ctxF._chartInit){
+    ctxF._chartInit = true;
+    new Chart(ctxF, {
+      type: 'bar',
+      data: {
+        labels: ['Jan','Feb','Mär','Apr','Mai','Jun'],
+        datasets: [
+          { type:'bar', label:'Burn (€/M)', data:[3200,3400,2900,3100,3300,3500], backgroundColor:'rgba(255,100,100,0.45)', borderColor:'rgba(255,100,100,0.9)', borderWidth:1, borderRadius:3, yAxisID:'y' },
+          { type:'line', label:'Runway (Mo.)', data:[18,16,15,13,11,9], borderColor:'rgba(201,168,76,0.9)', backgroundColor:'rgba(201,168,76,0.05)', fill:false, tension:0.4, borderWidth:2, pointRadius:3, pointBackgroundColor:'rgba(201,168,76,1)', yAxisID:'y1' }
+        ]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        plugins: { legend: { labels: { color:'rgba(208,232,248,0.7)', font:{ size:9 } } } },
+        scales: {
+          y:  { position:'left',  grid:{ color:'rgba(0,200,255,0.06)' }, ticks:{ callback: v => (v/1000)+'k€' } },
+          y1: { position:'right', grid:{ display:false }, ticks:{ callback: v => v+' Mo.' }, min:0, max:24 }
+        }
+      }
+    });
+  }
+})();
+});
+
+// ===================== PWA INSTALL PROMPT =====================
+let _pwaPrompt = null;
+window.addEventListener('beforeinstallprompt', function(e){
+  e.preventDefault();
+  _pwaPrompt = e;
+  const bar = document.getElementById('pwa-install-bar');
+  if(bar && !localStorage.getItem('pwa_dismissed')) bar.style.display = 'flex';
+});
+const _pwaBtn = document.getElementById('pwa-install-btn');
+if(_pwaBtn) _pwaBtn.addEventListener('click', function(){
+  if(!_pwaPrompt) return;
+  _pwaPrompt.prompt();
+  _pwaPrompt.userChoice.then(function(r){
+    if(r.outcome === 'accepted'){
+      const bar = document.getElementById('pwa-install-bar');
+      if(bar) bar.style.display = 'none';
+      localStorage.setItem('pwa_dismissed','1');
+    }
+    _pwaPrompt = null;
+  });
+});
+
+</script>
+
+<script>
+// ── Collapsible Sections ──────────────────────────────────────
+(function(){
+  // Sections to collapse by default (to keep page concise)
+  const defaultClosed = new Set(['sec-tasks','sec-console','sec-agents','sec-finance']);
+
+  document.querySelectorAll('section').forEach(sec => {
+    const titleEl = sec.querySelector('.section-title');
+    if (!titleEl) return;
+
+    // Wrap all non-title children in a sec-body div
+    const body = document.createElement('div');
+    body.className = 'sec-body';
+    const children = Array.from(sec.children).filter(c => c !== titleEl);
+    children.forEach(c => body.appendChild(c));
+    sec.appendChild(body);
+
+    // Add toggle indicator
+    const toggle = document.createElement('span');
+    toggle.className = 'sec-toggle';
+    toggle.setAttribute('aria-hidden','true');
+    titleEl.appendChild(toggle);
+
+    // Determine initial state
+    const isDefault = defaultClosed.has(sec.id);
+    body.classList.add(isDefault ? 'closed' : 'open');
+    toggle.textContent = isDefault ? '▼ ANZEIGEN' : '▲ EINKLAPPEN';
+
+    // Click to toggle
+    titleEl.addEventListener('click', (e) => {
+      if (e.target.tagName === 'A' || e.target.tagName === 'BUTTON') return;
+      const isClosed = body.classList.contains('closed');
+      body.classList.toggle('closed', !isClosed);
+      body.classList.toggle('open', isClosed);
+      toggle.textContent = isClosed ? '▲ EINKLAPPEN' : '▼ ANZEIGEN';
+    });
+  });
+})();
+</script>
+
+</body>
+</html>
