@@ -3474,42 +3474,22 @@ window._jsReadyAt = performance.now();
 // ===================== DASHBOARD HUB — openDash() =====================
 (function(){
   var DASH_CONFIG = {
-    tracking:    { action:'scroll', target:'sec-tracking-radar' },
-    wasserlage:  { action:'scroll', target:'sec-wasserlage' },
-    ceo_briefing:{ action:'url', url:'https://mail.google.com/mail/u/0/#search/label%3Aceo-briefing+OR+subject%3Abriefing', label:'Gmail öffnen' },
-    playbook:    { action:'url', url:'https://drive.google.com/drive/search?q=playbook', label:'Google Drive öffnen' },
-    wordpress:   { action:'url', url:'https://wave-bite.com/wp-admin/admin.php?page=ionos#overview', label:'WP Admin öffnen' },
-    flutterflow: { action:'url', url:'https://app.flutterflow.io', label:'FlutterFlow öffnen' },
-    glide:       { action:'url', url:'https://go.glideapps.com', label:'Glide Apps öffnen' },
-    automation:  { action:'url', url:'https://app.n8n.io', label:'N8N öffnen' },
-    elwis:       { action:'url', url:'https://www.elwis.de/DE/Freizeitschifffahrt/Wasserstrassen-info/index.html', label:'ELWIS öffnen' },
-    github:      { action:'url', url:'https://github.com/voigtcarsten4-rgb', label:'GitHub öffnen' },
-    drive:       { action:'url', url:'https://drive.google.com', label:'Google Drive öffnen' },
-    appstore:    { action:'url', url:'https://appstoreconnect.apple.com', label:'App Store Connect öffnen' },
-    marketing:   {
-      action:'modal', icon:'📣', title:'Marketing Dashboard', statusClass:'building', statusText:'Im Aufbau',
-      desc:'Das Marketing-Dashboard verbindet Meta Business Suite, Instagram Analytics, Google Ads und Content-Kalender zu einer zentralen Übersicht. Aktuell im Aufbau.',
-      steps:['Meta Business Suite als Hauptquelle verbinden','Instagram & TikTok Analytics integrieren','Content-Kalender in Google Sheets anlegen','KPI-Tracking: Reichweite · Leads · CPC einrichten'],
-      cta:'Meta Business Suite', ctaUrl:'https://business.facebook.com', ctaClass:'gold'
-    },
-    kpi:         {
-      action:'modal', icon:'📈', title:'KPI Dashboard', statusClass:'planned', statusText:'Geplant',
-      desc:'Zentrales KPI-Board für alle Wave Bite Metriken: App-Downloads, Nutzeraktivierung, QR-Scans, Revenue und Wachstums-OKRs. Basis: Google Sheets + Apps Script Bridge.',
-      steps:['KPI-Google-Sheet mit allen Metriken anlegen','Apps Script Webhook für Echtzeit-Daten einrichten','CEO Office Bridge-URL in Einstellungen eintragen','Wöchentliches Auto-Briefing per E-Mail aktivieren'],
-      cta:'Google Sheets öffnen', ctaUrl:'https://docs.google.com/spreadsheets/u/0/', ctaClass:''
-    },
-    partner:     {
-      action:'modal', icon:'🤝', title:'Partner & Sponsoring CRM', statusClass:'planned', statusText:'Geplant',
-      desc:'CRM für alle Partneranfragen, Sponsoring-Deals, Kooperationen und Behördenkontakte rund um Wave Bite und BunBo. Geplant als leichtgewichtiges Google Sheets CRM.',
-      steps:['Kontakt-Sheet mit Status-Pipeline anlegen','Kategorien: Marina · Sponsor · Medien · Investor · Behörde','E-Mail-Vorlagen für Outreach vorbereiten','Follow-up Erinnerungen via Google Calendar koppeln'],
-      cta:'CRM Sheet anlegen', ctaUrl:'https://docs.google.com/spreadsheets/u/0/create', ctaClass:''
-    },
-    finance:     {
-      action:'modal', icon:'💶', title:'Finance Dashboard', statusClass:'planned', statusText:'Geplant',
-      desc:'Finanzübersicht mit Cashflow, Burn Rate, Runway und Investoren-Reporting. Basis: Google Sheets mit monatlichem Update und Verknüpfung zur Buchhaltung.',
-      steps:['Finanz-Sheet: Einnahmen · Ausgaben · Burn Rate einrichten','Runway-Berechnung automatisieren (=Kasse/Burn)','Investor-Update Vorlage erstellen (monatlich)','Ziel: Seed-Runde Unterlagen Q3 2026 fertigstellen'],
-      cta:'Finance Sheet öffnen', ctaUrl:'https://docs.google.com/spreadsheets/u/0/', ctaClass:'gold'
-    }
+    tracking:    { action:'url', url:'https://voigtcarsten4-rgb.github.io/wasserlage/wavebite-premium-dashboard.html' },
+    wasserlage:  { action:'url', url:'https://voigtcarsten4-rgb.github.io/wasserlage/' },
+    ceo_briefing:{ action:'url', url:'https://voigtcarsten4-rgb.github.io/wasserlage/ceo-briefing.html' },
+    playbook:    { action:'url', url:'https://voigtcarsten4-rgb.github.io/wasserlage/daily-playbook.html' },
+    wordpress:   { action:'url', url:'https://wave-bite.com/wp-admin/admin.php?page=ionos#overview' },
+    flutterflow: { action:'url', url:'https://app.flutterflow.io' },
+    glide:       { action:'url', url:'https://go.glideapps.com' },
+    automation:  { action:'url', url:'https://app.n8n.io' },
+    elwis:       { action:'url', url:'https://www.elwis.de/DE/Startseite/Startseite-node.html' },
+    github:      { action:'url', url:'https://github.com/voigtcarsten4-rgb' },
+    drive:       { action:'url', url:'https://drive.google.com' },
+    appstore:    { action:'url', url:'https://appstoreconnect.apple.com' },
+    marketing:   { action:'url', url:'https://voigtcarsten4-rgb.github.io/wasserlage/marketing-dashboard.html' },
+    kpi:         { action:'url', url:'https://voigtcarsten4-rgb.github.io/wasserlage/kpi-dashboard.html' },
+    partner:     { action:'url', url:'https://voigtcarsten4-rgb.github.io/wasserlage/partner-dashboard.html' },
+    finance:     { action:'url', url:'https://voigtcarsten4-rgb.github.io/wasserlage/finance-dashboard.html' }
   };
 
   function openDash(id){
