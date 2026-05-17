@@ -3968,6 +3968,24 @@ window.toggleToolbelt = function() {
 // INIT ALL
 // ════════════════════════════════════════════════════════════
 function initAll() {
+  // ── Boot sequence dismiss ─────────────────────────────────
+  const bootEl = document.getElementById('boot');
+  const bootLines = document.getElementById('boot-lines');
+  const bootMsgs = ['JARVIS v3.0 initialisiert …','Pegelonline verbunden …','12 Projekte geladen …','Neural Network online …','CEO Office bereit ✓'];
+  let bi = 0;
+  (function nextLine() {
+    if (!bootLines || bi >= bootMsgs.length) {
+      setTimeout(() => { if(bootEl){bootEl.classList.add('fade');setTimeout(()=>{bootEl.style.display='none';},800);} }, 400);
+      return;
+    }
+    const el = document.createElement('div');
+    el.className = 'boot-line';
+    el.textContent = '> ' + bootMsgs[bi++];
+    el.style.animationDelay = '0s';
+    bootLines.appendChild(el);
+    setTimeout(nextLine, 420);
+  })();
+
   initKpiStrip();
   renderProjects('all');
   initNeuralCanvas();
@@ -3978,7 +3996,7 @@ function initAll() {
   initModals();
   initPWA();
   loadWasserlage();
-  // Charts need Chart.js loaded
+  loadCommunityKPIs();
   if (typeof Chart !== 'undefined') {
     initCharts();
   } else {
@@ -3989,6 +4007,138 @@ function initAll() {
 
 if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initAll);
 else initAll();
+
+
+// ════════════════════════════════════════════════════════════
+// COMMUNITY KPI PANEL — reads from shared localStorage
+// (same domain: voigtcarsten4-rgb.github.io)
+// ════════════════════════════════════════════════════════════
+function loadCommunityKPIs() {
+  try {
+    // ── Ratings ─────────────────────────────────────────────
+    const ratingsRaw = localStorage.getItem('wb_feedback_ratings');
+    const ratings = ratingsRaw ? JSON.parse(ratingsRaw) : [];
+    const totalRatings = ratings.length;
+    const avgRating = totalRatings > 0
+      ? (ratings.reduce((s,r) => s + r.stars, 0) / totalRatings).toFixed(1)
+      : null;
+    const satisfied = ratings.filter(r => r.stars >= 4).length;
+    const satisfaction = totalRatings > 0
+      ? Math.round((satisfied / totalRatings) * 100)
+      : null;
+
+    // ── Posts ────────────────────────────────────────────────
+    const postsRaw = localStorage.getItem('wb_community_posts');
+    const posts = postsRaw ? JSON.parse(postsRaw) : [];
+    const today = new Date().toISOString().slice(0,10);
+    const postsToday = posts.filter(p => p.ts && p.ts.startsWith(today)).length;
+
+    // ── Update DOM ───────────────────────────────────────────
+    const avgEl = document.getElementById('ck-avg-rating');
+    const starsEl = document.getElementById('ck-stars-display');
+    const totalEl = document.getElementById('ck-total-ratings');
+    const trendEl = document.getElementById('ck-rating-trend');
+    const postsEl = document.getElementById('ck-community-posts');
+    const postsTodayEl = document.getElementById('ck-posts-today');
+    const satEl = document.getElementById('ck-satisfaction');
+    const satLblEl = document.getElementById('ck-satisfaction-label');
+    const feedEl = document.getElementById('ck-posts-feed');
+    const sentBadge = document.getElementById('ck-sentiment-badge');
+    const sentDot = document.getElementById('ck-sentiment-dot');
+    const sentText = document.getElementById('ck-sentiment-text');
+
+    if (avgEl) avgEl.textContent = avgRating !== null ? avgRating : '–';
+    if (starsEl && avgRating !== null) {
+      const full = Math.round(parseFloat(avgRating));
+      starsEl.textContent = '★'.repeat(full) + '☆'.repeat(5 - full);
+      starsEl.style.color = full >= 4 ? '#fbbf24' : full >= 3 ? '#f97316' : '#ef4444';
+    }
+    if (totalEl) totalEl.textContent = totalRatings;
+    if (trendEl) {
+      const recent = ratings.filter(r => r.ts && r.ts.startsWith(today)).length;
+      trendEl.textContent = recent > 0 ? `+${recent} heute` : 'Keine neuen heute';
+    }
+    if (postsEl) postsEl.textContent = posts.length;
+    if (postsTodayEl) postsTodayEl.textContent = `Heute: ${postsToday}`;
+    if (satEl) satEl.textContent = satisfaction !== null ? satisfaction + '%' : '–%';
+    if (satLblEl && satisfaction !== null) {
+      satLblEl.textContent = satisfaction >= 80 ? '🟢 Exzellent' : satisfaction >= 60 ? '🟡 Gut' : '🔴 Nachbessern';
+    }
+
+    // ── Sentiment ────────────────────────────────────────────
+    if (sentDot && sentText) {
+      if (avgRating === null) {
+        sentDot.style.background = '#6b7280';
+        sentText.textContent = 'Noch keine Daten';
+      } else if (parseFloat(avgRating) >= 4) {
+        sentDot.style.background = '#22c55e';
+        sentText.textContent = `Positiv · Ø ${avgRating}⭐ von ${totalRatings} Bewertungen`;
+      } else if (parseFloat(avgRating) >= 3) {
+        sentDot.style.background = '#f59e0b';
+        sentText.textContent = `Neutral · Verbesserungspotenzial erkannt`;
+      } else {
+        sentDot.style.background = '#ef4444';
+        sentText.textContent = `Kritisch · Sofortmaßnahmen prüfen`;
+      }
+    }
+
+    // ── Post Feed ────────────────────────────────────────────
+    if (feedEl) {
+      if (posts.length === 0 && totalRatings === 0) {
+        feedEl.innerHTML = '<div style="color:rgba(255,255,255,.3);font-size:.8rem;padding:.5rem 0">Noch keine Community-Daten. Besuche die <a href="https://voigtcarsten4-rgb.github.io/wasserlage/" target="_blank" style="color:var(--blue)">Wasserlage Heute</a> Seite und hinterlasse eine Bewertung.</div>';
+      } else {
+        const recentPosts = [...posts].reverse().slice(0, 5);
+        feedEl.innerHTML = recentPosts.map(p => {
+          const ago = p.ts ? timeAgo(p.ts) : '';
+          return \`<div class="ck-post">
+            <div class="ck-post-emoji">\${p.emoji || '💬'}</div>
+            <div class="ck-post-body">
+              <div class="ck-post-text">\${escHtml(p.text)}</div>
+              <div class="ck-post-meta">\${ago} · \${p.type || 'Nutzer'}</div>
+            </div>
+          </div>\`;
+        }).join('') || '<div style="color:rgba(255,255,255,.3);font-size:.8rem">Noch keine Posts</div>';
+
+        // Also show latest rating if any
+        if (ratings.length > 0) {
+          const lastRating = ratings[ratings.length - 1];
+          const stars = '★'.repeat(lastRating.stars) + '☆'.repeat(5 - lastRating.stars);
+          if (lastRating.comment) {
+            feedEl.innerHTML += \`<div class="ck-post" style="border-top:1px solid rgba(251,191,36,.15);margin-top:.5rem">
+              <div class="ck-post-emoji">⭐</div>
+              <div class="ck-post-body">
+                <div class="ck-post-text" style="color:#fbbf24">\${stars} · "\${escHtml(lastRating.comment)}"</div>
+                <div class="ck-post-meta">Letzte Bewertung · \${timeAgo(lastRating.ts)}</div>
+              </div>
+            </div>\`;
+          }
+        }
+      }
+    }
+  } catch(e) {
+    console.warn('[CEO] Community KPI load error:', e);
+  }
+}
+
+function escHtml(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function timeAgo(isoStr) {
+  try {
+    const diff = Date.now() - new Date(isoStr).getTime();
+    const mins = Math.floor(diff / 60000);
+    if (mins < 2) return 'gerade eben';
+    if (mins < 60) return `vor ${mins} Min`;
+    const hrs = Math.floor(mins / 60);
+    if (hrs < 24) return `vor ${hrs} Std`;
+    return `vor ${Math.floor(hrs/24)} Tagen`;
+  } catch { return ''; }
+}
+
+// Auto-refresh every 60s
+setInterval(loadCommunityKPIs, 60000);
+
 
 // Pegelonline refresh every 10min
 setInterval(loadWasserlage, 600000);
