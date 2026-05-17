@@ -102,6 +102,33 @@
   .cd-num{font-size:1.4rem;font-weight:700;color:var(--gold);display:block;line-height:1}
   .cd-label{font-size:.55rem;letter-spacing:.15em;color:var(--text-dim)}
   .hero-stat{position:absolute;background:rgba(2,8,16,0.75);border:1px solid rgba(0,200,255,0.2);border-radius:8px;padding:.4rem .8rem;font-size:.7rem;color:var(--blue)}
+  /* ── BunBo Mentor Card (Star Wars Commander Style) ── */
+  .bunbo-mentor-card{position:relative;margin-top:.55rem;background:linear-gradient(135deg,rgba(0,212,170,.07) 0%,rgba(2,8,16,.85) 40%,rgba(201,168,76,.05) 100%);border:1px solid rgba(0,212,170,.32);border-radius:12px;padding:.65rem 1.05rem .6rem;overflow:hidden;box-shadow:0 0 20px rgba(0,212,170,.09),0 0 40px rgba(0,200,255,.04),inset 0 1px 0 rgba(0,212,170,.12);animation:mentorCardPulse 4.5s ease-in-out infinite}
+  @keyframes mentorCardPulse{0%,100%{box-shadow:0 0 20px rgba(0,212,170,.09),0 0 40px rgba(0,200,255,.04),inset 0 1px 0 rgba(0,212,170,.12)}50%{box-shadow:0 0 32px rgba(0,212,170,.2),0 0 60px rgba(0,200,255,.08),inset 0 1px 0 rgba(0,212,170,.22)}}
+  .mentor-scan{position:absolute;top:0;left:-60%;width:45%;height:100%;background:linear-gradient(90deg,transparent,rgba(0,212,170,.06),rgba(201,168,76,.03),transparent);animation:mentorScan 6s linear infinite;pointer-events:none}
+  @keyframes mentorScan{0%{left:-60%}100%{left:115%}}
+  .mentor-corner{position:absolute;width:8px;height:8px;border-color:var(--teal);border-style:solid;opacity:.6}
+  .mentor-corner.tl{top:5px;left:5px;border-width:1.5px 0 0 1.5px}
+  .mentor-corner.tr{top:5px;right:5px;border-width:1.5px 1.5px 0 0}
+  .mentor-corner.bl{bottom:5px;left:5px;border-width:0 0 1.5px 1.5px}
+  .mentor-corner.br{bottom:5px;right:5px;border-width:0 1.5px 1.5px 0}
+  .mentor-header{display:flex;align-items:center;gap:.42rem;margin-bottom:.32rem}
+  .mentor-badge{font-size:.44rem;letter-spacing:.18em;color:var(--teal);font-weight:700;background:rgba(0,212,170,.1);border:1px solid rgba(0,212,170,.25);border-radius:4px;padding:.08rem .3rem}
+  .mentor-date-chip{font-size:.43rem;color:var(--text-dim);margin-left:auto;letter-spacing:.06em}
+  .mentor-msg{font-size:.73rem;color:rgba(210,230,255,.88);line-height:1.55;min-height:2.4em;text-shadow:0 0 14px rgba(0,212,170,.15)}
+  .mentor-msg .mn{color:var(--gold);font-weight:700;font-style:normal}
+  .mentor-footer{margin-top:.48rem}
+  .mentor-prog-row{display:flex;align-items:center;gap:.55rem;margin-bottom:.3rem}
+  .mentor-prog-bar{flex:1;height:3px;background:rgba(0,212,170,.1);border-radius:2px;overflow:hidden}
+  .mentor-prog-fill{height:100%;border-radius:2px;background:linear-gradient(90deg,var(--teal),var(--gold));box-shadow:0 0 8px rgba(0,212,170,.55);width:0;transition:width 1.8s cubic-bezier(.4,0,.2,1)}
+  .mentor-prog-pct{font-size:.52rem;font-weight:700;color:var(--gold);white-space:nowrap;text-shadow:0 0 6px rgba(201,168,76,.4)}
+  .mentor-countdown-row{display:flex;align-items:center;gap:.35rem}
+  .mentor-cd-unit{text-align:center;min-width:1.8rem}
+  .mentor-cd-num{font-size:.82rem;font-weight:700;color:var(--gold);display:block;line-height:1;text-shadow:0 0 10px rgba(201,168,76,.5);font-family:monospace}
+  .mentor-cd-lbl{font-size:.36rem;letter-spacing:.1em;color:var(--text-dim)}
+  .mentor-cd-sep{color:rgba(201,168,76,.4);font-size:.65rem;padding-bottom:.5rem;font-weight:700}
+  .mentor-launch-txt{font-size:.42rem;letter-spacing:.1em;color:var(--text-dim);margin-left:auto}
+  .mentor-launch-txt b{color:rgba(0,212,170,.7)}
   .hero-stat.left{left:1.5rem;top:50%;transform:translateY(-50%)}
   .hero-stat.right{right:1.5rem;top:50%;transform:translateY(-50%)}
 
@@ -1451,15 +1478,31 @@
         </div>
       </div>
 
-      <!-- Countdown Strip -->
-      <div class="countdown-strip" style="position:relative;bottom:auto;left:auto;transform:none;margin-top:.5rem">
-        <div class="cd-unit"><span class="cd-num" id="cd-d">--</span><span class="cd-label">TAGE</span></div>
-        <div class="cd-unit"><span class="cd-num" id="cd-h">--</span><span class="cd-label">STD</span></div>
-        <div class="cd-unit"><span class="cd-num" id="cd-m">--</span><span class="cd-label">MIN</span></div>
-        <div class="cd-unit"><span class="cd-num" id="cd-s">--</span><span class="cd-label">SEK</span></div>
-        <div class="cd-unit" style="border-left:1px solid rgba(201,168,76,0.2);padding-left:1.5rem">
-          <span class="cd-num" style="color:var(--gold);font-size:.75rem">BUNBO</span>
-          <span class="cd-label">LAUNCH TARGET</span>
+      <!-- BunBo Mentor Command Card -->
+      <div class="bunbo-mentor-card" id="bunbo-mentor-card">
+        <div class="mentor-scan"></div>
+        <div class="mentor-corner tl"></div><div class="mentor-corner tr"></div>
+        <div class="mentor-corner bl"></div><div class="mentor-corner br"></div>
+        <div class="mentor-header">
+          <span class="mentor-badge">⚡ BUNBO COMMAND</span>
+          <span class="mentor-date-chip" id="mentor-date-chip">— —</span>
+        </div>
+        <div class="mentor-msg" id="mentor-msg-text">Lade Briefing…</div>
+        <div class="mentor-footer">
+          <div class="mentor-prog-row">
+            <div class="mentor-prog-bar"><div class="mentor-prog-fill" id="mentor-prog-fill"></div></div>
+            <span class="mentor-prog-pct" id="mentor-prog-pct">65%</span>
+          </div>
+          <div class="mentor-countdown-row">
+            <div class="mentor-cd-unit"><span class="mentor-cd-num" id="bcd-d">--</span><span class="mentor-cd-lbl">TAGE</span></div>
+            <span class="mentor-cd-sep">:</span>
+            <div class="mentor-cd-unit"><span class="mentor-cd-num" id="bcd-h">--</span><span class="mentor-cd-lbl">STD</span></div>
+            <span class="mentor-cd-sep">:</span>
+            <div class="mentor-cd-unit"><span class="mentor-cd-num" id="bcd-m">--</span><span class="mentor-cd-lbl">MIN</span></div>
+            <span class="mentor-cd-sep">:</span>
+            <div class="mentor-cd-unit"><span class="mentor-cd-num" id="bcd-s">--</span><span class="mentor-cd-lbl">SEK</span></div>
+            <span class="mentor-launch-txt">BIS LAUNCH &nbsp;<b>01 JUL 2026</b></span>
+          </div>
         </div>
       </div>
     </div>
@@ -3063,25 +3106,33 @@ window._jsReadyAt = performance.now();
     const ctx = canvas.getContext('2d');
     let t = 0;
 
-    /* ── Deterministic star field ── */
-    const STARS = Array.from({length:72}, (_,i) => ({
-      x: Math.cos(i*2.4+0.6)*(55+(i*9)%130) + (i*17)%90-45,
-      y: Math.sin(i*1.618+1.1)*(38+(i*7)%90) - 68,
-      r: 0.35 + (i%4)*0.22,
-      b: 0.11 + (i%6)*0.085,
+    /* ── Deterministic star field — Star Wars deep space ── */
+    const STARS = Array.from({length:160}, (_,i) => ({
+      x: Math.cos(i*2.4+0.6)*(50+(i*9)%160) + (i*17)%110-55,
+      y: Math.sin(i*1.618+1.1)*(42+(i*7)%110) - 50 + (i%3)*30,
+      r: 0.28 + (i%5)*0.28,
+      b: 0.18 + (i%8)*0.10,
+      spd: 0.4 + (i%4)*0.3,
+    }));
+    /* Star Wars hyperspace streaks (distant, subtle) */
+    const STREAKS = Array.from({length:12}, (_,i) => ({
+      ang: (i/12)*Math.PI*2,
+      dist: 160 + (i*23)%90,
+      len: 8 + (i%4)*6,
+      op: 0.12 + (i%3)*0.07,
     }));
 
-    /* ── Galaxy dust cloud — 3-arm spiral ── */
-    const GAL = Array.from({length:180}, (_,i) => {
-      const arm = i % 3;
-      const baseAng = (i/60)*Math.PI*2 + arm*(Math.PI*2/3);
-      const dist = 195 + (i*7)%55;
+    /* ── Galaxy — 4-arm spiral, more visible ── */
+    const GAL = Array.from({length:280}, (_,i) => {
+      const arm = i % 4;
+      const baseAng = (i/70)*Math.PI*2 + arm*(Math.PI*2/4);
+      const dist = 100 + (i*5)%160;
       return { baseAng, dist,
-        spd: (0.005 + (i%5)*0.0018) * (arm===1 ? -1.25 : 1),
-        col: arm===0 ? '0,200,255' : arm===1 ? '201,168,76' : '0,212,170',
-        op:  0.028 + (i%5)*0.016,
-        sz:  0.30 + (i%4)*0.22,
-        tilt: 0.30 + arm*0.04,
+        spd: (0.004 + (i%5)*0.0016) * (arm%2===1 ? -1.1 : 1),
+        col: arm===0 ? '0,200,255' : arm===1 ? '201,168,76' : arm===2 ? '0,212,170' : '120,160,255',
+        op:  0.055 + (i%6)*0.022,
+        sz:  0.38 + (i%5)*0.26,
+        tilt: 0.28 + arm*0.05,
       };
     });
 
@@ -3133,40 +3184,87 @@ window._jsReadyAt = performance.now();
       bg.addColorStop(1,    'rgba(2,8,16,0)');
       ctx.fillStyle=bg; ctx.fillRect(0,0,W,H);
 
-      /* STARS */
+      /* STARS — twinkle effect */
       STARS.forEach(st => {
         const sx=cx+st.x*sc, sy=cy+st.y*sc;
-        const op=Math.max(.07,st.b+.06*Math.sin(t*.65+st.x*.1));
-        ctx.beginPath(); ctx.arc(sx,sy,st.r*sc,0,Math.PI*2);
-        ctx.fillStyle=`rgba(205,225,255,${op.toFixed(2)})`; ctx.fill();
+        const twinkle = Math.sin(t*st.spd+st.x*0.05+st.y*0.04);
+        const op=Math.max(.06, st.b + .10*twinkle);
+        const r = st.r*sc * (0.9 + 0.15*twinkle);
+        ctx.beginPath(); ctx.arc(sx,sy,r,0,Math.PI*2);
+        ctx.fillStyle=`rgba(210,228,255,${op.toFixed(2)})`; ctx.fill();
+        /* bright stars: cross flare */
+        if(st.r > 0.7 && op > 0.35) {
+          ctx.globalAlpha = op*0.35;
+          ctx.strokeStyle='rgba(180,210,255,0.8)'; ctx.lineWidth=0.5*sc;
+          ctx.beginPath(); ctx.moveTo(sx-r*2.5,sy); ctx.lineTo(sx+r*2.5,sy); ctx.stroke();
+          ctx.beginPath(); ctx.moveTo(sx,sy-r*2.5); ctx.lineTo(sx,sy+r*2.5); ctx.stroke();
+          ctx.globalAlpha=1;
+        }
+      });
+      /* HYPERSPACE STREAKS */
+      STREAKS.forEach(sk => {
+        const a = sk.ang + t*0.008;
+        const x1=cx+sk.dist*sc*Math.cos(a), y1=cy+sk.dist*sc*0.34*Math.sin(a);
+        const x2=cx+(sk.dist+sk.len)*sc*Math.cos(a), y2=cy+(sk.dist+sk.len)*sc*0.34*Math.sin(a);
+        ctx.beginPath(); ctx.moveTo(x1,y1); ctx.lineTo(x2,y2);
+        ctx.strokeStyle=`rgba(160,210,255,${sk.op})`; ctx.lineWidth=0.7*sc; ctx.stroke();
       });
 
-      /* GALAXY DUST — rotating spiral particles */
+      /* GALAXY — 4-arm spiral, vivid */
       GAL.forEach((g, i) => {
         const ang = g.baseAng + t * g.spd;
         const gx  = cx + g.dist*sc * Math.cos(ang);
         const gy  = cy + g.dist*sc * g.tilt * Math.sin(ang);
-        const gop = (g.op + 0.012*Math.sin(t*1.8+i*0.35)).toFixed(3);
+        const gop = Math.min(0.55, g.op + 0.018*Math.sin(t*1.6+i*0.3));
         ctx.beginPath(); ctx.arc(gx, gy, g.sz*sc, 0, Math.PI*2);
-        ctx.fillStyle=`rgba(${g.col},${gop})`; ctx.fill();
+        ctx.fillStyle=`rgba(${g.col},${gop.toFixed(3)})`; ctx.fill();
       });
 
-      /* ORBIT RINGS — 3D-tilted ellipses (4 rings, expanded) */
-      [[95*sc, .55*sc,'rgba(0,200,255,.11)',[2*sc,4*sc]],
-       [180*sc, .90*sc,'rgba(0,200,255,.24)',[4*sc,7*sc]],
-       [220*sc, .60*sc,'rgba(201,168,76,.14)',[2.5*sc,5.5*sc]],
-       [248*sc, .38*sc,'rgba(0,212,170,.08)',[3*sc,9*sc]]].forEach(([rx,lw,col,da])=>{
+      /* ORBIT RINGS — Star Wars holographic targeting rings */
+      /* Outer faint fill rings for depth */
+      [[248*sc,'rgba(0,200,255,.025)'],[180*sc,'rgba(201,168,76,.018)']].forEach(([rx,fill])=>{
+        const rg=ctx.createRadialGradient(cx,cy,rx*.5,cx,cy,rx);
+        rg.addColorStop(0,'transparent'); rg.addColorStop(0.7,'transparent');
+        rg.addColorStop(0.88,fill); rg.addColorStop(1,'transparent');
+        ctx.fillStyle=rg;
+        ctx.beginPath(); ctx.ellipse(cx,cy,rx,rx*TILT,0,0,Math.PI*2); ctx.fill();
+      });
+      /* Main rings with laser glow */
+      [[95*sc,  .8*sc, 'rgba(0,200,255,.28)',  [2.5*sc,3.5*sc], 'rgba(0,200,255,.55)'],
+       [180*sc, 1.3*sc,'rgba(0,200,255,.55)',  [3*sc,5.5*sc],   'rgba(0,200,255,.9)'],
+       [220*sc, .9*sc, 'rgba(201,168,76,.35)', [2*sc,4.5*sc],   'rgba(201,168,76,.65)'],
+       [248*sc, .6*sc, 'rgba(0,212,170,.22)',  [2.5*sc,8*sc],   'rgba(0,212,170,.4)']].forEach(([rx,lw,col,da,glowCol])=>{
+        ctx.shadowColor=glowCol; ctx.shadowBlur=6*sc;
         ctx.beginPath(); ctx.ellipse(cx,cy,rx,rx*TILT,0,0,Math.PI*2);
-        ctx.strokeStyle=col; ctx.lineWidth=lw; ctx.setLineDash(da); ctx.stroke(); ctx.setLineDash([]);
+        ctx.strokeStyle=col; ctx.lineWidth=lw; ctx.setLineDash(da); ctx.stroke();
+        ctx.setLineDash([]); ctx.shadowBlur=0;
       });
+      /* Scan line rotating around main ring */
+      const scanAng = t*0.38;
+      const sx1=cx+178*sc*Math.cos(scanAng), sy1=cy+178*sc*TILT*Math.sin(scanAng);
+      const sx2=cx+183*sc*Math.cos(scanAng), sy2=cy+183*sc*TILT*Math.sin(scanAng);
+      ctx.beginPath(); ctx.moveTo(sx1,sy1); ctx.lineTo(sx2,sy2);
+      ctx.strokeStyle='rgba(0,200,255,.9)'; ctx.lineWidth=2.5*sc;
+      ctx.shadowColor='rgba(0,200,255,1)'; ctx.shadowBlur=12*sc; ctx.stroke(); ctx.shadowBlur=0;
 
-      /* CENTRAL GLOW */
+      /* CENTRAL GLOW — Star Wars reactor core */
       const gp=.5+.5*Math.sin(t*1.15);
-      const cg=ctx.createRadialGradient(cx,cy+4*sc,0,cx,cy,95*sc);
-      cg.addColorStop(0,`rgba(0,200,255,${(.10+.04*gp).toFixed(3)})`);
-      cg.addColorStop(.65,`rgba(0,200,255,${(.02+.01*gp).toFixed(3)})`);
+      /* outer soft halo */
+      const ch=ctx.createRadialGradient(cx,cy,0,cx,cy,160*sc);
+      ch.addColorStop(0,`rgba(0,200,255,${(.06+.03*gp).toFixed(3)})`);
+      ch.addColorStop(0.45,'rgba(0,200,255,.015)'); ch.addColorStop(1,'transparent');
+      ctx.fillStyle=ch; ctx.beginPath(); ctx.ellipse(cx,cy,160*sc,160*sc*TILT,0,0,Math.PI*2); ctx.fill();
+      /* inner intense core */
+      const cg=ctx.createRadialGradient(cx,cy+2*sc,0,cx,cy,95*sc);
+      cg.addColorStop(0,`rgba(0,220,255,${(.22+.08*gp).toFixed(3)})`);
+      cg.addColorStop(.35,`rgba(0,200,255,${(.08+.04*gp).toFixed(3)})`);
+      cg.addColorStop(.70,`rgba(0,200,255,${(.025+.015*gp).toFixed(3)})`);
       cg.addColorStop(1,'transparent');
       ctx.fillStyle=cg; ctx.beginPath(); ctx.ellipse(cx,cy,95*sc,95*sc*TILT,0,0,Math.PI*2); ctx.fill();
+      /* core spark */
+      ctx.beginPath(); ctx.arc(cx,cy,3.5*sc,0,Math.PI*2);
+      ctx.fillStyle=`rgba(200,240,255,${(.55+.3*gp).toFixed(2)})`;
+      ctx.shadowColor='rgba(0,220,255,1)'; ctx.shadowBlur=20*sc; ctx.fill(); ctx.shadowBlur=0;
 
       /* ORBIT NODES */
       const oRx=180*sc, oRy=oRx*TILT, iRx=95*sc, iRy=iRx*TILT;
@@ -3203,9 +3301,9 @@ window._jsReadyAt = performance.now();
         ctx.fillText(lbl,lx,ly); ctx.shadowBlur=0;
       });
 
-      /* BOAT */
-      const s=W/128;
-      const oy=cy+(22+Math.sin(t)*2.5)*sc;
+      /* BOAT — 20% bigger, laser-grade glow */
+      const s=W/107;
+      const oy=cy+(22+Math.sin(t)*2.8)*sc;
       drawBoat(s,cx,oy,t);
 
       ctx.restore();
@@ -3227,21 +3325,21 @@ window._jsReadyAt = performance.now();
       const PX=26,PZ=22,PY0=-3,PY1=4,CX=19,CZ=20,CZO=1,CY0=4,CY1=32,MX=0,MZ=5,MY0=32,MY1=55;
 
       /* Water ellipse */
-      glow(CY+'.18)',3);
+      glow(CY+'.35)',7);
       const wc=p3(0,0,PZ*.5); ctx.beginPath(); ctx.ellipse(wc[0],wc[1],PX*1.35*s,PX*.28*s,0,0,Math.PI*2);
-      ctx.strokeStyle=CY+'.10)'; ctx.lineWidth=.45*s; ctx.stroke(); ng();
+      ctx.strokeStyle=CY+'.22)'; ctx.lineWidth=.6*s; ctx.stroke(); ng();
 
       /* Pontoon back faces */
-      glow(CY+'.18)',3);
-      face([[-PX,PY0,PZ],[PX,PY0,PZ],[PX,PY1,PZ],[-PX,PY1,PZ]],CY+'.03)',CY+'.24)',.62);
-      face([[-PX,PY0,0],[-PX,PY0,PZ],[-PX,PY1,PZ],[-PX,PY1,0]],CY+'.02)',CY+'.18)',.52);
-      face([[-PX,PY0,0],[PX,PY0,0],[PX,PY0,PZ],[-PX,PY0,PZ]],CY+'.02)',CY+'.11)',.43);
-      glow(CY+'.33)',4);
-      face([[PX,PY0,0],[PX,PY0,PZ],[PX,PY1,PZ],[PX,PY1,0]],CY+'.04)',CY+'.38)',.82);
-      glow(CY+'.52)',6);
-      face([[-PX,PY0,0],[PX,PY0,0],[PX,PY1,0],[-PX,PY1,0]],CY+'.06)',CY+'.66)',1.0);
-      glow(CY+'.33)',4);
-      face([[-PX,PY1,0],[PX,PY1,0],[PX,PY1,PZ],[-PX,PY1,PZ]],CY+'.05)',CY+'.44)',.82);
+      glow(CY+'.28)',5);
+      face([[-PX,PY0,PZ],[PX,PY0,PZ],[PX,PY1,PZ],[-PX,PY1,PZ]],CY+'.04)',CY+'.35)',.75);
+      face([[-PX,PY0,0],[-PX,PY0,PZ],[-PX,PY1,PZ],[-PX,PY1,0]],CY+'.03)',CY+'.28)',.65);
+      face([[-PX,PY0,0],[PX,PY0,0],[PX,PY0,PZ],[-PX,PY0,PZ]],CY+'.03)',CY+'.18)',.55);
+      glow(CY+'.52)',7);
+      face([[PX,PY0,0],[PX,PY0,PZ],[PX,PY1,PZ],[PX,PY1,0]],CY+'.06)',CY+'.55)',1.0);
+      glow(CY+'.75)',10);
+      face([[-PX,PY0,0],[PX,PY0,0],[PX,PY1,0],[-PX,PY1,0]],CY+'.08)',CY+'.85)',1.3);
+      glow(CY+'.52)',7);
+      face([[-PX,PY1,0],[PX,PY1,0],[PX,PY1,PZ],[-PX,PY1,PZ]],CY+'.07)',CY+'.60)',1.0);
       /* Deck grid */
       ng();
       for(let xi=-16;xi<=16;xi+=11){ln([xi,PY1,0],[xi,PY1,PZ],CY+'.11)',.38);ln([xi,PY0,0],[xi,PY1,0],CY+'.08)',.33);}
@@ -3266,9 +3364,9 @@ window._jsReadyAt = performance.now();
       ng();
       for(let yi=CY0+9;yi<CY1;yi+=9)ln([CX,yi,CZO],[CX,yi,CZO+CZ],CY+'.18)',.38);
       for(let zi=CZO+5;zi<CZO+CZ;zi+=5)ln([CX,CY0,zi],[CX,CY1,zi],CY+'.14)',.35);
-      /* Front face gold */
-      glow(GL+'.52)',8);
-      face([[-CX,CY0,CZO],[CX,CY0,CZO],[CX,CY1,CZO],[-CX,CY1,CZO]],GL+'.05)',GL+'.72)',1.05);
+      /* Front face gold — lightsaber intensity */
+      glow(GL+'.75)',14);
+      face([[-CX,CY0,CZO],[CX,CY0,CZO],[CX,CY1,CZO],[-CX,CY1,CZO]],GL+'.07)',GL+'.95)',1.4);
       ng();
       /* Windows with warm interior glow */
       [[-9,13],[9,13],[-9,23],[9,23]].forEach(([wx,wy])=>{
@@ -3291,10 +3389,10 @@ window._jsReadyAt = performance.now();
       [[-CX,CZO],[CX,CZO]].forEach(([xi,zi])=>ln([xi,CY1,zi],[xi,CY1+3,zi],CY+'.16)',.36));
       ng();
 
-      /* Mast */
-      glow(TL+'.62)',5); ln([MX,MY0,MZ],[MX,MY1,MZ],TL+'.78)',.82);
-      ln([MX-7,MY1-9,MZ],[MX+7,MY1-9,MZ],TL+'.42)',.55);
-      glow(TL+'.28)',2);
+      /* Mast — laser beacon */
+      glow(TL+'.85)',10); ln([MX,MY0,MZ],[MX,MY1,MZ],TL+'1.0)',1.1);
+      ln([MX-7,MY1-9,MZ],[MX+7,MY1-9,MZ],TL+'.60)',.75);
+      glow(TL+'.45)',4);
       ln([MX,MY0,MZ],[MX-4,MY0-8,MZ],TL+'.20)',.36); ln([MX,MY0,MZ],[MX+4,MY0-8,MZ],TL+'.20)',.36); ng();
       /* Radar dome */
       const radP=p3(MX,MY1-5,MZ);
@@ -3305,10 +3403,16 @@ window._jsReadyAt = performance.now();
       ctx.beginPath(); ctx.moveTo(fTop[0],fTop[1]); ctx.lineTo(fTip[0],fTip[1]); ctx.lineTo(fBot[0],fBot[1]); ctx.closePath();
       ctx.fillStyle=GL+'.70)'; glow(GL+'.78)',4); ctx.fill();
       ctx.strokeStyle=GL+'.84)'; ctx.lineWidth=.62*s; ctx.stroke(); ng();
-      /* Mast tip pulse */
+      /* Mast tip pulse — Star Wars beacon */
       const pa=.5+.5*Math.sin(t*3.2), mt=p3(MX,MY1,MZ);
-      ctx.beginPath(); ctx.arc(mt[0],mt[1],1.9*s,0,Math.PI*2);
-      ctx.fillStyle=TL+pa+')'; glow(TL+'.9)',8); ctx.fill(); ng();
+      ctx.beginPath(); ctx.arc(mt[0],mt[1],2.8*s,0,Math.PI*2);
+      ctx.fillStyle=`rgba(0,255,220,${(.7+.3*pa).toFixed(2)})`; glow(TL+'1.0)',16); ctx.fill(); ng();
+      /* beacon cross flare */
+      ctx.globalAlpha=0.5*pa;
+      ctx.strokeStyle='rgba(0,255,200,.9)'; ctx.lineWidth=0.8*s;
+      ctx.beginPath(); ctx.moveTo(mt[0]-7*s,mt[1]); ctx.lineTo(mt[0]+7*s,mt[1]); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(mt[0],mt[1]-7*s); ctx.lineTo(mt[0],mt[1]+7*s); ctx.stroke();
+      ctx.globalAlpha=1;
       /* Life preserver */
       const lpc=p3(PX+1.5,PY1+5,PZ*.45), lr=3.5*s;
       glow(OR+'.58)',5);
@@ -3339,6 +3443,72 @@ window._jsReadyAt = performance.now();
 })();
 
 
+
+// ===================== BUNBO MENTOR WIDGET =====================
+(function(){
+  const LAUNCH = new Date('2026-07-01T09:00:00');
+  const PROGRESS = 65; // MVP-Fortschritt %
+
+  const MSGS = [
+    // 0=So, 1=Mo, 2=Di, 3=Mi, 4=Do, 5=Fr, 6=Sa
+    /* So */ '<span class="mn">Hey Carsten,</span> Sunday Strategy: Ein klarer Gedanke heute erspart dir zehn Aufgaben am Montag. BunBo wartet auf deine Vision.',
+    /* Mo */ '<span class="mn">Hey Carsten,</span> die Brücke gehört dir. Neuer Wochenauftrag: BunBo einen Schritt näher an den Launch bringen. Jeder Commit zählt.',
+    /* Di */ '<span class="mn">Hey Carsten,</span> Elon hatte auch mal einen Dienstag ohne Plan. Du hast einen. Ship it — ein Feature nach dem anderen.',
+    /* Mi */ '<span class="mn">Hey Carsten,</span> Midweek. Die App schreibt sich nicht von allein — aber mit dir wird sie legendary. Fokus auf das Kritische.',
+    /* Do */ '<span class="mn">Hey Carsten,</span> fast Wochenende. Noch ein Testflight-Push und du kannst es Donnerstag feiern. Die Beta-Tester warten auf dich.',
+    /* Fr */ '<span class="mn">Hey Carsten,</span> TGIF? Nein: Thank God It\'s Funding-Freitag. Seedmatch schaut auf dein Deck. Mach es unvergesslich.',
+    /* Sa */ '<span class="mn">Hey Carsten,</span> Samstag = Secret Weapon. Competitor schlafen. Du nicht. BunBo wird der Unterschied zwischen Idee und Impact.',
+  ];
+
+  function pad(n){ return String(n).padStart(2,'0'); }
+
+  function updateCountdown(){
+    const now = new Date();
+    const diff = LAUNCH - now;
+    if(diff <= 0){
+      const el = document.getElementById('bcd-d');
+      if(el){ el.closest('.mentor-countdown-row').innerHTML='<span style="font-size:.65rem;color:var(--gold);font-weight:700;text-shadow:0 0 12px rgba(201,168,76,.6)">🚀 LAUNCH DAY — WIR SIND LIVE!</span>'; }
+      return;
+    }
+    const d=Math.floor(diff/86400000);
+    const h=Math.floor((diff%86400000)/3600000);
+    const m=Math.floor((diff%3600000)/60000);
+    const s=Math.floor((diff%60000)/1000);
+    const ed=document.getElementById('bcd-d');
+    const eh=document.getElementById('bcd-h');
+    const em=document.getElementById('bcd-m');
+    const es=document.getElementById('bcd-s');
+    if(ed) ed.textContent=pad(d);
+    if(eh) eh.textContent=pad(h);
+    if(em) em.textContent=pad(m);
+    if(es) es.textContent=pad(s);
+  }
+
+  function init(){
+    /* date chip */
+    const dc=document.getElementById('mentor-date-chip');
+    if(dc){
+      const now=new Date();
+      const days=['So','Mo','Di','Mi','Do','Fr','Sa'];
+      const months=['Jan','Feb','Mär','Apr','Mai','Jun','Jul','Aug','Sep','Okt','Nov','Dez'];
+      dc.textContent=days[now.getDay()]+' '+now.getDate()+' '+months[now.getMonth()]+' '+now.getFullYear();
+    }
+    /* message */
+    const mt=document.getElementById('mentor-msg-text');
+    if(mt) mt.innerHTML=MSGS[new Date().getDay()];
+    /* progress bar */
+    const pf=document.getElementById('mentor-prog-fill');
+    const pp=document.getElementById('mentor-prog-pct');
+    if(pf) setTimeout(()=>{ pf.style.width=PROGRESS+'%'; },400);
+    if(pp) pp.textContent=PROGRESS+'%';
+    /* countdown */
+    updateCountdown();
+    setInterval(updateCountdown,1000);
+  }
+
+  if(document.readyState==='loading') window.addEventListener('DOMContentLoaded',init,{once:true});
+  else init();
+})();
 
 // ===================== OCEAN CANVAS =====================
 (function(){
