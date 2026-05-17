@@ -3339,7 +3339,8 @@ function openProjModal(idx) {
 // ════════════════════════════════════════════════════════════
 function initNeuralCanvas() {
   const canvas = document.getElementById('neural-canvas');
-  if (!canvas) return;
+  if (!canvas || canvas._ncInited) return;
+  canvas._ncInited = true;
   const dpr = window.devicePixelRatio || 1;
   function resize() {
     const w = canvas.offsetWidth || 400, h = 220;
@@ -3501,15 +3502,21 @@ const JARVIS_LINES_DATA = [
 
 function initJarvis() {
   const thoughts = document.getElementById('jarvis-thoughts');
+  const heroAi  = document.getElementById('hero-ai');
   const linesEl = document.getElementById('jarvis-lines');
-  if (!thoughts) return;
+  if (!thoughts && !heroAi) return;
+  if (heroAi) heroAi.style.transition = 'opacity 0.4s';
   let idx = 0;
   function cycle() {
-    thoughts.style.opacity = '0';
-    setTimeout(() => {
-      thoughts.textContent = JARVIS_MESSAGES[idx++ % JARVIS_MESSAGES.length];
-      thoughts.style.opacity = '1';
-    }, 300);
+    const msg = JARVIS_MESSAGES[idx++ % JARVIS_MESSAGES.length];
+    if (thoughts) {
+      thoughts.style.opacity = '0';
+      setTimeout(() => { thoughts.textContent = msg; thoughts.style.opacity = '1'; }, 300);
+    }
+    if (heroAi) {
+      heroAi.style.opacity = '0';
+      setTimeout(() => { heroAi.textContent = msg; heroAi.style.opacity = '1'; }, 300);
+    }
   }
   cycle();
   setInterval(cycle, 4000);
@@ -3523,9 +3530,97 @@ function initJarvis() {
 }
 
 // ════════════════════════════════════════════════════════════
+// BUNBO COMMAND MENTOR — live cycling briefing
+// ════════════════════════════════════════════════════════════
+function initBunboMentor() {
+  const msg  = document.getElementById('mentor-msg-text');
+  const pct  = document.getElementById('mentor-prog-pct');
+  const fill = document.getElementById('mentor-prog-fill');
+  const chip = document.getElementById('mentor-date-chip');
+  if (!msg) return;
+  if (chip) {
+    chip.textContent = new Date().toLocaleDateString('de-DE',{weekday:'short',day:'2-digit',month:'2-digit'});
+  }
+  const BRIEFINGS = [
+    {text:'🚀 <em class="mn">BunBo App:</em> TestFlight-Upload diese Woche. 20 Beta-Tester rekrutieren.', pct:65},
+    {text:'💰 <em class="mn">Runway-Alarm:</em> Seed-Gespräch mit Seedmatch priorisieren — KW 21 Deadline.', pct:45},
+    {text:'⚓ <em class="mn">Marina-Saison:</em> Peak-Window Mai–Sep nutzen. Müggelsee-LOI fertigstellen.', pct:78},
+    {text:'📊 <em class="mn">Investor-Deck v3:</em> Pitch-Deck bis Freitag finalisieren und versenden.', pct:72},
+    {text:'🌊 <em class="mn">Wasserlage:</em> Live-Daten aktiv. Community wächst. Feedback auswerten.', pct:80},
+    {text:'🎯 <em class="mn">Heute fokussieren:</em> MVP-Demo fertigstellen — das ist der kritische Pfad.', pct:60},
+  ];
+  let bi = 0;
+  function nextBriefing() {
+    const b = BRIEFINGS[bi++ % BRIEFINGS.length];
+    msg.style.transition = 'opacity 0.4s'; msg.style.opacity = '0';
+    setTimeout(() => {
+      msg.innerHTML = b.text; msg.style.opacity = '1';
+      if (fill) { fill.style.transition = 'width 1.5s ease'; fill.style.width = b.pct + '%'; }
+      if (pct) pct.textContent = b.pct + '%';
+    }, 420);
+  }
+  nextBriefing();
+  setInterval(nextBriefing, 8000);
+  // Countdown to launch: 1. Juli 2026
+  const cdD = document.getElementById('bcd-d'), cdH = document.getElementById('bcd-h');
+  const cdM = document.getElementById('bcd-m'), cdS = document.getElementById('bcd-s');
+  function tickCountdown() {
+    const diff = new Date('2026-07-01T00:00:00') - new Date();
+    if (diff <= 0) { if (cdD) cdD.textContent = '00'; return; }
+    if (cdD) cdD.textContent = String(Math.floor(diff/86400000)).padStart(2,'0');
+    if (cdH) cdH.textContent = String(Math.floor((diff%86400000)/3600000)).padStart(2,'0');
+    if (cdM) cdM.textContent = String(Math.floor((diff%3600000)/60000)).padStart(2,'0');
+    if (cdS) cdS.textContent = String(Math.floor((diff%60000)/1000)).padStart(2,'0');
+  }
+  tickCountdown();
+  setInterval(tickCountdown, 1000);
+}
+
+// ════════════════════════════════════════════════════════════
+// HEARTBEAT CANVAS — system pulse animation
+// ════════════════════════════════════════════════════════════
+function initHeartbeat() {
+  const canvas = document.getElementById('heartbeat-canvas');
+  if (!canvas || canvas._hbInited) return;
+  canvas._hbInited = true;
+  const dpr = window.devicePixelRatio || 1;
+  const cssW = canvas.offsetWidth || 200, cssH = 40;
+  canvas.width = Math.round(cssW * dpr); canvas.height = Math.round(cssH * dpr);
+  const ctx = canvas.getContext('2d');
+  const W = canvas.width / dpr, H = canvas.height / dpr;
+  const history = new Array(Math.round(W)).fill(H / 2);
+  // ECG shape: flat, spike up, spike down, flat, small bump
+  const ECG_SHAPE = [0,0,0,0,0,0,0,.05,0,0,.04,.8,-.55,.92,-.15,.06,0,0,.04,.38,-.22,.04,0,0,0,0,0,0];
+  let t = 0;
+  function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.save(); ctx.scale(dpr, dpr);
+    history.shift();
+    const ecgY = H / 2 - ECG_SHAPE[Math.floor(t) % ECG_SHAPE.length] * H * 0.42;
+    history.push(ecgY);
+    ctx.beginPath(); ctx.moveTo(0, history[0]);
+    history.forEach((y, i) => ctx.lineTo(i, y));
+    ctx.shadowColor = '#00c8ff'; ctx.shadowBlur = 5;
+    ctx.strokeStyle = 'rgba(0,200,255,0.85)'; ctx.lineWidth = 1.5; ctx.stroke();
+    ctx.shadowBlur = 0;
+    // Moving dot
+    ctx.beginPath(); ctx.arc(W - 2, history[history.length - 1], 2.5, 0, Math.PI * 2);
+    ctx.fillStyle = '#00c8ff'; ctx.shadowColor = '#00c8ff'; ctx.shadowBlur = 10; ctx.fill(); ctx.shadowBlur = 0;
+    ctx.restore();
+    t += 0.7;
+    requestAnimationFrame(draw);
+  }
+  draw();
+}
+
+// ════════════════════════════════════════════════════════════
 // CHART.JS INITIALIZATION
 // ════════════════════════════════════════════════════════════
+let _chartsInited = false;
 function initCharts() {
+  if (_chartsInited) return;
+  if (typeof Chart === 'undefined') { setTimeout(initCharts, 500); return; }
+  _chartsInited = true;
   const isLight = false;
   const textDim = 'rgba(255,255,255,0.4)';
   const gridCol = 'rgba(255,255,255,0.05)';
@@ -3736,7 +3831,7 @@ function loadWasserlage() {
 (function(){
   function initBoatCanvas(){
     const canvas = document.getElementById('boat-wireframe-canvas');
-    if (!canvas) return;
+    if (!canvas || canvas._bcInited) return;
     const dpr = window.devicePixelRatio || 1;
     function setSize(){
       const cssW = canvas.offsetWidth || 480, cssH = canvas.offsetHeight || 480;
@@ -3883,12 +3978,17 @@ function loadWasserlage() {
       t += 0.016;
       requestAnimationFrame(drawScene);
     }
+    canvas._bcInited = true;
     drawScene();
     window.addEventListener('resize',()=>{ setSize(); });
   }
   if (document.readyState==='loading') document.addEventListener('DOMContentLoaded',initBoatCanvas);
   else initBoatCanvas();
-  setTimeout(initBoatCanvas,500);
+  // Deferred retry in case canvas had 0 size on first call
+  setTimeout(function(){
+    const c = document.getElementById('boat-wireframe-canvas');
+    if (c && !c._bcInited) initBoatCanvas();
+  }, 600);
 })();
 
 // ════════════════════════════════════════════════════════════
@@ -3921,14 +4021,16 @@ function renderOKRs() {
 
 // ─── CLOCK ───
 function initClock() {
+  const bridgeDate = document.getElementById('bridge-date');
   function tick() {
     const now = new Date();
     const ts = now.toLocaleTimeString('de-DE',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
-    const ds = now.toLocaleDateString('de-DE',{weekday:'short',day:'2-digit',month:'2-digit',year:'numeric'});
+    const ds = now.toLocaleDateString('de-DE',{weekday:'long',day:'2-digit',month:'long',year:'numeric'});
     document.querySelectorAll('.live-clock,.topbar-right,[id*="clock"]').forEach(el => {
       if (el.dataset.dateOnly) el.textContent = ds;
       else el.textContent = ts;
     });
+    if (bridgeDate) bridgeDate.textContent = ds;
   }
   tick(); setInterval(tick, 1000);
 }
@@ -4031,6 +4133,8 @@ function initAll() {
   renderProjects('all');
   initNeuralCanvas();
   initJarvis();
+  initBunboMentor();
+  initHeartbeat();
   renderOKRs();
   initClock();
   initNavActive();
@@ -4038,12 +4142,19 @@ function initAll() {
   initPWA();
   loadWasserlage();
   loadCommunityKPIs();
-  if (typeof Chart !== 'undefined') {
-    initCharts();
-  } else {
-    document.querySelector('script[src*="chart"]')?.addEventListener('load', initCharts);
-    setTimeout(initCharts, 2000);
-  }
+  // Charts — init immediately if Chart.js loaded, else wait for CDN or timeout
+  setTimeout(initCharts, 100);
+  // ── Deferred re-init after full page load: ensures canvas sizes are correct ──
+  window.addEventListener('load', function() {
+    // Re-init neural canvas if it didn't get a proper size
+    const nc = document.getElementById('neural-canvas');
+    if (nc && nc.width < 2) { nc._ncInited = false; initNeuralCanvas(); }
+    // Re-init heartbeat if not started
+    const hb = document.getElementById('heartbeat-canvas');
+    if (hb && !hb._hbInited) initHeartbeat();
+    // Re-init charts if CDN failed initially
+    setTimeout(initCharts, 200);
+  }, {once: true});
 }
 
 if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initAll);
