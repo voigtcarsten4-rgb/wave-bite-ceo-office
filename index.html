@@ -3113,1135 +3113,895 @@
 
 </div><!-- /page -->
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js" async></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <script>
-window._jsReadyAt = performance.now();
-// ===================== CANVAS 2D — Holographic Orbit Command Center =====================
+'use strict';
+// ════════════════════════════════════════════════════════════
+// WAVE BITE — Virtual CEO Office · Master Intelligence Engine
+// ════════════════════════════════════════════════════════════
+
+// ─── KPI DATA (real Wave Bite numbers) ───
+const CEO_KPIS = [
+  {val:'65%',  label:'BunBo Ready',    delta:'+5% KW',          arc:65,  color:'#c9a84c', cream:true,  pulse:false, up:true},
+  {val:'80%',  label:'Wasserlage',     delta:'✓ Live · 380 User',arc:80,  color:'#00d4aa', cream:false, pulse:false, up:true},
+  {val:'~5 Mo',label:'Runway',         delta:'⚠ Seed nötig',     arc:35,  color:'#ff4757', cream:false, pulse:true,  up:false},
+  {val:'12',   label:'Projekte aktiv', delta:'2 in MVP-Phase',   arc:100, color:'#00c8ff', cream:false, pulse:false, up:true},
+  {val:'3',    label:'Investor Leads', delta:'1 DD läuft',       arc:30,  color:'#c9a84c', cream:true,  pulse:false, up:true},
+  {val:'LIVE', label:'Website',        delta:'wave-bite.com',    arc:70,  color:'#00d4aa', cream:false, pulse:false, up:true},
+];
+
+// ─── PROJECT DATA ───
+const PROJECTS = [
+  {name:'BunBo App',icon:'🍔',pct:65,status:'review',statusLabel:'IN REVIEW',cat:'app',color:'rgba(0,200,255,0.12)',
+   desc:'Hauptprodukt — Gastronomie-Navigator für Wassertouristen. 48 Screens, Sprint 7, Testflight diese Woche kritisch.',
+   actions:['Testflight Upload diese Woche','Payment-Modul finalisieren','Onboarding-Flow testen'],
+   stats:[{l:'Screens',v:'48'},{l:'Beta-User',v:'12'},{l:'Bugs offen',v:'4'},{l:'Sprint',v:'7'}],
+   url:'https://app.flutterflow.io'},
+  {name:'Wasserlage',icon:'🌊',pct:80,status:'live',statusLabel:'LIVE',cat:'data',color:'rgba(0,212,170,0.12)',
+   desc:'Echtzeit-Pegelstände und Wasserstraßen-Informationen. 15 Stationen live, 99.8% Uptime.',
+   actions:['API-Monitoring automatisieren','2 neue Pegel integrieren','Mobile-Optimierung Q3'],
+   stats:[{l:'Stationen',v:'15'},{l:'Uptime',v:'99.8%'},{l:'API/h',v:'240'},{l:'User/Mo',v:'380'}],
+   url:'https://voigtcarsten4-rgb.github.io/wasserlage/'},
+  {name:'Wave Bite Website',icon:'🌐',pct:70,status:'live',statusLabel:'LIVE',cat:'tech',color:'rgba(0,200,255,0.12)',
+   desc:'Haupt-Website auf WordPress. 1.2k Besucher/Monat, SEO-Score 72. Live unter wave-bite.com.',
+   actions:['SEO Blogbereich optimieren','DSGVO Cookie-Banner prüfen','Landingpage BunBo Update'],
+   stats:[{l:'Besucher/Mo',v:'1.2k'},{l:'Pages',v:'18'},{l:'SEO',v:'72'},{l:'Speed',v:'89ms'}],
+   url:'https://wave-bite.com'},
+  {name:'BunBo Connect',icon:'🔗',pct:30,status:'dev',statusLabel:'IN DEV',cat:'app',color:'rgba(201,168,76,0.08)',
+   desc:'B2B-Portal für Marina-Partner und Gastronomen. API zu BunBo. 3 Partner im Onboarding. ETA Q4 2026.',
+   actions:['B2B-Portal MVP definieren','Marina-Partner onboarding','API-Schnittstelle spec'],
+   stats:[{l:'Partner',v:'3'},{l:'Features',v:'12/40'},{l:'Phase',v:'Discovery'},{l:'ETA',v:'Q4 2026'}],
+   url:'https://go.glideapps.com'},
+  {name:'Himmelreich App',icon:'✨',pct:25,status:'plan',statusLabel:'KONZEPT',cat:'app',color:'rgba(167,139,250,0.08)',
+   desc:'Premium-Erlebnis für Wassertourismus-Locations. Konzeptphase — Differenziertes Angebot für High-End Marinas.',
+   actions:['User Research Interviews','Concept Validation','MVP Scope Definition'],
+   stats:[{l:'Phase',v:'Konzept'},{l:'Screens',v:'5 Drafts'},{l:'Partner',v:'1 LOI'},{l:'ETA',v:'Q2 2027'}],
+   url:'https://drive.google.com'},
+  {name:'Hausboot App',icon:'🏠',pct:15,status:'plan',statusLabel:'KONZEPT',cat:'app',color:'rgba(0,200,255,0.08)',
+   desc:'Digitale Services für Hausboot-Besitzer. Vernetzung mit BunBo-Ökosystem. Frühe Konzeptionsphase.',
+   actions:['Market Research','Competitor Analysis','Technical Feasibility'],
+   stats:[{l:'Phase',v:'Research'},{l:'Zielgruppe',v:'Hausboote DE'},{l:'ETA',v:'2027'}],
+   url:'https://drive.google.com'},
+  {name:'CEO Briefing System',icon:'📋',pct:60,status:'live',statusLabel:'AKTIV',cat:'data',color:'rgba(201,168,76,0.08)',
+   desc:'Tägliches CEO-Briefing via Gmail + Google Apps Script. Automatisierte Morning Intelligence. Läuft täglich.',
+   actions:['Automatisches Tages-Briefing aktiv','Gmail-Integration stabil','Apps Script läuft'],
+   stats:[{l:'Automation',v:'Aktiv'},{l:'Trigger',v:'Täglich'},{l:'Quellen',v:'6'},{l:'Uptime',v:'99%'}],
+   url:'https://script.google.com'},
+  {name:'Marketing & Social',icon:'📣',pct:45,status:'dev',statusLabel:'AUFBAU',cat:'marketing',color:'rgba(0,200,255,0.08)',
+   desc:'Instagram 387 Follower, LinkedIn 234. Content-Plan für Q2/Q3 2026. Video-Serie in Produktion.',
+   actions:['Instagram-Wachstum 500 Ziel Q2','Video-Content BunBo Behind Scenes','LinkedIn Company Page aktivieren'],
+   stats:[{l:'Instagram',v:'387'},{l:'LinkedIn',v:'234'},{l:'Newsletter',v:'142'},{l:'TikTok',v:'89'}],
+   url:'https://voigtcarsten4-rgb.github.io/wasserlage/marketing-dashboard.html'},
+  {name:'Funding & Investoren',icon:'💎',pct:35,status:'dev',statusLabel:'AKTIV',cat:'finance',color:'rgba(201,168,76,0.12)',
+   desc:'Seed-Runde 250–500k € Ziel Q3 2026. Seedmatch in DD, HTGF Erstkontakt, EXIST in Vorbereitung.',
+   actions:['Seedmatch DD-Unterlagen KW 21','HTGF Follow-up Call vereinbaren','EXIST Antrag vorbereiten'],
+   stats:[{l:'Seed-Ziel',v:'250-500k'},{l:'Fortschritt',v:'35%'},{l:'Leads',v:'3'},{l:'Timeline',v:'Q3 2026'}],
+   url:'https://voigtcarsten4-rgb.github.io/wasserlage/finance-dashboard.html'},
+  {name:'Automation Hub',icon:'🤖',pct:40,status:'dev',statusLabel:'IN DEV',cat:'tech',color:'rgba(0,212,170,0.08)',
+   desc:'N8N Workflows, Make.com Szenarien & Google Apps Script. CEO-Briefing, QR-Tracking, Daten-Pipelines aktiv.',
+   actions:['N8N CEO-Briefing Workflow','Make.com Marketing Automation','Apps Script QR-Bridge stable'],
+   stats:[{l:'Workflows',v:'8 aktiv'},{l:'Triggers',v:'12/Tag'},{l:'Tools',v:'N8N, Make'},{l:'Uptime',v:'97%'}],
+   url:'https://app.n8n.io'},
+  {name:'Partner & Sponsoring',icon:'🤝',pct:20,status:'dev',statusLabel:'AUFBAU',cat:'finance',color:'rgba(0,200,255,0.08)',
+   desc:'26 Kontakte, 1 aktiver Partner. Marina Müggelsee in Verhandlung. Ziel Q4: 5 Marinas als Partner.',
+   actions:['Marina Müggelsee Angebot Freitag','Wassertourismus e.V. Erst-Kontakt','Investor-Netzwerk Berlin aktivieren'],
+   stats:[{l:'Leads',v:'26'},{l:'Aktiv',v:'1'},{l:'Pipeline',v:'4 warm'},{l:'Ziel Q4',v:'5 Marinas'}],
+   url:'https://voigtcarsten4-rgb.github.io/wasserlage/partner-dashboard.html'},
+  {name:'Glide Apps',icon:'⚡',pct:50,status:'dev',statusLabel:'IN DEV',cat:'tech',color:'rgba(0,212,170,0.08)',
+   desc:'No-Code Web-Apps für MVP & interne Tools. BunBo Connect Prototype live, 3 interne Tools.',
+   actions:['BunBo Connect Prototype finalisieren','Interne Tools optimieren','Glide → FlutterFlow Migration plan'],
+   stats:[{l:'Apps',v:'3 aktiv'},{l:'User',v:'12'},{l:'Features',v:'24/40'},{l:'Phase',v:'Beta'}],
+   url:'https://go.glideapps.com'},
+];
+
+// ─── INVESTOR READINESS SCORE (calculated) ───
+function calcInvestorScore() {
+  const factors = {
+    'Product MVP': 65,
+    'Live Traction': 70,
+    'Market Size': 80,
+    'Team': 60,
+    'Financials': 40,
+    'Pitch Deck': 75,
+  };
+  return Math.round(Object.values(factors).reduce((a,b)=>a+b,0)/Object.keys(factors).length);
+}
+
+// ════════════════════════════════════════════════════════════
+// KPI STRIP
+// ════════════════════════════════════════════════════════════
+function initKpiStrip() {
+  const strip = document.getElementById('kpi-strip');
+  if (!strip) return;
+  const circ = 188.5;
+  strip.innerHTML = CEO_KPIS.map(k => `
+    <div class="kpi-card${k.cream?' cream':''}" style="cursor:pointer;position:relative">
+      <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,${k.color},transparent);opacity:.7"></div>
+      ${k.pulse?'<div style="position:absolute;top:10px;right:10px;width:8px;height:8px"><div style="position:absolute;inset:0;border-radius:50%;background:#ff4757;animation:kpiring 1.8s ease-out infinite"></div><div style="position:absolute;inset:0;border-radius:50%;background:#ff4757;animation:kpiring 1.8s ease-out .9s infinite"></div><div style="position:absolute;inset:0;border-radius:50%;background:#ff4757;border-radius:50%"></div></div>':''}
+      <svg style="display:block;margin:0 auto .4rem" width="64" height="64" viewBox="0 0 64 64">
+        <circle cx="32" cy="32" r="28" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="5"/>
+        <circle cx="32" cy="32" r="28" fill="none" stroke="${k.color}" stroke-width="5"
+          stroke-linecap="round" stroke-dasharray="${circ}" stroke-dashoffset="${(circ*(1-k.arc/100)).toFixed(1)}"
+          transform="rotate(-90 32 32)" style="transition:stroke-dashoffset 1.4s ease"/>
+        <text x="32" y="36" text-anchor="middle" fill="${k.color}" font-size="9" font-weight="700">${k.arc}%</text>
+      </svg>
+      <span class="kpi-val" style="color:${k.color}">${k.val}</span>
+      <span class="kpi-label">${k.label}</span>
+      <span class="kpi-delta ${k.up?'up':'down'}">${k.delta}</span>
+    </div>`).join('');
+}
+
+// ════════════════════════════════════════════════════════════
+// PROJECT GRID + FILTER
+// ════════════════════════════════════════════════════════════
+let currentFilter = 'all';
+const STATUS_MAP = {live:'chip-success',review:'chip-warn',dev:'chip-info',plan:'chip-info'};
+
+function renderProjects(cat) {
+  const grid = document.getElementById('projects-grid');
+  if (!grid) return;
+  const filtered = cat === 'all' ? PROJECTS : PROJECTS.filter(p => p.cat === cat);
+  grid.innerHTML = filtered.map((p,i) => `
+    <div class="proj-card" style="background:linear-gradient(145deg,${p.color},rgba(4,16,30,0.9));border:1px solid rgba(255,255,255,0.07);border-radius:14px;padding:1.1rem;cursor:pointer;transition:all .2s;animation:fadeIn .3s ease ${i*0.05}s both"
+         onclick="openProjModal(${PROJECTS.indexOf(p)})"
+         onmouseenter="this.style.transform='translateY(-3px)';this.style.borderColor='rgba(0,200,255,0.35)'"
+         onmouseleave="this.style.transform='';this.style.borderColor='rgba(255,255,255,0.07)'">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:.7rem">
+        <div style="font-size:1.4rem">${p.icon}</div>
+        <span class="chip ${STATUS_MAP[p.status]||'chip-info'}" style="font-size:.55rem">${p.statusLabel}</span>
+      </div>
+      <div style="font-size:.82rem;font-weight:700;margin-bottom:.35rem;color:rgba(255,255,255,.9)">${p.name}</div>
+      <div style="font-size:.65rem;color:var(--text-dim);margin-bottom:.65rem;line-height:1.5">${p.desc.substring(0,80)}...</div>
+      <div style="background:rgba(255,255,255,0.05);border-radius:4px;height:4px;overflow:hidden">
+        <div style="height:100%;width:${p.pct}%;background:linear-gradient(90deg,var(--blue),var(--teal));transition:width 1s ease"></div>
+      </div>
+      <div style="display:flex;justify-content:space-between;margin-top:.3rem">
+        <span style="font-size:.6rem;color:var(--text-dim)">Fortschritt</span>
+        <span style="font-size:.6rem;color:var(--blue);font-weight:700">${p.pct}%</span>
+      </div>
+    </div>`).join('');
+}
+
+window.filterProj = function(cat, btn) {
+  currentFilter = cat;
+  document.querySelectorAll('#proj-pills .pill').forEach(p => p.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  renderProjects(cat);
+};
+
+function openProjModal(idx) {
+  const p = PROJECTS[idx];
+  if (!p) return;
+  const m = document.getElementById('proj-modal');
+  if (!m) { window.open(p.url,'_blank'); return; }
+  m.querySelector('.pm-title').textContent = p.icon + ' ' + p.name;
+  m.querySelector('.pm-status').innerHTML = `<span class="chip ${STATUS_MAP[p.status]||'chip-info'}">${p.statusLabel}</span>`;
+  m.querySelector('.pm-desc').textContent = p.desc;
+  const statsEl = m.querySelector('.pm-stats');
+  if (statsEl) statsEl.innerHTML = p.stats.map(s=>`<div style="background:rgba(0,200,255,0.04);border:1px solid rgba(0,200,255,0.1);border-radius:8px;padding:.6rem;text-align:center"><div style="font-size:.9rem;font-weight:700;color:var(--blue)">${s.v}</div><div style="font-size:.55rem;color:var(--text-dim)">${s.l}</div></div>`).join('');
+  const actsEl = m.querySelector('.pm-actions');
+  if (actsEl) actsEl.innerHTML = p.actions.map(a=>`<div style="padding:.35rem .5rem;border-left:2px solid var(--blue);background:rgba(0,200,255,0.04);border-radius:0 6px 6px 0;font-size:.72rem;color:rgba(255,255,255,.8)">→ ${a}</div>`).join('');
+  const btn = m.querySelector('.pm-open-btn');
+  if (btn) btn.href = p.url;
+  m.style.display = 'flex';
+  document.body.style.overflow = 'hidden';
+}
+
+// ════════════════════════════════════════════════════════════
+// NEURAL CANVAS — Intelligent Network (properly firing)
+// ════════════════════════════════════════════════════════════
+function initNeuralCanvas() {
+  const canvas = document.getElementById('neural-canvas');
+  if (!canvas) return;
+  const dpr = window.devicePixelRatio || 1;
+  function resize() {
+    const w = canvas.offsetWidth || 400, h = 220;
+    canvas.width = Math.round(w * dpr); canvas.height = Math.round(h * dpr);
+  }
+  resize();
+  const ctx = canvas.getContext('2d');
+
+  // Nodes: labeled with real Wave Bite projects
+  const NODE_DATA = [
+    {label:'BunBo',   color:'#00c8ff', x:0.12, y:0.35, pct:65},
+    {label:'Wasser',  color:'#00d4aa', x:0.28, y:0.18, pct:80},
+    {label:'CEO',     color:'#c9a84c', x:0.5,  y:0.5,  pct:75, hub:true},
+    {label:'Finance', color:'#c9a84c', x:0.72, y:0.25, pct:35},
+    {label:'Partner', color:'#00c8ff', x:0.85, y:0.55, pct:20},
+    {label:'Market',  color:'#ff4757', x:0.62, y:0.78, pct:45},
+    {label:'Website', color:'#00d4aa', x:0.3,  y:0.72, pct:70},
+    {label:'Auto',    color:'#c9a84c', x:0.5,  y:0.15, pct:40},
+    {label:'Himmel',  color:'#a78bfa', x:0.15, y:0.72, pct:25},
+  ];
+
+  // Connections: all connect to hub (CEO), some cross-connections
+  const EDGES = [[0,2],[1,2],[2,3],[2,4],[2,5],[2,6],[2,7],[0,1],[1,7],[3,4],[5,6],[0,8]];
+
+  // Firing pulses
+  const pulses = [];
+  function spawnPulse() {
+    const edgeIdx = Math.floor(Math.random() * EDGES.length);
+    pulses.push({edge: edgeIdx, t: 0, speed: 0.012 + Math.random() * 0.01, color: NODE_DATA[EDGES[edgeIdx][0]].color});
+  }
+  setInterval(spawnPulse, 400);
+
+  let t = 0;
+  function draw() {
+    const W = canvas.width / dpr, H = canvas.height / dpr;
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.save(); ctx.scale(dpr, dpr);
+
+    // Background
+    const bg = ctx.createRadialGradient(W*.5, H*.5, 0, W*.5, H*.5, W*.6);
+    bg.addColorStop(0, 'rgba(7,24,40,0.6)'); bg.addColorStop(1, 'rgba(2,8,16,0.2)');
+    ctx.fillStyle = bg; ctx.fillRect(0, 0, W, H);
+
+    const nodes = NODE_DATA.map(n => ({
+      ...n,
+      px: n.x * W,
+      py: n.y * H,
+      r: n.hub ? 14 : 8
+    }));
+
+    // Draw edges
+    EDGES.forEach(([a,b]) => {
+      const na = nodes[a], nb = nodes[b];
+      const grad = ctx.createLinearGradient(na.px, na.py, nb.px, nb.py);
+      grad.addColorStop(0, na.color + '44');
+      grad.addColorStop(0.5, nb.color + '22');
+      grad.addColorStop(1, nb.color + '44');
+      ctx.beginPath(); ctx.moveTo(na.px, na.py); ctx.lineTo(nb.px, nb.py);
+      ctx.strokeStyle = grad; ctx.lineWidth = 1; ctx.stroke();
+    });
+
+    // Draw pulses along edges
+    pulses.forEach((p, i) => {
+      const [a, b] = EDGES[p.edge];
+      const na = nodes[a], nb = nodes[b];
+      const px = na.px + (nb.px - na.px) * p.t;
+      const py = na.py + (nb.py - na.py) * p.t;
+      ctx.beginPath(); ctx.arc(px, py, 3, 0, Math.PI*2);
+      const alpha = Math.sin(p.t * Math.PI);
+      ctx.fillStyle = p.color + Math.round(alpha * 255).toString(16).padStart(2,'0');
+      ctx.shadowColor = p.color; ctx.shadowBlur = 8;
+      ctx.fill(); ctx.shadowBlur = 0;
+      p.t += p.speed;
+    });
+
+    // Remove completed pulses
+    for (let i = pulses.length - 1; i >= 0; i--) {
+      if (pulses[i].t >= 1) pulses.splice(i, 1);
+    }
+
+    // Draw nodes
+    nodes.forEach(n => {
+      const pulse = 0.7 + 0.3 * Math.sin(t * 1.5 + n.x * 10);
+      // Outer ring
+      ctx.beginPath(); ctx.arc(n.px, n.py, n.r + 4, 0, Math.PI*2);
+      ctx.strokeStyle = n.color + '30'; ctx.lineWidth = 1.5; ctx.stroke();
+      // Inner fill
+      const gr = ctx.createRadialGradient(n.px, n.py, 0, n.px, n.py, n.r);
+      gr.addColorStop(0, n.color + '55'); gr.addColorStop(1, n.color + '11');
+      ctx.beginPath(); ctx.arc(n.px, n.py, n.r, 0, Math.PI*2);
+      ctx.fillStyle = gr;
+      ctx.shadowColor = n.color; ctx.shadowBlur = n.hub ? 18 : 10;
+      ctx.fill();
+      // Border
+      ctx.strokeStyle = n.color + Math.round(pulse * 200).toString(16).padStart(2,'0');
+      ctx.lineWidth = n.hub ? 2 : 1.2; ctx.stroke();
+      ctx.shadowBlur = 0;
+      // Label
+      ctx.fillStyle = 'rgba(255,255,255,0.75)';
+      ctx.font = `${n.hub ? 9 : 8}px -apple-system,sans-serif`;
+      ctx.textAlign = 'center';
+      ctx.fillText(n.label, n.px, n.py + n.r + 13);
+      // Progress arc on hub
+      if (n.hub) {
+        ctx.beginPath();
+        ctx.arc(n.px, n.py, n.r + 6, -Math.PI/2, -Math.PI/2 + Math.PI*2*(n.pct/100));
+        ctx.strokeStyle = n.color; ctx.lineWidth = 2.5; ctx.lineCap = 'round'; ctx.stroke();
+      }
+    });
+
+    // Intelligence score display
+    const score = calcInvestorScore();
+    ctx.font = 'bold 11px -apple-system,sans-serif';
+    ctx.fillStyle = '#c9a84c';
+    ctx.textAlign = 'left';
+    ctx.fillText('🧠 INTELLIGENCE SCORE', 8, 16);
+    ctx.font = 'bold 24px -apple-system,sans-serif';
+    ctx.fillStyle = '#c9a84c';
+    ctx.fillText(score + '%', 8, 42);
+    ctx.font = '9px -apple-system,sans-serif';
+    ctx.fillStyle = 'rgba(255,255,255,0.4)';
+    ctx.fillText('INVESTOR READINESS', 8, 56);
+
+    // Active connections counter
+    ctx.textAlign = 'right';
+    ctx.fillStyle = '#00d4aa';
+    ctx.font = 'bold 10px -apple-system,sans-serif';
+    ctx.fillText(pulses.length + ' SIGNALS ACTIVE', W - 8, 16);
+
+    ctx.restore();
+    t += 0.016;
+    requestAnimationFrame(draw);
+  }
+  draw();
+  window.addEventListener('resize', resize);
+}
+
+// ════════════════════════════════════════════════════════════
+// JARVIS AI — Dynamic Intelligence Feed
+// ════════════════════════════════════════════════════════════
+const JARVIS_MESSAGES = [
+  'BunBo Launch-Fenster optimal — Sommer 2026',
+  'Runway-Risiko erkannt → Seed-Gespräch priorisieren',
+  'Marina-Saison aktiv — Partnerschaft-Chance hoch',
+  '3 offene Investor Follow-ups identifiziert',
+  'Seedmatch DD: Unterlagen bis KW 21 deadline',
+  'Instagram +12 Follower diese Woche — Content läuft',
+  'Wasserlage 380 MAU — Wachstum stabil +8%',
+  'Revenue-Prognose: Break-even Q4 2026 bei 2 Marinas',
+  'EXIST-Stipendium: Q3 Antragsfenster geöffnet',
+  'BunBo: 4 offene Bugs → Launch-kritisch priorisieren',
+];
+const JARVIS_LINES_DATA = [
+  {text:'📊 Investoren-Deck: <span style="color:var(--gold)">KW 21 Deadline</span>', urgent:true},
+  {text:'🚀 BunBo Testflight: <span style="color:var(--green)">Diese Woche</span>', urgent:false},
+  {text:'⚓ Marina Müggelsee: <span style="color:var(--teal)">Angebot senden Fr</span>', urgent:false},
+  {text:'⚠ Runway: <span style="color:var(--red)">~5 Monate</span>', urgent:true},
+];
+
+function initJarvis() {
+  const thoughts = document.getElementById('jarvis-thoughts');
+  const linesEl = document.getElementById('jarvis-lines');
+  if (!thoughts) return;
+  let idx = 0;
+  function cycle() {
+    thoughts.style.opacity = '0';
+    setTimeout(() => {
+      thoughts.textContent = JARVIS_MESSAGES[idx++ % JARVIS_MESSAGES.length];
+      thoughts.style.opacity = '1';
+    }, 300);
+  }
+  cycle();
+  setInterval(cycle, 4000);
+  if (linesEl) {
+    linesEl.innerHTML = JARVIS_LINES_DATA.map(l =>
+      `<div style="display:flex;align-items:center;gap:.45rem;margin-bottom:.35rem;padding:.3rem .5rem;border-radius:5px;background:${l.urgent?'rgba(255,71,87,0.06)':'rgba(0,200,255,0.04)'}">
+        <div style="width:5px;height:5px;border-radius:50%;background:${l.urgent?'var(--red)':'var(--blue)'};flex-shrink:0"></div>
+        <span style="font-size:.7rem">${l.text}</span></div>`
+    ).join('');
+  }
+}
+
+// ════════════════════════════════════════════════════════════
+// CHART.JS INITIALIZATION
+// ════════════════════════════════════════════════════════════
+function initCharts() {
+  const isLight = false;
+  const textDim = 'rgba(255,255,255,0.4)';
+  const gridCol = 'rgba(255,255,255,0.05)';
+
+  // Project Progress Bar Chart
+  const progEl = document.getElementById('chart-progress');
+  if (progEl) {
+    new Chart(progEl.getContext('2d'), {
+      type: 'bar',
+      data: {
+        labels: PROJECTS.map(p => p.icon + ' ' + p.name.split(' ')[0]),
+        datasets: [{
+          label: 'Fortschritt %',
+          data: PROJECTS.map(p => p.pct),
+          backgroundColor: PROJECTS.map(p =>
+            p.pct >= 70 ? 'rgba(0,212,170,0.6)' :
+            p.pct >= 40 ? 'rgba(0,200,255,0.6)' :
+            'rgba(201,168,76,0.6)'),
+          borderColor: PROJECTS.map(p =>
+            p.pct >= 70 ? '#00d4aa' : p.pct >= 40 ? '#00c8ff' : '#c9a84c'),
+          borderWidth: 1, borderRadius: 5
+        }]
+      },
+      options: {
+        indexAxis: 'y', responsive: true, maintainAspectRatio: false,
+        plugins: { legend: { display: false } },
+        scales: {
+          x: { max: 100, grid: { color: gridCol }, ticks: { color: textDim, font: {size:8}, callback: v => v + '%' }},
+          y: { grid: { color: 'transparent' }, ticks: { color: 'rgba(255,255,255,0.65)', font: {size:8} }}
+        }
+      }
+    });
+  }
+
+  // Growth Radar
+  const radarEl = document.getElementById('chart-radar');
+  if (radarEl) {
+    new Chart(radarEl.getContext('2d'), {
+      type: 'radar',
+      data: {
+        labels: ['Product', 'Marketing', 'Finance', 'Tech', 'Partner', 'Traction'],
+        datasets: [
+          {label:'Ist', data:[65,45,35,60,20,55], fill:true,
+           backgroundColor:'rgba(0,200,255,0.1)', borderColor:'rgba(0,200,255,0.8)',
+           pointBackgroundColor:'#00c8ff', pointRadius:4},
+          {label:'Ziel Q4', data:[90,70,65,80,50,80], fill:true,
+           backgroundColor:'rgba(201,168,76,0.06)', borderColor:'rgba(201,168,76,0.5)',
+           pointBackgroundColor:'#c9a84c', pointRadius:3}
+        ]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        plugins: { legend: { labels: { color: textDim, font: {size:9}, boxWidth:10 } } },
+        scales: { r: {
+          angleLines: { color: gridCol }, grid: { color: gridCol },
+          pointLabels: { color: 'rgba(255,255,255,0.6)', font: {size:9} },
+          ticks: { display: false }, min: 0, max: 100
+        }}
+      }
+    });
+  }
+
+  // Revenue Forecast
+  const revEl = document.getElementById('chart-revenue');
+  if (revEl) {
+    new Chart(revEl.getContext('2d'), {
+      type: 'line',
+      data: {
+        labels: ['Jan','Feb','Mär','Apr','Mai','Jun','Jul','Aug','Sep','Okt','Nov','Dez'],
+        datasets: [
+          {label:'Revenue (€)', data:[0,0,0,0,2000,5000,18000,35000,60000,90000,130000,160000],
+           borderColor:'#c9a84c', backgroundColor:'rgba(201,168,76,0.07)',
+           pointBackgroundColor:'#c9a84c', pointRadius:3, fill:true, tension:0.4},
+          {label:'Burn Rate (€)', data:[2800,2800,2800,2800,3200,3200,3800,4200,5000,6000,7000,8000],
+           borderColor:'rgba(255,71,87,0.7)', backgroundColor:'rgba(255,71,87,0.05)',
+           pointBackgroundColor:'#ff4757', pointRadius:2, fill:true, tension:0.4,
+           borderDash:[4,4]}
+        ]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        plugins: { legend: { labels: { color: textDim, font:{size:9}, boxWidth:10 } } },
+        scales: {
+          x: { grid:{color:gridCol}, ticks:{color:textDim,font:{size:8}} },
+          y: { grid:{color:gridCol}, ticks:{color:textDim,font:{size:8},callback:v=>v>=1000?'€'+(v/1000).toFixed(0)+'k':'€'+v} }
+        }
+      }
+    });
+  }
+
+  // Finance Burn Chart
+  const finEl = document.getElementById('chart-finance');
+  if (finEl) {
+    new Chart(finEl.getContext('2d'), {
+      type: 'bar',
+      data: {
+        labels: ['Jan','Feb','Mär','Apr','Mai','Jun','Jul','Aug','Sep'],
+        datasets: [
+          {label:'Burn (€)', data:[2800,2800,2800,2800,3200,3200,3800,4200,5000],
+           backgroundColor:'rgba(255,71,87,0.5)', borderColor:'#ff4757', borderWidth:1, borderRadius:4},
+          {label:'Revenue (€)', data:[0,0,0,0,0,2000,5000,18000,35000],
+           backgroundColor:'rgba(0,212,170,0.5)', borderColor:'#00d4aa', borderWidth:1, borderRadius:4}
+        ]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        plugins: { legend: { labels: { color: textDim, font:{size:9}, boxWidth:10 } } },
+        scales: {
+          x: { grid:{color:gridCol}, ticks:{color:textDim,font:{size:8}} },
+          y: { grid:{color:gridCol}, ticks:{color:textDim,font:{size:8},callback:v=>'€'+v} }
+        }
+      }
+    });
+  }
+}
+
+// ════════════════════════════════════════════════════════════
+// OPEN DASH — All 16 URLs
+// ════════════════════════════════════════════════════════════
+const DASH_CONFIG = {
+  tracking:    {action:'url', url:'https://voigtcarsten4-rgb.github.io/wasserlage/wavebite-premium-dashboard.html'},
+  wasserlage:  {action:'url', url:'https://voigtcarsten4-rgb.github.io/wasserlage/'},
+  ceo_briefing:{action:'url', url:'https://voigtcarsten4-rgb.github.io/wasserlage/ceo-briefing.html'},
+  playbook:    {action:'url', url:'https://voigtcarsten4-rgb.github.io/wasserlage/daily-playbook.html'},
+  wordpress:   {action:'url', url:'https://wave-bite.com/wp-admin/admin.php?page=ionos#overview'},
+  flutterflow: {action:'url', url:'https://app.flutterflow.io'},
+  glide:       {action:'url', url:'https://go.glideapps.com'},
+  automation:  {action:'url', url:'https://app.n8n.io'},
+  elwis:       {action:'url', url:'https://www.elwis.de/DE/Startseite/Startseite-node.html'},
+  github:      {action:'url', url:'https://github.com/voigtcarsten4-rgb'},
+  drive:       {action:'url', url:'https://drive.google.com'},
+  appstore:    {action:'url', url:'https://appstoreconnect.apple.com'},
+  marketing:   {action:'url', url:'https://voigtcarsten4-rgb.github.io/wasserlage/marketing-dashboard.html'},
+  kpi:         {action:'url', url:'https://voigtcarsten4-rgb.github.io/wasserlage/kpi-dashboard.html'},
+  partner:     {action:'url', url:'https://voigtcarsten4-rgb.github.io/wasserlage/partner-dashboard.html'},
+  finance:     {action:'url', url:'https://voigtcarsten4-rgb.github.io/wasserlage/finance-dashboard.html'},
+};
+window.openDash = function(id) {
+  const cfg = DASH_CONFIG[id];
+  if (!cfg) return;
+  window.open(cfg.url, '_blank', 'noopener');
+};
+
+// ════════════════════════════════════════════════════════════
+// LIVE DATA — Pegelonline
+// ════════════════════════════════════════════════════════════
+function loadWasserlage() {
+  const stationId = '5e3ef417-50b4-4d60-9f5a-e0f1d28a55fe'; // Berlin Spandau-West
+  fetch(`https://www.pegelonline.wsv.de/webservices/rest-api/v2/stations/${stationId}/W/measurements.json?start=P1D`)
+    .then(r => r.json())
+    .then(data => {
+      if (!data || !data.length) return;
+      const latest = data[data.length - 1];
+      const val = latest.value;
+      const el = document.getElementById('wl-pegel-status');
+      if (el) {
+        el.textContent = val + ' cm';
+        el.style.color = val > 200 ? '#ff4757' : val > 150 ? '#c9a84c' : '#00d4aa';
+      }
+      const badge = document.getElementById('wl-nav-text');
+      if (badge) {
+        const ok = val < 200;
+        badge.textContent = ok ? '✅ Schifffahrt freigegeben — Pegel normal (' + val + ' cm)' : '⚠️ Erhöhter Pegel — Einschränkungen möglich (' + val + ' cm)';
+        badge.style.color = ok ? 'var(--green)' : '#c9a84c';
+        badge.parentElement.style.borderColor = ok ? 'rgba(0,255,136,0.18)' : 'rgba(201,168,76,0.25)';
+        badge.parentElement.style.background = ok ? 'rgba(0,255,136,0.07)' : 'rgba(201,168,76,0.06)';
+      }
+    })
+    .catch(() => {
+      const el = document.getElementById('wl-pegel-status');
+      if (el) { el.textContent = '—'; }
+    });
+
+  // Weather via open-meteo (Berlin)
+  fetch('https://api.open-meteo.com/v1/forecast?latitude=52.52&longitude=13.41&current=temperature_2m,apparent_temperature,weathercode,windspeed_10m&daily=sunrise,sunset&timezone=Europe/Berlin&forecast_days=1')
+    .then(r => r.json())
+    .then(d => {
+      const c = d.current;
+      const temp = document.getElementById('wl-temp');
+      const feels = document.getElementById('wl-feels');
+      const wind = document.getElementById('wl-wind-status');
+      const rise = document.getElementById('wl-sunrise');
+      const set = document.getElementById('wl-sunset');
+      const up = document.getElementById('live-updated');
+      const weather = document.getElementById('wl-weather-status');
+      if (temp) temp.textContent = Math.round(c.temperature_2m) + '°C';
+      if (feels) feels.textContent = 'Gefühlt ' + Math.round(c.apparent_temperature) + '°C';
+      if (wind) { wind.textContent = Math.round(c.windspeed_10m) + ' km/h'; wind.style.color = c.windspeed_10m > 30 ? '#ff4757' : '#00d4aa'; }
+      if (weather) { const codes = {0:'☀️ Klar',1:'🌤 Meist klar',2:'⛅ Teilweise bewölkt',3:'☁️ Bewölkt',61:'🌧 Regen',80:'🌦 Schauer',95:'⛈ Gewitter'}; weather.textContent = codes[c.weathercode] || '🌡 ' + c.weathercode; }
+      if (d.daily && d.daily.sunrise) { if (rise) rise.textContent = d.daily.sunrise[0].split('T')[1].substring(0,5); if (set) set.textContent = d.daily.sunset[0].split('T')[1].substring(0,5); }
+      if (up) up.textContent = '✓ Aktualisiert ' + new Date().toLocaleTimeString('de-DE',{hour:'2-digit',minute:'2-digit'});
+      const wlStatus = document.getElementById('wl-status-label');
+      const wlSub = document.getElementById('wl-status-sub');
+      if (wlStatus) { wlStatus.textContent = c.windspeed_10m < 20 && c.weathercode < 60 ? 'Günstige Bedingungen' : c.weathercode >= 80 ? 'Schlechte Bedingungen' : 'Mittlere Bedingungen'; }
+      if (wlSub) wlSub.textContent = 'Berlin-Brandenburg · ' + new Date().toLocaleDateString('de-DE');
+      const icon = document.getElementById('wl-status-icon');
+      if (icon) icon.textContent = c.weathercode < 2 ? '☀️' : c.weathercode < 60 ? '⛅' : '🌧';
+      // Water temp estimate
+      const waterTmp = document.getElementById('wl-water-temp');
+      if (waterTmp) { const wt = Math.round(c.temperature_2m - 3 + (new Date().getMonth() > 4 ? 3 : 0)); waterTmp.textContent = wt + '°C'; }
+    })
+    .catch(() => {});
+}
+
+// ════════════════════════════════════════════════════════════
+// BOAT CANVAS — Holographic Orbit Command Center
+// ════════════════════════════════════════════════════════════
 (function(){
   function initBoatCanvas(){
     const canvas = document.getElementById('boat-wireframe-canvas');
     if (!canvas) return;
     const dpr = window.devicePixelRatio || 1;
-    function setSize() {
-      const cssW = canvas.offsetWidth  || 480;
-      const cssH = canvas.offsetHeight || 480;
-      canvas.width  = Math.round(cssW * dpr);
-      canvas.height = Math.round(cssH * dpr);
+    function setSize(){
+      const cssW = canvas.offsetWidth || 480, cssH = canvas.offsetHeight || 480;
+      canvas.width = Math.round(cssW*dpr); canvas.height = Math.round(cssH*dpr);
     }
     setSize();
     if (canvas.width < 2) { setTimeout(initBoatCanvas, 300); return; }
     const ctx = canvas.getContext('2d');
     let t = 0;
 
-    /* ── Deterministic star field — Star Wars deep space ── */
-    const STARS = Array.from({length:160}, (_,i) => ({
-      x: Math.cos(i*2.4+0.6)*(50+(i*9)%160) + (i*17)%110-55,
-      y: Math.sin(i*1.618+1.1)*(42+(i*7)%110) - 50 + (i%3)*30,
-      r: 0.28 + (i%5)*0.28,
-      b: 0.18 + (i%8)*0.10,
-      spd: 0.4 + (i%4)*0.3,
+    const STARS = Array.from({length:160},(_,i) => ({
+      x:Math.cos(i*2.4+0.6)*(50+(i*9)%160)+(i*17)%110-55,
+      y:Math.sin(i*1.618+1.1)*(42+(i*7)%110)-50+(i%3)*30,
+      r:0.28+(i%5)*0.28, b:0.18+(i%8)*0.10, spd:0.4+(i%4)*0.3
     }));
-    /* Star Wars hyperspace streaks (distant, subtle) */
-    const STREAKS = Array.from({length:12}, (_,i) => ({
-      ang: (i/12)*Math.PI*2,
-      dist: 160 + (i*23)%90,
-      len: 8 + (i%4)*6,
-      op: 0.12 + (i%3)*0.07,
-    }));
-
-    /* ── Galaxy — 4-arm spiral, more visible ── */
-    const GAL = Array.from({length:280}, (_,i) => {
-      const arm = i % 4;
-      const baseAng = (i/70)*Math.PI*2 + arm*(Math.PI*2/4);
-      const dist = 100 + (i*5)%160;
-      return { baseAng, dist,
-        spd: (0.004 + (i%5)*0.0016) * (arm%2===1 ? -1.1 : 1),
-        col: arm===0 ? '0,200,255' : arm===1 ? '201,168,76' : arm===2 ? '0,212,170' : '120,160,255',
-        op:  0.055 + (i%6)*0.022,
-        sz:  0.38 + (i%5)*0.26,
-        tilt: 0.28 + arm*0.05,
-      };
+    const STREAKS = Array.from({length:12},(_,i)=>({ang:(i/12)*Math.PI*2,dist:160+(i*23)%90,len:8+(i%4)*6,op:0.12+(i%3)*0.07}));
+    const GAL = Array.from({length:280},(_,i)=>{
+      const arm=i%4, baseAng=(i/70)*Math.PI*2+arm*(Math.PI*2/4), dist=100+(i*5)%160;
+      return{baseAng,dist,spd:(0.004+(i%5)*0.0016)*(arm%2===1?-1.1:1),
+        col:arm===0?'0,200,255':arm===1?'201,168,76':arm===2?'0,212,170':'120,160,255',
+        op:0.055+(i%6)*0.022,sz:0.38+(i%5)*0.26,tilt:0.28+arm*0.05};
     });
+    const LABELS=['WASSERLAGE','BUNBO','HIMMELREICH','FINANZEN','PARTNER','MARKETING'];
+    const NCOLS=['#00c8ff','#00d4aa','#c9a84c','#c9a84c','#00c8ff','#00d4aa'];
+    const TILT=0.34;
 
-    const LABELS = ['WASSERLAGE','BUNBO','HIMMELREICH','FINANZEN','PARTNER','MARKETING'];
-    const NCOLS  = ['#00c8ff','#00d4aa','#c9a84c','#c9a84c','#00c8ff','#00d4aa'];
-    const TILT   = 0.34; // orbit ring 3D-tilt: ry = rx * TILT
-
-    /* ── Node icons ── */
-    function drawIcon(idx, nx, ny, r) {
-      const c = NCOLS[idx]; const f = r * 0.52;
-      const lw = Math.max(0.5, 1.1*(r/8));
-      ctx.strokeStyle=c; ctx.lineWidth=lw; ctx.lineCap='round'; ctx.lineJoin='round';
-      ctx.shadowColor=c; ctx.shadowBlur=3*(r/8);
-      if (idx===0) {
-        ctx.beginPath(); ctx.moveTo(nx-f,ny-f*.2); ctx.bezierCurveTo(nx-f*.3,ny-f*.8,nx+f*.3,ny+f*.4,nx+f,ny-f*.2); ctx.stroke();
-        ctx.beginPath(); ctx.moveTo(nx-f,ny+f*.4); ctx.bezierCurveTo(nx-f*.3,ny-f*.2,nx+f*.3,ny+f,nx+f,ny+f*.4); ctx.stroke();
-      } else if (idx===1) {
-        ctx.beginPath(); ctx.moveTo(nx-f*.85,ny+f*.7); ctx.lineTo(nx-f*.85,ny+f*.05); ctx.lineTo(nx,ny-f*.8); ctx.lineTo(nx+f*.85,ny+f*.05); ctx.lineTo(nx+f*.85,ny+f*.7); ctx.closePath(); ctx.stroke();
-      } else if (idx===2) {
-        ctx.beginPath(); ctx.moveTo(nx,ny-f*.85); ctx.lineTo(nx,ny+f*.85); ctx.moveTo(nx-f*.5,ny-f*.25); ctx.lineTo(nx+f*.5,ny-f*.25); ctx.stroke();
-      } else if (idx===3) {
-        ctx.beginPath(); ctx.moveTo(nx-f*.85,ny+f*.75); ctx.lineTo(nx+f*.85,ny+f*.75); ctx.moveTo(nx-f*.6,ny+f*.75); ctx.lineTo(nx-f*.6,ny+f*.15); ctx.moveTo(nx,ny+f*.75); ctx.lineTo(nx,ny-f*.25); ctx.moveTo(nx+f*.6,ny+f*.75); ctx.lineTo(nx+f*.6,ny-f*.75); ctx.stroke();
-      } else if (idx===4) {
-        ctx.beginPath(); ctx.arc(nx-f*.5,ny,f*.38,0,Math.PI*2); ctx.stroke();
-        ctx.beginPath(); ctx.arc(nx+f*.5,ny,f*.38,0,Math.PI*2); ctx.stroke();
-        ctx.beginPath(); ctx.moveTo(nx-f*.12,ny); ctx.lineTo(nx+f*.12,ny); ctx.stroke();
-      } else {
-        ctx.beginPath(); ctx.moveTo(nx-f*.8,ny+f*.45); ctx.lineTo(nx-f*.2,ny+f*.45); ctx.lineTo(nx+f*.45,ny-f*.75); ctx.lineTo(nx+f*.45,ny+f*.75); ctx.lineTo(nx-f*.2,ny+f*.45); ctx.stroke();
-        ctx.beginPath(); ctx.arc(nx+f*.45,ny,f*.85,-0.6,0.6); ctx.stroke();
-      }
-      ctx.shadowBlur=0;
-    }
-
-    function drawScene() {
-      const W = Math.round(canvas.width / dpr);
-      const H = Math.round(canvas.height / dpr);
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.save(); ctx.scale(dpr, dpr);
-
-      const sc = W / 480;
-      const cx = W * 0.5, cy = H * 0.5;
-
-      /* BACKGROUND — seamless fade to page void (#020810) */
-      const bg = ctx.createRadialGradient(cx, cy*0.80, 0, cx, cy, W*0.72);
-      bg.addColorStop(0,    'rgba(4,14,34,.98)');
-      bg.addColorStop(0.42, 'rgba(2,10,24,.95)');
-      bg.addColorStop(0.72, 'rgba(2,8,18,.65)');
-      bg.addColorStop(0.90, 'rgba(2,8,16,.22)');
-      bg.addColorStop(1,    'rgba(2,8,16,0)');
+    function drawScene(){
+      const W=Math.round(canvas.width/dpr), H=Math.round(canvas.height/dpr);
+      ctx.clearRect(0,0,canvas.width,canvas.height);
+      ctx.save(); ctx.scale(dpr,dpr);
+      const cx=W*.5, cy=H*.5, sc=W/480;
+      const bg=ctx.createRadialGradient(cx,cy*.80,0,cx,cy,W*.72);
+      bg.addColorStop(0,'rgba(4,14,34,.98)'); bg.addColorStop(0.42,'rgba(2,10,24,.95)');
+      bg.addColorStop(0.72,'rgba(2,8,18,.65)'); bg.addColorStop(0.90,'rgba(2,8,16,.22)');
+      bg.addColorStop(1,'rgba(2,8,16,0)');
       ctx.fillStyle=bg; ctx.fillRect(0,0,W,H);
 
-      /* STARS — twinkle effect */
-      STARS.forEach(st => {
+      // Stars
+      STARS.forEach(st=>{
         const sx=cx+st.x*sc, sy=cy+st.y*sc;
-        const twinkle = Math.sin(t*st.spd+st.x*0.05+st.y*0.04);
-        const op=Math.max(.06, st.b + .10*twinkle);
-        const r = st.r*sc * (0.9 + 0.15*twinkle);
+        const tw=Math.sin(t*st.spd+st.x*.05+st.y*.04);
+        const op=Math.max(.06,st.b+.10*tw), r=st.r*sc*(0.9+0.15*tw);
         ctx.beginPath(); ctx.arc(sx,sy,r,0,Math.PI*2);
         ctx.fillStyle=`rgba(210,228,255,${op.toFixed(2)})`; ctx.fill();
-        /* bright stars: cross flare */
-        if(st.r > 0.7 && op > 0.35) {
-          ctx.globalAlpha = op*0.35;
-          ctx.strokeStyle='rgba(180,210,255,0.8)'; ctx.lineWidth=0.5*sc;
-          ctx.beginPath(); ctx.moveTo(sx-r*2.5,sy); ctx.lineTo(sx+r*2.5,sy); ctx.stroke();
-          ctx.beginPath(); ctx.moveTo(sx,sy-r*2.5); ctx.lineTo(sx,sy+r*2.5); ctx.stroke();
-          ctx.globalAlpha=1;
-        }
       });
-      /* HYPERSPACE STREAKS */
-      STREAKS.forEach(sk => {
-        const a = sk.ang + t*0.008;
-        const x1=cx+sk.dist*sc*Math.cos(a), y1=cy+sk.dist*sc*0.34*Math.sin(a);
-        const x2=cx+(sk.dist+sk.len)*sc*Math.cos(a), y2=cy+(sk.dist+sk.len)*sc*0.34*Math.sin(a);
+      // Streaks
+      STREAKS.forEach(sk=>{
+        const a=sk.ang+t*.008;
+        const x1=cx+sk.dist*sc*Math.cos(a),y1=cy+sk.dist*sc*.34*Math.sin(a);
+        const x2=cx+(sk.dist+sk.len)*sc*Math.cos(a),y2=cy+(sk.dist+sk.len)*sc*.34*Math.sin(a);
         ctx.beginPath(); ctx.moveTo(x1,y1); ctx.lineTo(x2,y2);
         ctx.strokeStyle=`rgba(160,210,255,${sk.op})`; ctx.lineWidth=0.7*sc; ctx.stroke();
       });
-
-      /* GALAXY — 4-arm spiral, vivid */
-      GAL.forEach((g, i) => {
-        const ang = g.baseAng + t * g.spd;
-        const gx  = cx + g.dist*sc * Math.cos(ang);
-        const gy  = cy + g.dist*sc * g.tilt * Math.sin(ang);
-        const gop = Math.min(0.55, g.op + 0.018*Math.sin(t*1.6+i*0.3));
-        ctx.beginPath(); ctx.arc(gx, gy, g.sz*sc, 0, Math.PI*2);
+      // Galaxy
+      GAL.forEach((g,i)=>{
+        const ang=g.baseAng+t*g.spd;
+        const gx=cx+g.dist*sc*Math.cos(ang), gy=cy+g.dist*sc*g.tilt*Math.sin(ang);
+        const gop=Math.min(0.55,g.op+.018*Math.sin(t*1.6+i*.3));
+        ctx.beginPath(); ctx.arc(gx,gy,g.sz*sc,0,Math.PI*2);
         ctx.fillStyle=`rgba(${g.col},${gop.toFixed(3)})`; ctx.fill();
       });
-
-      /* ORBIT RINGS — Star Wars holographic targeting rings */
-      /* Outer faint fill rings for depth */
+      // Orbit rings
       [[248*sc,'rgba(0,200,255,.025)'],[180*sc,'rgba(201,168,76,.018)']].forEach(([rx,fill])=>{
         const rg=ctx.createRadialGradient(cx,cy,rx*.5,cx,cy,rx);
         rg.addColorStop(0,'transparent'); rg.addColorStop(0.7,'transparent');
         rg.addColorStop(0.88,fill); rg.addColorStop(1,'transparent');
-        ctx.fillStyle=rg;
-        ctx.beginPath(); ctx.ellipse(cx,cy,rx,rx*TILT,0,0,Math.PI*2); ctx.fill();
+        ctx.fillStyle=rg; ctx.beginPath(); ctx.ellipse(cx,cy,rx,rx*TILT,0,0,Math.PI*2); ctx.fill();
       });
-      /* Main rings with laser glow */
-      [[95*sc,  .8*sc, 'rgba(0,200,255,.28)',  [2.5*sc,3.5*sc], 'rgba(0,200,255,.55)'],
-       [180*sc, 1.3*sc,'rgba(0,200,255,.55)',  [3*sc,5.5*sc],   'rgba(0,200,255,.9)'],
-       [220*sc, .9*sc, 'rgba(201,168,76,.35)', [2*sc,4.5*sc],   'rgba(201,168,76,.65)'],
-       [248*sc, .6*sc, 'rgba(0,212,170,.22)',  [2.5*sc,8*sc],   'rgba(0,212,170,.4)']].forEach(([rx,lw,col,da,glowCol])=>{
-        ctx.shadowColor=glowCol; ctx.shadowBlur=6*sc;
+      [[95*sc,.8*sc,'rgba(0,200,255,.28)',[2.5*sc,3.5*sc],'rgba(0,200,255,.55)'],
+       [180*sc,1.3*sc,'rgba(0,200,255,.55)',[3*sc,5.5*sc],'rgba(0,200,255,.9)'],
+       [220*sc,.9*sc,'rgba(201,168,76,.35)',[2*sc,4.5*sc],'rgba(201,168,76,.65)'],
+       [248*sc,.6*sc,'rgba(0,212,170,.22)',[2.5*sc,8*sc],'rgba(0,212,170,.4)']].forEach(([rx,lw,col,da,gc])=>{
+        ctx.shadowColor=gc; ctx.shadowBlur=6*sc;
         ctx.beginPath(); ctx.ellipse(cx,cy,rx,rx*TILT,0,0,Math.PI*2);
         ctx.strokeStyle=col; ctx.lineWidth=lw; ctx.setLineDash(da); ctx.stroke();
         ctx.setLineDash([]); ctx.shadowBlur=0;
       });
-      /* Scan line rotating around main ring */
-      const scanAng = t*0.38;
-      const sx1=cx+178*sc*Math.cos(scanAng), sy1=cy+178*sc*TILT*Math.sin(scanAng);
-      const sx2=cx+183*sc*Math.cos(scanAng), sy2=cy+183*sc*TILT*Math.sin(scanAng);
+      // Scan line
+      const sa=t*.38;
+      const sx1=cx+178*sc*Math.cos(sa),sy1=cy+178*sc*TILT*Math.sin(sa);
+      const sx2=cx+183*sc*Math.cos(sa),sy2=cy+183*sc*TILT*Math.sin(sa);
       ctx.beginPath(); ctx.moveTo(sx1,sy1); ctx.lineTo(sx2,sy2);
       ctx.strokeStyle='rgba(0,200,255,.9)'; ctx.lineWidth=2.5*sc;
       ctx.shadowColor='rgba(0,200,255,1)'; ctx.shadowBlur=12*sc; ctx.stroke(); ctx.shadowBlur=0;
 
-      /* CENTRAL GLOW — Star Wars reactor core */
+      // Central glow
       const gp=.5+.5*Math.sin(t*1.15);
-      /* outer soft halo */
-      const ch=ctx.createRadialGradient(cx,cy,0,cx,cy,160*sc);
-      ch.addColorStop(0,`rgba(0,200,255,${(.06+.03*gp).toFixed(3)})`);
-      ch.addColorStop(0.45,'rgba(0,200,255,.015)'); ch.addColorStop(1,'transparent');
-      ctx.fillStyle=ch; ctx.beginPath(); ctx.ellipse(cx,cy,160*sc,160*sc*TILT,0,0,Math.PI*2); ctx.fill();
-      /* inner intense core */
-      const cg=ctx.createRadialGradient(cx,cy+2*sc,0,cx,cy,95*sc);
-      cg.addColorStop(0,`rgba(0,220,255,${(.22+.08*gp).toFixed(3)})`);
-      cg.addColorStop(.35,`rgba(0,200,255,${(.08+.04*gp).toFixed(3)})`);
-      cg.addColorStop(.70,`rgba(0,200,255,${(.025+.015*gp).toFixed(3)})`);
-      cg.addColorStop(1,'transparent');
-      ctx.fillStyle=cg; ctx.beginPath(); ctx.ellipse(cx,cy,95*sc,95*sc*TILT,0,0,Math.PI*2); ctx.fill();
-      /* core spark */
-      ctx.beginPath(); ctx.arc(cx,cy,3.5*sc,0,Math.PI*2);
-      ctx.fillStyle=`rgba(200,240,255,${(.55+.3*gp).toFixed(2)})`;
-      ctx.shadowColor='rgba(0,220,255,1)'; ctx.shadowBlur=20*sc; ctx.fill(); ctx.shadowBlur=0;
-
-      /* ORBIT NODES */
-      const oRx=180*sc, oRy=oRx*TILT, iRx=95*sc, iRy=iRx*TILT;
-      const nodeR=20*sc;
-      LABELS.forEach((lbl,i) => {
-        const ang=(i/6)*Math.PI*2-Math.PI*.5+t*.020;
-        const nx=cx+oRx*Math.cos(ang), ny=cy+oRy*Math.sin(ang);
-        const pulse=.5+.5*Math.sin(t*2+i*Math.PI/3);
-        const col=NCOLS[i];
-        /* dot on inner ring */
-        const ix=cx+iRx*Math.cos(ang), iy=cy+iRy*Math.sin(ang);
-        ctx.beginPath(); ctx.arc(ix,iy,2*sc,0,Math.PI*2);
-        ctx.fillStyle=col; ctx.globalAlpha=.35+.25*pulse; ctx.fill(); ctx.globalAlpha=1;
-        /* spoke */
-        ctx.beginPath(); ctx.moveTo(ix,iy); ctx.lineTo(nx,ny);
-        ctx.strokeStyle=col; ctx.lineWidth=.55*sc; ctx.globalAlpha=.16+.1*pulse; ctx.stroke(); ctx.globalAlpha=1;
-        /* outer glow ring */
-        ctx.beginPath(); ctx.arc(nx,ny,nodeR+(2.5+2*pulse)*sc,0,Math.PI*2);
-        ctx.strokeStyle=col; ctx.lineWidth=1.2*sc; ctx.globalAlpha=.14+.1*pulse; ctx.stroke(); ctx.globalAlpha=1;
-        /* node bg */
-        ctx.beginPath(); ctx.arc(nx,ny,nodeR,0,Math.PI*2);
-        ctx.fillStyle='rgba(2,10,26,.94)'; ctx.fill();
-        ctx.strokeStyle=col; ctx.lineWidth=1.25*sc;
-        ctx.shadowColor=col; ctx.shadowBlur=(4+3*pulse)*sc; ctx.stroke(); ctx.shadowBlur=0;
-        drawIcon(i,nx,ny,nodeR);
-        /* label */
-        const dx=nx-cx, dy=ny-cy, dl=Math.sqrt(dx*dx+dy*dy)||1;
-        const lx=nx+(dx/dl)*(nodeR+11*sc), ly=ny+(dy/dl)*(nodeR+11*sc);
-        ctx.fillStyle=col;
-        ctx.font=`700 ${Math.max(6,Math.round(8*sc))}px monospace`;
-        ctx.textAlign=dx>.1?'left':dx<-.1?'right':'center';
-        ctx.textBaseline=dy>.1?'top':dy<-.1?'bottom':'middle';
-        ctx.shadowColor=col; ctx.shadowBlur=3*sc;
-        ctx.fillText(lbl,lx,ly); ctx.shadowBlur=0;
+      const ch=ctx.createRadialGradient(cx,cy,0,cx,cy,140*sc);
+      ch.addColorStop(0,`rgba(0,200,255,${(.04+.03*gp).toFixed(3)})`);
+      ch.addColorStop(.35,`rgba(0,200,255,${(.012+.008*gp).toFixed(3)})`);
+      ch.addColorStop(.75,`rgba(201,168,76,${(.006+.004*gp).toFixed(3)})`);
+      ch.addColorStop(1,'transparent');
+      ctx.fillStyle=ch; ctx.beginPath(); ctx.ellipse(cx,cy,140*sc,140*sc*TILT,0,0,Math.PI*2); ctx.fill();
+      // Core pulse
+      [[14*sc,`rgba(0,200,255,${.45+.3*gp})`,'rgba(0,200,255,1)',18*sc],
+       [9*sc,`rgba(201,168,76,${.55+.35*gp})`,'rgba(201,168,76,.9)',14*sc],
+       [5.5*sc,`rgba(255,255,255,${.7+.25*gp})`,'rgba(255,255,255,.7)',10*sc]].forEach(([r,fill,sc2,blur])=>{
+        ctx.beginPath(); ctx.arc(cx,cy,r,0,Math.PI*2);
+        ctx.fillStyle=fill; ctx.shadowColor=sc2; ctx.shadowBlur=blur; ctx.fill(); ctx.shadowBlur=0;
       });
 
-      /* BOAT — 20% bigger, laser-grade glow */
-      const s=W/107;
-      const oy=cy+(22+Math.sin(t)*2.8)*sc;
-      drawBoat(s,cx,oy,t);
+      // Orbital nodes
+      const orbitConfigs=[
+        {r:95*sc,n:6,spd:.18,labels:true},
+        {r:180*sc,n:4,spd:-.11,labels:false}
+      ];
+      orbitConfigs.forEach((cfg,oi)=>{
+        for(let i=0;i<cfg.n;i++){
+          const ang=(i/cfg.n)*Math.PI*2+t*cfg.spd+(oi*.8);
+          const nx=cx+cfg.r*Math.cos(ang), ny=cy+cfg.r*TILT*Math.sin(ang);
+          const col=NCOLS[i%NCOLS.length], nr=oi===0?7*sc:5*sc;
+          ctx.beginPath(); ctx.arc(nx,ny,nr,0,Math.PI*2);
+          ctx.fillStyle=col+'33'; ctx.shadowColor=col; ctx.shadowBlur=8*sc; ctx.fill();
+          ctx.strokeStyle=col+'cc'; ctx.lineWidth=1.5*sc; ctx.stroke(); ctx.shadowBlur=0;
+          if(cfg.labels && sc>0.6){
+            ctx.fillStyle='rgba(255,255,255,0.7)'; ctx.font=`${Math.round(7*sc)}px -apple-system,sans-serif`;
+            ctx.textAlign='center'; ctx.fillText(LABELS[i],nx,ny+nr+9*sc);
+          }
+          // Connection line to center
+          ctx.beginPath(); ctx.moveTo(cx,cy); ctx.lineTo(nx,ny);
+          ctx.strokeStyle=col+'18'; ctx.lineWidth=0.6*sc; ctx.stroke();
+        }
+      });
+
+      // HUD overlays
+      const hudItems=['WAVE BITE','CEO COMMAND','MARITIME AI'];
+      hudItems.forEach((h,i)=>{
+        ctx.fillStyle=`rgba(0,200,255,${.22-.04*i})`;
+        ctx.font=`${Math.round((8.5-.5*i)*sc)}px monospace`;
+        ctx.textAlign='center'; ctx.fillText(h,cx,cy-22*sc+i*11*sc);
+      });
+      // KPI overlays on outer ring
+      [['BunBo','65%','#c9a84c'],['Revenue','€0 MRR','#ff4757'],['Runway','~5 Mo','#ff4757'],['Leads','3 Inv.','#c9a84c']].forEach((item,i)=>{
+        const a=(i/4)*Math.PI*2-Math.PI/4;
+        const rx=248*sc*Math.cos(a), ry=248*sc*TILT*Math.sin(a);
+        ctx.fillStyle='rgba(0,4,10,0.6)'; ctx.fillRect(cx+rx-22*sc,cy+ry-10*sc,44*sc,20*sc);
+        ctx.fillStyle='rgba(255,255,255,0.5)'; ctx.font=`${Math.round(5.5*sc)}px monospace`;
+        ctx.textAlign='center'; ctx.fillText(item[0].toUpperCase(),cx+rx,cy+ry-2*sc);
+        ctx.fillStyle=item[2]; ctx.font=`bold ${Math.round(7*sc)}px monospace`;
+        ctx.fillText(item[1],cx+rx,cy+ry+8*sc);
+      });
 
       ctx.restore();
+      t += 0.016;
+      requestAnimationFrame(drawScene);
     }
-
-    function drawBoat(s, ox, oy, t) {
-      function p3(x,y,z){ return [ox+(x-z)*.75*s, oy+(-y*.9+(x+z)*.35)*s]; }
-      function glow(c,b){ ctx.shadowColor=c; ctx.shadowBlur=b*s; }
-      function ng(){ ctx.shadowBlur=0; }
-      function face(pts,fill,stroke,lw){
-        ctx.beginPath(); const q=p3(...pts[0]); ctx.moveTo(q[0],q[1]);
-        for(let i=1;i<pts.length;i++){const r=p3(...pts[i]);ctx.lineTo(r[0],r[1]);} ctx.closePath();
-        if(fill){ctx.fillStyle=fill;ctx.fill();}
-        if(stroke){ctx.strokeStyle=stroke;ctx.lineWidth=lw*s;ctx.stroke();}
-      }
-      function ln(a,b,col,lw){ const pa=p3(...a),pb=p3(...b); ctx.beginPath(); ctx.moveTo(pa[0],pa[1]); ctx.lineTo(pb[0],pb[1]); ctx.strokeStyle=col; ctx.lineWidth=lw*s; ctx.stroke(); }
-
-      const CY='rgba(0,200,255,',GL='rgba(201,168,76,',TL='rgba(0,212,170,',OR='rgba(255,110,50,',WH='rgba(255,240,200,';
-      const PX=26,PZ=22,PY0=-3,PY1=4,CX=19,CZ=20,CZO=1,CY0=4,CY1=32,MX=0,MZ=5,MY0=32,MY1=55;
-
-      /* Water ellipse */
-      glow(CY+'.35)',7);
-      const wc=p3(0,0,PZ*.5); ctx.beginPath(); ctx.ellipse(wc[0],wc[1],PX*1.35*s,PX*.28*s,0,0,Math.PI*2);
-      ctx.strokeStyle=CY+'.22)'; ctx.lineWidth=.6*s; ctx.stroke(); ng();
-
-      /* Pontoon back faces */
-      glow(CY+'.28)',5);
-      face([[-PX,PY0,PZ],[PX,PY0,PZ],[PX,PY1,PZ],[-PX,PY1,PZ]],CY+'.04)',CY+'.35)',.75);
-      face([[-PX,PY0,0],[-PX,PY0,PZ],[-PX,PY1,PZ],[-PX,PY1,0]],CY+'.03)',CY+'.28)',.65);
-      face([[-PX,PY0,0],[PX,PY0,0],[PX,PY0,PZ],[-PX,PY0,PZ]],CY+'.03)',CY+'.18)',.55);
-      glow(CY+'.52)',7);
-      face([[PX,PY0,0],[PX,PY0,PZ],[PX,PY1,PZ],[PX,PY1,0]],CY+'.06)',CY+'.55)',1.0);
-      glow(CY+'.75)',10);
-      face([[-PX,PY0,0],[PX,PY0,0],[PX,PY1,0],[-PX,PY1,0]],CY+'.08)',CY+'.85)',1.3);
-      glow(CY+'.52)',7);
-      face([[-PX,PY1,0],[PX,PY1,0],[PX,PY1,PZ],[-PX,PY1,PZ]],CY+'.07)',CY+'.60)',1.0);
-      /* Deck grid */
-      ng();
-      for(let xi=-16;xi<=16;xi+=11){ln([xi,PY1,0],[xi,PY1,PZ],CY+'.11)',.38);ln([xi,PY0,0],[xi,PY1,0],CY+'.08)',.33);}
-      for(let zi=5;zi<PZ;zi+=7)ln([-PX,PY1,zi],[PX,PY1,zi],CY+'.11)',.38);
-
-      /* Railing */
-      const RL=PY1+4;
-      glow(CY+'.26)',3);
-      ln([-PX,RL,0],[-CX-1,RL,0],CY+'.30)',.52); ln([CX+1,RL,0],[PX,RL,0],CY+'.30)',.52);
-      ln([PX,RL,0],[PX,RL,PZ],CY+'.20)',.44); ln([-PX,RL,PZ],[PX,RL,PZ],CY+'.16)',.38);
-      [-PX,PX].forEach(xi=>ln([xi,PY1,0],[xi,RL,0],CY+'.26)',.52));
-      [-20,0,20].forEach(xi=>{if(xi<-CX||xi>CX)ln([xi,PY1,0],[xi,RL,0],CY+'.17)',.4);});
-      ln([-PX,PY1,PZ],[-PX,RL,PZ],CY+'.17)',.4); ln([PX,PY1,PZ],[PX,RL,PZ],CY+'.20)',.4);
-      ng();
-
-      /* Cabin */
-      glow(CY+'.2)',3);
-      face([[-CX,CY0,CZO+CZ],[CX,CY0,CZO+CZ],[CX,CY1,CZO+CZ],[-CX,CY1,CZO+CZ]],CY+'.03)',CY+'.23)',.62);
-      face([[-CX,CY0,CZO],[-CX,CY0,CZO+CZ],[-CX,CY1,CZO+CZ],[-CX,CY1,CZO]],CY+'.03)',CY+'.24)',.62);
-      glow(CY+'.38)',5);
-      face([[CX,CY0,CZO],[CX,CY0,CZO+CZ],[CX,CY1,CZO+CZ],[CX,CY1,CZO]],CY+'.07)',CY+'.46)',.82);
-      ng();
-      for(let yi=CY0+9;yi<CY1;yi+=9)ln([CX,yi,CZO],[CX,yi,CZO+CZ],CY+'.18)',.38);
-      for(let zi=CZO+5;zi<CZO+CZ;zi+=5)ln([CX,CY0,zi],[CX,CY1,zi],CY+'.14)',.35);
-      /* Front face gold — lightsaber intensity */
-      glow(GL+'.75)',14);
-      face([[-CX,CY0,CZO],[CX,CY0,CZO],[CX,CY1,CZO],[-CX,CY1,CZO]],GL+'.07)',GL+'.95)',1.4);
-      ng();
-      /* Windows with warm interior glow */
-      [[-9,13],[9,13],[-9,23],[9,23]].forEach(([wx,wy])=>{
-        glow(WH+'.38)',4);
-        face([[wx-4.5,wy-3.5,CZO],[wx+4.5,wy-3.5,CZO],[wx+4.5,wy+3,CZO],[wx-4.5,wy+3,CZO]],WH+'.09)',null,0);
-        glow(CY+'.48)',3);
-        face([[wx-4.5,wy-3.5,CZO],[wx+4.5,wy-3.5,CZO],[wx+4.5,wy+3,CZO],[wx-4.5,wy+3,CZO]],null,CY+'.52)',.62);
-        ng(); ln([wx,wy-3.5,CZO],[wx,wy+3,CZO],CY+'.22)',.28); ln([wx-4.5,wy-.3,CZO],[wx+4.5,wy-.3,CZO],CY+'.22)',.28);
-      });
-      /* Roof with solar grid */
-      glow(GL+'.42)',6);
-      face([[-CX,CY1,CZO],[CX,CY1,CZO],[CX,CY1,CZO+CZ],[-CX,CY1,CZO+CZ]],GL+'.07)',GL+'.62)',.95);
-      ng();
-      for(let xi=-15;xi<=15;xi+=10)ln([xi,CY1+.1,CZO+2],[xi,CY1+.1,CZO+CZ-2],GL+'.25)',.36);
-      for(let zi=CZO+3;zi<CZO+CZ;zi+=6)ln([-CX+2,CY1+.1,zi],[CX-2,CY1+.1,zi],GL+'.2)',.32);
-      ln([0,CY1,CZO],[0,CY1,CZO+CZ],GL+'.30)',.42);
-      /* Upper deck rail */
-      glow(CY+'.18)',2);
-      ln([-CX,CY1+3,CZO],[CX,CY1+3,CZO],CY+'.20)',.38); ln([-CX,CY1+3,CZO+CZ],[CX,CY1+3,CZO+CZ],CY+'.14)',.34);
-      [[-CX,CZO],[CX,CZO]].forEach(([xi,zi])=>ln([xi,CY1,zi],[xi,CY1+3,zi],CY+'.16)',.36));
-      ng();
-
-      /* Mast — laser beacon */
-      glow(TL+'.85)',10); ln([MX,MY0,MZ],[MX,MY1,MZ],TL+'1.0)',1.1);
-      ln([MX-7,MY1-9,MZ],[MX+7,MY1-9,MZ],TL+'.60)',.75);
-      glow(TL+'.45)',4);
-      ln([MX,MY0,MZ],[MX-4,MY0-8,MZ],TL+'.20)',.36); ln([MX,MY0,MZ],[MX+4,MY0-8,MZ],TL+'.20)',.36); ng();
-      /* Radar dome */
-      const radP=p3(MX,MY1-5,MZ);
-      ctx.beginPath(); ctx.arc(radP[0],radP[1],3.5*s,0,Math.PI*2);
-      ctx.strokeStyle=TL+'.5)'; ctx.lineWidth=.6*s; ctx.shadowColor=TL+'.7)'; ctx.shadowBlur=4*s; ctx.stroke(); ng();
-      /* Flag */
-      const fTip=p3(MX+10,MY1-4,MZ),fTop=p3(MX,MY1,MZ),fBot=p3(MX,MY1-9,MZ);
-      ctx.beginPath(); ctx.moveTo(fTop[0],fTop[1]); ctx.lineTo(fTip[0],fTip[1]); ctx.lineTo(fBot[0],fBot[1]); ctx.closePath();
-      ctx.fillStyle=GL+'.70)'; glow(GL+'.78)',4); ctx.fill();
-      ctx.strokeStyle=GL+'.84)'; ctx.lineWidth=.62*s; ctx.stroke(); ng();
-      /* Mast tip pulse — Star Wars beacon */
-      const pa=.5+.5*Math.sin(t*3.2), mt=p3(MX,MY1,MZ);
-      ctx.beginPath(); ctx.arc(mt[0],mt[1],2.8*s,0,Math.PI*2);
-      ctx.fillStyle=`rgba(0,255,220,${(.7+.3*pa).toFixed(2)})`; glow(TL+'1.0)',16); ctx.fill(); ng();
-      /* beacon cross flare */
-      ctx.globalAlpha=0.5*pa;
-      ctx.strokeStyle='rgba(0,255,200,.9)'; ctx.lineWidth=0.8*s;
-      ctx.beginPath(); ctx.moveTo(mt[0]-7*s,mt[1]); ctx.lineTo(mt[0]+7*s,mt[1]); ctx.stroke();
-      ctx.beginPath(); ctx.moveTo(mt[0],mt[1]-7*s); ctx.lineTo(mt[0],mt[1]+7*s); ctx.stroke();
-      ctx.globalAlpha=1;
-      /* Life preserver */
-      const lpc=p3(PX+1.5,PY1+5,PZ*.45), lr=3.5*s;
-      glow(OR+'.58)',5);
-      ctx.beginPath(); ctx.arc(lpc[0],lpc[1],lr,0,Math.PI*2); ctx.strokeStyle=OR+'.17)'; ctx.lineWidth=3.5*s; ctx.stroke();
-      [0,Math.PI*.5,Math.PI,Math.PI*1.5].forEach((sa,k)=>{ ctx.beginPath(); ctx.arc(lpc[0],lpc[1],lr,sa,sa+Math.PI*.44); ctx.strokeStyle=k%2===0?OR+'.74)':'rgba(255,255,255,.38)'; ctx.lineWidth=3.5*s; ctx.stroke(); }); ng();
-      /* Anchor chain */
-      const bc=p3(-PX,PY0,0),bc2=p3(-PX-3,PY0-7,0);
-      ctx.beginPath(); ctx.moveTo(bc[0],bc[1]); ctx.lineTo(bc2[0],bc2[1]);
-      ctx.setLineDash([1.5*s,2*s]); ctx.strokeStyle=CY+'.16)'; ctx.lineWidth=.45*s; ctx.stroke(); ctx.setLineDash([]);
-    }
-
-    function animate() {
-      t += 0.018;
-      drawScene();
-      requestAnimationFrame(animate);
-    }
-
-    let _rt;
-    window.addEventListener('resize', ()=>{clearTimeout(_rt);_rt=setTimeout(setSize,180);});
-    animate();
+    drawScene();
+    window.addEventListener('resize',()=>{ setSize(); });
   }
-
-  if (document.readyState==='complete') {
-    requestAnimationFrame(initBoatCanvas);
-  } else {
-    window.addEventListener('load', ()=>requestAnimationFrame(initBoatCanvas), {once:true});
-  }
+  if (document.readyState==='loading') document.addEventListener('DOMContentLoaded',initBoatCanvas);
+  else initBoatCanvas();
+  setTimeout(initBoatCanvas,500);
 })();
 
-
-
-// ===================== DASHBOARD HUB — openDash() =====================
-(function(){
-  var DASH_CONFIG = {
-    tracking:    { action:'url', url:'https://voigtcarsten4-rgb.github.io/wasserlage/wavebite-premium-dashboard.html' },
-    wasserlage:  { action:'url', url:'https://voigtcarsten4-rgb.github.io/wasserlage/' },
-    ceo_briefing:{ action:'url', url:'https://voigtcarsten4-rgb.github.io/wasserlage/ceo-briefing.html' },
-    playbook:    { action:'url', url:'https://voigtcarsten4-rgb.github.io/wasserlage/daily-playbook.html' },
-    wordpress:   { action:'url', url:'https://wave-bite.com/wp-admin/admin.php?page=ionos#overview' },
-    flutterflow: { action:'url', url:'https://app.flutterflow.io' },
-    glide:       { action:'url', url:'https://go.glideapps.com' },
-    automation:  { action:'url', url:'https://app.n8n.io' },
-    elwis:       { action:'url', url:'https://www.elwis.de/DE/Startseite/Startseite-node.html' },
-    github:      { action:'url', url:'https://github.com/voigtcarsten4-rgb' },
-    drive:       { action:'url', url:'https://drive.google.com' },
-    appstore:    { action:'url', url:'https://appstoreconnect.apple.com' },
-    marketing:   { action:'url', url:'https://voigtcarsten4-rgb.github.io/wasserlage/marketing-dashboard.html' },
-    kpi:         { action:'url', url:'https://voigtcarsten4-rgb.github.io/wasserlage/kpi-dashboard.html' },
-    partner:     { action:'url', url:'https://voigtcarsten4-rgb.github.io/wasserlage/partner-dashboard.html' },
-    finance:     { action:'url', url:'https://voigtcarsten4-rgb.github.io/wasserlage/finance-dashboard.html' }
-  };
-
-  function openDash(id){
-    var cfg = DASH_CONFIG[id];
-    if(!cfg){ showNotif('⚠ Dashboard "'+id+'" nicht konfiguriert','blue'); return; }
-
-    if(cfg.action === 'scroll'){
-      var el = document.getElementById(cfg.target);
-      if(el){ el.scrollIntoView({behavior:'smooth', block:'start'}); showNotif('⬇ Navigiere zu '+id,'blue'); }
-      else { showNotif('⚠ Sektion nicht gefunden','blue'); }
-      return;
-    }
-    if(cfg.action === 'url'){
-      window.open(cfg.url, '_blank', 'noopener');
-      return;
-    }
-    if(cfg.action === 'modal'){
-      var m = document.getElementById('dash-modal');
-      if(!m) return;
-      document.getElementById('dmo-icon').textContent  = cfg.icon  || '📊';
-      document.getElementById('dmo-title').textContent = cfg.title || id;
-      var st = document.getElementById('dmo-status');
-      st.textContent = cfg.statusText || '';
-      st.className = 'dmo-status ' + (cfg.statusClass || 'planned');
-      document.getElementById('dmo-desc').textContent = cfg.desc || '';
-      var ul = document.getElementById('dmo-steps');
-      ul.innerHTML = '';
-      (cfg.steps||[]).forEach(function(s,i){
-        ul.innerHTML += '<li><span class="step-num">'+(i+1)+'</span><span>'+s+'</span></li>';
-      });
-      var cta = document.getElementById('dmo-cta');
-      cta.textContent = cfg.cta || 'Öffnen';
-      cta.href = cfg.ctaUrl || '#';
-      cta.className = 'dmo-cta ' + (cfg.ctaClass||'');
-      m.classList.add('open');
-      return;
-    }
-  }
-  window.openDash = openDash;
-
-  // Modal close
-  document.addEventListener('DOMContentLoaded', function(){
-    var m   = document.getElementById('dash-modal');
-    var btn = document.getElementById('dash-modal-close');
-    if(btn) btn.addEventListener('click', function(){ m.classList.remove('open'); });
-    if(m)   m.addEventListener('click', function(e){ if(e.target===m) m.classList.remove('open'); });
-    document.addEventListener('keydown', function(e){ if(e.key==='Escape') m.classList.remove('open'); });
-  });
-})();
-
-// ===================== BUNBO MENTOR WIDGET =====================
-(function(){
-  const LAUNCH = new Date('2026-07-01T09:00:00');
-  const PROGRESS = 65; // MVP-Fortschritt %
-
-  const MSGS = [
-    // 0=So, 1=Mo, 2=Di, 3=Mi, 4=Do, 5=Fr, 6=Sa
-    /* So */ '<span class="mn">Hey Carsten,</span> Sunday Strategy: Ein klarer Gedanke heute erspart dir zehn Aufgaben am Montag. BunBo wartet auf deine Vision.',
-    /* Mo */ '<span class="mn">Hey Carsten,</span> die Brücke gehört dir. Neuer Wochenauftrag: BunBo einen Schritt näher an den Launch bringen. Jeder Commit zählt.',
-    /* Di */ '<span class="mn">Hey Carsten,</span> Elon hatte auch mal einen Dienstag ohne Plan. Du hast einen. Ship it — ein Feature nach dem anderen.',
-    /* Mi */ '<span class="mn">Hey Carsten,</span> Midweek. Die App schreibt sich nicht von allein — aber mit dir wird sie legendary. Fokus auf das Kritische.',
-    /* Do */ '<span class="mn">Hey Carsten,</span> fast Wochenende. Noch ein Testflight-Push und du kannst es Donnerstag feiern. Die Beta-Tester warten auf dich.',
-    /* Fr */ '<span class="mn">Hey Carsten,</span> TGIF? Nein: Thank God It\'s Funding-Freitag. Seedmatch schaut auf dein Deck. Mach es unvergesslich.',
-    /* Sa */ '<span class="mn">Hey Carsten,</span> Samstag = Secret Weapon. Competitor schlafen. Du nicht. BunBo wird der Unterschied zwischen Idee und Impact.',
+// ════════════════════════════════════════════════════════════
+// BUSINESS INTELLIGENCE — OKR Tracker + Investor Readiness
+// ════════════════════════════════════════════════════════════
+function renderOKRs() {
+  const el = document.getElementById('okr-list');
+  if (!el) return;
+  const OKRs = [
+    {obj:'BunBo App Launch bereit machen', krs:[{text:'TestFlight Upload + 20 Beta-Tester',done:false,pct:65},{text:'Payment-Modul live',done:false,pct:40},{text:'0 kritische Bugs',done:false,pct:60}]},
+    {obj:'Seed-Finanzierung initiieren', krs:[{text:'Pitch Deck v3 fertig',done:true,pct:100},{text:'3 Investor-Gespräche',done:false,pct:100},{text:'Seedmatch DD abgeschlossen',done:false,pct:30}]},
+    {obj:'Erste zahlende Marina-Partner', krs:[{text:'Marina Müggelsee Vertrag',done:false,pct:60},{text:'2 weitere LOIs',done:false,pct:15},{text:'B2B-Onboarding live',done:false,pct:25}]},
   ];
+  el.innerHTML = OKRs.map(okr => `
+    <div style="margin-bottom:1rem">
+      <div style="font-size:.72rem;font-weight:700;color:rgba(255,255,255,.85);margin-bottom:.4rem">🎯 ${okr.obj}</div>
+      ${okr.krs.map(kr=>`
+        <div style="display:flex;align-items:center;gap:.5rem;margin-bottom:.25rem">
+          <span style="font-size:.85rem">${kr.done?'✅':'⬜'}</span>
+          <div style="flex:1">
+            <div style="font-size:.65rem;color:${kr.done?'var(--green)':'rgba(255,255,255,.6)'};margin-bottom:.15rem">${kr.text}</div>
+            <div style="height:3px;background:rgba(255,255,255,.07);border-radius:2px;overflow:hidden">
+              <div style="height:100%;width:${kr.pct}%;background:${kr.done?'var(--green)':'var(--blue)'};border-radius:2px"></div>
+            </div>
+          </div>
+          <span style="font-size:.6rem;color:var(--text-dim);width:28px;text-align:right">${kr.pct}%</span>
+        </div>`).join('')}
+    </div>`).join('');
+}
 
-  function pad(n){ return String(n).padStart(2,'0'); }
-
-  function updateCountdown(){
+// ─── CLOCK ───
+function initClock() {
+  function tick() {
     const now = new Date();
-    const diff = LAUNCH - now;
-    if(diff <= 0){
-      const el = document.getElementById('bcd-d');
-      if(el){ el.closest('.mentor-countdown-row').innerHTML='<span style="font-size:.65rem;color:var(--gold);font-weight:700;text-shadow:0 0 12px rgba(201,168,76,.6)">🚀 LAUNCH DAY — WIR SIND LIVE!</span>'; }
-      return;
+    const ts = now.toLocaleTimeString('de-DE',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
+    const ds = now.toLocaleDateString('de-DE',{weekday:'short',day:'2-digit',month:'2-digit',year:'numeric'});
+    document.querySelectorAll('.live-clock,.topbar-right,[id*="clock"]').forEach(el => {
+      if (el.dataset.dateOnly) el.textContent = ds;
+      else el.textContent = ts;
+    });
+  }
+  tick(); setInterval(tick, 1000);
+}
+
+// ─── NOTIFICATIONS ───
+window.showNotif = function(msg, type='blue') {
+  const colors = {blue:'rgba(0,200,255,0.85)',gold:'rgba(201,168,76,0.85)',green:'rgba(0,212,170,0.85)',red:'rgba(255,71,87,0.85)'};
+  const n = document.createElement('div');
+  n.style.cssText = `position:fixed;bottom:80px;left:50%;transform:translateX(-50%);z-index:99999;background:${colors[type]||colors.blue};color:#000;font-weight:600;font-size:.78rem;padding:.55rem 1.2rem;border-radius:20px;box-shadow:0 4px 20px rgba(0,0,0,0.4);pointer-events:none;transition:opacity .4s;white-space:nowrap`;
+  n.textContent = msg;
+  document.body.appendChild(n);
+  setTimeout(() => { n.style.opacity='0'; setTimeout(()=>n.remove(),400); }, 2800);
+};
+
+// ─── NAV ACTIVE ───
+function initNavActive() {
+  const secs = document.querySelectorAll('section[id]');
+  const pills = document.querySelectorAll('.nav-pill');
+  if (!secs.length || !pills.length) return;
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        pills.forEach(p => p.classList.remove('active'));
+        const match = document.querySelector(`.nav-pill[onclick*="${e.target.id}"]`);
+        if (match) match.classList.add('active');
+      }
+    });
+  }, {threshold: 0.3});
+  secs.forEach(s => io.observe(s));
+}
+
+// ─── MODAL CLOSE ───
+function initModals() {
+  const dashModal = document.getElementById('dash-modal');
+  const projModal = document.getElementById('proj-modal');
+  if (dashModal) {
+    dashModal.addEventListener('click', e => { if(e.target===dashModal) dashModal.style.display='none'; });
+    document.getElementById('dash-modal-close')?.addEventListener('click', () => dashModal.style.display='none');
+  }
+  if (projModal) {
+    projModal.addEventListener('click', e => { if(e.target===projModal){ projModal.style.display='none'; document.body.style.overflow=''; }});
+    projModal.querySelector('.pm-close-btn')?.addEventListener('click', () => { projModal.style.display='none'; document.body.style.overflow=''; });
+  }
+  document.addEventListener('keydown', e => {
+    if (e.key==='Escape') {
+      if (dashModal) dashModal.style.display='none';
+      if (projModal) { projModal.style.display='none'; document.body.style.overflow=''; }
     }
-    const d=Math.floor(diff/86400000);
-    const h=Math.floor((diff%86400000)/3600000);
-    const m=Math.floor((diff%3600000)/60000);
-    const s=Math.floor((diff%60000)/1000);
-    const ed=document.getElementById('bcd-d');
-    const eh=document.getElementById('bcd-h');
-    const em=document.getElementById('bcd-m');
-    const es=document.getElementById('bcd-s');
-    if(ed) ed.textContent=pad(d);
-    if(eh) eh.textContent=pad(h);
-    if(em) em.textContent=pad(m);
-    if(es) es.textContent=pad(s);
-  }
-
-  function init(){
-    /* date chip */
-    const dc=document.getElementById('mentor-date-chip');
-    if(dc){
-      const now=new Date();
-      const days=['So','Mo','Di','Mi','Do','Fr','Sa'];
-      const months=['Jan','Feb','Mär','Apr','Mai','Jun','Jul','Aug','Sep','Okt','Nov','Dez'];
-      dc.textContent=days[now.getDay()]+' '+now.getDate()+' '+months[now.getMonth()]+' '+now.getFullYear();
-    }
-    /* message */
-    const mt=document.getElementById('mentor-msg-text');
-    if(mt) mt.innerHTML=MSGS[new Date().getDay()];
-    /* progress bar */
-    const pf=document.getElementById('mentor-prog-fill');
-    const pp=document.getElementById('mentor-prog-pct');
-    if(pf) setTimeout(()=>{ pf.style.width=PROGRESS+'%'; },400);
-    if(pp) pp.textContent=PROGRESS+'%';
-    /* countdown */
-    updateCountdown();
-    setInterval(updateCountdown,1000);
-  }
-
-  if(document.readyState==='loading') window.addEventListener('DOMContentLoaded',init,{once:true});
-  else init();
-})();
-
-// ===================== OCEAN CANVAS =====================
-(function(){
-  const c=document.getElementById('ocean-canvas');
-  if(!c) return;
-  const cx=c.getContext('2d');
-  let W,H,pts=[],waves=[];
-  function resize(){W=c.width=window.innerWidth;H=c.height=window.innerHeight;}
-  window.addEventListener('resize',resize);resize();
-  for(let i=0;i<5;i++) waves.push({sp:0.0003+i*0.00015,amp:22+i*10,fr:0.003+i*0.0008,ph:i*Math.PI*0.4,yo:H*0.58+i*30,op:0.022-i*0.003});
-  for(let i=0;i<70;i++) pts.push({x:Math.random()*2000,y:Math.random()*1200,r:Math.random()*1.1+0.2,sp:Math.random()*0.12+0.04,op:Math.random()*0.3+0.05});
-  let ot=0;
-  function draw(){
-    cx.clearRect(0,0,W,H);
-    const bg=cx.createLinearGradient(0,0,0,H);
-    bg.addColorStop(0,'#020810');bg.addColorStop(0.6,'#04101e');bg.addColorStop(1,'#060f22');
-    cx.fillStyle=bg;cx.fillRect(0,0,W,H);
-    cx.strokeStyle='rgba(0,200,255,0.018)';cx.lineWidth=1;
-    for(let x=0;x<W;x+=90){cx.beginPath();cx.moveTo(x,0);cx.lineTo(x,H);cx.stroke();}
-    for(let y=0;y<H;y+=90){cx.beginPath();cx.moveTo(0,y);cx.lineTo(W,y);cx.stroke();}
-    waves.forEach(w=>{
-      cx.beginPath();cx.moveTo(0,H);
-      for(let x=0;x<=W;x+=5) cx.lineTo(x,w.yo+Math.sin(x*w.fr+ot*w.sp*3000+w.ph)*w.amp);
-      cx.lineTo(W,H);cx.closePath();cx.fillStyle=`rgba(0,60,150,${w.op})`;cx.fill();
-    });
-    pts.forEach(p=>{
-      p.y-=p.sp;if(p.y<-5){p.y=H+5;p.x=Math.random()*W;}
-      cx.beginPath();cx.arc(p.x,p.y,p.r,0,Math.PI*2);
-      cx.fillStyle=`rgba(201,168,76,${p.op})`;cx.fill();
-    });
-    ot++;if(!document.hidden)requestAnimationFrame(draw);else setTimeout(()=>requestAnimationFrame(draw),500);
-  }
-  draw();
-})();
-
-// ===================== HEARTBEAT CANVAS =====================
-(function(){
-  const c=document.getElementById('heartbeat-canvas');
-  if(!c) return;
-  const cx=c.getContext('2d');
-  let hpts=[],fr=0;
-  function resizeH(){c.width=c.parentElement.offsetWidth||600;c.height=52;}
-  window.addEventListener('resize',resizeH);resizeH();
-  function drawH(){
-    const w=c.width,h=c.height;
-    cx.clearRect(0,0,w,h);fr++;
-    hpts.push(
-      fr%60===0?h*.15:fr%60===5?h*.85:fr%60===8?h*.1:
-      fr%60===12?h*.88:fr%60===15?h*.5:h*.46+Math.sin(fr*.3)*(h*.07)
-    );
-    if(hpts.length>w) hpts.shift();
-    cx.beginPath();
-    hpts.forEach((y,i)=>{i===0?cx.moveTo(0,y):cx.lineTo(i,y);});
-    const g=cx.createLinearGradient(0,0,w,0);
-    g.addColorStop(0,'rgba(0,212,170,0)');g.addColorStop(0.7,'rgba(0,212,170,0.6)');g.addColorStop(1,'rgba(201,168,76,0.9)');
-    cx.strokeStyle=g;cx.lineWidth=1.5;cx.stroke();
-    if(!document.hidden) requestAnimationFrame(drawH);
-    else setTimeout(()=>requestAnimationFrame(drawH),1000);
-  }
-  drawH();
-})();
-
-// ===================== NEURAL NETWORK (BRAIN) =====================
-(function(){
-  const c=document.getElementById('neural-canvas');
-  if(!c) return;
-  const cx=c.getContext('2d');
-  let nodes=[];
-  function resizeN(){c.width=c.parentElement.offsetWidth||500;c.height=220;init();}
-  function init(){
-    nodes=[];
-    for(let i=0;i<30;i++) nodes.push({
-      x:Math.random()*c.width,y:Math.random()*c.height,
-      vx:(Math.random()-.5)*.45,vy:(Math.random()-.5)*.45,
-      r:Math.random()*2+1.5,pulse:Math.random()*Math.PI*2
-    });
-  }
-  window.addEventListener('resize',resizeN);resizeN();
-  function drawN(){
-    cx.clearRect(0,0,c.width,c.height);
-    nodes.forEach(n=>{
-      n.x+=n.vx;n.y+=n.vy;n.pulse+=0.04;
-      if(n.x<0||n.x>c.width) n.vx*=-1;
-      if(n.y<0||n.y>c.height) n.vy*=-1;
-    });
-    nodes.forEach((a,i)=>{
-      nodes.forEach((b,j)=>{
-        if(j<=i) return;
-        const dx=a.x-b.x,dy=a.y-b.y,dist=Math.sqrt(dx*dx+dy*dy);
-        if(dist<120){
-          const op=(1-dist/120)*0.4;
-          cx.beginPath();cx.moveTo(a.x,a.y);cx.lineTo(b.x,b.y);
-          const g=cx.createLinearGradient(a.x,a.y,b.x,b.y);
-          g.addColorStop(0,`rgba(201,168,76,${op})`);
-          g.addColorStop(0.5,`rgba(0,200,255,${op*0.7})`);
-          g.addColorStop(1,`rgba(0,212,170,${op})`);
-          cx.strokeStyle=g;cx.lineWidth=0.8;cx.stroke();
-        }
-      });
-    });
-    nodes.forEach(n=>{
-      const pulse=0.5+Math.sin(n.pulse)*0.5;
-      cx.beginPath();cx.arc(n.x,n.y,n.r,0,Math.PI*2);
-      cx.fillStyle=`rgba(201,168,76,${0.5+pulse*0.5})`;cx.fill();
-      cx.beginPath();cx.arc(n.x,n.y,n.r*2.8,0,Math.PI*2);
-      cx.strokeStyle=`rgba(201,168,76,${pulse*0.18})`;cx.lineWidth=1;cx.stroke();
-    });
-    if(!document.hidden) requestAnimationFrame(drawN);
-    else setTimeout(()=>requestAnimationFrame(drawN),1000);
-  }
-  drawN();
-})();
-
-// ===================== FILTER PILLS =====================
-function filterProj(cat,btn){
-  document.querySelectorAll('#proj-pills .pill').forEach(p=>p.classList.remove('active'));
-  btn.classList.add('active');
-  document.querySelectorAll('#projects-grid .project-card').forEach(c=>{
-    const show=cat==='all'||c.dataset.cat===cat;
-    c.style.display=show?'':'none';
-    if(show){c.style.opacity=0;requestAnimationFrame(()=>{c.style.transition='opacity .3s';c.style.opacity=1;});}
   });
 }
 
-// ===================== BOOT SEQUENCE =====================
-const bootLines = [
-  'Initializing JARVIS v3.0...',
-  'Loading Wave Bite project matrix...',
-  'Connecting to Pegelonline API...',
-  'Syncing CEO calendar data...',
-  'Activating arc reactor core...',
-  'All systems online ✓'
-];
-let bl = 0;
-function addBootLine(){
-  if(bl >= bootLines.length) return;
-  const d = document.getElementById('boot-lines');
-  const el = document.createElement('div');
-  el.className = 'boot-line';
-  el.textContent = '> ' + bootLines[bl++];
-  el.style.animationDelay = '0s';
-  d.appendChild(el);
-  el.getBoundingClientRect();
-  el.style.opacity = '1';
-  setTimeout(addBootLine, 380);
-}
-addBootLine();
-function dismissBoot(){
-  const b = document.getElementById('boot');
-  if(!b || b.dataset.dismissed) return;
-  b.dataset.dismissed = '1';
-  b.classList.add('fade');
-  setTimeout(()=>{ if(b) b.style.display='none'; }, 900);
-}
-// Click anywhere to skip boot
-document.getElementById('boot').addEventListener('click', dismissBoot);
-// Auto-dismiss: sync to CSS bootfill animation (2.6s) + small buffer
-const _elapsed = performance.now();
-const _target = 3200;
-const _delay1 = Math.max(300, _target - _elapsed);
-const _delay2 = Math.max(800, 5500 - _elapsed);
-setTimeout(dismissBoot, _delay1);
-setTimeout(dismissBoot, _delay2);
-
-// ===================== NOTIFICATIONS =====================
-function showNotif(msg, type='blue'){
-  const c = document.getElementById('notif');
-  if(!c) return;
-  const t = document.createElement('div');
-  t.className = 'notif-toast' + (type==='gold'?' gold':type==='teal'?' teal':'');
-  t.textContent = msg;
-  c.appendChild(t);
-  setTimeout(()=>t.classList.add('show'),50);
-  setTimeout(()=>{ t.classList.remove('show'); setTimeout(()=>t.remove(),500); },3500);
-}
-setTimeout(()=>showNotif('🤖 JARVIS Online — Maritime Bridge aktiv','blue'),3600);
-setTimeout(()=>showNotif('⚠ 2 ungelesene Investor-Mails','gold'),5200);
-
-// ===================== CHART.JS — PROJEKTFORTSCHRITT =====================
-(function initCharts(){
-  if(typeof Chart === 'undefined'){ setTimeout(initCharts, 400); return; }
-
-  // ── 1) Projektfortschritt (Horizontal Bar) ──
-  var ctxP = document.getElementById('chart-progress');
-  if(ctxP && !ctxP._chartInited){
-    ctxP._chartInited = true;
-    new Chart(ctxP, {
-      type: 'bar',
-      data: {
-        labels: ['Wave Bite Platform','Wasserlage App','BunBo Connect','Himmelreich','Marketing','Investor Deck'],
-        datasets:[{
-          label: 'Fortschritt %',
-          data: [68, 82, 41, 18, 55, 74],
-          backgroundColor:[
-            'rgba(0,200,255,0.55)','rgba(0,200,255,0.45)','rgba(0,212,170,0.45)',
-            'rgba(201,168,76,0.35)','rgba(0,255,136,0.4)','rgba(201,168,76,0.55)'
-          ],
-          borderColor:[
-            'rgba(0,200,255,0.9)','rgba(0,200,255,0.7)','rgba(0,212,170,0.8)',
-            'rgba(201,168,76,0.6)','rgba(0,255,136,0.7)','rgba(201,168,76,0.9)'
-          ],
-          borderWidth:1, borderRadius:4
-        }]
-      },
-      options:{
-        indexAxis:'y',
-        responsive:true, maintainAspectRatio:false,
-        plugins:{ legend:{display:false}, tooltip:{ callbacks:{
-          label: ctx => ' ' + ctx.parsed.x + '%'
-        }}},
-        scales:{
-          x:{ min:0, max:100, grid:{color:'rgba(255,255,255,0.05)'}, ticks:{color:'rgba(255,255,255,0.45)',font:{size:9}, callback: v=>v+'%'} },
-          y:{ grid:{display:false}, ticks:{color:'rgba(255,255,255,0.6)',font:{size:9}} }
-        }
-      }
-    });
-  }
-
-  // ── 2) Wachstums-Radar IST vs. ZIEL Q4 ──
-  var ctxR = document.getElementById('chart-radar');
-  if(ctxR && !ctxR._chartInited){
-    ctxR._chartInited = true;
-    new Chart(ctxR, {
-      type: 'radar',
-      data:{
-        labels:['Website Traffic','App-Nutzer','QR-Scans','Partner','Funding','Social Reach'],
-        datasets:[
-          {
-            label:'IST (Mai 2026)',
-            data:[71,12,281,3,0,420],
-            borderColor:'rgba(0,200,255,0.85)',
-            backgroundColor:'rgba(0,200,255,0.1)',
-            pointBackgroundColor:'rgba(0,200,255,0.9)',
-            pointRadius:3, borderWidth:2
-          },
-          {
-            label:'ZIEL Q4 2026',
-            data:[500,150,1200,10,50000,5000],
-            borderColor:'rgba(201,168,76,0.75)',
-            backgroundColor:'rgba(201,168,76,0.07)',
-            pointBackgroundColor:'rgba(201,168,76,0.9)',
-            pointRadius:3, borderWidth:2, borderDash:[4,3]
-          }
-        ]
-      },
-      options:{
-        responsive:true, maintainAspectRatio:false,
-        plugins:{ legend:{
-          labels:{ color:'rgba(255,255,255,0.55)', font:{size:9}, boxWidth:10 }
-        }},
-        scales:{ r:{
-          angleLines:{color:'rgba(255,255,255,0.06)'},
-          grid:{color:'rgba(255,255,255,0.07)'},
-          pointLabels:{color:'rgba(255,255,255,0.55)',font:{size:8}},
-          ticks:{display:false},
-          suggestedMin:0
-        }}
-      }
-    });
-  }
-
-  // ── 3) Revenue Forecast (Line) ──
-  var ctxV = document.getElementById('chart-revenue');
-  if(ctxV && !ctxV._chartInited){
-    ctxV._chartInited = true;
-    new Chart(ctxV, {
-      type:'line',
-      data:{
-        labels:['Jan','Feb','Mär','Apr','Mai','Jun','Jul','Aug','Sep','Okt','Nov','Dez'],
-        datasets:[
-          {
-            label:'Prognose (€)',
-            data:[0,0,0,200,400,800,1500,2800,4200,6500,9000,14000],
-            borderColor:'rgba(201,168,76,0.9)',
-            backgroundColor:'rgba(201,168,76,0.08)',
-            pointBackgroundColor:'rgba(201,168,76,0.9)',
-            pointRadius:3, borderWidth:2, tension:0.4, fill:true
-          },
-          {
-            label:'IST (€)',
-            data:[0,0,0,0,0,null,null,null,null,null,null,null],
-            borderColor:'rgba(0,200,255,0.7)',
-            backgroundColor:'rgba(0,200,255,0.07)',
-            pointBackgroundColor:'rgba(0,200,255,0.9)',
-            pointRadius:3, borderWidth:2, tension:0.4, fill:true, spanGaps:false
-          }
-        ]
-      },
-      options:{
-        responsive:true, maintainAspectRatio:false,
-        plugins:{ legend:{
-          labels:{ color:'rgba(255,255,255,0.55)', font:{size:9}, boxWidth:10 }
-        }},
-        scales:{
-          x:{ grid:{color:'rgba(255,255,255,0.05)'}, ticks:{color:'rgba(255,255,255,0.4)',font:{size:8}} },
-          y:{ grid:{color:'rgba(255,255,255,0.05)'}, ticks:{color:'rgba(255,255,255,0.4)',font:{size:8}, callback: v => v>=1000 ? (v/1000).toFixed(v%1000===0?0:1)+'k' : v+'€'} }
-        }
-      }
-    });
-  }
-
-  // ── 4) Burn Rate & Runway (Bar) ──
-  var ctxF = document.getElementById('chart-finance');
-  if(ctxF && !ctxF._chartInited){
-    ctxF._chartInited = true;
-    new Chart(ctxF, {
-      type:'bar',
-      data:{
-        labels:['Jan','Feb','Mär','Apr','Mai','Jun','Jul','Aug','Sep','Okt','Nov','Dez'],
-        datasets:[
-          {
-            label:'Burn Rate (€)',
-            data:[2800,2800,3100,3400,3200,3500,3800,4000,4200,4500,4800,5000],
-            backgroundColor:'rgba(201,168,76,0.45)',
-            borderColor:'rgba(201,168,76,0.85)',
-            borderWidth:1, borderRadius:3
-          },
-          {
-            label:'Revenue (€)',
-            data:[0,0,0,0,0,200,600,1200,2000,3200,4500,6000],
-            backgroundColor:'rgba(0,200,255,0.35)',
-            borderColor:'rgba(0,200,255,0.75)',
-            borderWidth:1, borderRadius:3
-          }
-        ]
-      },
-      options:{
-        responsive:true, maintainAspectRatio:false,
-        plugins:{ legend:{ labels:{ color:'rgba(255,255,255,0.55)', font:{size:9}, boxWidth:10 } } },
-        scales:{
-          x:{ grid:{color:'rgba(255,255,255,0.04)'}, ticks:{color:'rgba(255,255,255,0.4)',font:{size:8}} },
-          y:{ grid:{color:'rgba(255,255,255,0.05)'}, ticks:{color:'rgba(255,255,255,0.4)',font:{size:8}, callback: v => v>=1000?(v/1000)+'k€':v+'€'} }
-        }
-      }
-    });
-  }
-})();
-
-// ===================== PWA — SERVICE WORKER + INSTALL =====================
-(function initPWA(){
-  // 1) Service Worker registrieren
-  if('serviceWorker' in navigator){
-    navigator.serviceWorker.register('./sw.js').catch(function(){});
-  }
-
-  var isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
-  var isStandalone = window.navigator.standalone === true || window.matchMedia('(display-mode: standalone)').matches;
-
-  // Bereits installiert → nichts zeigen
-  if(isStandalone) return;
-
-  // 2) iOS Safari → unteres Banner mit Anleitung
-  if(isIOS){
-    if(localStorage.getItem('ios-install-dismissed')) return;
-    // Kurz verzögert zeigen, damit Seite erst lädt
-    setTimeout(function(){
-      var bar = document.getElementById('ios-install-bar');
-      if(bar) bar.style.display = 'flex';
-    }, 3000);
-    return;
-  }
-
-  // 3) Chrome / Edge / Android → beforeinstallprompt
-  var deferredPrompt = null;
-  window.addEventListener('beforeinstallprompt', function(e){
-    e.preventDefault();
-    deferredPrompt = e;
-    var bar = document.getElementById('pwa-install-bar');
-    if(bar) bar.style.display = 'flex';
+// ─── PWA INSTALL ───
+function initPWA() {
+  let deferredPrompt;
+  window.addEventListener('beforeinstallprompt', e => {
+    e.preventDefault(); deferredPrompt = e;
+    const bar = document.getElementById('pwa-install-bar');
+    if (bar) bar.style.display='flex';
   });
-
-  var installBtn = document.getElementById('pwa-install-btn');
-  if(installBtn){
-    installBtn.addEventListener('click', function(){
-      if(!deferredPrompt) return;
-      deferredPrompt.prompt();
-      deferredPrompt.userChoice.then(function(result){
-        deferredPrompt = null;
-        var bar = document.getElementById('pwa-install-bar');
-        if(bar) bar.style.display = 'none';
-      });
-    });
-  }
-
-  window.addEventListener('appinstalled', function(){
-    var bar = document.getElementById('pwa-install-bar');
-    if(bar) bar.style.display = 'none';
+  const installBtn = document.getElementById('pwa-install-btn');
+  if (installBtn) installBtn.addEventListener('click', () => {
+    if (deferredPrompt) { deferredPrompt.prompt(); deferredPrompt=null; }
+    const bar = document.getElementById('pwa-install-bar');
+    if (bar) bar.style.display='none';
   });
-})();
-
-// ===================== CLOCK =====================
-function tick(){
-  const el = document.getElementById('nav-clock');
-  if(el) el.textContent = new Date().toLocaleTimeString('de-DE',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
-  // Bridge date display
-  const bd = document.getElementById('bridge-date');
-  if(bd && bd.textContent === '—') {
-    const d = new Date();
-    bd.textContent = d.toLocaleDateString('de-DE',{weekday:'short',day:'2-digit',month:'short'});
+  // iOS
+  const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+  const isStandalone = window.matchMedia('(display-mode: standalone)').matches;
+  if (isIOS && !isStandalone) {
+    const iosBar = document.getElementById('ios-install-bar');
+    if (iosBar) iosBar.style.display='flex';
   }
 }
-setInterval(tick,1000); tick();
 
-// ===================== KPI LOADER — localStorage basiert =====================
-(function loadAllKpis(){
-  function ls(key, fallback){ try{ return localStorage.getItem(key); }catch(e){ return fallback||null; } }
-  function set(id, val){ var el=document.getElementById(id); if(el&&val!=null) el.textContent=val; }
+// ─── TOOLBELT ───
+window.toggleToolbelt = function() {
+  const tb = document.getElementById('toolbelt');
+  if (!tb) return;
+  tb.style.right = tb.style.right === '0px' ? '-320px' : '0px';
+};
 
-  // ── Wasserlage PWA KPIs (from Wasserlage site, same browser) ──
-  var installs  = parseInt(ls('wb_wl_install_count')||'0');
-  var views     = parseInt(ls('wb_wl_total_views')||'0');
-  var dayViews  = parseInt(ls('wb_wl_day_views')||'0');
-  var convRate  = views>0 ? ((installs/views)*100).toFixed(1)+'%' : '—';
-  set('wl-install-count', installs || '—');
-  set('wl-pageview-count', views || '—');
-  set('wl-conv-rate', convRate);
-  set('bridge-wl-installs', installs || '—');
-
-  // ── QR Code Tracking (from QR Bridge localStorage) ──
-  var qrWW   = ls('wb_qr_ww_count');    // QR Wasserwerte Scans
-  var qrWB   = ls('wb_qr_wb_count');    // QR Wave Bite App Scans
-  var gInfo  = ls('wb_wl_total_views') || ls('wb_gewaesser_views'); // Gewässerinfo/Wasserlage Seitenaufrufe
-  var bunbo  = ls('wb_bunbo_glide');     // BunBo Glide App users
-  set('kpi-qr-ww',       qrWW   || '281+');
-  set('kpi-qr-wb',       qrWB   || '—');
-  set('kpi-gewaesser',   gInfo  || '—');
-  set('kpi-bunbo-glide', bunbo  || '—');
-  // QR Movement Intelligence panel
-  set('qr-total-scans',  qrWW   || '281+');
-
-  // ── Bridge Status ──
-  var bridgeUrl = ls('wb_bridge_url');
-  var bridgeEl  = document.getElementById('kpi-bridge-status');
-  if(bridgeEl){
-    if(bridgeUrl){
-      bridgeEl.textContent='✓ AKTIV';
-      bridgeEl.style.background='rgba(0,255,136,0.1)';
-      bridgeEl.style.color='var(--green)';
-    }
+// ════════════════════════════════════════════════════════════
+// INIT ALL
+// ════════════════════════════════════════════════════════════
+function initAll() {
+  initKpiStrip();
+  renderProjects('all');
+  initNeuralCanvas();
+  initJarvis();
+  renderOKRs();
+  initClock();
+  initNavActive();
+  initModals();
+  initPWA();
+  loadWasserlage();
+  // Charts need Chart.js loaded
+  if (typeof Chart !== 'undefined') {
+    initCharts();
+  } else {
+    document.querySelector('script[src*="chart"]')?.addEventListener('load', initCharts);
+    setTimeout(initCharts, 2000);
   }
+}
 
-  // ── Wave Bite App KPI (Glide) ──
-  var wbApp = ls('wb_app_users');        // Wave Bite Glide App users
-  set('kpi-wb-app', wbApp || '—');
+if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initAll);
+else initAll();
 
-  // ── QR Bridge Live-Fetch (falls Web-App URL bekannt) ──
-  var BRIDGE_URL = ls('wb_bridge_exec_url'); // Eintragen: ls.setItem('wb_bridge_exec_url', 'https://script.google.com/macros/s/[ID]/exec')
-  if(BRIDGE_URL){
-    fetch(BRIDGE_URL + '?action=stats', {mode:'cors'}).then(function(r){ return r.json(); })
-      .then(function(d){
-        if(d.ww != null){
-          set('kpi-qr-ww', d.ww);
-          localStorage.setItem('wb_qr_ww_count', d.ww);
-        }
-        if(d.wb != null){
-          set('kpi-qr-wb', d.wb);
-          localStorage.setItem('wb_qr_wb_count', d.wb);
-        }
-        if(d.bunbo != null){
-          set('kpi-bunbo-glide', d.bunbo);
-          localStorage.setItem('wb_bunbo_glide', d.bunbo);
-        }
-        var bridgeEl2 = document.getElementById('kpi-bridge-status');
-        if(bridgeEl2){ bridgeEl2.textContent='✓ LIVE'; bridgeEl2.style.color='var(--green)'; bridgeEl2.style.background='rgba(0,255,136,0.1)'; }
-      }).catch(function(){ /* Bridge offline oder CORS - silent fail */ });
-  }
-
-  // ── Seiten-Performance Bars (Gewässerinfo + QR Bridge) ──
-  var gwNum = parseInt(gInfo || '0');
-  var gwPct = gwNum > 0 ? Math.min(100, Math.round(gwNum / 71 * 100)) : 7;
-  var gwBar = document.getElementById('perf-gewaesser-bar');
-  if(gwBar) gwBar.style.width = gwPct + '%';
-  if(gInfo) set('perf-gewaesser', gInfo);
-  // QR Bridge: 281+ scans > 71 monthly visitors → always full bar
-  var qrBar = document.getElementById('perf-qr-bridge-bar');
-  if(qrBar) qrBar.style.width = '100%';
-  set('perf-qr-bridge', qrWW || '281+');
-
-  // ── Last Update Timestamp ──
-  var lastVisit = ls('wb_wl_last_visit');
-  var el = document.getElementById('tracking-last-update');
-  if(el && lastVisit){
-    var d = new Date(lastVisit);
-    el.textContent = d.toLocaleString('de-DE',{day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'});
-  } else if(el){
-    el.textContent = 'Noch kein Besuch via Browser';
-  }
-})();
-
-// ===================== WASSERLAGE COCKPIT — LIVE =====================
-(function loadWasserlage(){
-  var LAT=52.52, LON=13.41;
-
-  function el(id){ return document.getElementById(id); }
-  function set(id,v){ var e=el(id); if(e&&v!=null) e.textContent=v; }
-
-  // ── Sonnenauf-/untergang (astronomische Berechnung Berlin) ──
-  function sunTime(type){
-    var now=new Date(), JD=now/86400000+2440587.5, n=JD-2451545.0;
-    var L=(280.46+0.9856474*n)%360;
-    var g=((357.528+0.9856003*n)%360)*Math.PI/180;
-    var lam=(L+1.915*Math.sin(g)+0.02*Math.sin(2*g))*Math.PI/180;
-    var dec=Math.asin(Math.sin(23.439*Math.PI/180)*Math.sin(lam));
-    var cosH=(Math.cos(90.833*Math.PI/180)-Math.sin(LAT*Math.PI/180)*Math.sin(dec))/(Math.cos(LAT*Math.PI/180)*Math.cos(dec));
-    if(cosH<-1||cosH>1) return '—';
-    var H=Math.acos(Math.max(-1,Math.min(1,cosH)))*180/Math.PI;
-    var noon=12-LON/15, t=type==='rise'?noon-H/15:noon+H/15;
-    // UTC → lokale Zeit (MESZ = UTC+2)
-    t = (t + 2 + 24) % 24;
-    var h=Math.floor(t), m=Math.round((t-h)*60); if(m===60){h++;m=0;}
-    return (h<10?'0':'')+h+':'+(m<10?'0':'')+m;
-  }
-  set('wl-sunrise', sunTime('rise'));
-  set('wl-sunset',  sunTime('set'));
-
-  function kmhToBft(k){
-    var lim=[1,6,12,20,29,39,50,62,75,89,103,118];
-    for(var i=0;i<lim.length;i++) if(k<lim[i]) return i;
-    return 12;
-  }
-  function wmoText(c){
-    if(c===0) return '☀️ Klar'; if(c<=1) return '🌤️ Heiter';
-    if(c<=3) return '☁️ Bewölkt'; if(c<=48) return '🌫️ Nebel';
-    if(c<=55) return '🌦️ Nieselregen'; if(c<=65) return '🌧️ Regen';
-    if(c<=75) return '❄️ Schnee'; if(c<=82) return '🌧️ Schauer';
-    return '⛈️ Gewitter';
-  }
-
-  var bftVal=null, pegelWarns=0, weatherDone=false, pegelDone=false;
-
-  function updateOverall(){
-    if(!weatherDone||!pegelDone) return;
-    var now=new Date().toLocaleTimeString('de-DE',{hour:'2-digit',minute:'2-digit'});
-    set('live-updated','⟳ '+now+' Uhr');
-
-    // Navigationsbadge
-    var nb=el('wl-nav-badge'), nt=el('wl-nav-text');
-    if(bftVal!==null){
-      if(bftVal<=3){
-        if(nt){nt.textContent='✓ Bft '+bftVal+' — Ideale Bedingungen';nt.style.color='var(--green)';}
-        if(nb){nb.style.background='rgba(0,255,136,0.07)';nb.style.borderColor='rgba(0,255,136,0.18)';}
-      } else if(bftVal<=5){
-        if(nt){nt.textContent='⚠ Bft '+bftVal+' — Mit Vorsicht fahren';nt.style.color='var(--gold)';}
-        if(nb){nb.style.background='rgba(201,168,76,0.08)';nb.style.borderColor='rgba(201,168,76,0.2)';}
-      } else {
-        if(nt){nt.textContent='⛔ Bft '+bftVal+' — Bootsfahrt nicht empfohlen';nt.style.color='#ff6b6b';}
-        if(nb){nb.style.background='rgba(255,107,107,0.07)';nb.style.borderColor='rgba(255,107,107,0.2)';}
-      }
-    }
-
-    // Gesamtstatus-Karte
-    var sc=el('wl-status-card'), si=el('wl-status-icon'), sl=el('wl-status-label'), ss=el('wl-status-sub');
-    var windWarn = bftVal!==null && bftVal>4;
-    if(pegelWarns===0 && !windWarn){
-      if(si) si.textContent='✅';
-      if(sl){sl.textContent='Normale Lage';sl.style.color='var(--green)';}
-      if(ss) ss.textContent='Alle Parameter normal — Gute Bedingungen';
-      if(sc){sc.style.background='rgba(0,255,136,0.05)';sc.style.borderColor='rgba(0,255,136,0.15)';}
-    } else if(pegelWarns>0||bftVal>3){
-      if(si) si.textContent='⚠️';
-      if(sl){sl.textContent='Mit Vorsicht';sl.style.color='var(--gold)';}
-      var msg=[];
-      if(pegelWarns>0) msg.push(pegelWarns+' Pegel außerhalb Normal');
-      if(bftVal!==null&&bftVal>3) msg.push('Wind Bft '+bftVal);
-      if(ss) ss.textContent=(msg.join(' — '))+' — ELWIS prüfen';
-      if(sc){sc.style.background='rgba(201,168,76,0.07)';sc.style.borderColor='rgba(201,168,76,0.2)';}
-    } else {
-      if(si) si.textContent='🔴';
-      if(sl){sl.textContent='Eingeschränkt';sl.style.color='#ff6b6b';}
-      if(ss) ss.textContent='Starker Wind — Fahrt nicht empfohlen';
-      if(sc){sc.style.background='rgba(255,107,107,0.05)';sc.style.borderColor='rgba(255,107,107,0.15)';}
-    }
-  }
-
-  // ── 1) Open-Meteo Wetter (kein API-Key nötig) ──
-  fetch('https://api.open-meteo.com/v1/forecast?latitude=52.52&longitude=13.41&current=temperature_2m,apparent_temperature,weathercode,windspeed_10m&windspeed_unit=kmh&timezone=Europe%2FBerlin')
-    .then(function(r){return r.json();})
-    .then(function(d){
-      var c=d.current;
-      var temp=Math.round(c.temperature_2m);
-      var feels=Math.round(c.apparent_temperature);
-      var wind=Math.round(c.windspeed_10m);
-      bftVal=kmhToBft(wind);
-      set('wl-temp',temp+'°C');
-      set('wl-feels','Gefühlt '+feels+'°C');
-      var wt=el('wl-wind-status');
-      if(wt){
-        wt.textContent='Bft '+bftVal+' ('+wind+' km/h)';
-        wt.style.color=bftVal<=3?'var(--green)':bftVal<=5?'var(--gold)':'#ff6b6b';
-      }
-      var ws=el('wl-weather-status');
-      if(ws){ws.textContent=wmoText(c.weathercode);ws.style.color='var(--green)';}
-      weatherDone=true; updateOverall();
-    })
-    .catch(function(){weatherDone=true;updateOverall();});
-
-  // ── 2) Pegelonline: POTSDAM (Havel) — zuverlässigste Station ──
-  var pegelTotal=1, pegelLoaded=0;
-  function onPegel(cm,min,max){
-    pegelLoaded++;
-    if(cm!==null&&(cm<min||cm>max)) pegelWarns++;
-    var pe=el('wl-pegel-status');
-    if(pe){
-      if(pegelWarns===0){pe.textContent='Normal ✓';pe.style.color='var(--green)';}
-      else{pe.textContent=pegelWarns+' Hinweis'+(pegelWarns>1?'e':'');pe.style.color='var(--gold)';}
-    }
-    if(pegelLoaded>=pegelTotal){pegelDone=true;updateOverall();}
-  }
-  fetch('https://www.pegelonline.wsv.de/webservices/rest-api/v2/stations/POTSDAM/W/currentmeasurement.json')
-    .then(function(r){return r.json();})
-    .then(function(d){
-      var cm=parseFloat(d.value);
-      onPegel(isNaN(cm)?null:Math.round(cm),40,130);
-    })
-    .catch(function(){onPegel(null,40,130);});
-
-  // ── 3) Wassertemperatur Spree Berlin-Spandau ──
-  fetch('https://www.pegelonline.wsv.de/webservices/rest-api/v2/stations/BERLIN-SPANDAU/WT/currentmeasurement.json')
-    .then(function(r){return r.json();})
-    .then(function(d){
-      var t=parseFloat(d.value);
-      set('wl-water-temp',isNaN(t)?'n/a':(Math.round(t*10)/10)+'°C');
-    })
-    .catch(function(){set('wl-water-temp','n/a');});
-})();
+// Pegelonline refresh every 10min
+setInterval(loadWasserlage, 600000);
 </script>
 
-<!-- ── DASHBOARD MODAL ── -->
-<div id="dash-modal">
-  <div id="dash-modal-box">
-    <button id="dash-modal-close">✕ Schließen</button>
-    <div class="dmo-icon" id="dmo-icon">📊</div>
-    <div class="dmo-title" id="dmo-title">Dashboard</div>
-    <span class="dmo-status planned" id="dmo-status">Geplant</span>
-    <div class="dmo-desc" id="dmo-desc"></div>
-    <ul class="dmo-steps" id="dmo-steps"></ul>
-    <a class="dmo-cta" id="dmo-cta" href="#" target="_blank" rel="noopener">Öffnen →</a>
+<!-- ════ DASH MODAL ════ -->
+<div id="dash-modal" style="display:none;position:fixed;inset:0;z-index:9500;background:rgba(0,4,10,.82);backdrop-filter:blur(8px);align-items:center;justify-content:center;padding:1rem">
+  <div style="background:linear-gradient(145deg,#071828,#04101e);border:1px solid rgba(0,200,255,0.25);border-radius:16px;padding:2rem;width:min(500px,90vw);position:relative">
+    <button id="dash-modal-close" onclick="document.getElementById('dash-modal').style.display='none'" style="position:absolute;top:.8rem;right:.8rem;background:none;border:1px solid rgba(0,200,255,0.2);color:rgba(255,255,255,.5);width:28px;height:28px;border-radius:50%;cursor:pointer;font-size:.8rem">✕</button>
+    <div id="dmo-icon" style="font-size:2rem;margin-bottom:.5rem">📊</div>
+    <div id="dmo-title" style="font-size:1.1rem;font-weight:700;margin-bottom:.4rem">Dashboard</div>
+    <div id="dmo-desc" style="font-size:.75rem;color:rgba(255,255,255,.55);margin-bottom:1rem;line-height:1.6"></div>
+    <a id="dmo-cta" href="#" target="_blank" style="display:inline-block;background:linear-gradient(135deg,rgba(0,200,255,0.15),rgba(0,200,255,0.08));border:1px solid rgba(0,200,255,0.4);color:var(--blue);border-radius:8px;padding:.5rem 1.2rem;font-size:.78rem;font-weight:600;text-decoration:none">Öffnen →</a>
   </div>
 </div>
 
