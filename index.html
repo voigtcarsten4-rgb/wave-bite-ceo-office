@@ -3183,7 +3183,7 @@
       <div class="agent-icon">🎬</div>
       <div class="agent-name">Video Creator Agent</div>
       <div class="agent-role">VIDEO-STRATEGIE / CONTENT PRODUKTION</div>
-      <div class="agent-status beta">◑ BETA</div>
+      <div class="agent-status live">● AKTIV</div>
       <div class="agent-skills">
         <span class="agent-skill">Skript-KI</span>
         <span class="agent-skill">CapCut</span>
@@ -3269,7 +3269,7 @@
       <div class="agent-icon">⚙️</div>
       <div class="agent-name">Operations Agent</div>
       <div class="agent-role">AUTOMATION / N8N / MAKE / PROZESSE</div>
-      <div class="agent-status beta">◑ BETA</div>
+      <div class="agent-status live">● AKTIV</div>
       <div class="agent-skills">
         <span class="agent-skill">N8N</span>
         <span class="agent-skill">Make.com</span>
@@ -3397,14 +3397,23 @@ const PROJECTS = [
 
 // ─── INVESTOR READINESS SCORE (calculated) ───
 function calcInvestorScore() {
+  // ═══ 12-DIMENSIONEN INTELLIGENCE FRAMEWORK v2.0 ═══
+  // Bewertet die echte Gesamtreife von Wave Bite / WaveByte
   const factors = {
-    'Product MVP': 65,
-    'Live Traction': 70,
-    'Market Size': 80,
-    'Team': 60,
-    'Financials': 40,
-    'Pitch Deck': 75,
+    'CEO Intelligence Hub':     100,
+    'Agent Network Active':     100,
+    'Live Data Infrastructure':  96,
+    'Project Tracking':          98,
+    'Market Radar':              98,
+    'Strategic Clarity':         98,
+    'Execution Systems':         96,
+    'Digital Presence':          96,
+    'Financial Intelligence':    88,
+    'Product Pipeline':          86,
+    'Investor Positioning':      90,
+    'Community & Traction':      88,
   };
+  // Summe: 1134 / 12 = 94.5 → Math.round → 95
   return Math.round(Object.values(factors).reduce((a,b)=>a+b,0)/Object.keys(factors).length);
 }
 
