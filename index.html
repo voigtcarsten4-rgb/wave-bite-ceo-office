@@ -560,7 +560,7 @@
   .orbit-boat {
     overflow: visible !important;
     background: transparent !important;
-    border-radius: 12px;
+    border-radius: 0;
   }
 
   /* 6. NODE hover shimmer — nodes pulse when hovered */
@@ -595,9 +595,9 @@
     .bridge-sub{font-size:.5rem;letter-spacing:.15em}
 
     /* Orbit system auf iPhone */
-    .orbit-system{width:340px;height:340px}
-    .orbit-ring-inner{width:126px;height:126px}
-    .orbit-ring-outer{width:218px;height:218px}
+    .orbit-system{width:360px;height:360px}
+    .orbit-ring-inner{width:140px;height:140px}
+    .orbit-ring-outer{width:240px;height:240px}
 
     /* Orbit nodes: grösser, besser tappbar */
     .onode-in{min-width:42px;padding:.35rem .45rem;border-radius:8px;min-height:44px;justify-content:center}
@@ -667,6 +667,9 @@
 
     /* Floating Action Bar */
     #quick-actions-bar{bottom:16px;right:.6rem;gap:.35rem}
+
+    /* Tracking Radar — single column, balanced auf iPhone */
+    #analytics-grid{grid-template-columns:1fr!important;gap:.75rem}
   }
 
   /* Extra klein: iPhone SE / kleinere Geräte */
@@ -2606,6 +2609,20 @@ window._jsReadyAt = performance.now();
       b: 0.11 + (i%6)*0.085,
     }));
 
+    /* ── Galaxy dust cloud — 3-arm spiral ── */
+    const GAL = Array.from({length:180}, (_,i) => {
+      const arm = i % 3;
+      const baseAng = (i/60)*Math.PI*2 + arm*(Math.PI*2/3);
+      const dist = 195 + (i*7)%55;
+      return { baseAng, dist,
+        spd: (0.005 + (i%5)*0.0018) * (arm===1 ? -1.25 : 1),
+        col: arm===0 ? '0,200,255' : arm===1 ? '201,168,76' : '0,212,170',
+        op:  0.028 + (i%5)*0.016,
+        sz:  0.30 + (i%4)*0.22,
+        tilt: 0.30 + arm*0.04,
+      };
+    });
+
     const LABELS = ['WASSERLAGE','BUNBO','HIMMELREICH','FINANZEN','PARTNER','MARKETING'];
     const NCOLS  = ['#00c8ff','#00d4aa','#c9a84c','#c9a84c','#00c8ff','#00d4aa'];
     const TILT   = 0.34; // orbit ring 3D-tilt: ry = rx * TILT
@@ -2645,9 +2662,13 @@ window._jsReadyAt = performance.now();
       const sc = W / 480;
       const cx = W * 0.5, cy = H * 0.5;
 
-      /* BACKGROUND */
-      const bg = ctx.createRadialGradient(cx,cy*.72,0,cx,cy,W*.75);
-      bg.addColorStop(0,'rgba(5,20,44,.98)'); bg.addColorStop(.55,'rgba(2,10,24,.99)'); bg.addColorStop(1,'rgba(1,4,12,1)');
+      /* BACKGROUND — seamless fade to page void (#020810) */
+      const bg = ctx.createRadialGradient(cx, cy*0.80, 0, cx, cy, W*0.72);
+      bg.addColorStop(0,    'rgba(4,14,34,.98)');
+      bg.addColorStop(0.42, 'rgba(2,10,24,.95)');
+      bg.addColorStop(0.72, 'rgba(2,8,18,.65)');
+      bg.addColorStop(0.90, 'rgba(2,8,16,.22)');
+      bg.addColorStop(1,    'rgba(2,8,16,0)');
       ctx.fillStyle=bg; ctx.fillRect(0,0,W,H);
 
       /* STARS */
@@ -2658,27 +2679,61 @@ window._jsReadyAt = performance.now();
         ctx.fillStyle=`rgba(205,225,255,${op.toFixed(2)})`; ctx.fill();
       });
 
-      /* ORBIT RINGS — 3D-tilted ellipses */
-      [[76*sc,.65*sc,'rgba(0,200,255,.13)',[2*sc,5*sc]],
-       [137*sc,1.0*sc,'rgba(0,200,255,.26)',[4*sc,7*sc]],
-       [190*sc,.72*sc,'rgba(201,168,76,.16)',[2.5*sc,5.5*sc]]].forEach(([rx,lw,col,da])=>{
+      /* TITLE — integrated into canvas */
+      if (W > 220) {
+        const tsz = Math.max(9, Math.round(15*sc));
+        const ssz = Math.max(5, Math.round(6.5*sc));
+        const ty  = H * 0.040 + tsz;
+        const tg  = ctx.createLinearGradient(cx-90*sc, 0, cx+90*sc, 0);
+        tg.addColorStop(0,   'rgba(0,200,255,0)');
+        tg.addColorStop(0.18,'rgba(0,200,255,0.88)');
+        tg.addColorStop(0.5, 'rgba(180,200,255,0.95)');
+        tg.addColorStop(0.82,'rgba(201,168,76,0.88)');
+        tg.addColorStop(1,   'rgba(201,168,76,0)');
+        ctx.save();
+        ctx.textAlign='center'; ctx.textBaseline='top';
+        ctx.font=`900 ${tsz}px 'Segoe UI',sans-serif`;
+        ctx.shadowColor='rgba(0,200,255,0.85)'; ctx.shadowBlur=10*sc;
+        ctx.fillStyle=tg; ctx.fillText('CAPITÄNS BRIDGE', cx, ty);
+        ctx.font=`600 ${ssz}px monospace`;
+        ctx.shadowColor='rgba(201,168,76,0.7)'; ctx.shadowBlur=6*sc;
+        ctx.fillStyle='rgba(201,168,76,0.60)';
+        ctx.fillText('WAVE BITE  //  MARITIME TECH  //  WAVEBYTE', cx, ty + tsz*1.3);
+        ctx.shadowBlur=0; ctx.restore();
+      }
+
+      /* GALAXY DUST — rotating spiral particles */
+      GAL.forEach((g, i) => {
+        const ang = g.baseAng + t * g.spd;
+        const gx  = cx + g.dist*sc * Math.cos(ang);
+        const gy  = cy + g.dist*sc * g.tilt * Math.sin(ang);
+        const gop = (g.op + 0.012*Math.sin(t*1.8+i*0.35)).toFixed(3);
+        ctx.beginPath(); ctx.arc(gx, gy, g.sz*sc, 0, Math.PI*2);
+        ctx.fillStyle=`rgba(${g.col},${gop})`; ctx.fill();
+      });
+
+      /* ORBIT RINGS — 3D-tilted ellipses (4 rings, expanded) */
+      [[95*sc, .55*sc,'rgba(0,200,255,.11)',[2*sc,4*sc]],
+       [180*sc, .90*sc,'rgba(0,200,255,.24)',[4*sc,7*sc]],
+       [220*sc, .60*sc,'rgba(201,168,76,.14)',[2.5*sc,5.5*sc]],
+       [248*sc, .38*sc,'rgba(0,212,170,.08)',[3*sc,9*sc]]].forEach(([rx,lw,col,da])=>{
         ctx.beginPath(); ctx.ellipse(cx,cy,rx,rx*TILT,0,0,Math.PI*2);
         ctx.strokeStyle=col; ctx.lineWidth=lw; ctx.setLineDash(da); ctx.stroke(); ctx.setLineDash([]);
       });
 
       /* CENTRAL GLOW */
       const gp=.5+.5*Math.sin(t*1.15);
-      const cg=ctx.createRadialGradient(cx,cy+4*sc,0,cx,cy,80*sc);
-      cg.addColorStop(0,`rgba(0,200,255,${(.09+.04*gp).toFixed(3)})`);
+      const cg=ctx.createRadialGradient(cx,cy+4*sc,0,cx,cy,95*sc);
+      cg.addColorStop(0,`rgba(0,200,255,${(.10+.04*gp).toFixed(3)})`);
       cg.addColorStop(.65,`rgba(0,200,255,${(.02+.01*gp).toFixed(3)})`);
       cg.addColorStop(1,'transparent');
-      ctx.fillStyle=cg; ctx.beginPath(); ctx.ellipse(cx,cy,80*sc,80*sc*TILT,0,0,Math.PI*2); ctx.fill();
+      ctx.fillStyle=cg; ctx.beginPath(); ctx.ellipse(cx,cy,95*sc,95*sc*TILT,0,0,Math.PI*2); ctx.fill();
 
       /* ORBIT NODES */
-      const oRx=137*sc, oRy=oRx*TILT, iRx=76*sc, iRy=iRx*TILT;
-      const nodeR=12.5*sc;
+      const oRx=180*sc, oRy=oRx*TILT, iRx=95*sc, iRy=iRx*TILT;
+      const nodeR=20*sc;
       LABELS.forEach((lbl,i) => {
-        const ang=(i/6)*Math.PI*2-Math.PI*.5+t*.022;
+        const ang=(i/6)*Math.PI*2-Math.PI*.5+t*.020;
         const nx=cx+oRx*Math.cos(ang), ny=cy+oRy*Math.sin(ang);
         const pulse=.5+.5*Math.sin(t*2+i*Math.PI/3);
         const col=NCOLS[i];
@@ -2700,9 +2755,9 @@ window._jsReadyAt = performance.now();
         drawIcon(i,nx,ny,nodeR);
         /* label */
         const dx=nx-cx, dy=ny-cy, dl=Math.sqrt(dx*dx+dy*dy)||1;
-        const lx=nx+(dx/dl)*(nodeR+9*sc), ly=ny+(dy/dl)*(nodeR+9*sc);
+        const lx=nx+(dx/dl)*(nodeR+11*sc), ly=ny+(dy/dl)*(nodeR+11*sc);
         ctx.fillStyle=col;
-        ctx.font=`700 ${Math.max(6,Math.round(7.5*sc))}px monospace`;
+        ctx.font=`700 ${Math.max(6,Math.round(8*sc))}px monospace`;
         ctx.textAlign=dx>.1?'left':dx<-.1?'right':'center';
         ctx.textBaseline=dy>.1?'top':dy<-.1?'bottom':'middle';
         ctx.shadowColor=col; ctx.shadowBlur=3*sc;
