@@ -2,7 +2,7 @@
 <html lang="de">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>WAVE BITE // CAPITÄNS BRIDGE — JARVIS Edition</title>
 <!-- CDN scripts moved to bottom of body for instant boot-screen render -->
 <style>
@@ -1210,6 +1210,69 @@
   .dmo-cta.gold{background:linear-gradient(135deg,rgba(201,168,76,.18),rgba(201,168,76,.08));border-color:rgba(201,168,76,.35);color:rgba(201,168,76,.9)}
   .dmo-cta.gold:hover{background:linear-gradient(135deg,rgba(201,168,76,.28),rgba(201,168,76,.14));border-color:rgba(201,168,76,.6);color:#fff;box-shadow:0 0 18px rgba(201,168,76,.2)}
 
+
+/* ══════════════════════════════════════════════════════════════
+   MOBILE OPTIMIERUNG — CEO OFFICE RESPONSIVE
+   ══════════════════════════════════════════════════════════════ */
+@media (max-width: 768px) {
+  .page { padding: 0 .65rem 5rem !important; }
+  .panel { padding: .85rem !important; }
+  .section-title { font-size: .68rem !important; flex-wrap: wrap; gap: .4rem; }
+  .kpi-strip { grid-template-columns: repeat(2,1fr) !important; gap: .5rem !important; }
+  .kpi-card { padding: .65rem !important; }
+  .kpi-val { font-size: 1.4rem !important; }
+  .kpi-label { font-size: .5rem !important; }
+  .bridge-cockpit { grid-template-columns: 1fr !important; min-height: auto !important; }
+  .bridge-left, .bridge-right { display: none !important; }
+  .bridge-center { padding: 1rem !important; }
+  .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr !important; }
+  .cal-sec-grid { grid-template-columns: 1fr !important; }
+  #cal-week-strip {
+    display: flex !important;
+    overflow-x: auto !important;
+    gap: .3rem !important;
+    padding-bottom: .4rem;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  #cal-week-strip::-webkit-scrollbar { display: none; }
+  .cal-week-col { flex: 0 0 52px !important; min-width: 52px !important; min-height: 60px !important; }
+  .cal-week-day-num { font-size: .75rem !important; }
+  .cal-next-bar { flex-wrap: wrap; gap: .4rem !important; padding: .5rem !important; }
+  #cal-next-title { font-size: .65rem !important; }
+  #cal-next-countdown { font-size: .7rem !important; }
+  .nav-pill { min-height: 38px !important; font-size: .48rem !important; padding: .3rem .55rem !important; }
+  #quick-actions-bar { bottom: 10px !important; right: .65rem !important; flex-direction: row !important; gap: .35rem !important; }
+  .bridge-title { font-size: 1.6rem !important; }
+  .bridge-sub { font-size: .7rem !important; }
+  .orbit-system { display: none !important; }
+  .agent-grid { grid-template-columns: 1fr !important; }
+  #master-bridge-config { flex-wrap: wrap !important; gap: .4rem !important; }
+  #master-bridge-url-input { min-width: 0; width: 100% !important; flex: unset !important; }
+  .pc-grid { grid-template-columns: 1fr !important; }
+  .ck2-kpis { grid-template-columns: repeat(2,1fr) !important; }
+  .ck2-bottom { grid-template-columns: 1fr !important; }
+  .bwl-module-grid { grid-template-columns: 1fr !important; }
+  section { margin-bottom: 1.25rem !important; }
+}
+
+@media (max-width: 480px) {
+  .kpi-strip { grid-template-columns: repeat(2,1fr) !important; }
+  .bridge-title { font-size: 1.3rem !important; }
+  .nav-pill { font-size: .44rem !important; padding: .25rem .5rem !important; }
+}
+
+@media (pointer: coarse) {
+  .cqs-btn { padding: .55rem !important; font-size: .72rem !important; min-height: 44px; }
+  .cqs-input { padding: .5rem .65rem !important; font-size: .72rem !important; min-height: 40px; }
+  .cal-day { padding: .4rem .1rem !important; font-size: .65rem !important; }
+}
+
+@supports (padding-bottom: env(safe-area-inset-bottom)) {
+  .page { padding-bottom: calc(5rem + env(safe-area-inset-bottom)) !important; }
+  #quick-actions-bar { bottom: calc(10px + env(safe-area-inset-bottom)) !important; }
+}
+
 </style>
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#020810">
@@ -1427,6 +1490,7 @@
   <div class="nav-pill" onclick="document.getElementById('sec-projects').scrollIntoView({behavior:'smooth'})">PROJEKTE</div>
   <div class="nav-pill" onclick="document.getElementById('sec-intel').scrollIntoView({behavior:'smooth'})">INTEL</div>
   <div class="nav-pill" onclick="document.getElementById('sec-finance').scrollIntoView({behavior:'smooth'})">FINANZEN</div>
+  <div class="nav-pill" onclick="document.getElementById('sec-calendar').scrollIntoView({behavior:'smooth'})" style="background:rgba(0,200,255,0.08);border:1px solid rgba(0,200,255,0.3)">📅 KALENDER</div>
   <div class="nav-pill" onclick="document.getElementById('sec-tasks').scrollIntoView({behavior:'smooth'})">TASKS</div>
   <div class="nav-pill" onclick="document.getElementById('sec-console').scrollIntoView({behavior:'smooth'})">CONSOLE</div>
   <div class="nav-pill" onclick="document.getElementById('sec-agents').scrollIntoView({behavior:'smooth'})">AGENTEN</div>
@@ -1522,6 +1586,102 @@
 <div class="page">
 
 <!-- CAPTAIN'S BRIDGE COCKPIT -->
+<!-- ╔══════════════════════════════════════════════════════════╗ -->
+<!-- ║   CEO CALENDAR STRIP — always-visible above cockpit      ║ -->
+<!-- ╚══════════════════════════════════════════════════════════╝ -->
+<!-- ╔══════════════════════════════════════════════════════════╗ -->
+<!-- ║   CEO CALENDAR STRIP — compact daily overview widget    ║ -->
+<!-- ╚══════════════════════════════════════════════════════════╝ -->
+<div id="ceo-cal-strip" style="display:none">
+  <div style="position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent 0%,rgba(0,200,255,0.6) 30%,rgba(201,168,76,0.5) 70%,transparent 100%);animation:calStripGlow 3s ease-in-out infinite alternate"></div>
+  <style>
+    @keyframes calStripGlow{0%{opacity:.5;transform:scaleX(.8)}100%{opacity:1;transform:scaleX(1)}}
+    @keyframes calEvPulse{0%,100%{opacity:.7}50%{opacity:1}}
+    .cal-ev-pill{display:inline-flex;align-items:center;gap:.3rem;padding:.18rem .55rem;border-radius:5px;font-size:.6rem;font-weight:600;letter-spacing:.05em;cursor:pointer;transition:all .2s;border:1px solid transparent}
+    .cal-ev-pill:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(0,0,0,0.3)}
+    .cal-ev-pill.wb{background:rgba(30,223,255,0.12);border-color:rgba(30,223,255,0.35);color:#1edfff}
+    .cal-ev-pill.bl{background:rgba(245,200,66,0.12);border-color:rgba(245,200,66,0.35);color:#f5c842}
+    .cal-ev-pill.pr{background:rgba(180,141,250,0.12);border-color:rgba(180,141,250,0.35);color:#b48dfa}
+    .cal-ev-pill.demo{background:rgba(0,200,255,0.06);border-color:rgba(0,200,255,0.2);color:rgba(0,200,255,0.7)}
+    .cal-strip-btn{display:inline-flex;align-items:center;gap:.35rem;padding:.32rem .8rem;border-radius:7px;font-size:.62rem;font-weight:700;letter-spacing:.08em;cursor:pointer;border:none;transition:all .2s;text-decoration:none}
+    .cal-strip-btn.add{background:linear-gradient(135deg,rgba(0,200,255,0.25),rgba(0,200,255,0.12));border:1px solid rgba(0,200,255,0.45);color:#1edfff}
+    .cal-strip-btn.add:hover{background:linear-gradient(135deg,rgba(0,200,255,0.4),rgba(0,200,255,0.2));box-shadow:0 0 16px rgba(0,200,255,0.3)}
+    .cal-strip-btn.open{background:rgba(201,168,76,0.1);border:1px solid rgba(201,168,76,0.3);color:#c9a84c}
+    .cal-strip-btn.open:hover{background:rgba(201,168,76,0.2);box-shadow:0 0 14px rgba(201,168,76,0.25)}
+    #cal-strip-modal{display:none;position:fixed;inset:0;z-index:8888;background:rgba(2,8,16,0.85);backdrop-filter:blur(8px);align-items:center;justify-content:center}
+    #cal-strip-modal.open{display:flex}
+    #cal-strip-modal-inner{background:linear-gradient(135deg,rgba(4,16,32,0.98),rgba(2,8,16,0.99));border:1px solid rgba(0,200,255,0.25);border-radius:16px;padding:1.5rem;width:min(420px,94vw);position:relative;box-shadow:0 20px 60px rgba(0,0,0,0.8),0 0 40px rgba(0,200,255,0.08)}
+    .cal-modal-input{width:100%;background:rgba(0,200,255,0.05);border:1px solid rgba(0,200,255,0.2);border-radius:8px;padding:.5rem .75rem;color:#e0f4ff;font-size:.78rem;outline:none;box-sizing:border-box;font-family:inherit}
+    .cal-modal-input:focus{border-color:rgba(0,200,255,0.5);box-shadow:0 0 12px rgba(0,200,255,0.12)}
+    .cal-modal-select{width:100%;background:rgba(2,8,16,0.9);border:1px solid rgba(0,200,255,0.2);border-radius:8px;padding:.45rem .75rem;color:#e0f4ff;font-size:.78rem;outline:none;cursor:pointer;font-family:inherit}
+  </style>
+  <div style="display:flex;align-items:center;gap:1rem;flex-wrap:wrap">
+    <div style="display:flex;align-items:center;gap:.5rem;flex-shrink:0">
+      <div style="width:7px;height:7px;border-radius:50%;background:#1edfff;box-shadow:0 0 8px #1edfff;animation:calEvPulse 2s ease-in-out infinite"></div>
+      <span style="font-size:.55rem;letter-spacing:.2em;color:var(--text-dim);font-weight:700">KALENDER HEUTE</span>
+      <span id="cal-strip-datestr" style="font-size:.58rem;color:rgba(0,200,255,0.5);letter-spacing:.08em"></span>
+    </div>
+    <div id="cal-strip-events" style="display:flex;align-items:center;gap:.45rem;flex-wrap:wrap;flex:1;min-width:0">
+      <span class="cal-ev-pill demo">⏳ Kalender lädt…</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:.5rem;flex-shrink:0">
+      <button class="cal-strip-btn add" onclick="openCalStripModal()">＋ Termin</button>
+      <a class="cal-strip-btn open" href="ceo-calendar-planner.html" target="_blank">📅 Vollansicht ↗</a>
+    </div>
+  </div>
+</div>
+
+<!-- Quick-Add Modal -->
+<div id="cal-strip-modal">
+  <div id="cal-strip-modal-inner">
+    <div style="position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(0,200,255,0.5),rgba(201,168,76,0.4),transparent)"></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem">
+      <span style="font-size:.72rem;letter-spacing:.15em;color:var(--blue);font-weight:700">⚡ TERMIN ERSTELLEN</span>
+      <button onclick="closeCalStripModal()" style="background:none;border:none;color:rgba(255,255,255,0.4);font-size:1.1rem;cursor:pointer;padding:.1rem .4rem;border-radius:4px">✕</button>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:.65rem">
+      <div>
+        <div style="font-size:.52rem;letter-spacing:.12em;color:var(--text-dim);margin-bottom:.3rem">TITEL</div>
+        <input id="csm-title" class="cal-modal-input" type="text" placeholder="Termintitel eingeben…">
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:.65rem">
+        <div>
+          <div style="font-size:.52rem;letter-spacing:.12em;color:var(--text-dim);margin-bottom:.3rem">DATUM</div>
+          <input id="csm-date" class="cal-modal-input" type="date">
+        </div>
+        <div>
+          <div style="font-size:.52rem;letter-spacing:.12em;color:var(--text-dim);margin-bottom:.3rem">UHRZEIT</div>
+          <input id="csm-time" class="cal-modal-input" type="time">
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:.65rem">
+        <div>
+          <div style="font-size:.52rem;letter-spacing:.12em;color:var(--text-dim);margin-bottom:.3rem">KALENDER</div>
+          <select id="csm-cal" class="cal-modal-select">
+            <option value="wb">🌊 Wave Bite</option>
+            <option value="bl">🔔 Bell</option>
+            <option value="pr">🔒 Privat</option>
+          </select>
+        </div>
+        <div>
+          <div style="font-size:.52rem;letter-spacing:.12em;color:var(--text-dim);margin-bottom:.3rem">DAUER (MIN)</div>
+          <input id="csm-dur" class="cal-modal-input" type="number" value="60" min="15" step="15">
+        </div>
+      </div>
+      <div>
+        <div style="font-size:.52rem;letter-spacing:.12em;color:var(--text-dim);margin-bottom:.3rem">ORT / LINK</div>
+        <input id="csm-loc" class="cal-modal-input" type="text" placeholder="z.B. zoom.us/j/123 oder Hamburg">
+      </div>
+    </div>
+    <div style="display:flex;gap:.65rem;margin-top:1.1rem">
+      <button onclick="submitCalStripEvent()" style="flex:1;padding:.5rem;background:linear-gradient(135deg,rgba(0,200,255,0.3),rgba(0,200,255,0.15));border:1px solid rgba(0,200,255,0.5);border-radius:8px;color:#1edfff;font-size:.72rem;font-weight:700;letter-spacing:.1em;cursor:pointer;transition:all .2s">✓ SPEICHERN</button>
+      <button onclick="closeCalStripModal()" style="padding:.5rem 1rem;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:8px;color:rgba(255,255,255,0.4);font-size:.72rem;cursor:pointer">Abbrechen</button>
+    </div>
+    <div id="csm-status" style="margin-top:.6rem;font-size:.65rem;text-align:center;min-height:1.2em"></div>
+  </div>
+</div>
+</div>
+
 <div id="hero">
   <!-- sphere-canvas preserved for JS compatibility (hidden) -->
   <canvas id="sphere-canvas" style="display:none;position:absolute;width:1px;height:1px;pointer-events:none"></canvas>
@@ -1566,6 +1726,19 @@
       </a>
       <a href="https://calendar.google.com" target="_blank" class="b-stat-row" style="text-decoration:none;cursor:pointer">
         <span class="b-stat-label">📅 KALENDER</span>
+        <span style="color:var(--blue);font-size:.6rem">öffnen ↗</span>
+      </a>
+
+
+      <!-- ▸ HEUTE IM KALENDER (bridge-left) -->
+      <div style="font-size:.46rem;letter-spacing:.14em;color:var(--text-dim);margin-top:.1rem">▸ HEUTE IM KALENDER</div>
+      <div id="bridge-cal-events" style="display:flex;flex-direction:column;gap:.18rem;min-height:1.2rem">
+        <div class="b-stat-row" style="font-size:.58rem;color:rgba(0,200,255,0.5)">
+          <span>⏳ Lädt…</span>
+        </div>
+      </div>
+      <a class="b-stat-row" href="ceo-calendar-planner.html" target="_blank" style="text-decoration:none;cursor:pointer">
+        <span class="b-stat-label">📅 VOLLPLANER</span>
         <span style="color:var(--blue);font-size:.6rem">öffnen ↗</span>
       </a>
 
@@ -1657,6 +1830,7 @@
           <span class="mentor-badge">⚡ BUNBO COMMAND</span>
           <span class="mentor-date-chip" id="mentor-date-chip">— —</span>
         </div>
+        <div id="mentor-next-appt" style="display:none;margin-bottom:.4rem;padding:.22rem .55rem;background:rgba(30,223,255,0.08);border:1px solid rgba(30,223,255,0.22);border-radius:5px;font-size:.58rem;color:#1edfff;letter-spacing:.06em">📅 <span id="mentor-next-appt-text"></span></div>
         <div class="mentor-msg" id="mentor-msg-text">Lade Briefing…</div>
         <div class="mentor-footer">
           <div class="mentor-prog-row">
@@ -1694,7 +1868,7 @@
       </div>
       <div class="b-kpi-item green">
         <span class="b-kpi-lbl">WEBSITE<br>BESUCHER</span>
-        <span class="b-kpi-val" style="color:var(--green)">71</span>
+        <span class="b-kpi-val" style="color:var(--green)" id="bridge-visitors" title="Letzte bekannte Daten">71</span>
       </div>
       <div class="b-kpi-item">
         <span class="b-kpi-lbl">GITHUB<br>REPOS</span>
@@ -1731,15 +1905,236 @@
     </div>
 
   </div><!-- end bridge-cockpit -->
-</div>
+
 
 <!-- KPI STRIP -->
 <div class="kpi-strip" id="kpi-strip">
   <!-- rendered by JS -->
 </div>
 
+
+<!-- ╔══════════════════════════════════════════════════════════════════════╗ -->
+<!-- ║   CEO KALENDERPLANER — TERMINZENTRALE (vollwertige Sektion)         ║ -->
+<!-- ╚══════════════════════════════════════════════════════════════════════╝ -->
+<section id="sec-calendar" style="margin-bottom:1.5rem">
+  <div class="section-title" data-no-toggle="1">📅 CEO KALENDERPLANER — TERMINZENTRALE</div>
+
+  <style>
+    /* ── Calendar Section Styles ── */
+    .cal-sec-grid{display:grid;grid-template-columns:260px 1fr 300px;gap:1.2rem;align-items:start}
+    @media(max-width:1024px){.cal-sec-grid{grid-template-columns:1fr 1fr}}
+    @media(max-width:640px){.cal-sec-grid{grid-template-columns:1fr}}
+
+    /* Month mini calendar */
+    .cal-month-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:2px;margin-top:.6rem}
+    .cal-day-hdr{font-size:.45rem;letter-spacing:.08em;color:var(--text-dim);text-align:center;padding:.18rem 0}
+    .cal-day{font-size:.6rem;text-align:center;padding:.28rem .1rem;border-radius:5px;cursor:pointer;position:relative;transition:all .18s;color:var(--text)}
+    .cal-day:hover{background:rgba(0,200,255,0.1);color:var(--blue)}
+    .cal-day.today{background:linear-gradient(135deg,rgba(0,200,255,0.22),rgba(0,212,170,0.14));color:#fff;font-weight:800;box-shadow:0 0 10px rgba(0,200,255,0.3)}
+    .cal-day.has-ev::after{content:'';position:absolute;bottom:2px;left:50%;transform:translateX(-50%);width:4px;height:4px;border-radius:50%;background:var(--blue)}
+    .cal-day.selected{border:1px solid rgba(0,200,255,0.5);color:var(--blue)}
+    .cal-day.other-month{color:rgba(255,255,255,0.15)}
+    .cal-day.wb-ev::after{background:var(--teal)}
+    .cal-day.bl-ev::after{background:var(--gold)}
+    .cal-day.multi-ev::after{background:linear-gradient(90deg,var(--teal),var(--gold))}
+
+    /* Agenda events */
+    .cal-ev-row{display:flex;align-items:stretch;gap:.65rem;padding:.55rem .7rem;border-radius:8px;background:rgba(0,200,255,0.03);border:1px solid rgba(0,200,255,0.1);margin-bottom:.45rem;transition:all .2s;cursor:pointer}
+    .cal-ev-row:hover{background:rgba(0,200,255,0.07);border-color:rgba(0,200,255,0.25);transform:translateX(2px)}
+    .cal-ev-row.wb{border-left:2px solid var(--teal)}
+    .cal-ev-row.bl{border-left:2px solid var(--gold)}
+    .cal-ev-row.pr{border-left:2px solid #b48dfa}
+    .cal-ev-time{font-size:.62rem;font-weight:700;color:var(--blue);white-space:nowrap;min-width:48px;padding-top:.05rem;font-family:monospace}
+    .cal-ev-body{flex:1;min-width:0}
+    .cal-ev-title{font-size:.68rem;font-weight:700;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .cal-ev-meta{font-size:.52rem;color:var(--text-dim);margin-top:.1rem}
+    .cal-ev-dur{font-size:.52rem;color:var(--text-dim);white-space:nowrap;align-self:center}
+
+    /* Week strip */
+    .cal-week-col{background:rgba(0,200,255,0.03);border:1px solid rgba(0,200,255,0.1);border-radius:8px;padding:.45rem .4rem;text-align:center;cursor:pointer;transition:all .18s;min-height:70px}
+    .cal-week-col:hover{background:rgba(0,200,255,0.08);border-color:rgba(0,200,255,0.3)}
+    .cal-week-col.today-col{background:linear-gradient(135deg,rgba(0,200,255,0.12),rgba(0,212,170,0.08));border-color:rgba(0,200,255,0.4)}
+    .cal-week-day-name{font-size:.45rem;letter-spacing:.1em;color:var(--text-dim)}
+    .cal-week-day-num{font-size:.85rem;font-weight:800;color:var(--text);margin:.12rem 0}
+    .cal-week-col.today-col .cal-week-day-num{color:var(--blue);text-shadow:0 0 10px rgba(0,200,255,0.5)}
+    .cal-week-ev-dot{width:5px;height:5px;border-radius:50%;margin:.1rem auto;background:var(--teal)}
+
+    /* Quick-add form */
+    .cqs-input{width:100%;background:rgba(0,200,255,0.04);border:1px solid rgba(0,200,255,0.18);border-radius:7px;padding:.4rem .65rem;color:#e0f4ff;font-size:.72rem;outline:none;box-sizing:border-box;font-family:inherit;transition:border-color .2s}
+    .cqs-input:focus{border-color:rgba(0,200,255,0.5);box-shadow:0 0 10px rgba(0,200,255,0.1)}
+    .cqs-select{width:100%;background:rgba(2,8,16,0.9);border:1px solid rgba(0,200,255,0.18);border-radius:7px;padding:.38rem .65rem;color:#e0f4ff;font-size:.7rem;outline:none;cursor:pointer;font-family:inherit}
+    .cqs-btn{width:100%;padding:.42rem;background:linear-gradient(135deg,rgba(0,200,255,0.25),rgba(0,212,170,0.18));border:1px solid rgba(0,200,255,0.45);border-radius:7px;color:#1edfff;font-size:.68rem;font-weight:700;letter-spacing:.1em;cursor:pointer;transition:all .2s;font-family:inherit}
+    .cqs-btn:hover{background:linear-gradient(135deg,rgba(0,200,255,0.4),rgba(0,212,170,0.3));box-shadow:0 0 16px rgba(0,200,255,0.3)}
+
+    /* Next appointment countdown */
+    .cal-next-bar{display:flex;align-items:center;gap:.6rem;padding:.45rem .75rem;background:linear-gradient(135deg,rgba(0,200,255,0.06),rgba(0,212,170,0.04));border:1px solid rgba(0,200,255,0.2);border-radius:8px;margin-bottom:.65rem}
+  </style>
+
+  <div class="panel" style="border-color:rgba(0,200,255,0.18);background:linear-gradient(135deg,rgba(2,10,22,0.96),rgba(4,16,30,0.98));padding:1.2rem">
+
+    <!-- NEXT APPOINTMENT BAR -->
+    <div class="cal-next-bar" id="cal-next-bar">
+      <div style="width:8px;height:8px;border-radius:50%;background:var(--teal);box-shadow:0 0 10px var(--teal);animation:pulse 2s infinite;flex-shrink:0"></div>
+      <div style="flex:1;min-width:0">
+        <div style="font-size:.48rem;letter-spacing:.14em;color:var(--text-dim)">NÄCHSTER TERMIN</div>
+        <div id="cal-next-title" style="font-size:.7rem;color:var(--text);font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">— kein Termin eingetragen —</div>
+      </div>
+      <div style="text-align:right;flex-shrink:0">
+        <div style="font-size:.45rem;letter-spacing:.1em;color:var(--text-dim)">IN</div>
+        <div id="cal-next-countdown" style="font-size:.75rem;font-weight:800;color:var(--blue);font-family:monospace">— : — : —</div>
+      </div>
+      <a href="ceo-calendar-planner.html" target="_blank" style="flex-shrink:0;padding:.3rem .75rem;background:rgba(201,168,76,0.1);border:1px solid rgba(201,168,76,0.3);border-radius:6px;color:var(--gold);font-size:.6rem;font-weight:700;text-decoration:none;letter-spacing:.08em;transition:all .2s" onmouseover="this.style.background='rgba(201,168,76,0.2)'" onmouseout="this.style.background='rgba(201,168,76,0.1)'">📅 VOLLANSICHT ↗</a>
+    </div>
+
+    <!-- WEEK STRIP -->
+    <div id="cal-week-strip" style="display:grid;grid-template-columns:repeat(7,1fr);gap:.4rem;margin-bottom:1rem">
+      <!-- rendered by JS -->
+    </div>
+
+    <!-- MAIN 3-COLUMN GRID -->
+    <div class="cal-sec-grid">
+
+      <!-- ═══ LEFT: MINI MONTH CALENDAR ═══ -->
+      <div>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.5rem">
+          <button id="cal-prev-month" onclick="calNavMonth(-1)" style="background:none;border:1px solid rgba(0,200,255,0.2);border-radius:5px;color:var(--blue);padding:.18rem .5rem;cursor:pointer;font-size:.7rem">‹</button>
+          <div id="cal-month-title" style="font-size:.6rem;letter-spacing:.14em;color:var(--blue);font-weight:700">MONAT JAHR</div>
+          <button id="cal-next-month" onclick="calNavMonth(1)" style="background:none;border:1px solid rgba(0,200,255,0.2);border-radius:5px;color:var(--blue);padding:.18rem .5rem;cursor:pointer;font-size:.7rem">›</button>
+        </div>
+        <div class="cal-month-grid" id="cal-month-grid">
+          <div class="cal-day-hdr">Mo</div><div class="cal-day-hdr">Di</div><div class="cal-day-hdr">Mi</div>
+          <div class="cal-day-hdr">Do</div><div class="cal-day-hdr">Fr</div><div class="cal-day-hdr">Sa</div><div class="cal-day-hdr">So</div>
+          <!-- days rendered by JS -->
+        </div>
+
+        <!-- Calendar legend -->
+        <div style="display:flex;flex-wrap:wrap;gap:.4rem;margin-top:.65rem">
+          <div style="display:flex;align-items:center;gap:.25rem"><div style="width:7px;height:7px;border-radius:50%;background:var(--teal)"></div><span style="font-size:.48rem;color:var(--text-dim)">Wave Bite</span></div>
+          <div style="display:flex;align-items:center;gap:.25rem"><div style="width:7px;height:7px;border-radius:50%;background:var(--gold)"></div><span style="font-size:.48rem;color:var(--text-dim)">Bell</span></div>
+          <div style="display:flex;align-items:center;gap:.25rem"><div style="width:7px;height:7px;border-radius:50%;background:#b48dfa"></div><span style="font-size:.48rem;color:var(--text-dim)">Privat</span></div>
+        </div>
+
+        <!-- Month stats -->
+        <div style="margin-top:.7rem;padding:.5rem .6rem;background:rgba(0,200,255,0.03);border:1px solid rgba(0,200,255,0.1);border-radius:8px">
+          <div style="font-size:.45rem;letter-spacing:.12em;color:var(--text-dim);margin-bottom:.35rem">▸ MONATSÜBERSICHT</div>
+          <div style="display:flex;justify-content:space-between">
+            <div style="text-align:center"><div style="font-size:.95rem;font-weight:800;color:var(--blue)" id="cal-stat-total">0</div><div style="font-size:.42rem;color:var(--text-dim)">GESAMT</div></div>
+            <div style="text-align:center"><div style="font-size:.95rem;font-weight:800;color:var(--teal)" id="cal-stat-wb">0</div><div style="font-size:.42rem;color:var(--text-dim)">WAVE BITE</div></div>
+            <div style="text-align:center"><div style="font-size:.95rem;font-weight:800;color:var(--gold)" id="cal-stat-bl">0</div><div style="font-size:.42rem;color:var(--text-dim)">BELL</div></div>
+            <div style="text-align:center"><div style="font-size:.95rem;font-weight:800;color:#b48dfa" id="cal-stat-pr">0</div><div style="font-size:.42rem;color:var(--text-dim)">PRIVAT</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══ CENTER: TODAY'S AGENDA + SELECTED DAY ═══ -->
+      <div>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.6rem">
+          <div>
+            <div style="font-size:.48rem;letter-spacing:.15em;color:var(--text-dim)">AGENDA</div>
+            <div id="cal-agenda-date" style="font-size:.8rem;font-weight:800;color:var(--text)">Montag, 18. Mai 2026</div>
+          </div>
+          <div style="display:flex;gap:.4rem">
+            <button onclick="calSelectToday()" style="padding:.25rem .65rem;background:rgba(0,200,255,0.1);border:1px solid rgba(0,200,255,0.3);border-radius:5px;color:var(--blue);font-size:.58rem;cursor:pointer;font-family:inherit">Heute</button>
+            <button onclick="calToggleQuickAdd()" style="padding:.25rem .65rem;background:rgba(0,212,170,0.1);border:1px solid rgba(0,212,170,0.3);border-radius:5px;color:var(--teal);font-size:.58rem;cursor:pointer;font-family:inherit">＋ Termin</button>
+          </div>
+        </div>
+
+        <!-- Inline Quick-Add (hidden by default) -->
+        <div id="cal-inline-add" style="display:none;margin-bottom:.7rem;padding:.75rem;background:rgba(0,200,255,0.04);border:1px solid rgba(0,200,255,0.2);border-radius:10px">
+          <div style="font-size:.5rem;letter-spacing:.14em;color:var(--blue);margin-bottom:.55rem;font-weight:700">⚡ TERMIN ANLEGEN</div>
+          <div style="display:grid;grid-template-columns:1fr auto;gap:.5rem;margin-bottom:.45rem">
+            <input id="cia-title" class="cqs-input" type="text" placeholder="Termintitel…" style="margin:0">
+            <select id="cia-cal" class="cqs-select" style="width:110px">
+              <option value="wb">🌊 Wave Bite</option>
+              <option value="bl">🔔 Bell</option>
+              <option value="pr">🔒 Privat</option>
+            </select>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr 80px;gap:.5rem;margin-bottom:.5rem">
+            <input id="cia-date" class="cqs-input" type="date" style="margin:0">
+            <input id="cia-time" class="cqs-input" type="time" style="margin:0">
+            <input id="cia-dur" class="cqs-input" type="number" value="60" min="15" step="15" placeholder="Min" style="margin:0">
+          </div>
+          <input id="cia-loc" class="cqs-input" type="text" placeholder="Ort / Link (optional)…" style="margin-bottom:.5rem">
+          <div style="display:flex;gap:.5rem">
+            <button onclick="calInlineAddSave()" class="cqs-btn">✓ SPEICHERN</button>
+            <button onclick="calToggleQuickAdd()" style="padding:.4rem .8rem;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:7px;color:rgba(255,255,255,0.4);font-size:.65rem;cursor:pointer;font-family:inherit">✕</button>
+          </div>
+          <div id="cia-status" style="font-size:.62rem;text-align:center;margin-top:.4rem;min-height:1em"></div>
+        </div>
+
+        <!-- Event list for selected day -->
+        <div id="cal-agenda-events" style="min-height:120px">
+          <div style="text-align:center;padding:1.5rem;color:rgba(255,255,255,0.2);font-size:.65rem">⏳ Lädt…</div>
+        </div>
+
+        <!-- UPCOMING — next 5 events across all days -->
+        <div style="margin-top:.8rem;padding-top:.7rem;border-top:1px solid rgba(0,200,255,0.08)">
+          <div style="font-size:.48rem;letter-spacing:.14em;color:var(--text-dim);margin-bottom:.5rem">▸ DEMNÄCHST</div>
+          <div id="cal-upcoming-events">
+            <div style="font-size:.62rem;color:rgba(255,255,255,0.2)">Keine kommenden Termine</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══ RIGHT: BRIDGE + STATS ═══ -->
+      <div>
+        <!-- Bridge URL configurator -->
+        <div style="padding:.65rem .75rem;background:rgba(0,200,255,0.04);border:1px solid rgba(0,200,255,0.15);border-radius:10px;margin-bottom:.75rem">
+          <div style="font-size:.48rem;letter-spacing:.14em;color:var(--text-dim);margin-bottom:.45rem">🔌 GOOGLE CALENDAR BRIDGE</div>
+          <div id="cal-bridge-status-sec" style="font-size:.6rem;margin-bottom:.45rem;padding:.28rem .5rem;border-radius:5px;background:rgba(255,193,7,0.08);border:1px solid rgba(255,193,7,0.2);color:rgba(255,193,7,0.85)">⚡ Nicht verbunden — Apps Script URL eintragen</div>
+          <input id="cal-bridge-url-input" class="cqs-input" type="text" placeholder="https://script.google.com/…/exec" style="margin-bottom:.45rem;font-size:.62rem">
+          <button onclick="calSaveBridgeUrl()" class="cqs-btn" style="margin-bottom:.3rem">🔗 VERBINDEN</button>
+          <button onclick="calSyncNow()" style="width:100%;padding:.35rem;background:rgba(0,212,170,0.08);border:1px solid rgba(0,212,170,0.25);border-radius:6px;color:var(--teal);font-size:.62rem;cursor:pointer;font-family:inherit;transition:all .2s" onmouseover="this.style.background='rgba(0,212,170,0.15)'" onmouseout="this.style.background='rgba(0,212,170,0.08)'">↺ SYNC STARTEN</button>
+          <div id="cal-sync-status" style="font-size:.58rem;color:var(--text-dim);text-align:center;margin-top:.3rem;min-height:.8rem"></div>
+        </div>
+
+        <!-- Calendar stats for this week -->
+        <div style="padding:.65rem .75rem;background:rgba(0,212,170,0.03);border:1px solid rgba(0,212,170,0.12);border-radius:10px;margin-bottom:.75rem">
+          <div style="font-size:.48rem;letter-spacing:.14em;color:var(--text-dim);margin-bottom:.5rem">▸ DIESE WOCHE</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:.5rem">
+            <div style="text-align:center;padding:.4rem;background:rgba(0,200,255,0.05);border-radius:7px">
+              <div style="font-size:1.4rem;font-weight:900;color:var(--blue);line-height:1" id="cal-week-count">0</div>
+              <div style="font-size:.42rem;color:var(--text-dim);letter-spacing:.08em">TERMINE</div>
+            </div>
+            <div style="text-align:center;padding:.4rem;background:rgba(201,168,76,0.04);border-radius:7px">
+              <div style="font-size:1.4rem;font-weight:900;color:var(--gold);line-height:1" id="cal-week-hours">0h</div>
+              <div style="font-size:.42rem;color:var(--text-dim);letter-spacing:.08em">STUNDEN</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quick category buttons -->
+        <div style="font-size:.48rem;letter-spacing:.14em;color:var(--text-dim);margin-bottom:.4rem">▸ SCHNELL ANLEGEN</div>
+        <div style="display:flex;flex-direction:column;gap:.35rem">
+          <button onclick="calQuickCreate('wb','🌊 WaveBite Meeting')" style="text-align:left;padding:.4rem .65rem;background:rgba(30,223,255,0.08);border:1px solid rgba(30,223,255,0.22);border-radius:7px;color:#1edfff;font-size:.62rem;cursor:pointer;font-family:inherit;transition:all .2s" onmouseover="this.style.background='rgba(30,223,255,0.16)'" onmouseout="this.style.background='rgba(30,223,255,0.08)'">🌊 WaveBite Meeting</button>
+          <button onclick="calQuickCreate('wb','🤝 Investor Pitch')" style="text-align:left;padding:.4rem .65rem;background:rgba(30,223,255,0.06);border:1px solid rgba(30,223,255,0.18);border-radius:7px;color:rgba(30,223,255,0.8);font-size:.62rem;cursor:pointer;font-family:inherit;transition:all .2s" onmouseover="this.style.background='rgba(30,223,255,0.12)'" onmouseout="this.style.background='rgba(30,223,255,0.06)'">🤝 Investor Pitch</button>
+          <button onclick="calQuickCreate('bl','🔔 Bell Termin')" style="text-align:left;padding:.4rem .65rem;background:rgba(245,200,66,0.08);border:1px solid rgba(245,200,66,0.22);border-radius:7px;color:#f5c842;font-size:.62rem;cursor:pointer;font-family:inherit;transition:all .2s" onmouseover="this.style.background='rgba(245,200,66,0.16)'" onmouseout="this.style.background='rgba(245,200,66,0.08)'">🔔 Bell Termin</button>
+          <button onclick="calQuickCreate('pr','🔒 Persönlicher Termin')" style="text-align:left;padding:.4rem .65rem;background:rgba(180,141,250,0.07);border:1px solid rgba(180,141,250,0.2);border-radius:7px;color:#b48dfa;font-size:.62rem;cursor:pointer;font-family:inherit;transition:all .2s" onmouseover="this.style.background='rgba(180,141,250,0.14)'" onmouseout="this.style.background='rgba(180,141,250,0.07)'">🔒 Persönlicher Termin</button>
+        </div>
+
+        <!-- Full planner link -->
+        <a href="ceo-calendar-planner.html" target="_blank" style="display:flex;align-items:center;justify-content:center;gap:.5rem;margin-top:.75rem;padding:.45rem;background:linear-gradient(135deg,rgba(201,168,76,0.1),rgba(201,168,76,0.06));border:1px solid rgba(201,168,76,0.3);border-radius:8px;color:var(--gold);font-size:.65rem;font-weight:700;text-decoration:none;letter-spacing:.1em;transition:all .2s" onmouseover="this.style.background='linear-gradient(135deg,rgba(201,168,76,0.2),rgba(201,168,76,0.12))'" onmouseout="this.style.background='linear-gradient(135deg,rgba(201,168,76,0.1),rgba(201,168,76,0.06))'">📅 VOLLSTÄNDIGER KALENDERPLANER ↗</a>
+      </div>
+
+    </div><!-- end cal-sec-grid -->
+  </div><!-- end panel -->
+</section>
+
 <!-- WATER TOURISM INTELLIGENCE HUB -->
 <section id="sec-tracking-radar" style="margin-bottom:1.5rem">
+  <!-- MASTER BRIDGE CONFIG -->
+  <div id="master-bridge-config" style="display:flex;align-items:center;gap:.5rem;margin-bottom:.5rem;padding:.45rem .75rem;background:rgba(0,200,255,0.05);border:1px solid rgba(0,200,255,0.15);border-radius:8px">
+    <span style="font-size:.55rem;color:rgba(0,200,255,0.7);white-space:nowrap;font-weight:700">🔗 MASTER BRIDGE</span>
+    <input id="master-bridge-url-input" type="text" placeholder="Apps Script URL (CEO_MASTER_BRIDGE_V2) → Nach Deployment eintragen"
+      style="flex:1;font-size:.52rem;padding:.3rem .5rem;background:rgba(0,0,0,0.3);border:1px solid rgba(0,200,255,0.2);border-radius:5px;color:#fff;outline:none"
+      onchange="saveMasterBridgeUrl(this.value)">
+    <button onclick="saveMasterBridgeUrl(document.getElementById('master-bridge-url-input').value)"
+      style="font-size:.5rem;padding:.3rem .6rem;background:rgba(0,200,255,0.15);border:1px solid rgba(0,200,255,0.3);border-radius:5px;color:var(--blue);cursor:pointer;white-space:nowrap">
+      ✓ Verbinden + GA4
+    </button>
+    <span class="analytics-live-badge" style="font-size:.48rem;white-space:nowrap;color:rgba(255,255,255,0.3)">⚫ nicht verbunden</span>
+  </div>
   <div class="section-title">🌊 WATER TOURISM INTELLIGENCE — WAVE BITE ANALYTICS</div>
   <div class="panel" style="border-color:rgba(0,200,255,0.2);background:linear-gradient(135deg,rgba(2,15,30,0.92),rgba(4,16,30,0.98));padding:1.5rem">
     <div id="analytics-grid" style="display:grid;grid-template-columns:repeat(5,1fr);gap:1.5rem;align-items:start">
@@ -1750,7 +2145,12 @@
         <div style="padding:.9rem .75rem;background:linear-gradient(145deg,rgba(0,200,255,0.06),rgba(0,200,255,0.02));border:1px solid rgba(0,200,255,0.18);border-radius:12px;text-align:center;position:relative;overflow:hidden">
           <div style="position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(0,200,255,0.5),transparent)"></div>
           <div style="font-size:.48rem;letter-spacing:.18em;color:var(--text-dim);margin-bottom:.3rem">GESAMTBESUCHER</div>
-          <div style="font-size:2.8rem;font-weight:900;color:var(--blue);line-height:1;text-shadow:0 0 24px rgba(0,200,255,0.5)">71</div>
+          <div style="font-size:2.8rem;font-weight:900;color:var(--blue);line-height:1;text-shadow:0 0 24px rgba(0,200,255,0.5)" id="analytics-visitor-count">–</div>
+              <div style="display:flex;align-items:center;gap:.3rem;margin-top:.1rem">
+                <span class="analytics-live-badge" style="font-size:.42rem;color:rgba(255,255,255,0.3)">⚫ nicht verbunden</span>
+                <span style="font-size:.38rem;color:rgba(255,255,255,0.25)">|</span>
+                <span style="font-size:.38rem;color:rgba(0,200,255,0.5)">🟣 Echtzeit: <span id="ga4-realtime-users" style="color:rgba(0,212,170,0.7)">–</span></span>
+              </div>
           <div style="font-size:.58rem;color:var(--green);margin-top:.2rem;font-weight:600">&#x2191; +788% Wachstum</div>
           <div style="margin-top:.65rem;display:flex;align-items:flex-end;justify-content:center;gap:2px;height:28px">
             <div style="flex:1;height:4px;background:rgba(0,200,255,0.18);border-radius:1px 1px 0 0"></div>
@@ -2684,8 +3084,8 @@
   <div class="section-title">INTELLIGENCE // ANALYTICS</div>
   <div class="grid-2" style="margin-bottom:1.25rem">
     <div class="panel panel-cream">
-      <div style="font-size:.65rem;letter-spacing:.15em;color:var(--gold);margin-bottom:.75rem">🧠 NEURAL INTELLIGENCE NETWORK</div>
-      <canvas id="neural-canvas"></canvas>
+      <div style="font-size:.65rem;letter-spacing:.15em;color:var(--gold);margin-bottom:.75rem">🧠 SYNAPTIC INTELLIGENCE — WAVE BITE NEURAL CORE</div>
+      <canvas id="neural-canvas" style="width:100%;height:220px;border-radius:10px;display:block"></canvas>
     </div>
     <div class="panel">
       <div style="font-size:.65rem;letter-spacing:.15em;color:var(--blue);margin-bottom:.75rem">📊 PROJEKTFORTSCHRITT</div>
@@ -3743,137 +4143,160 @@ function initNeuralCanvas() {
   const canvas = document.getElementById('neural-canvas');
   if (!canvas || canvas._ncInited) return;
   canvas._ncInited = true;
-  const dpr = window.devicePixelRatio || 1;
+  const dpr = Math.min(window.devicePixelRatio || 1, 2);
   function resize() {
-    const w = canvas.offsetWidth || 400, h = 220;
+    const w = canvas.offsetWidth || 420, h = 220;
     canvas.width = Math.round(w * dpr); canvas.height = Math.round(h * dpr);
   }
   resize();
   const ctx = canvas.getContext('2d');
 
-  // Nodes: labeled with real Wave Bite projects
-  const NODE_DATA = [
-    {label:'BunBo',   color:'#00c8ff', x:0.12, y:0.35, pct:65},
-    {label:'Wasser',  color:'#00d4aa', x:0.28, y:0.18, pct:80},
-    {label:'CEO',     color:'#c9a84c', x:0.5,  y:0.5,  pct:75, hub:true},
-    {label:'Finance', color:'#c9a84c', x:0.72, y:0.25, pct:35},
-    {label:'Partner', color:'#00c8ff', x:0.85, y:0.55, pct:20},
-    {label:'Market',  color:'#ff4757', x:0.62, y:0.78, pct:45},
-    {label:'Website', color:'#00d4aa', x:0.3,  y:0.72, pct:70},
-    {label:'Auto',    color:'#c9a84c', x:0.5,  y:0.15, pct:40},
-    {label:'Himmel',  color:'#a78bfa', x:0.15, y:0.72, pct:25},
+  const NEURONS = [
+    { id:0, label:'CEO HUB',    color:'#c9a84c', x:.50, y:.50, r:13, pct:75, urgency:1.8, hub:true },
+    { id:1, label:'BunBo',      color:'#00c8ff', x:.12, y:.32, r: 9, pct:65, urgency:1.5 },
+    { id:2, label:'Wasserlage', color:'#00d4aa', x:.26, y:.14, r: 8, pct:80, urgency:1.2 },
+    { id:3, label:'Finance',    color:'#c9a84c', x:.75, y:.22, r: 8, pct:35, urgency:1.6 },
+    { id:4, label:'Partner',    color:'#00c8ff', x:.88, y:.52, r: 7, pct:20, urgency:0.8 },
+    { id:5, label:'Marketing',  color:'#ff6b7a', x:.65, y:.80, r: 8, pct:45, urgency:1.1 },
+    { id:6, label:'Website',    color:'#00d4aa', x:.30, y:.76, r: 7, pct:70, urgency:0.9 },
+    { id:7, label:'Automation', color:'#c9a84c', x:.52, y:.12, r: 7, pct:40, urgency:1.0 },
+    { id:8, label:'Himmelreich',color:'#a78bfa', x:.14, y:.74, r: 7, pct:25, urgency:0.6 },
+    { id:9, label:'Funding',    color:'#ff6b7a', x:.82, y:.80, r: 7, pct:15, urgency:2.0 },
   ];
-
-  // Connections: all connect to hub (CEO), some cross-connections
-  const EDGES = [[0,2],[1,2],[2,3],[2,4],[2,5],[2,6],[2,7],[0,1],[1,7],[3,4],[5,6],[0,8]];
-
-  // Firing pulses
-  const pulses = [];
-  function spawnPulse() {
-    const edgeIdx = Math.floor(Math.random() * EDGES.length);
-    pulses.push({edge: edgeIdx, t: 0, speed: 0.012 + Math.random() * 0.01, color: NODE_DATA[EDGES[edgeIdx][0]].color});
-  }
-  setInterval(spawnPulse, 400);
-
-  let t = 0;
-  function draw() {
-    const W = canvas.width / dpr, H = canvas.height / dpr;
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.save(); ctx.scale(dpr, dpr);
-
-    // Background
-    const bg = ctx.createRadialGradient(W*.5, H*.5, 0, W*.5, H*.5, W*.6);
-    bg.addColorStop(0, 'rgba(7,24,40,0.6)'); bg.addColorStop(1, 'rgba(2,8,16,0.2)');
-    ctx.fillStyle = bg; ctx.fillRect(0, 0, W, H);
-
-    const nodes = NODE_DATA.map(n => ({
-      ...n,
-      px: n.x * W,
-      py: n.y * H,
-      r: n.hub ? 14 : 8
-    }));
-
-    // Draw edges
-    EDGES.forEach(([a,b]) => {
-      const na = nodes[a], nb = nodes[b];
-      const grad = ctx.createLinearGradient(na.px, na.py, nb.px, nb.py);
-      grad.addColorStop(0, na.color + '44');
-      grad.addColorStop(0.5, nb.color + '22');
-      grad.addColorStop(1, nb.color + '44');
-      ctx.beginPath(); ctx.moveTo(na.px, na.py); ctx.lineTo(nb.px, nb.py);
-      ctx.strokeStyle = grad; ctx.lineWidth = 1; ctx.stroke();
-    });
-
-    // Draw pulses along edges
-    pulses.forEach((p, i) => {
-      const [a, b] = EDGES[p.edge];
-      const na = nodes[a], nb = nodes[b];
-      const px = na.px + (nb.px - na.px) * p.t;
-      const py = na.py + (nb.py - na.py) * p.t;
-      ctx.beginPath(); ctx.arc(px, py, 3, 0, Math.PI*2);
-      const alpha = Math.sin(p.t * Math.PI);
-      ctx.fillStyle = p.color + Math.round(alpha * 255).toString(16).padStart(2,'0');
-      ctx.shadowColor = p.color; ctx.shadowBlur = 8;
-      ctx.fill(); ctx.shadowBlur = 0;
-      p.t += p.speed;
-    });
-
-    // Remove completed pulses
-    for (let i = pulses.length - 1; i >= 0; i--) {
-      if (pulses[i].t >= 1) pulses.splice(i, 1);
+  const AXONS = [[1,0],[2,0],[0,3],[0,4],[0,5],[0,6],[0,7],[1,2],[2,7],[3,9],[5,6],[1,8],[3,4],[9,5]];
+  const DENDRITES = NEURONS.map(n => {
+    const branches = [], count = n.hub ? 6 : (2 + Math.floor(Math.random()*3));
+    for (let i=0;i<count;i++) {
+      const ang = (Math.PI*2/count)*i + (Math.random()-.5)*.6;
+      branches.push({ang, len: n.r*(1.8+Math.random()*1.4), wag: Math.random()*Math.PI*2});
     }
-
-    // Draw nodes
-    nodes.forEach(n => {
-      const pulse = 0.7 + 0.3 * Math.sin(t * 1.5 + n.x * 10);
-      // Outer ring
-      ctx.beginPath(); ctx.arc(n.px, n.py, n.r + 4, 0, Math.PI*2);
-      ctx.strokeStyle = n.color + '30'; ctx.lineWidth = 1.5; ctx.stroke();
-      // Inner fill
-      const gr = ctx.createRadialGradient(n.px, n.py, 0, n.px, n.py, n.r);
-      gr.addColorStop(0, n.color + '55'); gr.addColorStop(1, n.color + '11');
-      ctx.beginPath(); ctx.arc(n.px, n.py, n.r, 0, Math.PI*2);
-      ctx.fillStyle = gr;
-      ctx.shadowColor = n.color; ctx.shadowBlur = n.hub ? 18 : 10;
-      ctx.fill();
-      // Border
-      ctx.strokeStyle = n.color + Math.round(pulse * 200).toString(16).padStart(2,'0');
-      ctx.lineWidth = n.hub ? 2 : 1.2; ctx.stroke();
-      ctx.shadowBlur = 0;
-      // Label
-      ctx.fillStyle = 'rgba(255,255,255,0.75)';
-      ctx.font = `${n.hub ? 9 : 8}px -apple-system,sans-serif`;
-      ctx.textAlign = 'center';
-      ctx.fillText(n.label, n.px, n.py + n.r + 13);
-      // Progress arc on hub
-      if (n.hub) {
-        ctx.beginPath();
-        ctx.arc(n.px, n.py, n.r + 6, -Math.PI/2, -Math.PI/2 + Math.PI*2*(n.pct/100));
-        ctx.strokeStyle = n.color; ctx.lineWidth = 2.5; ctx.lineCap = 'round'; ctx.stroke();
-      }
+    return branches;
+  });
+  const pulses = [], discharges = [];
+  function spawnPulse(ai) {
+    const [a,b]=AXONS[ai], na=NEURONS[a];
+    pulses.push({axon:ai,t:0,speed:.008+Math.random()*.009,color:na.color,size:2.5+Math.random()*1.5,trail:[],_fired:false});
+  }
+  function flashNeuron(ni){ discharges.push({nIdx:ni,t:0}); }
+  function maybeSpawn() {
+    AXONS.forEach((_,i)=>{ if(Math.random()<NEURONS[AXONS[i][0]].urgency*.022) spawnPulse(i); });
+  }
+  function quadPt(x1,y1,mx,my,x2,y2,t2){
+    const m=1-t2;
+    return {x:m*m*x1+2*m*t2*mx+t2*t2*x2, y:m*m*y1+2*m*t2*my+t2*t2*y2};
+  }
+  let tf=0;
+  function draw(){
+    const W=canvas.width/dpr, H=canvas.height/dpr;
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    ctx.save(); ctx.scale(dpr,dpr);
+    // Background
+    const bg=ctx.createRadialGradient(W*.48,H*.45,0,W*.5,H*.5,W*.65);
+    bg.addColorStop(0,'rgba(5,18,35,0.85)'); bg.addColorStop(.6,'rgba(3,10,22,0.65)'); bg.addColorStop(1,'rgba(2,6,14,0.3)');
+    ctx.fillStyle=bg; ctx.fillRect(0,0,W,H);
+    // Grid fog
+    ctx.strokeStyle='rgba(0,200,255,0.022)'; ctx.lineWidth=.5;
+    for(let gx=0;gx<W;gx+=30){ctx.beginPath();ctx.moveTo(gx,0);ctx.lineTo(gx,H);ctx.stroke();}
+    for(let gy=0;gy<H;gy+=30){ctx.beginPath();ctx.moveTo(0,gy);ctx.lineTo(W,gy);ctx.stroke();}
+    const nodes=NEURONS.map(n=>({...n,px:n.x*W,py:n.y*H}));
+    // Build axon curves
+    const curves=AXONS.map(([a,b])=>{
+      const na=nodes[a],nb=nodes[b];
+      const mx=(na.px+nb.px)/2+(nb.py-na.py)*.15, my=(na.py+nb.py)/2-(nb.px-na.px)*.15;
+      const grad=ctx.createLinearGradient(na.px,na.py,nb.px,nb.py);
+      grad.addColorStop(0,na.color+'40'); grad.addColorStop(.5,nb.color+'20'); grad.addColorStop(1,nb.color+'40');
+      ctx.beginPath(); ctx.moveTo(na.px,na.py); ctx.quadraticCurveTo(mx,my,nb.px,nb.py);
+      ctx.strokeStyle=grad; ctx.lineWidth=.9; ctx.stroke();
+      return {x1:na.px,y1:na.py,mx,my,x2:nb.px,y2:nb.py};
     });
-
-    // Intelligence score display
-    const score = calcInvestorScore();
-    ctx.font = 'bold 11px -apple-system,sans-serif';
-    ctx.fillStyle = '#c9a84c';
-    ctx.textAlign = 'left';
-    ctx.fillText('🧠 INTELLIGENCE SCORE', 8, 16);
-    ctx.font = 'bold 24px -apple-system,sans-serif';
-    ctx.fillStyle = '#c9a84c';
-    ctx.fillText(score + '%', 8, 42);
-    ctx.font = '9px -apple-system,sans-serif';
-    ctx.fillStyle = 'rgba(255,255,255,0.4)';
-    ctx.fillText('INVESTOR READINESS', 8, 56);
-
-    // Active connections counter
-    ctx.textAlign = 'right';
-    ctx.fillStyle = '#00d4aa';
-    ctx.font = 'bold 10px -apple-system,sans-serif';
-    ctx.fillText(pulses.length + ' SIGNALS ACTIVE', W - 8, 16);
-
+    // Dendrites
+    nodes.forEach((n,i)=>{
+      DENDRITES[i].forEach(br=>{
+        const ang=br.ang+Math.sin(tf*.8+br.wag)*.1;
+        const ex=n.px+Math.cos(ang)*(n.r+br.len), ey=n.py+Math.sin(ang)*(n.r+br.len);
+        ctx.beginPath(); ctx.moveTo(n.px,n.py);
+        ctx.quadraticCurveTo(n.px+Math.cos(ang)*(n.r+br.len*.5),n.py+Math.sin(ang)*(n.r+br.len*.5),ex,ey);
+        ctx.strokeStyle=n.color+'22'; ctx.lineWidth=n.hub?.85:.55; ctx.stroke();
+        ctx.beginPath(); ctx.arc(ex,ey,.7,0,Math.PI*2); ctx.fillStyle=n.color+'44'; ctx.fill();
+      });
+    });
+    // Pulses
+    pulses.forEach(p=>{
+      const c=curves[p.axon];
+      const pos=quadPt(c.x1,c.y1,c.mx,c.my,c.x2,c.y2,p.t);
+      p.trail.forEach((tp,ti)=>{
+        const tp2=quadPt(c.x1,c.y1,c.mx,c.my,c.x2,c.y2,tp);
+        ctx.beginPath(); ctx.arc(tp2.x,tp2.y,p.size*.55,0,Math.PI*2);
+        ctx.fillStyle=p.color+Math.round((ti/Math.max(p.trail.length,1))*80).toString(16).padStart(2,'0');
+        ctx.fill();
+      });
+      p.trail.push(p.t); if(p.trail.length>8) p.trail.shift();
+      const alpha=Math.sin(p.t*Math.PI);
+      const gr=ctx.createRadialGradient(pos.x,pos.y,0,pos.x,pos.y,p.size*2.5);
+      gr.addColorStop(0,p.color+'ff'); gr.addColorStop(.4,p.color+'88'); gr.addColorStop(1,p.color+'00');
+      ctx.beginPath(); ctx.arc(pos.x,pos.y,p.size,0,Math.PI*2);
+      ctx.fillStyle=gr; ctx.shadowColor=p.color; ctx.shadowBlur=12; ctx.fill(); ctx.shadowBlur=0;
+      p.t+=p.speed;
+      if(p.t>=.93&&!p._fired){p._fired=true;flashNeuron(AXONS[p.axon][1]);}
+    });
+    for(let i=pulses.length-1;i>=0;i--){if(pulses[i].t>=1)pulses.splice(i,1);}
+    // Neurons
+    nodes.forEach(n=>{
+      const beat=.7+.3*Math.sin(tf*(n.hub?2.2:1.6)+n.x*8+n.y*5);
+      const disc=discharges.find(d=>d.nIdx===n.id);
+      const da=disc?Math.max(0,1-disc.t*3):0;
+      if(da>0){
+        const hr=n.r+8+da*10;
+        const halo=ctx.createRadialGradient(n.px,n.py,n.r,n.px,n.py,hr);
+        halo.addColorStop(0,n.color+Math.round(da*.7*255).toString(16).padStart(2,'0'));
+        halo.addColorStop(1,n.color+'00');
+        ctx.beginPath(); ctx.arc(n.px,n.py,hr,0,Math.PI*2); ctx.fillStyle=halo; ctx.fill();
+      }
+      ctx.beginPath(); ctx.arc(n.px,n.py,n.r+3+beat*1.5,0,Math.PI*2);
+      ctx.strokeStyle=n.color+Math.round(beat*.28*255).toString(16).padStart(2,'0');
+      ctx.lineWidth=1; ctx.stroke();
+      const gr=ctx.createRadialGradient(n.px-n.r*.3,n.py-n.r*.3,0,n.px,n.py,n.r);
+      gr.addColorStop(0,n.color+'bb'); gr.addColorStop(.5,n.color+'3a'); gr.addColorStop(1,n.color+'0a');
+      ctx.beginPath(); ctx.arc(n.px,n.py,n.r,0,Math.PI*2);
+      ctx.fillStyle=gr; ctx.shadowColor=n.color; ctx.shadowBlur=n.hub?22:12; ctx.fill(); ctx.shadowBlur=0;
+      ctx.strokeStyle=n.color+Math.round(beat*.85*255).toString(16).padStart(2,'0');
+      ctx.lineWidth=n.hub?2.2:1.4; ctx.stroke();
+      const as=-Math.PI/2, ae=as+Math.PI*2*(n.pct/100);
+      ctx.beginPath(); ctx.arc(n.px,n.py,n.r+5,as,ae);
+      ctx.strokeStyle=n.color+'bb'; ctx.lineWidth=2; ctx.lineCap='round'; ctx.stroke();
+      if(n.hub){
+        for(let si=0;si<6;si++){
+          const sa=(Math.PI*2/6)*si+tf*.4;
+          ctx.beginPath(); ctx.moveTo(n.px+Math.cos(sa)*3,n.py+Math.sin(sa)*3);
+          ctx.lineTo(n.px+Math.cos(sa)*(n.r-2),n.py+Math.sin(sa)*(n.r-2));
+          ctx.strokeStyle=n.color+'33'; ctx.lineWidth=.7; ctx.stroke();
+        }
+        ctx.fillStyle=n.color; ctx.font='bold 8px -apple-system,sans-serif'; ctx.textAlign='center';
+        ctx.fillText(n.pct+'%',n.px,n.py+3);
+      }
+      ctx.fillStyle='rgba(210,235,255,0.82)'; ctx.shadowColor='rgba(0,0,0,0.8)'; ctx.shadowBlur=4;
+      ctx.font=`${n.hub?7.5:6.5}px -apple-system,sans-serif`; ctx.textAlign='center';
+      ctx.fillText(n.label,n.px,n.py+n.r+10); ctx.shadowBlur=0;
+    });
+    for(let i=discharges.length-1;i>=0;i--){discharges[i].t+=.06;if(discharges[i].t>=1)discharges.splice(i,1);}
+    // HUD
+    const score=typeof calcInvestorScore==='function'?calcInvestorScore():95;
+    ctx.save();
+    ctx.fillStyle='rgba(2,8,16,0.75)'; ctx.beginPath(); ctx.rect(5,5,115,55); ctx.fill();
+    ctx.strokeStyle='rgba(201,168,76,0.35)'; ctx.lineWidth=.7; ctx.stroke();
+    ctx.fillStyle='#c9a84c'; ctx.font='6.5px -apple-system,sans-serif'; ctx.textAlign='left';
+    ctx.fillText('INTELLIGENCE SCORE',11,18);
+    ctx.font='bold 22px -apple-system,sans-serif'; ctx.fillText(score+'%',11,43);
+    ctx.font='7px -apple-system,sans-serif'; ctx.fillStyle='rgba(255,255,255,0.35)'; ctx.fillText('INVESTOR READINESS',11,55);
     ctx.restore();
-    t += 0.016;
+    ctx.save();
+    ctx.fillStyle='rgba(0,212,170,0.85)'; ctx.font='7px -apple-system,sans-serif'; ctx.textAlign='right';
+    ctx.fillText('⚡ '+pulses.length+' SYNAPSEN AKTIV',W-8,16);
+    ctx.fillStyle='rgba(0,200,255,0.4)'; ctx.font='6px -apple-system,sans-serif';
+    ctx.fillText(NEURONS.length+' NEURONEN · '+AXONS.length+' AXONE',W-8,H-7);
+    ctx.restore();
+    ctx.restore();
+    maybeSpawn(); tf+=.018;
     requestAnimationFrame(draw);
   }
   draw();
@@ -3934,6 +4357,369 @@ function initJarvis() {
 }
 
 // ════════════════════════════════════════════════════════════
+
+// ══════════════════════════════════════════════════════════════
+// CEO CALENDAR SECTION — Full Interactive JS
+// ══════════════════════════════════════════════════════════════
+(function(){
+  var CAL = {
+    selectedDate: new Date(),
+    viewYear: new Date().getFullYear(),
+    viewMonth: new Date().getMonth(),
+    bridgeUrl: '',
+    events: [],
+    nextCountdownTimer: null,
+    DAYS_DE: ['Mo','Di','Mi','Do','Fr','Sa','So'],
+    MONTHS_DE: ['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'],
+    MONTHS_DE_SHORT: ['Jan','Feb','Mär','Apr','Mai','Jun','Jul','Aug','Sep','Okt','Nov','Dez'],
+
+    init: function() {
+      try {
+        CAL.bridgeUrl = localStorage.getItem('ceo_cal_bridge_url') ||
+                        localStorage.getItem('ceo_master_bridge_url') || '';
+      } catch(e){}
+      CAL.loadEvents();
+      CAL.renderMonthGrid();
+      CAL.renderWeekStrip();
+      CAL.renderAgenda(CAL.selectedDate);
+      CAL.renderUpcoming();
+      CAL.startNextCountdown();
+      CAL.updateBridgeStatus();
+      CAL.updateWeekStats();
+      // Restore bridge input
+      var bi = document.getElementById('cal-bridge-url-input');
+      if (bi && CAL.bridgeUrl) bi.value = CAL.bridgeUrl;
+    },
+
+    loadEvents: function() {
+      try {
+        var stored = JSON.parse(localStorage.getItem('ceo_cal_events') || '[]');
+        // Add demo events if empty
+        if (stored.length === 0) {
+          var today = new Date();
+          var td = today.toISOString().split('T')[0];
+          stored = [
+            {id:'d1',title:'BunBo Strategy Call',date:td,time:'09:00',dur:60,cal:'wb',loc:'Zoom'},
+            {id:'d2',title:'Seedmatch DD Review',date:td,time:'11:30',dur:90,cal:'bl',loc:'Online'},
+            {id:'d3',title:'Investor Meeting',date:td,time:'15:00',dur:60,cal:'wb',loc:'Hamburg'},
+            {id:'d4',title:'Wave Bite Sprint Review',date:CAL.offsetDate(today,1),time:'10:00',dur:90,cal:'wb',loc:'Remote'},
+            {id:'d5',title:'BunBo Pitch Vorbereitung',date:CAL.offsetDate(today,2),time:'14:00',dur:120,cal:'bl',loc:''},
+            {id:'d6',title:'Investor Follow-up',date:CAL.offsetDate(today,3),time:'09:30',dur:45,cal:'wb',loc:'Zoom'},
+          ];
+          try { localStorage.setItem('ceo_cal_events', JSON.stringify(stored)); } catch(e){}
+        }
+        CAL.events = stored;
+      } catch(e) { CAL.events = []; }
+    },
+
+    offsetDate: function(base, days) {
+      var d = new Date(base);
+      d.setDate(d.getDate() + days);
+      return d.toISOString().split('T')[0];
+    },
+
+    saveEvents: function() {
+      try { localStorage.setItem('ceo_cal_events', JSON.stringify(CAL.events)); } catch(e){}
+    },
+
+    getEventsForDate: function(dateStr) {
+      return CAL.events.filter(function(e){ return (e.date||'').startsWith(dateStr); })
+             .sort(function(a,b){ return (a.time||'').localeCompare(b.time||''); });
+    },
+
+    renderMonthGrid: function() {
+      var grid = document.getElementById('cal-month-grid');
+      if (!grid) return;
+      var y = CAL.viewYear, m = CAL.viewMonth;
+      var title = document.getElementById('cal-month-title');
+      if (title) title.textContent = CAL.MONTHS_DE[m] + ' ' + y;
+
+      // Clear old days (keep headers = first 7 children)
+      while (grid.children.length > 7) grid.removeChild(grid.lastChild);
+
+      var firstDay = new Date(y, m, 1);
+      var lastDay = new Date(y, m+1, 0);
+      var startDow = (firstDay.getDay() + 6) % 7; // Mon=0
+      var today = new Date(); today.setHours(0,0,0,0);
+      var selStr = CAL.selectedDate.toISOString().split('T')[0];
+
+      // Previous month days
+      for (var i = 0; i < startDow; i++) {
+        var prevDay = new Date(y, m, -startDow + i + 1);
+        var el = document.createElement('div');
+        el.className = 'cal-day other-month';
+        el.textContent = prevDay.getDate();
+        grid.appendChild(el);
+      }
+      // Current month days
+      for (var d = 1; d <= lastDay.getDate(); d++) {
+        var date = new Date(y, m, d);
+        var dateStr = date.toISOString().split('T')[0];
+        var evs = CAL.getEventsForDate(dateStr);
+        var el = document.createElement('div');
+        el.className = 'cal-day';
+        if (date.getTime() === today.getTime()) el.className += ' today';
+        if (dateStr === selStr) el.className += ' selected';
+        if (evs.length > 0) {
+          var calTypes = evs.map(function(e){ return e.cal; });
+          if (calTypes.indexOf('wb') > -1 && calTypes.indexOf('bl') > -1) el.className += ' multi-ev has-ev';
+          else if (calTypes.indexOf('wb') > -1) el.className += ' wb-ev has-ev';
+          else if (calTypes.indexOf('bl') > -1) el.className += ' bl-ev has-ev';
+          else el.className += ' has-ev';
+        }
+        el.textContent = d;
+        (function(ds, dateObj){ el.onclick = function(){ CAL.selectDay(ds, dateObj); }; })(dateStr, date);
+        grid.appendChild(el);
+      }
+      // Update month stats
+      var mEvs = CAL.events.filter(function(e){ return (e.date||'').startsWith(y+'-'+(m<9?'0':'')+(m+1)); });
+      var statEl = function(id){ return document.getElementById(id); };
+      if(statEl('cal-stat-total')) statEl('cal-stat-total').textContent = mEvs.length;
+      if(statEl('cal-stat-wb')) statEl('cal-stat-wb').textContent = mEvs.filter(function(e){return e.cal==='wb';}).length;
+      if(statEl('cal-stat-bl')) statEl('cal-stat-bl').textContent = mEvs.filter(function(e){return e.cal==='bl';}).length;
+      if(statEl('cal-stat-pr')) statEl('cal-stat-pr').textContent = mEvs.filter(function(e){return e.cal==='pr';}).length;
+    },
+
+    renderWeekStrip: function() {
+      var strip = document.getElementById('cal-week-strip');
+      if (!strip) return;
+      strip.innerHTML = '';
+      var today = new Date(); today.setHours(0,0,0,0);
+      var dow = (today.getDay() + 6) % 7;
+      var monday = new Date(today); monday.setDate(today.getDate() - dow);
+      for (var i = 0; i < 7; i++) {
+        var day = new Date(monday); day.setDate(monday.getDate() + i);
+        var dateStr = day.toISOString().split('T')[0];
+        var evs = CAL.getEventsForDate(dateStr);
+        var isToday = day.getTime() === today.getTime();
+        var col = document.createElement('div');
+        col.className = 'cal-week-col' + (isToday ? ' today-col' : '');
+        var dayName = CAL.DAYS_DE[i];
+        var dots = evs.slice(0,3).map(function(e){
+          var bg = e.cal==='wb' ? 'var(--teal)' : e.cal==='bl' ? 'var(--gold)' : '#b48dfa';
+          return '<div class="cal-week-ev-dot" style="background:'+bg+'"></div>';
+        }).join('');
+        col.innerHTML = '<div class="cal-week-day-name">'+dayName+'</div><div class="cal-week-day-num">'+day.getDate()+'</div>'+dots+(evs.length>3?'<div style="font-size:.38rem;color:var(--text-dim)">+'+( evs.length-3)+'</div>':'');
+        (function(ds, dateObj){ col.onclick = function(){ CAL.selectDay(ds, dateObj); }; })(dateStr, day);
+        strip.appendChild(col);
+      }
+    },
+
+    selectDay: function(dateStr, dateObj) {
+      CAL.selectedDate = dateObj;
+      CAL.renderMonthGrid();
+      CAL.renderAgenda(dateObj);
+      // Prefill date in quick-add
+      var cia = document.getElementById('cia-date');
+      if (cia) cia.value = dateStr;
+    },
+
+    renderAgenda: function(dateObj) {
+      var dateStr = dateObj.toISOString().split('T')[0];
+      var adEl = document.getElementById('cal-agenda-date');
+      if (adEl) {
+        var opts = {weekday:'long', year:'numeric', month:'long', day:'numeric'};
+        adEl.textContent = dateObj.toLocaleDateString('de-DE', opts);
+      }
+      var container = document.getElementById('cal-agenda-events');
+      if (!container) return;
+      var evs = CAL.getEventsForDate(dateStr);
+      if (evs.length === 0) {
+        container.innerHTML = '<div style="text-align:center;padding:1.8rem;color:rgba(255,255,255,0.18);font-size:.65rem;border:1px dashed rgba(0,200,255,0.12);border-radius:8px">📅 Keine Termine an diesem Tag<br><span style="font-size:.55rem;margin-top:.3rem;display:block">Klicke <strong style="color:var(--teal)">＋ Termin</strong> um einen anzulegen</span></div>';
+        return;
+      }
+      container.innerHTML = evs.map(function(ev, idx){
+        var calCol = ev.cal==='wb' ? 'wb' : ev.cal==='bl' ? 'bl' : 'pr';
+        var calEmoji = ev.cal==='wb' ? '🌊' : ev.cal==='bl' ? '🔔' : '🔒';
+        var dur = ev.dur ? (ev.dur >= 60 ? Math.floor(ev.dur/60)+'h'+(ev.dur%60?''+ev.dur%60+'m':'') : ev.dur+'min') : '';
+        var loc = ev.loc ? '<span>📍 '+ev.loc+'</span>' : '';
+        return '<div class="cal-ev-row '+calCol+'" onclick="calDeletePrompt('+idx+',\''+dateStr+'\')">'+
+          '<div class="cal-ev-time">'+(ev.time||'--:--')+'</div>'+
+          '<div class="cal-ev-body">'+
+            '<div class="cal-ev-title">'+calEmoji+' '+ev.title+'</div>'+
+            '<div class="cal-ev-meta">'+loc+(loc&&dur?' · ':'')+dur+'</div>'+
+          '</div>'+
+          '<div class="cal-ev-dur" style="font-size:.5rem;color:rgba(255,255,255,0.15)" title="Klicken zum Löschen">✕</div>'+
+        '</div>';
+      }).join('');
+    },
+
+    renderUpcoming: function() {
+      var container = document.getElementById('cal-upcoming-events');
+      if (!container) return;
+      var now = new Date();
+      var nowStr = now.toISOString().split('T')[0];
+      var nowTime = now.getHours()*60 + now.getMinutes();
+      var upcoming = CAL.events.filter(function(e){
+        if (!e.date) return false;
+        if (e.date > nowStr) return true;
+        if (e.date === nowStr && e.time) {
+          var parts = e.time.split(':');
+          return parseInt(parts[0])*60 + parseInt(parts[1]) > nowTime;
+        }
+        return false;
+      }).sort(function(a,b){ return (a.date+a.time).localeCompare(b.date+b.time); }).slice(0,4);
+
+      if (upcoming.length === 0) {
+        container.innerHTML = '<div style="font-size:.62rem;color:rgba(255,255,255,0.18)">Keine kommenden Termine</div>';
+        return;
+      }
+      var today = new Date(); today.setHours(0,0,0,0);
+      container.innerHTML = upcoming.map(function(ev){
+        var evDate = new Date(ev.date);
+        var diff = Math.round((evDate - today)/(86400000));
+        var diffStr = diff===0?'Heute':diff===1?'Morgen':'in '+diff+' Tagen';
+        var calColor = ev.cal==='wb'?'var(--teal)':ev.cal==='bl'?'var(--gold)':'#b48dfa';
+        var calEmoji = ev.cal==='wb'?'🌊':ev.cal==='bl'?'🔔':'🔒';
+        return '<div style="display:flex;align-items:center;gap:.55rem;padding:.4rem .5rem;border-radius:6px;background:rgba(0,200,255,0.03);border:1px solid rgba(0,200,255,0.08);margin-bottom:.3rem">'+
+          '<div style="width:3px;height:28px;background:'+calColor+';border-radius:2px;flex-shrink:0"></div>'+
+          '<div style="flex:1;min-width:0">'+
+            '<div style="font-size:.65rem;color:var(--text);font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">'+calEmoji+' '+ev.title+'</div>'+
+            '<div style="font-size:.5rem;color:var(--text-dim)">'+diffStr+' · '+(ev.time||'')+'</div>'+
+          '</div>'+
+        '</div>';
+      }).join('');
+    },
+
+    startNextCountdown: function() {
+      if (CAL.nextCountdownTimer) clearInterval(CAL.nextCountdownTimer);
+      CAL.updateNextAppt();
+      CAL.nextCountdownTimer = setInterval(CAL.updateNextAppt, 1000);
+    },
+
+    updateNextAppt: function() {
+      var now = new Date();
+      var nowMs = now.getTime();
+      var upcoming = CAL.events.filter(function(e){
+        if (!e.date || !e.time) return false;
+        var eDate = new Date(e.date + 'T' + e.time + ':00');
+        return eDate.getTime() > nowMs;
+      }).sort(function(a,b){
+        return new Date(a.date+'T'+a.time+':00') - new Date(b.date+'T'+b.time+':00');
+      });
+      var titleEl = document.getElementById('cal-next-title');
+      var cdEl = document.getElementById('cal-next-countdown');
+      if (!upcoming.length) {
+        if (titleEl) titleEl.textContent = '— kein Termin eingetragen —';
+        if (cdEl) cdEl.textContent = '— : — : —';
+        return;
+      }
+      var next = upcoming[0];
+      var nextDate = new Date(next.date + 'T' + next.time + ':00');
+      var diff = nextDate - now;
+      var h = Math.floor(diff/3600000);
+      var m = Math.floor((diff%3600000)/60000);
+      var s = Math.floor((diff%60000)/1000);
+      var emoji = next.cal==='wb'?'🌊':next.cal==='bl'?'🔔':'🔒';
+      if (titleEl) titleEl.textContent = emoji + ' ' + next.title + ' · ' + next.time;
+      if (cdEl) cdEl.textContent = (h>0?h+'h ':'')+('0'+m).slice(-2)+'m '+('0'+s).slice(-2)+'s';
+    },
+
+    updateWeekStats: function() {
+      var today = new Date(); today.setHours(0,0,0,0);
+      var dow = (today.getDay() + 6) % 7;
+      var monday = new Date(today); monday.setDate(today.getDate() - dow);
+      var sunday = new Date(monday); sunday.setDate(monday.getDate() + 6);
+      var monStr = monday.toISOString().split('T')[0];
+      var sunStr = sunday.toISOString().split('T')[0];
+      var wEvs = CAL.events.filter(function(e){ return e.date >= monStr && e.date <= sunStr; });
+      var wHours = wEvs.reduce(function(s,e){ return s + (parseInt(e.dur)||60); }, 0) / 60;
+      var wc = document.getElementById('cal-week-count');
+      var wh = document.getElementById('cal-week-hours');
+      if (wc) wc.textContent = wEvs.length;
+      if (wh) wh.textContent = wHours.toFixed(1)+'h';
+    },
+
+    updateBridgeStatus: function() {
+      var el = document.getElementById('cal-bridge-status-sec');
+      if (!el) return;
+      if (CAL.bridgeUrl) {
+        el.style.background = 'rgba(0,212,170,0.08)';
+        el.style.borderColor = 'rgba(0,212,170,0.3)';
+        el.style.color = 'rgba(0,212,170,0.9)';
+        el.textContent = '✓ Bridge verbunden — Auto-Sync aktiv';
+      }
+    }
+  };
+
+  // Global functions for onclick handlers
+  window.calNavMonth = function(dir) { CAL.viewMonth += dir; if(CAL.viewMonth<0){CAL.viewMonth=11;CAL.viewYear--;} if(CAL.viewMonth>11){CAL.viewMonth=0;CAL.viewYear++;} CAL.renderMonthGrid(); };
+  window.calSelectToday = function() { var t=new Date(); CAL.viewMonth=t.getMonth(); CAL.viewYear=t.getFullYear(); CAL.selectedDate=t; CAL.renderMonthGrid(); CAL.renderWeekStrip(); CAL.renderAgenda(t); };
+  window.calToggleQuickAdd = function() { var el=document.getElementById('cal-inline-add'); if(el){el.style.display=el.style.display==='none'?'block':'none';} var d=document.getElementById('cia-date'); if(d&&!d.value)d.value=CAL.selectedDate.toISOString().split('T')[0]; };
+  window.calInlineAddSave = function() {
+    var title = (document.getElementById('cia-title')||{}).value||'';
+    var date = (document.getElementById('cia-date')||{}).value||'';
+    var time = (document.getElementById('cia-time')||{}).value||'';
+    var cal = (document.getElementById('cia-cal')||{}).value||'wb';
+    var dur = parseInt((document.getElementById('cia-dur')||{}).value||60);
+    var loc = (document.getElementById('cia-loc')||{}).value||'';
+    var st = document.getElementById('cia-status');
+    if (!title || !date) { if(st) st.innerHTML='<span style="color:#f5c842">⚠ Titel und Datum erforderlich</span>'; return; }
+    var ev = {id:'u'+Date.now(), title:title, date:date, time:time, cal:cal, dur:dur, loc:loc};
+    CAL.events.push(ev); CAL.saveEvents();
+    CAL.renderMonthGrid(); CAL.renderWeekStrip(); CAL.renderAgenda(CAL.selectedDate); CAL.renderUpcoming(); CAL.updateNextAppt(); CAL.updateWeekStats();
+    if(st) st.innerHTML='<span style="color:var(--teal)">✓ Termin gespeichert!</span>';
+    document.getElementById('cia-title').value=''; document.getElementById('cia-time').value=''; document.getElementById('cia-loc').value='';
+    setTimeout(function(){calToggleQuickAdd();if(st)st.innerHTML='';},1500);
+    // Also sync to bridge if connected
+    if(CAL.bridgeUrl) calSyncEventToBridge(ev);
+    if(typeof updateBridgeCalEvents==='function') updateBridgeCalEvents();
+  };
+  window.calDeletePrompt = function(idx, dateStr) {
+    var evs = CAL.getEventsForDate(dateStr);
+    var ev = evs[idx];
+    if (!ev) return;
+    if (confirm('Termin löschen: "'+ev.title+'"?')) {
+      var gIdx = CAL.events.indexOf(ev);
+      if (gIdx>-1) CAL.events.splice(gIdx,1);
+      CAL.saveEvents();
+      CAL.renderMonthGrid(); CAL.renderWeekStrip(); CAL.renderAgenda(CAL.selectedDate); CAL.renderUpcoming(); CAL.updateNextAppt(); CAL.updateWeekStats();
+      if(typeof updateBridgeCalEvents==='function') updateBridgeCalEvents();
+    }
+  };
+  window.calQuickCreate = function(cal, title) {
+    var ev = {id:'q'+Date.now(), title:title, date:new Date().toISOString().split('T')[0], time:'09:00', cal:cal, dur:60, loc:''};
+    CAL.events.push(ev); CAL.saveEvents();
+    CAL.renderMonthGrid(); CAL.renderWeekStrip(); CAL.renderAgenda(CAL.selectedDate); CAL.renderUpcoming(); CAL.updateNextAppt(); CAL.updateWeekStats();
+    if(typeof updateBridgeCalEvents==='function') updateBridgeCalEvents();
+  };
+  window.calSaveBridgeUrl = function() {
+    var val = (document.getElementById('cal-bridge-url-input')||{}).value||'';
+    if(!val.startsWith('http')){ alert('Bitte eine gültige URL eingeben'); return; }
+    CAL.bridgeUrl = val;
+    try { localStorage.setItem('ceo_cal_bridge_url', val); } catch(e){}
+    CAL.updateBridgeStatus();
+    calSyncNow();
+  };
+  window.calSyncNow = function() {
+    var st = document.getElementById('cal-sync-status');
+    if (!CAL.bridgeUrl) { if(st) st.textContent='Keine Bridge-URL gesetzt'; return; }
+    if(st) st.textContent='↺ Synchronisiere…';
+    fetch(CAL.bridgeUrl+'?action=calendar_today')
+      .then(function(r){return r.json();})
+      .then(function(d){
+        if(d&&d.events&&d.events.length){
+          // Merge bridge events
+          var today=new Date().toISOString().split('T')[0];
+          var existing=CAL.events.filter(function(e){return !e.fromBridge||!e.date.startsWith(today);});
+          var bridgeEvs=d.events.map(function(e){return Object.assign({},e,{id:'b'+e.id,fromBridge:true});});
+          CAL.events=existing.concat(bridgeEvs);
+          CAL.saveEvents(); CAL.renderMonthGrid(); CAL.renderWeekStrip(); CAL.renderAgenda(CAL.selectedDate); CAL.renderUpcoming(); CAL.updateNextAppt(); CAL.updateWeekStats();
+          if(st) st.innerHTML='<span style="color:var(--teal)">✓ '+bridgeEvs.length+' Termine geladen</span>';
+          if(typeof updateBridgeCalEvents==='function') updateBridgeCalEvents();
+        } else { if(st) st.innerHTML='<span style="color:var(--text-dim)">Keine neuen Termine</span>'; }
+      }).catch(function(err){ if(st) st.innerHTML='<span style="color:#f5c842">⚠ Bridge offline</span>'; });
+  };
+  window.calSyncEventToBridge = function(ev) {
+    if (!CAL.bridgeUrl) return;
+    fetch(CAL.bridgeUrl+'?action=add_event', {method:'POST', body:JSON.stringify(ev), headers:{'Content-Type':'application/json'}}).catch(function(){});
+  };
+
+  // Init after DOM ready
+  if (document.readyState === 'loading') { document.addEventListener('DOMContentLoaded', CAL.init); }
+  else { setTimeout(CAL.init, 300); }
+})();
+
 // BUNBO COMMAND MENTOR — live cycling briefing
 // ════════════════════════════════════════════════════════════
 function initBunboMentor() {
@@ -3946,12 +4732,16 @@ function initBunboMentor() {
     chip.textContent = new Date().toLocaleDateString('de-DE',{weekday:'short',day:'2-digit',month:'2-digit'});
   }
   const BRIEFINGS = [
-    {text:'🚀 <em class="mn">BunBo App:</em> TestFlight-Upload diese Woche. 20 Beta-Tester rekrutieren.', pct:65},
-    {text:'💰 <em class="mn">Runway-Alarm:</em> Seed-Gespräch mit Seedmatch priorisieren — KW 21 Deadline.', pct:45},
-    {text:'⚓ <em class="mn">Marina-Saison:</em> Peak-Window Mai–Sep nutzen. Müggelsee-LOI fertigstellen.', pct:78},
-    {text:'📊 <em class="mn">Investor-Deck v3:</em> Pitch-Deck bis Freitag finalisieren und versenden.', pct:72},
-    {text:'🌊 <em class="mn">Wasserlage:</em> Live-Daten aktiv. Community wächst. Feedback auswerten.', pct:80},
-    {text:'🎯 <em class="mn">Heute fokussieren:</em> MVP-Demo fertigstellen — das ist der kritische Pfad.', pct:60},
+    {text:'🚀 <em class="mn">BunBo App:</em> TestFlight-Upload diese Woche — 20 Beta-Tester warten. Sommer-Fenster nutzen! 🚢', pct:65},
+    {text:'💰 <em class="mn">Runway-Alarm:</em> 5 Monate Runway. Seedmatch DD KW 21. Ohne Pitch kein Schotter — also ran! 💸', pct:45},
+    {text:'⚓ <em class="mn">Marina-Saison:</em> Das Wasser ist warm, die Investoren auch. Müggelsee-LOI heute finalisieren.', pct:78},
+    {text:'📊 <em class="mn">Investor-Deck v3:</em> Intelligence Score 95%. Deck ist scharf. Jetzt senden, nicht zögern.', pct:72},
+    {text:'🌊 <em class="mn">Wasserlage:</em> Live-Daten fließen, Community wächst. Feedback auswerten — die Nutzer reden! 📡', pct:80},
+    {text:'🎯 <em class="mn">Fokus heute:</em> MVP-Demo ist der kritische Pfad. Alles andere kann warten. 🎖️', pct:60},
+    {text:'📅 <em class="mn">Kalender-Check:</em> Nächster Investor-Termin schon eingetragen? Vollplaner warten auf dich!', pct:68},
+    {text:'🧠 <em class="mn">JARVIS meldet:</em> Synapsen feuern auf Hochtouren. Deine KI arbeitet — du auch? 😄', pct:70},
+    {text:'🤝 <em class="mn">Partner-Pipeline:</em> Frank Burggraf / ROKA Werk — Termin fixieren. Chancenfenster 72h!', pct:62},
+    {text:'🏆 <em class="mn">Maritime Awards 2026:</em> PR-Goldgrube. Bewerbung läuft — kurzer Status-Check heute?', pct:55},
   ];
   let bi = 0;
   function nextBriefing() {
@@ -4565,6 +5355,130 @@ function drawWireframeBoat(ctx, cx, cy, sc, t) {
 // MAIL INTELLIGENCE — GMAIL + OUTLOOK
 // ══════════════════════════════════════════════
 const GMAIL_BRIDGE_URL = 'https://script.google.com/macros/s/AKfycbzrTsfF1w8z6D8_j8E2xBcayRkO1q0ldlAsPAvv7tY1LgZEeELrwZd7x_J2v_utaXSc/exec';
+
+// ── MASTER BRIDGE (Gmail + Kalender + GA4) — nach Deployment URL eintragen ──
+var MASTER_BRIDGE_URL = '';
+try { MASTER_BRIDGE_URL = localStorage.getItem('ceo_master_bridge_url') || ''; } catch(e){}
+
+// ── GA4 TRACKING — Live-Daten vom Master Bridge ────────────────────────────
+function loadGA4Stats() {
+  var url = MASTER_BRIDGE_URL || GMAIL_BRIDGE_URL;
+  if (!url) return;
+
+  // Status anzeigen
+  var statusEls = document.querySelectorAll('.analytics-live-badge');
+  statusEls.forEach(function(el) { el.textContent = '⏳'; });
+
+  fetch(url + '?action=analytics_stats')
+    .then(function(r) { return r.json(); })
+    .then(function(data) {
+      if (data.error || !data.configured) {
+        // Bridge erreichbar aber GA4 noch nicht konfiguriert
+        statusEls.forEach(function(el) { el.textContent = '⚠ GA4 einrichten'; el.style.color = '#f5c842'; });
+        // Trotzdem Mail-Stats laden (Bridge läuft)
+        updateMailStatsBadge(url);
+        return;
+      }
+      // ─── Echte GA4 Daten eintragen ─────────────────────────────────────
+      var todayPV  = data.today  && data.today.pageviews  || 0;
+      var todayU   = data.today  && data.today.users       || 0;
+      var weekU    = data.week   && data.week.users        || 0;
+      var monthU   = data.month  && data.month.users       || 0;
+      var bounce   = data.engagement && data.engagement.bounce_rate || 0;
+      var avgSes   = data.engagement && data.engagement.avg_session_fmt || '0:00';
+
+      // Haupt-Besucherzahl (heute Seitenaufrufe)
+      var visEl = document.getElementById('analytics-visitor-count');
+      if (visEl) { visEl.textContent = todayPV; visEl.title = 'Live GA4 Daten — ' + new Date().toLocaleTimeString(); }
+
+      // Bridge KPI (oben rechts)
+      var bridgeVis = document.getElementById('bridge-visitors');
+      if (bridgeVis) { bridgeVis.textContent = todayPV; bridgeVis.title = 'Live: ' + todayPV + ' Seitenaufrufe heute'; }
+
+      // Weitere Tracking-Zahlen updaten
+      var allVisEls = document.querySelectorAll('[data-ga4-metric]');
+      allVisEls.forEach(function(el) {
+        var metric = el.getAttribute('data-ga4-metric');
+        if (metric === 'today-users')  el.textContent = todayU;
+        if (metric === 'week-users')   el.textContent = weekU;
+        if (metric === 'month-users')  el.textContent = monthU;
+        if (metric === 'bounce-rate')  el.textContent = Math.round(bounce) + '%';
+        if (metric === 'avg-session')  el.textContent = avgSes;
+      });
+
+      // Live-Badge grün
+      statusEls.forEach(function(el) { el.textContent = '🟢 LIVE'; el.style.color = '#00d4aa'; });
+
+      // Top Pages wenn vorhanden
+      if (data.top_pages && data.top_pages.length > 0) {
+        var tpEl = document.getElementById('ga4-top-pages');
+        if (tpEl) {
+          tpEl.innerHTML = data.top_pages.slice(0,3).map(function(p) {
+            return '<div style="display:flex;justify-content:space-between;font-size:.55rem;padding:.15rem 0;border-bottom:1px solid rgba(255,255,255,0.05)">' +
+              '<span style="color:rgba(255,255,255,0.6);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:140px">' + p.path + '</span>' +
+              '<span style="color:var(--blue);font-weight:700">' + p.pageviews + '</span>' +
+            '</div>';
+          }).join('');
+        }
+      }
+
+      // Echtzeit-Besucher nachladen
+      loadGA4Realtime(url);
+    })
+    .catch(function(err) {
+      statusEls.forEach(function(el) { el.textContent = '⚫ offline'; el.style.color = 'rgba(255,255,255,0.3)'; });
+    });
+}
+
+function loadGA4Realtime(url) {
+  if (!url) return;
+  fetch(url + '?action=analytics_realtime')
+    .then(function(r) { return r.json(); })
+    .then(function(data) {
+      var rtEl = document.getElementById('ga4-realtime-users');
+      if (rtEl && data.configured) {
+        rtEl.textContent = data.active_users || 0;
+        rtEl.style.color = (data.active_users > 0) ? '#00d4aa' : 'rgba(255,255,255,0.4)';
+      }
+    }).catch(function(){});
+}
+
+function updateMailStatsBadge(url) {
+  fetch(url + '?action=mail_stats')
+    .then(function(r) { return r.json(); })
+    .then(function(data) {
+      var unreadEl = document.getElementById('gmail-unread-count');
+      if (unreadEl && data.unread !== undefined) unreadEl.textContent = data.unread;
+    }).catch(function(){});
+}
+
+function saveMasterBridgeUrl(url) {
+  url = (url || '').trim();
+  if (!url) return;
+  MASTER_BRIDGE_URL = url;
+  try { localStorage.setItem('ceo_master_bridge_url', url); } catch(e){}
+  // Auch als Calendar Bridge setzen
+  try { localStorage.setItem('ceo_cal_bridge_url', url); } catch(e){}
+  // Kalender Bridge in UI updaten
+  var calBridgeInput = document.querySelector('#cal-bridge-input, [id*="bridge-input"]');
+  if (calBridgeInput) calBridgeInput.value = url;
+  // Sofort GA4 laden
+  loadGA4Stats();
+}
+
+// Beim Laden: Master Bridge aus localStorage lesen und GA4 starten
+setTimeout(function() {
+  if (MASTER_BRIDGE_URL) {
+    loadGA4Stats();
+    // Kalender Bridge ebenfalls setzen
+    try { localStorage.setItem('ceo_cal_bridge_url', MASTER_BRIDGE_URL); } catch(e){}
+  } else {
+    // Nur Gmail Bridge (keine GA4)
+    updateMailStatsBadge(GMAIL_BRIDGE_URL);
+  }
+  // GA4 alle 5 Minuten aktualisieren
+  setInterval(function() { if (MASTER_BRIDGE_URL) loadGA4Stats(); }, 300000);
+}, 6000);
 const OUTLOOK_CLIENT_ID = 'f026a23d-c0f8-479d-b18c-9d4813105673'; // Wave Bite CEO Office — Azure SPA Registration
 
 let allMails = [];
@@ -5290,6 +6204,10 @@ function toggleSection(titleEl) {
 
 _tryInitMSAL(20); // bis zu 6 Sekunden warten
 setTimeout(function() {
+  // Master Bridge URL-Input befüllen
+  var mbInput = document.getElementById('master-bridge-url-input');
+  if (mbInput && MASTER_BRIDGE_URL) mbInput.value = MASTER_BRIDGE_URL;
+
   loadGmail();
   // Fallback: if still showing loading after 10s, load demo data
   setTimeout(function() {
@@ -5299,6 +6217,128 @@ setTimeout(function() {
     }
   }, 10000);
 }, 4500); // 4.5s nach Boot Gmail laden
+
+// ════════════════════════════════════════════════════════════
+// CEO CALENDAR STRIP — compact daily widget
+// ════════════════════════════════════════════════════════════
+(function initCalStrip() {
+  var dateEl = document.getElementById('cal-strip-datestr');
+  if (dateEl) {
+    dateEl.textContent = new Date().toLocaleDateString('de-DE', {weekday:'long',day:'2-digit',month:'long',year:'numeric'});
+  }
+  var csmd = document.getElementById('csm-date');
+  if (csmd) csmd.value = new Date().toISOString().slice(0,10);
+  var csmt = document.getElementById('csm-time');
+  if (csmt) {
+    var h=new Date().getHours(), m=Math.ceil(new Date().getMinutes()/15)*15;
+    if(m>=60){h++;m=0;} csmt.value=String(h).padStart(2,'0')+':'+String(m).padStart(2,'0');
+  }
+  loadCalStripEvents();
+})();
+
+function loadCalStripEvents() {
+  var evC = document.getElementById('cal-strip-events');
+  if (!evC) return;
+  var url = '';
+  try { url = localStorage.getItem('ceo_cal_bridge_url') || ''; } catch(e){}
+  if (!url) { renderCalStripDemo(evC); updateBridgeCalEvents(); return; }
+  fetch(url+'?action=calendar_today')
+    .then(function(r){return r.json();})
+    .then(function(d){
+      if(d&&d.events&&d.events.length){renderCalStripEvents(evC,d.events);updateMentorNextAppt(d.events);}
+      else { renderCalStripDemo(evC); updateBridgeCalEvents(); }
+    }).catch(function(){renderCalStripDemo(evC); updateBridgeCalEvents();});
+}
+
+function renderCalStripEvents(c,evs) {
+  if(!evs.length){c.innerHTML='<span style="font-size:.6rem;color:rgba(255,255,255,0.3)">Keine Termine heute</span>';return;}
+  c.innerHTML=evs.slice(0,5).map(function(ev){
+    var cl=ev.calendar==='bl'?'bl':(ev.calendar==='pr'?'pr':'wb');
+    var ic=ev.calendar==='bl'?'🔔':(ev.calendar==='pr'?'🔒':'🌊');
+    var t=ev.startTime?ev.startTime.slice(11,16):'';
+    return '<span class="cal-ev-pill '+cl+'" onclick="window.open(\'ceo-calendar-planner.html\',\'_blank\')">'+ic+' '+(t?t+' · ':'')+((ev.title||'Termin').slice(0,22))+'</span>';
+  }).join('');
+}
+
+function renderCalStripDemo(c) {
+  var demo=[{t:'09:00',l:'BunBo Strategy Call',c:'wb'},{t:'11:30',l:'Seedmatch DD Review',c:'bl'},{t:'15:00',l:'Investor Meeting',c:'wb'}];
+  c.innerHTML=demo.map(function(e){return '<span class="cal-ev-pill '+e.c+'" style="opacity:.6">'+(e.c==='wb'?'🌊':'🔔')+' '+e.t+' · '+e.l+'</span>';}).join('')+'<span style="font-size:.5rem;color:rgba(0,200,255,0.3);margin-left:.3rem">Demo</span>';
+}
+
+function updateMentorNextAppt(evs) {
+  var nEl=document.getElementById('mentor-next-appt'), tEl=document.getElementById('mentor-next-appt-text');
+  if(!nEl||!tEl||!evs||!evs.length)return;
+  var ev=evs[0], t=ev.startTime?ev.startTime.slice(11,16):'';
+  tEl.textContent='NÄCHSTER TERMIN: '+(t?t+' — ':'')+((ev.title||'Termin'));
+  nEl.style.display='block';
+}
+
+function openCalStripModal(){
+  var m=document.getElementById('cal-strip-modal'); if(m)m.classList.add('open');
+  var t=document.getElementById('csm-title'); if(t)setTimeout(function(){t.focus();},100);
+}
+function closeCalStripModal(){
+  var m=document.getElementById('cal-strip-modal'); if(m)m.classList.remove('open');
+  var s=document.getElementById('csm-status'); if(s)s.innerHTML='';
+}
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closeCalStripModal();});
+(function(){
+  var m=document.getElementById('cal-strip-modal');
+  if(m)m.addEventListener('click',function(e){if(e.target===this)closeCalStripModal();});
+})();
+
+function submitCalStripEvent(){
+  var title=(document.getElementById('csm-title')||{}).value||'';
+  var date=(document.getElementById('csm-date')||{}).value||'';
+  var time=(document.getElementById('csm-time')||{}).value||'09:00';
+  var cal=(document.getElementById('csm-cal')||{}).value||'wb';
+  var dur=parseInt((document.getElementById('csm-dur')||{}).value||'60')||60;
+  var loc=(document.getElementById('csm-loc')||{}).value||'';
+  var st=document.getElementById('csm-status');
+  title=title.trim(); loc=loc.trim();
+  if(!title){if(st)st.innerHTML='<span style="color:#ff6b7a">⚠ Bitte Titel eingeben</span>';return;}
+  if(!date){if(st)st.innerHTML='<span style="color:#ff6b7a">⚠ Datum fehlt</span>';return;}
+  if(st)st.innerHTML='<span style="color:#1edfff">⏳ Speichere…</span>';
+  var bridgeUrl=''; try{bridgeUrl=localStorage.getItem('ceo_cal_bridge_url')||'';}catch(e){}
+  var startISO=date+'T'+(time||'09:00')+':00';
+  var endISO=new Date(new Date(startISO).getTime()+dur*60000).toISOString().slice(0,19);
+  var payload={title:title,startTime:startISO,endTime:endISO,calendar:cal,location:loc,duration:dur};
+  if(bridgeUrl){
+    fetch(bridgeUrl,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'create_event',event:payload})})
+      .then(function(r){return r.json();})
+      .then(function(d){
+        if(d&&d.success){if(st)st.innerHTML='<span style="color:#00d4aa">✓ In Google Calendar erstellt!</span>';setTimeout(function(){closeCalStripModal();loadCalStripEvents();},1500);}
+        else{saveCalEventLocally(payload);if(st)st.innerHTML='<span style="color:#f5c842">⚠ Lokal gespeichert. Bridge prüfen.</span>';setTimeout(function(){closeCalStripModal();},1800);}
+      }).catch(function(){saveCalEventLocally(payload);if(st)st.innerHTML='<span style="color:#f5c842">✓ Lokal gespeichert. Bridge offline.</span>';setTimeout(function(){closeCalStripModal();},1800);});
+  } else {
+    saveCalEventLocally(payload);
+    if(st)st.innerHTML='<span style="color:#f5c842">✓ Lokal gespeichert. <a href="ceo-calendar-planner.html" target="_blank" style="color:#1edfff;text-decoration:none">Planer ↗</a></span>';
+    setTimeout(function(){closeCalStripModal();loadCalStripEvents();},2000);
+  }
+}
+
+function updateBridgeCalEvents() {
+  try {
+    var bd = document.getElementById('bridge-cal-events');
+    if (!bd) return;
+    var today = new Date().toISOString().split('T')[0];
+    var stored = JSON.parse(localStorage.getItem('ceo_cal_events') || '[]');
+    var todayEvs = stored.filter(function(e) { return (e.date || '').startsWith(today); });
+    if (todayEvs.length === 0) {
+      bd.innerHTML = '<div class="b-stat-row" style="font-size:.58rem;color:rgba(0,200,255,0.35)"><span>Keine Termine heute</span></div>';
+    } else {
+      bd.innerHTML = todayEvs.slice(0,3).map(function(e) {
+        var col = e.cal === 'wb' ? '#1edfff' : e.cal === 'bl' ? '#f5c842' : '#b48dfa';
+        var emoji = e.cal === 'wb' ? '\u{1F30A}' : e.cal === 'bl' ? '\u{1F514}' : '\u{1F512}';
+        return '<div class="b-stat-row"><span class="b-stat-label" style="color:' + col + ';font-size:.58rem">' + emoji + ' ' + (e.time || '') + '</span><span style="color:var(--text);font-size:.58rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:100px">' + (e.title || '') + '</span></div>';
+      }).join('');
+    }
+  } catch(err) {}
+}
+
+function saveCalEventLocally(ev){
+  try{var s=JSON.parse(localStorage.getItem('ceo_local_events')||'[]');ev.id='local_'+Date.now();s.push(ev);localStorage.setItem('ceo_local_events',JSON.stringify(s));}catch(e){}
+}
 
 </script>
 
