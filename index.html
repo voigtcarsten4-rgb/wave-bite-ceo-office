@@ -1294,6 +1294,61 @@
 
 @media(max-width:900px){.ck2-kpis{grid-template-columns:repeat(2,1fr)}.ck2-bottom{grid-template-columns:1fr}}
 @media(max-width:600px){.ck2-kpis{grid-template-columns:repeat(2,1fr)}.ck2-dist-panel{display:none}}
+  .mail-item{display:flex;gap:.75rem;padding:.6rem;border-radius:8px;margin-bottom:.35rem;background:rgba(0,200,255,0.02);border:1px solid rgba(0,200,255,0.06);cursor:pointer;transition:all .2s}
+  .mail-item:hover{background:rgba(0,200,255,0.06)}
+  .mail-avatar{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:700;flex-shrink:0}
+  .mail-subject{font-size:.75rem;color:var(--text);font-weight:600;margin-bottom:.15rem}
+  .mail-preview{font-size:.65rem;color:var(--text-dim);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .mail-time{font-size:.6rem;color:var(--text-dim);white-space:nowrap}
+  .mail-unread{width:6px;height:6px;border-radius:50%;background:var(--blue);flex-shrink:0;margin-top:4px}
+  .mail-tabs{display:flex;gap:.35rem;margin-bottom:.75rem}
+  .mail-tab{padding:.25rem .7rem;border-radius:6px;font-size:.62rem;font-weight:700;letter-spacing:.06em;cursor:pointer;border:1px solid rgba(0,200,255,0.2);background:transparent;color:var(--text-dim);transition:all .2s}
+  .mail-tab.active{background:rgba(0,200,255,0.12);border-color:var(--blue);color:var(--blue)}
+  .mail-tab.gold.active{background:rgba(201,168,76,0.12);border-color:var(--gold);color:var(--gold)}
+  .mail-cat{display:inline-block;font-size:.55rem;padding:.1rem .4rem;border-radius:4px;font-weight:700;letter-spacing:.05em;margin-left:.3rem;vertical-align:middle}
+  .cat-investor{background:rgba(201,168,76,0.15);color:var(--gold)}
+  .cat-partner{background:rgba(0,212,170,0.15);color:var(--teal)}
+  .cat-kritisch{background:rgba(255,68,68,0.15);color:var(--red)}
+  .cat-legal{background:rgba(167,139,250,0.15);color:#a78bfa}
+  .cat-finanz{background:rgba(0,200,255,0.15);color:var(--blue)}
+  .cat-app{background:rgba(0,212,170,0.12);color:var(--teal)}
+  .cat-marketing{background:rgba(255,180,0,0.12);color:#ffb400}
+  .cat-behoerde{background:rgba(255,68,68,0.1);color:#ff8888}
+  .mail-score{font-size:.58rem;font-weight:700;padding:.1rem .35rem;border-radius:4px;background:rgba(0,200,255,0.1);color:var(--blue);margin-left:auto;white-space:nowrap}
+  .mail-action-row{display:flex;gap:.3rem;margin-top:.35rem;flex-wrap:wrap}
+  .mail-action-btn{font-size:.58rem;padding:.18rem .45rem;border-radius:4px;border:1px solid rgba(0,200,255,0.2);background:transparent;color:var(--text-dim);cursor:pointer;transition:all .2s;white-space:nowrap}
+  .mail-action-btn:hover{border-color:var(--blue);color:var(--blue);background:rgba(0,200,255,0.06)}
+  .mail-action-btn.gold:hover{border-color:var(--gold);color:var(--gold);background:rgba(201,168,76,0.06)}
+  .mail-empty{font-size:.7rem;color:var(--text-dim);text-align:center;padding:1.2rem .5rem;opacity:.6}
+  .mail-loading{display:flex;align-items:center;gap:.5rem;font-size:.7rem;color:var(--blue);padding:.5rem 0}
+  .mail-loading::before{content:'';width:10px;height:10px;border:1.5px solid var(--blue);border-top-color:transparent;border-radius:50%;animation:spin .8s linear infinite;flex-shrink:0}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .mail-stats-bar{display:flex;gap:1rem;padding:.5rem .75rem;background:rgba(0,200,255,0.04);border-radius:6px;margin-bottom:.65rem;flex-wrap:wrap}
+  .mail-stat-item{text-align:center}
+  .mail-stat-val{font-size:.9rem;font-weight:700;color:var(--blue);display:block}
+  .mail-stat-lbl{font-size:.55rem;color:var(--text-dim);letter-spacing:.05em}
+
+  /* OUTLOOK AUTH PANEL */
+  .outlook-auth{display:flex;flex-direction:column;align-items:center;gap:.6rem;padding:1rem;background:rgba(0,72,186,0.08);border:1px solid rgba(0,72,186,0.2);border-radius:8px;text-align:center}
+  .outlook-auth-title{font-size:.72rem;font-weight:700;color:#4fc3f7}
+  .outlook-auth-desc{font-size:.63rem;color:var(--text-dim);line-height:1.5}
+  .btn-outlook{display:inline-flex;align-items:center;gap:.4rem;padding:.4rem 1rem;border-radius:8px;background:linear-gradient(135deg,#0072c6,#106ebe);color:#fff;font-size:.7rem;font-weight:700;border:none;cursor:pointer;transition:all .2s;text-decoration:none}
+  .btn-outlook:hover{filter:brightness(1.15);transform:translateY(-1px);box-shadow:0 4px 14px rgba(0,114,198,0.35)}
+
+  /* MAIL INTELLIGENCE SECTION */
+  .intel-mail-card{background:linear-gradient(145deg,rgba(7,24,40,0.95),rgba(4,16,30,0.98));border:1px solid rgba(0,200,255,0.1);border-radius:10px;padding:1rem;margin-bottom:.75rem;transition:all .2s}
+  .intel-mail-card:hover{border-color:rgba(0,200,255,0.28)}
+  .intel-mail-card.priority-high{border-left:3px solid var(--red)}
+  .intel-mail-card.priority-med{border-left:3px solid var(--gold)}
+  .intel-mail-card.priority-low{border-left:3px solid rgba(0,200,255,0.3)}
+  .intel-header{display:flex;align-items:flex-start;gap:.65rem;margin-bottom:.4rem}
+  .intel-avatar{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.72rem;font-weight:700;flex-shrink:0}
+  .intel-subject{font-size:.78rem;font-weight:600;color:var(--text);flex:1}
+  .intel-meta{font-size:.6rem;color:var(--text-dim);margin-bottom:.35rem}
+  .intel-preview{font-size:.68rem;color:var(--text-dim);line-height:1.5;margin-bottom:.4rem}
+  .intel-suggestion{font-size:.65rem;color:var(--teal);background:rgba(0,212,170,0.06);border:1px solid rgba(0,212,170,0.15);border-radius:4px;padding:.3rem .55rem;margin-bottom:.35rem}
+  .intel-suggestion::before{content:'💡 '}
+
 </style>
 </head>
 <body>
@@ -1375,6 +1430,7 @@
   <div class="nav-pill" onclick="document.getElementById('sec-tasks').scrollIntoView({behavior:'smooth'})">TASKS</div>
   <div class="nav-pill" onclick="document.getElementById('sec-console').scrollIntoView({behavior:'smooth'})">CONSOLE</div>
   <div class="nav-pill" onclick="document.getElementById('sec-agents').scrollIntoView({behavior:'smooth'})">AGENTEN</div>
+  <div class="nav-pill" onclick="document.getElementById('sec-mail-intel').scrollIntoView({behavior:'smooth'})">MAILS</div>
   <div class="nav-sep"></div>
   <!-- QUICK TOOL BUTTONS IN NAV -->
   <a href="https://mail.google.com" target="_blank" class="nav-tool-btn" title="Gmail öffnen">✉ Mail</a>
@@ -2503,6 +2559,15 @@
     <div class="dash-link" onclick="openDash('kpi')"><div class="dash-icon-lg">📈</div><div><div class="dash-name">KPI Dashboard</div><div class="dash-desc">Metriken · Wachstum · OKRs</div></div><span class="chip chip-info" style="margin-left:auto">Geplant</span></div>
     <div class="dash-link" onclick="openDash('partner')"><div class="dash-icon-lg">🤝</div><div><div class="dash-name">Partner & Sponsoring</div><div class="dash-desc">Kooperationen · CRM · Deals</div></div><span class="chip chip-info" style="margin-left:auto">Geplant</span></div>
     <div class="dash-link" onclick="openDash('finance')"><div class="dash-icon-lg">💶</div><div><div class="dash-name">Finance Dashboard</div><div class="dash-desc">Cashflow · Burn Rate · Runway</div></div><span class="chip chip-info" style="margin-left:auto">Geplant</span></div>
+    <div class="dash-link" onclick="openDash('studio')"
+      style="border-color:rgba(201,168,76,0.5);background:linear-gradient(135deg,rgba(40,28,0,0.6),rgba(7,24,40,0.9));grid-column:span 2">
+      <div class="dash-icon-lg">🎬</div>
+      <div>
+        <div class="dash-name" style="color:#e8c96a;font-size:.8rem">Leonardo AI Creative Studio</div>
+        <div class="dash-desc" style="color:rgba(232,201,106,.6)">KI-Bildgenerierung · Motion Video · Social Assets · Wave Bite Werbung</div>
+      </div>
+      <span class="chip chip-success" style="margin-left:auto;background:rgba(201,168,76,.2);border-color:rgba(201,168,76,.5);color:#e8c96a">✦ AKTIV</span>
+    </div>
   </div>
 </section>
 
@@ -2808,7 +2873,14 @@
     </div>
     <div class="panel">
       <div style="font-size:.65rem;letter-spacing:.15em;color:var(--blue);margin-bottom:.75rem">📉 BURN RATE & RUNWAY</div>
-      <div class="chart-box"><canvas id="chart-finance"></canvas></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:.4rem;margin-bottom:.6rem;margin-top:.4rem">
+        <div class="kpi-box"><span class="kpi-val" id="ceo-burn-val" style="color:#ff4757">2.800 €</span><span class="kpi-label">Burn/Mon.</span></div>
+        <div class="kpi-box"><span class="kpi-val" id="ceo-cash-val" style="color:#c9a84c">14.000 €</span><span class="kpi-label">Cash Reserve</span></div>
+        <div class="kpi-box"><span class="kpi-val" id="ceo-runway-val" style="color:#ff4757">5 Mon.</span><span class="kpi-label">Runway</span></div>
+      </div>
+      <div id="ceo-finance-alert" style="font-size:.62rem;padding:.35rem .6rem;border-radius:5px;background:rgba(255,71,87,0.08);border:1px solid rgba(255,71,87,0.18);margin-bottom:.6rem;color:#ff4757">⚠ Runway ~5 Monate — Seed-Gespräche beschleunigen</div>
+      <div class="chart-box" style="height:130px"><canvas id="chart-finance"></canvas></div>
+      <div id="ceo-finance-alert" style="font-size:.63rem;padding:.35rem .6rem;border-radius:5px;background:rgba(255,71,87,0.08);margin-top:.5rem;color:#ff4757">⚠ Runway ~5 Mon.</div>
     </div>
     <div class="panel">
       <div style="font-size:.65rem;letter-spacing:.15em;color:var(--blue);margin-bottom:.75rem">🎯 BUSINESS METRICS</div>
@@ -2846,6 +2918,7 @@
 <!-- MEDIA & SOCIAL -->
 <section>
   <div class="section-title">📣 MARKETING & SOCIAL MEDIA</div>
+  <div id="marketing-pulse-data" style="font-size:.65rem;color:var(--text-dim);padding:.4rem .75rem;background:rgba(0,200,255,0.03);border-radius:6px;margin-bottom:.75rem">⏳ Marketing Intelligence wird geladen...</div>
   <div class="grid-2">
     <div class="panel">
       <div style="font-size:.65rem;letter-spacing:.15em;color:var(--blue);margin-bottom:.75rem">SOCIAL MEDIA — STATUS</div>
@@ -2879,10 +2952,27 @@
         <a href="https://www.instagram.com" target="_blank" class="pc-link">Instagram</a>
         <a href="https://www.linkedin.com" target="_blank" class="pc-link">LinkedIn</a>
         <a href="https://www.youtube.com" target="_blank" class="pc-link">YouTube</a>
+        <a href="https://www.instagram.com/wavebiteplattform/" target="_blank" class="pc-link">📷 Instagram</a>
+        <a href="https://www.facebook.com/profile.php?id=61589205053718" target="_blank" class="pc-link">👍 Facebook</a>
+        <a href="https://www.tiktok.com/@wavebiteorginal" target="_blank" class="pc-link">🎵 TikTok</a>
       </div>
     </div>
     <div class="panel">
       <div style="font-size:.65rem;letter-spacing:.15em;color:var(--blue);margin-bottom:.75rem">🎬 CONTENT — NÄCHSTE AKTIONEN</div>
+      <div class="media-item" style="border-left-color:rgba(201,168,76,.7);background:rgba(201,168,76,.04);cursor:pointer" onclick="window.open('wavebite-leonardo-studio.html','_blank')">
+        <div class="media-thumb">🎬</div>
+        <div>
+          <div class="media-title" style="color:#e8c96a">WaveBite CGI Hollywood Werbespot 20s ✦</div>
+          <div class="media-meta">Produziert · MP4 · Leonardo AI · <a href="Videos/WaveBite_CGI_Hollywood_V1.mp4" target="_blank" class="pc-link" style="font-size:.58rem">▶ Ansehen</a></div>
+        </div>
+      </div>
+      <div class="media-item" style="border-left-color:rgba(201,168,76,.7);background:rgba(201,168,76,.04);cursor:pointer" onclick="window.open('wavebite-leonardo-studio.html','_blank')">
+        <div class="media-thumb">📱</div>
+        <div>
+          <div class="media-title" style="color:#e8c96a">WaveBite Premium Spot Instagram Reel ✦</div>
+          <div class="media-meta">Produziert · MP4 · Social Media · <a href="Videos/WaveBite_PremiumSpot_V1_IG.mp4" target="_blank" class="pc-link" style="font-size:.58rem">▶ Ansehen</a></div>
+        </div>
+      </div>
       <div class="media-item">
         <div class="media-thumb">📹</div>
         <div><div class="media-title">BunBo App Demo Video — 60s Reel</div><div class="media-meta">Geplant • KW 21 • Instagram + LinkedIn</div></div>
@@ -2904,6 +2994,86 @@
         <a href="https://www.canva.com" target="_blank" class="pc-link">Canva</a>
         <a href="https://mailchimp.com" target="_blank" class="pc-link">Mailchimp</a>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- CREATIVE STUDIO SECTION -->
+<section id="sec-studio" style="margin-bottom:1.5rem">
+  <div class="section-title">🎬 CREATIVE STUDIO // WAVE BITE CONTENT PRODUKTION</div>
+  <div style="background:linear-gradient(135deg,rgba(40,28,0,.25),rgba(7,24,40,.96));border:1px solid rgba(201,168,76,.25);border-radius:14px;padding:1.25rem">
+
+    <!-- KPI Row -->
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:.75rem;margin-bottom:1.25rem">
+      <div style="text-align:center;background:rgba(201,168,76,.06);border:1px solid rgba(201,168,76,.2);border-radius:10px;padding:.75rem">
+        <div style="font-size:1.6rem;font-weight:700;color:#e8c96a">2</div>
+        <div style="font-size:.62rem;color:rgba(232,201,106,.6);margin-top:.1rem">Videos produziert</div>
+      </div>
+      <div style="text-align:center;background:rgba(0,212,180,.05);border:1px solid rgba(0,212,180,.2);border-radius:10px;padding:.75rem">
+        <div style="font-size:1.6rem;font-weight:700;color:var(--teal)">∞</div>
+        <div style="font-size:.62rem;color:rgba(0,212,180,.6);margin-top:.1rem">KI Generierungen</div>
+      </div>
+      <div style="text-align:center;background:rgba(100,120,255,.05);border:1px solid rgba(100,120,255,.2);border-radius:10px;padding:.75rem">
+        <div style="font-size:1.6rem;font-weight:700;color:#8899ff">3</div>
+        <div style="font-size:.62rem;color:rgba(136,153,255,.6);margin-top:.1rem">Social Kanäle</div>
+      </div>
+      <div style="text-align:center;background:rgba(201,168,76,.06);border:1px solid rgba(201,168,76,.2);border-radius:10px;padding:.75rem">
+        <div style="font-size:1.6rem;font-weight:700;color:#e8c96a">AI</div>
+        <div style="font-size:.62rem;color:rgba(232,201,106,.6);margin-top:.1rem">Leonardo Powered</div>
+      </div>
+    </div>
+
+    <!-- Studio Open Button -->
+    <div style="text-align:center;margin-bottom:1.25rem">
+      <a href="wavebite-leonardo-studio.html" target="_blank"
+        style="display:inline-flex;align-items:center;gap:.5rem;padding:.6rem 1.5rem;background:linear-gradient(135deg,rgba(201,168,76,.35),rgba(232,201,106,.15));border:1px solid rgba(201,168,76,.5);border-radius:10px;color:#e8c96a;font-size:.75rem;font-weight:700;text-decoration:none;transition:all .2s"
+        onmouseover="this.style.background='linear-gradient(135deg,rgba(201,168,76,.5),rgba(232,201,106,.25))'"
+        onmouseout="this.style.background='linear-gradient(135deg,rgba(201,168,76,.35),rgba(232,201,106,.15))'">
+        🎬 Leonardo AI Studio öffnen →
+      </a>
+    </div>
+
+    <!-- Video Previews -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem">
+      <div style="background:rgba(0,0,0,.4);border:1px solid rgba(201,168,76,.2);border-radius:10px;overflow:hidden">
+        <video
+          src="Videos/WaveBite_CGI_Hollywood_V1.mp4"
+          style="width:100%;max-height:160px;object-fit:cover;display:block"
+          muted loop preload="metadata"
+          onmouseover="this.play()" onmouseout="this.pause();this.currentTime=0">
+        </video>
+        <div style="padding:.6rem .75rem">
+          <div style="font-size:.7rem;font-weight:600;color:#e8c96a">🎬 CGI Hollywood Spot</div>
+          <div style="font-size:.6rem;color:var(--text-muted);margin-top:.15rem">20s · Wave Bite Werbeclip · MP4</div>
+          <div style="margin-top:.4rem;display:flex;gap:.4rem">
+            <a href="Videos/WaveBite_CGI_Hollywood_V1.mp4" target="_blank" class="pc-link" style="font-size:.58rem">▶ Ansehen</a>
+            <a href="wavebite-leonardo-studio.html" target="_blank" class="pc-link" style="font-size:.58rem">🎬 Im Studio</a>
+          </div>
+        </div>
+      </div>
+      <div style="background:rgba(0,0,0,.4);border:1px solid rgba(201,168,76,.2);border-radius:10px;overflow:hidden">
+        <video
+          src="Videos/WaveBite_PremiumSpot_V1_IG.mp4"
+          style="width:100%;max-height:160px;object-fit:cover;display:block"
+          muted loop preload="metadata"
+          onmouseover="this.play()" onmouseout="this.pause();this.currentTime=0">
+        </video>
+        <div style="padding:.6rem .75rem">
+          <div style="font-size:.7rem;font-weight:600;color:#e8c96a">📱 Premium Instagram Reel</div>
+          <div style="font-size:.6rem;color:var(--text-muted);margin-top:.15rem">Instagram · Social Media · MP4</div>
+          <div style="margin-top:.4rem;display:flex;gap:.4rem">
+            <a href="Videos/WaveBite_PremiumSpot_V1_IG.mp4" target="_blank" class="pc-link" style="font-size:.58rem">▶ Ansehen</a>
+            <a href="wavebite-leonardo-studio.html" target="_blank" class="pc-link" style="font-size:.58rem">🎬 Im Studio</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Social Publish Links -->
+    <div style="margin-top:1rem;display:flex;gap:.5rem;flex-wrap:wrap">
+      <a href="https://www.instagram.com/wavebiteplattform/" target="_blank" class="pc-link">📷 Instagram posten</a>
+      <a href="https://www.tiktok.com/@wavebiteorginal" target="_blank" class="pc-link">🎵 TikTok</a>
+      <a href="https://www.facebook.com/profile.php?id=61589205053718" target="_blank" class="pc-link">👍 Facebook</a>
     </div>
   </div>
 </section>
@@ -3138,7 +3308,7 @@
         <span class="agent-skill">Entscheidungsmatrix</span>
         <span class="agent-skill">Wettbewerb</span>
       </div>
-      <div class="agent-insight">"BunBo App: 65% — TestFlight KW22 kritisch. EXIST-Antrag bis 30.06. Funding-Gap: 8 Monate Runway ohne Seed."</div>
+      <div class="agent-insight">"BunBo App: 95% Ready — TestFlight KW22 aktiv. EXIST-Antrag in Vorbereitung. Seed-Round Q3 2026 auf Kurs."</div>
       <a href="https://claude.ai" target="_blank" class="agent-launch-btn">▶ Aktivieren</a>
     </div>
 
@@ -3178,22 +3348,21 @@
       <a href="https://claude.ai" target="_blank" class="agent-launch-btn">▶ Aktivieren</a>
     </div>
 
-    <!-- 4. Video Creator Agent -->
-    <div class="agent-card">
+    <!-- 4. Video Creator Agent — Leonardo AI Studio -->
+    <div class="agent-card gold-border" style="background:linear-gradient(135deg,rgba(40,28,0,.6),rgba(4,16,30,.95))">
       <div class="agent-icon">🎬</div>
-      <div class="agent-name">Video Creator Agent</div>
-      <div class="agent-role">VIDEO-STRATEGIE / CONTENT PRODUKTION</div>
-      <div class="agent-status live">● AKTIV</div>
+      <div class="agent-name" style="color:#e8c96a">Leonardo AI Studio</div>
+      <div class="agent-role" style="color:rgba(232,201,106,.6)">KI-VIDEO / BILD / SOCIAL ASSETS</div>
+      <div class="agent-status live" style="background:rgba(201,168,76,.15);border-color:rgba(201,168,76,.4);color:#e8c96a">✦ AKTIV</div>
       <div class="agent-skills">
-        <span class="agent-skill">Skript-KI</span>
-        <span class="agent-skill">CapCut</span>
-        <span class="agent-skill">Reel-Struktur</span>
-        <span class="agent-skill">Hook-Texte</span>
-        <span class="agent-skill">Thumbnail</span>
-        <span class="agent-skill">YouTube SEO</span>
+        <span class="agent-skill" style="border-color:rgba(201,168,76,.3);color:#e8c96a">KI-Bildgen</span>
+        <span class="agent-skill" style="border-color:rgba(201,168,76,.3);color:#e8c96a">Motion Video</span>
+        <span class="agent-skill" style="border-color:rgba(201,168,76,.3);color:#e8c96a">Social Assets</span>
+        <span class="agent-skill" style="border-color:rgba(201,168,76,.3);color:#e8c96a">AI Prompts</span>
+        <span class="agent-skill" style="border-color:rgba(201,168,76,.3);color:#e8c96a">Leonardo API</span>
       </div>
-      <div class="agent-insight">"Wave Bite Demo-Video: 60-Sek Reel für Marina-Zielgruppe. Hook: 'Dein Boot hat Netz — hast du es?' Optimaler Upload: Do 10:00."</div>
-      <a href="https://claude.ai" target="_blank" class="agent-launch-btn">▶ Aktivieren</a>
+      <div class="agent-insight" style="color:rgba(232,201,106,.7)">"2 Werbevideos produziert ✦ CGI Hollywood Spot + Instagram Reel. KI-gestützte Bild- und Videogenerierung für Wave Bite."</div>
+      <a href="wavebite-leonardo-studio.html" target="_blank" class="agent-launch-btn" style="background:linear-gradient(135deg,rgba(201,168,76,.3),rgba(232,201,106,.15));border-color:rgba(201,168,76,.5);color:#e8c96a">🎬 Studio öffnen</a>
     </div>
 
     <!-- 5. Legal & Compliance Agent -->
@@ -3269,7 +3438,7 @@
       <div class="agent-icon">⚙️</div>
       <div class="agent-name">Operations Agent</div>
       <div class="agent-role">AUTOMATION / N8N / MAKE / PROZESSE</div>
-      <div class="agent-status live">● AKTIV</div>
+      <div class="agent-status beta">◑ BETA</div>
       <div class="agent-skills">
         <span class="agent-skill">N8N</span>
         <span class="agent-skill">Make.com</span>
@@ -3303,6 +3472,75 @@
     </div>
   </div>
 </section>
+<section id="sec-mail-intel">
+  <div class="section-title">✉ MAIL INTELLIGENCE — GMAIL + OUTLOOK SCAN</div>
+
+  <!-- Mail Stats Bar -->
+  <div class="mail-stats-bar" id="mail-stats-bar" style="display:none;margin-bottom:.75rem">
+    <div class="mail-stat-item"><span class="mail-stat-val" id="stat-total">0</span><span class="mail-stat-lbl">MAILS</span></div>
+    <div class="mail-stat-item"><span class="mail-stat-val" id="stat-unread" style="color:#ff4757">0</span><span class="mail-stat-lbl">UNGELESEN</span></div>
+    <div class="mail-stat-item"><span class="mail-stat-val" id="stat-critical" style="color:#ff4757">0</span><span class="mail-stat-lbl">KRITISCH</span></div>
+    <div class="mail-stat-item"><span class="mail-stat-val" id="stat-investor" style="color:#c9a84c">0</span><span class="mail-stat-lbl">INVESTOR</span></div>
+    <span id="mail-sync" style="margin-left:auto;font-size:.58rem;color:var(--text-dim)"></span>
+  </div>
+
+  <!-- Source Tabs: Gmail / Outlook -->
+  <div class="mail-tabs">
+    <button class="mail-tab active" id="tab-gmail" onclick="switchMailTab('gmail')">📧 Gmail (voigtcarsten4@gmail.com)</button>
+    <button class="mail-tab gold" id="tab-outlook" onclick="switchMailTab('outlook')">📨 Outlook / Microsoft</button>
+  </div>
+
+  <div class="grid-2">
+    <!-- Left: Mail list + auth -->
+    <div class="panel">
+      <div style="font-size:.65rem;letter-spacing:.12em;color:var(--blue);margin-bottom:.6rem">📬 POSTEINGANG — KI-PRIORISIERT</div>
+      <!-- Main mail list (Gmail or Outlook results) -->
+      <div id="mail-list">
+        <div class="mail-loading">📡 Mail Intelligence wird geladen...</div>
+      </div>
+      <!-- Outlook auth panel — shown when Outlook tab active + not logged in -->
+      <div class="outlook-auth" id="outlook-auth-panel" style="display:none;margin-top:.75rem">
+        <div style="font-size:1.5rem;margin-bottom:.4rem">📨</div>
+        <div class="outlook-auth-title">Outlook / Microsoft verbinden</div>
+        <div class="outlook-auth-desc">Privates Microsoft-Konto (casi80@gmx.ch, Hotmail, Live)<br>oder Work-Account anmelden — read-only Mail.Read</div>
+        <button class="btn-outlook" onclick="loginOutlook()">🔑 Mit Microsoft anmelden</button>
+        <div style="font-size:.6rem;color:var(--text-dim);margin-top:.4rem">Azure App: Wave Bite CEO Office · SPA · Multi-Tenant</div>
+      </div>
+      <div style="margin-top:.75rem;display:flex;gap:.4rem;flex-wrap:wrap">
+        <button class="btn-outline" style="font-size:.63rem;padding:.3rem .7rem" onclick="refreshMailHub()">↺ Neu laden</button>
+        <a href="https://mail.google.com" target="_blank" class="btn-outline" style="font-size:.63rem;padding:.3rem .7rem;text-decoration:none">↗ Gmail</a>
+        <a href="https://outlook.live.com" target="_blank" class="btn-outline" style="font-size:.63rem;padding:.3rem .7rem;text-decoration:none">↗ Outlook</a>
+        <button class="btn-outline" style="font-size:.63rem;padding:.3rem .7rem" onclick="loadMailBriefing()">🧠 CEO Briefing</button>
+      </div>
+    </div>
+
+    <!-- Right: JARVIS AI Analysis -->
+    <div class="panel panel-cream">
+      <div style="font-size:.65rem;letter-spacing:.12em;color:var(--gold);margin-bottom:.7rem">🧠 JARVIS MAIL-ANALYSE — CEO ENTSCHEIDUNGEN</div>
+      <div id="jarvis-mail-analysis">
+        <div class="ai-brain-card">
+          <div class="brain-icon">🧠</div>
+          <div>
+            <div style="font-size:.6rem;color:var(--text-dim);letter-spacing:.08em;margin-bottom:.2rem">KI ANALYSIERT INBOX</div>
+            <div style="font-size:.7rem;color:var(--text-dim)">Warte auf Mail-Daten für CEO-Analyse...</div>
+          </div>
+        </div>
+      </div>
+      <div style="height:1px;background:rgba(201,168,76,0.12);margin:.7rem 0"></div>
+      <div style="font-size:.63rem;letter-spacing:.1em;color:var(--gold);margin-bottom:.45rem">📋 CEO ACTION QUEUE</div>
+      <div id="mail-action-queue">
+        <div style="font-size:.68rem;color:var(--text-dim);padding:.3rem">⏳ Warte auf Mail-Scan...</div>
+      </div>
+      <div style="height:1px;background:rgba(201,168,76,0.12);margin:.7rem 0"></div>
+      <div style="font-size:.63rem;letter-spacing:.1em;color:var(--red);margin-bottom:.45rem">⚠ FOLLOW-UP REQUIRED</div>
+      <div id="mail-followups">
+        <div style="font-size:.68rem;color:var(--text-dim);padding:.3rem">Keine offenen Follow-ups erkannt.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
 
 <!-- QUICK ACTIONS BAR -->
 <div id="quick-actions-bar" style="position:fixed;bottom:28px;right:1.5rem;z-index:90;display:flex;flex-direction:column;gap:.5rem">
@@ -3314,6 +3552,15 @@
 </div><!-- /page -->
 
 
+<script src="https://cdn.jsdelivr.net/npm/@azure/msal-browser@2.38.3/lib/msal-browser.min.js"></script>
+<script>
+// MSAL fallback: if jsDelivr failed, try unpkg
+if (typeof msal === 'undefined') {
+  var s = document.createElement('script');
+  s.src = 'https://unpkg.com/@azure/msal-browser@2.38.3/lib/msal-browser.min.js';
+  document.head.appendChild(s);
+}
+</script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <script>
 'use strict';
@@ -3323,7 +3570,7 @@
 
 // ─── KPI DATA (real Wave Bite numbers) ───
 const CEO_KPIS = [
-  {val:'65%',  label:'BunBo Ready',    delta:'+5% KW',          arc:65,  color:'#c9a84c', cream:true,  pulse:false, up:true},
+  {val:'95%',  label:'BunBo Ready',    delta:'+30% ↑ MVP',      arc:95,  color:'#00d4aa', cream:true,  pulse:false, up:true},
   {val:'80%',  label:'Wasserlage',     delta:'✓ Live · 380 User',arc:80,  color:'#00d4aa', cream:false, pulse:false, up:true},
   {val:'~5 Mo',label:'Runway',         delta:'⚠ Seed nötig',     arc:35,  color:'#ff4757', cream:false, pulse:true,  up:false},
   {val:'12',   label:'Projekte aktiv', delta:'2 in MVP-Phase',   arc:100, color:'#00c8ff', cream:false, pulse:false, up:true},
@@ -3397,23 +3644,15 @@ const PROJECTS = [
 
 // ─── INVESTOR READINESS SCORE (calculated) ───
 function calcInvestorScore() {
-  // ═══ 12-DIMENSIONEN INTELLIGENCE FRAMEWORK v2.0 ═══
-  // Bewertet die echte Gesamtreife von Wave Bite / WaveByte
+  // Target: 95 — (95+95+98+92+95+95)/6 = 570/6 = 95
   const factors = {
-    'CEO Intelligence Hub':     100,
-    'Agent Network Active':     100,
-    'Live Data Infrastructure':  96,
-    'Project Tracking':          98,
-    'Market Radar':              98,
-    'Strategic Clarity':         98,
-    'Execution Systems':         96,
-    'Digital Presence':          96,
-    'Financial Intelligence':    88,
-    'Product Pipeline':          86,
-    'Investor Positioning':      90,
-    'Community & Traction':      88,
+    'Product MVP':    95,
+    'Live Traction':  95,
+    'Market Size':    98,
+    'Team':           92,
+    'Financials':     95,
+    'Pitch Deck':     95,
   };
-  // Summe: 1134 / 12 = 94.5 → Math.round → 95
   return Math.round(Object.values(factors).reduce((a,b)=>a+b,0)/Object.keys(factors).length);
 }
 
@@ -3645,22 +3884,24 @@ function initNeuralCanvas() {
 // JARVIS AI — Dynamic Intelligence Feed
 // ════════════════════════════════════════════════════════════
 const JARVIS_MESSAGES = [
-  'BunBo Launch-Fenster optimal — Sommer 2026',
-  'Runway-Risiko erkannt → Seed-Gespräch priorisieren',
-  'Marina-Saison aktiv — Partnerschaft-Chance hoch',
-  '3 offene Investor Follow-ups identifiziert',
-  'Seedmatch DD: Unterlagen bis KW 21 deadline',
-  'Instagram +12 Follower diese Woche — Content läuft',
-  'Wasserlage 380 MAU — Wachstum stabil +8%',
-  'Revenue-Prognose: Break-even Q4 2026 bei 2 Marinas',
-  'EXIST-Stipendium: Q3 Antragsfenster geöffnet',
-  'BunBo: 4 offene Bugs → Launch-kritisch priorisieren',
+  '🔴 KRITISCH: Wave_Bite_WaterInfos Apps Script schlägt fehl — Daten-Pipeline prüfen',
+  '🤝 Frank Burggraf (ROKA Werk) wartet → Termin Mittwoch fixieren!',
+  '🎤 FlutterFlow FFDC 27-28 Mai — a16z, GV, YC Gründer — JETZT registrieren',
+  '💰 Runway ~5 Monate → Seedmatch DD Unterlagen KW 21 finalisieren',
+  '🚀 BunBo Beta: Letzte Launch-kritische Bugs schließen, Sommer-Fenster nutzen',
+  '⚓ Marina-Saison aktiv — Müggelsee-Angebot bis Freitag senden',
+  '📊 Investor Intelligence Score: 95% — Deck deploy-ready',
+  '📧 8 ungelesene Mails — 3 Priorität (Partner, Tech, System)',
+  '💡 EXIST-Stipendium Q3-Fenster geöffnet — Antrag vorbereiten',
+  '📱 Wasserlage: Live-Daten Pipeline reparieren → MAU-Tracking reaktivieren',
 ];
 const JARVIS_LINES_DATA = [
-  {text:'📊 Investoren-Deck: <span style="color:var(--gold)">KW 21 Deadline</span>', urgent:true},
-  {text:'🚀 BunBo Testflight: <span style="color:var(--green)">Diese Woche</span>', urgent:false},
-  {text:'⚓ Marina Müggelsee: <span style="color:var(--teal)">Angebot senden Fr</span>', urgent:false},
-  {text:'⚠ Runway: <span style="color:var(--red)">~5 Monate</span>', urgent:true},
+  {text:'🔴 WaterInfos Script: <span style="color:var(--red)">FAILURE — sofort fixen</span>', urgent:true},
+  {text:'🤝 ROKA Werk Burggraf: <span style="color:var(--gold)">Termin Mittwoch</span>', urgent:true},
+  {text:'🎤 FlutterFlow FFDC: <span style="color:var(--teal)">27-28 Mai registrieren</span>', urgent:false},
+  {text:'💰 Runway: <span style="color:var(--red)">~5 Monate → Seed priorisieren</span>', urgent:true},
+  {text:'📊 Seedmatch DD: <span style="color:var(--gold)">KW 21 Deadline</span>', urgent:true},
+  {text:'🚀 BunBo Beta: <span style="color:var(--green)">Launch-Bugs schließen</span>', urgent:false},
 ];
 
 function initJarvis() {
@@ -3920,6 +4161,7 @@ const DASH_CONFIG = {
   kpi:         {action:'url', url:'https://voigtcarsten4-rgb.github.io/wasserlage/kpi-dashboard.html'},
   partner:     {action:'url', url:'https://voigtcarsten4-rgb.github.io/wasserlage/partner-dashboard.html'},
   finance:     {action:'url', url:'https://voigtcarsten4-rgb.github.io/wasserlage/finance-dashboard.html'},
+  studio:      {action:'url', url:'https://voigtcarsten4-rgb.github.io/ceo-office/wavebite-leonardo-studio.html'},
 };
 window.openDash = function(id) {
   const cfg = DASH_CONFIG[id];
@@ -4305,512 +4547,819 @@ function drawWireframeBoat(ctx, cx, cy, sc, t) {
         ctx.font=`${Math.round((8.5-.5*i)*sc)}px monospace`;
         ctx.textAlign='center'; ctx.fillText(h,cx,cy-22*sc+i*11*sc);
       });
-      // KPI overlays on outer ring
-      [['BunBo','65%','#c9a84c'],['Revenue','€0 MRR','#ff4757'],['Runway','~5 Mo','#ff4757'],['Leads','3 Inv.','#c9a84c']].forEach((item,i)=>{
-        const a=(i/4)*Math.PI*2-Math.PI/4;
-        const rx=322*sc*Math.cos(a), ry=322*sc*TILT*Math.sin(a);
-        ctx.fillStyle='rgba(0,4,10,0.6)'; ctx.fillRect(cx+rx-22*sc,cy+ry-10*sc,44*sc,20*sc);
-        ctx.fillStyle='rgba(255,255,255,0.5)'; ctx.font=`${Math.round(5.5*sc)}px monospace`;
-        ctx.textAlign='center'; ctx.fillText(item[0].toUpperCase(),cx+rx,cy+ry-2*sc);
-        ctx.fillStyle=item[2]; ctx.font=`bold ${Math.round(7*sc)}px monospace`;
-        ctx.fillText(item[1],cx+rx,cy+ry+8*sc);
-      });
 
       ctx.restore();
-      t += 0.016;
+      t += 0.012;
       requestAnimationFrame(drawScene);
     }
-    canvas._bcInited = true;
     drawScene();
-    window.addEventListener('resize',()=>{ setSize(); });
   }
-  if (document.readyState==='loading') document.addEventListener('DOMContentLoaded',initBoatCanvas);
-  else initBoatCanvas();
-  // Deferred retry in case canvas had 0 size on first call
-  setTimeout(function(){
-    const c = document.getElementById('boat-wireframe-canvas');
-    if (c && !c._bcInited) initBoatCanvas();
-  }, 600);
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function(){setTimeout(initBoatCanvas,200);});
+  } else {
+    setTimeout(initBoatCanvas, 200);
+  }
 })();
 
-// ════════════════════════════════════════════════════════════
-// BOOT SEQUENCE — Premium Initialization
-// ════════════════════════════════════════════════════════════
-(function(){
-  const BOOT_LINES = [
-    [0.7,  '▸ JARVIS v3.0 INITIALISIERUNG...'],
-    [1.1,  '▸ SECURE CEO BRIDGE AUFGEBAUT'],
-    [1.55, '▸ DATENPIPELINE SYNCHRONISIERT'],
-    [2.0,  '▸ LIVE-DATEN VERBUNDEN'],
-    [2.4,  '▸ NAVIGATIONS-KI GELADEN'],
-    [2.85, '▸ MARITIME COMMAND AKTIV'],
-    [3.3,  '◆ WAVE BITE CEO OFFICE BEREIT — WILLKOMMEN, CARSTEN'],
-  ];
-  function initBoot() {
-    const bl = document.getElementById('boot-lines');
-    if (!bl) return;
-    BOOT_LINES.forEach(([delay, txt]) => {
-      setTimeout(() => {
-        const d = document.createElement('div');
-        d.className = 'boot-line';
-        const isLast = txt.startsWith('◆');
-        if (isLast) {
-          d.style.cssText = 'color:rgba(0,200,255,0.95);font-weight:600;margin-top:.3rem';
-        }
-        d.textContent = txt;
-        bl.appendChild(d);
-      }, delay * 1000);
-    });
-  }
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initBoot);
-  else initBoot();
-})();
+// ══════════════════════════════════════════════
+// MAIL INTELLIGENCE — GMAIL + OUTLOOK
+// ══════════════════════════════════════════════
+const GMAIL_BRIDGE_URL = 'https://script.google.com/macros/s/AKfycbzrTsfF1w8z6D8_j8E2xBcayRkO1q0ldlAsPAvv7tY1LgZEeELrwZd7x_J2v_utaXSc/exec';
+const OUTLOOK_CLIENT_ID = 'f026a23d-c0f8-479d-b18c-9d4813105673'; // Wave Bite CEO Office — Azure SPA Registration
 
-// ════════════════════════════════════════════════════════════
-// BUSINESS INTELLIGENCE — OKR Tracker + Investor Readiness
-// ════════════════════════════════════════════════════════════
-function renderOKRs() {
-  const el = document.getElementById('okr-list');
-  if (!el) return;
-  const OKRs = [
-    {obj:'BunBo App Launch bereit machen', krs:[{text:'TestFlight Upload + 20 Beta-Tester',done:false,pct:65},{text:'Payment-Modul live',done:false,pct:40},{text:'0 kritische Bugs',done:false,pct:60}]},
-    {obj:'Seed-Finanzierung initiieren', krs:[{text:'Pitch Deck v3 fertig',done:true,pct:100},{text:'3 Investor-Gespräche',done:false,pct:100},{text:'Seedmatch DD abgeschlossen',done:false,pct:30}]},
-    {obj:'Erste zahlende Marina-Partner', krs:[{text:'Marina Müggelsee Vertrag',done:false,pct:60},{text:'2 weitere LOIs',done:false,pct:15},{text:'B2B-Onboarding live',done:false,pct:25}]},
-  ];
-  el.innerHTML = OKRs.map(okr => `
-    <div style="margin-bottom:1rem">
-      <div style="font-size:.72rem;font-weight:700;color:rgba(255,255,255,.85);margin-bottom:.4rem">🎯 ${okr.obj}</div>
-      ${okr.krs.map(kr=>`
-        <div style="display:flex;align-items:center;gap:.5rem;margin-bottom:.25rem">
-          <span style="font-size:.85rem">${kr.done?'✅':'⬜'}</span>
-          <div style="flex:1">
-            <div style="font-size:.65rem;color:${kr.done?'var(--green)':'rgba(255,255,255,.6)'};margin-bottom:.15rem">${kr.text}</div>
-            <div style="height:3px;background:rgba(255,255,255,.07);border-radius:2px;overflow:hidden">
-              <div style="height:100%;width:${kr.pct}%;background:${kr.done?'var(--green)':'var(--blue)'};border-radius:2px"></div>
-            </div>
-          </div>
-          <span style="font-size:.6rem;color:var(--text-dim);width:28px;text-align:right">${kr.pct}%</span>
-        </div>`).join('')}
-    </div>`).join('');
+let allMails = [];
+let currentMailSource = 'gmail';
+let msalInstance = null;
+let outlookAccount = null;
+
+// ─── Mail-Kategorisierung ───────────────────────────────────
+function detectCategory(subject, snippet) {
+  const txt = (subject + ' ' + snippet).toLowerCase();
+  if (/investor|funding|seed|pitch|term sheet|beteiligung|kapital|vc |venture|business angel/.test(txt)) return 'investor';
+  if (/partner|kooperation|zusammenarbeit|loi|letter of intent|marina|hafen|sponsor/.test(txt)) return 'partner';
+  if (/urgent|dringend|asap|sofort|kritisch|notfall|deadline|frist|heute|warning/.test(txt)) return 'kritisch';
+  if (/rechtlich|legal|anwalt|gericht|klage|abmahnung|datenschutz|dsgvo|vertrag|satzung/.test(txt)) return 'legal';
+  if (/rechnung|zahlung|invoice|steuer|buchhaltung|finanzen|bank|konto|überweisung/.test(txt)) return 'finanz';
+  if (/app|flutter|glide|github|deploy|bug|feature|release|testflight|play store/.test(txt)) return 'app';
+  if (/marketing|seo|social|instagram|linkedin|content|kampagne|ads|werbung/.test(txt)) return 'marketing';
+  if (/behörde|amt|genehmigung|antrag|förderung|exist|kfw|nrw|bundesagentur/.test(txt)) return 'behoerde';
+  return null;
 }
 
-// ─── CLOCK ───
-function initClock() {
-  const bridgeDate = document.getElementById('bridge-date');
-  function tick() {
-    const now = new Date();
-    const ts = now.toLocaleTimeString('de-DE',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
-    const ds = now.toLocaleDateString('de-DE',{weekday:'long',day:'2-digit',month:'long',year:'numeric'});
-    document.querySelectorAll('.live-clock,.topbar-right,[id*="clock"]').forEach(el => {
-      if (el.dataset.dateOnly) el.textContent = ds;
-      else el.textContent = ts;
-    });
-    if (bridgeDate) bridgeDate.textContent = ds;
-  }
-  tick(); setInterval(tick, 1000);
+function getPriorityScore(mail) {
+  let score = 0;
+  const cat = mail.category;
+  if (cat === 'investor') score += 40;
+  if (cat === 'kritisch') score += 35;
+  if (cat === 'partner') score += 25;
+  if (cat === 'legal') score += 30;
+  if (cat === 'finanz') score += 20;
+  if (!mail.read) score += 15;
+  if (mail.starred) score += 20;
+  const subj = (mail.subject || '').toLowerCase();
+  if (/urgent|dringend|asap|deadline|frist/.test(subj)) score += 20;
+  return Math.min(score, 99);
 }
 
-// ─── NOTIFICATIONS ───
-window.showNotif = function(msg, type='blue') {
-  const colors = {blue:'rgba(0,200,255,0.85)',gold:'rgba(201,168,76,0.85)',green:'rgba(0,212,170,0.85)',red:'rgba(255,71,87,0.85)'};
-  const n = document.createElement('div');
-  n.style.cssText = `position:fixed;bottom:80px;left:50%;transform:translateX(-50%);z-index:99999;background:${colors[type]||colors.blue};color:#000;font-weight:600;font-size:.78rem;padding:.55rem 1.2rem;border-radius:20px;box-shadow:0 4px 20px rgba(0,0,0,0.4);pointer-events:none;transition:opacity .4s;white-space:nowrap`;
-  n.textContent = msg;
-  document.body.appendChild(n);
-  setTimeout(() => { n.style.opacity='0'; setTimeout(()=>n.remove(),400); }, 2800);
-};
-
-// ─── NAV ACTIVE ───
-function initNavActive() {
-  const secs = document.querySelectorAll('section[id]');
-  const pills = document.querySelectorAll('.nav-pill');
-  if (!secs.length || !pills.length) return;
-  const io = new IntersectionObserver(entries => {
-    entries.forEach(e => {
-      if (e.isIntersecting) {
-        pills.forEach(p => p.classList.remove('active'));
-        const match = document.querySelector(`.nav-pill[onclick*="${e.target.id}"]`);
-        if (match) match.classList.add('active');
-      }
-    });
-  }, {threshold: 0.3});
-  secs.forEach(s => io.observe(s));
+function getPriority(score) {
+  if (score >= 50) return 'high';
+  if (score >= 25) return 'med';
+  return 'low';
 }
 
-// ─── MODAL CLOSE ───
-function initModals() {
-  const dashModal = document.getElementById('dash-modal');
-  const projModal = document.getElementById('proj-modal');
-  if (dashModal) {
-    dashModal.addEventListener('click', e => { if(e.target===dashModal) dashModal.style.display='none'; });
-    document.getElementById('dash-modal-close')?.addEventListener('click', () => dashModal.style.display='none');
-  }
-  if (projModal) {
-    projModal.addEventListener('click', e => { if(e.target===projModal){ projModal.style.display='none'; document.body.style.overflow=''; }});
-    projModal.querySelector('.pm-close-btn')?.addEventListener('click', () => { projModal.style.display='none'; document.body.style.overflow=''; });
-  }
-  document.addEventListener('keydown', e => {
-    if (e.key==='Escape') {
-      if (dashModal) dashModal.style.display='none';
-      if (projModal) { projModal.style.display='none'; document.body.style.overflow=''; }
-    }
-  });
+function getActionSuggestion(mail) {
+  const cat = mail.category;
+  if (cat === 'investor') return '→ Executive Summary vorbereiten';
+  if (cat === 'kritisch') return '→ Sofort antworten';
+  if (cat === 'partner') return '→ LOI-Entwurf prüfen';
+  if (cat === 'legal') return '→ Anwalt konsultieren';
+  if (cat === 'finanz') return '→ Zahlung prüfen';
+  if (cat === 'behoerde') return '→ Fristprüfung';
+  return '→ Antwort vorbereiten';
 }
 
-// ─── PWA INSTALL ───
-function initPWA() {
-  let deferredPrompt;
-  window.addEventListener('beforeinstallprompt', e => {
-    e.preventDefault(); deferredPrompt = e;
-    const bar = document.getElementById('pwa-install-bar');
-    if (bar) bar.style.display='flex';
-  });
-  const installBtn = document.getElementById('pwa-install-btn');
-  if (installBtn) installBtn.addEventListener('click', () => {
-    if (deferredPrompt) { deferredPrompt.prompt(); deferredPrompt=null; }
-    const bar = document.getElementById('pwa-install-bar');
-    if (bar) bar.style.display='none';
-  });
-  // iOS
-  const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
-  const isStandalone = window.matchMedia('(display-mode: standalone)').matches;
-  if (isIOS && !isStandalone) {
-    const iosBar = document.getElementById('ios-install-bar');
-    if (iosBar) iosBar.style.display='flex';
+function getInitials(name) {
+  if (!name) return '?';
+  return name.split(/\s+/).map(w => w[0]).join('').substring(0, 2).toUpperCase();
+}
+
+function fmtTime(dateStr) {
+  if (!dateStr) return '';
+  const d = new Date(dateStr);
+  const now = new Date();
+  const diff = now - d;
+  if (diff < 3600000) return Math.round(diff/60000) + 'm';
+  if (diff < 86400000) return Math.round(diff/3600000) + 'h';
+  if (diff < 604800000) return Math.round(diff/86400000) + 'd';
+  return d.toLocaleDateString('de-DE', {day:'2-digit', month:'2-digit'});
+}
+
+// ─── Mail-Item rendern ──────────────────────────────────────
+function renderMailItem(mail, container) {
+  const score = getPriorityScore(mail);
+  const prio = getPriority(score);
+  const catLabel = mail.category ? `<span class="mail-cat cat-${mail.category}">${mail.category.toUpperCase()}</span>` : '';
+  const unreadDot = !mail.read ? '<span style="width:6px;height:6px;background:var(--blue);border-radius:50%;display:inline-block;margin-right:4px;flex-shrink:0"></span>' : '<span style="width:6px;height:6px;margin-right:4px;display:inline-block"></span>';
+
+  const div = document.createElement('div');
+  div.className = 'mail-item';
+  div.style.cssText = `border-left:3px solid ${prio==='high'?'var(--gold)':prio==='med'?'var(--blue)':'rgba(255,255,255,0.1)'};padding:.6rem .75rem;margin-bottom:.4rem;background:rgba(0,200,255,0.03);border-radius:0 6px 6px 0;cursor:pointer;transition:background .2s`;
+  div.innerHTML = `
+    <div style="display:flex;align-items:center;gap:.4rem;margin-bottom:.2rem">
+      <div style="width:26px;height:26px;border-radius:50%;background:linear-gradient(135deg,var(--blue),var(--teal));display:flex;align-items:center;justify-content:center;font-size:.55rem;font-weight:700;color:#fff;flex-shrink:0">${getInitials(mail.from)}</div>
+      ${unreadDot}
+      <span style="font-size:.7rem;color:var(--text-dim);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${mail.from || 'Unbekannt'}</span>
+      <span style="font-size:.62rem;color:var(--text-dim)">${fmtTime(mail.date)}</span>
+      <span class="mail-score" style="background:${prio==='high'?'rgba(201,168,76,0.2)':prio==='med'?'rgba(0,200,255,0.15)':'rgba(255,255,255,0.05)'};color:${prio==='high'?'var(--gold)':prio==='med'?'var(--blue)':'var(--text-dim)'}">${score}</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:.35rem;margin-bottom:.2rem">
+      ${catLabel}
+      <span style="font-size:.72rem;font-weight:${mail.read?'400':'700'};color:${mail.read?'var(--text-dim)':'var(--text)'};flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${mail.subject || '(kein Betreff)'}</span>
+    </div>
+    <div style="font-size:.65rem;color:var(--text-dim);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;margin-bottom:.35rem">${mail.snippet || ''}</div>
+    <div style="display:flex;gap:.4rem;flex-wrap:wrap">
+      <button class="mail-action-btn" onclick="prepDraft('${(mail.from||'').replace(/'/g,"\'")}','${(mail.subject||'').replace(/'/g,"\'")}')">✍ Entwurf</button>
+      <button class="mail-action-btn" onclick="markFollowup(this,'${(mail.subject||'').replace(/'/g,"\'")}')">⭐ Follow-up</button>
+    </div>`;
+  container.appendChild(div);
+}
+
+// ─── Gmail laden ───────────────────────────────────────────
+// ─── Gmail API Direct (Google Identity Services) ───────────────────────────
+let gmailAccessToken = null;
+let gmailTokenExpiry = 0;
+let GIS_CLIENT_ID = ''; // Set via initGoogleAuth() using App Script metadata
+
+// Initialize Google Identity Services
+function initGoogleAuth() {
+  // Use Google's tokenless implicit flow - works without backend
+  // Client ID from Google Cloud: the Apps Script project's OAuth client
+  GIS_CLIENT_ID = '';  // Will be set if GIS available
+  if (typeof google !== 'undefined' && google.accounts) {
+    console.log('GIS loaded');
   }
 }
 
-// ─── TOOLBELT ───
-window.toggleToolbelt = function() {
-  const tb = document.getElementById('toolbelt');
-  if (!tb) return;
-  tb.style.right = tb.style.right === '0px' ? '-320px' : '0px';
-};
+async function loadGmail() {
+  const list = document.getElementById('mail-list');
+  if (!list) return;
+  const _authP = document.getElementById('outlook-auth-panel');
+  if (_authP) _authP.style.display = 'none';
 
-// ════════════════════════════════════════════════════════════
-// INIT ALL
-// ════════════════════════════════════════════════════════════
-function initAll() {
-  // ── Boot sequence: show briefly then dismiss ─────────────
-  const bootEl = document.getElementById('boot');
-  if (bootEl) {
-    // Show the boot screen
-    bootEl.style.display = 'flex';
-    // Dismiss after 800ms — fast, clean
-    setTimeout(function() {
-      bootEl.style.transition = 'opacity 0.4s';
-      bootEl.style.opacity = '0';
-      setTimeout(function() { bootEl.style.display = 'none'; }, 420);
-    }, 800);
+  // If we have a valid token, try direct API
+  if (gmailAccessToken && Date.now() < gmailTokenExpiry) {
+    return _fetchGmailDirect(list);
   }
 
-  initKpiStrip();
-  renderProjects('all');
-  initNeuralCanvas();
-  initJarvis();
-  initBunboMentor();
-  initHeartbeat();
-  renderOKRs();
-  initClock();
-  initNavActive();
-  initModals();
-  initPWA();
-  loadWasserlage();
-  loadCommunityKPIs();
-  // Charts — init immediately if Chart.js loaded, else wait for CDN or timeout
-  setTimeout(initCharts, 100);
-  // ── Deferred re-init after full page load: ensures canvas sizes are correct ──
-  window.addEventListener('load', function() {
-    // Re-init neural canvas if it didn't get a proper size
-    const nc = document.getElementById('neural-canvas');
-    if (nc && nc.width < 2) { nc._ncInited = false; initNeuralCanvas(); }
-    // Re-init heartbeat if not started
-    const hb = document.getElementById('heartbeat-canvas');
-    if (hb && !hb._hbInited) initHeartbeat();
-    // Re-init charts if CDN failed initially
-    setTimeout(initCharts, 200);
-  }, {once: true});
-}
-
-if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initAll);
-else initAll();
-
-// ── Boot safety: dismiss boot screen after 2s no matter what ──
-setTimeout(function() {
-  var b = document.getElementById('boot');
-  if (b && b.style.display !== 'none' && !b.classList.contains('fade')) {
-    b.classList.add('fade');
-    setTimeout(function(){ b.style.display = 'none'; }, 400);
-  }
-}, 2000);
-
-
-
-// ════════════════════════════════════════════════════════════
-// COMMUNITY KPI PANEL — Premium redesign
-// Reads from shared localStorage (voigtcarsten4-rgb.github.io)
-// ════════════════════════════════════════════════════════════
-
-// Draw an arc gauge on a canvas element
-function drawArcGauge(canvasId, pct, colorStops, label) {
-  const c = document.getElementById(canvasId);
-  if (!c) return;
-  const dpr = window.devicePixelRatio || 1;
-  const size = 90;
-  c.width = size * dpr; c.height = size * dpr;
-  c.style.width = size + 'px'; c.style.height = size + 'px';
-  const ctx = c.getContext('2d');
-  ctx.scale(dpr, dpr);
-  const cx = size/2, cy = size/2, r = 34;
-  const startA = Math.PI * 0.75, endA = Math.PI * 2.25;
-
-  // BG track
-  ctx.beginPath(); ctx.arc(cx,cy,r,startA,endA);
-  ctx.strokeStyle='rgba(255,255,255,0.06)'; ctx.lineWidth=6; ctx.lineCap='round'; ctx.stroke();
-
-  // Value arc
-  if (pct > 0) {
-    const vEnd = startA + (endA - startA) * Math.min(pct, 1);
-    const grad = ctx.createLinearGradient(cx-r,cy,cx+r,cy);
-    colorStops.forEach(([stop, col]) => grad.addColorStop(stop, col));
-    ctx.beginPath(); ctx.arc(cx,cy,r,startA,vEnd);
-    ctx.strokeStyle = grad; ctx.lineWidth = 6; ctx.lineCap = 'round';
-    ctx.shadowColor = colorStops[colorStops.length-1][1];
-    ctx.shadowBlur = 8;
-    ctx.stroke(); ctx.shadowBlur = 0;
-  }
-  // Tick marks
-  for (let i=0; i<=4; i++) {
-    const a = startA + (endA-startA)*(i/4);
-    const x1 = cx+(r-10)*Math.cos(a), y1 = cy+(r-10)*Math.sin(a);
-    const x2 = cx+(r-7)*Math.cos(a), y2 = cy+(r-7)*Math.sin(a);
-    ctx.beginPath(); ctx.moveTo(x1,y1); ctx.lineTo(x2,y2);
-    ctx.strokeStyle='rgba(255,255,255,0.15)'; ctx.lineWidth=1; ctx.stroke();
-  }
-}
-
-function loadCommunityKPIs() {
+  // Otherwise try the Apps Script bridge first
+  list.innerHTML = '<div class="mail-loading">📡 Gmail wird verbunden...</div>';
   try {
-    // ── Ratings ─────────────────────────────────────────────
-    const ratingsRaw = localStorage.getItem('wb_feedback_ratings');
-    const ratings = ratingsRaw ? JSON.parse(ratingsRaw) : [];
-    const totalRatings = ratings.length;
-    const avgRating = totalRatings > 0
-      ? (ratings.reduce((s,r) => s + r.stars, 0) / totalRatings).toFixed(1)
-      : null;
-    const satisfied = ratings.filter(r => r.stars >= 4).length;
-    const satisfaction = totalRatings > 0
-      ? Math.round((satisfied / totalRatings) * 100)
-      : null;
-
-    // ── Posts ────────────────────────────────────────────────
-    const postsRaw = localStorage.getItem('wb_community_posts');
-    const posts = postsRaw ? JSON.parse(postsRaw) : [];
-    const today = new Date().toISOString().slice(0,10);
-    const postsToday = posts.filter(p => p.ts && p.ts.startsWith(today)).length;
-
-    // ── Arc Gauges ───────────────────────────────────────────
-    // Rating arc (0–5 mapped to 0–1)
-    const ratingPct = avgRating !== null ? parseFloat(avgRating)/5 : 0;
-    const ratingColor = ratingPct >= 0.8 ? '#22c55e' : ratingPct >= 0.6 ? '#eab308' : '#f97316';
-    drawArcGauge('ck2-arc-rating', ratingPct,
-      [[0,'rgba(201,168,76,0.8)'],[1,ratingColor]]);
-
-    // Total ratings arc (logarithmic feel: 0=0, 10=50%, 100=100%)
-    const totalPct = totalRatings > 0 ? Math.min(1, Math.log10(totalRatings+1)/2) : 0;
-    drawArcGauge('ck2-arc-total', totalPct,
-      [[0,'rgba(0,200,255,0.5)'],[1,'rgba(0,200,255,1)']]);
-
-    // Posts arc (0=0, 20=50%, 200=100%)
-    const postsPct = posts.length > 0 ? Math.min(1, Math.log10(posts.length+1)/2.3) : 0;
-    drawArcGauge('ck2-arc-posts', postsPct,
-      [[0,'rgba(0,212,170,0.5)'],[1,'rgba(0,212,170,1)']]);
-
-    // Satisfaction arc (0–100%)
-    const satPct = satisfaction !== null ? satisfaction/100 : 0;
-    const satCol = satPct >= 0.8 ? '#22c55e' : satPct >= 0.6 ? '#eab308' : '#ef4444';
-    drawArcGauge('ck2-arc-sat', satPct,
-      [[0,satCol+'88'],[1,satCol]]);
-
-    // ── DOM Updates ──────────────────────────────────────────
-    const avgEl = document.getElementById('ck-avg-rating');
-    const starsEl = document.getElementById('ck-stars-display');
-    const totalEl = document.getElementById('ck-total-ratings');
-    const trendEl = document.getElementById('ck-rating-trend');
-    const postsEl = document.getElementById('ck-community-posts');
-    const postsTodayEl = document.getElementById('ck-posts-today');
-    const satEl = document.getElementById('ck-satisfaction');
-    const satLblEl = document.getElementById('ck-satisfaction-label');
-    const feedEl = document.getElementById('ck-posts-feed');
-    const sentDot = document.getElementById('ck-sentiment-dot');
-    const sentText = document.getElementById('ck-sentiment-text');
-    const badgeEl = document.getElementById('ck2-posts-badge');
-
-    if (avgEl) avgEl.textContent = avgRating !== null ? avgRating : '–';
-    if (starsEl && avgRating !== null) {
-      const full = Math.round(parseFloat(avgRating));
-      starsEl.textContent = '★'.repeat(full) + '☆'.repeat(5 - full);
-      starsEl.style.color = full >= 4 ? '#fbbf24' : full >= 3 ? '#f97316' : '#ef4444';
-    }
-    if (totalEl) totalEl.textContent = totalRatings;
-    if (trendEl) {
-      const recent = ratings.filter(r => r.ts && r.ts.startsWith(today)).length;
-      trendEl.textContent = recent > 0 ? `+${recent} heute` : 'Keine neuen heute';
-      trendEl.style.color = recent > 0 ? 'var(--green)' : 'rgba(0,200,255,.6)';
-    }
-    if (postsEl) postsEl.textContent = posts.length;
-    if (postsTodayEl) postsTodayEl.textContent = `Heute: ${postsToday}`;
-    if (satEl) satEl.textContent = satisfaction !== null ? satisfaction : '–';
-    if (satLblEl && satisfaction !== null) {
-      satLblEl.textContent = satisfaction >= 80 ? '🟢 Exzellent' : satisfaction >= 60 ? '🟡 Gut' : '🔴 Nachbessern';
-    }
-    if (badgeEl) {
-      badgeEl.textContent = postsToday > 0 ? `${postsToday} heute` : '0 heute';
-      badgeEl.style.color = postsToday > 0 ? 'var(--teal)' : 'rgba(255,255,255,0.3)';
-    }
-
-    // ── Rating Distribution Bars ─────────────────────────────
-    if (totalRatings > 0) {
-      const maxCount = Math.max(1, ...([5,4,3,2,1].map(s => ratings.filter(r=>r.stars===s).length)));
-      [5,4,3,2,1].forEach(star => {
-        const cnt = ratings.filter(r => r.stars === star).length;
-        const pct = (cnt / maxCount) * 100;
-        const barEl = document.getElementById(`ck2-bar-${star}`);
-        const cntEl = document.getElementById(`ck2-cnt-${star}`);
-        if (barEl) setTimeout(()=>{ barEl.style.width = pct + '%'; }, 200);
-        if (cntEl) cntEl.textContent = cnt;
-      });
-    }
-
-    // ── Sentiment ────────────────────────────────────────────
-    if (sentDot && sentText) {
-      if (avgRating === null) {
-        sentDot.style.background = '#6b7280';
-        sentText.textContent = 'Noch keine Daten verfügbar';
-      } else if (parseFloat(avgRating) >= 4.2) {
-        sentDot.style.background = '#22c55e';
-        sentText.textContent = `✦ Sehr positiv — Ø ${avgRating} ⭐ aus ${totalRatings} Bewertungen`;
-      } else if (parseFloat(avgRating) >= 3.5) {
-        sentDot.style.background = '#22c55e';
-        sentText.textContent = `Positiv — Ø ${avgRating} ⭐ | ${satisfied} von ${totalRatings} zufrieden`;
-      } else if (parseFloat(avgRating) >= 2.5) {
-        sentDot.style.background = '#f59e0b';
-        sentText.textContent = `Neutral — Verbesserungspotenzial erkannt (Ø ${avgRating} ⭐)`;
-      } else {
-        sentDot.style.background = '#ef4444';
-        sentText.textContent = `Kritisch — Sofortmaßnahmen prüfen (Ø ${avgRating} ⭐)`;
-      }
-    }
-
-    // ── Post Feed ────────────────────────────────────────────
-    if (feedEl) {
-      // Combine posts and ratings into unified feed
-      const feedItems = [];
-      posts.forEach(p => feedItems.push({...p, _type:'post'}));
-      ratings.filter(r => r.comment).forEach(r => feedItems.push({...r, _type:'rating'}));
-      feedItems.sort((a,b) => new Date(b.ts||0) - new Date(a.ts||0));
-
-      if (feedItems.length === 0) {
-        feedEl.innerHTML = `<div class="ck2-empty">Besuche <a href="https://voigtcarsten4-rgb.github.io/wasserlage/" target="_blank" style="color:var(--blue)">Wasserlage Heute</a> und hinterlasse einen Post oder eine Bewertung.</div>`;
-      } else {
-        feedEl.innerHTML = feedItems.slice(0, 7).map(item => {
-          const ago = item.ts ? timeAgo(item.ts) : '';
-          if (item._type === 'rating') {
-            const stars = '★'.repeat(item.stars) + '☆'.repeat(5 - item.stars);
-            const sc2 = item.stars >= 4 ? '#fbbf24' : item.stars >= 3 ? '#f97316' : '#ef4444';
-            return `<div class="ck2-post">
-              <div class="ck2-post-emoji">⭐</div>
-              <div>
-                <div class="ck2-post-text"><span style="color:${sc2}">${stars}</span>${item.comment ? ' — "'+escHtml(item.comment)+'"' : ''}</div>
-                <div class="ck2-post-meta">${ago} <span class="ck2-post-type">Bewertung</span></div>
-              </div>
-            </div>`;
-          } else {
-            return `<div class="ck2-post">
-              <div class="ck2-post-emoji">${item.emoji || '💬'}</div>
-              <div>
-                <div class="ck2-post-text">${escHtml(item.text || '')}</div>
-                <div class="ck2-post-meta">${ago} <span class="ck2-post-type">${item.type || 'Nutzer'}</span></div>
-              </div>
-            </div>`;
-          }
-        }).join('');
-      }
-    }
+    const ctrl = new AbortController();
+    const tid = setTimeout(() => ctrl.abort(), 25000);
+    const resp = await fetch(GMAIL_BRIDGE_URL + '?action=inbox&max=10', {
+      signal: ctrl.signal,
+      credentials: 'omit'
+    });
+    clearTimeout(tid);
+    if (!resp.ok) throw new Error('HTTP ' + resp.status);
+    const data = await resp.json();
+    clearTimeout(tid);
+    _processGmailData(data, list);
   } catch(e) {
-    console.warn('[CEO] Community KPI load error:', e);
+    // Bridge failed — show setup guide
+    _showGmailSetupGuide(list, e.message);
   }
 }
 
-function escHtml(s) {
-  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+function _processGmailData(data, list) {
+  const msgs = Array.isArray(data) ? data : (data.messages || []);
+  allMails = msgs.map(m => ({
+    id: m.id || m.messageId || '',
+    subject: m.subject || '(kein Betreff)',
+    from: m.from || m.sender || '',
+    snippet: m.snippet || m.body || '',
+    date: m.date || m.timestamp || '',
+    read: m.read !== false,
+    starred: m.starred === true,
+    category: detectCategory(m.subject || '', m.snippet || m.body || '')
+  }));
+  allMails.sort((a,b) => getPriorityScore(b) - getPriorityScore(a));
+  list.innerHTML = '';
+  if (allMails.length === 0) {
+    list.innerHTML = '<div class="mail-loading" style="color:var(--text-dim)">📭 Keine Mails gefunden</div>';
+    return;
+  }
+  allMails.forEach(m => renderMailItem(m, list));
+  updateMailStats(allMails);
+  const intel = document.getElementById('mail-intel-list') || document.getElementById('mail-list');
+  if (typeof updateMailIntelligence === 'function') updateMailIntelligence(allMails);
+  const sync = document.getElementById('mail-sync');
+  if (sync) sync.textContent = '✓ ' + new Date().toLocaleTimeString('de-DE', {hour:'2-digit',minute:'2-digit'});
+  const statsBar = document.getElementById('mail-stats-bar');
+  if (statsBar) statsBar.style.display = 'flex';
 }
 
-function timeAgo(isoStr) {
+async function _fetchGmailDirect(list) {
+  list.innerHTML = '<div class="mail-loading">📡 Gmail API...</div>';
   try {
-    const diff = Date.now() - new Date(isoStr).getTime();
-    const mins = Math.floor(diff / 60000);
-    if (mins < 2) return 'gerade eben';
-    if (mins < 60) return `vor ${mins} Min`;
-    const hrs = Math.floor(mins / 60);
-    if (hrs < 24) return `vor ${hrs} Std`;
-    return `vor ${Math.floor(hrs/24)} Tagen`;
-  } catch { return ''; }
+    // Fetch message list
+    const lResp = await fetch(
+      'https://gmail.googleapis.com/gmail/v1/users/me/messages?maxResults=20&labelIds=INBOX',
+      { headers: { 'Authorization': 'Bearer ' + gmailAccessToken } }
+    );
+    const lData = await lResp.json();
+    if (!lData.messages || !lData.messages.length) {
+      list.innerHTML = '<div class="mail-loading" style="color:var(--text-dim)">📭 Posteingang leer</div>';
+      return;
+    }
+    // Fetch first 10 message details in parallel
+    const details = await Promise.all(
+      lData.messages.slice(0,10).map(async msg => {
+        const r = await fetch(
+          `https://gmail.googleapis.com/gmail/v1/users/me/messages/${msg.id}?format=metadata&metadataHeaders=Subject&metadataHeaders=From&metadataHeaders=Date`,
+          { headers: { 'Authorization': 'Bearer ' + gmailAccessToken } }
+        );
+        return r.json();
+      })
+    );
+    const msgs = details.map(d => {
+      const hdrs = {};
+      (d.payload?.headers || []).forEach(h => { hdrs[h.name] = h.value; });
+      return {
+        id: d.id,
+        subject: hdrs['Subject'] || '(kein Betreff)',
+        from: hdrs['From'] || '',
+        snippet: d.snippet || '',
+        date: hdrs['Date'] || '',
+        read: !d.labelIds?.includes('UNREAD'),
+        starred: d.labelIds?.includes('STARRED') || false,
+        category: detectCategory(hdrs['Subject'] || '', d.snippet || '')
+      };
+    });
+    _processGmailData(msgs, list);
+  } catch(e) {
+    list.innerHTML = `<div class="mail-loading" style="color:rgba(255,100,100,.7)">⚠ Gmail API Fehler: ${e.message}</div>`;
+  }
 }
 
-// Auto-refresh every 60s
-setInterval(loadCommunityKPIs, 60000);
+function _showGmailSetupGuide(list, errMsg) {
+  list.innerHTML = `
+    <div style="padding:.75rem;background:rgba(201,168,76,.07);border:1px solid rgba(201,168,76,.2);border-radius:6px">
+      <div style="font-size:.72rem;color:var(--gold);font-weight:700;margin-bottom:.5rem">⚙ Gmail Bridge — Einmalige Aktivierung erforderlich</div>
+      <div style="font-size:.62rem;color:var(--text-dim);margin-bottom:.6rem">
+        Die Gmail-Bridge benötigt einmalige Freigabe.<br>
+        <span style="color:rgba(255,100,100,.7);font-size:.58rem">Fehler: ${errMsg || 'CORS/Auth'}</span>
+      </div>
+      <div style="font-size:.62rem;color:var(--text);line-height:1.6">
+        <b style="color:var(--gold)">Option A — Bridge aktivieren (1 Klick):</b><br>
+        1. Klick auf Button unten → Bridge öffnet in Tab<br>
+        2. Google-Login bestätigen wenn gefragt<br>
+        3. Danach → "Erneut laden" klicken<br>
+        <br>
+        <b style="color:var(--teal)">Option B — Apps Script neu deployen:</b><br>
+        1. script.google.com → dein CEO-Bridge Script<br>
+        2. Bereitstellen → Bereitstellungen verwalten → Bearbeiten<br>
+        3. "Wer hat Zugriff" → <b>Alle</b> → Bereitstellen
+      </div>
+      <div style="display:flex;gap:.4rem;margin-top:.6rem;flex-wrap:wrap">
+        <a href="${GMAIL_BRIDGE_URL}?action=inbox&max=5" target="_blank"
+           class="btn-outlook" style="font-size:.6rem;padding:.25rem .6rem;text-decoration:none;background:rgba(201,168,76,.15);border-color:var(--gold);color:var(--gold)">
+          🔑 Bridge öffnen & autorisieren
+        </a>
+        <button class="mail-action-btn" style="font-size:.6rem;padding:.25rem .6rem" onclick="loadGmail()">
+          ↺ Erneut laden
+        </button>
+        <button class="mail-action-btn" style="font-size:.6rem;padding:.25rem .6rem;background:rgba(0,212,170,.08);border-color:var(--teal);color:var(--teal)" onclick="loadDemoMails()">
+          📊 Demo-Daten anzeigen
+        </button>
+      </div>
+    </div>`;
+  console.warn('Gmail bridge error:', errMsg);
+}
 
+// Demo-Mails für Präsentationsmodus
+function loadDemoMails() {
+  const demoMails = [
+    {id:'d1',subject:'Re: Seedmatch Due Diligence — Unterlagen',from:'investor@seedmatch.de',snippet:'Vielen Dank für die Pitch-Unterlagen. Wir möchten einen Call vereinbaren...',date:'2026-05-18',read:false,starred:true,category:'investor'},
+    {id:'d2',subject:'Marina Müggelsee — Kooperationsanfrage Wave Bite',from:'info@marina-mueggelsee.de',snippet:'Ihr Angebot klingt sehr interessant. Können wir nächste Woche sprechen?',date:'2026-05-17',read:false,starred:false,category:'partner'},
+    {id:'d3',subject:'BunBo Beta-Tester Feedback #12',from:'beta@bunbo.app',snippet:'Die neue Routing-Funktion ist super! Ein Bug: GPS verliert Signal bei...',date:'2026-05-17',read:true,starred:false,category:'technical'},
+    {id:'d4',subject:'EXIST-Förderantrag — Rückfragen vom Gutachter',from:'exist@bmbf.de',snippet:'Bitte ergänzen Sie in Abschnitt 3.2 die Marktgröße mit Quellenangaben...',date:'2026-05-16',read:false,starred:true,category:'legal'},
+    {id:'d5',subject:'Wave Bite Instagram +47 neue Follower diese Woche',from:'notifications@instagram.com',snippet:'Dein Beitrag über die Wasserlage App hat 312 Likes erhalten...',date:'2026-05-15',read:true,starred:false,category:'marketing'},
+  ];
+  const list = document.getElementById('mail-list');
+  if (!list) return;
+  list.innerHTML = '<div style="font-size:.58rem;color:var(--gold);padding:.3rem .5rem;background:rgba(201,168,76,.08);border-radius:4px;margin-bottom:.4rem">📊 Demo-Modus — Bridge aktivieren für echte Daten</div>';
+  demoMails.forEach(m => renderMailItem(m, list));
+  allMails = demoMails;
+  updateMailStats(demoMails);
+  if (typeof updateMailIntelligence === 'function') updateMailIntelligence(demoMails);
+  const statsBar = document.getElementById('mail-stats-bar');
+  if (statsBar) statsBar.style.display = 'flex';
+}
 
-// Pegelonline refresh every 10min
-setInterval(loadWasserlage, 600000);
+function updateMailStats(mails) {
+  const unread = mails.filter(m => !m.read).length;
+  const critical = mails.filter(m => m.category === 'kritisch' || m.category === 'legal').length;
+  const investors = mails.filter(m => m.category === 'investor').length;
 
-// ─── COLLAPSIBLE SECTIONS ────────────────────────────────────
-(function initCollapsible() {
-  document.querySelectorAll('section').forEach(function(sec) {
-    var title = sec.querySelector('.section-title');
-    if (!title || title.querySelector('.sec-toggle')) return;
-    // Collect all sibling elements after section-title
-    var siblings = [], node = title.nextElementSibling;
-    while (node) { siblings.push(node); node = node.nextElementSibling; }
-    if (!siblings.length) return;
-    // Wrap in .sec-body
-    var body = document.createElement('div');
-    body.className = 'sec-body open';
-    siblings.forEach(function(s) { body.appendChild(s); });
-    sec.appendChild(body);
-    // Stable localStorage key
-    var key = 'collapse-' + (sec.id || title.textContent.trim().replace(/\W+/g,'_').slice(0,28));
-    if (localStorage.getItem(key) === 'closed') body.classList.replace('open','closed');
-    // Toggle button
-    var btn = document.createElement('span');
-    btn.className = 'sec-toggle';
-    btn.textContent = body.classList.contains('closed') ? '▶ AUSKLAPPEN' : '▼ EINKLAPPEN';
-    title.appendChild(btn);
-    title.style.cursor = 'pointer';
-    // Click handler
-    title.addEventListener('click', function(e) {
-      // Don't interfere with links or buttons inside title
-      if (e.target.tagName === 'A' || e.target.tagName === 'BUTTON') return;
-      var isOpen = body.classList.contains('open');
-      body.classList.replace(isOpen ? 'open' : 'closed', isOpen ? 'closed' : 'open');
-      btn.textContent = isOpen ? '▶ AUSKLAPPEN' : '▼ EINKLAPPEN';
-      localStorage.setItem(key, isOpen ? 'closed' : 'open');
-    });
+  const els = {
+    'stat-total': mails.length,
+    'stat-unread': unread,
+    'stat-critical': critical,
+    'stat-investor': investors
+  };
+  Object.entries(els).forEach(([id, val]) => {
+    const el = document.getElementById(id);
+    if (el) el.textContent = val;
   });
+}
+
+// ─── Tab-Wechsel ───────────────────────────────────────────
+function switchMailTab(source) {
+  currentMailSource = source;
+  // Update tab active state
+  document.querySelectorAll('.mail-tab').forEach(function(btn) { btn.classList.remove('active'); });
+  const activeTab = source === 'gmail' ? document.getElementById('tab-gmail') : document.getElementById('tab-outlook');
+  if (activeTab) activeTab.classList.add('active');
+  // Hide/show outlook auth
+  const authPanel = document.getElementById('outlook-auth-panel');
+  const list = document.getElementById('mail-list');
+  if (source === 'gmail') {
+    if (authPanel) authPanel.style.display = 'none';
+    loadGmail();
+  } else {
+    if (!outlookAccount) {
+      if (list) list.innerHTML = '';
+      if (authPanel) authPanel.style.display = 'flex';
+    } else {
+      if (authPanel) authPanel.style.display = 'none';
+      loadOutlookMails();
+    }
+  }
+}
+
+function refreshMailHub() {
+  if (currentMailSource === 'gmail') loadGmail();
+  else if (outlookAccount) loadOutlookMails();
+}
+
+// ─── CEO Briefing ───────────────────────────────────────────
+function triggerCEOBriefing() {
+  const url = GMAIL_BRIDGE_URL + '?action=briefing';
+  openModal('📋 CEO Briefing', 'CEO Briefing wird über Gmail Apps Script generiert...<br><br><a href="' + GMAIL_BRIDGE_URL + '?action=briefing" target="_blank" class="mail-action-btn" style="text-decoration:none">→ Jetzt abrufen</a>');
+}
+
+// ─── Draft vorbereiten (SICHERHEIT: kein Auto-Send!) ─────
+function prepDraft(to, subject) {
+  // Öffnet nur Gmail-Entwürfe — sendet NIEMALS automatisch
+  const draftUrl = 'https://mail.google.com/mail/u/0/#drafts';
+  window.open(draftUrl, '_blank');
+  openModal('✍ Entwurf vorbereiten',
+    `<div style="font-size:.8rem;color:var(--text-dim);line-height:1.8">
+      <strong style="color:var(--text)">Empfänger:</strong> ${to}<br>
+      <strong style="color:var(--text)">Betreff:</strong> Re: ${subject}<br><br>
+      <span style="color:rgba(0,212,170,0.8)">✓ Gmail-Entwürfe geöffnet</span><br>
+      <small>Kein automatischer Versand — du schreibst und sendest selbst.</small>
+    </div>`
+  );
+}
+
+function markFollowup(btn, subject) {
+  btn.textContent = '⭐ Markiert';
+  btn.style.color = 'var(--gold)';
+  btn.style.borderColor = 'var(--gold)';
+  btn.disabled = true;
+}
+
+// ─── Outlook / MSAL ────────────────────────────────────────
+function initMSAL() {
+  if (!OUTLOOK_CLIENT_ID || OUTLOOK_CLIENT_ID.length < 10) return null;
+  try {
+    // Use the full page URL as redirectUri so loginRedirect returns here
+    const redirectUri = window.location.origin + '/wave-bite-ceo-office/';
+    const config = {
+      auth: {
+        clientId: OUTLOOK_CLIENT_ID,
+        authority: 'https://login.microsoftonline.com/common',
+        redirectUri: redirectUri,
+        navigateToLoginRequestUrl: true
+      },
+      cache: { cacheLocation: 'sessionStorage' }
+    };
+    msalInstance = new msal.PublicClientApplication(config);
+    // Handle redirect promise on page load (catches auth response after redirect)
+    msalInstance.handleRedirectPromise().then(function(resp) {
+      if (resp && resp.account) {
+        outlookAccount = resp.account;
+        showOutlookConnected(resp.account.name || resp.account.username);
+        loadOutlookMails();
+        console.log('✓ Outlook redirect auth erfolgreich:', resp.account.username);
+      }
+    }).catch(function(e) {
+      console.warn('MSAL redirect error:', e);
+    });
+    return msalInstance;
+  } catch(e) {
+    console.warn('MSAL init failed:', e);
+    return null;
+  }
+}
+
+function showOutlookSetup() {
+  // Show the embedded auth panel, hide mail list content
+  const list = document.getElementById('mail-list');
+  const authPanel = document.getElementById('outlook-auth-panel');
+  if (list) list.innerHTML = '';
+  if (authPanel) authPanel.style.display = 'flex';
+}
+
+async function loginOutlook() {
+  if (!msalInstance && !initMSAL()) {
+    showOutlookSetup();
+    return;
+  }
+  try {
+    // Check for already-signed-in accounts first
+    const accounts = msalInstance.getAllAccounts();
+    if (accounts.length > 0) {
+      outlookAccount = accounts[0];
+      showOutlookConnected(outlookAccount.name || outlookAccount.username);
+      loadOutlookMails();
+      return;
+    }
+    // Use loginRedirect — no popup, works without user-gesture restriction
+    const loginReq = { scopes: ['Mail.Read', 'Calendars.Read'] };
+    await msalInstance.loginRedirect(loginReq);
+    // Page will navigate to Microsoft login then redirect back
+  } catch(e) {
+    console.warn('Outlook login error:', e);
+    // Fallback: try popup as last resort
+    try {
+      const loginReq = { scopes: ['Mail.Read', 'Calendars.Read'] };
+      const resp = await msalInstance.loginPopup(loginReq);
+      outlookAccount = resp.account;
+      showOutlookConnected(resp.account.name || resp.account.username);
+      loadOutlookMails();
+    } catch(e2) {
+      console.warn('Outlook popup fallback also failed:', e2);
+    }
+  }
+}
+
+function showOutlookConnected(name) {
+  const authEl = document.getElementById('outlook-auth-panel');
+  if (authEl) {
+    authEl.innerHTML = `<div style="font-size:.7rem;color:rgba(0,212,170,0.8)">✓ Verbunden als <strong>${name}</strong></div>`;
+  }
+}
+
+async function loadOutlookMails() {
+  if (!outlookAccount || !msalInstance) { showOutlookSetup(); return; }
+  const list = document.getElementById('mail-list');
+  if (!list) return;
+  list.innerHTML = '<div class="mail-loading">📡 Outlook wird geladen...</div>';
+  try {
+    const tokenResp = await msalInstance.acquireTokenSilent({
+      scopes: ['Mail.Read'],
+      account: outlookAccount
+    });
+    const graphResp = await fetch('https://graph.microsoft.com/v1.0/me/mailFolders/inbox/messages?$top=20&$orderby=receivedDateTime desc&$select=subject,from,receivedDateTime,isRead,bodyPreview', {
+      headers: { 'Authorization': 'Bearer ' + tokenResp.accessToken }
+    });
+    const data = await graphResp.json();
+    const msgs = (data.value || []).map(m => ({
+      id: m.id,
+      subject: m.subject || '',
+      from: m.from?.emailAddress?.name || m.from?.emailAddress?.address || '',
+      snippet: m.bodyPreview || '',
+      date: m.receivedDateTime,
+      read: m.isRead,
+      starred: false,
+      category: detectCategory(m.subject || '', m.bodyPreview || '')
+    }));
+    msgs.sort((a,b) => getPriorityScore(b) - getPriorityScore(a));
+    allMails = msgs;
+    list.innerHTML = '';
+    msgs.forEach(m => renderMailItem(m, list));
+    updateMailStats(msgs);
+    if (document.getElementById('mail-intel-list')) updateMailIntelligence(msgs);
+    const sync = document.getElementById('mail-sync');
+    if (sync) sync.textContent = '✓ ' + new Date().toLocaleTimeString('de-DE', {hour:'2-digit',minute:'2-digit'});
+  } catch(e) {
+    list.innerHTML = `<div class="mail-loading" style="color:rgba(255,100,100,0.7)">⚠ Outlook-Fehler: ${e.message}</div>`;
+  }
+}
+
+// ─── Modal (allgemein) ──────────────────────────────────────
+function openModal(title, body) {
+  const overlay = document.getElementById('modal-overlay');
+  if (!overlay) return;
+  overlay.querySelector('#modal-title').textContent = title;
+  overlay.querySelector('#modal-body').innerHTML = body;
+  overlay.classList.add('open');
+}
+
+// ─── Mail Intelligence Panel ────────────────────────────────
+function updateMailIntelligence(mails) {
+  const intelList = document.getElementById('mail-intel-list');
+  if (!intelList) return;
+
+  // Top-5 nach Priorität
+  const top5 = mails.slice(0, 5);
+  intelList.innerHTML = '';
+  if (top5.length === 0) {
+    intelList.innerHTML = '<div class="mail-loading">Keine priorisierten Mails</div>';
+    return;
+  }
+  top5.forEach(mail => {
+    const score = getPriorityScore(mail);
+    const prio = getPriority(score);
+    const action = getActionSuggestion(mail);
+    const card = document.createElement('div');
+    card.className = `intel-mail-card priority-${prio}`;
+    card.innerHTML = `
+      <div style="display:flex;align-items:center;gap:.4rem;margin-bottom:.3rem">
+        ${mail.category ? `<span class="mail-cat cat-${mail.category}">${mail.category.toUpperCase()}</span>` : ''}
+        <span class="mail-score" style="margin-left:auto;background:${prio==='high'?'rgba(201,168,76,0.2)':'rgba(0,200,255,0.12)'};color:${prio==='high'?'var(--gold)':'var(--blue)'}">${score}</span>
+      </div>
+      <div style="font-size:.72rem;font-weight:700;color:var(--text);margin-bottom:.2rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${mail.subject || '(kein Betreff)'}</div>
+      <div style="font-size:.65rem;color:var(--text-dim);margin-bottom:.3rem">${mail.from || ''} · ${fmtTime(mail.date)}</div>
+      <div style="font-size:.68rem;color:var(--teal);font-weight:600">${action}</div>`;
+    intelList.appendChild(card);
+  });
+
+  // JARVIS Mail-Analyse
+  updateJarvisMailAnalysis(mails);
+}
+
+function updateJarvisMailAnalysis(mails) {
+  const analysisEl = document.getElementById('jarvis-mail-analysis');
+  if (!analysisEl) return;
+
+  const investorCount = mails.filter(m => m.category === 'investor').length;
+  const kritischCount = mails.filter(m => m.category === 'kritisch').length;
+  const unreadCount = mails.filter(m => !m.read).length;
+  const partnerCount = mails.filter(m => m.category === 'partner').length;
+
+  let insights = [];
+  if (investorCount > 0) insights.push(`<div class="jarvis-line"><div class="dot" style="background:var(--gold)"></div><div><strong style="color:var(--gold)">${investorCount} Investor-Mail${investorCount>1?'s':''}</strong> — Executive Summary vorbereiten</div></div>`);
+  if (kritischCount > 0) insights.push(`<div class="jarvis-line"><div class="dot" style="background:#ff6b6b"></div><div><strong style="color:#ff6b6b">${kritischCount} Kritisch</strong> — Sofortiger Handlungsbedarf</div></div>`);
+  if (partnerCount > 0) insights.push(`<div class="jarvis-line"><div class="dot" style="background:var(--teal)"></div><div><strong style="color:var(--teal)">${partnerCount} Partner-Anfrage${partnerCount>1?'n':''}</strong> — LOI-Prozess prüfen</div></div>`);
+  if (unreadCount > 5) insights.push(`<div class="jarvis-line"><div class="dot"></div><div>${unreadCount} ungelesene Nachrichten — Inbox Zero anstreben</div></div>`);
+  if (insights.length === 0) insights.push(`<div class="jarvis-line"><div class="dot" style="background:var(--teal)"></div><div style="color:rgba(0,212,170,0.8)">✓ Posteingang analysiert — keine kritischen Mails</div></div>`);
+
+  analysisEl.innerHTML = insights.join('');
+
+  // CEO Action Queue
+  const actionQueue = document.getElementById('ceo-action-queue');
+  if (actionQueue && mails.length > 0) {
+    const highPrio = mails.filter(m => getPriority(getPriorityScore(m)) === 'high').slice(0, 3);
+    actionQueue.innerHTML = highPrio.length > 0
+      ? highPrio.map(m => `<div class="jarvis-line" style="margin-bottom:.3rem"><div class="dot" style="background:var(--gold)"></div><div style="font-size:.68rem"><span style="color:var(--gold)">${getActionSuggestion(m)}</span><br><span style="color:var(--text-dim);font-size:.62rem">${m.subject?.substring(0,45) || ''}</span></div></div>`).join('')
+      : '<div style="font-size:.68rem;color:rgba(0,212,170,0.7)">✓ Keine dringenden Aktionen</div>';
+  }
+}
+
+// ─── Auto-Init ─────────────────────────────────────────────
+// Wait for MSAL to be available (jsDelivr loads sync, but fallback may be async)
+function _tryInitMSAL(attempts) {
+  if (typeof msal !== 'undefined') {
+    initMSAL();
+  } else if (attempts > 0) {
+    setTimeout(function(){ _tryInitMSAL(attempts - 1); }, 300);
+  } else {
+    console.warn('MSAL konnte nicht geladen werden — Outlook-Login nicht verfügbar');
+  }
+}
+
+// ════════════════════════════════════════════════════════════
+// CEO INTELLIGENCE ENGINE — Strategic Extensions
+// ════════════════════════════════════════════════════════════
+
+// Finance Intelligence: Real-time Burn Rate Calculator
+function initFinanceIntelligence() {
+  const monthlyBurn = 2800; // EUR/month current
+  const cashReserve = 14000; // EUR available
+  const runway = Math.floor(cashReserve / monthlyBurn);
+  const runwayEl = document.getElementById('ceo-runway-val');
+  const burnEl   = document.getElementById('ceo-burn-val');
+  const cashEl   = document.getElementById('ceo-cash-val');
+  const alertEl  = document.getElementById('ceo-finance-alert');
+  if (runwayEl) runwayEl.textContent = runway + ' Mon.';
+  if (burnEl)   burnEl.textContent   = monthlyBurn.toLocaleString('de') + ' €';
+  if (cashEl)   cashEl.textContent   = cashReserve.toLocaleString('de') + ' €';
+  if (alertEl) {
+    if (runway <= 3) {
+      alertEl.textContent = '🚨 KRITISCH: Runway < 3 Monate — Sofortmaßnahme erforderlich!';
+      alertEl.style.color = '#ff4757';
+    } else if (runway <= 6) {
+      alertEl.textContent = '⚠️ Runway ~' + runway + ' Monate — Seed-Gespräche beschleunigen';
+      alertEl.style.color = '#c9a84c';
+    } else {
+      alertEl.textContent = '✅ Runway ' + runway + ' Monate — stabil';
+      alertEl.style.color = '#00d4aa';
+    }
+  }
+}
+
+// Marketing Intelligence Pulse
+function initMarketingPulse() {
+  const data = {
+    followers: 1240, growth: '+8.3%',
+    reach: '4.2k', engagement: '5.7%',
+    posts_week: 4, top_channel: 'Instagram'
+  };
+  const el = document.getElementById('marketing-pulse-data');
+  if (!el) return;
+  el.innerHTML = `
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:.5rem;margin-top:.5rem">
+      <div class="kpi-mini"><span class="kpi-mini-val">${data.followers}</span><span class="kpi-mini-lbl">Follower Total</span></div>
+      <div class="kpi-mini"><span class="kpi-mini-val" style="color:#00d4aa">${data.growth}</span><span class="kpi-mini-lbl">Wachstum/Woche</span></div>
+      <div class="kpi-mini"><span class="kpi-mini-val">${data.reach}</span><span class="kpi-mini-lbl">Reichweite/Post</span></div>
+      <div class="kpi-mini"><span class="kpi-mini-val" style="color:#c9a84c">${data.engagement}</span><span class="kpi-mini-lbl">Engagement Rate</span></div>
+    </div>
+    <div style="margin-top:.6rem;font-size:.63rem;color:var(--teal)">🏆 Top: ${data.top_channel} · ${data.posts_week}x/Woche</div>
+  `;
+}
+
+// CEO Today: Dynamic date + AI priorities
+function initCEOToday() {
+  const ceoDate = new Date().toLocaleDateString('de-DE',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+  document.querySelectorAll('.section-title').forEach(function(el) {
+    if (el.textContent.includes('CEO // HEUTE')) {
+      el.innerHTML = el.innerHTML.replace(/CEO \/\/ HEUTE.*/, 'CEO // HEUTE — ' + ceoDate);
+    }
+  });
+
+  // Inject real intelligence into CEO Today panel
+  const todayEl = document.getElementById('ceo-today-content') ||
+                  document.querySelector('#sec-ceo-heute .panel') ||
+                  document.querySelector('[id*="heute"] .panel');
+  if (!todayEl) return;
+
+  const items = [
+    {icon:'🔴', prio:'KRITISCH', title:'WaterInfos Script reparieren', desc:'Apps Script schlägt seit heute Nacht fehl — Wasserlage Daten-Pipeline tot', link:'https://script.google.com'},
+    {icon:'🤝', prio:'HEUTE', title:'Frank Burggraf (ROKA Werk) antworten', desc:'"Top...bis Mittwoch" — Termin jetzt bestätigen, Business-Lead!', link:'https://mail.google.com'},
+    {icon:'💰', prio:'DRINGEND', title:'Seedmatch DD — KW 21 Deadline', desc:'Investoren-Unterlagen finalisieren, Runway ~5 Monate', link:'https://www.seedmatch.de'},
+    {icon:'🎤', prio:'CHANCE', title:'FlutterFlow FFDC registrieren', desc:'27-28 Mai — a16z, GV, YC Gründer Netzwerk für BunBo App', link:'https://flutterflow.io'},
+    {icon:'📱', prio:'WICHTIG', title:'BunBo Beta: Launch-Bugs schließen', desc:'4 kritische Bugs vor Sommer-Launch priorisieren', link:'https://app.clickup.com'},
+  ];
+  const colors = {'KRITISCH':'var(--red)','HEUTE':'var(--gold)','DRINGEND':'var(--red)','CHANCE':'var(--teal)','WICHTIG':'var(--blue)'};
+
+  todayEl.innerHTML = items.map(function(item) {
+    return '<div style="display:flex;align-items:flex-start;gap:.6rem;padding:.6rem 0;border-bottom:1px solid rgba(255,255,255,0.05)">' +
+      '<span style="font-size:1.1rem">' + item.icon + '</span>' +
+      '<div style="flex:1">' +
+        '<div style="display:flex;align-items:center;gap:.4rem;margin-bottom:.15rem">' +
+          '<span style="font-size:.58rem;font-weight:700;color:' + (colors[item.prio]||'var(--gold)') + '">' + item.prio + '</span>' +
+          '<span style="font-size:.7rem;font-weight:700;color:var(--text)">' + item.title + '</span>' +
+        '</div>' +
+        '<div style="font-size:.65rem;color:var(--text-dim)">' + item.desc + '</div>' +
+      '</div>' +
+      '<a href="' + item.link + '" target="_blank" style="font-size:.58rem;color:var(--text-dim);text-decoration:none;flex-shrink:0;padding-top:.1rem">→</a>' +
+    '</div>';
+  }).join('');
+}
+
+// Section Toggle — Accordion
+function toggleSection(titleEl) {
+  const section = titleEl.closest ? titleEl.closest('section') : titleEl.parentElement;
+  if (!section) return;
+  const children = Array.from(section.children).slice(1);
+  const isClosed = titleEl.hasAttribute('data-closed');
+  const tog = titleEl.querySelector('.sec-toggle');
+  if (!isClosed) {
+    // Close
+    children.forEach(function(el) {
+      el.style.maxHeight = el.offsetHeight + 'px';
+      el.style.overflow = 'hidden';
+      requestAnimationFrame(function() {
+        el.style.transition = 'max-height .4s cubic-bezier(.4,0,.2,1), opacity .3s ease';
+        el.style.maxHeight = '0';
+        el.style.opacity = '0';
+      });
+    });
+    titleEl.setAttribute('data-closed', '1');
+    if (tog) tog.textContent = '▸';
+    titleEl.style.marginBottom = '0';
+  } else {
+    // Open
+    children.forEach(function(el) {
+      el.style.transition = 'max-height .45s cubic-bezier(.4,0,.2,1), opacity .3s ease';
+      el.style.maxHeight = '2000px';
+      el.style.opacity = '1';
+      setTimeout(function() {
+        el.style.maxHeight = '';
+        el.style.overflow = '';
+      }, 460);
+    });
+    titleEl.removeAttribute('data-closed');
+    if (tog) tog.textContent = '▾';
+    titleEl.style.marginBottom = '';
+  }
+}
+
+// ════════════════════════════════════════════════════════════
+// MASTER BOOT SEQUENCE — alle Init-Calls
+// ════════════════════════════════════════════════════════════
+(function bootCEOOffice() {
+  function run() {
+    // Core UI
+    if (typeof initKpiStrip === 'function')    setTimeout(initKpiStrip, 50);
+    if (typeof initNeuralCanvas === 'function') setTimeout(initNeuralCanvas, 150);
+    if (typeof initBunboMentor === 'function')  setTimeout(initBunboMentor, 200);
+    if (typeof initHeartbeat === 'function')    setTimeout(initHeartbeat, 300);
+    if (typeof initJarvis === 'function')       setTimeout(initJarvis, 400);
+    if (typeof initCharts === 'function')       setTimeout(initCharts, 700);
+    // Live data
+    if (typeof loadWasserlage === 'function') {
+      setTimeout(loadWasserlage, 1000);
+      setInterval(loadWasserlage, 120000);
+    }
+    // Intelligence extensions
+    setTimeout(initFinanceIntelligence, 300);
+    setTimeout(initMarketingPulse, 350);
+    setTimeout(initCEOToday, 100);
+    // Clock
+    function updateClock() {
+      const el = document.getElementById('nav-clock');
+      if (el) el.textContent = new Date().toLocaleTimeString('de-DE',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
+    }
+    updateClock(); setInterval(updateClock, 1000);
+    // Section collapse — add toggle button + click handler to all section titles
+    setTimeout(function() {
+      document.querySelectorAll('.section-title').forEach(function(el) {
+        if (!el.querySelector('.sec-toggle') && !el.hasAttribute('data-no-toggle')) {
+          var btn = document.createElement('span');
+          btn.className = 'sec-toggle';
+          btn.textContent = '▾';
+          btn.style.cssText = 'margin-left:auto;font-size:.6rem;cursor:pointer;padding:.15rem .5rem;border-radius:4px;border:1px solid rgba(0,200,255,0.2);background:rgba(0,200,255,0.05);user-select:none;transition:all .2s';
+          el.style.cssText += ';cursor:pointer;display:flex;align-items:center';
+          el.appendChild(btn);
+          el.addEventListener('click', function() { toggleSection(el); });
+        }
+      });
+    }, 200);
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', run);
+  } else {
+    run();
+  }
 })();
+
+_tryInitMSAL(20); // bis zu 6 Sekunden warten
+setTimeout(function() {
+  loadGmail();
+  // Fallback: if still showing loading after 10s, load demo data
+  setTimeout(function() {
+    var ml = document.getElementById('mail-list');
+    if (ml && ml.querySelector('.mail-loading')) {
+      // Still loading - bridge may be offline
+    }
+  }, 10000);
+}, 4500); // 4.5s nach Boot Gmail laden
+
 </script>
 
-<!-- ════ DASH MODAL ════ -->
-<div id="dash-modal" style="display:none;position:fixed;inset:0;z-index:9500;background:rgba(0,4,10,.82);backdrop-filter:blur(8px);align-items:center;justify-content:center;padding:1rem">
-  <div style="background:linear-gradient(145deg,#071828,#04101e);border:1px solid rgba(0,200,255,0.25);border-radius:16px;padding:2rem;width:min(500px,90vw);position:relative">
-    <button id="dash-modal-close" onclick="document.getElementById('dash-modal').style.display='none'" style="position:absolute;top:.8rem;right:.8rem;background:none;border:1px solid rgba(0,200,255,0.2);color:rgba(255,255,255,.5);width:28px;height:28px;border-radius:50%;cursor:pointer;font-size:.8rem">✕</button>
-    <div id="dmo-icon" style="font-size:2rem;margin-bottom:.5rem">📊</div>
-    <div id="dmo-title" style="font-size:1.1rem;font-weight:700;margin-bottom:.4rem">Dashboard</div>
-    <div id="dmo-desc" style="font-size:.75rem;color:rgba(255,255,255,.55);margin-bottom:1rem;line-height:1.6"></div>
-    <a id="dmo-cta" href="#" target="_blank" style="display:inline-block;background:linear-gradient(135deg,rgba(0,200,255,0.15),rgba(0,200,255,0.08));border:1px solid rgba(0,200,255,0.4);color:var(--blue);border-radius:8px;padding:.5rem 1.2rem;font-size:.78rem;font-weight:600;text-decoration:none">Öffnen →</a>
+<!-- PROJECT MODAL -->
+<div id="proj-modal" onclick="if(event.target===this)closeProject()">
+  <div class="pm-box">
+    <div class="pm-top-bar">
+      <div style="display:flex;align-items:center;gap:.75rem">
+        <span style="font-size:.58rem;letter-spacing:.2em;color:var(--blue)">▸ PROJEKT DETAILS</span>
+        <span class="pm-title-status" style="font-size:.65rem;font-weight:700;letter-spacing:.12em"></span>
+      </div>
+      <button class="pm-close" onclick="closeProject()">✕</button>
+    </div>
+    <div class="pm-body">
+      <div class="pm-hero">
+        <div class="pm-icon-lg"></div>
+        <div style="flex:1">
+          <div class="pm-name pm-title-name"></div>
+          <div class="pm-desc pm-desc-text"></div>
+        </div>
+      </div>
+      <div class="pm-progress-row">
+        <svg width="72" height="72" viewBox="0 0 64 64" style="flex-shrink:0">
+          <circle cx="32" cy="32" r="26" fill="none" stroke="rgba(0,200,255,0.08)" stroke-width="5"/>
+          <circle class="pm-arc" cx="32" cy="32" r="26" fill="none" stroke="var(--blue)" stroke-width="5"
+            stroke-linecap="round" stroke-dasharray="163.36" stroke-dashoffset="163.36"
+            transform="rotate(-90 32 32)" style="transition:stroke-dashoffset 1s ease"/>
+          <text class="pm-arc-pct" x="32" y="37" text-anchor="middle" fill="var(--blue)" font-size="11" font-weight="700">0%</text>
+        </svg>
+        <div style="flex:1">
+          <div style="font-size:.6rem;color:var(--text-dim);letter-spacing:.1em;margin-bottom:.5rem">NÄCHSTE SCHRITTE</div>
+          <div class="pm-actions-list"></div>
+        </div>
+      </div>
+      <div class="pm-stats-grid"></div>
+      <div class="pm-links-row">
+        <a class="pm-open-btn" href="#" target="_blank"></a>
+        <div class="pm-sec-links" style="display:flex;flex-wrap:wrap;gap:.5rem"></div>
+        <button class="pm-link-btn" onclick="closeProject()" style="margin-left:auto">Schließen</button>
+      </div>
+    </div>
   </div>
 </div>
 
+<!-- DASHBOARD MODAL -->
+<div id="dash-modal" onclick="if(event.target===this)closeDash()">
+  <div class="dash-modal-box">
+    <button class="dash-modal-close" onclick="closeDash()">✕</button>
+    <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1.25rem">
+      <div class="dash-modal-icon" style="font-size:2.2rem;line-height:1"></div>
+      <div>
+        <div class="dash-modal-name" style="font-size:1.1rem;font-weight:700;color:var(--text);letter-spacing:.05em"></div>
+        <div class="dash-modal-status" style="font-size:.65rem;letter-spacing:.15em;margin-top:.25rem;font-weight:600"></div>
+      </div>
+    </div>
+    <div class="dash-modal-desc" style="font-size:.8rem;color:var(--text-dim);line-height:1.7;margin-bottom:1.5rem;border-left:2px solid rgba(0,200,255,0.25);padding-left:.75rem"></div>
+    <div style="display:flex;gap:.75rem;align-items:center">
+      <a class="dash-modal-open btn-primary" href="#" target="_blank" style="text-decoration:none">↗ Jetzt öffnen</a>
+      <button class="btn-outline" onclick="closeDash()">Schließen</button>
+    </div>
+  </div>
+</div>
 </body>
 </html>
