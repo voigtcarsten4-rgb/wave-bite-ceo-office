@@ -778,16 +778,25 @@ input[type=range]{accent-color:var(--teal);flex:1}
               <span class="sv" id="count-val">1</span>
             </div>
             <hr style="border:none;border-top:1px solid var(--border);margin:12px 0">
-            <!-- VIDEO LENGTH -->
-            <div class="label" style="margin-bottom:8px">🎬 Videolänge (Werbespot-Format)</div>
+            <!-- VIDEO INFO BOX -->
+            <div style="background:rgba(201,168,76,0.07);border:1px solid rgba(201,168,76,0.25);border-radius:10px;padding:12px 14px;margin-bottom:12px">
+              <div style="font-size:11px;font-weight:700;color:var(--gold);margin-bottom:6px">🎬 Motion Video · Leonardo SVD</div>
+              <div style="font-size:11px;color:var(--muted);line-height:1.6">
+                <span style="color:var(--text)">Ausgabe: ~4–5 Sekunden</span> — das ist die feste Länge der Leonardo Motion SVD API.<br>
+                Ideal als <span style="color:var(--teal)">Instagram Reel · TikTok Loop · Story</span>.<br>
+                <span style="color:var(--muted)">Für längere Videos: Clip mehrfach aneinanderreihen oder in CapCut / Premiere erweitern.</span>
+              </div>
+            </div>
+            <!-- FORMAT PLANNER (Planungshilfe, kein API-Parameter) -->
+            <div class="label" style="margin-bottom:6px;font-size:10px;opacity:.7">Ziel-Format (Planungshilfe)</div>
             <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px" id="duration-chips"></div>
-            <!-- MOTION STRENGTH -->
+            <!-- MOTION STRENGTH — echter API Parameter -->
             <div class="slider-row">
               <label>Motion</label>
               <input type="range" id="motion-strength" min="1" max="10" value="5" oninput="document.getElementById('motion-val').textContent=this.value">
               <span class="sv" id="motion-val">5</span>
             </div>
-            <div style="font-size:10px;color:var(--muted)">Motion 1=subtil · 10=maximal bewegt</div>
+            <div style="font-size:10px;color:var(--muted)">Motion 1=subtil (smooth pan) · 10=maximal bewegt (action) — wirkt direkt auf API</div>
           </div>
 
           <!-- GENERATE BUTTONS -->
@@ -796,8 +805,15 @@ input[type=range]{accent-color:var(--teal);flex:1}
               <span>✦</span> Bild generieren
             </button>
             <button class="gen-btn gen-btn-gold" id="gen-vid-btn" onclick="generateContent('video')">
-              <span>▶</span> Video generieren
+              <span>▶</span> Motion Clip ~5s
             </button>
+          </div>
+          <div style="display:flex;align-items:center;gap:6px;margin-top:8px;padding:8px 10px;background:rgba(0,212,180,0.05);border:1px solid rgba(0,212,180,0.1);border-radius:8px">
+            <span style="font-size:14px">♪</span>
+            <span style="font-size:10px;color:var(--muted)">
+              <span style="color:var(--teal)">Kein Ton im Clip</span> — Leonardo SVD generiert stumme Videos.
+              Musik & Voice-Over im <span onclick="showPanel('audio')" style="color:var(--gold);cursor:pointer;text-decoration:underline">♪ Musik-Studio</span> hinzufügen.
+            </span>
           </div>
 
           <!-- PROGRESS -->
@@ -2209,25 +2225,27 @@ function buildPrompt(){
 /* ═══════════════════════════════════════════
    VIDEO DURATION
 ═══════════════════════════════════════════ */
+// VIDEO_DURATIONS = Planungshilfe für Ziel-Format
+// WICHTIG: Leonardo Motion SVD generiert immer ~4-5s Clips (API-Limit).
+// Diese Auswahl hat keinen Effekt auf die tatsächliche Video-Länge.
+// Für längere Inhalte: Clips mehrfach verwenden oder in CapCut/Premiere verlängern.
 const VIDEO_DURATIONS = [
-  {id:'6s',  label:'6s',   sub:'Social Story',  frames:6},
-  {id:'15s', label:'15s',  sub:'Spot kurz',      frames:15},
-  {id:'30s', label:'30s',  sub:'Spot Standard',  frames:30, default:true},
-  {id:'45s', label:'45s',  sub:'Spot lang',      frames:45},
-  {id:'60s', label:'60s',  sub:'YouTube / TV',   frames:60},
-  {id:'90s', label:'90s',  sub:'Brand Film',     frames:90},
-  {id:'120s',label:'2min', sub:'Imagefilm',      frames:120},
+  {id:'reel',  label:'Reel',   sub:'Instagram · TikTok',  note:'1× Clip ~5s'},
+  {id:'story', label:'Story',  sub:'4× Clips Loop',       note:'~20s gesamt', default:true},
+  {id:'short', label:'Short',  sub:'6× Clips Schnitt',    note:'~30s gesamt'},
+  {id:'spot',  label:'Spot',   sub:'12× Clips Edit',      note:'~60s gesamt'},
 ];
-let S_duration = '30s';
+let S_duration = 'story';
 
 function buildDurationChips(){
   const el = document.getElementById('duration-chips');
   if(!el) return;
   el.innerHTML = VIDEO_DURATIONS.map(d=>`
     <div class="duration-chip ${d.id===S_duration?'dur-active':''}" id="dc-${d.id}"
-         onclick="selectDuration('${d.id}',this)" title="${d.sub}">
-      <span style="font-size:13px;font-weight:700;display:block">${d.label}</span>
-      <span style="font-size:9px;opacity:.7">${d.sub}</span>
+         onclick="selectDuration('${d.id}',this)" title="${d.sub} · ${d.note||''}">
+      <span style="font-size:12px;font-weight:700;display:block">${d.label}</span>
+      <span style="font-size:9px;opacity:.7;display:block">${d.sub}</span>
+      ${d.note?`<span style="font-size:8px;color:var(--gold);display:block">${d.note}</span>`:''}
     </div>`).join('');
 }
 function selectDuration(id, el){
@@ -2410,12 +2428,12 @@ async function generateMotion(imageId, fallbackUrl){
     return fallbackUrl;
   }
 
-  updateProgress(78, `🎬 Motion-Video rendert (ca. 25s)…`, null);
+  updateProgress(78, `🎬 Motion-Video rendert (ca. 40–60s)…`, null);
 
   // Poll motion result
   for(let i=0;i<35;i++){
     await sleep(4000);
-    updateProgress(78+Math.min(i*0.5,18), `🎬 Video: ${(i+1)*4}s / ~30s`, null);
+    updateProgress(78+Math.min(i*0.5,18), `🎬 Render läuft… ${(i+1)*4}s vergangen`, null);
 
     const pr=await fetch(`https://cloud.leonardo.ai/api/rest/v1/generations/${motionId}`,{
       headers:{'Authorization':`Bearer ${S.apiKey}`}

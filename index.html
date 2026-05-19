@@ -2431,7 +2431,12 @@
         <div style="padding:.65rem .75rem;background:rgba(0,200,255,0.04);border:1px solid rgba(0,200,255,0.15);border-radius:10px;margin-bottom:.75rem">
           <div style="font-size:.48rem;letter-spacing:.14em;color:var(--text-dim);margin-bottom:.45rem">🔌 GOOGLE CALENDAR BRIDGE</div>
           <div id="cal-bridge-status-sec" style="font-size:.6rem;margin-bottom:.45rem;padding:.28rem .5rem;border-radius:5px;background:rgba(255,193,7,0.08);border:1px solid rgba(255,193,7,0.2);color:rgba(255,193,7,0.85)">⚡ Nicht verbunden — Apps Script URL eintragen</div>
-          <input id="cal-bridge-url-input" class="cqs-input" type="text" placeholder="https://script.google.com/…/exec" style="margin-bottom:.45rem;font-size:.62rem">
+          <div style="font-size:.55rem;color:var(--text-dim);margin-bottom:.4rem;line-height:1.5;padding:.28rem .4rem;background:rgba(0,0,0,.2);border-radius:5px">
+            📋 <strong style="color:var(--text)">So verbinden:</strong> Google Apps Script öffnen →
+            <code style="color:var(--teal);font-size:.5rem">CEO_MASTER_BRIDGE_V2.gs</code> deployen →
+            Bereitstellen als Web-App → URL kopieren → hier einfügen
+          </div>
+          <input id="cal-bridge-url-input" class="cqs-input" type="text" placeholder="https://script.google.com/macros/s/…/exec" style="margin-bottom:.45rem;font-size:.62rem">
           <button onclick="calSaveBridgeUrl()" class="cqs-btn" style="margin-bottom:.3rem">🔗 VERBINDEN</button>
           <button onclick="calSyncNow()" style="width:100%;padding:.35rem;background:rgba(0,212,170,0.08);border:1px solid rgba(0,212,170,0.25);border-radius:6px;color:var(--teal);font-size:.62rem;cursor:pointer;font-family:inherit;transition:all .2s" onmouseover="this.style.background='rgba(0,212,170,0.15)'" onmouseout="this.style.background='rgba(0,212,170,0.08)'">↺ SYNC STARTEN</button>
           <div id="cal-sync-status" style="font-size:.58rem;color:var(--text-dim);text-align:center;margin-top:.3rem;min-height:.8rem"></div>
