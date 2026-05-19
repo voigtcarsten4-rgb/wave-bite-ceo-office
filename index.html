@@ -1496,6 +1496,11 @@
   <div class="nav-pill" onclick="document.getElementById('sec-console').scrollIntoView({behavior:'smooth'})">CONSOLE</div>
   <div class="nav-pill" onclick="document.getElementById('sec-agents').scrollIntoView({behavior:'smooth'})">AGENTEN</div>
   <div class="nav-pill" onclick="document.getElementById('sec-mail-intel').scrollIntoView({behavior:'smooth'})">MAILS</div>
+  <div class="nav-pill" onclick="document.getElementById('sec-executive').scrollIntoView({behavior:'smooth'})" style="border-color:rgba(0,212,170,0.35);color:var(--teal)">⚡ EXEC</div>
+  <div class="nav-pill" onclick="document.getElementById('sec-crm').scrollIntoView({behavior:'smooth'})">🤝 CRM</div>
+  <div class="nav-pill" onclick="document.getElementById('sec-investor').scrollIntoView({behavior:'smooth'})" style="border-color:rgba(201,168,76,0.35);color:var(--gold)">💎 INVEST</div>
+  <div class="nav-pill" onclick="document.getElementById('sec-ops').scrollIntoView({behavior:'smooth'})">⚙ OPS</div>
+  <div class="nav-pill" onclick="document.getElementById('sec-risk').scrollIntoView({behavior:'smooth'})" style="border-color:rgba(255,68,68,0.35);color:#ff4757">🔴 RISK</div>
   <div class="nav-sep"></div>
   <!-- QUICK TOOL BUTTONS IN NAV -->
   <a href="https://mail.google.com" target="_blank" class="nav-tool-btn" title="Gmail öffnen">✉ Mail</a>
@@ -1527,6 +1532,7 @@
   <div style="display:flex;flex-direction:column;gap:.4rem;margin-bottom:1rem">
     <a href="https://wave-bite.com" target="_blank" class="tb-link"><span>🌐</span><div><div class="tb-name">Wave Bite Website</div><div class="tb-url">wave-bite.com</div></div><span class="tb-arrow">↗</span></a>
     <a href="https://wave-bite.com/wp-admin" target="_blank" class="tb-link"><span>⚙</span><div><div class="tb-name">WordPress Admin</div><div class="tb-url">wave-bite.com/wp-admin</div></div><span class="tb-arrow">↗</span></a>
+    <a href="wavebyte-financial-os.html" target="_blank" class="tb-link" style="border-color:rgba(201,168,76,0.25)"><span>💰</span><div><div class="tb-name" style="color:var(--gold)">Financial OS</div><div class="tb-url">WaveByte Finanzen · Cashflow</div></div><span class="chip chip-gold" style="font-size:.55rem;padding:.1rem .35rem">LOCAL</span></a>
     <a href="https://www.pegelonline.wsv.de" target="_blank" class="tb-link"><span>🌊</span><div><div class="tb-name">Wasserlage Dashboard</div><div class="tb-url">pegelonline.wsv.de</div></div><span class="chip chip-success" style="font-size:.55rem;padding:.1rem .35rem">LIVE</span></a>
     <a href="https://www.elwis.de" target="_blank" class="tb-link"><span>⚓</span><div><div class="tb-name">ELWIS Wasserstraßen</div><div class="tb-url">elwis.de</div></div><span class="tb-arrow">↗</span></a>
   </div>
@@ -3973,10 +3979,304 @@
 
 
 <!-- QUICK ACTIONS BAR -->
-<div id="quick-actions-bar" style="position:fixed;bottom:28px;right:1.5rem;z-index:90;display:flex;flex-direction:column;gap:.5rem">
+
+<!-- ═══════════════════════════════════════════════════════════════
+     WAVEBYTE EXECUTIVE OS — ADDITIVE SECTIONS
+═══════════════════════════════════════════════════════════════ -->
+
+<!-- EXECUTIVE KPI DASHBOARD -->
+<section id="sec-executive" style="padding:2rem 1.5rem;max-width:1400px;margin:0 auto">
+  <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem">
+    <div style="width:3px;height:2rem;background:linear-gradient(180deg,var(--teal),var(--blue));border-radius:2px"></div>
+    <div>
+      <h2 style="font-size:1rem;font-weight:700;letter-spacing:.12em;color:var(--teal);margin:0">EXECUTIVE KPI DASHBOARD</h2>
+      <div style="font-size:.62rem;color:var(--text-dim);letter-spacing:.08em;margin-top:.15rem">WAVEBYTE · REALTIME FÜHRUNGSSTATUS</div>
+    </div>
+    <div id="exec-date" style="margin-left:auto;font-size:.6rem;color:var(--text-dim);letter-spacing:.08em"></div>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:1.5rem">
+    <div style="background:linear-gradient(135deg,rgba(0,212,170,0.1),rgba(0,200,255,0.05));border:1px solid rgba(0,212,170,0.25);border-radius:12px;padding:1rem;text-align:center">
+      <div style="font-size:.55rem;letter-spacing:.1em;color:var(--teal);margin-bottom:.4rem">WASSERLAGE NUTZER</div>
+      <div style="font-size:2rem;font-weight:700;color:var(--teal);line-height:1">380</div>
+      <div style="font-size:.55rem;color:var(--text-dim);margin-top:.3rem">▲ wachsend</div>
+    </div>
+    <div style="background:linear-gradient(135deg,rgba(201,168,76,0.1),rgba(201,168,76,0.05));border:1px solid rgba(201,168,76,0.25);border-radius:12px;padding:1rem;text-align:center">
+      <div style="font-size:.55rem;letter-spacing:.1em;color:var(--gold);margin-bottom:.4rem">MRR</div>
+      <div style="font-size:2rem;font-weight:700;color:var(--gold);line-height:1">0€</div>
+      <div style="font-size:.55rem;color:var(--text-dim);margin-top:.3rem">Pre-Revenue Phase</div>
+    </div>
+    <div style="background:linear-gradient(135deg,rgba(255,68,68,0.1),rgba(255,68,68,0.05));border:1px solid rgba(255,68,68,0.25);border-radius:12px;padding:1rem;text-align:center">
+      <div style="font-size:.55rem;letter-spacing:.1em;color:#ff4757;margin-bottom:.4rem">RUNWAY</div>
+      <div style="font-size:2rem;font-weight:700;color:#ff4757;line-height:1">~5</div>
+      <div style="font-size:.55rem;color:var(--text-dim);margin-top:.3rem">Monate · Burn 2.800€/mo</div>
+    </div>
+    <div style="background:rgba(7,24,40,0.6);border:1px solid rgba(0,200,255,0.12);border-radius:12px;padding:1rem;text-align:center">
+      <div style="font-size:.55rem;letter-spacing:.1em;color:var(--text-dim);margin-bottom:.4rem">LEADS (EST.)</div>
+      <div style="font-size:2rem;font-weight:700;color:var(--blue);line-height:1">~40</div>
+      <div style="font-size:.55rem;color:var(--text-dim);margin-top:.3rem">Qualifiziert: 4 aktiv</div>
+    </div>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:1rem;margin-bottom:1.5rem">
+    <div style="background:rgba(7,24,40,0.7);border:1px solid rgba(0,200,255,0.12);border-radius:12px;padding:1.25rem">
+      <div style="font-size:.6rem;font-weight:700;letter-spacing:.1em;color:var(--text-dim);margin-bottom:1rem">TOP PRIORITÄTEN HEUTE</div>
+      <div style="display:flex;flex-direction:column;gap:.6rem">
+        <div style="display:flex;align-items:flex-start;gap:.6rem"><span class="chip chip-danger" style="font-size:.5rem;padding:.15rem .4rem;flex-shrink:0;margin-top:.1rem">P1</span><span style="font-size:.72rem;color:var(--text);line-height:1.5">Funding sichern — Seedmatch + EXIST vorbereiten</span></div>
+        <div style="display:flex;align-items:flex-start;gap:.6rem"><span class="chip chip-danger" style="font-size:.5rem;padding:.15rem .4rem;flex-shrink:0;margin-top:.1rem">P1</span><span style="font-size:.72rem;color:var(--text);line-height:1.5">UG eintragen — Handelsregister-Anmeldung starten</span></div>
+        <div style="display:flex;align-items:flex-start;gap:.6rem"><span class="chip chip-warn" style="font-size:.5rem;padding:.15rem .4rem;flex-shrink:0;margin-top:.1rem">P2</span><span style="font-size:.72rem;color:var(--text);line-height:1.5">Marina Müggelsee — Follow-up heute</span></div>
+        <div style="display:flex;align-items:flex-start;gap:.6rem"><span class="chip chip-warn" style="font-size:.5rem;padding:.15rem .4rem;flex-shrink:0;margin-top:.1rem">P2</span><span style="font-size:.72rem;color:var(--text);line-height:1.5">BunBo Sprint 7 abschließen — 65%</span></div>
+        <div style="display:flex;align-items:flex-start;gap:.6rem"><span class="chip chip-info" style="font-size:.5rem;padding:.15rem .4rem;flex-shrink:0;margin-top:.1rem">P3</span><span style="font-size:.72rem;color:var(--text);line-height:1.5">Wasserlage 302-Redirect — Tech-Fix einplanen</span></div>
+      </div>
+    </div>
+    <div style="background:rgba(7,24,40,0.7);border:1px solid rgba(0,200,255,0.12);border-radius:12px;padding:1.25rem">
+      <div style="font-size:.6rem;font-weight:700;letter-spacing:.1em;color:var(--text-dim);margin-bottom:1rem">FINANZ &amp; RISIKO STATUS</div>
+      <div style="display:flex;flex-direction:column;gap:.55rem;margin-bottom:1rem">
+        <div style="display:flex;justify-content:space-between;align-items:center"><span style="font-size:.68rem;color:var(--text-dim)">Cash</span><span style="font-size:.78rem;font-weight:700;color:var(--gold)">14.000€</span></div>
+        <div style="display:flex;justify-content:space-between;align-items:center"><span style="font-size:.68rem;color:var(--text-dim)">Burn/Monat</span><span style="font-size:.78rem;font-weight:700;color:#ff4757">−2.800€</span></div>
+        <div style="display:flex;justify-content:space-between;align-items:center"><span style="font-size:.68rem;color:var(--text-dim)">Runway</span><span style="font-size:.78rem;font-weight:700;color:#ff4757">~5 Monate</span></div>
+        <div style="display:flex;justify-content:space-between;align-items:center"><span style="font-size:.68rem;color:var(--text-dim)">MRR</span><span style="font-size:.78rem;font-weight:700;color:var(--text-dim)">0€ (Pre-Revenue)</span></div>
+      </div>
+      <div style="border-top:1px solid rgba(0,200,255,0.1);padding-top:.75rem">
+        <div style="font-size:.57rem;color:var(--text-dim);margin-bottom:.5rem;letter-spacing:.05em">RISIKOAMPEL</div>
+        <div style="display:flex;flex-direction:column;gap:.4rem">
+          <div style="display:flex;align-items:center;gap:.5rem"><span style="color:#ff4757;font-size:.8rem">●</span><span style="font-size:.65rem;color:var(--text)">Liquidität — KRITISCH</span></div>
+          <div style="display:flex;align-items:center;gap:.5rem"><span style="color:#ffaa00;font-size:.8rem">●</span><span style="font-size:.65rem;color:var(--text)">Rechtsstatus — IN KLÄRUNG</span></div>
+          <div style="display:flex;align-items:center;gap:.5rem"><span style="color:#ffaa00;font-size:.8rem">●</span><span style="font-size:.65rem;color:var(--text)">Tech (302) — TEILS OFFLINE</span></div>
+          <div style="display:flex;align-items:center;gap:.5rem"><span style="color:var(--green);font-size:.8rem">●</span><span style="font-size:.65rem;color:var(--text)">Core-Systeme — STABIL</span></div>
+        </div>
+      </div>
+    </div>
+    <div style="background:rgba(7,24,40,0.7);border:1px solid rgba(0,200,255,0.12);border-radius:12px;padding:1.25rem">
+      <div style="font-size:.6rem;font-weight:700;letter-spacing:.1em;color:var(--text-dim);margin-bottom:1rem">OFFENE ENTSCHEIDUNGEN</div>
+      <div style="display:flex;flex-direction:column;gap:.55rem;margin-bottom:1rem">
+        <div style="background:rgba(255,170,0,0.07);border:1px solid rgba(255,170,0,0.2);border-radius:8px;padding:.55rem .7rem;font-size:.67rem;color:var(--text);line-height:1.5">⚡ Welche Rechtsform zuerst: UG jetzt oder direkt GmbH?</div>
+        <div style="background:rgba(255,170,0,0.07);border:1px solid rgba(255,170,0,0.2);border-radius:8px;padding:.55rem .7rem;font-size:.67rem;color:var(--text);line-height:1.5">⚡ Seedmatch: Kampagne jetzt vorbereiten oder erst EXIST?</div>
+        <div style="background:rgba(0,200,255,0.05);border:1px solid rgba(0,200,255,0.12);border-radius:8px;padding:.55rem .7rem;font-size:.67rem;color:var(--text);line-height:1.5">ℹ BunBo: FlutterFlow weiter oder React Native Switch?</div>
+      </div>
+      <div style="border-top:1px solid rgba(0,200,255,0.1);padding-top:.75rem">
+        <div style="font-size:.57rem;color:var(--text-dim);margin-bottom:.5rem;letter-spacing:.05em">TOP 3 AKTIONEN HEUTE</div>
+        <div style="display:flex;flex-direction:column;gap:.35rem">
+          <div style="font-size:.65rem;color:var(--teal)">→ UG-Gründungsdokumente aufsetzen</div>
+          <div style="font-size:.65rem;color:var(--teal)">→ Marina Müggelsee anrufen/mailen</div>
+          <div style="font-size:.65rem;color:var(--teal)">→ EXIST-Antrag Unterlagen prüfen</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div style="background:rgba(7,24,40,0.5);border:1px solid rgba(0,200,255,0.08);border-radius:12px;padding:1rem">
+    <div style="font-size:.57rem;letter-spacing:.1em;color:var(--text-dim);margin-bottom:.75rem">PHASE 2 FOCUS TRACKER</div>
+    <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:.6rem">
+      <div style="background:rgba(255,68,68,0.1);border:1px solid rgba(255,68,68,0.3);border-radius:8px;padding:.6rem;text-align:center"><div style="font-size:.55rem;color:#ff4757;font-weight:700;letter-spacing:.05em">FUNDING</div><div style="font-size:.5rem;color:var(--text-dim);margin-top:.2rem">KRITISCH</div></div>
+      <div style="background:rgba(0,255,136,0.08);border:1px solid rgba(0,255,136,0.2);border-radius:8px;padding:.6rem;text-align:center"><div style="font-size:.55rem;color:var(--green);font-weight:700;letter-spacing:.05em">WASSERLAGE</div><div style="font-size:.5rem;color:var(--text-dim);margin-top:.2rem">STABIL 80%</div></div>
+      <div style="background:rgba(0,200,255,0.08);border:1px solid rgba(0,200,255,0.2);border-radius:8px;padding:.6rem;text-align:center"><div style="font-size:.55rem;color:var(--blue);font-weight:700;letter-spacing:.05em">TRACKING</div><div style="font-size:.5rem;color:var(--text-dim);margin-top:.2rem">AKTIV</div></div>
+      <div style="background:rgba(0,212,170,0.08);border:1px solid rgba(0,212,170,0.2);border-radius:8px;padding:.6rem;text-align:center"><div style="font-size:.55rem;color:var(--teal);font-weight:700;letter-spacing:.05em">PARTNER</div><div style="font-size:.5rem;color:var(--text-dim);margin-top:.2rem">AUFBAU</div></div>
+      <div style="background:rgba(201,168,76,0.08);border:1px solid rgba(201,168,76,0.2);border-radius:8px;padding:.6rem;text-align:center"><div style="font-size:.55rem;color:var(--gold);font-weight:700;letter-spacing:.05em">BUNBO</div><div style="font-size:.5rem;color:var(--text-dim);margin-top:.2rem">SPRINT 7 65%</div></div>
+      <div style="background:rgba(100,100,100,0.1);border:1px solid rgba(100,100,100,0.2);border-radius:8px;padding:.6rem;text-align:center"><div style="font-size:.55rem;color:rgba(200,200,200,0.4);font-weight:700;letter-spacing:.05em">PHASE 3</div><div style="font-size:.5rem;color:rgba(200,200,200,0.3);margin-top:.2rem">GESPERRT</div></div>
+    </div>
+  </div>
+  <script>(function(){var d=document.getElementById('exec-date');if(d){var n=new Date();d.textContent=n.toLocaleDateString('de-DE',{weekday:'long',day:'2-digit',month:'long',year:'numeric'});}})()</script>
+</section>
+
+<!-- SPONSOREN & PARTNER CRM -->
+<section id="sec-crm" style="padding:2rem 1.5rem;max-width:1400px;margin:0 auto">
+  <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem">
+    <div style="width:3px;height:2rem;background:linear-gradient(180deg,var(--teal),var(--blue));border-radius:2px"></div>
+    <div>
+      <h2 style="font-size:1rem;font-weight:700;letter-spacing:.12em;color:var(--teal);margin:0">SPONSOREN &amp; PARTNER CRM</h2>
+      <div style="font-size:.62rem;color:var(--text-dim);letter-spacing:.08em;margin-top:.15rem">DEAL PIPELINE · KONTAKTE · AKTIONEN</div>
+    </div>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:.75rem;margin-bottom:1.5rem">
+    <div style="background:rgba(7,24,40,0.7);border:1px solid rgba(0,200,255,0.12);border-radius:10px;padding:.85rem;text-align:center"><div style="font-size:1.6rem;font-weight:700;color:var(--blue)">12+</div><div style="font-size:.55rem;letter-spacing:.08em;color:var(--text-dim);margin-top:.25rem">IDENTIFIZIERT</div></div>
+    <div style="background:rgba(7,24,40,0.7);border:1px solid rgba(0,200,255,0.12);border-radius:10px;padding:.85rem;text-align:center"><div style="font-size:1.6rem;font-weight:700;color:var(--teal)">4</div><div style="font-size:.55rem;letter-spacing:.08em;color:var(--text-dim);margin-top:.25rem">KONTAKTIERT</div></div>
+    <div style="background:rgba(7,24,40,0.7);border:1px solid rgba(201,168,76,0.2);border-radius:10px;padding:.85rem;text-align:center"><div style="font-size:1.6rem;font-weight:700;color:var(--gold)">2</div><div style="font-size:.55rem;letter-spacing:.08em;color:var(--text-dim);margin-top:.25rem">IM GESPRÄCH</div></div>
+    <div style="background:rgba(7,24,40,0.7);border:1px solid rgba(255,170,0,0.2);border-radius:10px;padding:.85rem;text-align:center"><div style="font-size:1.6rem;font-weight:700;color:#ffaa00">1</div><div style="font-size:.55rem;letter-spacing:.08em;color:var(--text-dim);margin-top:.25rem">VERHANDLUNG</div></div>
+    <div style="background:rgba(0,255,136,0.08);border:1px solid rgba(0,255,136,0.2);border-radius:10px;padding:.85rem;text-align:center"><div style="font-size:1.6rem;font-weight:700;color:var(--green)">0</div><div style="font-size:.55rem;letter-spacing:.08em;color:var(--text-dim);margin-top:.25rem">PARTNER</div></div>
+  </div>
+  <div style="background:rgba(0,212,170,0.08);border:1px solid rgba(0,212,170,0.3);border-radius:10px;padding:.85rem 1rem;margin-bottom:1.25rem;display:flex;align-items:center;gap:.75rem">
+    <span style="font-size:1.1rem">⚡</span>
+    <div><div style="font-size:.7rem;font-weight:700;color:var(--teal)">Heute kontaktieren:</div><div style="font-size:.65rem;color:var(--text);margin-top:.15rem">Marina Müggelsee — Verhandlungsphase · Follow-up überfällig</div></div>
+    <a href="https://mail.google.com/mail/u/0/#compose" target="_blank" class="btn-outline" style="margin-left:auto;font-size:.6rem;padding:.35rem .7rem;text-decoration:none;flex-shrink:0">✉ Mail öffnen</a>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1rem">
+    <div style="background:rgba(7,24,40,0.7);border:1px solid rgba(255,170,0,0.25);border-radius:12px;padding:1rem">
+      <div style="display:flex;align-items:center;gap:.6rem;margin-bottom:.75rem">
+        <div style="width:36px;height:36px;background:linear-gradient(135deg,rgba(255,170,0,0.2),rgba(255,170,0,0.05));border:1px solid rgba(255,170,0,0.3);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.9rem">⚓</div>
+        <div><div style="font-size:.72rem;font-weight:700;color:var(--text)">Marina Müggelsee</div><div style="font-size:.57rem;color:var(--text-dim)">Marinamanagement</div></div>
+        <span class="chip chip-warn" style="margin-left:auto;font-size:.5rem;padding:.15rem .4rem">VERHANDLUNG</span>
+      </div>
+      <div style="display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:.6rem"><span class="chip chip-danger" style="font-size:.5rem;padding:.15rem .35rem">PRIORITÄT HOCH</span><span class="chip chip-warn" style="font-size:.5rem;padding:.15rem .35rem">FOLLOW-UP HEUTE</span></div>
+      <div style="font-size:.62rem;color:var(--text-dim);line-height:1.6;margin-bottom:.75rem">Erste Testmarinas — Verhandlung aktiv. Ziel: Pilotpartnerschaft Q2/Q3.</div>
+      <a href="https://mail.google.com/mail/u/0/#compose" target="_blank" class="btn-outline" style="font-size:.58rem;padding:.35rem .6rem;text-decoration:none;display:inline-block">✉ Mail</a>
+    </div>
+    <div style="background:rgba(7,24,40,0.7);border:1px solid rgba(0,200,255,0.1);border-radius:12px;padding:1rem">
+      <div style="display:flex;align-items:center;gap:.6rem;margin-bottom:.75rem">
+        <div style="width:36px;height:36px;background:rgba(0,200,255,0.08);border:1px solid rgba(0,200,255,0.2);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.9rem">🌊</div>
+        <div><div style="font-size:.72rem;font-weight:700;color:var(--text)">Wassertourismus e.V.</div><div style="font-size:.57rem;color:var(--text-dim)">Verband / Netzwerk</div></div>
+        <span class="chip" style="margin-left:auto;font-size:.5rem;padding:.15rem .4rem;background:rgba(100,100,100,0.15);border-color:rgba(100,100,100,0.3);color:rgba(200,200,200,0.6)">SCHLAFEND</span>
+      </div>
+      <div style="font-size:.62rem;color:var(--text-dim);line-height:1.6;margin-bottom:.75rem">Erster Kontakt hergestellt. Reaktivierung sinnvoll für Verbandsreichweite.</div>
+      <a href="https://mail.google.com/mail/u/0/#compose" target="_blank" class="btn-outline" style="font-size:.58rem;padding:.35rem .6rem;text-decoration:none;display:inline-block">✉ Reaktivieren</a>
+    </div>
+    <div style="background:rgba(7,24,40,0.7);border:1px solid rgba(0,200,255,0.1);border-radius:12px;padding:1rem">
+      <div style="display:flex;align-items:center;gap:.6rem;margin-bottom:.75rem">
+        <div style="width:36px;height:36px;background:rgba(201,168,76,0.08);border:1px solid rgba(201,168,76,0.2);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.9rem">🍺</div>
+        <div><div style="font-size:.72rem;font-weight:700;color:var(--text)">Radeberger Gruppe</div><div style="font-size:.57rem;color:var(--text-dim)">Getränke-Sponsoring</div></div>
+        <span class="chip chip-info" style="margin-left:auto;font-size:.5rem;padding:.15rem .4rem">IDENTIFIZIERT</span>
+      </div>
+      <div style="font-size:.62rem;color:var(--text-dim);line-height:1.6;margin-bottom:.75rem">Potenzieller Getränkepartner / Marinen-Sponsor. Noch nicht kontaktiert.</div>
+      <a href="https://mail.google.com/mail/u/0/#compose" target="_blank" class="btn-outline" style="font-size:.58rem;padding:.35rem .6rem;text-decoration:none;display:inline-block">✉ Erst-Kontakt</a>
+    </div>
+  </div>
+</section>
+
+<!-- INVESTOR READINESS -->
+<section id="sec-investor" style="padding:2rem 1.5rem;max-width:1400px;margin:0 auto">
+  <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem">
+    <div style="width:3px;height:2rem;background:linear-gradient(180deg,var(--gold),rgba(201,168,76,0.4));border-radius:2px"></div>
+    <div>
+      <h2 style="font-size:1rem;font-weight:700;letter-spacing:.12em;color:var(--gold);margin:0">INVESTOR READINESS</h2>
+      <div style="font-size:.62rem;color:var(--text-dim);letter-spacing:.08em;margin-top:.15rem">FUNDING PIPELINE · DATA ROOM · READINESS SCORE</div>
+    </div>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;margin-bottom:1.5rem">
+    <div style="background:rgba(7,24,40,0.7);border:1px solid rgba(201,168,76,0.15);border-radius:12px;padding:1.25rem">
+      <div style="font-size:.6rem;font-weight:700;letter-spacing:.1em;color:var(--text-dim);margin-bottom:1rem">INVESTOR PIPELINE</div>
+      <div style="display:flex;flex-direction:column;gap:.65rem">
+        <div style="display:flex;align-items:center;gap:.75rem;background:rgba(255,68,68,0.06);border:1px solid rgba(255,68,68,0.2);border-radius:8px;padding:.65rem .85rem">
+          <span>🔴</span><div style="flex:1"><div style="font-size:.7rem;font-weight:600;color:var(--text)">Seedmatch</div><div style="font-size:.57rem;color:var(--text-dim);margin-top:.1rem">Due Diligence Vorbereitung</div></div>
+          <span class="chip chip-danger" style="font-size:.5rem;padding:.15rem .4rem">50k€</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:.75rem;background:rgba(255,170,0,0.06);border:1px solid rgba(255,170,0,0.2);border-radius:8px;padding:.65rem .85rem">
+          <span>🟡</span><div style="flex:1"><div style="font-size:.7rem;font-weight:600;color:var(--text)">HTGF</div><div style="font-size:.57rem;color:var(--text-dim);margin-top:.1rem">Erstgespräch geplant</div></div>
+          <span class="chip chip-warn" style="font-size:.5rem;padding:.15rem .4rem">250k€</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:.75rem;background:rgba(255,170,0,0.06);border:1px solid rgba(255,170,0,0.2);border-radius:8px;padding:.65rem .85rem">
+          <span>🟡</span><div style="flex:1"><div style="font-size:.7rem;font-weight:600;color:var(--text)">EXIST-Gründerstipendium</div><div style="font-size:.57rem;color:var(--text-dim);margin-top:.1rem">Antrag in Vorbereitung</div></div>
+          <span class="chip chip-warn" style="font-size:.5rem;padding:.15rem .4rem">125k€</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:.75rem;background:rgba(0,200,255,0.04);border:1px solid rgba(0,200,255,0.1);border-radius:8px;padding:.65rem .85rem">
+          <span>⚪</span><div style="flex:1"><div style="font-size:.7rem;font-weight:600;color:var(--text-dim)">KfW Startgeld</div><div style="font-size:.57rem;color:var(--text-dim);margin-top:.1rem">Noch nicht kontaktiert</div></div>
+          <span class="chip" style="font-size:.5rem;padding:.15rem .4rem;background:rgba(100,100,100,0.15);border-color:rgba(100,100,100,0.3);color:rgba(200,200,200,0.5)">offen</span>
+        </div>
+      </div>
+    </div>
+    <div style="background:rgba(7,24,40,0.7);border:1px solid rgba(201,168,76,0.15);border-radius:12px;padding:1.25rem">
+      <div style="font-size:.6rem;font-weight:700;letter-spacing:.1em;color:var(--text-dim);margin-bottom:1rem">INVESTOR READINESS SCORE</div>
+      <div style="display:flex;align-items:center;gap:1.5rem;margin-bottom:1rem">
+        <svg width="80" height="80" viewBox="0 0 80 80"><circle cx="40" cy="40" r="32" fill="none" stroke="rgba(0,200,255,0.1)" stroke-width="8"/><circle cx="40" cy="40" r="32" fill="none" stroke="var(--gold)" stroke-width="8" stroke-dasharray="201" stroke-dashoffset="121" stroke-linecap="round" transform="rotate(-90 40 40)"/><text x="40" y="45" text-anchor="middle" fill="var(--gold)" font-size="14" font-weight="700">40%</text></svg>
+        <div><div style="font-size:.7rem;color:var(--gold);font-weight:700">40% Ready</div><div style="font-size:.6rem;color:var(--text-dim);margin-top:.3rem;line-height:1.6">UG fehlt · DD-Ordner lückenhaft<br>Pitch Deck ✓ · Exec Summary ✓</div></div>
+      </div>
+      <div style="font-size:.57rem;color:var(--text-dim);margin-bottom:.5rem;letter-spacing:.05em">DATA ROOM CHECKLIST</div>
+      <div id="inv-checklist" style="display:flex;flex-direction:column;gap:.3rem"></div>
+    </div>
+  </div>
+  <div style="background:rgba(7,24,40,0.5);border:1px solid rgba(201,168,76,0.12);border-radius:10px;padding:1rem">
+    <div style="font-size:.57rem;letter-spacing:.1em;color:var(--text-dim);margin-bottom:.75rem">NÄCHSTE SCHRITTE</div>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:.75rem">
+      <div style="background:rgba(255,68,68,0.08);border:1px solid rgba(255,68,68,0.2);border-radius:8px;padding:.65rem"><div style="font-size:.5rem;color:#ff4757;font-weight:700;margin-bottom:.3rem">SOFORT</div><div style="font-size:.62rem;color:var(--text);line-height:1.5">UG beim Notar anmelden</div></div>
+      <div style="background:rgba(255,68,68,0.08);border:1px solid rgba(255,68,68,0.2);border-radius:8px;padding:.65rem"><div style="font-size:.5rem;color:#ff4757;font-weight:700;margin-bottom:.3rem">SOFORT</div><div style="font-size:.62rem;color:var(--text);line-height:1.5">Seedmatch DD-Ordner vervollständigen</div></div>
+      <div style="background:rgba(255,170,0,0.08);border:1px solid rgba(255,170,0,0.2);border-radius:8px;padding:.65rem"><div style="font-size:.5rem;color:#ffaa00;font-weight:700;margin-bottom:.3rem">DIESE WOCHE</div><div style="font-size:.62rem;color:var(--text);line-height:1.5">EXIST-Unterlagen zusammenstellen</div></div>
+      <div style="background:rgba(0,200,255,0.06);border:1px solid rgba(0,200,255,0.15);border-radius:8px;padding:.65rem"><div style="font-size:.5rem;color:var(--blue);font-weight:700;margin-bottom:.3rem">KW 22</div><div style="font-size:.62rem;color:var(--text);line-height:1.5">HTGF Termin bestätigen</div></div>
+    </div>
+  </div>
+  <script>(function(){var items=[{l:'Pitch Deck (10 Slides)',s:'ok'},{l:'Executive Summary',s:'ok'},{l:'Finanzplan 3J',s:'warn'},{l:'Teamprofile / CVs',s:'warn'},{l:'Produktdemo / Screenshots',s:'ok'},{l:'Marktanalyse',s:'warn'},{l:'Wettbewerbsanalyse',s:'error'},{l:'UG-Gesellschaftsvertrag',s:'error'},{l:'IP / Markenschutz',s:'error'},{l:'Kundennachweise / LOIs',s:'error'},{l:'Tech-Dokumentation',s:'warn'},{l:'Cap Table',s:'error'}];var m={ok:['✓','var(--green)'],warn:['◐','#ffaa00'],error:['✗','#ff4757']};var el=document.getElementById('inv-checklist');if(!el)return;el.innerHTML=items.map(function(it){var r=m[it.s];return'<div style="display:flex;align-items:center;gap:.5rem"><span style="color:'+r[1]+';font-size:.7rem;width:12px;text-align:center">'+r[0]+'</span><span style="font-size:.62rem;color:'+(it.s==='ok'?'var(--text)':it.s==='warn'?'#ffaa00':'rgba(255,100,100,0.8)')+'">'+it.l+'</span></div>';}).join('');})()</script>
+</section>
+
+<!-- OPERATIONS CENTER -->
+<section id="sec-ops" style="padding:2rem 1.5rem;max-width:1400px;margin:0 auto">
+  <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem">
+    <div style="width:3px;height:2rem;background:linear-gradient(180deg,var(--blue),var(--teal));border-radius:2px"></div>
+    <div>
+      <h2 style="font-size:1rem;font-weight:700;letter-spacing:.12em;color:var(--blue);margin:0">OPERATIONS CENTER</h2>
+      <div style="font-size:.62rem;color:var(--text-dim);letter-spacing:.08em;margin-top:.15rem">TASKS · SYSTEM STATUS · DEADLINES</div>
+    </div>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;margin-bottom:1.25rem">
+    <div style="background:rgba(7,24,40,0.7);border:1px solid rgba(0,200,255,0.12);border-radius:12px;padding:1.25rem">
+      <div style="font-size:.6rem;font-weight:700;letter-spacing:.1em;color:var(--text-dim);margin-bottom:1rem">AKTIVE OPERATIVE AUFGABEN</div>
+      <div style="display:flex;flex-direction:column;gap:.55rem">
+        <div style="display:flex;align-items:center;gap:.65rem;padding:.55rem .7rem;background:rgba(0,200,255,0.04);border-radius:8px"><span class="task-indicator active"></span><span style="font-size:.68rem;color:var(--text);flex:1">BunBo Sprint 7 — FlutterFlow Dev</span><span class="chip chip-info" style="font-size:.5rem;padding:.1rem .35rem">65%</span></div>
+        <div style="display:flex;align-items:center;gap:.65rem;padding:.55rem .7rem;background:rgba(0,200,255,0.04);border-radius:8px"><span class="task-indicator active"></span><span style="font-size:.68rem;color:var(--text);flex:1">Wasserlage 302-Redirect Fix</span><span class="chip chip-warn" style="font-size:.5rem;padding:.1rem .35rem">WARN</span></div>
+        <div style="display:flex;align-items:center;gap:.65rem;padding:.55rem .7rem;background:rgba(0,200,255,0.04);border-radius:8px"><span class="task-indicator warn"></span><span style="font-size:.68rem;color:var(--text);flex:1">Seedmatch Datenraum vervollständigen</span><span class="chip chip-danger" style="font-size:.5rem;padding:.1rem .35rem">KRITISCH</span></div>
+        <div style="display:flex;align-items:center;gap:.65rem;padding:.55rem .7rem;background:rgba(0,200,255,0.04);border-radius:8px"><span class="task-indicator warn"></span><span style="font-size:.68rem;color:var(--text);flex:1">UG Gründung — Notar Termin</span><span class="chip chip-danger" style="font-size:.5rem;padding:.1rem .35rem">P1</span></div>
+        <div style="display:flex;align-items:center;gap:.65rem;padding:.55rem .7rem;background:rgba(0,200,255,0.04);border-radius:8px"><span class="task-indicator active"></span><span style="font-size:.68rem;color:var(--text);flex:1">Marina Müggelsee Follow-up</span><span class="chip chip-warn" style="font-size:.5rem;padding:.1rem .35rem">HEUTE</span></div>
+        <div style="display:flex;align-items:center;gap:.65rem;padding:.55rem .7rem;background:rgba(0,200,255,0.04);border-radius:8px"><span class="task-indicator idle"></span><span style="font-size:.68rem;color:var(--text);flex:1">EXIST-Antrag Unterlagen sammeln</span><span class="chip chip-info" style="font-size:.5rem;padding:.1rem .35rem">DIESE WOCHE</span></div>
+        <div style="display:flex;align-items:center;gap:.65rem;padding:.55rem .7rem;background:rgba(0,200,255,0.04);border-radius:8px"><span class="task-indicator idle"></span><span style="font-size:.68rem;color:var(--text);flex:1">CEO Office GitHub Push</span><span class="chip chip-info" style="font-size:.5rem;padding:.1rem .35rem">HEUTE</span></div>
+        <div style="display:flex;align-items:center;gap:.65rem;padding:.55rem .7rem;background:rgba(0,200,255,0.04);border-radius:8px"><span class="task-indicator idle"></span><span style="font-size:.68rem;color:var(--text);flex:1">Himmelreich App Konzept</span><span class="chip" style="font-size:.5rem;padding:.1rem .35rem;background:rgba(100,100,100,0.15);border-color:rgba(100,100,100,0.3);color:rgba(200,200,200,0.5)">Q3</span></div>
+      </div>
+    </div>
+    <div style="background:rgba(7,24,40,0.7);border:1px solid rgba(0,200,255,0.12);border-radius:12px;padding:1.25rem">
+      <div style="font-size:.6rem;font-weight:700;letter-spacing:.1em;color:var(--text-dim);margin-bottom:1rem">SYSTEM STATUS</div>
+      <div style="display:flex;flex-direction:column;gap:.45rem">
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:.45rem .7rem;background:rgba(0,200,255,0.03);border-radius:7px"><span style="font-size:.65rem;color:var(--text)">Wave Bite Website</span><span class="chip chip-success" style="font-size:.5rem;padding:.1rem .35rem">LIVE</span></div>
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:.45rem .7rem;background:rgba(0,200,255,0.03);border-radius:7px"><span style="font-size:.65rem;color:var(--text)">CEO Office (GitHub Pages)</span><span class="chip chip-success" style="font-size:.5rem;padding:.1rem .35rem">LIVE</span></div>
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:.45rem .7rem;background:rgba(255,170,0,0.04);border-radius:7px"><span style="font-size:.65rem;color:var(--text)">Wasserlage Dashboard</span><span class="chip chip-warn" style="font-size:.5rem;padding:.1rem .35rem">302 REDIRECT</span></div>
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:.45rem .7rem;background:rgba(0,200,255,0.03);border-radius:7px"><span style="font-size:.65rem;color:var(--text)">Gmail Bridge / Apps Script</span><span class="chip chip-success" style="font-size:.5rem;padding:.1rem .35rem">AKTIV</span></div>
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:.45rem .7rem;background:rgba(0,200,255,0.03);border-radius:7px"><span style="font-size:.65rem;color:var(--text-dim)">GA4 Tracking</span><span class="chip chip-success" style="font-size:.5rem;padding:.1rem .35rem">AKTIV</span></div>
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:.45rem .7rem;background:rgba(201,168,76,0.04);border-radius:7px"><span style="font-size:.65rem;color:var(--text)">BunBo App</span><span class="chip chip-warn" style="font-size:.5rem;padding:.1rem .35rem">SPRINT 7</span></div>
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:.45rem .7rem;background:rgba(100,100,100,0.05);border-radius:7px"><span style="font-size:.65rem;color:var(--text-dim)">Himmelreich App</span><span class="chip" style="font-size:.5rem;padding:.1rem .35rem;background:rgba(100,100,100,0.15);border-color:rgba(100,100,100,0.3);color:rgba(200,200,200,0.5)">IN DEV</span></div>
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:.45rem .7rem;background:rgba(100,100,100,0.05);border-radius:7px"><span style="font-size:.65rem;color:var(--text-dim)">Financial OS</span><span class="chip chip-info" style="font-size:.5rem;padding:.1rem .35rem">LOKAL</span></div>
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:.45rem .7rem;background:rgba(100,100,100,0.05);border-radius:7px"><span style="font-size:.65rem;color:var(--text-dim)">N8N / Make</span><span class="chip" style="font-size:.5rem;padding:.1rem .35rem;background:rgba(100,100,100,0.15);border-color:rgba(100,100,100,0.3);color:rgba(200,200,200,0.5)">AUSSTEHEND</span></div>
+      </div>
+    </div>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:.75rem">
+    <div style="background:rgba(255,68,68,0.08);border:1px solid rgba(255,68,68,0.25);border-radius:10px;padding:.75rem;text-align:center"><div style="font-size:.5rem;color:#ff4757;font-weight:700;margin-bottom:.3rem">SOFORT</div><div style="font-size:.62rem;color:var(--text);line-height:1.5">UG Notar Termin</div></div>
+    <div style="background:rgba(255,68,68,0.08);border:1px solid rgba(255,68,68,0.25);border-radius:10px;padding:.75rem;text-align:center"><div style="font-size:.5rem;color:#ff4757;font-weight:700;margin-bottom:.3rem">KW 21</div><div style="font-size:.62rem;color:var(--text);line-height:1.5">Marina Follow-up</div></div>
+    <div style="background:rgba(255,170,0,0.08);border:1px solid rgba(255,170,0,0.25);border-radius:10px;padding:.75rem;text-align:center"><div style="font-size:.5rem;color:#ffaa00;font-weight:700;margin-bottom:.3rem">DIESE WOCHE</div><div style="font-size:.62rem;color:var(--text);line-height:1.5">Seedmatch DD</div></div>
+    <div style="background:rgba(255,170,0,0.08);border:1px solid rgba(255,170,0,0.25);border-radius:10px;padding:.75rem;text-align:center"><div style="font-size:.5rem;color:#ffaa00;font-weight:700;margin-bottom:.3rem">HEUTE</div><div style="font-size:.62rem;color:var(--text);line-height:1.5">CEO Office Push</div></div>
+    <div style="background:rgba(0,200,255,0.06);border:1px solid rgba(0,200,255,0.15);border-radius:10px;padding:.75rem;text-align:center"><div style="font-size:.5rem;color:var(--blue);font-weight:700;margin-bottom:.3rem">KW 22</div><div style="font-size:.62rem;color:var(--text);line-height:1.5">HTGF Gespräch</div></div>
+    <div style="background:rgba(0,200,255,0.06);border:1px solid rgba(0,200,255,0.15);border-radius:10px;padding:.75rem;text-align:center"><div style="font-size:.5rem;color:var(--blue);font-weight:700;margin-bottom:.3rem">LAUFEND</div><div style="font-size:.62rem;color:var(--text);line-height:1.5">BunBo Sprint 7</div></div>
+  </div>
+</section>
+
+<!-- RISK & CRISIS DASHBOARD -->
+<section id="sec-risk" style="padding:2rem 1.5rem;max-width:1400px;margin:0 auto">
+  <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem">
+    <div style="width:3px;height:2rem;background:linear-gradient(180deg,#ff4757,rgba(255,68,68,0.3));border-radius:2px"></div>
+    <div>
+      <h2 style="font-size:1rem;font-weight:700;letter-spacing:.12em;color:#ff4757;margin:0">RISK &amp; CRISIS DASHBOARD</h2>
+      <div style="font-size:.62rem;color:var(--text-dim);letter-spacing:.08em;margin-top:.15rem">RISIKOSTATUS · GEGENMAASSNAHMEN · AMPEL</div>
+    </div>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:.75rem;margin-bottom:1.5rem">
+    <div style="background:rgba(255,68,68,0.1);border:1px solid rgba(255,68,68,0.35);border-radius:10px;padding:.85rem;text-align:center"><div style="font-size:1.3rem">🔴</div><div style="font-size:.58rem;font-weight:700;color:#ff4757;margin-top:.3rem">LIQUIDITÄT</div><div style="font-size:.5rem;color:var(--text-dim);margin-top:.15rem">KRITISCH</div></div>
+    <div style="background:rgba(255,170,0,0.08);border:1px solid rgba(255,170,0,0.3);border-radius:10px;padding:.85rem;text-align:center"><div style="font-size:1.3rem">🟡</div><div style="font-size:.58rem;font-weight:700;color:#ffaa00;margin-top:.3rem">RECHTLICHES</div><div style="font-size:.5rem;color:var(--text-dim);margin-top:.15rem">IN KLÄRUNG</div></div>
+    <div style="background:rgba(255,170,0,0.08);border:1px solid rgba(255,170,0,0.3);border-radius:10px;padding:.85rem;text-align:center"><div style="font-size:1.3rem">🟡</div><div style="font-size:.58rem;font-weight:700;color:#ffaa00;margin-top:.3rem">TECHNIK</div><div style="font-size:.5rem;color:var(--text-dim);margin-top:.15rem">TEILS OFFLINE</div></div>
+    <div style="background:rgba(0,255,136,0.06);border:1px solid rgba(0,255,136,0.2);border-radius:10px;padding:.85rem;text-align:center"><div style="font-size:1.3rem">🟢</div><div style="font-size:.58rem;font-weight:700;color:var(--green);margin-top:.3rem">CORE-SYSTEME</div><div style="font-size:.5rem;color:var(--text-dim);margin-top:.15rem">STABIL</div></div>
+    <div style="background:rgba(0,200,255,0.06);border:1px solid rgba(0,200,255,0.15);border-radius:10px;padding:.85rem;text-align:center"><div style="font-size:1.3rem">🔵</div><div style="font-size:.58rem;font-weight:700;color:var(--blue);margin-top:.3rem">PARTNER</div><div style="font-size:.5rem;color:var(--text-dim);margin-top:.15rem">AUFBAU</div></div>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.25rem">
+    <div style="background:rgba(7,24,40,0.7);border:1px solid rgba(0,200,255,0.1);border-radius:12px;padding:1.25rem">
+      <div style="font-size:.6rem;font-weight:700;letter-spacing:.1em;color:var(--text-dim);margin-bottom:1rem">RISIKO-REGISTER</div>
+      <div style="display:flex;flex-direction:column;gap:.65rem">
+        <div style="display:flex;gap:.65rem;align-items:flex-start"><span class="risk-sev risk-high" style="flex-shrink:0">KRIT.</span><div><div style="font-size:.67rem;color:var(--text);font-weight:600">Runway nur ~5 Monate</div><div style="font-size:.58rem;color:var(--text-dim);margin-top:.15rem">Burn 2.800€/mo bei 14k Cash. Ohne Funding Ende Q3 kritisch.</div></div></div>
+        <div style="display:flex;gap:.65rem;align-items:flex-start"><span class="risk-sev risk-high" style="flex-shrink:0">HOCH</span><div><div style="font-size:.67rem;color:var(--text);font-weight:600">Kein Rechtsstatus (UG nicht eingetragen)</div><div style="font-size:.58rem;color:var(--text-dim);margin-top:.15rem">Verhindert Bankkonten, Verträge, Investoren-DD.</div></div></div>
+        <div style="display:flex;gap:.65rem;align-items:flex-start"><span class="risk-sev risk-high" style="flex-shrink:0">HOCH</span><div><div style="font-size:.67rem;color:var(--text);font-weight:600">Wasserlage 302-Redirect aktiv</div><div style="font-size:.58rem;color:var(--text-dim);margin-top:.15rem">Produktivseite leitet um. Nutzer-Impact möglich.</div></div></div>
+        <div style="display:flex;gap:.65rem;align-items:flex-start"><span class="risk-sev risk-med" style="flex-shrink:0">MITTEL</span><div><div style="font-size:.67rem;color:var(--text);font-weight:600">Einzel-Abhängigkeit (Carsten)</div><div style="font-size:.58rem;color:var(--text-dim);margin-top:.15rem">Alle kritischen Systeme nur von einer Person gesteuert.</div></div></div>
+        <div style="display:flex;gap:.65rem;align-items:flex-start"><span class="risk-sev risk-med" style="flex-shrink:0">MITTEL</span><div><div style="font-size:.67rem;color:var(--text);font-weight:600">Partnerpipeline = 0 aktive Partner</div><div style="font-size:.58rem;color:var(--text-dim);margin-top:.15rem">Verhandlungen noch nicht abgeschlossen.</div></div></div>
+        <div style="display:flex;gap:.65rem;align-items:flex-start"><span class="risk-sev risk-low" style="flex-shrink:0">OK</span><div><div style="font-size:.67rem;color:var(--text);font-weight:600">Core-Systeme stabil</div><div style="font-size:.58rem;color:var(--text-dim);margin-top:.15rem">CEO Office, Gmail, Drive, GitHub Pages funktionieren.</div></div></div>
+      </div>
+    </div>
+    <div style="background:rgba(7,24,40,0.7);border:1px solid rgba(0,200,255,0.1);border-radius:12px;padding:1.25rem">
+      <div style="font-size:.6rem;font-weight:700;letter-spacing:.1em;color:var(--text-dim);margin-bottom:1rem">GEGENMAASSNAHMEN</div>
+      <div style="display:flex;flex-direction:column;gap:.85rem">
+        <div style="background:rgba(255,68,68,0.06);border:1px solid rgba(255,68,68,0.15);border-radius:8px;padding:.85rem"><div style="font-size:.6rem;font-weight:700;color:#ff4757;margin-bottom:.5rem">🔴 LIQUIDITÄT — SOFORT</div><div style="font-size:.62rem;color:var(--text);line-height:1.7">1. Seedmatch DD-Ordner bis KW 22 fertig<br>2. EXIST-Antrag parallel vorbereiten<br>3. HTGF KW 22 bestätigen<br>4. Kosten unter 2.500€/mo drücken</div></div>
+        <div style="background:rgba(255,170,0,0.06);border:1px solid rgba(255,170,0,0.15);border-radius:8px;padding:.85rem"><div style="font-size:.6rem;font-weight:700;color:#ffaa00;margin-bottom:.5rem">🟡 TECHNIK — QUICK FIXES</div><div style="font-size:.62rem;color:var(--text);line-height:1.7">1. Wasserlage 302-Redirect analysieren + beheben<br>2. BunBo Sprint 7 bis KW 23 abschließen<br>3. CEO Office GitHub Push heute</div></div>
+        <div style="background:rgba(0,200,255,0.04);border:1px solid rgba(0,200,255,0.1);border-radius:8px;padding:.85rem"><div style="font-size:.6rem;font-weight:700;color:var(--blue);margin-bottom:.5rem">⚡ FOKUS-DIREKTIVE</div><div style="font-size:.62rem;color:var(--text);line-height:1.7">Funding + UG = absolute Priorität.<br>Alle anderen Projekte auf Maintenance-Modus bis Runway gesichert.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div id="quick-actions-bar" style="position:fixed;bottom:28px;right:1.5rem;z-index:90;display:flex;flex-direction:column;gap:.4rem">
   <button class="btn-gold" onclick="showNotif('📋 CEO Briefing wird erstellt...','gold')" title="CEO Briefing">☀ Briefing</button>
+  <button class="btn-primary" onclick="document.getElementById('sec-executive').scrollIntoView({behavior:'smooth'})" title="Executive Focus" style="background:linear-gradient(135deg,var(--teal),var(--blue))">⚡ Executive</button>
   <button class="btn-primary" onclick="document.getElementById('sec-projects').scrollIntoView({behavior:'smooth'})" title="Projekte">⚓ Projekte</button>
+  <button class="btn-outline" onclick="document.getElementById('sec-risk').scrollIntoView({behavior:'smooth'})" title="Risiken" style="border-color:rgba(255,68,68,0.4);color:#ff4757">⚠ Risiken</button>
+  <button class="btn-outline" onclick="document.getElementById('sec-crm').scrollIntoView({behavior:'smooth'})" title="CRM">🤝 CRM</button>
   <button class="btn-outline" onclick="document.getElementById('sec-tasks').scrollIntoView({behavior:'smooth'})" title="Tasks">⚙ Tasks</button>
+  <a href="wavebyte-financial-os.html" target="_blank" class="btn-outline" style="text-decoration:none;border-color:rgba(201,168,76,0.4);color:var(--gold)" title="Financial OS">💰 Finance</a>
 </div>
 
 </div><!-- /page -->
