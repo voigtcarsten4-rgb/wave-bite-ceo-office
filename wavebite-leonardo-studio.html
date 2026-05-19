@@ -490,6 +490,93 @@ input[type=range]{accent-color:var(--teal);flex:1}
 /* SFX BUTTON */
 .sfx-btn{padding:10px 8px;background:rgba(0,0,0,.3);border:1px solid var(--border);border-radius:8px;cursor:pointer;text-align:center;font-size:11px;color:var(--muted);transition:.2s}
 .sfx-btn:hover,.sfx-btn:active{border-color:var(--purple);color:var(--purple);background:rgba(124,58,237,.1)}
+
+/* ─── MOBILE SIDEBAR FIX ─── */
+#hamburger {
+  display: none;
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--teal);
+  font-size: 18px;
+  padding: 6px 10px;
+  cursor: pointer;
+  line-height: 1;
+}
+#sidebar-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  z-index: 49;
+  backdrop-filter: blur(2px);
+}
+@media (max-width: 768px) {
+  #hamburger { display: flex; align-items: center; justify-content: center; }
+  #sidebar {
+    position: fixed;
+    left: -240px;
+    top: 0;
+    height: 100vh;
+    width: 240px;
+    min-width: 240px;
+    z-index: 50;
+    transition: left 0.3s cubic-bezier(.4,0,.2,1);
+    box-shadow: 4px 0 24px rgba(0,0,0,0.5);
+  }
+  #sidebar.open { left: 0; }
+  #sidebar-overlay.show { display: block; }
+  .grid2 { grid-template-columns: 1fr; }
+  .grid3 { grid-template-columns: 1fr; }
+  .grid4 { grid-template-columns: 1fr 1fr; }
+  .mood-grid { grid-template-columns: repeat(3, 1fr); }
+  .theme-grid { grid-template-columns: repeat(2, 1fr); }
+  .gen-controls { flex-direction: column; align-items: stretch; }
+  #topbar { padding: 0 12px; gap: 8px; }
+  .panel { padding: 12px; }
+  .quick-nav { padding: 8px 12px; }
+}
+@media (max-width: 480px) {
+  .grid4 { grid-template-columns: 1fr; }
+  .mood-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* ─── AUTO POST + DAY PLAN PANEL STYLES ─── */
+.auto-step {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: rgba(0,0,0,.3);
+  margin-bottom: 8px;
+  font-size: 12px;
+  color: var(--muted);
+  transition: .3s;
+}
+.auto-step .as-num {
+  width: 24px; height: 24px; border-radius: 50%;
+  background: rgba(0,0,0,.4); border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 700; flex-shrink: 0;
+}
+.auto-step.active { border-color: var(--gold); color: var(--gold); background: rgba(201,168,76,.08); }
+.auto-step.active .as-num { border-color: var(--gold); color: var(--gold); animation: pulse 1s ease-in-out infinite; }
+.auto-step.done { border-color: var(--green); color: var(--green); background: rgba(46,213,115,.06); }
+.auto-step.done .as-num { border-color: var(--green); color: var(--green); background: rgba(46,213,115,.15); }
+.cal-week { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; margin-top: 12px; }
+@media (max-width: 600px) { .cal-week { grid-template-columns: repeat(4, 1fr); } }
+.cal-day { background: rgba(0,0,0,.3); border: 1px solid var(--border); border-radius: 10px; padding: 8px 4px; text-align: center; }
+.cal-day-label { font-size: 10px; color: var(--muted); margin-bottom: 6px; font-weight: 600; }
+.cal-slot { padding: 4px 2px; border-radius: 6px; font-size: 9px; margin-bottom: 3px; cursor: pointer; transition: .2s; border: 1px solid transparent; }
+.cal-slot.free { background: rgba(0,0,0,.3); color: var(--muted); border-color: var(--border); }
+.cal-slot.free:hover { border-color: var(--teal); color: var(--teal); }
+.cal-slot.booked { background: rgba(46,213,115,.12); color: var(--green); border-color: rgba(46,213,115,.3); cursor: default; }
+.day-plan-post { display: flex; align-items: center; gap: 10px; padding: 10px; border: 1px solid var(--border); border-radius: 10px; margin-bottom: 8px; font-size: 12px; }
+.day-plan-post input[type=checkbox] { accent-color: var(--teal); width: 16px; height: 16px; flex-shrink: 0; }
+.best-time-badge { display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; border-radius: 20px; background: rgba(201,168,76,.1); border: 1px solid rgba(201,168,76,.3); color: var(--gold); font-size: 12px; margin: 4px; }
+
 </style>
 </head>
 <body>
@@ -497,6 +584,7 @@ input[type=range]{accent-color:var(--teal);flex:1}
 <canvas id="bg-canvas"></canvas>
 
 <!-- SIDEBAR -->
+<div id="sidebar-overlay" onclick="closeSidebar()"></div>
 <div id="sidebar">
   <div id="sidebar-logo">
     <div class="logo-mark">Wave Bite</div>
@@ -518,6 +606,17 @@ input[type=range]{accent-color:var(--teal);flex:1}
     <div class="nav-section">Publish</div>
     <div class="nav-item" onclick="showPanel('social')" id="nav-social">
       <span class="ni">⬡</span> Social Hub
+    </div>
+    <div class="nav-item" onclick="openMarketingOS()" id="nav-marketing">
+      <span class="ni">📣</span> Marketing OS
+      <span class="nav-badge" style="background:var(--gold);color:var(--bg)">SYNC</span>
+    </div>
+    <div class="nav-item" onclick="showPanel('auto-post')" id="nav-auto-post">
+      <span class="ni">🤖</span> Auto-Post
+      <span class="nav-badge" style="background:var(--purple);color:#fff">KI</span>
+    </div>
+    <div class="nav-item" onclick="showPanel('day-plan')" id="nav-day-plan">
+      <span class="ni">📅</span> Tagesplan
     </div>
     <div class="nav-item" onclick="showPanel('captions')" id="nav-captions">
       <span class="ni">✎</span> Captions & SEO
@@ -550,6 +649,7 @@ input[type=range]{accent-color:var(--teal);flex:1}
 <!-- MAIN -->
 <div id="main">
   <div id="topbar">
+    <button id="hamburger" onclick="toggleSidebar()">☰</button>
     <div class="tb-title" id="topbar-title">✦ Generate — Neues Asset erstellen</div>
     <button class="tb-btn" onclick="loadDemoMedia()">Demo laden</button>
     <button class="tb-btn gold" onclick="showPanel('library')">◫ Library</button>
@@ -1333,6 +1433,177 @@ input[type=range]{accent-color:var(--teal);flex:1}
       </div>
     </div><!-- /audio -->
 
+
+    <!-- ═══════════════ AUTO-POST PANEL ═══════════════ -->
+    <div class="panel" id="panel-auto-post">
+      <!-- TAGES-BRIEFING -->
+      <div class="card mb12" style="background:linear-gradient(135deg,rgba(0,212,180,.08),rgba(201,168,76,.06));border-color:var(--teal)">
+        <div class="flex-between mb12">
+          <div>
+            <div style="font-size:18px;font-weight:700;color:var(--teal)" id="ap-date-display">Heute · Laden…</div>
+            <div style="font-size:12px;color:var(--muted);margin-top:4px">Dein täglicher Content-Plan</div>
+          </div>
+          <button class="tb-btn" onclick="requestNotificationPermission()">🔔 Reminder aktivieren</button>
+        </div>
+        <div class="grid3">
+          <div style="text-align:center;padding:10px;background:rgba(0,0,0,.3);border-radius:10px;border:1px solid var(--border)">
+            <div style="font-size:22px;font-weight:700;color:var(--gold)" id="ap-count-today">0</div>
+            <div style="font-size:10px;color:var(--muted)">Posts heute</div>
+          </div>
+          <div style="text-align:center;padding:10px;background:rgba(0,0,0,.3);border-radius:10px;border:1px solid var(--border)">
+            <div style="font-size:22px;font-weight:700;color:var(--teal)" id="ap-next-time">—</div>
+            <div style="font-size:10px;color:var(--muted)">Nächster Post</div>
+          </div>
+          <div style="text-align:center;padding:10px;background:rgba(0,0,0,.3);border-radius:10px;border:1px solid var(--border)">
+            <div style="font-size:22px;font-weight:700;color:var(--green)" id="ap-total-count">0</div>
+            <div style="font-size:10px;color:var(--muted)">Posts gesamt</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid2">
+        <!-- LEFT: Auto-Creator -->
+        <div>
+          <div class="card">
+            <div class="card-title"><span>🤖</span> Vollständigen Post erstellen</div>
+            <div class="label">Thema</div>
+            <input class="text-overlay-input" id="auto-topic" placeholder="z.B. Wave Bite Navigation, Sommer auf dem Wasser…">
+            <div class="grid2 gap8 mb12 mt8">
+              <div>
+                <div class="label">Plattform</div>
+                <select class="sel-input" id="auto-platform" style="width:100%">
+                  <option value="instagram">📷 Instagram</option>
+                  <option value="tiktok">🎵 TikTok</option>
+                  <option value="facebook">👍 Facebook</option>
+                  <option value="linkedin">💼 LinkedIn</option>
+                </select>
+              </div>
+              <div>
+                <div class="label">Ton</div>
+                <select class="sel-input" id="auto-tone" style="width:100%">
+                  <option value="luxury">Luxury</option>
+                  <option value="inspirierend">Inspirierend</option>
+                  <option value="dynamisch">Dynamisch</option>
+                  <option value="informativ">Informativ</option>
+                  <option value="witzig">Witzig</option>
+                </select>
+              </div>
+            </div>
+            <div class="label">Posting-Zeitpunkt</div>
+            <input type="time" class="sel-input" id="auto-time" value="09:00" style="width:100%;margin-bottom:16px">
+            <button class="gen-btn" onclick="runAutoPost()" style="width:100%">
+              <span>🤖</span> Vollständigen Post-Workflow starten
+            </button>
+          </div>
+
+          <!-- WORKFLOW STEPS -->
+          <div class="card">
+            <div class="card-title"><span>⚡</span> Workflow-Status</div>
+            <div class="auto-step" id="auto-step-1">
+              <div class="as-num">1</div>
+              <div><strong>KI Bild-Prompt generieren</strong><div style="font-size:10px;margin-top:2px;opacity:.7">Theme + Ton + Marke kombinieren</div></div>
+            </div>
+            <div class="auto-step" id="auto-step-2">
+              <div class="as-num">2</div>
+              <div><strong>Asset generieren</strong><div style="font-size:10px;margin-top:2px;opacity:.7">Leonardo AI erstellt Bild/Video</div></div>
+            </div>
+            <div class="auto-step" id="auto-step-3">
+              <div class="as-num">3</div>
+              <div><strong>Caption + Hashtags</strong><div style="font-size:10px;margin-top:2px;opacity:.7">Automatisch für Plattform optimiert</div></div>
+            </div>
+            <div class="auto-step" id="auto-step-4">
+              <div class="as-num">4</div>
+              <div><strong>Posting-Link + Anleitung</strong><div style="font-size:10px;margin-top:2px;opacity:.7">Direktlink zur Upload-Seite</div></div>
+            </div>
+            <div class="auto-step" id="auto-step-5">
+              <div class="as-num">5</div>
+              <div><strong>Reminder planen</strong><div style="font-size:10px;margin-top:2px;opacity:.7">Browser-Benachrichtigung zur geplanten Zeit</div></div>
+            </div>
+
+            <!-- Generated Caption Result -->
+            <div id="auto-result-section" style="display:none;margin-top:14px">
+              <hr class="divider">
+              <div class="label">Generierte Caption:</div>
+              <div id="auto-caption-result" style="background:rgba(0,0,0,.4);border:1px solid var(--border);border-radius:8px;padding:10px;font-size:12px;line-height:1.6;white-space:pre-wrap;margin-bottom:8px"></div>
+              <div id="auto-posting-links"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- RIGHT: Posting Kalender -->
+        <div>
+          <div class="card">
+            <div class="card-title"><span>📅</span> Posting-Kalender — Diese Woche</div>
+            <div class="cal-week" id="posting-calendar"></div>
+          </div>
+
+          <!-- Quick Tips -->
+          <div class="card">
+            <div class="card-title"><span>💡</span> Best Practices</div>
+            <div style="font-size:12px;color:var(--muted);line-height:1.8">
+              <div>📷 <strong style="color:var(--text)">Instagram:</strong> Di–Do 11–13 Uhr, Mo–Fr 19–21 Uhr</div>
+              <div>🎵 <strong style="color:var(--text)">TikTok:</strong> Mo–Fr 7–9 Uhr, täglich 19–23 Uhr</div>
+              <div>👍 <strong style="color:var(--text)">Facebook:</strong> Di–Do 13–16 Uhr</div>
+              <div>💼 <strong style="color:var(--text)">LinkedIn:</strong> Di–Do 8–10 Uhr</div>
+              <hr class="divider">
+              <div>✅ <strong style="color:var(--green)">Tipp:</strong> 3–5 Posts/Woche = optimale Reichweite</div>
+              <div>✅ Konsistenz schlägt Frequenz</div>
+              <div>✅ Reminder nutzen — nie einen Post vergessen</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div><!-- /auto-post -->
+
+    <!-- ═══════════════ TAGESPLANUNG PANEL ═══════════════ -->
+    <div class="panel" id="panel-day-plan">
+      <div style="max-width:800px;margin:0 auto">
+        <!-- Header -->
+        <div class="card" style="background:linear-gradient(135deg,rgba(0,212,180,.08),rgba(201,168,76,.06));border-color:var(--teal);margin-bottom:16px">
+          <div class="flex-between">
+            <div>
+              <div style="font-size:24px;font-weight:700;color:var(--teal)" id="dp-date"></div>
+              <div style="font-size:14px;color:var(--muted);margin-top:4px" id="dp-weekday"></div>
+            </div>
+            <div style="text-align:right">
+              <button class="tb-btn gold" onclick="exportDayPlan()">📋 Tagesplan kopieren</button>
+            </div>
+          </div>
+          <!-- Motivations-Quote -->
+          <div style="margin-top:16px;padding:12px;background:rgba(0,0,0,.3);border-radius:10px;border-left:3px solid var(--gold)">
+            <div style="font-size:11px;color:var(--gold);letter-spacing:1px;text-transform:uppercase;margin-bottom:4px">Heutiges Motto</div>
+            <div style="font-size:13px;color:var(--text);font-style:italic" id="dp-quote"></div>
+          </div>
+        </div>
+
+        <!-- Beste Posting-Zeiten -->
+        <div class="card mb12">
+          <div class="card-title"><span>⏰</span> Beste Posting-Zeiten laut Algorithm</div>
+          <div style="display:flex;flex-wrap:wrap;gap:4px;margin-bottom:12px">
+            <span class="best-time-badge">🕘 9:00 Uhr — Morgen-Peak</span>
+            <span class="best-time-badge">🕛 12:00 Uhr — Mittagspause</span>
+            <span class="best-time-badge">🕕 18:00 Uhr — Feierabend</span>
+            <span class="best-time-badge">🕗 20:00 Uhr — Prime Time</span>
+          </div>
+          <div style="font-size:11px;color:var(--muted)">
+            Basierend auf Wave Bite Zielgruppe (25–55 Jahre, Wassersport-Enthusiasten, Deutschland)
+          </div>
+        </div>
+
+        <!-- Geplante Posts heute -->
+        <div class="card">
+          <div class="card-title"><span>📋</span> Geplante Posts heute
+            <button class="tb-btn" onclick="loadDayPlanPosts()" style="margin-left:auto;font-size:10px;padding:3px 8px">↻ Aktualisieren</button>
+          </div>
+          <div id="dp-posts-list">
+            <div style="font-size:12px;color:var(--muted);padding:20px;text-align:center">
+              Noch keine Posts für heute geplant. Erstelle einen Post im Auto-Post Panel!
+            </div>
+          </div>
+        </div>
+      </div>
+    </div><!-- /day-plan -->
+
   </div><!-- /content -->
 </div><!-- /main -->
 
@@ -1768,7 +2039,8 @@ function initCanvas(){
 function showPanel(id){
   document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
-  document.getElementById('panel-'+id).classList.add('active');
+  const panelEl = document.getElementById('panel-'+id);
+  if(panelEl) panelEl.classList.add('active');
   const nav=document.getElementById('nav-'+id);
   if(nav)nav.classList.add('active');
   const titles={
@@ -1778,12 +2050,17 @@ function showPanel(id){
     social:'⬡ Social Hub — Veröffentlichen',
     captions:'✎ Captions & SEO',
     brand:'◈ Brand Control',
-    settings:'⚙ Einstellungen'
+    settings:'⚙ Einstellungen',
+    audio:'♪ Musik & Voice',
+    'auto-post':'🤖 Auto-Post — Autonomer Content Creator',
+    'day-plan':'📅 Tagesplanung'
   };
   document.getElementById('topbar-title').textContent = titles[id]||id;
   if(id==='social')refreshSocialPanel();
   if(id==='library')loadLibraryGrid();
   if(id==='audio')buildAudioPanel();
+  if(id==='auto-post')initAutoPostPanel();
+  if(id==='day-plan')initDayPlanPanel();
 }
 
 /* ═══════════════════════════════════════════
@@ -2911,6 +3188,410 @@ function toast(msg, type='green'){
   clearTimeout(el._toastTimer);
   el._toastTimer = setTimeout(()=> el.classList.remove('show'), 3200);
 }
+
+
+/* ═══════════════════════════════════════════
+   MOBILE SIDEBAR
+═══════════════════════════════════════════ */
+function toggleSidebar(){
+  document.getElementById('sidebar').classList.toggle('open');
+  document.getElementById('sidebar-overlay').classList.toggle('show');
+}
+function closeSidebar(){
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('sidebar-overlay').classList.remove('show');
+}
+// Close sidebar when nav item clicked on mobile
+document.querySelectorAll('.nav-item').forEach(item => {
+  item.addEventListener('click', () => {
+    if(window.innerWidth <= 768) closeSidebar();
+  });
+});
+
+/* ═══════════════════════════════════════════
+   MARKETING OS INTEGRATION
+═══════════════════════════════════════════ */
+function openMarketingOS(){
+  const assets = JSON.parse(localStorage.getItem('wb_library') || '[]');
+  localStorage.setItem('wb_marketing_sync', JSON.stringify({
+    assets: assets,
+    lastSync: new Date().toISOString(),
+    source: 'leonardo-studio'
+  }));
+  window.open('https://voigtcarsten4-rgb.github.io/wasserlage/marketing-dashboard.html', '_blank');
+  toast('Marketing OS geöffnet — Assets synchronisiert ✓');
+}
+
+
+/* ═══════════════════════════════════════════
+   AUTO-POST PANEL
+═══════════════════════════════════════════ */
+const DAILY_QUOTES = [
+  '"Das Wasser ist geduldig — dein Content muss es nicht sein." 🌊',
+  '"Wer täglich postet, bleibt im Gespräch. Wer clever postet, bleibt in Erinnerung." ✨',
+  '"Konsistenz ist das mächtigste Marketing-Tool, das du hast." 💎',
+  '"Dein nächster Post könnte den nächsten Kunden bringen." 🚀',
+  '"Qualität schlägt Quantität — aber keines von beidem schlägt Regelmäßigkeit." ⚓',
+  '"Wave Bite wächst mit jedem Post, den du teilst." 🌊',
+  '"Sichtbarkeit ist die Grundlage von Vertrauen." 🎯',
+];
+
+function initAutoPostPanel(){
+  // Update date display
+  const now = new Date();
+  const dateStr = now.toLocaleDateString('de-DE', {weekday:'long', day:'numeric', month:'long'});
+  const el = document.getElementById('ap-date-display');
+  if(el) el.textContent = 'Heute · ' + dateStr;
+
+  // Count posts
+  const cal = JSON.parse(localStorage.getItem('wb_post_calendar') || '[]');
+  const todayStr = now.toDateString();
+  const todayPosts = cal.filter(p => p.date === todayStr);
+  const countEl = document.getElementById('ap-count-today');
+  if(countEl) countEl.textContent = todayPosts.length;
+  const totalEl = document.getElementById('ap-total-count');
+  if(totalEl) totalEl.textContent = cal.length;
+
+  // Next post time
+  const nextEl = document.getElementById('ap-next-time');
+  if(nextEl){
+    const bestTimes = ['09:00','12:00','18:00','20:00'];
+    const nowMins = now.getHours()*60 + now.getMinutes();
+    const next = bestTimes.find(t => {
+      const [h,m] = t.split(':').map(Number);
+      return h*60+m > nowMins;
+    });
+    nextEl.textContent = next || '09:00↗';
+  }
+
+  // Reset workflow steps
+  for(let i=1; i<=5; i++){
+    const step = document.getElementById('auto-step-'+i);
+    if(step) step.className = 'auto-step';
+  }
+
+  // Render calendar
+  renderCalendar();
+}
+
+function renderCalendar(){
+  const el = document.getElementById('posting-calendar');
+  if(!el) return;
+
+  const cal = JSON.parse(localStorage.getItem('wb_post_calendar') || '[]');
+  const days = ['Mo','Di','Mi','Do','Fr','Sa','So'];
+  const slots = ['9:00','12:00','18:00'];
+
+  // Get this week's dates (Mo-So)
+  const today = new Date();
+  const dayOfWeek = today.getDay(); // 0=Su,1=Mo,...
+  const mondayOffset = dayOfWeek === 0 ? -6 : 1 - dayOfWeek;
+  const monday = new Date(today);
+  monday.setDate(today.getDate() + mondayOffset);
+
+  let html = '';
+  for(let d=0; d<7; d++){
+    const date = new Date(monday);
+    date.setDate(monday.getDate() + d);
+    const dateStr = date.toDateString();
+    const isToday = date.toDateString() === today.toDateString();
+    html += `<div class="cal-day" style="${isToday ? 'border-color:var(--teal);background:rgba(0,212,180,.05)' : ''}">
+      <div class="cal-day-label" style="${isToday ? 'color:var(--teal)' : ''}">${days[d]}</div>`;
+    slots.forEach(slot => {
+      const isBooked = cal.some(p => p.date === dateStr && p.time && p.time.startsWith(slot.split(':')[0]));
+      if(isBooked){
+        html += `<div class="cal-slot booked">✓ ${slot}</div>`;
+      } else {
+        html += `<div class="cal-slot free" onclick="quickCreatePost('${dateStr}','${slot}')" title="Post planen">${slot}</div>`;
+      }
+    });
+    html += '</div>';
+  }
+  el.innerHTML = html;
+}
+
+function quickCreatePost(dateStr, time){
+  document.getElementById('auto-time').value = time.replace(':','').length === 3
+    ? '0'+time.split(':')[0]+':'+time.split(':')[1].padEnd(2,'0')
+    : time+':00';
+  document.getElementById('auto-topic').focus();
+  toast(`Slot ${time} ausgewählt — Thema eingeben und starten!`);
+}
+
+async function runAutoPost(){
+  const topic = document.getElementById('auto-topic').value.trim() || 'Wave Bite Navigation';
+  const platform = document.getElementById('auto-platform').value;
+  const tone = document.getElementById('auto-tone').value;
+  const time = document.getElementById('auto-time').value;
+
+  // Reset steps
+  for(let i=1; i<=5; i++){
+    const s = document.getElementById('auto-step-'+i);
+    if(s) s.className = 'auto-step';
+  }
+  const resultSection = document.getElementById('auto-result-section');
+  if(resultSection) resultSection.style.display = 'none';
+
+  // Step 1: Generate prompt
+  updateAutoStep(1, 'active');
+  const themeList = THEMES || [];
+  const randomTheme = themeList[Math.floor(Math.random() * themeList.length)];
+  const themeEn = randomTheme ? (THEME_PROMPTS[randomTheme.id] || randomTheme.id) : 'marina harbor';
+  const prompt = `${topic} — ${themeEn}, Wave Bite brand, ${tone} style, premium nautical photography`;
+  await sleepAP(600);
+  updateAutoStep(1, 'done');
+
+  // Step 2: Set prompt for generation
+  updateAutoStep(2, 'active');
+  const mainPrompt = document.getElementById('main-prompt');
+  if(mainPrompt) mainPrompt.value = prompt;
+  await sleepAP(400);
+  updateAutoStep(2, 'done');
+
+  // Step 3: Generate caption
+  updateAutoStep(3, 'active');
+  const caption = generateAutoCaption(topic, platform, tone);
+  const captionEl = document.getElementById('auto-caption-result');
+  if(captionEl) captionEl.textContent = caption;
+  await sleepAP(500);
+  updateAutoStep(3, 'done');
+
+  // Step 4: Show posting links
+  updateAutoStep(4, 'active');
+  showPostingLinks(platform, caption);
+  if(resultSection) resultSection.style.display = 'block';
+  updateAutoStep(4, 'done');
+
+  // Step 5: Schedule reminder
+  updateAutoStep(5, 'active');
+  if(time) schedulePostReminder(platform, time, caption);
+  await sleepAP(300);
+  updateAutoStep(5, 'done');
+
+  // Save to calendar
+  saveToCalendar(platform, time, topic, caption);
+
+  toast('🤖 Vollständiger Post-Workflow abgeschlossen!');
+}
+
+function updateAutoStep(n, status){
+  const el = document.getElementById('auto-step-' + n);
+  if(!el) return;
+  el.className = 'auto-step ' + status;
+}
+
+function generateAutoCaption(topic, platform, tone){
+  const captions = {
+    instagram: [
+      `✨ ${topic} — mit Wave Bite immer bestens informiert 🌊
+
+Die smarte App für alle Wasserliebhaber. Echtzeit-Pegelstände, Marina-Navigation und Community in einer App.
+
+👉 Jetzt entdecken — Link in Bio!
+
+#WaveBite #Wassersport #Bootsfahren #NauticalLife #Marina`,
+      `🌊 ${topic}
+
+Deine smarte Begleitung auf dem Wasser. 📱
+
+Von der Pegelinfo bis zur Liegeplatz-Navigation — alles in Wave Bite.
+
+#WaveBite #BootfahrenDeutschland #Yachtlife #Segelboot`
+    ],
+    tiktok: [
+      `${topic} 🌊 #WaveBite #Boating #Navigation #FYP #viral #wassersport`,
+      `So einfach navigierst du mit Wave Bite! 🚤 Echtzeit-Daten direkt aufs Wasser 💎 #WaveBite #WasserSport #fyp`
+    ],
+    facebook: [
+      `🌊 ${topic}
+
+Wave Bite macht deine Zeit auf dem Wasser sicherer und entspannter. Echtzeit-Pegelstände, Navigation und Community — kostenlos entdecken!
+
+→ wave-bite.com
+
+#WaveBite #Wassersport #BootfahrenDeutschland`
+    ],
+    linkedin: [
+      `Innovation auf dem Wasser: ${topic}
+
+Wave Bite revolutioniert die Navigation auf deutschen Binnenwasserstraßen. Aktuelle Pegelstände, Schifffahrtsinformationen und Community — alles in einer App.
+
+Für über 500.000 Wassersportler in Deutschland.
+
+#WaveBite #MaritimeTech #Startup #Innovation`
+    ]
+  };
+  const opts = captions[platform] || captions.instagram;
+  return opts[Math.floor(Math.random() * opts.length)];
+}
+
+function showPostingLinks(platform, caption){
+  const el = document.getElementById('auto-posting-links');
+  if(!el) return;
+  const links = {
+    instagram: { url:'https://www.instagram.com/wavebiteplattform/', label:'📷 Instagram öffnen', color:'#e1306c' },
+    tiktok: { url:'https://www.tiktok.com/@wavebiteorginal', label:'🎵 TikTok öffnen', color:'#ff0050' },
+    facebook: { url:'https://www.facebook.com/profile.php?id=61589205053718', label:'👍 Facebook öffnen', color:'#1877f2' },
+    linkedin: { url:'https://www.linkedin.com/', label:'💼 LinkedIn öffnen', color:'#0077b5' }
+  };
+  const link = links[platform] || links.instagram;
+  el.innerHTML = `
+    <div style="margin-bottom:8px">
+      <button class="tb-btn" onclick="navigator.clipboard.writeText(document.getElementById('auto-caption-result').textContent).then(()=>toast('Caption kopiert ✓'))">
+        ⎘ Caption kopieren
+      </button>
+    </div>
+    <a href="${link.url}" target="_blank"
+       style="display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:10px;border:1px solid ${link.color};background:${link.color}18;color:${link.color};font-size:13px;font-weight:600;text-decoration:none;transition:.2s">
+      ${link.label}
+      <span style="margin-left:auto;opacity:.6">→</span>
+    </a>
+    <div style="font-size:11px;color:var(--muted);margin-top:8px;padding:8px;background:rgba(0,0,0,.3);border-radius:8px">
+      💡 <strong>Anleitung:</strong> Caption kopieren → ${link.label} klicken → Neuen Post erstellen → Caption einfügen → Asset aus Library hochladen
+    </div>`;
+}
+
+function schedulePostReminder(platform, time, caption){
+  if(!('Notification' in window)) return;
+  Notification.requestPermission().then(perm => {
+    if(perm !== 'granted') return;
+    const now = new Date();
+    const [h, m] = time.split(':').map(Number);
+    const target = new Date();
+    target.setHours(h, m, 0, 0);
+    if(target <= now) target.setDate(target.getDate() + 1);
+    const delay = target - now;
+    setTimeout(() => {
+      new Notification('⚡ Wave Bite — Zeit zu posten!', {
+        body: `${platform}: ${caption.substring(0,80)}...`,
+        icon: 'https://voigtcarsten4-rgb.github.io/ceo-office/Dashboard_Icon.png'
+      });
+    }, delay);
+    toast(`🔔 Reminder für ${time} Uhr geplant ✓`);
+  });
+}
+
+function requestNotificationPermission(){
+  if(!('Notification' in window)){
+    toast('Browser unterstützt keine Notifications','red');
+    return;
+  }
+  Notification.requestPermission().then(perm => {
+    if(perm === 'granted'){
+      toast('🔔 Notifications aktiviert ✓');
+    } else {
+      toast('Notifications nicht erlaubt — bitte in Browser-Einstellungen aktivieren','orange');
+    }
+  });
+}
+
+function saveToCalendar(platform, time, topic, caption){
+  const cal = JSON.parse(localStorage.getItem('wb_post_calendar') || '[]');
+  cal.push({
+    platform, time, topic, caption,
+    created: new Date().toISOString(),
+    date: new Date().toDateString()
+  });
+  localStorage.setItem('wb_post_calendar', JSON.stringify(cal));
+  renderCalendar();
+}
+
+function sleepAP(ms){ return new Promise(r => setTimeout(r, ms)); }
+
+/* ═══════════════════════════════════════════
+   TAGESPLANUNG PANEL
+═══════════════════════════════════════════ */
+function initDayPlanPanel(){
+  const now = new Date();
+  const dateEl = document.getElementById('dp-date');
+  const weekdayEl = document.getElementById('dp-weekday');
+  const quoteEl = document.getElementById('dp-quote');
+
+  if(dateEl) dateEl.textContent = now.toLocaleDateString('de-DE', {day:'numeric', month:'long', year:'numeric'});
+  if(weekdayEl) weekdayEl.textContent = now.toLocaleDateString('de-DE', {weekday:'long'}) + ' — Dein Content-Tag';
+
+  // Daily quote — changes by day of month
+  if(quoteEl){
+    const qIdx = now.getDate() % DAILY_QUOTES.length;
+    quoteEl.textContent = DAILY_QUOTES[qIdx];
+  }
+
+  loadDayPlanPosts();
+}
+
+function loadDayPlanPosts(){
+  const el = document.getElementById('dp-posts-list');
+  if(!el) return;
+
+  const now = new Date();
+  const todayStr = now.toDateString();
+  const cal = JSON.parse(localStorage.getItem('wb_post_calendar') || '[]');
+  const todayPosts = cal.filter(p => p.date === todayStr);
+
+  if(todayPosts.length === 0){
+    el.innerHTML = `<div style="font-size:12px;color:var(--muted);padding:20px;text-align:center">
+      Noch keine Posts für heute geplant.<br>
+      <button class="tb-btn mt8" onclick="showPanel('auto-post')">🤖 Auto-Post öffnen</button>
+    </div>`;
+    return;
+  }
+
+  const platEmoji = {instagram:'📷', tiktok:'🎵', facebook:'👍', linkedin:'💼'};
+  el.innerHTML = todayPosts.map((p, i) => `
+    <div class="day-plan-post">
+      <input type="checkbox" id="dp-check-${i}" onchange="markPostDone(${i},this)">
+      <div style="flex:1;min-width:0">
+        <div style="font-weight:600;font-size:13px;margin-bottom:2px">
+          ${platEmoji[p.platform]||'📱'} ${p.platform.charAt(0).toUpperCase()+p.platform.slice(1)} 
+          ${p.time ? '· ' + p.time + ' Uhr' : ''}
+        </div>
+        <div style="font-size:11px;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${p.topic || p.caption.substring(0,60)}</div>
+      </div>
+      <span style="font-size:11px;color:var(--muted);flex-shrink:0">${p.time || '—'}</span>
+    </div>`).join('');
+}
+
+function markPostDone(i, cb){
+  const row = cb.closest('.day-plan-post');
+  if(cb.checked){
+    row.style.opacity = '.5';
+    row.style.textDecoration = 'line-through';
+    toast('✓ Post als erledigt markiert!');
+  } else {
+    row.style.opacity = '1';
+    row.style.textDecoration = 'none';
+  }
+}
+
+function exportDayPlan(){
+  const now = new Date();
+  const todayStr = now.toDateString();
+  const cal = JSON.parse(localStorage.getItem('wb_post_calendar') || '[]');
+  const todayPosts = cal.filter(p => p.date === todayStr);
+
+  const dateStr = now.toLocaleDateString('de-DE', {weekday:'long', day:'numeric', month:'long', year:'numeric'});
+  let text = `📅 Wave Bite Tagesplan — ${dateStr}\n\n`;
+  text += `⏰ Beste Posting-Zeiten: 9:00, 12:00, 18:00, 20:00 Uhr\n\n`;
+
+  if(todayPosts.length === 0){
+    text += 'Noch keine Posts geplant. Jetzt im Auto-Post erstellen!';
+  } else {
+    text += `📋 Geplante Posts (${todayPosts.length}):\n`;
+    todayPosts.forEach((p,i) => {
+      text += `\n${i+1}. [${p.platform.toUpperCase()}] ${p.time || '—'} Uhr\n`;
+      text += `   Thema: ${p.topic}\n`;
+      text += `   Caption: ${p.caption.substring(0,100)}...\n`;
+    });
+  }
+
+  navigator.clipboard.writeText(text)
+    .then(() => toast('📋 Tagesplan kopiert ✓'))
+    .catch(() => toast('Kopieren fehlgeschlagen','red'));
+}
+
+// Also update the showPanel function's showToast alias
+function showToast(msg){ toast(msg); }
+
 
 </script>
 </body>
