@@ -1552,7 +1552,7 @@
     <a href="https://n8n.io" target="_blank" class="tb-link"><span>🔄</span><div><div class="tb-name">N8N Workflows</div><div class="tb-url">n8n.io</div></div><span class="tb-arrow">↗</span></a>
     <a href="https://make.com" target="_blank" class="tb-link"><span>🔧</span><div><div class="tb-name">Make.com</div><div class="tb-url">make.com</div></div><span class="tb-arrow">↗</span></a>
     <a href="https://script.google.com" target="_blank" class="tb-link"><span>📝</span><div><div class="tb-name">Google Apps Script</div><div class="tb-url">script.google.com</div></div><span class="chip chip-success" style="font-size:.55rem;padding:.1rem .35rem">Aktiv</span></a>
-    <a href="https://sheets.google.com" target="_blank" class="tb-link"><span>📊</span><div><div class="tb-name">Google Sheets</div><div class="tb-url">sheets.google.com</div></div><span class="tb-arrow">↗</span></a>
+    <a href="https://docs.google.com/spreadsheets/d/1lROtjWlkeTpStbNURjyELWnO-8PETk-DeB3JThEHkqs/edit" target="_blank" class="tb-link"><span>📊</span><div><div class="tb-name">Wave Bite Tracking</div><div class="tb-url">QR · Analytics · KPIs</div></div><span class="chip chip-success" style="font-size:.55rem;padding:.1rem .35rem">LIVE</span></a>
     <a href="https://drive.google.com" target="_blank" class="tb-link"><span>📁</span><div><div class="tb-name">Google Drive</div><div class="tb-url">drive.google.com</div></div><span class="tb-arrow">↗</span></a>
   </div>
 
@@ -2043,6 +2043,7 @@
           <div style="display:flex;gap:.4rem">
             <button onclick="calSelectToday()" style="padding:.25rem .65rem;background:rgba(0,200,255,0.1);border:1px solid rgba(0,200,255,0.3);border-radius:5px;color:var(--blue);font-size:.58rem;cursor:pointer;font-family:inherit">Heute</button>
             <button onclick="calToggleQuickAdd()" style="padding:.25rem .65rem;background:rgba(0,212,170,0.1);border:1px solid rgba(0,212,170,0.3);border-radius:5px;color:var(--teal);font-size:.58rem;cursor:pointer;font-family:inherit">＋ Termin</button>
+            <button onclick="calFetchGCalToday(true)" title="Google Kalender synchronisieren" style="padding:.25rem .65rem;background:rgba(0,200,255,0.07);border:1px solid rgba(0,200,255,0.25);border-radius:5px;color:var(--blue);font-size:.58rem;cursor:pointer;font-family:inherit">🌐 GCal</button>
           </div>
         </div>
 
@@ -2063,6 +2064,24 @@
             <input id="cia-dur" class="cqs-input" type="number" value="60" min="15" step="15" placeholder="Min" style="margin:0">
           </div>
           <input id="cia-loc" class="cqs-input" type="text" placeholder="Ort / Link (optional)…" style="margin-bottom:.5rem">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:.5rem;margin-bottom:.5rem">
+            <select id="cia-prio" class="cqs-select">
+              <option value="">⚡ Priorität</option>
+              <option value="p1">🔴 P1 — Kritisch</option>
+              <option value="p2">🟡 P2 — Wichtig</option>
+              <option value="p3">🔵 P3 — Normal</option>
+            </select>
+            <select id="cia-cat" class="cqs-select">
+              <option value="">📂 Kategorie</option>
+              <option value="meeting">🤝 Meeting</option>
+              <option value="call">📞 Call</option>
+              <option value="deadline">⏰ Deadline</option>
+              <option value="prep">📋 Vorbereitung</option>
+              <option value="review">🔍 Review</option>
+              <option value="task">✅ Aufgabe</option>
+            </select>
+          </div>
+          <textarea id="cia-notes" class="cqs-input" rows="2" placeholder="Notizen / Follow-up (optional)…" style="resize:vertical;min-height:48px;margin-bottom:.5rem;font-family:inherit"></textarea>
           <div style="display:flex;gap:.5rem">
             <button onclick="calInlineAddSave()" class="cqs-btn">✓ SPEICHERN</button>
             <button onclick="calToggleQuickAdd()" style="padding:.4rem .8rem;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:7px;color:rgba(255,255,255,0.4);font-size:.65rem;cursor:pointer;font-family:inherit">✕</button>
@@ -2131,6 +2150,14 @@
 <!-- WATER TOURISM INTELLIGENCE HUB -->
 <section id="sec-tracking-radar" style="margin-bottom:1.5rem">
   <!-- MASTER BRIDGE CONFIG -->
+  <!-- MASTER BRIDGE V2 DEPLOY GUIDE -->
+  <div style="padding:.5rem .75rem;background:rgba(201,168,76,0.07);border:1px solid rgba(201,168,76,0.2);border-radius:8px;margin-bottom:.5rem;font-size:.57rem;color:var(--text-dim);line-height:1.7">
+    <span style="color:var(--gold);font-weight:700">⚡ Bridge V2 aktivieren:</span>
+    1. <a href="https://script.google.com/home" target="_blank" style="color:var(--teal);text-decoration:none">Apps Script öffnen ↗</a>
+    → CEO_MASTER_BRIDGE_V2.gs deployen
+    → URL hier eintragen
+    → Gmail · Kalender · GA4 live
+  </div>
   <div id="master-bridge-config" style="display:flex;align-items:center;gap:.5rem;margin-bottom:.5rem;padding:.45rem .75rem;background:rgba(0,200,255,0.05);border:1px solid rgba(0,200,255,0.15);border-radius:8px">
     <span style="font-size:.55rem;color:rgba(0,200,255,0.7);white-space:nowrap;font-weight:700">🔗 MASTER BRIDGE</span>
     <input id="master-bridge-url-input" type="text" placeholder="Apps Script URL (CEO_MASTER_BRIDGE_V2) → Nach Deployment eintragen"
@@ -3994,6 +4021,15 @@
     </div>
     <div id="exec-date" style="margin-left:auto;font-size:.6rem;color:var(--text-dim);letter-spacing:.08em"></div>
   </div>
+  <!-- Bridge Status Bar — auto-updates via JS -->
+  <div id="exec-bridge-status" style="display:flex;align-items:center;gap:.6rem;padding:.45rem .85rem;background:rgba(0,200,255,0.04);border:1px solid rgba(0,200,255,0.12);border-radius:8px;margin-bottom:1rem;font-size:.58rem;color:var(--text-dim)">
+    <span id="exec-bridge-dot" style="font-size:.7rem">⚫</span>
+    <span id="exec-bridge-label">Bridge-Status wird geladen…</span>
+    <span style="margin-left:auto;display:flex;align-items:center;gap:.5rem">
+      <span id="exec-bridge-unread" style="display:none;color:var(--gold)"></span>
+      <a href="https://script.google.com/home" target="_blank" style="color:rgba(0,200,255,0.5);text-decoration:none;font-size:.52rem">Apps Script ↗</a>
+    </span>
+  </div>
   <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:1.5rem">
     <div style="background:linear-gradient(135deg,rgba(0,212,170,0.1),rgba(0,200,255,0.05));border:1px solid rgba(0,212,170,0.25);border-radius:12px;padding:1rem;text-align:center">
       <div style="font-size:.55rem;letter-spacing:.1em;color:var(--teal);margin-bottom:.4rem">WASSERLAGE NUTZER</div>
@@ -4012,8 +4048,8 @@
     </div>
     <div style="background:rgba(7,24,40,0.6);border:1px solid rgba(0,200,255,0.12);border-radius:12px;padding:1rem;text-align:center">
       <div style="font-size:.55rem;letter-spacing:.1em;color:var(--text-dim);margin-bottom:.4rem">LEADS (EST.)</div>
-      <div style="font-size:2rem;font-weight:700;color:var(--blue);line-height:1">~40</div>
-      <div style="font-size:.55rem;color:var(--text-dim);margin-top:.3rem">Qualifiziert: 4 aktiv</div>
+      <div id="exec-leads-count" style="font-size:2rem;font-weight:700;color:var(--blue);line-height:1">~40</div>
+      <div style="font-size:.55rem;color:var(--text-dim);margin-top:.3rem">Qualifiziert: <span id="exec-leads-active">4</span> aktiv</div>
     </div>
   </div>
   <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:1rem;margin-bottom:1.5rem">
@@ -4637,24 +4673,26 @@ function initNeuralCanvas() {
 // JARVIS AI — Dynamic Intelligence Feed
 // ════════════════════════════════════════════════════════════
 const JARVIS_MESSAGES = [
-  '🔴 KRITISCH: Wave_Bite_WaterInfos Apps Script schlägt fehl — Daten-Pipeline prüfen',
-  '🤝 Frank Burggraf (ROKA Werk) wartet → Termin Mittwoch fixieren!',
-  '🎤 FlutterFlow FFDC 27-28 Mai — a16z, GV, YC Gründer — JETZT registrieren',
-  '💰 Runway ~5 Monate → Seedmatch DD Unterlagen KW 21 finalisieren',
-  '🚀 BunBo Beta: Letzte Launch-kritische Bugs schließen, Sommer-Fenster nutzen',
-  '⚓ Marina-Saison aktiv — Müggelsee-Angebot bis Freitag senden',
-  '📊 Investor Intelligence Score: 95% — Deck deploy-ready',
-  '📧 8 ungelesene Mails — 3 Priorität (Partner, Tech, System)',
-  '💡 EXIST-Stipendium Q3-Fenster geöffnet — Antrag vorbereiten',
-  '📱 Wasserlage: Live-Daten Pipeline reparieren → MAU-Tracking reaktivieren',
+  '🔴 KRITISCH: Wave_Bite_WaterInfos Apps Script fehlt — Daten-Pipeline reaktivieren',
+  '🤝 Frank Burggraf (ROKA Werk) — Termin fixieren, Kooperation konkretisieren',
+  '🎤 FlutterFlow FFDC 27–28 Mai 2026 — 8 Tage bis Event — Registrierung prüfen',
+  '💰 Runway ~5 Monate → Seedmatch DD KW 21/22 finalisieren — JETZT handeln',
+  '🚀 BunBo Beta: Sprint 7 zu 65% — Launch-kritische Bugs schließen bis KW 22',
+  '⚓ Marina-Saison 2026 aktiv — Müggelsee + Wannsee Angebote senden',
+  '📊 CEO Office Live — Executive OS aktiv, Bridge-V2 deployen für Echtdaten',
+  '📧 Gmail Bridge aktiv — für Echtdaten CEO_MASTER_BRIDGE_V2.gs deployen',
+  '💡 EXIST-Stipendium: Q3-Antragsfenster prüfen, Unterlagen bereit?',
+  '📱 Wasserlage 80% stabil — 302-Redirect fixen, MAU-Tracking reaktivieren',
+  '🏆 Wave Bite CEO Office v3.0 deployed — täglich nutzen, täglich gewinnen',
+  '⚡ UG-Gründung: Handelsregister-Anmeldung starten — Rechtsform sichert Funding',
 ];
 const JARVIS_LINES_DATA = [
-  {text:'🔴 WaterInfos Script: <span style="color:var(--red)">FAILURE — sofort fixen</span>', urgent:true},
-  {text:'🤝 ROKA Werk Burggraf: <span style="color:var(--gold)">Termin Mittwoch</span>', urgent:true},
-  {text:'🎤 FlutterFlow FFDC: <span style="color:var(--teal)">27-28 Mai registrieren</span>', urgent:false},
-  {text:'💰 Runway: <span style="color:var(--red)">~5 Monate → Seed priorisieren</span>', urgent:true},
-  {text:'📊 Seedmatch DD: <span style="color:var(--gold)">KW 21 Deadline</span>', urgent:true},
-  {text:'🚀 BunBo Beta: <span style="color:var(--green)">Launch-Bugs schließen</span>', urgent:false},
+  {text:'🔴 WaterInfos Script: <span style="color:var(--red)">FAILURE — Pipeline tot</span>', urgent:true},
+  {text:'💰 Runway: <span style="color:var(--red)">~5 Mo → Seedmatch KW 21/22</span>', urgent:true},
+  {text:'🤝 ROKA Burggraf: <span style="color:var(--gold)">Termin fixieren</span>', urgent:true},
+  {text:'🎤 FFDC: <span style="color:var(--teal)">27–28 Mai — 8 Tage</span>', urgent:false},
+  {text:'📊 Seedmatch DD: <span style="color:var(--gold)">KW 21/22 Deadline</span>', urgent:true},
+  {text:'🚀 BunBo Sprint 7: <span style="color:var(--green)">65% — Push für Launch</span>', urgent:false},
 ];
 
 function initJarvis() {
@@ -4719,6 +4757,8 @@ function initJarvis() {
       // Restore bridge input
       var bi = document.getElementById('cal-bridge-url-input');
       if (bi && CAL.bridgeUrl) bi.value = CAL.bridgeUrl;
+      // Auto-fetch Google Calendar events if bridge is set
+      if (CAL.bridgeUrl) { setTimeout(function(){ calFetchGCalToday(false); }, 2000); }
     },
 
     loadEvents: function() {
@@ -4866,8 +4906,9 @@ function initJarvis() {
         return '<div class="cal-ev-row '+calCol+'" onclick="calDeletePrompt('+idx+',\''+dateStr+'\')">'+
           '<div class="cal-ev-time">'+(ev.time||'--:--')+'</div>'+
           '<div class="cal-ev-body">'+
-            '<div class="cal-ev-title">'+calEmoji+' '+ev.title+'</div>'+
-            '<div class="cal-ev-meta">'+loc+(loc&&dur?' · ':'')+dur+'</div>'+
+            '<div class="cal-ev-title">'+calEmoji+' '+(ev.prio==='p1'?'<span style="color:#ff4757;font-size:.5rem">●</span> ':ev.prio==='p2'?'<span style="color:#ffaa00;font-size:.5rem">●</span> ':'')+ev.title+'</div>'+
+            '<div class="cal-ev-meta">'+loc+(loc&&dur?' · ':'')+dur+(ev.cat?' · '+{meeting:'🤝',call:'📞',deadline:'⏰',prep:'📋',review:'🔍',task:'✅'}[ev.cat]||ev.cat:'')+'</div>'+
+            (ev.notes?'<div class="cal-ev-meta" style="margin-top:.1rem;font-style:italic;opacity:.7">'+ev.notes+'</div>':'')+
           '</div>'+
           '<div class="cal-ev-dur" style="font-size:.5rem;color:rgba(255,255,255,0.15)" title="Klicken zum Löschen">✕</div>'+
         '</div>';
@@ -4901,6 +4942,7 @@ function initJarvis() {
         var diffStr = diff===0?'Heute':diff===1?'Morgen':'in '+diff+' Tagen';
         var calColor = ev.cal==='wb'?'var(--teal)':ev.cal==='bl'?'var(--gold)':'#b48dfa';
         var calEmoji = ev.cal==='wb'?'🌊':ev.cal==='bl'?'🔔':'🔒';
+              if(ev.source==='gcal') calEmoji = '🌐';
         return '<div style="display:flex;align-items:center;gap:.55rem;padding:.4rem .5rem;border-radius:6px;background:rgba(0,200,255,0.03);border:1px solid rgba(0,200,255,0.08);margin-bottom:.3rem">'+
           '<div style="width:3px;height:28px;background:'+calColor+';border-radius:2px;flex-shrink:0"></div>'+
           '<div style="flex:1;min-width:0">'+
@@ -4985,11 +5027,14 @@ function initJarvis() {
     var loc = (document.getElementById('cia-loc')||{}).value||'';
     var st = document.getElementById('cia-status');
     if (!title || !date) { if(st) st.innerHTML='<span style="color:#f5c842">⚠ Titel und Datum erforderlich</span>'; return; }
-    var ev = {id:'u'+Date.now(), title:title, date:date, time:time, cal:cal, dur:dur, loc:loc};
+    var prio = (document.getElementById('cia-prio')||{}).value||'';
+    var cat  = (document.getElementById('cia-cat')||{}).value||'';
+    var notes = (document.getElementById('cia-notes')||{}).value||'';
+    var ev = {id:'u'+Date.now(), title:title, date:date, time:time, cal:cal, dur:dur, loc:loc, prio:prio, cat:cat, notes:notes};
     CAL.events.push(ev); CAL.saveEvents();
     CAL.renderMonthGrid(); CAL.renderWeekStrip(); CAL.renderAgenda(CAL.selectedDate); CAL.renderUpcoming(); CAL.updateNextAppt(); CAL.updateWeekStats();
     if(st) st.innerHTML='<span style="color:var(--teal)">✓ Termin gespeichert!</span>';
-    document.getElementById('cia-title').value=''; document.getElementById('cia-time').value=''; document.getElementById('cia-loc').value='';
+    document.getElementById('cia-title').value=''; document.getElementById('cia-time').value=''; document.getElementById('cia-loc').value=''; try{document.getElementById('cia-prio').value='';document.getElementById('cia-cat').value='';document.getElementById('cia-notes').value='';}catch(e){}
     setTimeout(function(){calToggleQuickAdd();if(st)st.innerHTML='';},1500);
     // Also sync to bridge if connected
     if(CAL.bridgeUrl) calSyncEventToBridge(ev);
@@ -5043,6 +5088,57 @@ function initJarvis() {
   window.calSyncEventToBridge = function(ev) {
     if (!CAL.bridgeUrl) return;
     fetch(CAL.bridgeUrl+'?action=add_event', {method:'POST', body:JSON.stringify(ev), headers:{'Content-Type':'application/json'}}).catch(function(){});
+  };
+
+  // Fetch Google Calendar events from bridge and merge (non-destructive, additive)
+  window.calFetchGCalToday = function(showStatus) {
+    if (!CAL.bridgeUrl) return;
+    var st = document.getElementById('cal-bridge-status');
+    if (showStatus && st) st.textContent = '⏳ Google Kalender wird geladen…';
+    fetch(CAL.bridgeUrl + '?action=calendar_today')
+      .then(function(r){ return r.json(); })
+      .then(function(data){
+        // Only process if bridge returns real event data (not generic ping response)
+        if (!data || !data.events || !Array.isArray(data.events)) {
+          if (showStatus && st) st.textContent = '⚠ Bridge-V2 aktivieren für Google Kalender';
+          return;
+        }
+        var imported = 0;
+        data.events.forEach(function(ev){
+          // Avoid duplicates by bridge event ID
+          var exists = CAL.events.some(function(e){ return e.id === ('gcal_' + ev.id); });
+          if (!exists && ev.date) {
+            CAL.events.push({
+              id: 'gcal_' + (ev.id || Date.now()),
+              title: (ev.summary || ev.title || 'Google Event'),
+              date: ev.date,
+              time: ev.time || ev.start_time || '00:00',
+              dur: ev.duration_minutes || 60,
+              cal: 'wb',
+              loc: ev.location || '',
+              prio: '', cat: '', notes: '',
+              source: 'gcal'  // marks as Google Calendar event
+            });
+            imported++;
+          }
+        });
+        if (imported > 0) {
+          CAL.saveEvents();
+          CAL.renderAgenda(CAL.selectedDate);
+          CAL.renderUpcoming();
+          CAL.renderWeekStrip();
+        }
+        if (showStatus && st) {
+          st.textContent = imported > 0
+            ? ('🌐 ' + imported + ' Google-Termin(e) synchronisiert')
+            : '✅ Google Kalender — keine neuen Termine heute';
+        }
+        // Update bridge status bar
+        updateExecBridgeStatus('gcal_ok', data.events.length);
+      })
+      .catch(function(err){
+        if (showStatus && st) st.textContent = '⚫ Bridge nicht erreichbar';
+      });
   };
 
   // Init after DOM ready
@@ -5777,8 +5873,22 @@ function updateMailStatsBadge(url) {
   fetch(url + '?action=mail_stats')
     .then(function(r) { return r.json(); })
     .then(function(data) {
+      // Gmail unread badge
       var unreadEl = document.getElementById('gmail-unread-count');
       if (unreadEl && data.unread !== undefined) unreadEl.textContent = data.unread;
+      // Executive KPI: if real data present, update leads count
+      if (data.investors !== undefined || data.partners !== undefined) {
+        var leadsEl = document.getElementById('exec-leads-count');
+        var activeEl = document.getElementById('exec-leads-active');
+        var total = (data.investors || 0) + (data.partners || 0) + (data.total || 0);
+        var active = (data.investors || 0) + (data.partners || 0);
+        if (leadsEl && total > 0) leadsEl.textContent = total;
+        if (activeEl && active > 0) activeEl.textContent = active;
+        // Update bridge status
+        if (typeof updateExecBridgeStatus === 'function') {
+          updateExecBridgeStatus('live', data.unread || null);
+        }
+      }
     }).catch(function(){});
 }
 
@@ -5794,6 +5904,37 @@ function saveMasterBridgeUrl(url) {
   if (calBridgeInput) calBridgeInput.value = url;
   // Sofort GA4 laden
   loadGA4Stats();
+  updateExecBridgeStatus('connected', null);
+}
+
+// ── Exec Bridge Status Bar updater ─────────────────────────────────────────
+function updateExecBridgeStatus(mode, extra) {
+  var dot   = document.getElementById('exec-bridge-dot');
+  var label = document.getElementById('exec-bridge-label');
+  var unreadEl = document.getElementById('exec-bridge-unread');
+  if (!dot || !label) return;
+  if (mode === 'connected') {
+    dot.textContent = '🟡';
+    label.textContent = 'Bridge verbunden — Master Bridge V2 deployen für Echtdaten';
+    label.style.color = '#ffaa00';
+  } else if (mode === 'gcal_ok') {
+    dot.textContent = '🟢';
+    label.textContent = 'Google Kalender sync aktiv' + (extra ? ' · ' + extra + ' Events heute' : '');
+    label.style.color = 'var(--teal)';
+  } else if (mode === 'live') {
+    dot.textContent = '🟢';
+    label.textContent = 'Bridge LIVE — Gmail · Kalender · GA4 verbunden';
+    label.style.color = 'var(--green)';
+    if (unreadEl && extra) { unreadEl.textContent = extra + ' ungelesen'; unreadEl.style.display = 'inline'; }
+  } else if (mode === 'offline') {
+    dot.textContent = '🔴';
+    label.textContent = 'Bridge offline — Demo-Modus aktiv';
+    label.style.color = 'var(--red)';
+  } else if (mode === 'simple') {
+    dot.textContent = '🟡';
+    label.textContent = 'Bridge erreichbar — Simple Mode (Mail-Bridge aktiv, V2 fehlt)';
+    label.style.color = '#ffaa00';
+  }
 }
 
 // Beim Laden: Master Bridge aus localStorage lesen und GA4 starten
@@ -5808,6 +5949,28 @@ setTimeout(function() {
   }
   // GA4 alle 5 Minuten aktualisieren
   setInterval(function() { if (MASTER_BRIDGE_URL) loadGA4Stats(); }, 300000);
+
+  // ── Bridge Ping: Detect simple vs V2 vs offline ──────────────────────────
+  var pingUrl = MASTER_BRIDGE_URL || GMAIL_BRIDGE_URL;
+  if (pingUrl) {
+    fetch(pingUrl + '?action=ping')
+      .then(function(r){ return r.json(); })
+      .then(function(d){
+        // If bridge returns generic message it's simple mode; V2 returns structured data
+        var isV2 = d && (d.version || d.gmail || d.calendar || d.ga4);
+        var isSimple = d && d.message && d.message.indexOf('CEO Mail Bridge aktiv') !== -1;
+        if (isV2) {
+          updateExecBridgeStatus('live', d.unread || null);
+        } else if (isSimple) {
+          updateExecBridgeStatus('simple', null);
+        } else if (d && d.status === 'ok') {
+          updateExecBridgeStatus('connected', null);
+        }
+      })
+      .catch(function(){ updateExecBridgeStatus('offline', null); });
+  } else {
+    updateExecBridgeStatus('offline', null);
+  }
 }, 6000);
 const OUTLOOK_CLIENT_ID = 'f026a23d-c0f8-479d-b18c-9d4813105673'; // Wave Bite CEO Office — Azure SPA Registration
 
@@ -6063,12 +6226,14 @@ function _showGmailSetupGuide(list, errMsg) {
 
 // Demo-Mails für Präsentationsmodus
 function loadDemoMails() {
+  // Dynamic dates relative to today
+  function demoDate(daysAgo){var d=new Date();d.setDate(d.getDate()-daysAgo);return d.toISOString().split('T')[0];}
   const demoMails = [
-    {id:'d1',subject:'Re: Seedmatch Due Diligence — Unterlagen',from:'investor@seedmatch.de',snippet:'Vielen Dank für die Pitch-Unterlagen. Wir möchten einen Call vereinbaren...',date:'2026-05-18',read:false,starred:true,category:'investor'},
-    {id:'d2',subject:'Marina Müggelsee — Kooperationsanfrage Wave Bite',from:'info@marina-mueggelsee.de',snippet:'Ihr Angebot klingt sehr interessant. Können wir nächste Woche sprechen?',date:'2026-05-17',read:false,starred:false,category:'partner'},
-    {id:'d3',subject:'BunBo Beta-Tester Feedback #12',from:'beta@bunbo.app',snippet:'Die neue Routing-Funktion ist super! Ein Bug: GPS verliert Signal bei...',date:'2026-05-17',read:true,starred:false,category:'technical'},
-    {id:'d4',subject:'EXIST-Förderantrag — Rückfragen vom Gutachter',from:'exist@bmbf.de',snippet:'Bitte ergänzen Sie in Abschnitt 3.2 die Marktgröße mit Quellenangaben...',date:'2026-05-16',read:false,starred:true,category:'legal'},
-    {id:'d5',subject:'Wave Bite Instagram +47 neue Follower diese Woche',from:'notifications@instagram.com',snippet:'Dein Beitrag über die Wasserlage App hat 312 Likes erhalten...',date:'2026-05-15',read:true,starred:false,category:'marketing'},
+    {id:'d1',subject:'Re: Seedmatch Due Diligence — Unterlagen',from:'investor@seedmatch.de',snippet:'Vielen Dank für die Pitch-Unterlagen. Wir möchten einen Call vereinbaren...',date:demoDate(0),read:false,starred:true,category:'investor'},
+    {id:'d2',subject:'Marina Müggelsee — Kooperationsanfrage Wave Bite',from:'info@marina-mueggelsee.de',snippet:'Ihr Angebot klingt sehr interessant. Können wir nächste Woche sprechen?',date:demoDate(1),read:false,starred:false,category:'partner'},
+    {id:'d3',subject:'BunBo Beta-Tester Feedback #12',from:'beta@bunbo.app',snippet:'Die neue Routing-Funktion ist super! Ein Bug: GPS verliert Signal bei...',date:demoDate(1),read:true,starred:false,category:'technical'},
+    {id:'d4',subject:'EXIST-Förderantrag — Rückfragen vom Gutachter',from:'exist@bmbf.de',snippet:'Bitte ergänzen Sie in Abschnitt 3.2 die Marktgröße mit Quellenangaben...',date:demoDate(2),read:false,starred:true,category:'legal'},
+    {id:'d5',subject:'Wave Bite Instagram +47 neue Follower diese Woche',from:'notifications@instagram.com',snippet:'Dein Beitrag über die Wasserlage App hat 312 Likes erhalten...',date:demoDate(3),read:true,starred:false,category:'marketing'},
   ];
   const list = document.getElementById('mail-list');
   if (!list) return;
