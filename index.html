@@ -20,6 +20,14 @@
     --text-dim: #4a7a9b;
     --glow-blue: 0 0 20px rgba(0,200,255,0.4);
     --glow-gold: 0 0 20px rgba(201,168,76,0.5);
+    /* ── Cream / Elfenbein Palette ── */
+    --cream: #fdf6e3;
+    --ivory: #f5ead0;
+    --cream-glow: rgba(253,246,227,0.08);
+    --cream-subtle: rgba(253,246,227,0.04);
+    --cream-border: rgba(253,246,227,0.14);
+    --cream-mid: rgba(253,246,227,0.11);
+    --champagne: #f7e7b4;
   }
   *{margin:0;padding:0;box-sizing:border-box}
   html,body{width:100%;overflow-x:hidden;background:var(--void);color:var(--text);font-family:'Segoe UI',system-ui,sans-serif;font-size:14px}
@@ -1296,6 +1304,135 @@
   #quick-actions-bar { bottom: calc(10px + env(safe-area-inset-bottom)) !important; }
 }
 
+
+  /* ═══════════════════════════════════════════════════
+     CREAM / ELFENBEIN DESIGN SYSTEM — v5
+  ═══════════════════════════════════════════════════ */
+  /* Cream section backgrounds */
+  section {
+    position:relative;
+  }
+  section::before {
+    content:'';
+    position:absolute;
+    inset:0;
+    pointer-events:none;
+    border-radius:inherit;
+    background:linear-gradient(135deg,var(--cream-subtle) 0%,transparent 60%);
+    z-index:0;
+  }
+  section > * { position:relative; z-index:1; }
+
+  /* Cream panels */
+  .panel-cream {
+    background:linear-gradient(145deg,rgba(253,246,227,0.07),rgba(201,168,76,0.09)) !important;
+    border-color:var(--cream-border) !important;
+  }
+  .panel-cream::before {
+    background:linear-gradient(90deg,transparent,rgba(253,246,227,0.2),transparent) !important;
+  }
+
+  /* Cream section title variant */
+  .section-title.cream-title {
+    color:var(--champagne);
+    border-left:2px solid var(--ivory);
+    padding-left:.6rem;
+  }
+  .section-title.cream-title::before { background:var(--ivory); }
+  .section-title.cream-title::after  { background:linear-gradient(90deg,rgba(253,246,227,0.3),transparent); }
+
+  /* Cream card glow */
+  .panel:hover {
+    border-color:rgba(253,246,227,0.18) !important;
+    box-shadow:0 4px 24px rgba(253,246,227,0.06),0 0 0 1px rgba(253,246,227,0.06);
+  }
+
+  /* Cream KPI card */
+  .kpi-card {
+    background:linear-gradient(145deg,rgba(7,24,40,0.9),rgba(253,246,227,0.03));
+  }
+  .kpi-card:hover {
+    border-color:rgba(253,246,227,0.2);
+    background:linear-gradient(145deg,rgba(7,24,40,0.9),rgba(253,246,227,0.06));
+  }
+
+  /* Body cream texture - very subtle */
+  body::before {
+    content:'';
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    background:
+      radial-gradient(ellipse 120% 40% at 50% 0%,rgba(253,246,227,0.035) 0%,transparent 60%),
+      radial-gradient(ellipse 60% 30% at 80% 100%,rgba(201,168,76,0.04) 0%,transparent 60%);
+    z-index:0;
+  }
+  #app-root,main,.main-grid { position:relative; z-index:1; }
+
+  /* Nav cream accent */
+  nav {
+    border-bottom-color:rgba(253,246,227,0.1) !important;
+  }
+  nav::after {
+    content:'';
+    position:absolute;
+    bottom:-1px;left:0;right:0;height:1px;
+    background:linear-gradient(90deg,transparent,rgba(253,246,227,0.15),rgba(201,168,76,0.2),transparent);
+    pointer-events:none;
+  }
+
+  /* Section separator cream line */
+  section + section {
+    border-top:1px solid rgba(253,246,227,0.06);
+    padding-top:2rem;
+    margin-top:.5rem;
+  }
+
+  /* Cream scrollbar */
+  ::-webkit-scrollbar-thumb {
+    background:linear-gradient(180deg,rgba(201,168,76,0.4),rgba(253,246,227,0.25));
+  }
+
+
+  /* ── Mail Grid Responsive ── */
+  @media (max-width: 900px) {
+    .mail-grid-layout {
+      grid-template-columns: 1fr !important;
+    }
+    .mail-tabs { flex-wrap: wrap; gap:.3rem; }
+    .mail-tab  { font-size:.52rem; padding:.25rem .4rem; }
+    #mail-stats-bar { font-size:.55rem; }
+  }
+
+  /* Mail inbox scroll + max 5 visible */
+  #mail-list {
+    max-height:360px;
+    overflow-y:auto;
+    scrollbar-width:thin;
+    scrollbar-color:rgba(201,168,76,0.3) transparent;
+  }
+  .mail-item { position:relative; }
+  .mail-item.mail-hidden { display:none; }
+  #mail-show-more {
+    display:block;
+    width:100%;
+    margin-top:.4rem;
+    padding:.3rem;
+    background:rgba(201,168,76,0.06);
+    border:1px solid rgba(201,168,76,0.2);
+    border-radius:6px;
+    color:var(--gold);
+    font-size:.58rem;
+    cursor:pointer;
+    text-align:center;
+    letter-spacing:.06em;
+    transition:all .2s;
+  }
+  #mail-show-more:hover {
+    background:rgba(201,168,76,0.12);
+    border-color:rgba(201,168,76,0.4);
+  }
+
 </style>
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#020810">
@@ -2414,6 +2551,7 @@
     <div style="display:flex;gap:.4rem;flex-shrink:0">
       <a href="https://mail.google.com" target="_blank" style="display:inline-flex;align-items:center;gap:.25rem;padding:.25rem .6rem;background:rgba(0,200,255,0.1);border:1px solid rgba(0,200,255,0.3);border-radius:6px;color:var(--blue);font-size:.55rem;font-weight:700;text-decoration:none;transition:all .2s" onmouseover="this.style.background='rgba(0,200,255,0.2)'" onmouseout="this.style.background='rgba(0,200,255,0.1)'">✉ Gmail ↗</a>
       <a href="https://outlook.live.com" target="_blank" style="display:inline-flex;align-items:center;gap:.25rem;padding:.25rem .6rem;background:rgba(0,100,200,0.1);border:1px solid rgba(0,100,200,0.3);border-radius:6px;color:#5b9bd5;font-size:.55rem;font-weight:700;text-decoration:none;transition:all .2s" onmouseover="this.style.background='rgba(0,100,200,0.2)'" onmouseout="this.style.background='rgba(0,100,200,0.1)'">📨 Outlook ↗</a>
+      <a href="https://webmail.ionos.de/" target="_blank" style="display:inline-flex;align-items:center;gap:.25rem;padding:.25rem .6rem;background:rgba(0,212,170,0.1);border:1px solid rgba(0,212,170,0.3);border-radius:6px;color:var(--teal);font-size:.55rem;font-weight:700;text-decoration:none;transition:all .2s" onmouseover="this.style.background='rgba(0,212,170,0.2)'" onmouseout="this.style.background='rgba(0,212,170,0.1)'">🌊 Ionos ↗</a>
     </div>
   </div>
 
@@ -2443,13 +2581,16 @@
   </div>
 
   <!-- SOURCE TABS — kompakt -->
-  <div class="mail-tabs" style="margin-bottom:.6rem">
+  <div class="mail-tabs" style="margin-bottom:.6rem;flex-wrap:wrap;gap:.3rem">
     <button class="mail-tab active" id="tab-gmail" onclick="switchMailTab('gmail')">📧 Gmail</button>
+    <button class="mail-tab" id="tab-gmail-sent" onclick="switchMailTab('gmail-sent')" style="background:rgba(201,168,76,0.08);border-color:rgba(201,168,76,0.25);color:var(--gold)">📤 Gmail Gesendet</button>
     <button class="mail-tab gold" id="tab-outlook" onclick="switchMailTab('outlook')">📨 Outlook</button>
+    <button class="mail-tab" id="tab-ionos" onclick="switchMailTab('ionos')" style="background:rgba(0,212,170,0.08);border-color:rgba(0,212,170,0.3);color:var(--teal)">🌊 Ionos wave-bite.com</button>
+    <button class="mail-tab" id="tab-ionos-sent" onclick="switchMailTab('ionos-sent')" style="background:rgba(0,212,170,0.05);border-color:rgba(0,212,170,0.2);color:var(--teal)">📤 Ionos Gesendet</button>
   </div>
 
-  <!-- 3-SPALTEN LAYOUT: Mail | JARVIS | Actions -->
-  <div style="display:grid;grid-template-columns:1.2fr 1fr .85fr;gap:.75rem;align-items:start">
+  <!-- MAIL GRID: 3-spaltig Desktop, 1-spaltig Mobile -->
+  <div class="mail-grid-layout" style="display:grid;grid-template-columns:1.2fr 1fr .85fr;gap:.75rem;align-items:start">
 
     <!-- COL 1: POSTEINGANG -->
     <div class="panel" style="padding:.85rem">
@@ -2508,6 +2649,9 @@
           <a href="https://mail.google.com/mail/u/0/#starred" target="_blank" style="display:flex;align-items:center;gap:.45rem;padding:.35rem .5rem;background:rgba(0,200,255,0.05);border:1px solid rgba(0,200,255,0.12);border-radius:7px;text-decoration:none;color:var(--text);font-size:.62rem;transition:all .2s" onmouseover="this.style.borderColor='rgba(0,200,255,0.3)'" onmouseout="this.style.borderColor='rgba(0,200,255,0.12)'"><span>⭐</span><span>Markierte Mails</span><span style="margin-left:auto;font-size:.5rem;color:var(--text-dim)">↗</span></a>
           <a href="https://mail.google.com/mail/u/0/#compose" target="_blank" style="display:flex;align-items:center;gap:.45rem;padding:.35rem .5rem;background:rgba(201,168,76,0.06);border:1px solid rgba(201,168,76,0.18);border-radius:7px;text-decoration:none;color:var(--text);font-size:.62rem;transition:all .2s" onmouseover="this.style.borderColor='rgba(201,168,76,0.4)'" onmouseout="this.style.borderColor='rgba(201,168,76,0.18)'"><span>✏️</span><span>Neue Mail schreiben</span><span style="margin-left:auto;font-size:.5rem;color:var(--text-dim)">↗</span></a>
           <a href="https://outlook.live.com/mail/0/inbox" target="_blank" style="display:flex;align-items:center;gap:.45rem;padding:.35rem .5rem;background:rgba(0,100,200,0.05);border:1px solid rgba(0,100,200,0.15);border-radius:7px;text-decoration:none;color:var(--text);font-size:.62rem;transition:all .2s" onmouseover="this.style.borderColor='rgba(0,100,200,0.35)'" onmouseout="this.style.borderColor='rgba(0,100,200,0.15)'"><span>📨</span><span>Outlook (casi80)</span><span style="margin-left:auto;font-size:.5rem;color:var(--text-dim)">↗</span></a>
+          <a href="https://mail.google.com/mail/u/0/#sent" target="_blank" style="display:flex;align-items:center;gap:.45rem;padding:.35rem .5rem;background:rgba(201,168,76,0.05);border:1px solid rgba(201,168,76,0.15);border-radius:7px;text-decoration:none;color:var(--text);font-size:.62rem;transition:all .2s" onmouseover="this.style.borderColor='rgba(201,168,76,0.4)'" onmouseout="this.style.borderColor='rgba(201,168,76,0.15)'"><span>📤</span><span>Gmail Gesendet</span><span style="margin-left:auto;font-size:.5rem;color:var(--gold)">↗</span></a>
+          <a href="https://webmail.ionos.de/" target="_blank" style="display:flex;align-items:center;gap:.45rem;padding:.35rem .5rem;background:rgba(0,212,170,0.05);border:1px solid rgba(0,212,170,0.18);border-radius:7px;text-decoration:none;color:var(--text);font-size:.62rem;transition:all .2s" onmouseover="this.style.borderColor='rgba(0,212,170,0.4)'" onmouseout="this.style.borderColor='rgba(0,212,170,0.18)'"><span>🌊</span><span>Ionos Posteingang (wave-bite.com)</span><span style="margin-left:auto;font-size:.5rem;color:var(--teal)">↗</span></a>
+          <a href="https://webmail.ionos.de/#sent" target="_blank" style="display:flex;align-items:center;gap:.45rem;padding:.35rem .5rem;background:rgba(0,212,170,0.04);border:1px solid rgba(0,212,170,0.14);border-radius:7px;text-decoration:none;color:var(--text);font-size:.62rem;transition:all .2s" onmouseover="this.style.borderColor='rgba(0,212,170,0.35)'" onmouseout="this.style.borderColor='rgba(0,212,170,0.14)'"><span>📤</span><span>Ionos Gesendet (WICHTIG)</span><span style="margin-left:auto;font-size:.5rem;color:var(--teal)">↗</span></a>
         </div>
       </div>
     </div>
@@ -6607,7 +6751,7 @@ function initGoogleAuth() {
   }
 }
 
-async function loadGmail() {
+async function loadGmail(folder) { folder = folder || 'INBOX';
   const list = document.getElementById('mail-list');
   if (!list) return;
   const _authP = document.getElementById('outlook-auth-panel');
@@ -6615,7 +6759,7 @@ async function loadGmail() {
 
   // If we have a valid token, try direct API
   if (gmailAccessToken && Date.now() < gmailTokenExpiry) {
-    return _fetchGmailDirect(list);
+    return _fetchGmailDirect(list, folder);
   }
 
   // Otherwise try the Apps Script bridge first
@@ -6656,7 +6800,31 @@ function _processGmailData(data, list) {
     list.innerHTML = '<div class="mail-loading" style="color:var(--text-dim)">📭 Keine Mails gefunden</div>';
     return;
   }
-  allMails.forEach(m => renderMailItem(m, list));
+  allMails.forEach((m, i) => {
+    renderMailItem(m, list);
+    // Hide items beyond 5 (collapsible)
+    const items = list.querySelectorAll('.mail-item');
+    if (items.length > 5) {
+      items[items.length-1].classList.add('mail-hidden');
+    }
+  });
+  // Add "Mehr anzeigen" button if >5 mails
+  const existing = list.querySelector('#mail-show-more');
+  if (existing) existing.remove();
+  if (allMails.length > 5) {
+    const btn = document.createElement('button');
+    btn.id = 'mail-show-more';
+    btn.setAttribute('data-expanded','0');
+    btn.textContent = '▾ ' + (allMails.length-5) + ' weitere E-Mails anzeigen';
+    btn.onclick = function() {
+      const expanded = btn.getAttribute('data-expanded') === '1';
+      list.querySelectorAll('.mail-item.mail-hidden').forEach(function(el){ el.style.display = expanded ? 'none' : ''; el.classList.toggle('mail-hidden', expanded); });
+      if(!expanded){ list.querySelectorAll('.mail-item').forEach(function(el,i){ if(i>=5){ el.style.display=''; el.classList.remove('mail-hidden'); }}); }
+      btn.setAttribute('data-expanded', expanded ? '0' : '1');
+      btn.textContent = expanded ? ('▾ ' + (allMails.length-5) + ' weitere E-Mails anzeigen') : ('▴ Weniger anzeigen');
+    };
+    list.appendChild(btn);
+  }
   updateMailStats(allMails);
   const intel = document.getElementById('mail-intel-list') || document.getElementById('mail-list');
   if (typeof updateMailIntelligence === 'function') updateMailIntelligence(allMails);
@@ -6666,12 +6834,13 @@ function _processGmailData(data, list) {
   if (statsBar) statsBar.style.display = 'flex';
 }
 
-async function _fetchGmailDirect(list) {
-  list.innerHTML = '<div class="mail-loading">📡 Gmail API...</div>';
+async function _fetchGmailDirect(list, folder) {
+  const labelId = folder === 'SENT' ? 'SENT' : 'INBOX';
+  list.innerHTML = '<div class="mail-loading">📡 Gmail API (' + (folder||'INBOX') + ')...</div>';
   try {
     // Fetch message list
     const lResp = await fetch(
-      'https://gmail.googleapis.com/gmail/v1/users/me/messages?maxResults=20&labelIds=INBOX',
+      'https://gmail.googleapis.com/gmail/v1/users/me/messages?maxResults=20&labelIds=' + labelId,
       { headers: { 'Authorization': 'Bearer ' + gmailAccessToken } }
     );
     const lData = await lResp.json();
@@ -6788,15 +6957,33 @@ function switchMailTab(source) {
   currentMailSource = source;
   // Update tab active state
   document.querySelectorAll('.mail-tab').forEach(function(btn) { btn.classList.remove('active'); });
-  const activeTab = source === 'gmail' ? document.getElementById('tab-gmail') : document.getElementById('tab-outlook');
+  const tabMap = {
+    'gmail': 'tab-gmail',
+    'gmail-sent': 'tab-gmail-sent',
+    'outlook': 'tab-outlook',
+    'ionos': 'tab-ionos',
+    'ionos-sent': 'tab-ionos-sent'
+  };
+  const activeTab = document.getElementById(tabMap[source] || 'tab-gmail');
   if (activeTab) activeTab.classList.add('active');
-  // Hide/show outlook auth
+
   const authPanel = document.getElementById('outlook-auth-panel');
   const list = document.getElementById('mail-list');
+
   if (source === 'gmail') {
     if (authPanel) authPanel.style.display = 'none';
-    loadGmail();
+    loadGmail('INBOX');
+  } else if (source === 'gmail-sent') {
+    if (authPanel) authPanel.style.display = 'none';
+    loadGmail('SENT');
+  } else if (source === 'ionos') {
+    if (authPanel) authPanel.style.display = 'none';
+    _showIonosPanel(list, 'inbox');
+  } else if (source === 'ionos-sent') {
+    if (authPanel) authPanel.style.display = 'none';
+    _showIonosPanel(list, 'sent');
   } else {
+    // Outlook
     if (!outlookAccount) {
       if (list) list.innerHTML = '';
       if (authPanel) authPanel.style.display = 'flex';
@@ -6805,6 +6992,41 @@ function switchMailTab(source) {
       loadOutlookMails();
     }
   }
+}
+
+// Ionos: Deep-Link Panel (IMAP nicht browserbasiert möglich, aber direkte Links)
+function _showIonosPanel(list, folder) {
+  if (!list) return;
+  const isSent = folder === 'sent';
+  const url = isSent ? 'https://webmail.ionos.de/#sent' : 'https://webmail.ionos.de/';
+  list.innerHTML = \`
+    <div style="padding:.85rem;background:rgba(0,212,170,0.06);border:1px solid rgba(0,212,170,0.2);border-radius:10px">
+      <div style="display:flex;align-items:center;gap:.5rem;margin-bottom:.65rem">
+        <span style="font-size:1.3rem">🌊</span>
+        <div>
+          <div style="font-size:.7rem;font-weight:700;color:var(--teal)">Ionos Webmail — wave-bite.com</div>
+          <div style="font-size:.55rem;color:var(--text-dim)">Cloudflare MX · IMAP-Account · \${isSent?'📤 GESENDET — INTELLIGENCE PRIORITY':'📬 POSTEINGANG'}</div>
+        </div>
+      </div>
+      \${isSent ? \`<div style="font-size:.63rem;color:var(--gold);background:rgba(201,168,76,.08);border:1px solid rgba(201,168,76,.2);border-radius:6px;padding:.45rem .65rem;margin-bottom:.55rem">
+        ⭐ GESENDET-ORDNER = höchste Intelligence-Priorität<br>
+        <span style="color:var(--text-dim);font-size:.58rem">Zeigt aktive Gespräche, Investoren-Kontakte, Partner-Verhandlungen</span>
+      </div>\` : ''}
+      <div style="display:flex;flex-direction:column;gap:.35rem">
+        <a href="\${url}" target="_blank" style="display:flex;align-items:center;gap:.5rem;padding:.5rem .75rem;background:rgba(0,212,170,0.1);border:1px solid rgba(0,212,170,0.3);border-radius:8px;text-decoration:none;color:var(--teal);font-weight:700;font-size:.65rem">
+          \${isSent?'📤 Ionos Gesendet öffnen':'📬 Ionos Posteingang öffnen'} ↗
+        </a>
+        <a href="https://webmail.ionos.de/" target="_blank" style="display:flex;align-items:center;gap:.5rem;padding:.4rem .65rem;background:rgba(0,212,170,0.05);border:1px solid rgba(0,212,170,0.15);border-radius:7px;text-decoration:none;color:var(--text-dim);font-size:.6rem">
+          🌐 Ionos Webmail Hauptseite ↗
+        </a>
+      </div>
+      <div style="margin-top:.6rem;font-size:.58rem;color:var(--text-dim);line-height:1.6;border-top:1px solid rgba(0,212,170,0.1);padding-top:.5rem">
+        <strong style="color:var(--teal)">Integration:</strong> IMAP-Scanning erfordert Backend-Bridge.<br>
+        Empfehlung: Apps Script IMAP Trigger → selbes Schema wie Gmail Bridge einrichten.<br>
+        Account: <code style="color:var(--teal)">info@wave-bite.com</code> · Cloudflare DNS-Routing aktiv
+      </div>
+    </div>
+  \`;
 }
 
 function refreshMailHub() {
@@ -7130,42 +7352,58 @@ function initCEOToday() {
   }).join('');
 }
 
-// Section Toggle — Accordion
-function toggleSection(titleEl) {
+// Section Toggle — Accordion with localStorage
+function toggleSection(titleEl, skipSave) {
   const section = titleEl.closest ? titleEl.closest('section') : titleEl.parentElement;
   if (!section) return;
   const children = Array.from(section.children).slice(1);
   const isClosed = titleEl.hasAttribute('data-closed');
   const tog = titleEl.querySelector('.sec-toggle');
+  const sectionId = section.id || titleEl.textContent.trim().replace(/[^a-zA-Z0-9]/g,'').slice(0,20);
+
   if (!isClosed) {
     // Close
     children.forEach(function(el) {
       el.style.maxHeight = el.offsetHeight + 'px';
       el.style.overflow = 'hidden';
       requestAnimationFrame(function() {
-        el.style.transition = 'max-height .4s cubic-bezier(.4,0,.2,1), opacity .3s ease';
+        el.style.transition = 'max-height .38s cubic-bezier(.4,0,.2,1), opacity .28s ease';
         el.style.maxHeight = '0';
         el.style.opacity = '0';
       });
     });
     titleEl.setAttribute('data-closed', '1');
-    if (tog) tog.textContent = '▸';
+    if (tog) { tog.textContent = '▸'; tog.title = 'Aufklappen'; }
     titleEl.style.marginBottom = '0';
+    try { localStorage.setItem('sec_' + sectionId, 'closed'); } catch(e){}
   } else {
     // Open
     children.forEach(function(el) {
-      el.style.transition = 'max-height .45s cubic-bezier(.4,0,.2,1), opacity .3s ease';
+      el.style.transition = 'max-height .42s cubic-bezier(.4,0,.2,1), opacity .3s ease';
       el.style.maxHeight = '2000px';
       el.style.opacity = '1';
       setTimeout(function() {
         el.style.maxHeight = '';
         el.style.overflow = '';
-      }, 460);
+      }, 440);
     });
     titleEl.removeAttribute('data-closed');
-    if (tog) tog.textContent = '▾';
+    if (tog) { tog.textContent = '▾'; tog.title = 'Einklappen'; }
     titleEl.style.marginBottom = '';
+    try { localStorage.removeItem('sec_' + sectionId); } catch(e){}
   }
+}
+
+// Restore collapsed state from localStorage
+function restoreCollapsedSections() {
+  try {
+    document.querySelectorAll('.section-title[data-section-id]').forEach(function(el) {
+      const key = 'sec_' + el.getAttribute('data-section-id');
+      if (localStorage.getItem(key) === 'closed') {
+        toggleSection(el, true);
+      }
+    });
+  } catch(e){}
 }
 
 // ════════════════════════════════════════════════════════════
@@ -7189,6 +7427,7 @@ function toggleSection(titleEl) {
     setTimeout(initFinanceIntelligence, 300);
     setTimeout(initMarketingPulse, 350);
     setTimeout(initCEOToday, 100);
+    setTimeout(restoreCollapsedSections, 800);
     // Clock
     function updateClock() {
       const el = document.getElementById('nav-clock');
