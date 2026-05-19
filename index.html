@@ -1306,6 +1306,43 @@
   #quick-actions-bar { bottom: calc(10px + env(safe-area-inset-bottom)) !important; }
 }
 
+/* ── MOBILE FIX: Quick-Actions-Bar Sidebar + Dashboard Cutoff ── */
+/* 1) Switch to row layout at ≤900px so column never overflows viewport top */
+@media(max-width:900px){
+  #quick-actions-bar{
+    flex-direction:row!important;
+    flex-wrap:wrap!important;
+    bottom:40px!important;
+    right:.65rem!important;
+    gap:.3rem!important;
+    justify-content:flex-end!important;
+    max-width:calc(100vw - 1.3rem)!important;
+  }
+  #quick-actions-bar .btn-gold,
+  #quick-actions-bar .btn-primary,
+  #quick-actions-bar .btn-outline,
+  #quick-actions-bar a.btn-outline{
+    font-size:.52rem!important;
+    padding:.35rem .6rem!important;
+    min-height:38px!important;
+  }
+  /* 2) Extra bottom padding so bar (now 2 rows) doesn't cover page content */
+  .page{padding-bottom:8rem!important}
+}
+/* Extra safety: landscape phones with very low viewport height */
+@media(max-height:500px){
+  #quick-actions-bar{
+    flex-direction:row!important;
+    flex-wrap:wrap!important;
+    bottom:36px!important;
+    max-width:calc(100vw - 1rem)!important;
+  }
+}
+/* Dashboard grid: single column on narrow phones, remove grid-column span */
+@media(max-width:479px){
+  .dash-grid{grid-template-columns:1fr!important}
+  .dash-grid>[style*="grid-column"]{grid-column:span 1!important}
+}
 
   /* ═══════════════════════════════════════════════════
      CREAM / ELFENBEIN DESIGN SYSTEM — v5
