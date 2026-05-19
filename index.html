@@ -4,6 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>WAVE BITE // CAPITÄNS BRIDGE — JARVIS Edition</title>
+<meta name="description" content="Wave Bite CEO Command Center — Maritime Intelligence Dashboard für Projekte, Finanzen, Daten und Strategie">
+<meta name="robots" content="noindex, nofollow">
 <!-- CDN scripts moved to bottom of body for instant boot-screen render -->
 <style>
   :root {
@@ -1786,7 +1788,7 @@
   <!-- QUICK TOOL BUTTONS IN NAV -->
   <a href="https://mail.google.com" target="_blank" class="nav-tool-btn" title="Gmail öffnen">✉ Mail</a>
   <a href="https://calendar.google.com" target="_blank" class="nav-tool-btn" title="Kalender öffnen">📅 Kalender</a>
-  <a href="https://github.com" target="_blank" class="nav-tool-btn" title="GitHub öffnen">🐙 GitHub</a>
+  <a href="https://github.com/voigtcarsten4-rgb" target="_blank" class="nav-tool-btn" title="GitHub Repos öffnen">🐙 GitHub</a>
   <button class="nav-tool-btn" onclick="toggleToolbelt()" title="CEO Toolbelt">⚙ Tools</button>
   <div class="nav-status" title="System Online"></div>
   <div class="nav-clock" id="nav-clock">--:--:--</div>
@@ -1822,7 +1824,7 @@
   <!-- ENTWICKLUNG -->
   <div style="font-size:.6rem;letter-spacing:.15em;color:var(--gold);margin-bottom:.5rem">💻 ENTWICKLUNG</div>
   <div style="display:flex;flex-direction:column;gap:.4rem;margin-bottom:1rem">
-    <a href="https://github.com" target="_blank" class="tb-link"><span>🐙</span><div><div class="tb-name">GitHub</div><div class="tb-url">github.com</div></div><span class="tb-arrow">↗</span></a>
+    <a href="https://github.com/voigtcarsten4-rgb" target="_blank" class="tb-link"><span>🐙</span><div><div class="tb-name">GitHub — Wave Bite Repos</div><div class="tb-url">github.com/voigtcarsten4-rgb</div></div><span class="tb-arrow">↗</span></a>
     <a href="https://flutterflow.io" target="_blank" class="tb-link"><span>📱</span><div><div class="tb-name">FlutterFlow</div><div class="tb-url">flutterflow.io</div></div><span class="chip chip-success" style="font-size:.55rem;padding:.1rem .35rem">Aktiv</span></a>
     <a href="https://app.glideapps.com" target="_blank" class="tb-link"><span>⚡</span><div><div class="tb-name">Glide Apps</div><div class="tb-url">app.glideapps.com</div></div><span class="tb-arrow">↗</span></a>
     <a href="https://vercel.com" target="_blank" class="tb-link"><span>▲</span><div><div class="tb-name">Vercel Deployments</div><div class="tb-url">vercel.com</div></div><span class="tb-arrow">↗</span></a>
@@ -5327,7 +5329,8 @@ function initNeuralCanvas() {
     ctx.restore();
     ctx.restore();
     maybeSpawn(); tf+=.018;
-    requestAnimationFrame(draw);
+    if (!document.hidden && canvas._ioVisible !== false) requestAnimationFrame(draw);
+    else canvas._rafNeeded = draw;
   }
   draw();
   window.addEventListener('resize', resize);
@@ -5892,7 +5895,8 @@ function initHeartbeat() {
     ctx.fillStyle = '#00c8ff'; ctx.shadowColor = '#00c8ff'; ctx.shadowBlur = 10; ctx.fill(); ctx.shadowBlur = 0;
     ctx.restore();
     t += 0.7;
-    requestAnimationFrame(draw);
+    if (!document.hidden && canvas._ioVisible !== false) requestAnimationFrame(draw);
+    else canvas._rafNeeded = draw;
   }
   draw();
 }
@@ -6430,7 +6434,9 @@ function drawWireframeBoat(ctx, cx, cy, sc, t) {
 
       ctx.restore();
       t += 0.012;
-      requestAnimationFrame(drawScene);
+      const _bc = document.getElementById('boat-wireframe-canvas');
+      if (!document.hidden && _bc && _bc._ioVisible !== false) requestAnimationFrame(drawScene);
+      else if (_bc) _bc._rafNeeded = drawScene;
     }
     drawScene();
   }
@@ -7691,6 +7697,39 @@ function refreshCalIntel() {
     setTimeout(refreshCalIntel, 1000);
   } else {
     setTimeout(waitForCalIntel, 400);
+  }
+})();
+
+// ── Canvas Performance: Visibility-Guard (Page Hidden + IntersectionObserver) ──
+(function() {
+  // Restart paused canvas loops when tab becomes visible again
+  document.addEventListener('visibilitychange', function() {
+    if (!document.hidden) {
+      document.querySelectorAll('canvas').forEach(function(c) {
+        if (c._rafNeeded) {
+          var fn = c._rafNeeded;
+          c._rafNeeded = null;
+          requestAnimationFrame(fn);
+        }
+      });
+    }
+  });
+  // IntersectionObserver: pause canvases scrolled out of view
+  if (window.IntersectionObserver) {
+    var obs = new IntersectionObserver(function(entries) {
+      entries.forEach(function(e) {
+        e.target._ioVisible = e.isIntersecting;
+        if (e.isIntersecting && e.target._rafNeeded) {
+          var fn = e.target._rafNeeded;
+          e.target._rafNeeded = null;
+          requestAnimationFrame(fn);
+        }
+      });
+    }, { threshold: 0.01 });
+    // Observe after short delay so canvases are initialized
+    setTimeout(function() {
+      document.querySelectorAll('canvas').forEach(function(c) { obs.observe(c); });
+    }, 3000);
   }
 })();
 
