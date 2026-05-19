@@ -6999,22 +6999,22 @@ function _showIonosPanel(list, folder) {
   if (!list) return;
   const isSent = folder === 'sent';
   const url = isSent ? 'https://webmail.ionos.de/#sent' : 'https://webmail.ionos.de/';
-  list.innerHTML = \`
+  list.innerHTML = `
     <div style="padding:.85rem;background:rgba(0,212,170,0.06);border:1px solid rgba(0,212,170,0.2);border-radius:10px">
       <div style="display:flex;align-items:center;gap:.5rem;margin-bottom:.65rem">
         <span style="font-size:1.3rem">🌊</span>
         <div>
           <div style="font-size:.7rem;font-weight:700;color:var(--teal)">Ionos Webmail — wave-bite.com</div>
-          <div style="font-size:.55rem;color:var(--text-dim)">Cloudflare MX · IMAP-Account · \${isSent?'📤 GESENDET — INTELLIGENCE PRIORITY':'📬 POSTEINGANG'}</div>
+          <div style="font-size:.55rem;color:var(--text-dim)">Cloudflare MX · IMAP-Account · ${isSent?'📤 GESENDET — INTELLIGENCE PRIORITY':'📬 POSTEINGANG'}</div>
         </div>
       </div>
-      \${isSent ? \`<div style="font-size:.63rem;color:var(--gold);background:rgba(201,168,76,.08);border:1px solid rgba(201,168,76,.2);border-radius:6px;padding:.45rem .65rem;margin-bottom:.55rem">
+      ${isSent ? `<div style="font-size:.63rem;color:var(--gold);background:rgba(201,168,76,.08);border:1px solid rgba(201,168,76,.2);border-radius:6px;padding:.45rem .65rem;margin-bottom:.55rem">
         ⭐ GESENDET-ORDNER = höchste Intelligence-Priorität<br>
         <span style="color:var(--text-dim);font-size:.58rem">Zeigt aktive Gespräche, Investoren-Kontakte, Partner-Verhandlungen</span>
-      </div>\` : ''}
+      </div>` : ''}
       <div style="display:flex;flex-direction:column;gap:.35rem">
-        <a href="\${url}" target="_blank" style="display:flex;align-items:center;gap:.5rem;padding:.5rem .75rem;background:rgba(0,212,170,0.1);border:1px solid rgba(0,212,170,0.3);border-radius:8px;text-decoration:none;color:var(--teal);font-weight:700;font-size:.65rem">
-          \${isSent?'📤 Ionos Gesendet öffnen':'📬 Ionos Posteingang öffnen'} ↗
+        <a href="${url}" target="_blank" style="display:flex;align-items:center;gap:.5rem;padding:.5rem .75rem;background:rgba(0,212,170,0.1);border:1px solid rgba(0,212,170,0.3);border-radius:8px;text-decoration:none;color:var(--teal);font-weight:700;font-size:.65rem">
+          ${isSent?'📤 Ionos Gesendet öffnen':'📬 Ionos Posteingang öffnen'} ↗
         </a>
         <a href="https://webmail.ionos.de/" target="_blank" style="display:flex;align-items:center;gap:.5rem;padding:.4rem .65rem;background:rgba(0,212,170,0.05);border:1px solid rgba(0,212,170,0.15);border-radius:7px;text-decoration:none;color:var(--text-dim);font-size:.6rem">
           🌐 Ionos Webmail Hauptseite ↗
@@ -7026,7 +7026,7 @@ function _showIonosPanel(list, folder) {
         Account: <code style="color:var(--teal)">info@wave-bite.com</code> · Cloudflare DNS-Routing aktiv
       </div>
     </div>
-  \`;
+  `;
 }
 
 function refreshMailHub() {
