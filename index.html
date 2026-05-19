@@ -1439,6 +1439,7 @@
 </head>
 <body>
 
+<style>
   /* ══════════════════════════════════════════════════════
      DESIGN UPGRADE v4 — CREAM / IVORY / FRIENDLIER PALETTE
      Senior UI/UX — kompakter, luftiger Kontrast, premium
@@ -1630,20 +1631,20 @@
 <nav>
   <div class="nav-brand">WAVE<span>BITE</span> // JARVIS</div>
   <div class="nav-pill active" onclick="scrollTo(0,0)">HOME</div>
-  <div class="nav-pill" onclick="document.getElementById('sec-projects').scrollIntoView({behavior:'smooth'})">PROJEKTE</div>
-  <div class="nav-pill" onclick="document.getElementById('sec-intel').scrollIntoView({behavior:'smooth'})">INTEL</div>
-  <div class="nav-pill" onclick="document.getElementById('sec-finance').scrollIntoView({behavior:'smooth'})">FINANZEN</div>
   <div class="nav-pill" onclick="document.getElementById('sec-calendar').scrollIntoView({behavior:'smooth'})" style="background:rgba(0,200,255,0.08);border:1px solid rgba(0,200,255,0.3)">📅 KALENDER</div>
-  <div class="nav-pill" onclick="document.getElementById('sec-tasks').scrollIntoView({behavior:'smooth'})">TASKS</div>
-  <div class="nav-pill" onclick="document.getElementById('sec-console').scrollIntoView({behavior:'smooth'})">CONSOLE</div>
-  <div class="nav-pill" onclick="document.getElementById('sec-agents').scrollIntoView({behavior:'smooth'})">AGENTEN</div>
   <div class="nav-pill" onclick="document.getElementById('sec-mail-intel').scrollIntoView({behavior:'smooth'})">✉ MAILS</div>
+  <div class="nav-pill" onclick="document.getElementById('sec-projects').scrollIntoView({behavior:'smooth'})">⚓ PROJEKTE</div>
+  <div class="nav-pill" onclick="document.getElementById('sec-intel').scrollIntoView({behavior:'smooth'})" style="border-color:rgba(201,168,76,0.35);color:var(--gold)">🤖 JARVIS</div>
+  <div class="nav-pill" onclick="document.getElementById('sec-finance').scrollIntoView({behavior:'smooth'})">💰 FINANZEN</div>
   <div class="nav-pill" onclick="document.getElementById('sec-tools').scrollIntoView({behavior:'smooth'})">🛠 TOOLS</div>
   <div class="nav-pill" onclick="document.getElementById('sec-executive').scrollIntoView({behavior:'smooth'})" style="border-color:rgba(0,212,170,0.35);color:var(--teal)">⚡ EXEC</div>
   <div class="nav-pill" onclick="document.getElementById('sec-crm').scrollIntoView({behavior:'smooth'})">🤝 CRM</div>
   <div class="nav-pill" onclick="document.getElementById('sec-investor').scrollIntoView({behavior:'smooth'})" style="border-color:rgba(201,168,76,0.35);color:var(--gold)">💎 INVEST</div>
   <div class="nav-pill" onclick="document.getElementById('sec-ops').scrollIntoView({behavior:'smooth'})">⚙ OPS</div>
   <div class="nav-pill" onclick="document.getElementById('sec-risk').scrollIntoView({behavior:'smooth'})" style="border-color:rgba(255,68,68,0.35);color:#ff4757">🔴 RISK</div>
+  <div class="nav-pill" onclick="document.getElementById('sec-tasks').scrollIntoView({behavior:'smooth'})">TASKS</div>
+  <div class="nav-pill" onclick="document.getElementById('sec-agents').scrollIntoView({behavior:'smooth'})">AGENTEN</div>
+  <div class="nav-pill" onclick="document.getElementById('sec-console').scrollIntoView({behavior:'smooth'})">CONSOLE</div>
   <div class="nav-sep"></div>
   <!-- QUICK TOOL BUTTONS IN NAV -->
   <a href="https://mail.google.com" target="_blank" class="nav-tool-btn" title="Gmail öffnen">✉ Mail</a>
@@ -2290,6 +2291,278 @@
 
     </div><!-- end cal-sec-grid -->
   </div><!-- end panel -->
+</section>
+
+<!-- CEO TODAY -->
+<section>
+  <div class="section-title gold-title" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.5rem">
+    <span>🎯 CEO HEUTE — <span id="ceo-heute-date"></span></span>
+    <div style="display:flex;gap:.4rem;flex-shrink:0">
+      <button class="btn-outline" onclick="showNotif('📋 CEO Briefing wird erstellt...','gold')" style="font-size:.55rem;padding:.2rem .55rem;border-color:rgba(201,168,76,0.3);color:var(--gold)">☀ Briefing</button>
+      <button class="btn-outline" onclick="showNotif('⟳ Prioritäten synchronisiert','blue')" style="font-size:.55rem;padding:.2rem .55rem">⟳ Refresh</button>
+    </div>
+  </div>
+  <div class="grid-3">
+    <!-- PRIORITIES -->
+    <div class="panel panel-cream">
+      <svg class="arc-deco" viewBox="0 0 120 120"><circle cx="60" cy="60" r="50"/><circle cx="60" cy="60" r="38"/><circle cx="60" cy="60" r="26"/><circle cx="60" cy="60" r="14"/></svg>
+      <div style="font-size:.65rem;letter-spacing:.15em;color:var(--gold);margin-bottom:.75rem">🎯 TOP PRIORITÄTEN — HEUTE</div>
+      <div class="priority-item">
+        <div class="priority-num p1">1</div>
+        <div>
+          <div class="priority-text">BunBo App — FlutterFlow MVP-Review abschließen & Testflight-Upload</div>
+          <div class="priority-tag">KRITISCH • BunBo App • Heute</div>
+        </div>
+      </div>
+      <div class="priority-item">
+        <div class="priority-num p2">2</div>
+        <div>
+          <div class="priority-text">Investor-Pipeline: Follow-up Mail an 3 Lead-Investoren</div>
+          <div class="priority-tag">HOCH • Funding • Diese Woche</div>
+        </div>
+      </div>
+      <div class="priority-item">
+        <div class="priority-num p3">3</div>
+        <div>
+          <div class="priority-text">Wasserlage Dashboard: API-Monitoring prüfen & ggf. Pegel aktualisieren</div>
+          <div class="priority-tag">MITTEL • Technik • Heute</div>
+        </div>
+      </div>
+      <div class="priority-item">
+        <div class="priority-num p3">4</div>
+        <div>
+          <div class="priority-text">LinkedIn-Post: Wave Bite Entwicklungsupdate veröffentlichen</div>
+          <div class="priority-tag">MITTEL • Marketing • Diese Woche</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CALENDAR -->
+    <div class="panel panel-cream">
+      <div style="font-size:.65rem;letter-spacing:.15em;color:var(--gold);margin-bottom:.75rem">📅 KALENDER — NÄCHSTE EVENTS</div>
+      <div class="cal-event urgent">
+        <div class="cal-time">Mo 09:00</div>
+        <div><div class="cal-title">BunBo: FlutterFlow Review Call</div><div class="cal-meta">Entwickler-Sync • 60 Min</div></div>
+      </div>
+      <div class="cal-event gold">
+        <div class="cal-time">Mo 14:00</div>
+        <div><div class="cal-title">Investor Pitch: Seedmatch Kontakt</div><div class="cal-meta">Video Call • 45 Min</div></div>
+      </div>
+      <div class="cal-event">
+        <div class="cal-time">Di 11:00</div>
+        <div><div class="cal-title">Wasserlage: API Stakeholder Briefing</div><div class="cal-meta">Intern • 30 Min</div></div>
+      </div>
+      <div class="cal-event">
+        <div class="cal-time">Mi 16:00</div>
+        <div><div class="cal-title">Marketing: Content-Planung Mai/Juni</div><div class="cal-meta">Strategy • 60 Min</div></div>
+      </div>
+      <div class="cal-event gold">
+        <div class="cal-time">Fr 10:00</div>
+        <div><div class="cal-title">Wave Bite: Wochenreview & OKRs</div><div class="cal-meta">CEO Review • 90 Min</div></div>
+      </div>
+      <div style="margin-top:.75rem"><a href="https://calendar.google.com" target="_blank" class="pc-link" style="font-size:.65rem">→ Google Kalender öffnen</a></div>
+    </div>
+
+    <!-- MAIL HUB -->
+    <div class="panel">
+      <div style="font-size:.65rem;letter-spacing:.15em;color:var(--blue);margin-bottom:.75rem">✉ MAIL HUB — GMAIL</div>
+      <div class="mail-item">
+        <div class="mail-unread"></div>
+        <div class="mail-avatar" style="background:rgba(255,68,68,0.15);color:var(--red)">SB</div>
+        <div style="flex:1;min-width:0">
+          <div class="mail-subject">Seedmatch: Due Diligence Unterlagen</div>
+          <div class="mail-preview">Bitte senden Sie uns bis Freitag...</div>
+        </div>
+        <div class="mail-time">09:14</div>
+      </div>
+      <div class="mail-item">
+        <div class="mail-unread"></div>
+        <div class="mail-avatar" style="background:rgba(0,200,255,0.15);color:var(--blue)">FW</div>
+        <div style="flex:1;min-width:0">
+          <div class="mail-subject">FlutterFlow: Account Update Q2</div>
+          <div class="mail-preview">Your workspace has been upgraded...</div>
+        </div>
+        <div class="mail-time">08:32</div>
+      </div>
+      <div class="mail-item">
+        <div class="mail-avatar" style="background:rgba(201,168,76,0.15);color:var(--gold)">WP</div>
+        <div style="flex:1;min-width:0">
+          <div class="mail-subject">WordPress: Security Update verfügbar</div>
+          <div class="mail-preview">Version 6.5.3 ist verfügbar...</div>
+        </div>
+        <div class="mail-time">Ges.</div>
+      </div>
+      <div class="mail-item">
+        <div class="mail-avatar" style="background:rgba(0,212,170,0.15);color:var(--teal)">GH</div>
+        <div style="flex:1;min-width:0">
+          <div class="mail-subject">GitHub: New PR ready for review</div>
+          <div class="mail-preview">wavebite/wasserlage-dashboard...</div>
+        </div>
+        <div class="mail-time">Ges.</div>
+      </div>
+      <div style="margin-top:.75rem;display:flex;gap:.5rem">
+        <a href="https://mail.google.com" target="_blank" class="pc-link">→ Gmail öffnen</a>
+        <span class="pc-link" style="cursor:pointer;background:rgba(0,200,255,0.05)" onclick="showNotif('📬 CEO Briefing wird vorbereitet...','blue')">CEO Briefing</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="sec-mail-intel">
+  <div class="section-title" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.5rem">
+    <span>✉ MAIL HQ — JARVIS MAIL INTELLIGENCE</span>
+    <div style="display:flex;gap:.4rem;flex-shrink:0">
+      <a href="https://mail.google.com" target="_blank" style="display:inline-flex;align-items:center;gap:.25rem;padding:.25rem .6rem;background:rgba(0,200,255,0.1);border:1px solid rgba(0,200,255,0.3);border-radius:6px;color:var(--blue);font-size:.55rem;font-weight:700;text-decoration:none;transition:all .2s" onmouseover="this.style.background='rgba(0,200,255,0.2)'" onmouseout="this.style.background='rgba(0,200,255,0.1)'">✉ Gmail ↗</a>
+      <a href="https://outlook.live.com" target="_blank" style="display:inline-flex;align-items:center;gap:.25rem;padding:.25rem .6rem;background:rgba(0,100,200,0.1);border:1px solid rgba(0,100,200,0.3);border-radius:6px;color:#5b9bd5;font-size:.55rem;font-weight:700;text-decoration:none;transition:all .2s" onmouseover="this.style.background='rgba(0,100,200,0.2)'" onmouseout="this.style.background='rgba(0,100,200,0.1)'">📨 Outlook ↗</a>
+    </div>
+  </div>
+
+  <!-- MAIL STATS — kompakt einzeilig -->
+  <div style="display:flex;align-items:center;gap:.6rem;margin-bottom:.6rem;padding:.4rem .75rem;background:rgba(0,200,255,0.04);border:1px solid rgba(0,200,255,0.1);border-radius:8px;flex-wrap:wrap" id="mail-stats-bar">
+    <div style="display:flex;align-items:center;gap:.35rem">
+      <span class="mail-stat-val" id="stat-total" style="font-size:1rem;font-weight:800;color:var(--blue)">0</span>
+      <span style="font-size:.5rem;color:var(--text-dim);letter-spacing:.08em">MAILS</span>
+    </div>
+    <span style="color:rgba(0,200,255,0.2);font-size:.7rem">|</span>
+    <div style="display:flex;align-items:center;gap:.35rem">
+      <span class="mail-stat-val" id="stat-unread" style="font-size:1rem;font-weight:800;color:#ff4757">0</span>
+      <span style="font-size:.5rem;color:var(--text-dim);letter-spacing:.08em">UNGELESEN</span>
+    </div>
+    <span style="color:rgba(0,200,255,0.2);font-size:.7rem">|</span>
+    <div style="display:flex;align-items:center;gap:.35rem">
+      <span class="mail-stat-val" id="stat-critical" style="font-size:1rem;font-weight:800;color:#ff4757">0</span>
+      <span style="font-size:.5rem;color:var(--text-dim);letter-spacing:.08em">KRITISCH</span>
+    </div>
+    <span style="color:rgba(0,200,255,0.2);font-size:.7rem">|</span>
+    <div style="display:flex;align-items:center;gap:.35rem">
+      <span class="mail-stat-val" id="stat-investor" style="font-size:1rem;font-weight:800;color:var(--gold)">0</span>
+      <span style="font-size:.5rem;color:var(--text-dim);letter-spacing:.08em">INVESTOR</span>
+    </div>
+    <span id="mail-sync" style="margin-left:auto;font-size:.52rem;color:var(--text-dim)"></span>
+    <button class="btn-outline" style="font-size:.55rem;padding:.2rem .5rem;margin-left:auto" onclick="refreshMailHub()">↺ Refresh</button>
+  </div>
+
+  <!-- SOURCE TABS — kompakt -->
+  <div class="mail-tabs" style="margin-bottom:.6rem">
+    <button class="mail-tab active" id="tab-gmail" onclick="switchMailTab('gmail')">📧 Gmail</button>
+    <button class="mail-tab gold" id="tab-outlook" onclick="switchMailTab('outlook')">📨 Outlook</button>
+  </div>
+
+  <!-- 3-SPALTEN LAYOUT: Mail | JARVIS | Actions -->
+  <div style="display:grid;grid-template-columns:1.2fr 1fr .85fr;gap:.75rem;align-items:start">
+
+    <!-- COL 1: POSTEINGANG -->
+    <div class="panel" style="padding:.85rem">
+      <div style="font-size:.58rem;letter-spacing:.12em;color:var(--blue);margin-bottom:.5rem;display:flex;align-items:center;justify-content:space-between">
+        <span>📬 POSTEINGANG — KI-PRIORISIERT</span>
+        <button class="btn-outline" style="font-size:.5rem;padding:.15rem .4rem" onclick="loadMailBriefing()">🧠 Briefing</button>
+      </div>
+      <div id="mail-list">
+        <div class="mail-loading">📡 Mail Intelligence wird geladen...</div>
+      </div>
+      <!-- Outlook auth panel -->
+      <div class="outlook-auth" id="outlook-auth-panel" style="display:none;margin-top:.65rem">
+        <div style="font-size:1.3rem;margin-bottom:.3rem">📨</div>
+        <div class="outlook-auth-title">Outlook verbinden</div>
+        <div class="outlook-auth-desc">Microsoft-Konto (casi80@gmx.ch, Hotmail, Live)</div>
+        <button class="btn-outlook" onclick="loginOutlook()">🔑 Mit Microsoft anmelden</button>
+      </div>
+    </div>
+
+    <!-- COL 2: JARVIS MAIL-ANALYSE -->
+    <div class="panel panel-cream" style="padding:.85rem">
+      <div style="font-size:.58rem;letter-spacing:.1em;color:var(--gold);margin-bottom:.55rem;display:flex;align-items:center;gap:.4rem">
+        <span>🧠</span>
+        <span>JARVIS MAIL-ANALYSE</span>
+        <span style="font-size:.45rem;color:var(--text-dim);margin-left:auto">CEO ENTSCHEIDUNGEN</span>
+      </div>
+      <div id="jarvis-mail-analysis">
+        <div class="ai-brain-card">
+          <div class="brain-icon" style="font-size:1.2rem">🧠</div>
+          <div>
+            <div style="font-size:.55rem;color:var(--text-dim);letter-spacing:.08em;margin-bottom:.15rem">KI ANALYSIERT INBOX</div>
+            <div style="font-size:.65rem;color:var(--text-dim)">Warte auf Mail-Daten...</div>
+          </div>
+        </div>
+      </div>
+      <div style="height:1px;background:rgba(201,168,76,0.12);margin:.55rem 0"></div>
+      <div style="font-size:.55rem;letter-spacing:.1em;color:var(--gold);margin-bottom:.35rem">📋 ACTION QUEUE</div>
+      <div id="mail-action-queue">
+        <div style="font-size:.62rem;color:var(--text-dim)">⏳ Warte auf Scan...</div>
+      </div>
+    </div>
+
+    <!-- COL 3: FOLLOW-UPS + QUICK ACCESS -->
+    <div style="display:flex;flex-direction:column;gap:.65rem">
+      <div class="panel" style="padding:.85rem">
+        <div style="font-size:.55rem;letter-spacing:.1em;color:var(--red);margin-bottom:.35rem">⚠ FOLLOW-UP REQUIRED</div>
+        <div id="mail-followups">
+          <div style="font-size:.62rem;color:var(--text-dim)">Keine offenen Follow-ups.</div>
+        </div>
+      </div>
+      <!-- QUICK MAIL LINKS -->
+      <div class="panel" style="padding:.75rem">
+        <div style="font-size:.55rem;letter-spacing:.1em;color:var(--blue);margin-bottom:.45rem">⚡ MAIL QUICK ACCESS</div>
+        <div style="display:flex;flex-direction:column;gap:.3rem">
+          <a href="https://mail.google.com/mail/u/0/#inbox" target="_blank" style="display:flex;align-items:center;gap:.45rem;padding:.35rem .5rem;background:rgba(0,200,255,0.05);border:1px solid rgba(0,200,255,0.12);border-radius:7px;text-decoration:none;color:var(--text);font-size:.62rem;transition:all .2s" onmouseover="this.style.borderColor='rgba(0,200,255,0.3)'" onmouseout="this.style.borderColor='rgba(0,200,255,0.12)'"><span>📧</span><span>Gmail Posteingang</span><span style="margin-left:auto;font-size:.5rem;color:var(--text-dim)">↗</span></a>
+          <a href="https://mail.google.com/mail/u/0/#starred" target="_blank" style="display:flex;align-items:center;gap:.45rem;padding:.35rem .5rem;background:rgba(0,200,255,0.05);border:1px solid rgba(0,200,255,0.12);border-radius:7px;text-decoration:none;color:var(--text);font-size:.62rem;transition:all .2s" onmouseover="this.style.borderColor='rgba(0,200,255,0.3)'" onmouseout="this.style.borderColor='rgba(0,200,255,0.12)'"><span>⭐</span><span>Markierte Mails</span><span style="margin-left:auto;font-size:.5rem;color:var(--text-dim)">↗</span></a>
+          <a href="https://mail.google.com/mail/u/0/#compose" target="_blank" style="display:flex;align-items:center;gap:.45rem;padding:.35rem .5rem;background:rgba(201,168,76,0.06);border:1px solid rgba(201,168,76,0.18);border-radius:7px;text-decoration:none;color:var(--text);font-size:.62rem;transition:all .2s" onmouseover="this.style.borderColor='rgba(201,168,76,0.4)'" onmouseout="this.style.borderColor='rgba(201,168,76,0.18)'"><span>✏️</span><span>Neue Mail schreiben</span><span style="margin-left:auto;font-size:.5rem;color:var(--text-dim)">↗</span></a>
+          <a href="https://outlook.live.com/mail/0/inbox" target="_blank" style="display:flex;align-items:center;gap:.45rem;padding:.35rem .5rem;background:rgba(0,100,200,0.05);border:1px solid rgba(0,100,200,0.15);border-radius:7px;text-decoration:none;color:var(--text);font-size:.62rem;transition:all .2s" onmouseover="this.style.borderColor='rgba(0,100,200,0.35)'" onmouseout="this.style.borderColor='rgba(0,100,200,0.15)'"><span>📨</span><span>Outlook (casi80)</span><span style="margin-left:auto;font-size:.5rem;color:var(--text-dim)">↗</span></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<!-- PINNED / WICHTIG -->
+<section>
+  <div class="section-title">📌 GEPINNT & WICHTIG</div>
+  <div class="grid-3">
+    <div class="pinned-card">
+      <div class="pin-icon">🎯</div>
+      <div>
+        <div class="pin-title">BunBo Launch Target: 01. Juli 2026</div>
+        <div class="pin-body">MVP in FlutterFlow zu 65% fertig. Testflight-Upload diese Woche kritisch. Beta-Tester: 12 Personen bereit. App Store Connect: Konto aktiv.</div>
+      </div>
+    </div>
+    <div class="pinned-card">
+      <div class="pin-icon">💰</div>
+      <div>
+        <div class="pin-title">Seed-Runde: 250k–500k € // Q3 2026</div>
+        <div class="pin-body">3 aktive Investor-Gespräche. Seedmatch Due Diligence läuft. EXIST-Antrag in Vorbereitung. Pitch Deck v3 fertiggestellt.</div>
+      </div>
+    </div>
+    <div class="pinned-card">
+      <div class="pin-icon">🌊</div>
+      <div>
+        <div class="pin-title">Wasserlage Dashboard: Live & Stabil</div>
+        <div class="pin-body">Pegelonline API aktiv. ELWIS-Integration läuft. 15 Stationen überwacht. GitHub Pages Deployment online. Letzte Aktualisierung: heute.</div>
+      </div>
+    </div>
+    <div class="pinned-card">
+      <div class="pin-icon">⚠️</div>
+      <div>
+        <div class="pin-title">KRITISCH: DSGVO-Konformität Wave Bite App</div>
+        <div class="pin-body">Datenschutzerklärung für BunBo App muss bis Ende Mai finalisiert werden. Anwalt-Termin ausstehend. Cookie-Banner WordPress prüfen.</div>
+      </div>
+    </div>
+    <div class="pinned-card">
+      <div class="pin-icon">🤝</div>
+      <div>
+        <div class="pin-title">Partner: 3 Marina-Kooperationen in Verhandlung</div>
+        <div class="pin-body">Marina Düsseldorf: LOI unterzeichnet. Bodensee Marina: Gespräch KW 21. Hamburger Hafen: Kontakt hergestellt.</div>
+      </div>
+    </div>
+    <div class="pinned-card">
+      <div class="pin-icon">📱</div>
+      <div>
+        <div class="pin-title">Himmelreich App: Strategisch wichtig für Q4</div>
+        <div class="pin-body">Experience-Plattform für Wassertourismus. 25% Konzeptphase. FlutterFlow-Template identifiziert. Synergien mit BunBo App planen.</div>
+      </div>
+    </div>
+  </div>
 </section>
 
 <!-- WATER TOURISM INTELLIGENCE HUB -->
@@ -2950,164 +3223,6 @@
   </div><!-- /panel -->
 </section>
 
-<!-- CEO TODAY -->
-<section>
-  <div class="section-title">CEO // HEUTE — 17. MAI 2026</div>
-  <div class="grid-3">
-    <!-- PRIORITIES -->
-    <div class="panel panel-cream">
-      <svg class="arc-deco" viewBox="0 0 120 120"><circle cx="60" cy="60" r="50"/><circle cx="60" cy="60" r="38"/><circle cx="60" cy="60" r="26"/><circle cx="60" cy="60" r="14"/></svg>
-      <div style="font-size:.65rem;letter-spacing:.15em;color:var(--gold);margin-bottom:.75rem">🎯 TOP PRIORITÄTEN — HEUTE</div>
-      <div class="priority-item">
-        <div class="priority-num p1">1</div>
-        <div>
-          <div class="priority-text">BunBo App — FlutterFlow MVP-Review abschließen & Testflight-Upload</div>
-          <div class="priority-tag">KRITISCH • BunBo App • Heute</div>
-        </div>
-      </div>
-      <div class="priority-item">
-        <div class="priority-num p2">2</div>
-        <div>
-          <div class="priority-text">Investor-Pipeline: Follow-up Mail an 3 Lead-Investoren</div>
-          <div class="priority-tag">HOCH • Funding • Diese Woche</div>
-        </div>
-      </div>
-      <div class="priority-item">
-        <div class="priority-num p3">3</div>
-        <div>
-          <div class="priority-text">Wasserlage Dashboard: API-Monitoring prüfen & ggf. Pegel aktualisieren</div>
-          <div class="priority-tag">MITTEL • Technik • Heute</div>
-        </div>
-      </div>
-      <div class="priority-item">
-        <div class="priority-num p3">4</div>
-        <div>
-          <div class="priority-text">LinkedIn-Post: Wave Bite Entwicklungsupdate veröffentlichen</div>
-          <div class="priority-tag">MITTEL • Marketing • Diese Woche</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- CALENDAR -->
-    <div class="panel panel-cream">
-      <div style="font-size:.65rem;letter-spacing:.15em;color:var(--gold);margin-bottom:.75rem">📅 KALENDER — NÄCHSTE EVENTS</div>
-      <div class="cal-event urgent">
-        <div class="cal-time">Mo 09:00</div>
-        <div><div class="cal-title">BunBo: FlutterFlow Review Call</div><div class="cal-meta">Entwickler-Sync • 60 Min</div></div>
-      </div>
-      <div class="cal-event gold">
-        <div class="cal-time">Mo 14:00</div>
-        <div><div class="cal-title">Investor Pitch: Seedmatch Kontakt</div><div class="cal-meta">Video Call • 45 Min</div></div>
-      </div>
-      <div class="cal-event">
-        <div class="cal-time">Di 11:00</div>
-        <div><div class="cal-title">Wasserlage: API Stakeholder Briefing</div><div class="cal-meta">Intern • 30 Min</div></div>
-      </div>
-      <div class="cal-event">
-        <div class="cal-time">Mi 16:00</div>
-        <div><div class="cal-title">Marketing: Content-Planung Mai/Juni</div><div class="cal-meta">Strategy • 60 Min</div></div>
-      </div>
-      <div class="cal-event gold">
-        <div class="cal-time">Fr 10:00</div>
-        <div><div class="cal-title">Wave Bite: Wochenreview & OKRs</div><div class="cal-meta">CEO Review • 90 Min</div></div>
-      </div>
-      <div style="margin-top:.75rem"><a href="https://calendar.google.com" target="_blank" class="pc-link" style="font-size:.65rem">→ Google Kalender öffnen</a></div>
-    </div>
-
-    <!-- MAIL HUB -->
-    <div class="panel">
-      <div style="font-size:.65rem;letter-spacing:.15em;color:var(--blue);margin-bottom:.75rem">✉ MAIL HUB — GMAIL</div>
-      <div class="mail-item">
-        <div class="mail-unread"></div>
-        <div class="mail-avatar" style="background:rgba(255,68,68,0.15);color:var(--red)">SB</div>
-        <div style="flex:1;min-width:0">
-          <div class="mail-subject">Seedmatch: Due Diligence Unterlagen</div>
-          <div class="mail-preview">Bitte senden Sie uns bis Freitag...</div>
-        </div>
-        <div class="mail-time">09:14</div>
-      </div>
-      <div class="mail-item">
-        <div class="mail-unread"></div>
-        <div class="mail-avatar" style="background:rgba(0,200,255,0.15);color:var(--blue)">FW</div>
-        <div style="flex:1;min-width:0">
-          <div class="mail-subject">FlutterFlow: Account Update Q2</div>
-          <div class="mail-preview">Your workspace has been upgraded...</div>
-        </div>
-        <div class="mail-time">08:32</div>
-      </div>
-      <div class="mail-item">
-        <div class="mail-avatar" style="background:rgba(201,168,76,0.15);color:var(--gold)">WP</div>
-        <div style="flex:1;min-width:0">
-          <div class="mail-subject">WordPress: Security Update verfügbar</div>
-          <div class="mail-preview">Version 6.5.3 ist verfügbar...</div>
-        </div>
-        <div class="mail-time">Ges.</div>
-      </div>
-      <div class="mail-item">
-        <div class="mail-avatar" style="background:rgba(0,212,170,0.15);color:var(--teal)">GH</div>
-        <div style="flex:1;min-width:0">
-          <div class="mail-subject">GitHub: New PR ready for review</div>
-          <div class="mail-preview">wavebite/wasserlage-dashboard...</div>
-        </div>
-        <div class="mail-time">Ges.</div>
-      </div>
-      <div style="margin-top:.75rem;display:flex;gap:.5rem">
-        <a href="https://mail.google.com" target="_blank" class="pc-link">→ Gmail öffnen</a>
-        <span class="pc-link" style="cursor:pointer;background:rgba(0,200,255,0.05)" onclick="showNotif('📬 CEO Briefing wird vorbereitet...','blue')">CEO Briefing</span>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- PINNED / WICHTIG -->
-<section>
-  <div class="section-title">📌 GEPINNT & WICHTIG</div>
-  <div class="grid-3">
-    <div class="pinned-card">
-      <div class="pin-icon">🎯</div>
-      <div>
-        <div class="pin-title">BunBo Launch Target: 01. Juli 2026</div>
-        <div class="pin-body">MVP in FlutterFlow zu 65% fertig. Testflight-Upload diese Woche kritisch. Beta-Tester: 12 Personen bereit. App Store Connect: Konto aktiv.</div>
-      </div>
-    </div>
-    <div class="pinned-card">
-      <div class="pin-icon">💰</div>
-      <div>
-        <div class="pin-title">Seed-Runde: 250k–500k € // Q3 2026</div>
-        <div class="pin-body">3 aktive Investor-Gespräche. Seedmatch Due Diligence läuft. EXIST-Antrag in Vorbereitung. Pitch Deck v3 fertiggestellt.</div>
-      </div>
-    </div>
-    <div class="pinned-card">
-      <div class="pin-icon">🌊</div>
-      <div>
-        <div class="pin-title">Wasserlage Dashboard: Live & Stabil</div>
-        <div class="pin-body">Pegelonline API aktiv. ELWIS-Integration läuft. 15 Stationen überwacht. GitHub Pages Deployment online. Letzte Aktualisierung: heute.</div>
-      </div>
-    </div>
-    <div class="pinned-card">
-      <div class="pin-icon">⚠️</div>
-      <div>
-        <div class="pin-title">KRITISCH: DSGVO-Konformität Wave Bite App</div>
-        <div class="pin-body">Datenschutzerklärung für BunBo App muss bis Ende Mai finalisiert werden. Anwalt-Termin ausstehend. Cookie-Banner WordPress prüfen.</div>
-      </div>
-    </div>
-    <div class="pinned-card">
-      <div class="pin-icon">🤝</div>
-      <div>
-        <div class="pin-title">Partner: 3 Marina-Kooperationen in Verhandlung</div>
-        <div class="pin-body">Marina Düsseldorf: LOI unterzeichnet. Bodensee Marina: Gespräch KW 21. Hamburger Hafen: Kontakt hergestellt.</div>
-      </div>
-    </div>
-    <div class="pinned-card">
-      <div class="pin-icon">📱</div>
-      <div>
-        <div class="pin-title">Himmelreich App: Strategisch wichtig für Q4</div>
-        <div class="pin-body">Experience-Plattform für Wassertourismus. 25% Konzeptphase. FlutterFlow-Template identifiziert. Synergien mit BunBo App planen.</div>
-      </div>
-    </div>
-  </div>
-</section>
-
 <!-- PROJECTS -->
 <section id="sec-projects">
   <div class="section-title">PROJEKT-ZENTRALE — ALL SYSTEMS</div>
@@ -3268,7 +3383,8 @@
 
 <!-- INTELLIGENCE -->
 <section id="sec-intel">
-  <div class="section-title">INTELLIGENCE // ANALYTICS</div>
+  <div id="sec-jarvis"></div>
+  <div class="section-title gold-title">🤖 JARVIS INTELLIGENCE CENTER — ANALYTICS & AI</div>
   <div class="grid-2" style="margin-bottom:1.25rem">
     <div class="panel panel-cream">
       <div style="font-size:.65rem;letter-spacing:.15em;color:var(--gold);margin-bottom:.75rem">🧠 SYNAPTIC INTELLIGENCE — WAVE BITE NEURAL CORE</div>
@@ -3711,509 +3827,6 @@
   </div>
 </section>
 
-<!-- SCHEDULED TASKS -->
-<section id="sec-tasks">
-  <div class="section-title">⚙ AUTONOME TASKS — JARVIS SCHEDULER</div>
-  <div class="grid-2">
-    <div class="panel">
-      <div style="font-size:.65rem;letter-spacing:.15em;color:var(--teal);margin-bottom:.75rem">🤖 AKTIVE AUTOMATISIERUNGEN</div>
-      <div class="task-row">
-        <div class="task-indicator active"></div>
-        <div class="task-name">CEO Daily Briefing</div>
-        <div>
-          <div class="task-schedule">06:00 Uhr täglich</div>
-          <div class="task-last">Letzte Ausführung: heute 06:00</div>
-        </div>
-      </div>
-      <div class="task-row">
-        <div class="task-indicator active"></div>
-        <div class="task-name">Pegelonline API Sync</div>
-        <div>
-          <div class="task-schedule">alle 15 Min</div>
-          <div class="task-last">Letzte Ausführung: vor 8 Min</div>
-        </div>
-      </div>
-      <div class="task-row">
-        <div class="task-indicator active"></div>
-        <div class="task-name">Wöchentlicher Projekt-Status Report</div>
-        <div>
-          <div class="task-schedule">Mo 07:00 Uhr</div>
-          <div class="task-last">Letzte Ausführung: heute 07:00</div>
-        </div>
-      </div>
-      <div class="task-row">
-        <div class="task-indicator warn"></div>
-        <div class="task-name">Investor Follow-up Reminder</div>
-        <div>
-          <div class="task-schedule">Di + Fr 09:00</div>
-          <div class="task-last">Nächste: Di 09:00</div>
-        </div>
-      </div>
-      <div class="task-row">
-        <div class="task-indicator active"></div>
-        <div class="task-name">Social Media Analytics Pull</div>
-        <div>
-          <div class="task-schedule">täglich 18:00</div>
-          <div class="task-last">Letzte Ausführung: gestern 18:00</div>
-        </div>
-      </div>
-      <div class="task-row">
-        <div class="task-indicator idle"></div>
-        <div class="task-name">GitHub Repo Backup</div>
-        <div>
-          <div class="task-schedule">Sa 02:00 Uhr</div>
-          <div class="task-last">Letzte Ausführung: Sa 02:00</div>
-        </div>
-      </div>
-    </div>
-    <div class="panel">
-      <div style="font-size:.65rem;letter-spacing:.15em;color:var(--teal);margin-bottom:.75rem">🔗 TOOL-ZENTRALE</div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:.5rem">
-        <a href="https://flutterflow.io" target="_blank" class="project-card" style="text-decoration:none;padding:.75rem">
-          <div style="font-size:1.2rem;margin-bottom:.3rem">📱</div>
-          <div style="font-size:.75rem;font-weight:700;color:var(--text)">FlutterFlow</div>
-          <div style="font-size:.6rem;color:var(--teal)">BunBo App Dev</div>
-        </a>
-        <a href="https://github.com" target="_blank" class="project-card" style="text-decoration:none;padding:.75rem">
-          <div style="font-size:1.2rem;margin-bottom:.3rem">🐙</div>
-          <div style="font-size:.75rem;font-weight:700;color:var(--text)">GitHub</div>
-          <div style="font-size:.6rem;color:var(--teal)">Repos & Code</div>
-        </a>
-        <a href="https://n8n.io" target="_blank" class="project-card" style="text-decoration:none;padding:.75rem">
-          <div style="font-size:1.2rem;margin-bottom:.3rem">⚡</div>
-          <div style="font-size:.75rem;font-weight:700;color:var(--text)">N8N</div>
-          <div style="font-size:.6rem;color:var(--teal)">Automation Hub</div>
-        </a>
-        <a href="https://app.glideapps.com" target="_blank" class="project-card" style="text-decoration:none;padding:.75rem">
-          <div style="font-size:1.2rem;margin-bottom:.3rem">✨</div>
-          <div style="font-size:.75rem;font-weight:700;color:var(--text)">Glide Apps</div>
-          <div style="font-size:.6rem;color:var(--teal)">No-Code MVPs</div>
-        </a>
-        <a href="https://make.com" target="_blank" class="project-card" style="text-decoration:none;padding:.75rem">
-          <div style="font-size:1.2rem;margin-bottom:.3rem">🔄</div>
-          <div style="font-size:.75rem;font-weight:700;color:var(--text)">Make.com</div>
-          <div style="font-size:.6rem;color:var(--teal)">Workflows</div>
-        </a>
-        <a href="https://script.google.com" target="_blank" class="project-card" style="text-decoration:none;padding:.75rem">
-          <div style="font-size:1.2rem;margin-bottom:.3rem">📝</div>
-          <div style="font-size:.75rem;font-weight:700;color:var(--text)">Apps Script</div>
-          <div style="font-size:.6rem;color:var(--teal)">CEO Briefing</div>
-        </a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ===================== CONSOLE SECTION ===================== -->
-<section id="sec-console">
-  <div class="section-title">🧠 CEO CONSOLE — MEMORY · KPI · REVIEW</div>
-  <div class="grid-3" style="--cols:3">
-
-    <!-- MEMORY CONSOLE -->
-    <div class="panel" style="border-color:rgba(0,212,170,0.25)">
-      <div style="font-size:.65rem;letter-spacing:.15em;color:var(--teal);margin-bottom:.75rem">🗃 MEMORY CONSOLE — JARVIS CONTEXT</div>
-      <div id="memory-console-log" style="font-size:.7rem;color:var(--text-dim);line-height:1.9;max-height:260px;overflow-y:auto">
-        <div style="color:var(--teal);margin-bottom:.3rem">[17.05.2026 06:00] CEO Briefing generiert — 3 kritische Items</div>
-        <div style="color:var(--text-dim);margin-bottom:.3rem">[17.05.2026 00:00] Wöchentlicher Status-Report gespeichert</div>
-        <div style="color:var(--gold);margin-bottom:.3rem">[16.05.2026 18:00] Risiko-Flag: BunBo App Beta-Delay erkannt</div>
-        <div style="color:var(--text-dim);margin-bottom:.3rem">[16.05.2026 14:22] Investor-Mail-Vorlage vorbereitet (2 Kontakte)</div>
-        <div style="color:var(--teal);margin-bottom:.3rem">[16.05.2026 09:00] Pegelonline Sync — alle Daten aktuell</div>
-        <div style="color:var(--text-dim);margin-bottom:.3rem">[15.05.2026 18:00] Social Media Pull — Instagram +4.2% Reichweite</div>
-        <div style="color:var(--gold);margin-bottom:.3rem">[15.05.2026 11:00] Strategieentscheidung: FlutterFlow vs React Native</div>
-        <div style="color:var(--text-dim);margin-bottom:.3rem">[15.05.2026 07:00] Wasser-Lagen-Daten für 5 Gewässer geupdated</div>
-      </div>
-      <div style="margin-top:.75rem;display:flex;gap:.5rem">
-        <button class="btn-outline" style="font-size:.65rem;padding:.3rem .7rem" onclick="addMemoryEntry()">+ Eintrag</button>
-        <button class="btn-outline" style="font-size:.65rem;padding:.3rem .7rem" onclick="showNotif('🗃 Memory exportiert','teal')">Export</button>
-      </div>
-    </div>
-
-    <!-- KPI REPORT -->
-    <div class="panel" style="border-color:rgba(201,168,76,0.25)">
-      <div style="font-size:.65rem;letter-spacing:.15em;color:var(--gold);margin-bottom:.75rem">📊 KPI REPORT — LIVE STATUS</div>
-      <div style="display:flex;flex-direction:column;gap:.6rem">
-        <div style="display:flex;align-items:center;justify-content:space-between;padding:.5rem .7rem;background:rgba(0,200,255,0.05);border-radius:6px;border:1px solid rgba(0,200,255,0.1)">
-          <span style="font-size:.72rem;color:var(--text)">App MAU (BunBo)</span>
-          <span style="font-size:.8rem;font-weight:700;color:var(--teal)">847 <span style="font-size:.6rem;color:#4caf50">▲ +12%</span></span>
-        </div>
-        <div style="display:flex;align-items:center;justify-content:space-between;padding:.5rem .7rem;background:rgba(0,200,255,0.05);border-radius:6px;border:1px solid rgba(0,200,255,0.1)">
-          <span style="font-size:.72rem;color:var(--text)">Website Sessions (7d)</span>
-          <span style="font-size:.8rem;font-weight:700;color:var(--teal)">3.241 <span style="font-size:.6rem;color:#4caf50">▲ +8%</span></span>
-        </div>
-        <div style="display:flex;align-items:center;justify-content:space-between;padding:.5rem .7rem;background:rgba(0,200,255,0.05);border-radius:6px;border:1px solid rgba(0,200,255,0.1)">
-          <span style="font-size:.72rem;color:var(--text)">GitHub Commits (Mo)</span>
-          <span style="font-size:.8rem;font-weight:700;color:var(--blue)">34 <span style="font-size:.6rem;color:var(--text-dim)">→ stabil</span></span>
-        </div>
-        <div style="display:flex;align-items:center;justify-content:space-between;padding:.5rem .7rem;background:rgba(0,200,255,0.05);border-radius:6px;border:1px solid rgba(201,168,76,0.2)">
-          <span style="font-size:.72rem;color:var(--text)">Investor-Leads aktiv</span>
-          <span style="font-size:.8rem;font-weight:700;color:var(--gold)">7 <span style="font-size:.6rem;color:#ff9800">▲ +2</span></span>
-        </div>
-        <div style="display:flex;align-items:center;justify-content:space-between;padding:.5rem .7rem;background:rgba(0,200,255,0.05);border-radius:6px;border:1px solid rgba(255,76,76,0.15)">
-          <span style="font-size:.72rem;color:var(--text)">Offene kritische Tasks</span>
-          <span style="font-size:.8rem;font-weight:700;color:#ff6b6b">3 <span style="font-size:.6rem;color:#ff6b6b">⚠ action needed</span></span>
-        </div>
-        <div style="display:flex;align-items:center;justify-content:space-between;padding:.5rem .7rem;background:rgba(0,200,255,0.05);border-radius:6px;border:1px solid rgba(0,200,255,0.1)">
-          <span style="font-size:.72rem;color:var(--text)">Cashflow-Prognose (Q3)</span>
-          <span style="font-size:.8rem;font-weight:700;color:var(--teal)">+18.500€ <span style="font-size:.6rem;color:#4caf50">▲ positiv</span></span>
-        </div>
-      </div>
-      <div style="margin-top:.75rem">
-        <a href="wavebyte-financial-os.html" target="_blank" class="btn-gold" style="font-size:.65rem;padding:.3rem .9rem;width:100%;display:block;text-align:center;text-decoration:none;border-radius:8px">💰 Financial Intelligence OS ↗</a>
-        <button class="btn-gold" style="font-size:.65rem;padding:.3rem .9rem;width:100%;margin-top:.4rem" onclick="window.open('https://docs.google.com/spreadsheets/d/1lROtjWlkeTpStbNURjyELWnO-8PETk-DeB3JThEHkqs/edit','_blank')">📊 Full KPI Report ↗</button>
-      </div>
-    </div>
-
-    <!-- REVIEW MONITOR -->
-    <div class="panel" style="border-color:rgba(0,200,255,0.2)">
-      <div style="font-size:.65rem;letter-spacing:.15em;color:var(--blue);margin-bottom:.75rem">🔍 REVIEW MONITOR — DAILY & WEEKLY</div>
-      <div style="font-size:.62rem;color:var(--text-dim);letter-spacing:.1em;margin-bottom:.5rem">HEUTE — <span id="review-date" style="color:var(--teal)"></span></div>
-      <div style="display:flex;flex-direction:column;gap:.35rem;margin-bottom:.9rem" id="daily-checklist">
-        <label style="display:flex;align-items:center;gap:.5rem;cursor:pointer;font-size:.72rem;color:var(--text)"><input type="checkbox" onchange="updateReviewProgress()" style="accent-color:var(--teal)"> CEO Briefing gelesen</label>
-        <label style="display:flex;align-items:center;gap:.5rem;cursor:pointer;font-size:.72rem;color:var(--text)"><input type="checkbox" onchange="updateReviewProgress()" style="accent-color:var(--teal)"> Top 3 Prioritäten gesetzt</label>
-        <label style="display:flex;align-items:center;gap:.5rem;cursor:pointer;font-size:.72rem;color:var(--text)"><input type="checkbox" onchange="updateReviewProgress()" style="accent-color:var(--teal)"> Offene Mails bearbeitet</label>
-        <label style="display:flex;align-items:center;gap:.5rem;cursor:pointer;font-size:.72rem;color:var(--text)"><input type="checkbox" onchange="updateReviewProgress()" style="accent-color:var(--teal)"> Risiken geprüft</label>
-        <label style="display:flex;align-items:center;gap:.5rem;cursor:pointer;font-size:.72rem;color:var(--text)"><input type="checkbox" onchange="updateReviewProgress()" style="accent-color:var(--teal)"> Investor-Kontakte nachgefasst</label>
-        <label style="display:flex;align-items:center;gap:.5rem;cursor:pointer;font-size:.72rem;color:var(--text)"><input type="checkbox" onchange="updateReviewProgress()" style="accent-color:var(--teal)"> Tages-Recap dokumentiert</label>
-      </div>
-      <div style="font-size:.62rem;color:var(--text-dim);letter-spacing:.1em;margin-bottom:.4rem">FORTSCHRITT</div>
-      <div style="background:rgba(0,200,255,0.08);border-radius:4px;height:6px;overflow:hidden">
-        <div id="review-progress-bar" style="height:100%;width:0%;background:linear-gradient(90deg,var(--blue),var(--teal));transition:width .4s ease;border-radius:4px"></div>
-      </div>
-      <div style="font-size:.65rem;color:var(--teal);margin-top:.3rem" id="review-progress-text">0 / 6 erledigt</div>
-      <div style="margin-top:.75rem;font-size:.62rem;color:var(--text-dim);letter-spacing:.1em;margin-bottom:.4rem">WÖCHENTLICH</div>
-      <div style="display:flex;flex-direction:column;gap:.3rem">
-        <label style="display:flex;align-items:center;gap:.5rem;cursor:pointer;font-size:.7rem;color:var(--text-dim)"><input type="checkbox" style="accent-color:var(--gold)"> Wochenreview durchgeführt</label>
-        <label style="display:flex;align-items:center;gap:.5rem;cursor:pointer;font-size:.7rem;color:var(--text-dim)"><input type="checkbox" style="accent-color:var(--gold)"> OKRs überprüft & angepasst</label>
-        <label style="display:flex;align-items:center;gap:.5rem;cursor:pointer;font-size:.7rem;color:var(--text-dim)"><input type="checkbox" style="accent-color:var(--gold)"> GitHub Repos reviewed</label>
-      </div>
-    </div>
-
-  </div>
-</section>
-
-<!-- ===================== AGENTEN SECTION ===================== -->
-<section id="sec-agents">
-  <div class="section-title">🤖 AI-AGENTEN — AUTONOME INTELLIGENZ</div>
-
-  <!-- BWL INTELLIGENCE MODULE -->
-  <div class="panel" style="margin-bottom:1.25rem;border-color:rgba(201,168,76,0.2)">
-    <div style="font-size:.65rem;letter-spacing:.15em;color:var(--gold);margin-bottom:.9rem">⚡ CEO INTELLIGENCE ENGINE — BWL-WEITBLICK & MARKT-RADAR</div>
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:.75rem">
-      <div class="bwl-module">
-        <div class="bwl-module-icon">📊</div>
-        <div><div class="bwl-module-title">Finanz-KPIs Live</div><div class="bwl-module-desc">Runway, Burn Rate, Revenue Forecast, Break-Even-Analyse automatisch berechnet. Seedmatch-Deadline im Blick.</div></div>
-      </div>
-      <div class="bwl-module">
-        <div class="bwl-module-icon">🌊</div>
-        <div><div class="bwl-module-title">Markt-Trend Radar</div><div class="bwl-module-desc">Wassertourismus, Marina-Digitalisierung, Förder- & Zuschuss-Programme DE/EU automatisch überwacht.</div></div>
-      </div>
-      <div class="bwl-module">
-        <div class="bwl-module-icon">🎯</div>
-        <div><div class="bwl-module-title">Strategische Priorisierung</div><div class="bwl-module-desc">Impact-vs-Aufwand Matrix, OKR-Tracking, kritische Pfade aller Projekte — täglich neu bewertet.</div></div>
-      </div>
-      <div class="bwl-module">
-        <div class="bwl-module-icon">🤝</div>
-        <div><div class="bwl-module-title">Investor Relations</div><div class="bwl-module-desc">Follow-up Timing, Due-Diligence Checklisten, Pitch-Optimierung — automatisch an Gesprächsphasen angepasst.</div></div>
-      </div>
-      <div class="bwl-module">
-        <div class="bwl-module-icon">⚖️</div>
-        <div><div class="bwl-module-title">Legal & Compliance</div><div class="bwl-module-desc">DSGVO, Markenrecht, AGB-Check, Fördermittel-Compliance — proaktive Risikoerkennung.</div></div>
-      </div>
-      <div class="bwl-module">
-        <div class="bwl-module-icon">📣</div>
-        <div><div class="bwl-module-title">Growth Engine</div><div class="bwl-module-desc">Content-Kalender, LinkedIn-Timing, Kanal-ROI, Partnerstrategie — KI-gestützte Wachstumsplanung.</div></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- AI AGENT CARDS -->
-  <div class="agent-grid">
-
-    <!-- 1. CEO Strategy Agent -->
-    <div class="agent-card gold-border">
-      <div class="agent-icon">🧠</div>
-      <div class="agent-name">CEO Strategy Agent</div>
-      <div class="agent-role">LEITENDER STRATEGIEBERATER</div>
-      <div class="agent-status live">● AKTIV</div>
-      <div class="agent-skills">
-        <span class="agent-skill">BWL-Analyse</span>
-        <span class="agent-skill">OKR-Tracking</span>
-        <span class="agent-skill">Risiko-KI</span>
-        <span class="agent-skill">Entscheidungsmatrix</span>
-        <span class="agent-skill">Wettbewerb</span>
-      </div>
-      <div class="agent-insight">"BunBo App: 95% Ready — TestFlight KW22 aktiv. EXIST-Antrag in Vorbereitung. Seed-Round Q3 2026 auf Kurs."</div>
-      <a href="https://claude.ai" target="_blank" class="agent-launch-btn">▶ Aktivieren</a>
-    </div>
-
-    <!-- 2. Finanz-Agent -->
-    <div class="agent-card">
-      <div class="agent-icon">💰</div>
-      <div class="agent-name">Finanz & Investor Agent</div>
-      <div class="agent-role">CFO-ASSISTENT / FUNDRAISING</div>
-      <div class="agent-status live">● AKTIV</div>
-      <div class="agent-skills">
-        <span class="agent-skill">P&L-Analyse</span>
-        <span class="agent-skill">Burn Rate</span>
-        <span class="agent-skill">Pitch Deck</span>
-        <span class="agent-skill">Seedmatch</span>
-        <span class="agent-skill">EXIST</span>
-        <span class="agent-skill">Due Diligence</span>
-      </div>
-      <div class="agent-insight">"Break-Even bei ~85k€/Monat. Seedmatch DD-Deadline: Freitag. Empfehle: 2-seitiges Executive Summary für Banken."</div>
-      <a href="https://claude.ai" target="_blank" class="agent-launch-btn">▶ Aktivieren</a>
-    </div>
-
-    <!-- 3. Marketing & Growth Agent -->
-    <div class="agent-card">
-      <div class="agent-icon">📣</div>
-      <div class="agent-name">Marketing & Growth Agent</div>
-      <div class="agent-role">CMO-ASSISTENT / GROWTH HACKING</div>
-      <div class="agent-status live">● AKTIV</div>
-      <div class="agent-skills">
-        <span class="agent-skill">LinkedIn</span>
-        <span class="agent-skill">Content KI</span>
-        <span class="agent-skill">SEO</span>
-        <span class="agent-skill">Ads</span>
-        <span class="agent-skill">Brand Voice</span>
-        <span class="agent-skill">Funnel</span>
-      </div>
-      <div class="agent-insight">"3x/Woche LinkedIn = +40% Reichweite. Nächster Post-Slot: heute 17:30. Marina-Zielgruppe: Bootsbesitzer 45-65."</div>
-      <a href="https://claude.ai" target="_blank" class="agent-launch-btn">▶ Aktivieren</a>
-    </div>
-
-    <!-- 4. Video Creator Agent — Leonardo AI Studio -->
-    <div class="agent-card gold-border" style="background:linear-gradient(135deg,rgba(40,28,0,.6),rgba(4,16,30,.95))">
-      <div class="agent-icon">🎬</div>
-      <div class="agent-name" style="color:#e8c96a">Leonardo AI Studio</div>
-      <div class="agent-role" style="color:rgba(232,201,106,.6)">KI-VIDEO / BILD / SOCIAL ASSETS</div>
-      <div class="agent-status live" style="background:rgba(201,168,76,.15);border-color:rgba(201,168,76,.4);color:#e8c96a">✦ AKTIV</div>
-      <div class="agent-skills">
-        <span class="agent-skill" style="border-color:rgba(201,168,76,.3);color:#e8c96a">KI-Bildgen</span>
-        <span class="agent-skill" style="border-color:rgba(201,168,76,.3);color:#e8c96a">Motion Video</span>
-        <span class="agent-skill" style="border-color:rgba(201,168,76,.3);color:#e8c96a">Social Assets</span>
-        <span class="agent-skill" style="border-color:rgba(201,168,76,.3);color:#e8c96a">AI Prompts</span>
-        <span class="agent-skill" style="border-color:rgba(201,168,76,.3);color:#e8c96a">Leonardo API</span>
-      </div>
-      <div class="agent-insight" style="color:rgba(232,201,106,.7)">"2 Werbevideos produziert ✦ CGI Hollywood Spot + Instagram Reel. KI-gestützte Bild- und Videogenerierung für Wave Bite."</div>
-      <a href="wavebite-leonardo-studio.html" target="_blank" class="agent-launch-btn" style="background:linear-gradient(135deg,rgba(201,168,76,.3),rgba(232,201,106,.15));border-color:rgba(201,168,76,.5);color:#e8c96a">🎬 Studio öffnen</a>
-    </div>
-
-    <!-- 5. Legal & Compliance Agent -->
-    <div class="agent-card">
-      <div class="agent-icon">⚖️</div>
-      <div class="agent-name">Legal & Compliance Agent</div>
-      <div class="agent-role">RECHT / SCHUTZ / VERTRÄGE</div>
-      <div class="agent-status live">● AKTIV</div>
-      <div class="agent-skills">
-        <span class="agent-skill">DSGVO</span>
-        <span class="agent-skill">AGB-Check</span>
-        <span class="agent-skill">Markenrecht</span>
-        <span class="agent-skill">Förder-Compliance</span>
-        <span class="agent-skill">Vertragscheck</span>
-      </div>
-      <div class="agent-insight">"Marina Düsseldorf LOI: Exklusivitätsklausel prüfen. DSGVO-Pflicht für BunBo App-Daten beachten. Marke 'WaveByte' DE anmelden."</div>
-      <a href="https://claude.ai" target="_blank" class="agent-launch-btn">▶ Aktivieren</a>
-    </div>
-
-    <!-- 6. Trend-Scout Agent -->
-    <div class="agent-card">
-      <div class="agent-icon">🔭</div>
-      <div class="agent-name">Trend-Scout Agent</div>
-      <div class="agent-role">MARKT-RADAR / BRANCHENTRENDS</div>
-      <div class="agent-status live">● AKTIV</div>
-      <div class="agent-skills">
-        <span class="agent-skill">Wassertourismus</span>
-        <span class="agent-skill">Marine-Tech</span>
-        <span class="agent-skill">EU-Förder</span>
-        <span class="agent-skill">Konkurrenz-KI</span>
-        <span class="agent-skill">Startup-Radar</span>
-      </div>
-      <div class="agent-insight">"EU Blue Economy: 500Mrd€ Markt. Marine-Digitalisierung wächst 23% p.a. Kein direkter Konkurrent in DACH mit vergleichbarem Ansatz."</div>
-      <a href="https://claude.ai" target="_blank" class="agent-launch-btn">▶ Aktivieren</a>
-    </div>
-
-    <!-- 7. Web & SEO Agent -->
-    <div class="agent-card">
-      <div class="agent-icon">🌐</div>
-      <div class="agent-name">Web & SEO Agent</div>
-      <div class="agent-role">WEBSITE / WORDPRESS / TRAFFIC</div>
-      <div class="agent-status live">● AKTIV</div>
-      <div class="agent-skills">
-        <span class="agent-skill">WordPress</span>
-        <span class="agent-skill">On-Page SEO</span>
-        <span class="agent-skill">Core Web Vitals</span>
-        <span class="agent-skill">Backlinks</span>
-        <span class="agent-skill">Analytics</span>
-      </div>
-      <div class="agent-insight">"wave-bite.com: 1.2k Visits/Monat. Top-Keyword fehlt: 'Marina App Deutschland'. 3 Quick-Win-SEO-Maßnahmen identifiziert."</div>
-      <a href="https://wave-bite.com/wp-admin/" target="_blank" class="agent-launch-btn">▶ WP Admin</a>
-    </div>
-
-    <!-- 8. App Dev Agent -->
-    <div class="agent-card">
-      <div class="agent-icon">📱</div>
-      <div class="agent-name">App Dev Agent</div>
-      <div class="agent-role">FLUTTERFLOW / GLIDE / TECH-ARCHITEKTUR</div>
-      <div class="agent-status live">● AKTIV</div>
-      <div class="agent-skills">
-        <span class="agent-skill">FlutterFlow</span>
-        <span class="agent-skill">Glide Apps</span>
-        <span class="agent-skill">API-Design</span>
-        <span class="agent-skill">Firebase</span>
-        <span class="agent-skill">TestFlight</span>
-      </div>
-      <div class="agent-insight">"BunBo 3.0 Beta: TestFlight Upload KW22. Kritischer Pfad: Payment-Flow + Offline-Karte. Glide-Prototyp MVP in 4h baubar."</div>
-      <a href="https://flutterflow.io" target="_blank" class="agent-launch-btn">▶ FlutterFlow</a>
-    </div>
-
-    <!-- 9. Operations Agent -->
-    <div class="agent-card">
-      <div class="agent-icon">⚙️</div>
-      <div class="agent-name">Operations Agent</div>
-      <div class="agent-role">AUTOMATION / N8N / MAKE / PROZESSE</div>
-      <div class="agent-status beta">◑ BETA</div>
-      <div class="agent-skills">
-        <span class="agent-skill">N8N</span>
-        <span class="agent-skill">Make.com</span>
-        <span class="agent-skill">Zapier</span>
-        <span class="agent-skill">Apps Script</span>
-        <span class="agent-skill">Webhook</span>
-        <span class="agent-skill">CRM-Sync</span>
-      </div>
-      <div class="agent-insight">"6 Automationen aktiv. CEO-Briefing täglich 06:00. Investor-Reminder Di+Fr. Potenzial: 3h/Woche Zeitersparnis durch weitere Automationen."</div>
-      <a href="https://n8n.io" target="_blank" class="agent-launch-btn">▶ N8N öffnen</a>
-    </div>
-
-  </div><!-- /agent-grid -->
-
-  <!-- SKILL-MATRIX -->
-  <div class="panel" style="margin-top:1.25rem">
-    <div style="font-size:.65rem;letter-spacing:.15em;color:var(--teal);margin-bottom:.9rem">📋 AGENT-SKILL-MATRIX — AKTUELLE FÄHIGKEITEN & NÄCHSTE ERWEITERUNGEN</div>
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:.6rem;font-size:.63rem">
-      <div style="padding:.6rem .8rem;background:rgba(0,212,170,0.05);border:1px solid rgba(0,212,170,0.15);border-radius:8px">
-        <div style="color:var(--teal);font-weight:700;margin-bottom:.3rem">✅ AKTIVE SKILLS</div>
-        <div style="color:var(--text-dim);line-height:1.8">BWL-Analyse • Pitch-Decks • DSGVO-Prüfung • Content-Erstellung • SEO-Audit • API-Anbindung • Finanzplanung • OKR-Tracking</div>
-      </div>
-      <div style="padding:.6rem .8rem;background:rgba(201,168,76,0.05);border:1px solid rgba(201,168,76,0.15);border-radius:8px">
-        <div style="color:var(--gold);font-weight:700;margin-bottom:.3rem">🔧 IN ENTWICKLUNG</div>
-        <div style="color:var(--text-dim);line-height:1.8">Video-Skript-KI • Echtzeit-Investor-Alerts • KI-Vertragsanalyse • Social-Listening • Automatische Förderantragssuche</div>
-      </div>
-      <div style="padding:.6rem .8rem;background:rgba(0,200,255,0.04);border:1px solid rgba(0,200,255,0.1);border-radius:8px">
-        <div style="color:var(--blue);font-weight:700;margin-bottom:.3rem">🚀 GEPLANT (Q3)</div>
-        <div style="color:var(--text-dim);line-height:1.8">Echtzeit-Marktdaten • KI-Telefon-Agent • Auto-Reporting • Multimodales Video-AI • Partner-CRM-Integration</div>
-      </div>
-    </div>
-  </div>
-</section>
-<section id="sec-mail-intel">
-  <div class="section-title" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.5rem">
-    <span>✉ MAIL HQ — JARVIS MAIL INTELLIGENCE</span>
-    <div style="display:flex;gap:.4rem;flex-shrink:0">
-      <a href="https://mail.google.com" target="_blank" style="display:inline-flex;align-items:center;gap:.25rem;padding:.25rem .6rem;background:rgba(0,200,255,0.1);border:1px solid rgba(0,200,255,0.3);border-radius:6px;color:var(--blue);font-size:.55rem;font-weight:700;text-decoration:none;transition:all .2s" onmouseover="this.style.background='rgba(0,200,255,0.2)'" onmouseout="this.style.background='rgba(0,200,255,0.1)'">✉ Gmail ↗</a>
-      <a href="https://outlook.live.com" target="_blank" style="display:inline-flex;align-items:center;gap:.25rem;padding:.25rem .6rem;background:rgba(0,100,200,0.1);border:1px solid rgba(0,100,200,0.3);border-radius:6px;color:#5b9bd5;font-size:.55rem;font-weight:700;text-decoration:none;transition:all .2s" onmouseover="this.style.background='rgba(0,100,200,0.2)'" onmouseout="this.style.background='rgba(0,100,200,0.1)'">📨 Outlook ↗</a>
-    </div>
-  </div>
-
-  <!-- MAIL STATS — kompakt einzeilig -->
-  <div style="display:flex;align-items:center;gap:.6rem;margin-bottom:.6rem;padding:.4rem .75rem;background:rgba(0,200,255,0.04);border:1px solid rgba(0,200,255,0.1);border-radius:8px;flex-wrap:wrap" id="mail-stats-bar">
-    <div style="display:flex;align-items:center;gap:.35rem">
-      <span class="mail-stat-val" id="stat-total" style="font-size:1rem;font-weight:800;color:var(--blue)">0</span>
-      <span style="font-size:.5rem;color:var(--text-dim);letter-spacing:.08em">MAILS</span>
-    </div>
-    <span style="color:rgba(0,200,255,0.2);font-size:.7rem">|</span>
-    <div style="display:flex;align-items:center;gap:.35rem">
-      <span class="mail-stat-val" id="stat-unread" style="font-size:1rem;font-weight:800;color:#ff4757">0</span>
-      <span style="font-size:.5rem;color:var(--text-dim);letter-spacing:.08em">UNGELESEN</span>
-    </div>
-    <span style="color:rgba(0,200,255,0.2);font-size:.7rem">|</span>
-    <div style="display:flex;align-items:center;gap:.35rem">
-      <span class="mail-stat-val" id="stat-critical" style="font-size:1rem;font-weight:800;color:#ff4757">0</span>
-      <span style="font-size:.5rem;color:var(--text-dim);letter-spacing:.08em">KRITISCH</span>
-    </div>
-    <span style="color:rgba(0,200,255,0.2);font-size:.7rem">|</span>
-    <div style="display:flex;align-items:center;gap:.35rem">
-      <span class="mail-stat-val" id="stat-investor" style="font-size:1rem;font-weight:800;color:var(--gold)">0</span>
-      <span style="font-size:.5rem;color:var(--text-dim);letter-spacing:.08em">INVESTOR</span>
-    </div>
-    <span id="mail-sync" style="margin-left:auto;font-size:.52rem;color:var(--text-dim)"></span>
-    <button class="btn-outline" style="font-size:.55rem;padding:.2rem .5rem;margin-left:auto" onclick="refreshMailHub()">↺ Refresh</button>
-  </div>
-
-  <!-- SOURCE TABS — kompakt -->
-  <div class="mail-tabs" style="margin-bottom:.6rem">
-    <button class="mail-tab active" id="tab-gmail" onclick="switchMailTab('gmail')">📧 Gmail</button>
-    <button class="mail-tab gold" id="tab-outlook" onclick="switchMailTab('outlook')">📨 Outlook</button>
-  </div>
-
-  <!-- 3-SPALTEN LAYOUT: Mail | JARVIS | Actions -->
-  <div style="display:grid;grid-template-columns:1.2fr 1fr .85fr;gap:.75rem;align-items:start">
-
-    <!-- COL 1: POSTEINGANG -->
-    <div class="panel" style="padding:.85rem">
-      <div style="font-size:.58rem;letter-spacing:.12em;color:var(--blue);margin-bottom:.5rem;display:flex;align-items:center;justify-content:space-between">
-        <span>📬 POSTEINGANG — KI-PRIORISIERT</span>
-        <button class="btn-outline" style="font-size:.5rem;padding:.15rem .4rem" onclick="loadMailBriefing()">🧠 Briefing</button>
-      </div>
-      <div id="mail-list">
-        <div class="mail-loading">📡 Mail Intelligence wird geladen...</div>
-      </div>
-      <!-- Outlook auth panel -->
-      <div class="outlook-auth" id="outlook-auth-panel" style="display:none;margin-top:.65rem">
-        <div style="font-size:1.3rem;margin-bottom:.3rem">📨</div>
-        <div class="outlook-auth-title">Outlook verbinden</div>
-        <div class="outlook-auth-desc">Microsoft-Konto (casi80@gmx.ch, Hotmail, Live)</div>
-        <button class="btn-outlook" onclick="loginOutlook()">🔑 Mit Microsoft anmelden</button>
-      </div>
-    </div>
-
-    <!-- COL 2: JARVIS MAIL-ANALYSE -->
-    <div class="panel panel-cream" style="padding:.85rem">
-      <div style="font-size:.58rem;letter-spacing:.1em;color:var(--gold);margin-bottom:.55rem;display:flex;align-items:center;gap:.4rem">
-        <span>🧠</span>
-        <span>JARVIS MAIL-ANALYSE</span>
-        <span style="font-size:.45rem;color:var(--text-dim);margin-left:auto">CEO ENTSCHEIDUNGEN</span>
-      </div>
-      <div id="jarvis-mail-analysis">
-        <div class="ai-brain-card">
-          <div class="brain-icon" style="font-size:1.2rem">🧠</div>
-          <div>
-            <div style="font-size:.55rem;color:var(--text-dim);letter-spacing:.08em;margin-bottom:.15rem">KI ANALYSIERT INBOX</div>
-            <div style="font-size:.65rem;color:var(--text-dim)">Warte auf Mail-Daten...</div>
-          </div>
-        </div>
-      </div>
-      <div style="height:1px;background:rgba(201,168,76,0.12);margin:.55rem 0"></div>
-      <div style="font-size:.55rem;letter-spacing:.1em;color:var(--gold);margin-bottom:.35rem">📋 ACTION QUEUE</div>
-      <div id="mail-action-queue">
-        <div style="font-size:.62rem;color:var(--text-dim)">⏳ Warte auf Scan...</div>
-      </div>
-    </div>
-
-    <!-- COL 3: FOLLOW-UPS + QUICK ACCESS -->
-    <div style="display:flex;flex-direction:column;gap:.65rem">
-      <div class="panel" style="padding:.85rem">
-        <div style="font-size:.55rem;letter-spacing:.1em;color:var(--red);margin-bottom:.35rem">⚠ FOLLOW-UP REQUIRED</div>
-        <div id="mail-followups">
-          <div style="font-size:.62rem;color:var(--text-dim)">Keine offenen Follow-ups.</div>
-        </div>
-      </div>
-      <!-- QUICK MAIL LINKS -->
-      <div class="panel" style="padding:.75rem">
-        <div style="font-size:.55rem;letter-spacing:.1em;color:var(--blue);margin-bottom:.45rem">⚡ MAIL QUICK ACCESS</div>
-        <div style="display:flex;flex-direction:column;gap:.3rem">
-          <a href="https://mail.google.com/mail/u/0/#inbox" target="_blank" style="display:flex;align-items:center;gap:.45rem;padding:.35rem .5rem;background:rgba(0,200,255,0.05);border:1px solid rgba(0,200,255,0.12);border-radius:7px;text-decoration:none;color:var(--text);font-size:.62rem;transition:all .2s" onmouseover="this.style.borderColor='rgba(0,200,255,0.3)'" onmouseout="this.style.borderColor='rgba(0,200,255,0.12)'"><span>📧</span><span>Gmail Posteingang</span><span style="margin-left:auto;font-size:.5rem;color:var(--text-dim)">↗</span></a>
-          <a href="https://mail.google.com/mail/u/0/#starred" target="_blank" style="display:flex;align-items:center;gap:.45rem;padding:.35rem .5rem;background:rgba(0,200,255,0.05);border:1px solid rgba(0,200,255,0.12);border-radius:7px;text-decoration:none;color:var(--text);font-size:.62rem;transition:all .2s" onmouseover="this.style.borderColor='rgba(0,200,255,0.3)'" onmouseout="this.style.borderColor='rgba(0,200,255,0.12)'"><span>⭐</span><span>Markierte Mails</span><span style="margin-left:auto;font-size:.5rem;color:var(--text-dim)">↗</span></a>
-          <a href="https://mail.google.com/mail/u/0/#compose" target="_blank" style="display:flex;align-items:center;gap:.45rem;padding:.35rem .5rem;background:rgba(201,168,76,0.06);border:1px solid rgba(201,168,76,0.18);border-radius:7px;text-decoration:none;color:var(--text);font-size:.62rem;transition:all .2s" onmouseover="this.style.borderColor='rgba(201,168,76,0.4)'" onmouseout="this.style.borderColor='rgba(201,168,76,0.18)'"><span>✏️</span><span>Neue Mail schreiben</span><span style="margin-left:auto;font-size:.5rem;color:var(--text-dim)">↗</span></a>
-          <a href="https://outlook.live.com/mail/0/inbox" target="_blank" style="display:flex;align-items:center;gap:.45rem;padding:.35rem .5rem;background:rgba(0,100,200,0.05);border:1px solid rgba(0,100,200,0.15);border-radius:7px;text-decoration:none;color:var(--text);font-size:.62rem;transition:all .2s" onmouseover="this.style.borderColor='rgba(0,100,200,0.35)'" onmouseout="this.style.borderColor='rgba(0,100,200,0.15)'"><span>📨</span><span>Outlook (casi80)</span><span style="margin-left:auto;font-size:.5rem;color:var(--text-dim)">↗</span></a>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-
-
 <!-- QUICK ACTIONS BAR -->
 <!-- ═══════════════════════════════════════════════════════════════
      CEO TOOLS & WORKSPACE — ALLE WICHTIGEN PROGRAMME
@@ -4510,6 +4123,49 @@
 
 <!-- INVESTOR READINESS -->
 <section id="sec-investor" style="padding:2rem 1.5rem;max-width:1400px;margin:0 auto">
+  <!-- Funding KPI bar -->
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:.65rem;margin-bottom:1.25rem">
+    <div style="background:rgba(7,24,40,0.8);border:1px solid rgba(201,168,76,0.2);border-radius:10px;padding:.85rem;text-align:center">
+      <div style="font-size:1.2rem;font-weight:800;color:var(--gold)">3</div>
+      <div style="font-size:.5rem;color:var(--text-dim);letter-spacing:.07em;margin-top:.25rem">AKTIVE LEADS</div>
+    </div>
+    <div style="background:rgba(7,24,40,0.8);border:1px solid rgba(255,68,68,0.2);border-radius:10px;padding:.85rem;text-align:center">
+      <div style="font-size:1.2rem;font-weight:800;color:#ff4757">5 Mo</div>
+      <div style="font-size:.5rem;color:var(--text-dim);letter-spacing:.07em;margin-top:.25rem">RUNWAY</div>
+    </div>
+    <div style="background:rgba(7,24,40,0.8);border:1px solid rgba(0,200,255,0.15);border-radius:10px;padding:.85rem;text-align:center">
+      <div style="font-size:1.2rem;font-weight:800;color:var(--blue)">KW22</div>
+      <div style="font-size:.5rem;color:var(--text-dim);letter-spacing:.07em;margin-top:.25rem">SEEDMATCH DD</div>
+    </div>
+    <div style="background:rgba(7,24,40,0.8);border:1px solid rgba(0,212,170,0.15);border-radius:10px;padding:.85rem;text-align:center">
+      <div style="font-size:1.2rem;font-weight:800;color:var(--teal)">5M€</div>
+      <div style="font-size:.5rem;color:var(--text-dim);letter-spacing:.07em;margin-top:.25rem">TAM (DACH)</div>
+    </div>
+    <div style="background:rgba(7,24,40,0.8);border:1px solid rgba(201,168,76,0.2);border-radius:10px;padding:.85rem;text-align:center">
+      <div style="font-size:1.2rem;font-weight:800;color:var(--gold)">12%</div>
+      <div style="font-size:.5rem;color:var(--text-dim);letter-spacing:.07em;margin-top:.25rem">CHECKLIST</div>
+    </div>
+  </div>
+  <!-- Funding progress -->
+  <div style="background:rgba(7,24,40,0.7);border:1px solid rgba(201,168,76,0.18);border-radius:10px;padding:.9rem;margin-bottom:1.25rem">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:.5rem">
+      <span style="font-size:.58rem;font-weight:700;letter-spacing:.08em;color:var(--gold)">FUNDING-FORTSCHRITT — SEED 250K–500K €</span>
+      <span style="font-size:.65rem;font-weight:800;color:var(--gold)">~12%</span>
+    </div>
+    <div style="background:rgba(255,255,255,0.06);border-radius:5px;height:8px;overflow:hidden">
+      <div style="width:12%;height:100%;background:linear-gradient(90deg,var(--gold),#d4a843);border-radius:5px;box-shadow:0 0 8px rgba(201,168,76,0.35)"></div>
+    </div>
+    <div style="display:flex;justify-content:space-between;font-size:.5rem;color:var(--text-dim);margin-top:.3rem">
+      <span>0 €</span><span style="color:var(--gold)">~30k € gesichert (EK + Angels)</span><span>500k € Ziel</span>
+    </div>
+  </div>
+  <!-- Action buttons -->
+  <div style="display:flex;gap:.5rem;margin-bottom:1.25rem;flex-wrap:wrap">
+    <button class="btn-gold" onclick="showNotif('📧 Investor Follow-up vorbereitet — Bitte manuell absenden','gold')" style="font-size:.6rem">✉ Follow-up</button>
+    <button class="btn-outline" onclick="showNotif('📂 DD-Ordner: Google Drive wird geöffnet','blue')" style="font-size:.6rem;border-color:rgba(201,168,76,0.3);color:var(--gold)">📂 DD-Ordner</button>
+    <button class="btn-outline" onclick="showNotif('📊 Pitch Deck v3 wird geladen','blue')" style="font-size:.6rem">📊 Pitch Deck v3</button>
+    <button class="btn-outline" onclick="showNotif('📋 EXIST-Antrag Vorlage','blue')" style="font-size:.6rem">🏦 EXIST-Antrag</button>
+  </div>
   <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem">
     <div style="width:3px;height:2rem;background:linear-gradient(180deg,var(--gold),rgba(201,168,76,0.4));border-radius:2px"></div>
     <div>
@@ -4573,6 +4229,81 @@
 
 <!-- OPERATIONS CENTER -->
 <section id="sec-ops" style="padding:2rem 1.5rem;max-width:1400px;margin:0 auto">
+  <!-- System Health Row -->
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:.65rem;margin-bottom:1.25rem">
+    <div style="background:rgba(7,24,40,0.8);border:1px solid rgba(0,255,136,0.2);border-radius:10px;padding:.9rem">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:.5rem">
+        <span style="font-size:.55rem;font-weight:700;letter-spacing:.07em;color:var(--text-dim)">CEO OFFICE</span>
+        <span style="font-size:.58rem;color:var(--green);font-weight:700">● LIVE</span>
+      </div>
+      <div style="background:rgba(255,255,255,0.06);border-radius:4px;height:5px"><div style="width:99%;height:100%;background:var(--green);border-radius:4px"></div></div>
+      <div style="font-size:.5rem;color:var(--text-dim);margin-top:.3rem">99% Uptime</div>
+    </div>
+    <div style="background:rgba(7,24,40,0.8);border:1px solid rgba(0,255,136,0.18);border-radius:10px;padding:.9rem">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:.5rem">
+        <span style="font-size:.55rem;font-weight:700;letter-spacing:.07em;color:var(--text-dim)">WASSERLAGE</span>
+        <span style="font-size:.58rem;color:#ffaa00;font-weight:700">◐ WARN</span>
+      </div>
+      <div style="background:rgba(255,255,255,0.06);border-radius:4px;height:5px"><div style="width:85%;height:100%;background:#ffaa00;border-radius:4px"></div></div>
+      <div style="font-size:.5rem;color:var(--text-dim);margin-top:.3rem">302 Redirect aktiv</div>
+    </div>
+    <div style="background:rgba(7,24,40,0.8);border:1px solid rgba(255,170,0,0.2);border-radius:10px;padding:.9rem">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:.5rem">
+        <span style="font-size:.55rem;font-weight:700;letter-spacing:.07em;color:var(--text-dim)">BUNBO APP</span>
+        <span style="font-size:.58rem;color:#ffaa00;font-weight:700">◐ BETA</span>
+      </div>
+      <div style="background:rgba(255,255,255,0.06);border-radius:4px;height:5px"><div style="width:65%;height:100%;background:#ffaa00;border-radius:4px"></div></div>
+      <div style="font-size:.5rem;color:var(--text-dim);margin-top:.3rem">65% MVP</div>
+    </div>
+    <div style="background:rgba(7,24,40,0.8);border:1px solid rgba(0,200,255,0.15);border-radius:10px;padding:.9rem">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:.5rem">
+        <span style="font-size:.55rem;font-weight:700;letter-spacing:.07em;color:var(--text-dim)">WAVE BITE WP</span>
+        <span style="font-size:.58rem;color:var(--blue);font-weight:700">● AKTIV</span>
+      </div>
+      <div style="background:rgba(255,255,255,0.06);border-radius:4px;height:5px"><div style="width:88%;height:100%;background:var(--blue);border-radius:4px"></div></div>
+      <div style="font-size:.5rem;color:var(--text-dim);margin-top:.3rem">Updates ausstehend</div>
+    </div>
+    <div style="background:rgba(7,24,40,0.8);border:1px solid rgba(255,68,68,0.18);border-radius:10px;padding:.9rem">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:.5rem">
+        <span style="font-size:.55rem;font-weight:700;letter-spacing:.07em;color:var(--text-dim)">HIMMELREICH</span>
+        <span style="font-size:.58rem;color:#ff4757;font-weight:700">○ DEV</span>
+      </div>
+      <div style="background:rgba(255,255,255,0.06);border-radius:4px;height:5px"><div style="width:25%;height:100%;background:#ff4757;border-radius:4px"></div></div>
+      <div style="font-size:.5rem;color:var(--text-dim);margin-top:.3rem">Konzeptphase</div>
+    </div>
+  </div>
+  <!-- Workflow Kanban -->
+  <div style="background:rgba(7,24,40,0.7);border:1px solid rgba(0,200,255,0.1);border-radius:12px;padding:1rem;margin-bottom:1.25rem">
+    <div style="font-size:.58rem;font-weight:700;letter-spacing:.1em;color:var(--text-dim);margin-bottom:.75rem;display:flex;justify-content:space-between">
+      <span>⚡ AKTIVE WORKFLOWS — KW21</span>
+      <button class="btn-outline" onclick="showNotif('📋 Sprint-Board aktualisiert','blue')" style="font-size:.52rem;padding:.18rem .45rem">⟳</button>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:.6rem">
+      <div>
+        <div style="font-size:.52rem;font-weight:700;color:#ff4757;margin-bottom:.4rem;padding-bottom:.25rem;border-bottom:1px solid rgba(255,68,68,0.2)">🔴 IN PROGRESS</div>
+        <div style="display:flex;flex-direction:column;gap:.3rem">
+          <div style="background:rgba(255,68,68,0.07);border:1px solid rgba(255,68,68,0.18);border-radius:5px;padding:.38rem .5rem;font-size:.58rem;color:var(--text)">BunBo MVP Review</div>
+          <div style="background:rgba(255,68,68,0.07);border:1px solid rgba(255,68,68,0.18);border-radius:5px;padding:.38rem .5rem;font-size:.58rem;color:var(--text)">Seedmatch DD-Ordner</div>
+          <div style="background:rgba(255,170,0,0.06);border:1px solid rgba(255,170,0,0.18);border-radius:5px;padding:.38rem .5rem;font-size:.58rem;color:var(--text)">CEO Office Update</div>
+        </div>
+      </div>
+      <div>
+        <div style="font-size:.52rem;font-weight:700;color:#ffaa00;margin-bottom:.4rem;padding-bottom:.25rem;border-bottom:1px solid rgba(255,170,0,0.2)">🟡 REVIEW</div>
+        <div style="display:flex;flex-direction:column;gap:.3rem">
+          <div style="background:rgba(255,170,0,0.05);border:1px solid rgba(255,170,0,0.18);border-radius:5px;padding:.38rem .5rem;font-size:.58rem;color:var(--text)">Pitch Deck v3</div>
+          <div style="background:rgba(255,170,0,0.05);border:1px solid rgba(255,170,0,0.18);border-radius:5px;padding:.38rem .5rem;font-size:.58rem;color:var(--text)">DSGVO-Dokumente</div>
+        </div>
+      </div>
+      <div>
+        <div style="font-size:.52rem;font-weight:700;color:var(--green);margin-bottom:.4rem;padding-bottom:.25rem;border-bottom:1px solid rgba(0,255,136,0.2)">🟢 DONE</div>
+        <div style="display:flex;flex-direction:column;gap:.3rem">
+          <div style="background:rgba(0,255,136,0.04);border:1px solid rgba(0,255,136,0.12);border-radius:5px;padding:.38rem .5rem;font-size:.58rem;color:var(--text)">Mail HQ Launch ✓</div>
+          <div style="background:rgba(0,255,136,0.04);border:1px solid rgba(0,255,136,0.12);border-radius:5px;padding:.38rem .5rem;font-size:.58rem;color:var(--text)">Wasserlage ↗ ✓</div>
+          <div style="background:rgba(0,255,136,0.04);border:1px solid rgba(0,255,136,0.12);border-radius:5px;padding:.38rem .5rem;font-size:.58rem;color:var(--text)">Tool Shortcuts ✓</div>
+        </div>
+      </div>
+    </div>
+  </div>
   <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem">
     <div style="width:3px;height:2rem;background:linear-gradient(180deg,var(--blue),var(--teal));border-radius:2px"></div>
     <div>
@@ -4631,7 +4362,7 @@
     <div style="width:3px;height:2rem;background:linear-gradient(180deg,#ff4757,rgba(255,68,68,0.3));border-radius:2px"></div>
     <div>
       <div style="display:flex;align-items:center;gap:1rem;flex-wrap:wrap">
-      <h2 style="font-size:1rem;font-weight:700;letter-spacing:.12em;color:#ff4757;margin:0">RISK &amp; CRISIS DASHBOARD</h2>
+      <h2 style="font-size:1rem;font-weight:700;letter-spacing:.12em;color:#ff4757;margin:0">🔴 RISK & CRISIS DASHBOARD</h2>
       <a href="https://voigtcarsten4-rgb.github.io/ceo-office/" target="_blank"
         style="display:inline-flex;align-items:center;gap:.3rem;padding:.25rem .65rem;background:rgba(255,68,68,0.1);border:1px solid rgba(255,68,68,0.3);border-radius:6px;color:#ff4757;font-size:.52rem;font-weight:700;text-decoration:none;letter-spacing:.05em">
         🔴 Live Monitor ↗
@@ -4646,6 +4377,35 @@
     <div style="background:rgba(255,170,0,0.08);border:1px solid rgba(255,170,0,0.3);border-radius:10px;padding:.85rem;text-align:center"><div style="font-size:1.3rem">🟡</div><div style="font-size:.58rem;font-weight:700;color:#ffaa00;margin-top:.3rem">TECHNIK</div><div style="font-size:.5rem;color:var(--text-dim);margin-top:.15rem">TEILS OFFLINE</div></div>
     <div style="background:rgba(0,255,136,0.06);border:1px solid rgba(0,255,136,0.2);border-radius:10px;padding:.85rem;text-align:center"><div style="font-size:1.3rem">🟢</div><div style="font-size:.58rem;font-weight:700;color:var(--green);margin-top:.3rem">CORE-SYSTEME</div><div style="font-size:.5rem;color:var(--text-dim);margin-top:.15rem">STABIL</div></div>
     <div style="background:rgba(0,200,255,0.06);border:1px solid rgba(0,200,255,0.15);border-radius:10px;padding:.85rem;text-align:center"><div style="font-size:1.3rem">🔵</div><div style="font-size:.58rem;font-weight:700;color:var(--blue);margin-top:.3rem">PARTNER</div><div style="font-size:.5rem;color:var(--text-dim);margin-top:.15rem">AUFBAU</div></div>
+  </div>
+
+  <!-- Risk Heatmap -->
+  <div style="background:rgba(7,24,40,0.7);border:1px solid rgba(255,68,68,0.15);border-radius:12px;padding:1rem;margin-bottom:1.25rem">
+    <div style="font-size:.58rem;font-weight:700;letter-spacing:.1em;color:var(--text-dim);margin-bottom:.75rem;display:flex;justify-content:space-between;align-items:center">
+      <span>📊 RISIKO-MATRIX — WAHRSCHEINLICHKEIT × IMPACT</span>
+      <div style="display:flex;gap:.4rem">
+        <button class="btn-outline" onclick="showNotif('🔄 Risiko-Update gespeichert','gold')" style="font-size:.52rem;padding:.18rem .45rem;border-color:rgba(255,68,68,0.3);color:#ff4757">⟳ Update</button>
+        <button class="btn-outline" onclick="showNotif('📧 Risk-Report verschickt','blue')" style="font-size:.52rem;padding:.18rem .45rem">✉ Report</button>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:auto 1fr 1fr 1fr;gap:3px;font-size:.5rem">
+      <div></div>
+      <div style="text-align:center;color:var(--text-dim);padding:.2rem">GERING</div>
+      <div style="text-align:center;color:var(--text-dim);padding:.2rem">MITTEL</div>
+      <div style="text-align:center;color:var(--text-dim);padding:.2rem">HOCH</div>
+      <div style="color:var(--text-dim);padding:.2rem;writing-mode:vertical-rl;transform:rotate(180deg);text-align:center">HOCH</div>
+      <div style="background:rgba(255,170,0,0.1);border:1px solid rgba(255,170,0,0.2);border-radius:4px;padding:.3rem;min-height:48px;display:flex;align-items:center;justify-content:center;text-align:center;color:#ffaa00;font-size:.52rem"></div>
+      <div style="background:rgba(255,68,68,0.12);border:1px solid rgba(255,68,68,0.3);border-radius:4px;padding:.3rem;min-height:48px;display:flex;align-items:center;justify-content:center;text-align:center;color:#ff4757;font-size:.52rem">Kein<br>Rechtsstatus</div>
+      <div style="background:rgba(255,30,30,0.18);border:2px solid rgba(255,68,68,0.4);border-radius:4px;padding:.3rem;min-height:48px;display:flex;align-items:center;justify-content:center;text-align:center;color:#ff4757;font-weight:700;font-size:.52rem">LIQUIDITÄT<br>⚠️</div>
+      <div style="color:var(--text-dim);padding:.2rem;writing-mode:vertical-rl;transform:rotate(180deg);text-align:center">MITTEL</div>
+      <div style="background:rgba(0,200,255,0.04);border:1px solid rgba(0,200,255,0.1);border-radius:4px;padding:.3rem;min-height:48px;display:flex;align-items:center;justify-content:center;text-align:center;color:var(--text-dim);font-size:.52rem">WP<br>Updates</div>
+      <div style="background:rgba(255,170,0,0.08);border:1px solid rgba(255,170,0,0.2);border-radius:4px;padding:.3rem;min-height:48px;display:flex;align-items:center;justify-content:center;text-align:center;color:#ffaa00;font-size:.52rem">DSGVO</div>
+      <div style="background:rgba(255,68,68,0.1);border:1px solid rgba(255,68,68,0.22);border-radius:4px;padding:.3rem;min-height:48px;display:flex;align-items:center;justify-content:center;text-align:center;color:#ff4757;font-size:.52rem">Partner<br>Pipeline</div>
+      <div style="color:var(--text-dim);padding:.2rem;writing-mode:vertical-rl;transform:rotate(180deg);text-align:center">GERING</div>
+      <div style="background:rgba(0,255,136,0.04);border:1px solid rgba(0,255,136,0.1);border-radius:4px;padding:.3rem;min-height:48px;display:flex;align-items:center;justify-content:center;text-align:center;color:var(--green);font-size:.52rem">Core<br>Systeme</div>
+      <div style="background:rgba(0,255,136,0.04);border:1px solid rgba(0,255,136,0.1);border-radius:4px;padding:.3rem;min-height:48px;display:flex;align-items:center;justify-content:center;text-align:center;color:var(--green);font-size:.52rem">WL<br>302-Fix</div>
+      <div style="background:rgba(255,170,0,0.06);border:1px solid rgba(255,170,0,0.15);border-radius:4px;padding:.3rem;min-height:48px;display:flex;align-items:center;justify-content:center;text-align:center;color:#ffaa00;font-size:.52rem">Einzel-<br>abhäng.</div>
+    </div>
   </div>
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.25rem">
     <div style="background:rgba(7,24,40,0.7);border:1px solid rgba(0,200,255,0.1);border-radius:12px;padding:1.25rem">
@@ -4667,6 +4427,401 @@
         <div style="background:rgba(0,200,255,0.04);border:1px solid rgba(0,200,255,0.1);border-radius:8px;padding:.85rem"><div style="font-size:.6rem;font-weight:700;color:var(--blue);margin-bottom:.5rem">⚡ FOKUS-DIREKTIVE</div><div style="font-size:.62rem;color:var(--text);line-height:1.7">Funding + UG = absolute Priorität.<br>Alle anderen Projekte auf Maintenance-Modus bis Runway gesichert.</div></div>
       </div>
     </div>
+  </div>
+</section>
+
+<!-- SCHEDULED TASKS -->
+<section id="sec-tasks">
+  <div class="section-title">⚙ AUTONOME TASKS — JARVIS SCHEDULER</div>
+  <div class="grid-2">
+    <div class="panel">
+      <div style="font-size:.65rem;letter-spacing:.15em;color:var(--teal);margin-bottom:.75rem">🤖 AKTIVE AUTOMATISIERUNGEN</div>
+      <div class="task-row">
+        <div class="task-indicator active"></div>
+        <div class="task-name">CEO Daily Briefing</div>
+        <div>
+          <div class="task-schedule">06:00 Uhr täglich</div>
+          <div class="task-last">Letzte Ausführung: heute 06:00</div>
+        </div>
+      </div>
+      <div class="task-row">
+        <div class="task-indicator active"></div>
+        <div class="task-name">Pegelonline API Sync</div>
+        <div>
+          <div class="task-schedule">alle 15 Min</div>
+          <div class="task-last">Letzte Ausführung: vor 8 Min</div>
+        </div>
+      </div>
+      <div class="task-row">
+        <div class="task-indicator active"></div>
+        <div class="task-name">Wöchentlicher Projekt-Status Report</div>
+        <div>
+          <div class="task-schedule">Mo 07:00 Uhr</div>
+          <div class="task-last">Letzte Ausführung: heute 07:00</div>
+        </div>
+      </div>
+      <div class="task-row">
+        <div class="task-indicator warn"></div>
+        <div class="task-name">Investor Follow-up Reminder</div>
+        <div>
+          <div class="task-schedule">Di + Fr 09:00</div>
+          <div class="task-last">Nächste: Di 09:00</div>
+        </div>
+      </div>
+      <div class="task-row">
+        <div class="task-indicator active"></div>
+        <div class="task-name">Social Media Analytics Pull</div>
+        <div>
+          <div class="task-schedule">täglich 18:00</div>
+          <div class="task-last">Letzte Ausführung: gestern 18:00</div>
+        </div>
+      </div>
+      <div class="task-row">
+        <div class="task-indicator idle"></div>
+        <div class="task-name">GitHub Repo Backup</div>
+        <div>
+          <div class="task-schedule">Sa 02:00 Uhr</div>
+          <div class="task-last">Letzte Ausführung: Sa 02:00</div>
+        </div>
+      </div>
+    </div>
+    <div class="panel">
+      <div style="font-size:.65rem;letter-spacing:.15em;color:var(--teal);margin-bottom:.75rem">🔗 TOOL-ZENTRALE</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:.5rem">
+        <a href="https://flutterflow.io" target="_blank" class="project-card" style="text-decoration:none;padding:.75rem">
+          <div style="font-size:1.2rem;margin-bottom:.3rem">📱</div>
+          <div style="font-size:.75rem;font-weight:700;color:var(--text)">FlutterFlow</div>
+          <div style="font-size:.6rem;color:var(--teal)">BunBo App Dev</div>
+        </a>
+        <a href="https://github.com" target="_blank" class="project-card" style="text-decoration:none;padding:.75rem">
+          <div style="font-size:1.2rem;margin-bottom:.3rem">🐙</div>
+          <div style="font-size:.75rem;font-weight:700;color:var(--text)">GitHub</div>
+          <div style="font-size:.6rem;color:var(--teal)">Repos & Code</div>
+        </a>
+        <a href="https://n8n.io" target="_blank" class="project-card" style="text-decoration:none;padding:.75rem">
+          <div style="font-size:1.2rem;margin-bottom:.3rem">⚡</div>
+          <div style="font-size:.75rem;font-weight:700;color:var(--text)">N8N</div>
+          <div style="font-size:.6rem;color:var(--teal)">Automation Hub</div>
+        </a>
+        <a href="https://app.glideapps.com" target="_blank" class="project-card" style="text-decoration:none;padding:.75rem">
+          <div style="font-size:1.2rem;margin-bottom:.3rem">✨</div>
+          <div style="font-size:.75rem;font-weight:700;color:var(--text)">Glide Apps</div>
+          <div style="font-size:.6rem;color:var(--teal)">No-Code MVPs</div>
+        </a>
+        <a href="https://make.com" target="_blank" class="project-card" style="text-decoration:none;padding:.75rem">
+          <div style="font-size:1.2rem;margin-bottom:.3rem">🔄</div>
+          <div style="font-size:.75rem;font-weight:700;color:var(--text)">Make.com</div>
+          <div style="font-size:.6rem;color:var(--teal)">Workflows</div>
+        </a>
+        <a href="https://script.google.com" target="_blank" class="project-card" style="text-decoration:none;padding:.75rem">
+          <div style="font-size:1.2rem;margin-bottom:.3rem">📝</div>
+          <div style="font-size:.75rem;font-weight:700;color:var(--text)">Apps Script</div>
+          <div style="font-size:.6rem;color:var(--teal)">CEO Briefing</div>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== AGENTEN SECTION ===================== -->
+<section id="sec-agents">
+  <div class="section-title">🤖 AI-AGENTEN — AUTONOME INTELLIGENZ</div>
+
+  <!-- BWL INTELLIGENCE MODULE -->
+  <div class="panel" style="margin-bottom:1.25rem;border-color:rgba(201,168,76,0.2)">
+    <div style="font-size:.65rem;letter-spacing:.15em;color:var(--gold);margin-bottom:.9rem">⚡ CEO INTELLIGENCE ENGINE — BWL-WEITBLICK & MARKT-RADAR</div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:.75rem">
+      <div class="bwl-module">
+        <div class="bwl-module-icon">📊</div>
+        <div><div class="bwl-module-title">Finanz-KPIs Live</div><div class="bwl-module-desc">Runway, Burn Rate, Revenue Forecast, Break-Even-Analyse automatisch berechnet. Seedmatch-Deadline im Blick.</div></div>
+      </div>
+      <div class="bwl-module">
+        <div class="bwl-module-icon">🌊</div>
+        <div><div class="bwl-module-title">Markt-Trend Radar</div><div class="bwl-module-desc">Wassertourismus, Marina-Digitalisierung, Förder- & Zuschuss-Programme DE/EU automatisch überwacht.</div></div>
+      </div>
+      <div class="bwl-module">
+        <div class="bwl-module-icon">🎯</div>
+        <div><div class="bwl-module-title">Strategische Priorisierung</div><div class="bwl-module-desc">Impact-vs-Aufwand Matrix, OKR-Tracking, kritische Pfade aller Projekte — täglich neu bewertet.</div></div>
+      </div>
+      <div class="bwl-module">
+        <div class="bwl-module-icon">🤝</div>
+        <div><div class="bwl-module-title">Investor Relations</div><div class="bwl-module-desc">Follow-up Timing, Due-Diligence Checklisten, Pitch-Optimierung — automatisch an Gesprächsphasen angepasst.</div></div>
+      </div>
+      <div class="bwl-module">
+        <div class="bwl-module-icon">⚖️</div>
+        <div><div class="bwl-module-title">Legal & Compliance</div><div class="bwl-module-desc">DSGVO, Markenrecht, AGB-Check, Fördermittel-Compliance — proaktive Risikoerkennung.</div></div>
+      </div>
+      <div class="bwl-module">
+        <div class="bwl-module-icon">📣</div>
+        <div><div class="bwl-module-title">Growth Engine</div><div class="bwl-module-desc">Content-Kalender, LinkedIn-Timing, Kanal-ROI, Partnerstrategie — KI-gestützte Wachstumsplanung.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- AI AGENT CARDS -->
+  <div class="agent-grid">
+
+    <!-- 1. CEO Strategy Agent -->
+    <div class="agent-card gold-border">
+      <div class="agent-icon">🧠</div>
+      <div class="agent-name">CEO Strategy Agent</div>
+      <div class="agent-role">LEITENDER STRATEGIEBERATER</div>
+      <div class="agent-status live">● AKTIV</div>
+      <div class="agent-skills">
+        <span class="agent-skill">BWL-Analyse</span>
+        <span class="agent-skill">OKR-Tracking</span>
+        <span class="agent-skill">Risiko-KI</span>
+        <span class="agent-skill">Entscheidungsmatrix</span>
+        <span class="agent-skill">Wettbewerb</span>
+      </div>
+      <div class="agent-insight">"BunBo App: 95% Ready — TestFlight KW22 aktiv. EXIST-Antrag in Vorbereitung. Seed-Round Q3 2026 auf Kurs."</div>
+      <a href="https://claude.ai" target="_blank" class="agent-launch-btn">▶ Aktivieren</a>
+    </div>
+
+    <!-- 2. Finanz-Agent -->
+    <div class="agent-card">
+      <div class="agent-icon">💰</div>
+      <div class="agent-name">Finanz & Investor Agent</div>
+      <div class="agent-role">CFO-ASSISTENT / FUNDRAISING</div>
+      <div class="agent-status live">● AKTIV</div>
+      <div class="agent-skills">
+        <span class="agent-skill">P&L-Analyse</span>
+        <span class="agent-skill">Burn Rate</span>
+        <span class="agent-skill">Pitch Deck</span>
+        <span class="agent-skill">Seedmatch</span>
+        <span class="agent-skill">EXIST</span>
+        <span class="agent-skill">Due Diligence</span>
+      </div>
+      <div class="agent-insight">"Break-Even bei ~85k€/Monat. Seedmatch DD-Deadline: Freitag. Empfehle: 2-seitiges Executive Summary für Banken."</div>
+      <a href="https://claude.ai" target="_blank" class="agent-launch-btn">▶ Aktivieren</a>
+    </div>
+
+    <!-- 3. Marketing & Growth Agent -->
+    <div class="agent-card">
+      <div class="agent-icon">📣</div>
+      <div class="agent-name">Marketing & Growth Agent</div>
+      <div class="agent-role">CMO-ASSISTENT / GROWTH HACKING</div>
+      <div class="agent-status live">● AKTIV</div>
+      <div class="agent-skills">
+        <span class="agent-skill">LinkedIn</span>
+        <span class="agent-skill">Content KI</span>
+        <span class="agent-skill">SEO</span>
+        <span class="agent-skill">Ads</span>
+        <span class="agent-skill">Brand Voice</span>
+        <span class="agent-skill">Funnel</span>
+      </div>
+      <div class="agent-insight">"3x/Woche LinkedIn = +40% Reichweite. Nächster Post-Slot: heute 17:30. Marina-Zielgruppe: Bootsbesitzer 45-65."</div>
+      <a href="https://claude.ai" target="_blank" class="agent-launch-btn">▶ Aktivieren</a>
+    </div>
+
+    <!-- 4. Video Creator Agent — Leonardo AI Studio -->
+    <div class="agent-card gold-border" style="background:linear-gradient(135deg,rgba(40,28,0,.6),rgba(4,16,30,.95))">
+      <div class="agent-icon">🎬</div>
+      <div class="agent-name" style="color:#e8c96a">Leonardo AI Studio</div>
+      <div class="agent-role" style="color:rgba(232,201,106,.6)">KI-VIDEO / BILD / SOCIAL ASSETS</div>
+      <div class="agent-status live" style="background:rgba(201,168,76,.15);border-color:rgba(201,168,76,.4);color:#e8c96a">✦ AKTIV</div>
+      <div class="agent-skills">
+        <span class="agent-skill" style="border-color:rgba(201,168,76,.3);color:#e8c96a">KI-Bildgen</span>
+        <span class="agent-skill" style="border-color:rgba(201,168,76,.3);color:#e8c96a">Motion Video</span>
+        <span class="agent-skill" style="border-color:rgba(201,168,76,.3);color:#e8c96a">Social Assets</span>
+        <span class="agent-skill" style="border-color:rgba(201,168,76,.3);color:#e8c96a">AI Prompts</span>
+        <span class="agent-skill" style="border-color:rgba(201,168,76,.3);color:#e8c96a">Leonardo API</span>
+      </div>
+      <div class="agent-insight" style="color:rgba(232,201,106,.7)">"2 Werbevideos produziert ✦ CGI Hollywood Spot + Instagram Reel. KI-gestützte Bild- und Videogenerierung für Wave Bite."</div>
+      <a href="wavebite-leonardo-studio.html" target="_blank" class="agent-launch-btn" style="background:linear-gradient(135deg,rgba(201,168,76,.3),rgba(232,201,106,.15));border-color:rgba(201,168,76,.5);color:#e8c96a">🎬 Studio öffnen</a>
+    </div>
+
+    <!-- 5. Legal & Compliance Agent -->
+    <div class="agent-card">
+      <div class="agent-icon">⚖️</div>
+      <div class="agent-name">Legal & Compliance Agent</div>
+      <div class="agent-role">RECHT / SCHUTZ / VERTRÄGE</div>
+      <div class="agent-status live">● AKTIV</div>
+      <div class="agent-skills">
+        <span class="agent-skill">DSGVO</span>
+        <span class="agent-skill">AGB-Check</span>
+        <span class="agent-skill">Markenrecht</span>
+        <span class="agent-skill">Förder-Compliance</span>
+        <span class="agent-skill">Vertragscheck</span>
+      </div>
+      <div class="agent-insight">"Marina Düsseldorf LOI: Exklusivitätsklausel prüfen. DSGVO-Pflicht für BunBo App-Daten beachten. Marke 'WaveByte' DE anmelden."</div>
+      <a href="https://claude.ai" target="_blank" class="agent-launch-btn">▶ Aktivieren</a>
+    </div>
+
+    <!-- 6. Trend-Scout Agent -->
+    <div class="agent-card">
+      <div class="agent-icon">🔭</div>
+      <div class="agent-name">Trend-Scout Agent</div>
+      <div class="agent-role">MARKT-RADAR / BRANCHENTRENDS</div>
+      <div class="agent-status live">● AKTIV</div>
+      <div class="agent-skills">
+        <span class="agent-skill">Wassertourismus</span>
+        <span class="agent-skill">Marine-Tech</span>
+        <span class="agent-skill">EU-Förder</span>
+        <span class="agent-skill">Konkurrenz-KI</span>
+        <span class="agent-skill">Startup-Radar</span>
+      </div>
+      <div class="agent-insight">"EU Blue Economy: 500Mrd€ Markt. Marine-Digitalisierung wächst 23% p.a. Kein direkter Konkurrent in DACH mit vergleichbarem Ansatz."</div>
+      <a href="https://claude.ai" target="_blank" class="agent-launch-btn">▶ Aktivieren</a>
+    </div>
+
+    <!-- 7. Web & SEO Agent -->
+    <div class="agent-card">
+      <div class="agent-icon">🌐</div>
+      <div class="agent-name">Web & SEO Agent</div>
+      <div class="agent-role">WEBSITE / WORDPRESS / TRAFFIC</div>
+      <div class="agent-status live">● AKTIV</div>
+      <div class="agent-skills">
+        <span class="agent-skill">WordPress</span>
+        <span class="agent-skill">On-Page SEO</span>
+        <span class="agent-skill">Core Web Vitals</span>
+        <span class="agent-skill">Backlinks</span>
+        <span class="agent-skill">Analytics</span>
+      </div>
+      <div class="agent-insight">"wave-bite.com: 1.2k Visits/Monat. Top-Keyword fehlt: 'Marina App Deutschland'. 3 Quick-Win-SEO-Maßnahmen identifiziert."</div>
+      <a href="https://wave-bite.com/wp-admin/" target="_blank" class="agent-launch-btn">▶ WP Admin</a>
+    </div>
+
+    <!-- 8. App Dev Agent -->
+    <div class="agent-card">
+      <div class="agent-icon">📱</div>
+      <div class="agent-name">App Dev Agent</div>
+      <div class="agent-role">FLUTTERFLOW / GLIDE / TECH-ARCHITEKTUR</div>
+      <div class="agent-status live">● AKTIV</div>
+      <div class="agent-skills">
+        <span class="agent-skill">FlutterFlow</span>
+        <span class="agent-skill">Glide Apps</span>
+        <span class="agent-skill">API-Design</span>
+        <span class="agent-skill">Firebase</span>
+        <span class="agent-skill">TestFlight</span>
+      </div>
+      <div class="agent-insight">"BunBo 3.0 Beta: TestFlight Upload KW22. Kritischer Pfad: Payment-Flow + Offline-Karte. Glide-Prototyp MVP in 4h baubar."</div>
+      <a href="https://flutterflow.io" target="_blank" class="agent-launch-btn">▶ FlutterFlow</a>
+    </div>
+
+    <!-- 9. Operations Agent -->
+    <div class="agent-card">
+      <div class="agent-icon">⚙️</div>
+      <div class="agent-name">Operations Agent</div>
+      <div class="agent-role">AUTOMATION / N8N / MAKE / PROZESSE</div>
+      <div class="agent-status beta">◑ BETA</div>
+      <div class="agent-skills">
+        <span class="agent-skill">N8N</span>
+        <span class="agent-skill">Make.com</span>
+        <span class="agent-skill">Zapier</span>
+        <span class="agent-skill">Apps Script</span>
+        <span class="agent-skill">Webhook</span>
+        <span class="agent-skill">CRM-Sync</span>
+      </div>
+      <div class="agent-insight">"6 Automationen aktiv. CEO-Briefing täglich 06:00. Investor-Reminder Di+Fr. Potenzial: 3h/Woche Zeitersparnis durch weitere Automationen."</div>
+      <a href="https://n8n.io" target="_blank" class="agent-launch-btn">▶ N8N öffnen</a>
+    </div>
+
+  </div><!-- /agent-grid -->
+
+  <!-- SKILL-MATRIX -->
+  <div class="panel" style="margin-top:1.25rem">
+    <div style="font-size:.65rem;letter-spacing:.15em;color:var(--teal);margin-bottom:.9rem">📋 AGENT-SKILL-MATRIX — AKTUELLE FÄHIGKEITEN & NÄCHSTE ERWEITERUNGEN</div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:.6rem;font-size:.63rem">
+      <div style="padding:.6rem .8rem;background:rgba(0,212,170,0.05);border:1px solid rgba(0,212,170,0.15);border-radius:8px">
+        <div style="color:var(--teal);font-weight:700;margin-bottom:.3rem">✅ AKTIVE SKILLS</div>
+        <div style="color:var(--text-dim);line-height:1.8">BWL-Analyse • Pitch-Decks • DSGVO-Prüfung • Content-Erstellung • SEO-Audit • API-Anbindung • Finanzplanung • OKR-Tracking</div>
+      </div>
+      <div style="padding:.6rem .8rem;background:rgba(201,168,76,0.05);border:1px solid rgba(201,168,76,0.15);border-radius:8px">
+        <div style="color:var(--gold);font-weight:700;margin-bottom:.3rem">🔧 IN ENTWICKLUNG</div>
+        <div style="color:var(--text-dim);line-height:1.8">Video-Skript-KI • Echtzeit-Investor-Alerts • KI-Vertragsanalyse • Social-Listening • Automatische Förderantragssuche</div>
+      </div>
+      <div style="padding:.6rem .8rem;background:rgba(0,200,255,0.04);border:1px solid rgba(0,200,255,0.1);border-radius:8px">
+        <div style="color:var(--blue);font-weight:700;margin-bottom:.3rem">🚀 GEPLANT (Q3)</div>
+        <div style="color:var(--text-dim);line-height:1.8">Echtzeit-Marktdaten • KI-Telefon-Agent • Auto-Reporting • Multimodales Video-AI • Partner-CRM-Integration</div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- ===================== CONSOLE SECTION ===================== -->
+<section id="sec-console">
+  <div class="section-title">🧠 CEO CONSOLE — MEMORY · KPI · REVIEW</div>
+  <div class="grid-3" style="--cols:3">
+
+    <!-- MEMORY CONSOLE -->
+    <div class="panel" style="border-color:rgba(0,212,170,0.25)">
+      <div style="font-size:.65rem;letter-spacing:.15em;color:var(--teal);margin-bottom:.75rem">🗃 MEMORY CONSOLE — JARVIS CONTEXT</div>
+      <div id="memory-console-log" style="font-size:.7rem;color:var(--text-dim);line-height:1.9;max-height:260px;overflow-y:auto">
+        <div style="color:var(--teal);margin-bottom:.3rem">[17.05.2026 06:00] CEO Briefing generiert — 3 kritische Items</div>
+        <div style="color:var(--text-dim);margin-bottom:.3rem">[17.05.2026 00:00] Wöchentlicher Status-Report gespeichert</div>
+        <div style="color:var(--gold);margin-bottom:.3rem">[16.05.2026 18:00] Risiko-Flag: BunBo App Beta-Delay erkannt</div>
+        <div style="color:var(--text-dim);margin-bottom:.3rem">[16.05.2026 14:22] Investor-Mail-Vorlage vorbereitet (2 Kontakte)</div>
+        <div style="color:var(--teal);margin-bottom:.3rem">[16.05.2026 09:00] Pegelonline Sync — alle Daten aktuell</div>
+        <div style="color:var(--text-dim);margin-bottom:.3rem">[15.05.2026 18:00] Social Media Pull — Instagram +4.2% Reichweite</div>
+        <div style="color:var(--gold);margin-bottom:.3rem">[15.05.2026 11:00] Strategieentscheidung: FlutterFlow vs React Native</div>
+        <div style="color:var(--text-dim);margin-bottom:.3rem">[15.05.2026 07:00] Wasser-Lagen-Daten für 5 Gewässer geupdated</div>
+      </div>
+      <div style="margin-top:.75rem;display:flex;gap:.5rem">
+        <button class="btn-outline" style="font-size:.65rem;padding:.3rem .7rem" onclick="addMemoryEntry()">+ Eintrag</button>
+        <button class="btn-outline" style="font-size:.65rem;padding:.3rem .7rem" onclick="showNotif('🗃 Memory exportiert','teal')">Export</button>
+      </div>
+    </div>
+
+    <!-- KPI REPORT -->
+    <div class="panel" style="border-color:rgba(201,168,76,0.25)">
+      <div style="font-size:.65rem;letter-spacing:.15em;color:var(--gold);margin-bottom:.75rem">📊 KPI REPORT — LIVE STATUS</div>
+      <div style="display:flex;flex-direction:column;gap:.6rem">
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:.5rem .7rem;background:rgba(0,200,255,0.05);border-radius:6px;border:1px solid rgba(0,200,255,0.1)">
+          <span style="font-size:.72rem;color:var(--text)">App MAU (BunBo)</span>
+          <span style="font-size:.8rem;font-weight:700;color:var(--teal)">847 <span style="font-size:.6rem;color:#4caf50">▲ +12%</span></span>
+        </div>
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:.5rem .7rem;background:rgba(0,200,255,0.05);border-radius:6px;border:1px solid rgba(0,200,255,0.1)">
+          <span style="font-size:.72rem;color:var(--text)">Website Sessions (7d)</span>
+          <span style="font-size:.8rem;font-weight:700;color:var(--teal)">3.241 <span style="font-size:.6rem;color:#4caf50">▲ +8%</span></span>
+        </div>
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:.5rem .7rem;background:rgba(0,200,255,0.05);border-radius:6px;border:1px solid rgba(0,200,255,0.1)">
+          <span style="font-size:.72rem;color:var(--text)">GitHub Commits (Mo)</span>
+          <span style="font-size:.8rem;font-weight:700;color:var(--blue)">34 <span style="font-size:.6rem;color:var(--text-dim)">→ stabil</span></span>
+        </div>
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:.5rem .7rem;background:rgba(0,200,255,0.05);border-radius:6px;border:1px solid rgba(201,168,76,0.2)">
+          <span style="font-size:.72rem;color:var(--text)">Investor-Leads aktiv</span>
+          <span style="font-size:.8rem;font-weight:700;color:var(--gold)">7 <span style="font-size:.6rem;color:#ff9800">▲ +2</span></span>
+        </div>
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:.5rem .7rem;background:rgba(0,200,255,0.05);border-radius:6px;border:1px solid rgba(255,76,76,0.15)">
+          <span style="font-size:.72rem;color:var(--text)">Offene kritische Tasks</span>
+          <span style="font-size:.8rem;font-weight:700;color:#ff6b6b">3 <span style="font-size:.6rem;color:#ff6b6b">⚠ action needed</span></span>
+        </div>
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:.5rem .7rem;background:rgba(0,200,255,0.05);border-radius:6px;border:1px solid rgba(0,200,255,0.1)">
+          <span style="font-size:.72rem;color:var(--text)">Cashflow-Prognose (Q3)</span>
+          <span style="font-size:.8rem;font-weight:700;color:var(--teal)">+18.500€ <span style="font-size:.6rem;color:#4caf50">▲ positiv</span></span>
+        </div>
+      </div>
+      <div style="margin-top:.75rem">
+        <a href="wavebyte-financial-os.html" target="_blank" class="btn-gold" style="font-size:.65rem;padding:.3rem .9rem;width:100%;display:block;text-align:center;text-decoration:none;border-radius:8px">💰 Financial Intelligence OS ↗</a>
+        <button class="btn-gold" style="font-size:.65rem;padding:.3rem .9rem;width:100%;margin-top:.4rem" onclick="window.open('https://docs.google.com/spreadsheets/d/1lROtjWlkeTpStbNURjyELWnO-8PETk-DeB3JThEHkqs/edit','_blank')">📊 Full KPI Report ↗</button>
+      </div>
+    </div>
+
+    <!-- REVIEW MONITOR -->
+    <div class="panel" style="border-color:rgba(0,200,255,0.2)">
+      <div style="font-size:.65rem;letter-spacing:.15em;color:var(--blue);margin-bottom:.75rem">🔍 REVIEW MONITOR — DAILY & WEEKLY</div>
+      <div style="font-size:.62rem;color:var(--text-dim);letter-spacing:.1em;margin-bottom:.5rem">HEUTE — <span id="review-date" style="color:var(--teal)"></span></div>
+      <div style="display:flex;flex-direction:column;gap:.35rem;margin-bottom:.9rem" id="daily-checklist">
+        <label style="display:flex;align-items:center;gap:.5rem;cursor:pointer;font-size:.72rem;color:var(--text)"><input type="checkbox" onchange="updateReviewProgress()" style="accent-color:var(--teal)"> CEO Briefing gelesen</label>
+        <label style="display:flex;align-items:center;gap:.5rem;cursor:pointer;font-size:.72rem;color:var(--text)"><input type="checkbox" onchange="updateReviewProgress()" style="accent-color:var(--teal)"> Top 3 Prioritäten gesetzt</label>
+        <label style="display:flex;align-items:center;gap:.5rem;cursor:pointer;font-size:.72rem;color:var(--text)"><input type="checkbox" onchange="updateReviewProgress()" style="accent-color:var(--teal)"> Offene Mails bearbeitet</label>
+        <label style="display:flex;align-items:center;gap:.5rem;cursor:pointer;font-size:.72rem;color:var(--text)"><input type="checkbox" onchange="updateReviewProgress()" style="accent-color:var(--teal)"> Risiken geprüft</label>
+        <label style="display:flex;align-items:center;gap:.5rem;cursor:pointer;font-size:.72rem;color:var(--text)"><input type="checkbox" onchange="updateReviewProgress()" style="accent-color:var(--teal)"> Investor-Kontakte nachgefasst</label>
+        <label style="display:flex;align-items:center;gap:.5rem;cursor:pointer;font-size:.72rem;color:var(--text)"><input type="checkbox" onchange="updateReviewProgress()" style="accent-color:var(--teal)"> Tages-Recap dokumentiert</label>
+      </div>
+      <div style="font-size:.62rem;color:var(--text-dim);letter-spacing:.1em;margin-bottom:.4rem">FORTSCHRITT</div>
+      <div style="background:rgba(0,200,255,0.08);border-radius:4px;height:6px;overflow:hidden">
+        <div id="review-progress-bar" style="height:100%;width:0%;background:linear-gradient(90deg,var(--blue),var(--teal));transition:width .4s ease;border-radius:4px"></div>
+      </div>
+      <div style="font-size:.65rem;color:var(--teal);margin-top:.3rem" id="review-progress-text">0 / 6 erledigt</div>
+      <div style="margin-top:.75rem;font-size:.62rem;color:var(--text-dim);letter-spacing:.1em;margin-bottom:.4rem">WÖCHENTLICH</div>
+      <div style="display:flex;flex-direction:column;gap:.3rem">
+        <label style="display:flex;align-items:center;gap:.5rem;cursor:pointer;font-size:.7rem;color:var(--text-dim)"><input type="checkbox" style="accent-color:var(--gold)"> Wochenreview durchgeführt</label>
+        <label style="display:flex;align-items:center;gap:.5rem;cursor:pointer;font-size:.7rem;color:var(--text-dim)"><input type="checkbox" style="accent-color:var(--gold)"> OKRs überprüft & angepasst</label>
+        <label style="display:flex;align-items:center;gap:.5rem;cursor:pointer;font-size:.7rem;color:var(--text-dim)"><input type="checkbox" style="accent-color:var(--gold)"> GitHub Repos reviewed</label>
+      </div>
+    </div>
+
   </div>
 </section>
 
@@ -7361,5 +7516,16 @@ function refreshCalIntel() {
     </div>
   </div>
 </div>
+
+// CEO Heute dynamic date
+(function(){
+  var el = document.getElementById('ceo-heute-date');
+  if(el){
+    var d = new Date();
+    var days=['SONNTAG','MONTAG','DIENSTAG','MITTWOCH','DONNERSTAG','FREITAG','SAMSTAG'];
+    var months=['JAN','FEB','MÄR','APR','MAI','JUN','JUL','AUG','SEP','OKT','NOV','DEZ'];
+    el.textContent = days[d.getDay()]+', '+d.getDate()+'. '+months[d.getMonth()]+' '+d.getFullYear();
+  }
+})();
 </body>
 </html>
