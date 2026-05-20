@@ -8082,5 +8082,140 @@ function refreshCalIntel() {
 
 </script>
 
+
+<!-- LIVE-TRACKING-CENTER 2026-05-20 -->
+<section id="sec-tracking-center" style="padding:2rem 1.5rem;max-width:1400px;margin:0 auto">
+  <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem;flex-wrap:wrap">
+    <div style="width:3px;height:2rem;background:linear-gradient(180deg,#00d4aa,rgba(0,212,170,0.3));border-radius:2px"></div>
+    <div>
+      <h2 style="font-size:1rem;font-weight:700;letter-spacing:.12em;color:#00d4aa;margin:0">📡 LIVE TRACKING CENTER</h2>
+      <div style="font-size:.62rem;color:var(--text-dim);letter-spacing:.08em;margin-top:.15rem">GA4 · QR-SCANS · DOWNLOADS · PWA · 4 STREAMS LIVE</div>
+    </div>
+    <button class="btn-outline" onclick="refreshTracking()" style="margin-left:auto;font-size:.55rem;padding:.25rem .65rem">⟳ Aktualisieren</button>
+    <span id="tcc-sync" style="font-size:.55rem;color:var(--text-dim)"></span>
+  </div>
+
+  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:.75rem;margin-bottom:1.25rem">
+    <div data-tcc-stream="website"    style="background:rgba(201,168,76,0.08);border:1px solid rgba(201,168,76,0.25);border-radius:10px;padding:.9rem">
+      <div style="font-size:.5rem;color:var(--gold);font-weight:700;letter-spacing:.1em">🌐 WEBSITE</div>
+      <div style="font-size:.65rem;color:var(--text-dim);margin-top:.2rem">wave-bite.com</div>
+      <div style="font-size:1.6rem;font-weight:800;color:var(--gold);margin-top:.5rem" data-tcc-field="pageviews_7d">—</div>
+      <div style="font-size:.55rem;color:var(--text-dim)">Pageviews · 7T</div>
+      <div style="font-size:.55rem;color:var(--text);margin-top:.4rem"><span data-tcc-field="sessions_7d">—</span> Sessions · <span data-tcc-field="users_7d">—</span> Users</div>
+    </div>
+    <div data-tcc-stream="wasserlage" style="background:rgba(0,212,170,0.08);border:1px solid rgba(0,212,170,0.25);border-radius:10px;padding:.9rem">
+      <div style="font-size:.5rem;color:var(--teal);font-weight:700;letter-spacing:.1em">🌊 WASSERLAGE</div>
+      <div style="font-size:.65rem;color:var(--text-dim);margin-top:.2rem">github.io/wasserlage</div>
+      <div style="font-size:1.6rem;font-weight:800;color:var(--teal);margin-top:.5rem" data-tcc-field="pageviews_7d">—</div>
+      <div style="font-size:.55rem;color:var(--text-dim)">Pageviews · 7T</div>
+      <div style="font-size:.55rem;color:var(--text);margin-top:.4rem"><span data-tcc-field="sessions_7d">—</span> Sessions · <span data-tcc-field="users_7d">—</span> Users</div>
+    </div>
+    <div data-tcc-stream="bunbo"      style="background:rgba(255,71,87,0.08);border:1px solid rgba(255,71,87,0.25);border-radius:10px;padding:.9rem">
+      <div style="font-size:.5rem;color:#ff4757;font-weight:700;letter-spacing:.1em">🍔 BUNBO APP</div>
+      <div style="font-size:.65rem;color:var(--text-dim);margin-top:.2rem">bunbo-xperience.glide.page</div>
+      <div style="font-size:1.6rem;font-weight:800;color:#ff4757;margin-top:.5rem" data-tcc-field="pageviews_7d">—</div>
+      <div style="font-size:.55rem;color:var(--text-dim)">Pageviews · 7T</div>
+      <div style="font-size:.55rem;color:var(--text);margin-top:.4rem"><span data-tcc-field="sessions_7d">—</span> Sessions · <span data-tcc-field="users_7d">—</span> Users</div>
+    </div>
+    <div data-tcc-stream="wavebiteL1" style="background:rgba(0,200,255,0.08);border:1px solid rgba(0,200,255,0.25);border-radius:10px;padding:.9rem">
+      <div style="font-size:.5rem;color:#00c8ff;font-weight:700;letter-spacing:.1em">📱 WAVE BITE L1</div>
+      <div style="font-size:.65rem;color:var(--text-dim);margin-top:.2rem">wave-bite-l1.glide.page</div>
+      <div style="font-size:1.6rem;font-weight:800;color:#00c8ff;margin-top:.5rem" data-tcc-field="pageviews_7d">—</div>
+      <div style="font-size:.55rem;color:var(--text-dim)">Pageviews · 7T</div>
+      <div style="font-size:.55rem;color:var(--text);margin-top:.4rem"><span data-tcc-field="sessions_7d">—</span> Sessions · <span data-tcc-field="users_7d">—</span> Users</div>
+    </div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:.75rem;margin-bottom:1.25rem">
+    <div style="background:rgba(163,102,255,0.08);border:1px solid rgba(163,102,255,0.25);border-radius:10px;padding:.9rem">
+      <div style="font-size:.5rem;color:#a366ff;font-weight:700;letter-spacing:.1em">📷 QR-SCANS · 30T</div>
+      <div style="font-size:1.6rem;font-weight:800;color:#a366ff;margin-top:.5rem" id="tcc-qr-total">—</div>
+      <div style="font-size:.55rem;color:var(--text-dim)">Gesamt · alle Stationen</div>
+      <div id="tcc-qr-stations" style="font-size:.5rem;color:var(--text-dim);margin-top:.4rem;line-height:1.5"></div>
+    </div>
+    <div style="background:rgba(255,170,0,0.08);border:1px solid rgba(255,170,0,0.25);border-radius:10px;padding:.9rem">
+      <div style="font-size:.5rem;color:#ffaa00;font-weight:700;letter-spacing:.1em">📥 DOWNLOADS · 30T</div>
+      <div style="font-size:1.6rem;font-weight:800;color:#ffaa00;margin-top:.5rem" id="tcc-dl-total">—</div>
+      <div style="font-size:.55rem;color:var(--text-dim)">PDF · CSV · GPX · ZIP</div>
+      <div id="tcc-dl-files" style="font-size:.5rem;color:var(--text-dim);margin-top:.4rem;line-height:1.5"></div>
+    </div>
+    <div style="background:rgba(0,255,136,0.06);border:1px solid rgba(0,255,136,0.25);border-radius:10px;padding:.9rem">
+      <div style="font-size:.5rem;color:var(--green);font-weight:700;letter-spacing:.1em">📲 PWA-INSTALLS · 30T</div>
+      <div style="font-size:1.6rem;font-weight:800;color:var(--green);margin-top:.5rem" id="tcc-pwa-installed">—</div>
+      <div style="font-size:.55rem;color:var(--text-dim)">Installiert · <span id="tcc-pwa-prompted">—</span> Prompts</div>
+      <div style="font-size:.55rem;color:var(--text);margin-top:.4rem">Conv: <span id="tcc-pwa-conv">—</span>%</div>
+    </div>
+    <div style="background:rgba(0,200,255,0.06);border:1px solid rgba(0,200,255,0.25);border-radius:10px;padding:.9rem">
+      <div style="font-size:.5rem;color:var(--blue);font-weight:700;letter-spacing:.1em">⚡ AKTIV JETZT</div>
+      <div style="font-size:1.6rem;font-weight:800;color:var(--blue);margin-top:.5rem" id="tcc-active-now">—</div>
+      <div style="font-size:.55rem;color:var(--text-dim)">Realtime · letzte 30 Min</div>
+      <div style="font-size:.55rem;color:var(--text);margin-top:.4rem" id="tcc-status">Bridge V3.2</div>
+    </div>
+  </div>
+
+  <div style="background:rgba(7,24,40,0.7);border:1px solid rgba(0,200,255,0.12);border-radius:10px;padding:.85rem;display:flex;gap:.5rem;flex-wrap:wrap;align-items:center">
+    <span style="font-size:.58rem;color:var(--text-dim);letter-spacing:.1em">GA4 DIREKT-LINKS:</span>
+    <a href="https://analytics.google.com/analytics/web/#/p532605005/reports/intelligenthome" target="_blank" rel="noopener" style="font-size:.55rem;padding:.2rem .5rem;background:rgba(0,200,255,0.08);border:1px solid rgba(0,200,255,0.25);border-radius:5px;color:var(--blue);text-decoration:none">Analytics Home ↗</a>
+    <a href="https://analytics.google.com/analytics/web/#/p532605005/realtime/overview" target="_blank" rel="noopener" style="font-size:.55rem;padding:.2rem .5rem;background:rgba(0,212,170,0.08);border:1px solid rgba(0,212,170,0.25);border-radius:5px;color:var(--teal);text-decoration:none">Realtime ↗</a>
+    <a href="https://analytics.google.com/analytics/web/#/p532605005/admin/streams/table" target="_blank" rel="noopener" style="font-size:.55rem;padding:.2rem .5rem;background:rgba(201,168,76,0.08);border:1px solid rgba(201,168,76,0.25);border-radius:5px;color:var(--gold);text-decoration:none">Datenstreams (4) ↗</a>
+    <a href="https://analytics.google.com/analytics/web/#/p532605005/reports/explorer" target="_blank" rel="noopener" style="font-size:.55rem;padding:.2rem .5rem;background:rgba(163,102,255,0.08);border:1px solid rgba(163,102,255,0.25);border-radius:5px;color:#a366ff;text-decoration:none">Events Explorer ↗</a>
+    <span id="tcc-error-hint" style="display:none;font-size:.5rem;color:#ff6b7a;flex:1;text-align:right">⚠ GA4-Auth: einmalig Apps-Script "testStreams" → Berechtigungen erteilen</span>
+  </div>
+</section>
+
+<script>
+(function(){
+  'use strict';
+  function bridgeUrl(){ try { return localStorage.getItem('ceo_master_bridge_url') || ''; } catch(e){ return ''; } }
+  window.refreshTracking = function(){
+    var url = bridgeUrl();
+    if (!url) { var s=document.getElementById('tcc-status'); if(s) s.textContent = 'Keine Bridge-URL'; return; }
+    var sync = document.getElementById('tcc-sync'); if(sync) sync.textContent='⏳ Lade …';
+    fetch(url+'?action=stream_stats').then(function(r){return r.json();}).then(function(d){
+      if (d && d.streams){
+        Object.keys(d.streams).forEach(function(key){
+          var s = d.streams[key];
+          document.querySelectorAll('[data-tcc-stream="'+key+'"] [data-tcc-field]').forEach(function(el){
+            var f = el.getAttribute('data-tcc-field');
+            var v = s[f];
+            el.textContent = (v === undefined || v === null) ? '—' : (typeof v === 'number' ? v.toLocaleString('de-DE') : v);
+          });
+          if (s.error) { var h=document.getElementById('tcc-error-hint'); if(h) h.style.display='inline'; }
+        });
+      }
+    }).catch(function(){});
+    fetch(url+'?action=qr_stats').then(function(r){return r.json();}).then(function(d){
+      if (d && typeof d.total_scans_30d !== 'undefined') {
+        document.getElementById('tcc-qr-total').textContent = d.total_scans_30d.toLocaleString('de-DE');
+        var by = (d.by_station||[]).slice(0,4).map(function(s){return s.station_id+': '+s.scans;}).join(' · ');
+        document.getElementById('tcc-qr-stations').textContent = by || 'Noch keine Scans';
+      }
+    }).catch(function(){});
+    fetch(url+'?action=download_stats').then(function(r){return r.json();}).then(function(d){
+      if (d && typeof d.total_downloads_30d !== 'undefined') {
+        document.getElementById('tcc-dl-total').textContent = d.total_downloads_30d.toLocaleString('de-DE');
+        var by = (d.by_file||[]).slice(0,4).map(function(f){return (f.file_name||'').slice(0,18)+': '+f.downloads;}).join(' · ');
+        document.getElementById('tcc-dl-files').textContent = by || 'Noch keine Downloads';
+      }
+    }).catch(function(){});
+    fetch(url+'?action=pwa_stats').then(function(r){return r.json();}).then(function(d){
+      if (d && typeof d.installed_30d !== 'undefined') {
+        document.getElementById('tcc-pwa-installed').textContent = d.installed_30d;
+        document.getElementById('tcc-pwa-prompted').textContent = d.prompted_30d;
+        document.getElementById('tcc-pwa-conv').textContent = d.conversion || 0;
+      }
+    }).catch(function(){});
+    fetch(url+'?action=analytics_realtime').then(function(r){return r.json();}).then(function(d){
+      if (d && typeof d.active_users !== 'undefined') {
+        document.getElementById('tcc-active-now').textContent = d.active_users;
+      }
+    }).catch(function(){});
+    if(sync) sync.textContent = '✓ ' + new Date().toLocaleTimeString('de-DE',{hour:'2-digit',minute:'2-digit'});
+  };
+  setTimeout(refreshTracking, 1500);
+  setInterval(refreshTracking, 300000);
+})();
+</script>
+
 </body>
 </html>
