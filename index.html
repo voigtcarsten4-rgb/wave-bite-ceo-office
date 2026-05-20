@@ -2524,8 +2524,8 @@
   <div class="section-title gold-title" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.5rem">
     <span>🎯 CEO HEUTE — <span id="ceo-heute-date"></span></span>
     <div style="display:flex;gap:.4rem;flex-shrink:0">
-      <button class="btn-outline" onclick="showNotif('📋 CEO Briefing wird erstellt...','gold')" style="font-size:.55rem;padding:.2rem .55rem;border-color:rgba(201,168,76,0.3);color:var(--gold)">☀ Briefing</button>
-      <button class="btn-outline" onclick="showNotif('⟳ Prioritäten synchronisiert','blue')" style="font-size:.55rem;padding:.2rem .55rem">⟳ Refresh</button>
+      <button class="btn-outline" onclick="window.open('https://script.google.com/macros/s/AKfycbzR2PXMHIx1NDVre9OUSaZ62tbBL3PlEvDf5QFz2IQVNq0-NXLi4pH7KYrXvXnZdUyG/exec?action=briefing','_blank','noopener')" style="font-size:.55rem;padding:.2rem .55rem;border-color:rgba(201,168,76,0.3);color:var(--gold)">☀ Briefing</button>
+      <button class="btn-outline" onclick="if(typeof refreshTracking==='function'){refreshTracking();}else{location.reload();}" style="font-size:.55rem;padding:.2rem .55rem">⟳ Refresh</button>
     </div>
   </div>
   <div class="grid-3">
@@ -2628,7 +2628,7 @@
       </div>
       <div style="margin-top:.75rem;display:flex;gap:.5rem">
         <a href="https://mail.google.com" target="_blank" class="pc-link">→ Gmail öffnen</a>
-        <span class="pc-link" style="cursor:pointer;background:rgba(0,200,255,0.05)" onclick="showNotif('📬 CEO Briefing wird vorbereitet...','blue')">CEO Briefing</span>
+        <span class="pc-link" style="cursor:pointer;background:rgba(0,200,255,0.05)" onclick="window.open('https://script.google.com/macros/s/AKfycbzR2PXMHIx1NDVre9OUSaZ62tbBL3PlEvDf5QFz2IQVNq0-NXLi4pH7KYrXvXnZdUyG/exec?action=briefing','_blank','noopener')">CEO Briefing</span>
       </div>
     </div>
   </div>
@@ -2844,7 +2844,7 @@
                 <span style="font-size:.38rem;color:rgba(255,255,255,0.25)">|</span>
                 <span style="font-size:.38rem;color:rgba(0,200,255,0.5)">🟣 Echtzeit: <span id="ga4-realtime-users" style="color:rgba(0,212,170,0.7)">–</span></span>
               </div>
-          <div style="font-size:.58rem;color:var(--green);margin-top:.2rem;font-weight:600">&#x2191; +788% Wachstum</div>
+          <div style="font-size:.58rem;color:var(--green);margin-top:.2rem;font-weight:600"><span data-tcc-live-pageviews>—</span> Pageviews · 7T</div>
           <div style="margin-top:.65rem;display:flex;align-items:flex-end;justify-content:center;gap:2px;height:28px">
             <div style="flex:1;height:4px;background:rgba(0,200,255,0.18);border-radius:1px 1px 0 0"></div>
             <div style="flex:1;height:7px;background:rgba(0,200,255,0.28);border-radius:1px 1px 0 0"></div>
@@ -2868,7 +2868,7 @@
         </div>
         <div style="padding:.5rem .6rem;background:rgba(0,212,170,0.04);border:1px solid rgba(0,212,170,0.1);border-radius:8px;text-align:center">
           <div style="font-size:.45rem;letter-spacing:.08em;color:var(--text-dim)">NEUE NUTZER / MONAT</div>
-          <div style="font-size:.9rem;font-weight:700;color:var(--teal);margin-top:.1rem">+19 &#x2191;</div>
+          <div style="font-size:.9rem;font-weight:700;color:var(--teal);margin-top:.1rem"><span data-tcc-live-new-users>—</span> &#x2191;</div>
         </div>
       </div>
 
@@ -2972,7 +2972,7 @@
                 <span style="font-size:.46rem;padding:.1rem .3rem;background:rgba(201,168,76,0.12);border:1px solid rgba(201,168,76,0.35);border-radius:3px;color:var(--gold)">AKTIV</span>
               </div>
               <div style="display:flex;align-items:center;gap:.35rem">
-                <span style="font-size:.7rem;font-weight:800;color:var(--gold)" id="perf-qr-bridge">281+</span>
+                <span style="font-size:.7rem;font-weight:800;color:var(--gold)" id="perf-qr-bridge" data-tcc-live-qr>—</span>
                 <span style="font-size:.47rem;color:var(--text-dim)">Scans</span>
               </div>
             </div>
@@ -3078,7 +3078,7 @@
             <div style="font-size:.44rem;letter-spacing:.08em;color:var(--text-dim);margin-top:.15rem">M&#xc4;RKTE</div>
           </div>
           <div style="background:rgba(201,168,76,0.06);border:1px solid rgba(201,168,76,0.16);border-radius:10px;padding:.65rem .4rem;text-align:center">
-            <div style="font-size:1.05rem;font-weight:900;color:var(--gold);line-height:1;text-shadow:0 0 12px rgba(201,168,76,0.35)">788%</div>
+            <div style="font-size:1.05rem;font-weight:900;color:var(--gold);line-height:1;text-shadow:0 0 12px rgba(201,168,76,0.35)"><span data-tcc-live="growth">—</span></div>
             <div style="font-size:.44rem;letter-spacing:.08em;color:var(--text-dim);margin-top:.15rem">WACHSTUM</div>
           </div>
           <div style="background:rgba(0,255,136,0.06);border:1px solid rgba(0,255,136,0.16);border-radius:10px;padding:.65rem .4rem;text-align:center">
@@ -3226,7 +3226,7 @@
             </div>
             <div style="width:1px;background:rgba(201,168,76,0.15)"></div>
             <div style="text-align:center">
-              <div style="font-size:.9rem;font-weight:800;color:var(--green)">94%</div>
+              <div style="font-size:.9rem;font-weight:800;color:var(--green)"><span data-tcc-live-bunbo>—</span></div>
               <div style="font-size:.38rem;color:var(--text-dim)">MOBILE QR</div>
             </div>
             <div style="width:1px;background:rgba(201,168,76,0.15)"></div>
@@ -3674,8 +3674,8 @@
       <div style="height:1px;background:rgba(201,168,76,0.15);margin:.75rem 0"></div>
       <div id="jarvis-lines"></div>
       <div style="margin-top:.75rem;display:flex;gap:.4rem;flex-wrap:wrap">
-        <button class="btn-primary" onclick="showNotif('🤖 JARVIS Analyse läuft...','blue')">▶ Analyse starten</button>
-        <button class="btn-outline" onclick="showNotif('📋 Briefing wird generiert...','blue')">Briefing</button>
+        <button class="btn-primary" onclick="window.open('https://script.google.com/macros/s/AKfycbzR2PXMHIx1NDVre9OUSaZ62tbBL3PlEvDf5QFz2IQVNq0-NXLi4pH7KYrXvXnZdUyG/exec?action=dashboard_data','_blank','noopener')">▶ Analyse starten</button>
+        <button class="btn-outline" onclick="window.open('https://script.google.com/macros/s/AKfycbzR2PXMHIx1NDVre9OUSaZ62tbBL3PlEvDf5QFz2IQVNq0-NXLi4pH7KYrXvXnZdUyG/exec?action=briefing','_blank','noopener')">Briefing</button>
       </div>
     </div>
     <div class="panel">
@@ -3887,9 +3887,9 @@
       <div style="margin-top:1rem">
         <div style="font-size:.65rem;letter-spacing:.1em;color:var(--gold);margin-bottom:.5rem">PITCH DECK & UNTERLAGEN</div>
         <div style="display:flex;flex-wrap:wrap;gap:.4rem">
-          <span class="pc-link" style="cursor:pointer" onclick="showNotif('📄 Pitch Deck wird geöffnet...','gold')">Pitch Deck v3</span>
-          <span class="pc-link" style="cursor:pointer" onclick="showNotif('📊 Finanzplan wird geöffnet...','gold')">Finanzplan</span>
-          <span class="pc-link" style="cursor:pointer" onclick="showNotif('🧾 Executive Summary...','gold')">Exec Summary</span>
+          <span class="pc-link" style="cursor:pointer" onclick="window.open('docs/pitch_v3.pdf','_blank','noopener')">Pitch Deck v3</span>
+          <span class="pc-link" style="cursor:pointer" onclick="window.open('wavebyte-financial-os.html','_blank','noopener')">Finanzplan</span>
+          <span class="pc-link" style="cursor:pointer" onclick="window.open('docs/onepager.pdf','_blank','noopener')">Exec Summary</span>
           <a href="https://www.exist.de" target="_blank" class="pc-link">EXIST Info</a>
         </div>
       </div>
@@ -3972,7 +3972,7 @@
         <div><div class="media-title">Newsletter: Wave Bite Mai-Update</div><div class="media-meta">150 Abonnenten • Mailchimp • KW 22</div></div>
       </div>
       <div style="margin-top:.75rem;display:flex;gap:.5rem">
-        <span class="pc-link" style="cursor:pointer" onclick="showNotif('📅 Content-Kalender wird geladen...','blue')">Content-Plan</span>
+        <span class="pc-link" style="cursor:pointer" onclick="document.getElementById('sec-calendar').scrollIntoView({behavior:'smooth'})">Content-Plan</span>
         <a href="https://www.canva.com" target="_blank" class="pc-link">Canva</a>
         <a href="https://mailchimp.com" target="_blank" class="pc-link">Mailchimp</a>
       </div>
@@ -4394,10 +4394,10 @@
   </div>
   <!-- Action buttons -->
   <div style="display:flex;gap:.5rem;margin-bottom:1.25rem;flex-wrap:wrap">
-    <button class="btn-gold" onclick="showNotif('📧 Investor Follow-up vorbereitet — Bitte manuell absenden','gold')" style="font-size:.6rem">✉ Follow-up</button>
-    <button class="btn-outline" onclick="showNotif('📂 DD-Ordner: Google Drive wird geöffnet','blue')" style="font-size:.6rem;border-color:rgba(201,168,76,0.3);color:var(--gold)">📂 DD-Ordner</button>
-    <button class="btn-outline" onclick="showNotif('📊 Pitch Deck v3 wird geladen','blue')" style="font-size:.6rem">📊 Pitch Deck v3</button>
-    <button class="btn-outline" onclick="showNotif('📋 EXIST-Antrag Vorlage','blue')" style="font-size:.6rem">🏦 EXIST-Antrag</button>
+    <button class="btn-gold" onclick="document.getElementById('sec-investor').scrollIntoView({behavior:'smooth'})" style="font-size:.6rem">✉ Follow-up</button>
+    <button class="btn-outline" onclick="window.open('docs/businessplan_2026.pdf','_blank','noopener')" style="font-size:.6rem;border-color:rgba(201,168,76,0.3);color:var(--gold)">📂 DD-Ordner</button>
+    <button class="btn-outline" onclick="window.open('docs/pitch_v3.pdf','_blank','noopener')" style="font-size:.6rem">📊 Pitch Deck v3</button>
+    <button class="btn-outline" onclick="window.open('docs/exist_foerderlogik.pdf','_blank','noopener')" style="font-size:.6rem">🏦 EXIST-Antrag</button>
   </div>
   <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem">
     <div style="width:3px;height:2rem;background:linear-gradient(180deg,var(--gold),rgba(201,168,76,0.4));border-radius:2px"></div>
@@ -4509,7 +4509,7 @@
   <div style="background:rgba(7,24,40,0.7);border:1px solid rgba(0,200,255,0.1);border-radius:12px;padding:1rem;margin-bottom:1.25rem">
     <div style="font-size:.58rem;font-weight:700;letter-spacing:.1em;color:var(--text-dim);margin-bottom:.75rem;display:flex;justify-content:space-between">
       <span>⚡ AKTIVE WORKFLOWS — KW21</span>
-      <button class="btn-outline" onclick="showNotif('📋 Sprint-Board aktualisiert','blue')" style="font-size:.52rem;padding:.18rem .45rem">⟳</button>
+      <button class="btn-outline" onclick="document.getElementById('sec-projects').scrollIntoView({behavior:'smooth'})" style="font-size:.52rem;padding:.18rem .45rem">⟳</button>
     </div>
     <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:.6rem">
       <div>
@@ -4613,34 +4613,6 @@
   </div>
 
   <!-- Risk Heatmap -->
-  <div style="background:rgba(7,24,40,0.7);border:1px solid rgba(255,68,68,0.15);border-radius:12px;padding:1rem;margin-bottom:1.25rem">
-    <div style="font-size:.58rem;font-weight:700;letter-spacing:.1em;color:var(--text-dim);margin-bottom:.75rem;display:flex;justify-content:space-between;align-items:center">
-      <span>📊 RISIKO-MATRIX — WAHRSCHEINLICHKEIT × IMPACT</span>
-      <div style="display:flex;gap:.4rem">
-        <button class="btn-outline" onclick="updateRiskMatrix()" style="font-size:.52rem;padding:.18rem .45rem;border-color:rgba(255,68,68,0.3);color:#ff4757">⟳ Update</button>
-        <button class="btn-outline" onclick="exportRiskReport()" style="font-size:.52rem;padding:.18rem .45rem">✉ Report</button>
-      </div>
-    </div>
-    <div style="display:grid;grid-template-columns:auto 1fr 1fr 1fr;gap:3px;font-size:.5rem">
-      <div></div>
-      <div style="text-align:center;color:var(--text-dim);padding:.2rem">GERING</div>
-      <div style="text-align:center;color:var(--text-dim);padding:.2rem">MITTEL</div>
-      <div style="text-align:center;color:var(--text-dim);padding:.2rem">HOCH</div>
-      <div style="color:var(--text-dim);padding:.2rem;writing-mode:vertical-rl;transform:rotate(180deg);text-align:center">HOCH</div>
-      <div style="background:rgba(255,170,0,0.1);border:1px solid rgba(255,170,0,0.2);border-radius:4px;padding:.3rem;min-height:48px;display:flex;align-items:center;justify-content:center;text-align:center;color:#ffaa00;font-size:.52rem"></div>
-      <div style="background:rgba(255,68,68,0.12);border:1px solid rgba(255,68,68,0.3);border-radius:4px;padding:.3rem;min-height:48px;display:flex;align-items:center;justify-content:center;text-align:center;color:#ff4757;font-size:.52rem">Kein<br>Rechtsstatus</div>
-      <div style="background:rgba(255,30,30,0.18);border:2px solid rgba(255,68,68,0.4);border-radius:4px;padding:.3rem;min-height:48px;display:flex;align-items:center;justify-content:center;text-align:center;color:#ff4757;font-weight:700;font-size:.52rem">LIQUIDITÄT<br>⚠️</div>
-      <div style="color:var(--text-dim);padding:.2rem;writing-mode:vertical-rl;transform:rotate(180deg);text-align:center">MITTEL</div>
-      <div style="background:rgba(0,200,255,0.04);border:1px solid rgba(0,200,255,0.1);border-radius:4px;padding:.3rem;min-height:48px;display:flex;align-items:center;justify-content:center;text-align:center;color:var(--text-dim);font-size:.52rem">WP<br>Updates</div>
-      <div style="background:rgba(255,170,0,0.08);border:1px solid rgba(255,170,0,0.2);border-radius:4px;padding:.3rem;min-height:48px;display:flex;align-items:center;justify-content:center;text-align:center;color:#ffaa00;font-size:.52rem">DSGVO</div>
-      <div style="background:rgba(255,68,68,0.1);border:1px solid rgba(255,68,68,0.22);border-radius:4px;padding:.3rem;min-height:48px;display:flex;align-items:center;justify-content:center;text-align:center;color:#ff4757;font-size:.52rem">Partner<br>Pipeline</div>
-      <div style="color:var(--text-dim);padding:.2rem;writing-mode:vertical-rl;transform:rotate(180deg);text-align:center">GERING</div>
-      <div style="background:rgba(0,255,136,0.04);border:1px solid rgba(0,255,136,0.1);border-radius:4px;padding:.3rem;min-height:48px;display:flex;align-items:center;justify-content:center;text-align:center;color:var(--green);font-size:.52rem">Core<br>Systeme</div>
-      <div style="background:rgba(0,255,136,0.04);border:1px solid rgba(0,255,136,0.1);border-radius:4px;padding:.3rem;min-height:48px;display:flex;align-items:center;justify-content:center;text-align:center;color:var(--green);font-size:.52rem">WL<br>302-Fix</div>
-      <div style="background:rgba(255,170,0,0.06);border:1px solid rgba(255,170,0,0.15);border-radius:4px;padding:.3rem;min-height:48px;display:flex;align-items:center;justify-content:center;text-align:center;color:#ffaa00;font-size:.52rem">Einzel-<br>abhäng.</div>
-    </div>
-  </div>
-
   <!-- INTERAKTIVE RISK-MATRIX (Chart.js Bubble) -->
   <div style="background:rgba(7,24,40,0.7);border:1px solid rgba(255,68,68,0.15);border-radius:12px;padding:1rem;margin-bottom:1.25rem">
     <div style="font-size:.58rem;font-weight:700;letter-spacing:.1em;color:var(--text-dim);margin-bottom:.75rem">📊 INTERAKTIVE RISIKO-MATRIX (Hover für Details)</div>
@@ -4997,7 +4969,7 @@
       </div>
       <div style="margin-top:.75rem;display:flex;gap:.5rem">
         <button class="btn-outline" style="font-size:.65rem;padding:.3rem .7rem" onclick="addMemoryEntry()">+ Eintrag</button>
-        <button class="btn-outline" style="font-size:.65rem;padding:.3rem .7rem" onclick="showNotif('🗃 Memory exportiert','teal')">Export</button>
+        <button class="btn-outline" style="font-size:.65rem;padding:.3rem .7rem" onclick="window.open('docs/investor_onepager.pdf','_blank','noopener')">Export</button>
       </div>
     </div>
 
@@ -5065,7 +5037,7 @@
 </section>
 
 <div id="quick-actions-bar" style="position:fixed;bottom:28px;right:1.5rem;z-index:90;display:flex;flex-direction:column;gap:.4rem">
-  <button class="btn-gold" onclick="showNotif('📋 CEO Briefing wird erstellt...','gold')" title="CEO Briefing">☀ Briefing</button>
+  <button class="btn-gold" onclick="window.open('https://script.google.com/macros/s/AKfycbzR2PXMHIx1NDVre9OUSaZ62tbBL3PlEvDf5QFz2IQVNq0-NXLi4pH7KYrXvXnZdUyG/exec?action=briefing','_blank','noopener')" title="CEO Briefing">☀ Briefing</button>
   <button class="btn-primary" onclick="document.getElementById('sec-executive').scrollIntoView({behavior:'smooth'})" title="Executive Focus" style="background:linear-gradient(135deg,var(--teal),var(--blue))">⚡ Executive</button>
   <button class="btn-primary" onclick="document.getElementById('sec-projects').scrollIntoView({behavior:'smooth'})" title="Projekte">⚓ Projekte</button>
   <button class="btn-outline" onclick="document.getElementById('sec-risk').scrollIntoView({behavior:'smooth'})" title="Risiken" style="border-color:rgba(255,68,68,0.4);color:#ff4757">⚠ Risiken</button>
@@ -5524,20 +5496,8 @@ function initJarvis() {
     loadEvents: function() {
       try {
         var stored = JSON.parse(localStorage.getItem('ceo_cal_events') || '[]');
-        // Add demo events if empty
-        if (stored.length === 0) {
-          var today = new Date();
-          var td = today.toISOString().split('T')[0];
-          stored = [
-            {id:'d1',title:'BunBo Strategy Call',date:td,time:'09:00',dur:60,cal:'wb',loc:'Zoom'},
-            {id:'d2',title:'Seedmatch DD Review',date:td,time:'11:30',dur:90,cal:'bl',loc:'Online'},
-            {id:'d3',title:'Investor Meeting',date:td,time:'15:00',dur:60,cal:'wb',loc:'Hamburg'},
-            {id:'d4',title:'Wave Bite Sprint Review',date:CAL.offsetDate(today,1),time:'10:00',dur:90,cal:'wb',loc:'Remote'},
-            {id:'d5',title:'BunBo Pitch Vorbereitung',date:CAL.offsetDate(today,2),time:'14:00',dur:120,cal:'bl',loc:''},
-            {id:'d6',title:'Investor Follow-up',date:CAL.offsetDate(today,3),time:'09:30',dur:45,cal:'wb',loc:'Zoom'},
-          ];
-          try { localStorage.setItem('ceo_cal_events', JSON.stringify(stored)); } catch(e){}
-        }
+        // Demo events removed 2026-05-20 - nur echte Events
+        
         CAL.events = stored;
       } catch(e) { CAL.events = []; }
     },
