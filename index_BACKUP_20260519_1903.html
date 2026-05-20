@@ -4,8 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>WAVE BITE // CAPITÄNS BRIDGE — JARVIS Edition</title>
-<meta name="description" content="Wave Bite CEO Command Center — Maritime Intelligence Dashboard für Projekte, Finanzen, Daten und Strategie">
-<meta name="robots" content="noindex, nofollow">
 <!-- CDN scripts moved to bottom of body for instant boot-screen render -->
 <style>
   :root {
@@ -1306,43 +1304,6 @@
   #quick-actions-bar { bottom: calc(10px + env(safe-area-inset-bottom)) !important; }
 }
 
-/* ── MOBILE FIX: Quick-Actions-Bar Sidebar + Dashboard Cutoff ── */
-/* 1) Switch to row layout at ≤900px so column never overflows viewport top */
-@media(max-width:900px){
-  #quick-actions-bar{
-    flex-direction:row!important;
-    flex-wrap:wrap!important;
-    bottom:40px!important;
-    right:.65rem!important;
-    gap:.3rem!important;
-    justify-content:flex-end!important;
-    max-width:calc(100vw - 1.3rem)!important;
-  }
-  #quick-actions-bar .btn-gold,
-  #quick-actions-bar .btn-primary,
-  #quick-actions-bar .btn-outline,
-  #quick-actions-bar a.btn-outline{
-    font-size:.52rem!important;
-    padding:.35rem .6rem!important;
-    min-height:38px!important;
-  }
-  /* 2) Extra bottom padding so bar (now 2 rows) doesn't cover page content */
-  .page{padding-bottom:8rem!important}
-}
-/* Extra safety: landscape phones with very low viewport height */
-@media(max-height:500px){
-  #quick-actions-bar{
-    flex-direction:row!important;
-    flex-wrap:wrap!important;
-    bottom:36px!important;
-    max-width:calc(100vw - 1rem)!important;
-  }
-}
-/* Dashboard grid: single column on narrow phones, remove grid-column span */
-@media(max-width:479px){
-  .dash-grid{grid-template-columns:1fr!important}
-  .dash-grid>[style*="grid-column"]{grid-column:span 1!important}
-}
 
   /* ═══════════════════════════════════════════════════
      CREAM / ELFENBEIN DESIGN SYSTEM — v5
@@ -1612,17 +1573,6 @@
   .intel-suggestion::before{content:'💡 '}
 
 </style>
-
-<script>
-// Auto-Setup Apps-Script-Bridge URL als Default (2026-05-20)
-(function(){
-  try {
-    var DEFAULT_BRIDGE = 'https://script.google.com/macros/s/AKfycbzR2PXMHIx1NDVre9OUSaZ62tbBL3PlEvDf5QFz2IQVNq0-NXLi4pH7KYrXvXnZdUyG/exec';
-    if (!localStorage.getItem('ceo_master_bridge_url')) localStorage.setItem('ceo_master_bridge_url', DEFAULT_BRIDGE);
-    if (!localStorage.getItem('ceo_cal_bridge_url'))    localStorage.setItem('ceo_cal_bridge_url',    DEFAULT_BRIDGE);
-  } catch(e){}
-})();
-</script>
 </head>
 <body>
 
@@ -1746,47 +1696,13 @@
   ::-webkit-scrollbar-thumb:hover { background: rgba(212,168,67,0.5); }
 </style>
 
-<!-- COOKIE & DSGVO CONSENT BANNER (REBUILT 2026-05-20) -->
-<div id="cookie-banner" style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:99997;background:linear-gradient(135deg,rgba(2,8,16,0.97),rgba(4,14,28,0.97));border-top:1px solid rgba(201,168,76,0.3);padding:.85rem 1.25rem;backdrop-filter:blur(12px);box-shadow:0 -8px 30px rgba(0,0,0,0.5)">
-  <div style="max-width:1200px;margin:0 auto;display:flex;align-items:center;gap:1rem;flex-wrap:wrap">
-    <div style="flex:1;min-width:240px;display:flex;align-items:flex-start;gap:.75rem">
-      <span style="font-size:1.3rem;flex-shrink:0">🍪</span>
-      <div>
-        <div style="font-size:.78rem;font-weight:700;color:#fff;margin-bottom:.25rem">Cookies &amp; Datenschutz</div>
-        <div style="font-size:.7rem;color:rgba(255,255,255,0.65);line-height:1.5">
-          Diese App speichert lokal in deinem Browser (localStorage) Einstellungen, Kalender und Bridge-URLs. Keine Übertragung an Dritte. Mit "Akzeptieren" stimmst du dem zu.
-        </div>
-      </div>
-    </div>
-    <div style="display:flex;gap:.6rem;flex-shrink:0;flex-wrap:wrap">
-      <button onclick="acceptCookies()" style="padding:.5rem 1.2rem;background:linear-gradient(90deg,#00c8ff,#00d4aa);color:#000;border:none;border-radius:6px;font-weight:700;cursor:pointer;font-size:.78rem">✓ Akzeptieren</button>
-      <button onclick="declineCookies()" style="padding:.5rem 1rem;background:transparent;color:rgba(255,255,255,0.6);border:1px solid rgba(255,255,255,0.18);border-radius:6px;cursor:pointer;font-size:.78rem">Nur notwendig</button>
-      <a href="https://wave-bite.com/datenschutz" target="_blank" rel="noopener noreferrer" style="padding:.5rem .8rem;color:rgba(201,168,76,0.7);font-size:.7rem;text-decoration:none;align-self:center">Datenschutz ↗</a>
-    </div>
+<!-- COOKIE & PWA CONSENT BANNER -->
+  </div>
+  <div style="display:flex;gap:.75rem;flex-shrink:0">
+    <button onclick="acceptCookies()" style="padding:.5rem 1.2rem;background:linear-gradient(90deg,#00c8ff,#00d4aa);color:#000;border:none;border-radius:6px;font-weight:700;cursor:pointer;font-size:.8rem">✓ Akzeptieren</button>
+    <button onclick="declineCookies()" style="padding:.5rem 1rem;background:transparent;color:var(--text-dim,#4a7a9b);border:1px solid rgba(74,122,155,0.3);border-radius:6px;cursor:pointer;font-size:.8rem">Ablehnen</button>
   </div>
 </div>
-<script>
-(function(){
-  window.acceptCookies = function(){
-    try { localStorage.setItem('ceo_cookie_consent','accepted'); localStorage.setItem('ceo_cookie_consent_at', new Date().toISOString()); } catch(e){}
-    var b=document.getElementById('cookie-banner'); if(b) b.style.display='none';
-    if (typeof showNotif==='function') showNotif('Cookie-Einstellungen gespeichert','teal');
-  };
-  window.declineCookies = function(){
-    try { localStorage.setItem('ceo_cookie_consent','minimal'); localStorage.setItem('ceo_cookie_consent_at', new Date().toISOString()); } catch(e){}
-    var b=document.getElementById('cookie-banner'); if(b) b.style.display='none';
-    if (typeof showNotif==='function') showNotif('Nur notwendige Cookies aktiv','gold');
-  };
-  function showBannerIfNeeded(){
-    try {
-      var c = localStorage.getItem('ceo_cookie_consent');
-      if (!c) { var b = document.getElementById('cookie-banner'); if (b) b.style.display='block'; }
-    } catch(e){}
-  }
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', showBannerIfNeeded);
-  else setTimeout(showBannerIfNeeded, 100);
-})();
-</script>
 <!-- PWA INSTALL PROMPT (Chrome/Android/Windows) -->
 <div id="pwa-install-bar" style="display:none;position:fixed;top:0;left:0;right:0;z-index:99998;background:linear-gradient(90deg,rgba(0,200,255,0.1),rgba(0,212,170,0.08));border-bottom:1px solid rgba(0,200,255,0.15);padding:.6rem 1.5rem;backdrop-filter:blur(8px);align-items:center;gap:1rem">
   <img src="Dashboard_Icon.png" style="width:28px;height:28px;border-radius:6px" alt="Icon">
@@ -1870,7 +1786,7 @@
   <!-- QUICK TOOL BUTTONS IN NAV -->
   <a href="https://mail.google.com" target="_blank" class="nav-tool-btn" title="Gmail öffnen">✉ Mail</a>
   <a href="https://calendar.google.com" target="_blank" class="nav-tool-btn" title="Kalender öffnen">📅 Kalender</a>
-  <a href="https://github.com/voigtcarsten4-rgb" target="_blank" class="nav-tool-btn" title="GitHub Repos öffnen">🐙 GitHub</a>
+  <a href="https://github.com" target="_blank" class="nav-tool-btn" title="GitHub öffnen">🐙 GitHub</a>
   <button class="nav-tool-btn" onclick="toggleToolbelt()" title="CEO Toolbelt">⚙ Tools</button>
   <div class="nav-status" title="System Online"></div>
   <div class="nav-clock" id="nav-clock">--:--:--</div>
@@ -1906,7 +1822,7 @@
   <!-- ENTWICKLUNG -->
   <div style="font-size:.6rem;letter-spacing:.15em;color:var(--gold);margin-bottom:.5rem">💻 ENTWICKLUNG</div>
   <div style="display:flex;flex-direction:column;gap:.4rem;margin-bottom:1rem">
-    <a href="https://github.com/voigtcarsten4-rgb" target="_blank" class="tb-link"><span>🐙</span><div><div class="tb-name">GitHub — Wave Bite Repos</div><div class="tb-url">github.com/voigtcarsten4-rgb</div></div><span class="tb-arrow">↗</span></a>
+    <a href="https://github.com" target="_blank" class="tb-link"><span>🐙</span><div><div class="tb-name">GitHub</div><div class="tb-url">github.com</div></div><span class="tb-arrow">↗</span></a>
     <a href="https://flutterflow.io" target="_blank" class="tb-link"><span>📱</span><div><div class="tb-name">FlutterFlow</div><div class="tb-url">flutterflow.io</div></div><span class="chip chip-success" style="font-size:.55rem;padding:.1rem .35rem">Aktiv</span></a>
     <a href="https://app.glideapps.com" target="_blank" class="tb-link"><span>⚡</span><div><div class="tb-name">Glide Apps</div><div class="tb-url">app.glideapps.com</div></div><span class="tb-arrow">↗</span></a>
     <a href="https://vercel.com" target="_blank" class="tb-link"><span>▲</span><div><div class="tb-name">Vercel Deployments</div><div class="tb-url">vercel.com</div></div><span class="tb-arrow">↗</span></a>
@@ -2476,12 +2392,7 @@
         <div style="padding:.65rem .75rem;background:rgba(0,200,255,0.04);border:1px solid rgba(0,200,255,0.15);border-radius:10px;margin-bottom:.75rem">
           <div style="font-size:.48rem;letter-spacing:.14em;color:var(--text-dim);margin-bottom:.45rem">🔌 GOOGLE CALENDAR BRIDGE</div>
           <div id="cal-bridge-status-sec" style="font-size:.6rem;margin-bottom:.45rem;padding:.28rem .5rem;border-radius:5px;background:rgba(255,193,7,0.08);border:1px solid rgba(255,193,7,0.2);color:rgba(255,193,7,0.85)">⚡ Nicht verbunden — Apps Script URL eintragen</div>
-          <div style="font-size:.55rem;color:var(--text-dim);margin-bottom:.4rem;line-height:1.5;padding:.28rem .4rem;background:rgba(0,0,0,.2);border-radius:5px">
-            📋 <strong style="color:var(--text)">So verbinden:</strong> Google Apps Script öffnen →
-            <code style="color:var(--teal);font-size:.5rem">CEO_MASTER_BRIDGE_V2.gs</code> deployen →
-            Bereitstellen als Web-App → URL kopieren → hier einfügen
-          </div>
-          <input id="cal-bridge-url-input" class="cqs-input" type="text" placeholder="https://script.google.com/macros/s/…/exec" style="margin-bottom:.45rem;font-size:.62rem">
+          <input id="cal-bridge-url-input" class="cqs-input" type="text" placeholder="https://script.google.com/…/exec" style="margin-bottom:.45rem;font-size:.62rem">
           <button onclick="calSaveBridgeUrl()" class="cqs-btn" style="margin-bottom:.3rem">🔗 VERBINDEN</button>
           <button onclick="calSyncNow()" style="width:100%;padding:.35rem;background:rgba(0,212,170,0.08);border:1px solid rgba(0,212,170,0.25);border-radius:6px;color:var(--teal);font-size:.62rem;cursor:pointer;font-family:inherit;transition:all .2s" onmouseover="this.style.background='rgba(0,212,170,0.15)'" onmouseout="this.style.background='rgba(0,212,170,0.08)'">↺ SYNC STARTEN</button>
           <div id="cal-sync-status" style="font-size:.58rem;color:var(--text-dim);text-align:center;margin-top:.3rem;min-height:.8rem"></div>
@@ -3860,9 +3771,9 @@
         <div class="kpi-box"><span class="kpi-val" id="ceo-cash-val" style="color:#c9a84c">14.000 €</span><span class="kpi-label">Cash Reserve</span></div>
         <div class="kpi-box"><span class="kpi-val" id="ceo-runway-val" style="color:#ff4757">5 Mon.</span><span class="kpi-label">Runway</span></div>
       </div>
-      <div id="ceo-finance-alert" data-finance-alert style="font-size:.62rem;padding:.35rem .6rem;border-radius:5px;background:rgba(255,71,87,0.08);border:1px solid rgba(255,71,87,0.18);margin-bottom:.6rem;color:#ff4757">⚠ Runway ~5 Monate — Seed-Gespräche beschleunigen</div>
+      <div id="ceo-finance-alert" style="font-size:.62rem;padding:.35rem .6rem;border-radius:5px;background:rgba(255,71,87,0.08);border:1px solid rgba(255,71,87,0.18);margin-bottom:.6rem;color:#ff4757">⚠ Runway ~5 Monate — Seed-Gespräche beschleunigen</div>
       <div class="chart-box" style="height:130px"><canvas id="chart-finance"></canvas></div>
-      <div id="ceo-finance-alert-mobile" data-finance-alert style="font-size:.63rem;padding:.35rem .6rem;border-radius:5px;background:rgba(255,71,87,0.08);margin-top:.5rem;color:#ff4757">⚠ Runway ~5 Mon.</div>
+      <div id="ceo-finance-alert" style="font-size:.63rem;padding:.35rem .6rem;border-radius:5px;background:rgba(255,71,87,0.08);margin-top:.5rem;color:#ff4757">⚠ Runway ~5 Mon.</div>
     </div>
     <div class="panel">
       <div style="font-size:.65rem;letter-spacing:.15em;color:var(--blue);margin-bottom:.75rem">🎯 BUSINESS METRICS</div>
@@ -4601,7 +4512,7 @@
         🔴 Live Monitor ↗
       </a>
     </div>
-      <div style="font-size:.62rem;color:var(--text-dim);letter-spacing:.08em;margin-top:.15rem">RISIKOSTATUS · GEGENMASSNAHMEN · AMPEL</div>
+      <div style="font-size:.62rem;color:var(--text-dim);letter-spacing:.08em;margin-top:.15rem">RISIKOSTATUS · GEGENMAASSNAHMEN · AMPEL</div>
     </div>
   </div>
   <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:.75rem;margin-bottom:1.5rem">
@@ -4617,8 +4528,8 @@
     <div style="font-size:.58rem;font-weight:700;letter-spacing:.1em;color:var(--text-dim);margin-bottom:.75rem;display:flex;justify-content:space-between;align-items:center">
       <span>📊 RISIKO-MATRIX — WAHRSCHEINLICHKEIT × IMPACT</span>
       <div style="display:flex;gap:.4rem">
-        <button class="btn-outline" onclick="updateRiskMatrix()" style="font-size:.52rem;padding:.18rem .45rem;border-color:rgba(255,68,68,0.3);color:#ff4757">⟳ Update</button>
-        <button class="btn-outline" onclick="exportRiskReport()" style="font-size:.52rem;padding:.18rem .45rem">✉ Report</button>
+        <button class="btn-outline" onclick="showNotif('🔄 Risiko-Update gespeichert','gold')" style="font-size:.52rem;padding:.18rem .45rem;border-color:rgba(255,68,68,0.3);color:#ff4757">⟳ Update</button>
+        <button class="btn-outline" onclick="showNotif('📧 Risk-Report verschickt','blue')" style="font-size:.52rem;padding:.18rem .45rem">✉ Report</button>
       </div>
     </div>
     <div style="display:grid;grid-template-columns:auto 1fr 1fr 1fr;gap:3px;font-size:.5rem">
@@ -4640,12 +4551,6 @@
       <div style="background:rgba(255,170,0,0.06);border:1px solid rgba(255,170,0,0.15);border-radius:4px;padding:.3rem;min-height:48px;display:flex;align-items:center;justify-content:center;text-align:center;color:#ffaa00;font-size:.52rem">Einzel-<br>abhäng.</div>
     </div>
   </div>
-
-  <!-- INTERAKTIVE RISK-MATRIX (Chart.js Bubble) -->
-  <div style="background:rgba(7,24,40,0.7);border:1px solid rgba(255,68,68,0.15);border-radius:12px;padding:1rem;margin-bottom:1.25rem">
-    <div style="font-size:.58rem;font-weight:700;letter-spacing:.1em;color:var(--text-dim);margin-bottom:.75rem">📊 INTERAKTIVE RISIKO-MATRIX (Hover für Details)</div>
-    <div style="height:280px;position:relative"><canvas id="risk-heatmap-chart"></canvas></div>
-  </div>
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.25rem">
     <div style="background:rgba(7,24,40,0.7);border:1px solid rgba(0,200,255,0.1);border-radius:12px;padding:1.25rem">
       <div style="font-size:.6rem;font-weight:700;letter-spacing:.1em;color:var(--text-dim);margin-bottom:1rem">RISIKO-REGISTER</div>
@@ -4659,7 +4564,7 @@
       </div>
     </div>
     <div style="background:rgba(7,24,40,0.7);border:1px solid rgba(0,200,255,0.1);border-radius:12px;padding:1.25rem">
-      <div style="font-size:.6rem;font-weight:700;letter-spacing:.1em;color:var(--text-dim);margin-bottom:1rem">GEGENMASSNAHMEN</div>
+      <div style="font-size:.6rem;font-weight:700;letter-spacing:.1em;color:var(--text-dim);margin-bottom:1rem">GEGENMAASSNAHMEN</div>
       <div style="display:flex;flex-direction:column;gap:.85rem">
         <div style="background:rgba(255,68,68,0.06);border:1px solid rgba(255,68,68,0.15);border-radius:8px;padding:.85rem"><div style="font-size:.6rem;font-weight:700;color:#ff4757;margin-bottom:.5rem">🔴 LIQUIDITÄT — SOFORT</div><div style="font-size:.62rem;color:var(--text);line-height:1.7">1. Seedmatch DD-Ordner bis KW 22 fertig<br>2. EXIST-Antrag parallel vorbereiten<br>3. HTGF KW 22 bestätigen<br>4. Kosten unter 2.500€/mo drücken</div></div>
         <div style="background:rgba(255,170,0,0.06);border:1px solid rgba(255,170,0,0.15);border-radius:8px;padding:.85rem"><div style="font-size:.6rem;font-weight:700;color:#ffaa00;margin-bottom:.5rem">🟡 TECHNIK — QUICK FIXES</div><div style="font-size:.62rem;color:var(--text);line-height:1.7">1. Wasserlage 302-Redirect analysieren + beheben<br>2. BunBo Sprint 7 bis KW 23 abschließen<br>3. CEO Office GitHub Push heute</div></div>
@@ -5422,8 +5327,7 @@ function initNeuralCanvas() {
     ctx.restore();
     ctx.restore();
     maybeSpawn(); tf+=.018;
-    if (!document.hidden && canvas._ioVisible !== false) requestAnimationFrame(draw);
-    else canvas._rafNeeded = draw;
+    requestAnimationFrame(draw);
   }
   draw();
   window.addEventListener('resize', resize);
@@ -5988,8 +5892,7 @@ function initHeartbeat() {
     ctx.fillStyle = '#00c8ff'; ctx.shadowColor = '#00c8ff'; ctx.shadowBlur = 10; ctx.fill(); ctx.shadowBlur = 0;
     ctx.restore();
     t += 0.7;
-    if (!document.hidden && canvas._ioVisible !== false) requestAnimationFrame(draw);
-    else canvas._rafNeeded = draw;
+    requestAnimationFrame(draw);
   }
   draw();
 }
@@ -6121,9 +6024,8 @@ function initCharts() {
 // ════════════════════════════════════════════════════════════
 // OPEN DASH — All 16 URLs
 // ════════════════════════════════════════════════════════════
-// FIXED 2026-05-20: Stub-URLs durch echte Dashboards ersetzt
 const DASH_CONFIG = {
-  tracking:    {action:'url', url:'wavebite-premium-dashboard.html'},
+  tracking:    {action:'url', url:'https://voigtcarsten4-rgb.github.io/wasserlage/wavebite-premium-dashboard.html'},
   wasserlage:  {action:'url', url:'https://voigtcarsten4-rgb.github.io/wasserlage/'},
   ceo_briefing:{action:'url', url:'https://voigtcarsten4-rgb.github.io/wasserlage/ceo-briefing.html'},
   playbook:    {action:'url', url:'https://voigtcarsten4-rgb.github.io/wasserlage/daily-playbook.html'},
@@ -6135,11 +6037,11 @@ const DASH_CONFIG = {
   github:      {action:'url', url:'https://github.com/voigtcarsten4-rgb'},
   drive:       {action:'url', url:'https://drive.google.com'},
   appstore:    {action:'url', url:'https://appstoreconnect.apple.com'},
-  marketing:   {action:'url', url:'wavebite-ai-marketing-os.html'},
-  kpi:         {action:'url', url:'wavebite-premium-dashboard.html'},
-  partner:     {action:'url', url:'wavebite-premium-dashboard.html#partner'},
-  finance:     {action:'url', url:'wavebyte-financial-os.html'},
-  studio:      {action:'url', url:'wavebite-leonardo-studio.html'},
+  marketing:   {action:'url', url:'https://voigtcarsten4-rgb.github.io/wasserlage/marketing-dashboard.html'},
+  kpi:         {action:'url', url:'https://voigtcarsten4-rgb.github.io/wasserlage/kpi-dashboard.html'},
+  partner:     {action:'url', url:'https://voigtcarsten4-rgb.github.io/wasserlage/partner-dashboard.html'},
+  finance:     {action:'url', url:'https://voigtcarsten4-rgb.github.io/wasserlage/finance-dashboard.html'},
+  studio:      {action:'url', url:'https://voigtcarsten4-rgb.github.io/ceo-office/wavebite-leonardo-studio.html'},
 };
 window.openDash = function(id) {
   const cfg = DASH_CONFIG[id];
@@ -6528,9 +6430,7 @@ function drawWireframeBoat(ctx, cx, cy, sc, t) {
 
       ctx.restore();
       t += 0.012;
-      const _bc = document.getElementById('boat-wireframe-canvas');
-      if (!document.hidden && _bc && _bc._ioVisible !== false) requestAnimationFrame(drawScene);
-      else if (_bc) _bc._rafNeeded = drawScene;
+      requestAnimationFrame(drawScene);
     }
     drawScene();
   }
@@ -6544,7 +6444,7 @@ function drawWireframeBoat(ctx, cx, cy, sc, t) {
 // ══════════════════════════════════════════════
 // MAIL INTELLIGENCE — GMAIL + OUTLOOK
 // ══════════════════════════════════════════════
-const GMAIL_BRIDGE_URL = 'https://script.google.com/macros/s/AKfycbzR2PXMHIx1NDVre9OUSaZ62tbBL3PlEvDf5QFz2IQVNq0-NXLi4pH7KYrXvXnZdUyG/exec';
+const GMAIL_BRIDGE_URL = 'https://script.google.com/macros/s/AKfycbzrTsfF1w8z6D8_j8E2xBcayRkO1q0ldlAsPAvv7tY1LgZEeELrwZd7x_J2v_utaXSc/exec';
 
 // ── MASTER BRIDGE (Gmail + Kalender + GA4) — nach Deployment URL eintragen ──
 var MASTER_BRIDGE_URL = '';
@@ -7794,39 +7694,6 @@ function refreshCalIntel() {
   }
 })();
 
-// ── Canvas Performance: Visibility-Guard (Page Hidden + IntersectionObserver) ──
-(function() {
-  // Restart paused canvas loops when tab becomes visible again
-  document.addEventListener('visibilitychange', function() {
-    if (!document.hidden) {
-      document.querySelectorAll('canvas').forEach(function(c) {
-        if (c._rafNeeded) {
-          var fn = c._rafNeeded;
-          c._rafNeeded = null;
-          requestAnimationFrame(fn);
-        }
-      });
-    }
-  });
-  // IntersectionObserver: pause canvases scrolled out of view
-  if (window.IntersectionObserver) {
-    var obs = new IntersectionObserver(function(entries) {
-      entries.forEach(function(e) {
-        e.target._ioVisible = e.isIntersecting;
-        if (e.isIntersecting && e.target._rafNeeded) {
-          var fn = e.target._rafNeeded;
-          e.target._rafNeeded = null;
-          requestAnimationFrame(fn);
-        }
-      });
-    }, { threshold: 0.01 });
-    // Observe after short delay so canvases are initialized
-    setTimeout(function() {
-      document.querySelectorAll('canvas').forEach(function(c) { obs.observe(c); });
-    }, 3000);
-  }
-})();
-
 </script>
 
 <!-- PROJECT MODAL -->
@@ -7901,186 +7768,5 @@ function refreshCalIntel() {
   }
 })();
 </script>
-
-<!-- CEO OFFICE FIX-PACK 2026-05-20 -->
-<script>
-(function(){
-  'use strict';
-  var WAVE = window.WAVE = window.WAVE || {};
-  WAVE.state = WAVE.state || {
-    burn: 2800, cash: 14000, runway: 5,
-    bunbo: 65, wasserlage: 80, website: 70,
-    fundingProgress: 35, fundingTarget: 250000,
-    risks: [], lastSync: null
-  };
-  var KEY_STATE = 'ceo_wave_state_v2';
-  WAVE.loadState = function(){
-    try { var s = localStorage.getItem(KEY_STATE); if (s) Object.assign(WAVE.state, JSON.parse(s)); } catch(e){}
-  };
-  WAVE.saveState = function(){
-    try { localStorage.setItem(KEY_STATE, JSON.stringify(WAVE.state)); } catch(e){}
-  };
-  WAVE.update = function(patch, opts){
-    Object.assign(WAVE.state, patch || {});
-    WAVE.state.lastSync = new Date().toISOString();
-    WAVE.saveState();
-    WAVE.render();
-    if (!opts || !opts.silent) WAVE.broadcast({type:'state_update', patch:patch});
-  };
-  WAVE.render = function(){
-    var s = WAVE.state;
-    var byId = function(id){ return document.getElementById(id); };
-    if (byId('ceo-burn-val'))   byId('ceo-burn-val').textContent   = s.burn.toLocaleString('de-DE') + ' €';
-    if (byId('ceo-cash-val'))   byId('ceo-cash-val').textContent   = s.cash.toLocaleString('de-DE') + ' €';
-    if (byId('ceo-runway-val')) byId('ceo-runway-val').textContent = s.runway + ' Mon.';
-    document.querySelectorAll('[data-finance-alert]').forEach(function(el){
-      var msg = s.runway < 3 ? '⚠ KRITISCH: Runway < 3 Monate' :
-                s.runway < 6 ? '⚠ Runway ~' + s.runway + ' Monate' :
-                '✅ Runway ' + s.runway + ' Monate - stabil';
-      el.textContent = msg;
-      el.style.color = s.runway < 3 ? '#ff4757' : s.runway < 6 ? '#ffaa00' : '#00d4aa';
-    });
-  };
-
-  var ch = null;
-  try { ch = new BroadcastChannel('ceo-wave'); } catch(e) { ch = null; }
-  WAVE.broadcast = function(msg){
-    if (ch) { try { ch.postMessage(msg); } catch(e){} }
-    try { localStorage.setItem('ceo_wave_msg', JSON.stringify({t: Date.now(), msg: msg})); } catch(e){}
-  };
-  if (ch) {
-    ch.onmessage = function(ev){
-      var m = ev.data || {};
-      if (m.type === 'state_update' && m.patch) {
-        Object.assign(WAVE.state, m.patch);
-        WAVE.state.lastSync = new Date().toISOString();
-        WAVE.saveState();
-        WAVE.render();
-      } else if (m.type === 'request_state') {
-        ch.postMessage({type:'state_snapshot', state: WAVE.state});
-      }
-    };
-  }
-  window.addEventListener('storage', function(ev){
-    if (ev.key === 'ceo_wave_msg' && ev.newValue) {
-      try {
-        var p = JSON.parse(ev.newValue);
-        if (p.msg && p.msg.type === 'state_update' && p.msg.patch) {
-          Object.assign(WAVE.state, p.msg.patch);
-          WAVE.saveState();
-          WAVE.render();
-        }
-      } catch(e){}
-    }
-  });
-
-  (function migrateCalendarStores(){
-    try {
-      var evsA = JSON.parse(localStorage.getItem('ceo_cal_events') || '[]');
-      var evsB = JSON.parse(localStorage.getItem('ceo_local_events') || '[]');
-      var evsC = JSON.parse(localStorage.getItem('ceo_calendar_events') || '[]');
-      var normalize = function(e){
-        if (e.startTime && !e.date) {
-          var d = new Date(e.startTime);
-          e.date = d.toISOString().split('T')[0];
-          e.time = d.toTimeString().slice(0,5);
-        }
-        if (e.calendar && !e.cal) e.cal = e.calendar;
-        if (e.location && !e.loc) e.loc = e.location;
-        if (e.duration && !e.dur) e.dur = e.duration;
-        if (!e.id) e.id = 'mig_' + Math.random().toString(36).slice(2,9);
-        return e;
-      };
-      var allEvs = evsA.concat(evsB.map(normalize)).concat(evsC.map(normalize));
-      var seen = {}, merged = [];
-      allEvs.forEach(function(e){ if(e && e.id && !seen[e.id]){ seen[e.id]=1; merged.push(e); } });
-      if (evsB.length > 0 || evsC.length > 0) {
-        localStorage.setItem('ceo_cal_events', JSON.stringify(merged));
-        localStorage.removeItem('ceo_local_events');
-        localStorage.removeItem('ceo_calendar_events');
-      }
-    } catch(e){}
-  })();
-
-  window.updateRiskMatrix = function(){
-    if (typeof WAVE.renderRiskHeatmap === 'function') WAVE.renderRiskHeatmap();
-    var ts = new Date().toLocaleTimeString('de-DE',{hour:'2-digit',minute:'2-digit'});
-    if (typeof showNotif==='function') showNotif('Risiko-Matrix aktualisiert ' + ts, 'gold');
-  };
-  window.exportRiskReport = function(){
-    var s = WAVE.state;
-    var lines = ['WAVE BITE - RISK & CRISIS REPORT',
-      'Erstellt: ' + new Date().toLocaleString('de-DE'),
-      '',
-      'LIQUIDITAT:',
-      '  Cash:    ' + s.cash.toLocaleString('de-DE') + ' EUR',
-      '  Burn:    ' + s.burn.toLocaleString('de-DE') + ' EUR/Monat',
-      '  Runway:  ' + s.runway + ' Monate',
-      '',
-      'PROJEKTE:',
-      '  BunBo App:        ' + s.bunbo + '%',
-      '  Wasserlage:       ' + s.wasserlage + '%',
-      '  Wave Bite Website: ' + s.website + '%'
-    ].join('\n');
-    var blob = new Blob([lines], {type:'text/plain;charset=utf-8'});
-    var a = document.createElement('a');
-    a.href = URL.createObjectURL(blob);
-    a.download = 'WaveBite_Risk_Report_' + new Date().toISOString().slice(0,10) + '.txt';
-    document.body.appendChild(a); a.click();
-    setTimeout(function(){ URL.revokeObjectURL(a.href); a.remove(); }, 1000);
-    if (typeof showNotif==='function') showNotif('Risk-Report heruntergeladen', 'blue');
-  };
-
-  WAVE.renderRiskHeatmap = function(){
-    if (typeof Chart === 'undefined') return;
-    var canvas = document.getElementById('risk-heatmap-chart');
-    if (!canvas) return;
-    if (WAVE._heatmapChart) WAVE._heatmapChart.destroy();
-    var risks = [
-      { x: 3, y: 3, r: 28, label: 'Liquiditaet / Runway',  color: '#ff4757' },
-      { x: 2, y: 3, r: 22, label: 'UG-Eintragung laeuft',  color: '#ff6b7a' },
-      { x: 3, y: 2, r: 20, label: 'BunBo Launch-Risk',     color: '#ffaa00' },
-      { x: 2, y: 2, r: 16, label: 'DSGVO Compliance',      color: '#ffaa00' },
-      { x: 2, y: 2, r: 16, label: 'Partner-Pipeline 0',    color: '#ffaa00' },
-      { x: 1, y: 2, r: 12, label: 'Einzel-Abhaengigkeit',  color: '#c9a84c' },
-      { x: 1, y: 1, r: 10, label: 'WP Updates ausst.',     color: '#4a7a9b' },
-      { x: 1, y: 1, r: 12, label: 'Core-Systeme stabil',   color: '#00d4aa' }
-    ];
-    WAVE._heatmapChart = new Chart(canvas.getContext('2d'), {
-      type: 'bubble',
-      data: { datasets: risks.map(function(r){
-        return { label: r.label, data: [{x:r.x, y:r.y, r:r.r}], backgroundColor: r.color+'cc', borderColor: r.color };
-      })},
-      options: {
-        responsive:true, maintainAspectRatio:false,
-        plugins: {
-          legend: { display:true, position:'right', labels:{ color:'#7a8ba8', font:{size:10}, boxWidth:8, padding:6 } },
-          tooltip: { callbacks: { label: function(ctx){ return ctx.dataset.label + ' (Impact ' + ctx.raw.y + '/3, Wahrscheinl. ' + ctx.raw.x + '/3)'; } } }
-        },
-        scales: {
-          x: { min:0.5, max:3.5, title:{display:true, text:'WAHRSCHEINLICHKEIT', color:'#7a8ba8', font:{size:10}},
-               ticks:{ color:'#7a8ba8', callback:function(v){ return ['','GERING','MITTEL','HOCH'][v]||''; } },
-               grid:{ color:'rgba(0,200,255,0.06)' } },
-          y: { min:0.5, max:3.5, title:{display:true, text:'IMPACT', color:'#7a8ba8', font:{size:10}},
-               ticks:{ color:'#7a8ba8', callback:function(v){ return ['','GERING','MITTEL','HOCH'][v]||''; } },
-               grid:{ color:'rgba(0,200,255,0.06)' } }
-        }
-      }
-    });
-  };
-
-  function init(){
-    WAVE.loadState();
-    WAVE.render();
-    setTimeout(WAVE.renderRiskHeatmap, 1500);
-    if (ch) { try { ch.postMessage({type:'request_state'}); } catch(e){} }
-  }
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
-  else setTimeout(init, 200);
-  setInterval(WAVE.render, 30000);
-})();
-
-</script>
-
 </body>
 </html>

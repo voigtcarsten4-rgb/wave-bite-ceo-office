@@ -3,2009 +3,1359 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Wavebyte Financial Intelligence OS</title>
+<title>Wave Bite · Financial Intelligence OS v2</title>
+<meta name="description" content="Wave Bite / WaveByte Financial OS — Geschäft DE (UG/GmbH/AG) + Privat CH + Familie + Krankenkasse + AI CFO">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
 <style>
 :root {
-  --bg-primary: #040810;
-  --bg-secondary: #080f1e;
-  --bg-card: rgba(12, 20, 40, 0.85);
-  --bg-glass: rgba(15, 25, 50, 0.6);
+  --bg: #040810;
+  --bg2: #080f1e;
+  --bg3: #0a1628;
+  --card: rgba(12,20,40,0.85);
+  --glass: rgba(15,25,50,0.6);
   --gold: #c9a84c;
-  --gold-light: #e8c96a;
-  --gold-dim: rgba(201, 168, 76, 0.15);
+  --gold2: #e8c96a;
   --cyan: #00d4ff;
-  --cyan-dim: rgba(0, 212, 255, 0.1);
-  --navy: #0a1628;
-  --text-primary: #e8edf5;
-  --text-secondary: #7a8ba8;
-  --text-muted: #3a4a65;
   --green: #00e676;
-  --green-dim: rgba(0, 230, 118, 0.1);
   --red: #ff4757;
-  --red-dim: rgba(255, 71, 87, 0.1);
   --orange: #ffa726;
-  --border: rgba(201, 168, 76, 0.12);
-  --border-cyan: rgba(0, 212, 255, 0.15);
+  --purple: #a366ff;
+  --text: #e8edf5;
+  --text-dim: #7a8ba8;
+  --text-muted: #3a4a65;
+  --border: rgba(201,168,76,0.12);
+  --border-cyan: rgba(0,212,255,0.15);
   --shadow: 0 8px 32px rgba(0,0,0,0.6);
-  --shadow-gold: 0 0 30px rgba(201,168,76,0.12);
+  /* Entity Colors */
+  --de-bus: #c9a84c;   /* Geschäftlich DE */
+  --ch-priv: #ff4757;  /* Privat CH (rot wie Schweizer Flagge) */
+  --family: #a366ff;   /* Familie */
 }
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:var(--bg); color:var(--text); font-family:-apple-system,'SF Pro Display','Segoe UI',sans-serif; min-height:100vh; overflow-x:hidden; }
+body::before { content:''; position:fixed; inset:0; background-image:linear-gradient(rgba(0,212,255,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(0,212,255,0.03) 1px,transparent 1px); background-size:40px 40px; pointer-events:none; z-index:0; }
+.container { position:relative; z-index:1; max-width:1500px; margin:0 auto; padding:18px; }
 
-* { margin: 0; padding: 0; box-sizing: border-box; }
+/* TOPBAR */
+.topbar { display:flex; align-items:center; gap:12px; padding:14px 18px; background:rgba(4,8,16,0.96); border:1px solid var(--border); border-radius:14px; margin-bottom:16px; position:sticky; top:8px; z-index:50; backdrop-filter:blur(12px); }
+.brand { font-size:14px; font-weight:800; letter-spacing:.12em; background:linear-gradient(135deg,var(--gold),var(--cyan)); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; }
+.brand-sub { font-size:10px; color:var(--text-dim); letter-spacing:.18em; margin-top:2px; }
+.spacer { flex:1; }
+.live-dot { width:8px; height:8px; border-radius:50%; background:var(--green); box-shadow:0 0 8px var(--green); animation:pulse 2s infinite; }
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
+.nav-status { display:flex; align-items:center; gap:6px; font-size:11px; color:var(--green); padding:5px 10px; background:rgba(0,230,118,0.08); border:1px solid rgba(0,230,118,0.25); border-radius:8px; }
+.entity-pill { display:flex; gap:4px; background:rgba(15,25,50,0.6); border:1px solid var(--border); border-radius:10px; padding:3px; }
+.entity-btn { padding:6px 12px; font-size:11px; font-weight:700; background:transparent; color:var(--text-dim); border:none; border-radius:7px; cursor:pointer; transition:.15s; letter-spacing:.04em; }
+.entity-btn:hover { color:var(--text); }
+.entity-btn.active { background:linear-gradient(135deg,var(--gold),rgba(201,168,76,0.5)); color:#000; }
+.entity-btn[data-ent="ch-priv"].active { background:linear-gradient(135deg,var(--ch-priv),#c44); color:#fff; }
+.entity-btn[data-ent="family"].active { background:linear-gradient(135deg,var(--purple),#7a4dcc); color:#fff; }
+.entity-btn[data-ent="all"].active { background:linear-gradient(135deg,var(--cyan),#0098cc); color:#000; }
 
-body {
-  background: var(--bg-primary);
-  color: var(--text-primary);
-  font-family: -apple-system, 'SF Pro Display', 'Segoe UI', sans-serif;
-  min-height: 100vh;
-  overflow-x: hidden;
-}
+/* NAV TABS */
+.nav-tabs { display:flex; gap:6px; padding:10px 4px; overflow-x:auto; border-bottom:1px solid var(--border); margin-bottom:16px; }
+.nav-tabs::-webkit-scrollbar { height:3px; }
+.nav-tabs::-webkit-scrollbar-thumb { background:var(--border); }
+.nav-tab { flex-shrink:0; padding:8px 16px; font-size:12px; color:var(--text-dim); background:transparent; border:1px solid transparent; border-radius:10px; cursor:pointer; transition:.15s; font-weight:600; letter-spacing:.03em; }
+.nav-tab:hover { color:var(--text); background:rgba(15,25,50,0.6); }
+.nav-tab.active { color:var(--gold); background:linear-gradient(135deg,rgba(201,168,76,0.15),rgba(0,212,255,0.05)); border-color:var(--border); }
 
-/* BACKGROUND GRID */
-body::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  background-image:
-    linear-gradient(rgba(0,212,255,0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0,212,255,0.03) 1px, transparent 1px);
-  background-size: 60px 60px;
-  pointer-events: none;
-  z-index: 0;
-}
+/* PAGE */
+.page { display:none; }
+.page.active { display:block; animation:fadeIn .25s ease; }
+@keyframes fadeIn { from{opacity:0;transform:translateY(4px)} to{opacity:1;transform:none} }
 
-/* ORBS */
-.orb {
-  position: fixed;
-  border-radius: 50%;
-  filter: blur(80px);
-  pointer-events: none;
-  z-index: 0;
-}
-.orb-1 { width:500px; height:500px; background:rgba(201,168,76,0.06); top:-150px; right:-100px; }
-.orb-2 { width:400px; height:400px; background:rgba(0,212,255,0.05); bottom:-100px; left:-100px; }
-.orb-3 { width:300px; height:300px; background:rgba(0,150,100,0.04); top:40%; right:20%; }
-
-/* LAYOUT */
-#app { position: relative; z-index: 1; display: flex; flex-direction: column; min-height: 100vh; }
-
-/* TOP NAV */
-.topnav {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 14px 28px;
-  background: rgba(4,8,16,0.92);
-  border-bottom: 1px solid var(--border);
-  backdrop-filter: blur(20px);
-  position: sticky;
-  top: 0;
-  z-index: 100;
-}
-
-.brand {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.brand-icon {
-  width: 36px; height: 36px;
-  background: linear-gradient(135deg, var(--gold), var(--gold-light));
-  border-radius: 8px;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 16px;
-}
-
-.brand-name {
-  font-size: 15px;
-  font-weight: 700;
-  letter-spacing: 0.5px;
-  color: var(--text-primary);
-}
-
-.brand-sub {
-  font-size: 10px;
-  color: var(--gold);
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  font-weight: 500;
-}
-
-.nav-tabs {
-  display: flex;
-  gap: 4px;
-  background: rgba(255,255,255,0.03);
-  padding: 4px;
-  border-radius: 10px;
-  border: 1px solid var(--border);
-}
-
-.nav-tab {
-  padding: 7px 14px;
-  border-radius: 7px;
-  font-size: 12px;
-  font-weight: 500;
-  cursor: pointer;
-  color: var(--text-secondary);
-  border: none;
-  background: transparent;
-  transition: all 0.2s;
-  white-space: nowrap;
-}
-
-.nav-tab.active {
-  background: linear-gradient(135deg, var(--gold), var(--gold-light));
-  color: #000;
-  font-weight: 700;
-}
-
-.nav-tab:hover:not(.active) {
-  color: var(--text-primary);
-  background: rgba(255,255,255,0.06);
-}
-
-.nav-right {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.nav-status {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 11px;
-  color: var(--text-secondary);
-}
-
-.pulse {
-  width: 7px; height: 7px;
-  border-radius: 50%;
-  background: var(--green);
-  box-shadow: 0 0 8px var(--green);
-  animation: pulse 2s infinite;
-}
-
-@keyframes pulse {
-  0%,100% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.5; transform: scale(0.8); }
-}
-
-.btn-icon {
-  width: 34px; height: 34px;
-  border-radius: 8px;
-  border: 1px solid var(--border);
-  background: rgba(255,255,255,0.04);
-  color: var(--text-secondary);
-  display: flex; align-items: center; justify-content: center;
-  cursor: pointer;
-  font-size: 15px;
-  transition: all 0.2s;
-}
-.btn-icon:hover { border-color: var(--gold); color: var(--gold); }
-
-/* MAIN CONTENT */
-.main { flex: 1; padding: 24px 28px; }
-
-/* PAGES */
-.page { display: none; }
-.page.active { display: block; }
-
-/* SECTION HEADER */
-.section-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 20px;
-}
-
-.section-title {
-  font-size: 22px;
-  font-weight: 700;
-  color: var(--text-primary);
-}
-
-.section-title span {
-  color: var(--gold);
-}
-
-.section-sub {
-  font-size: 12px;
-  color: var(--text-secondary);
-  margin-top: 2px;
-}
-
-.badge {
-  padding: 4px 10px;
-  border-radius: 20px;
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.5px;
-}
-
-.badge-gold { background: var(--gold-dim); color: var(--gold); border: 1px solid rgba(201,168,76,0.3); }
-.badge-green { background: var(--green-dim); color: var(--green); border: 1px solid rgba(0,230,118,0.2); }
-.badge-red { background: var(--red-dim); color: var(--red); border: 1px solid rgba(255,71,87,0.2); }
-.badge-cyan { background: var(--cyan-dim); color: var(--cyan); border: 1px solid rgba(0,212,255,0.2); }
-
-/* GRID SYSTEMS */
-.grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
-.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
-.grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
-.grid-5-3 { display: grid; grid-template-columns: 5fr 3fr; gap: 16px; }
-.grid-3-2 { display: grid; grid-template-columns: 3fr 2fr; gap: 16px; }
+.section-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:18px; flex-wrap:wrap; gap:12px; }
+.section-title { font-size:20px; font-weight:800; letter-spacing:.04em; }
+.section-title span { background:linear-gradient(135deg,var(--gold),var(--cyan)); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; }
+.section-sub { font-size:12px; color:var(--text-dim); margin-top:3px; letter-spacing:.04em; }
 
 /* CARDS */
-.card {
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: 14px;
-  padding: 20px;
-  backdrop-filter: blur(20px);
-  transition: border-color 0.2s, transform 0.2s;
-}
+.card { background:var(--card); border:1px solid var(--border); border-radius:14px; padding:16px; box-shadow:var(--shadow); position:relative; overflow:hidden; }
+.card.gold-edge::before { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg,var(--gold),var(--cyan),transparent); }
+.card.red-edge::before { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg,var(--red),transparent); }
+.card.green-edge::before { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg,var(--green),transparent); }
+.card.purple-edge::before { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg,var(--purple),transparent); }
+.card-header { display:flex; align-items:flex-start; justify-content:space-between; margin-bottom:14px; gap:10px; }
+.card-title { font-size:11px; letter-spacing:.12em; text-transform:uppercase; color:var(--text-dim); font-weight:700; }
+.card-icon { font-size:18px; opacity:.7; }
 
-.card:hover { border-color: rgba(201,168,76,0.25); }
+/* GRIDS */
+.grid-4 { display:grid; grid-template-columns:repeat(4,1fr); gap:14px; }
+.grid-3 { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
+.grid-2 { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+.grid-5-3 { display:grid; grid-template-columns:5fr 3fr; gap:14px; }
+.grid-3-2 { display:grid; grid-template-columns:3fr 2fr; gap:14px; }
+@media (max-width:900px) { .grid-4,.grid-3,.grid-2,.grid-5-3,.grid-3-2 { grid-template-columns:1fr; } }
 
-.card-glass {
-  background: var(--bg-glass);
-  border: 1px solid var(--border-cyan);
-  border-radius: 14px;
-  padding: 20px;
-  backdrop-filter: blur(20px);
-}
+/* KPI */
+.kpi-value { font-size:26px; font-weight:800; letter-spacing:-.01em; margin-bottom:2px; }
+.kpi-label { font-size:11px; color:var(--text-dim); margin-top:6px; letter-spacing:.04em; }
+.kpi-change { font-size:11px; font-weight:600; margin-top:4px; letter-spacing:.04em; }
+.kpi-change.up { color:var(--green); }
+.kpi-change.down { color:var(--red); }
+.kpi-change.neutral { color:var(--text-dim); }
 
-.card-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 16px;
-}
-
-.card-title {
-  font-size: 12px;
-  font-weight: 600;
-  color: var(--text-secondary);
-  text-transform: uppercase;
-  letter-spacing: 1px;
-}
-
-.card-icon {
-  width: 30px; height: 30px;
-  border-radius: 7px;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 14px;
-}
-
-.icon-gold { background: var(--gold-dim); }
-.icon-green { background: var(--green-dim); }
-.icon-red { background: var(--red-dim); }
-.icon-cyan { background: var(--cyan-dim); }
-
-/* KPI CARDS */
-.kpi-value {
-  font-size: 28px;
-  font-weight: 800;
-  letter-spacing: -0.5px;
-  line-height: 1;
-  margin-bottom: 6px;
-}
-
-.kpi-change {
-  font-size: 12px;
-  display: flex;
-  align-items: center;
-  gap: 4px;
-}
-
-.kpi-change.up { color: var(--green); }
-.kpi-change.down { color: var(--red); }
-.kpi-change.neutral { color: var(--text-secondary); }
-
-.kpi-label { font-size: 11px; color: var(--text-muted); margin-top: 4px; }
-
-/* PROGRESS BARS */
-.progress-bar {
-  height: 4px;
-  background: rgba(255,255,255,0.06);
-  border-radius: 4px;
-  overflow: hidden;
-  margin-top: 12px;
-}
-
-.progress-fill {
-  height: 100%;
-  border-radius: 4px;
-  transition: width 1s ease;
-}
-
-.fill-gold { background: linear-gradient(90deg, var(--gold), var(--gold-light)); }
-.fill-green { background: linear-gradient(90deg, #00b050, var(--green)); }
-.fill-red { background: linear-gradient(90deg, #c0000f, var(--red)); }
-.fill-cyan { background: linear-gradient(90deg, #0090c0, var(--cyan)); }
+.progress-bar { height:5px; background:rgba(255,255,255,0.06); border-radius:3px; overflow:hidden; margin-top:8px; }
+.progress-fill { height:100%; border-radius:3px; transition:width .6s ease; }
+.fill-cyan { background:linear-gradient(90deg,var(--cyan),#0098cc); }
+.fill-gold { background:linear-gradient(90deg,var(--gold),var(--gold2)); }
+.fill-green { background:linear-gradient(90deg,var(--green),#00b85e); }
+.fill-red { background:linear-gradient(90deg,var(--red),#cc1a2e); }
+.fill-purple { background:linear-gradient(90deg,var(--purple),#7a4dcc); }
+.runway-bar { height:7px; background:rgba(255,71,87,0.1); border-radius:4px; overflow:hidden; margin-top:8px; }
+.runway-fill { height:100%; background:linear-gradient(90deg,var(--red),var(--orange)); border-radius:4px; }
 
 /* CHARTS */
-.chart-container {
-  position: relative;
-  height: 220px;
-}
-
-.chart-container-sm {
-  position: relative;
-  height: 160px;
-}
-
-/* AI INSIGHT CARDS */
-.insight-card {
-  display: flex;
-  gap: 12px;
-  padding: 14px 16px;
-  border-radius: 10px;
-  border: 1px solid transparent;
-  margin-bottom: 10px;
-  transition: all 0.2s;
-}
-
-.insight-card:hover { transform: translateX(3px); }
-
-.insight-card.warning { background: rgba(255,167,38,0.07); border-color: rgba(255,167,38,0.25); }
-.insight-card.success { background: var(--green-dim); border-color: rgba(0,230,118,0.2); }
-.insight-card.danger { background: var(--red-dim); border-color: rgba(255,71,87,0.2); }
-.insight-card.info { background: var(--cyan-dim); border-color: rgba(0,212,255,0.2); }
-.insight-card.gold { background: var(--gold-dim); border-color: rgba(201,168,76,0.25); }
-
-.insight-icon { font-size: 18px; margin-top: 1px; flex-shrink: 0; }
-.insight-title { font-size: 13px; font-weight: 600; margin-bottom: 3px; }
-.insight-text { font-size: 12px; color: var(--text-secondary); line-height: 1.5; }
-.insight-action {
-  font-size: 11px;
-  color: var(--gold);
-  cursor: pointer;
-  margin-top: 4px;
-  display: inline-flex;
-  align-items: center;
-  gap: 3px;
-}
-
-/* TRANSACTION LIST */
-.tx-row {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 12px 0;
-  border-bottom: 1px solid rgba(255,255,255,0.04);
-  transition: background 0.15s;
-  cursor: pointer;
-}
-.tx-row:last-child { border-bottom: none; }
-.tx-row:hover { background: rgba(255,255,255,0.02); border-radius: 8px; padding-left: 8px; }
-
-.tx-icon {
-  width: 36px; height: 36px;
-  border-radius: 9px;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 15px;
-  flex-shrink: 0;
-}
-
-.tx-info { flex: 1; min-width: 0; }
-.tx-name { font-size: 13px; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.tx-cat { font-size: 11px; color: var(--text-secondary); }
-.tx-amount { font-size: 14px; font-weight: 700; white-space: nowrap; }
-.tx-date { font-size: 10px; color: var(--text-muted); text-align: right; }
-
-/* INVOICE ITEMS */
-.invoice-item {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 14px;
-  border-radius: 10px;
-  border: 1px solid var(--border);
-  background: rgba(255,255,255,0.02);
-  margin-bottom: 8px;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-.invoice-item:hover { border-color: var(--gold); transform: translateY(-1px); }
-
-.invoice-status {
-  padding: 3px 8px;
-  border-radius: 5px;
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 0.5px;
-}
-.inv-paid { background: var(--green-dim); color: var(--green); }
-.inv-open { background: rgba(255,167,38,0.12); color: var(--orange); }
-.inv-overdue { background: var(--red-dim); color: var(--red); }
-
-/* UPLOAD ZONE */
-.upload-zone {
-  border: 2px dashed rgba(201,168,76,0.3);
-  border-radius: 14px;
-  padding: 40px 20px;
-  text-align: center;
-  cursor: pointer;
-  transition: all 0.3s;
-  background: rgba(201,168,76,0.03);
-}
-.upload-zone:hover {
-  border-color: var(--gold);
-  background: var(--gold-dim);
-}
-.upload-zone .upload-icon { font-size: 36px; margin-bottom: 12px; }
-.upload-zone .upload-title { font-size: 15px; font-weight: 600; margin-bottom: 6px; }
-.upload-zone .upload-sub { font-size: 12px; color: var(--text-secondary); }
-
-/* METRIC ROW */
-.metric-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 10px 0;
-  border-bottom: 1px solid rgba(255,255,255,0.04);
-}
-.metric-row:last-child { border-bottom: none; }
-.metric-label { font-size: 12px; color: var(--text-secondary); }
-.metric-val { font-size: 13px; font-weight: 600; }
-
-/* SPEEDOMETER */
-.gauge-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 10px 0;
-}
-
-/* TAGS */
-.tag {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  padding: 3px 8px;
-  border-radius: 5px;
-  font-size: 10px;
-  font-weight: 600;
-  letter-spacing: 0.3px;
-}
-
-/* SCENARIO BUTTONS */
-.scenario-btns {
-  display: flex;
-  gap: 8px;
-  margin-bottom: 16px;
-}
-.scenario-btn {
-  flex: 1;
-  padding: 8px;
-  border-radius: 8px;
-  border: 1px solid var(--border);
-  background: transparent;
-  color: var(--text-secondary);
-  font-size: 11px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s;
-  text-align: center;
-}
-.scenario-btn.active { border-color: var(--gold); background: var(--gold-dim); color: var(--gold); }
-
-/* SECTION SPACER */
-.spacer { height: 20px; }
-.spacer-sm { height: 12px; }
-
-/* SCROLLBAR */
-::-webkit-scrollbar { width: 4px; }
-::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: rgba(201,168,76,0.3); border-radius: 4px; }
-
-/* AI THINKING ANIMATION */
-.ai-thinking {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 12px;
-  color: var(--cyan);
-}
-.ai-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--cyan); animation: bounce 1.2s infinite; }
-.ai-dot:nth-child(2) { animation-delay: 0.2s; }
-.ai-dot:nth-child(3) { animation-delay: 0.4s; }
-@keyframes bounce { 0%,80%,100%{transform:scale(0.6);opacity:0.4} 40%{transform:scale(1);opacity:1} }
-
-/* RUNWAY INDICATOR */
-.runway-bar { height: 8px; border-radius: 8px; background: rgba(255,255,255,0.06); overflow: hidden; margin: 8px 0; }
-.runway-fill { height: 100%; border-radius: 8px; background: linear-gradient(90deg, var(--red), var(--orange), var(--green)); }
-
-/* TOGGLE SWITCH */
-.toggle { position: relative; display: inline-block; width: 36px; height: 20px; }
-.toggle input { display: none; }
-.toggle-slider {
-  position: absolute; inset: 0;
-  background: rgba(255,255,255,0.1);
-  border-radius: 20px;
-  cursor: pointer;
-  transition: 0.3s;
-}
-.toggle-slider::before {
-  content: '';
-  position: absolute;
-  width: 14px; height: 14px;
-  left: 3px; top: 3px;
-  background: #fff;
-  border-radius: 50%;
-  transition: 0.3s;
-}
-.toggle input:checked + .toggle-slider { background: var(--gold); }
-.toggle input:checked + .toggle-slider::before { transform: translateX(16px); }
-
-/* INPUT */
-.input-field {
-  width: 100%;
-  padding: 10px 14px;
-  background: rgba(255,255,255,0.04);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  color: var(--text-primary);
-  font-size: 13px;
-  outline: none;
-  transition: border-color 0.2s;
-}
-.input-field:focus { border-color: var(--gold); }
-.input-field::placeholder { color: var(--text-muted); }
-
-select.input-field option { background: #0a1628; }
-
-/* BTN */
-.btn {
-  padding: 10px 20px;
-  border-radius: 8px;
-  border: none;
-  font-size: 13px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-}
-.btn-gold {
-  background: linear-gradient(135deg, var(--gold), var(--gold-light));
-  color: #000;
-}
-.btn-gold:hover { opacity: 0.9; transform: translateY(-1px); }
-.btn-outline {
-  background: transparent;
-  border: 1px solid var(--border);
-  color: var(--text-secondary);
-}
-.btn-outline:hover { border-color: var(--gold); color: var(--gold); }
-
-/* OCR RESULT */
-.ocr-field {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  margin-bottom: 12px;
-}
-.ocr-label { font-size: 10px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; }
-.ocr-value { font-size: 14px; font-weight: 600; color: var(--text-primary); }
-.ocr-value.highlight { color: var(--gold); }
-
-/* FUNDING CARD */
-.funding-card {
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 16px;
-  background: rgba(255,255,255,0.02);
-  transition: all 0.2s;
-  cursor: pointer;
-}
-.funding-card:hover { border-color: var(--cyan); transform: translateY(-2px); }
-.funding-title { font-size: 13px; font-weight: 700; margin-bottom: 4px; }
-.funding-amount { font-size: 20px; font-weight: 800; color: var(--cyan); }
-.funding-match {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  font-size: 11px;
-  margin-top: 6px;
-}
+.chart-container { height:240px; position:relative; }
+.chart-container.tall { height:320px; }
+.chart-container.short { height:160px; }
 
 /* TABLE */
-.data-table { width: 100%; border-collapse: collapse; }
-.data-table th {
-  text-align: left;
-  font-size: 10px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.8px;
-  color: var(--text-muted);
-  padding: 8px 12px;
-  border-bottom: 1px solid var(--border);
-}
-.data-table td {
-  padding: 11px 12px;
-  font-size: 12px;
-  border-bottom: 1px solid rgba(255,255,255,0.03);
-}
-.data-table tr:hover td { background: rgba(255,255,255,0.02); }
+.data-table { width:100%; border-collapse:collapse; font-size:12px; }
+.data-table th { padding:9px 12px; text-align:left; color:var(--text-dim); font-weight:700; letter-spacing:.04em; border-bottom:1px solid var(--border); font-size:10px; text-transform:uppercase; }
+.data-table td { padding:9px 12px; border-bottom:1px solid rgba(255,255,255,0.04); color:var(--text); }
+.data-table tr:hover { background:rgba(0,212,255,0.03); }
+.data-table .right { text-align:right; font-variant-numeric:tabular-nums; }
 
-/* CATEGORY DOT */
-.cat-dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; margin-right: 6px; }
+/* BADGES */
+.badge { padding:3px 8px; border-radius:6px; font-size:10px; font-weight:700; letter-spacing:.05em; display:inline-block; }
+.badge-gold { background:rgba(201,168,76,0.12); color:var(--gold); border:1px solid rgba(201,168,76,0.3); }
+.badge-cyan { background:rgba(0,212,255,0.1); color:var(--cyan); border:1px solid rgba(0,212,255,0.3); }
+.badge-green { background:rgba(0,230,118,0.1); color:var(--green); border:1px solid rgba(0,230,118,0.3); }
+.badge-red { background:rgba(255,71,87,0.1); color:var(--red); border:1px solid rgba(255,71,87,0.3); }
+.badge-purple { background:rgba(163,102,255,0.1); color:var(--purple); border:1px solid rgba(163,102,255,0.3); }
 
-/* RESPONSIVE */
-@media (max-width: 1100px) {
-  .grid-4 { grid-template-columns: repeat(2, 1fr); }
-  .grid-5-3 { grid-template-columns: 1fr; }
-  .grid-3-2 { grid-template-columns: 1fr; }
-  .nav-tabs { display: none; }
+/* BUTTONS */
+.btn { padding:7px 14px; font-size:11px; font-weight:700; border-radius:8px; cursor:pointer; transition:.15s; letter-spacing:.04em; }
+.btn-gold { background:linear-gradient(135deg,var(--gold),var(--gold2)); color:#000; border:none; }
+.btn-gold:hover { transform:translateY(-1px); box-shadow:0 4px 14px rgba(201,168,76,0.35); }
+.btn-outline { background:transparent; color:var(--text); border:1px solid var(--border); }
+.btn-outline:hover { border-color:var(--gold); }
+.btn-cyan { background:linear-gradient(135deg,var(--cyan),#0098cc); color:#000; border:none; }
+
+/* INSIGHT CARDS */
+.insight-card { display:flex; gap:10px; padding:11px; border-radius:10px; margin-bottom:10px; border:1px solid var(--border); }
+.insight-card.warning { background:rgba(255,167,38,0.06); border-color:rgba(255,167,38,0.2); }
+.insight-card.success { background:rgba(0,230,118,0.06); border-color:rgba(0,230,118,0.2); }
+.insight-card.info { background:rgba(0,212,255,0.05); border-color:rgba(0,212,255,0.18); }
+.insight-card.gold { background:rgba(201,168,76,0.05); border-color:rgba(201,168,76,0.18); }
+.insight-card.purple { background:rgba(163,102,255,0.05); border-color:rgba(163,102,255,0.18); }
+.insight-icon { font-size:18px; flex-shrink:0; }
+.insight-title { font-size:12px; font-weight:700; margin-bottom:3px; }
+.insight-text { font-size:11px; color:var(--text-dim); line-height:1.55; }
+.insight-action { font-size:10px; color:var(--cyan); margin-top:5px; cursor:pointer; font-weight:700; }
+.insight-action:hover { text-decoration:underline; }
+
+/* METRIC ROWS */
+.metric-row { display:flex; justify-content:space-between; padding:6px 0; border-bottom:1px solid rgba(255,255,255,0.04); font-size:12px; }
+.metric-row:last-child { border:none; }
+.metric-label { color:var(--text-dim); }
+.metric-val { font-weight:700; font-variant-numeric:tabular-nums; }
+
+/* INPUT */
+.input { background:rgba(0,0,0,0.4); border:1px solid var(--border); border-radius:7px; padding:7px 10px; color:var(--text); font-size:12px; outline:none; transition:.15s; }
+.input:focus { border-color:var(--cyan); }
+.divider { height:1px; background:var(--border); margin:10px 0; }
+
+/* TRANSACTION ROW */
+.tx-row { display:grid; grid-template-columns:80px 1fr 100px 90px 100px; gap:10px; padding:9px 12px; border-bottom:1px solid rgba(255,255,255,0.04); align-items:center; font-size:12px; }
+.tx-row:hover { background:rgba(0,212,255,0.03); }
+.tx-amount { text-align:right; font-weight:700; font-variant-numeric:tabular-nums; }
+.tx-amount.pos { color:var(--green); }
+.tx-amount.neg { color:var(--red); }
+.tx-cat { font-size:10px; color:var(--text-dim); padding:2px 7px; border-radius:5px; background:rgba(255,255,255,0.04); display:inline-block; }
+.tx-entity { font-size:9px; padding:2px 6px; border-radius:4px; font-weight:700; letter-spacing:.05em; }
+.tx-entity.de { background:rgba(201,168,76,0.15); color:var(--gold); }
+.tx-entity.ch { background:rgba(255,71,87,0.15); color:var(--ch-priv); }
+.tx-entity.fam { background:rgba(163,102,255,0.15); color:var(--purple); }
+
+/* COMPACT GAUGE */
+.gauge { display:flex; flex-direction:column; align-items:center; padding:14px; }
+.gauge svg { width:100%; max-width:160px; }
+.gauge-val { font-size:24px; font-weight:800; }
+.gauge-label { font-size:11px; color:var(--text-dim); margin-top:4px; letter-spacing:.04em; }
+
+/* MODAL */
+.modal-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.7); z-index:200; backdrop-filter:blur(8px); justify-content:center; align-items:center; padding:20px; }
+.modal-overlay.active { display:flex; }
+.modal { background:var(--bg2); border:1px solid var(--gold); border-radius:14px; padding:24px; max-width:600px; width:100%; max-height:90vh; overflow-y:auto; }
+
+/* ENTITY BADGE STRIP */
+.ent-strip { display:flex; gap:6px; margin-bottom:14px; flex-wrap:wrap; }
+.ent-bubble { padding:8px 14px; border-radius:24px; font-size:11px; font-weight:700; letter-spacing:.05em; cursor:pointer; transition:.15s; background:rgba(15,25,50,0.6); border:1px solid var(--border); color:var(--text-dim); }
+.ent-bubble.active { background:rgba(0,212,255,0.12); border-color:var(--cyan); color:var(--cyan); }
+.ent-bubble:hover { color:var(--text); }
+
+/* LEGAL/FORM SWITCHER */
+.legal-form-switcher { display:flex; gap:6px; margin-bottom:12px; }
+.lf-btn { padding:6px 12px; font-size:11px; border-radius:8px; cursor:pointer; background:rgba(15,25,50,0.6); border:1px solid var(--border); color:var(--text-dim); font-weight:700; }
+.lf-btn.active { background:linear-gradient(135deg,var(--gold),var(--gold2)); color:#000; border-color:var(--gold); }
+.lf-btn[data-status="planned"]::after { content:' · GEPLANT'; font-size:8px; color:rgba(0,0,0,0.55); }
+.lf-btn[data-status="pending"]::after { content:' · ANMELDUNG'; font-size:8px; color:rgba(0,0,0,0.55); }
+.lf-btn[data-status="active"]::after { content:' · AKTIV'; font-size:8px; color:rgba(0,0,0,0.55); }
+
+@media (max-width:768px) {
+  .tx-row { grid-template-columns:1fr; gap:4px; }
+  .container { padding:10px; }
+  .topbar { flex-wrap:wrap; }
 }
-
-@media (max-width: 700px) {
-  .main { padding: 16px; }
-  .grid-3 { grid-template-columns: 1fr; }
-  .grid-2 { grid-template-columns: 1fr; }
-  .grid-4 { grid-template-columns: 1fr; }
-}
-
-/* NUMBER ANIMATION */
-.animated-num { transition: all 0.8s ease; }
-
-/* DIVIDER */
-.divider { height: 1px; background: var(--border); margin: 16px 0; }
-
-/* PILL SELECT */
-.pill-select {
-  display: flex;
-  gap: 6px;
-  flex-wrap: wrap;
-}
-.pill {
-  padding: 5px 12px;
-  border-radius: 20px;
-  border: 1px solid var(--border);
-  font-size: 11px;
-  cursor: pointer;
-  transition: all 0.15s;
-  color: var(--text-secondary);
-  background: transparent;
-}
-.pill.active { background: var(--gold-dim); border-color: var(--gold); color: var(--gold); }
-.pill:hover:not(.active) { border-color: rgba(255,255,255,0.2); color: var(--text-primary); }
 </style>
+
+<script>
+// Auto-Setup Apps-Script-Bridge URL als Default (2026-05-20)
+(function(){
+  try {
+    var DEFAULT_BRIDGE = 'https://script.google.com/macros/s/AKfycbzR2PXMHIx1NDVre9OUSaZ62tbBL3PlEvDf5QFz2IQVNq0-NXLi4pH7KYrXvXnZdUyG/exec';
+    if (!localStorage.getItem('ceo_master_bridge_url')) localStorage.setItem('ceo_master_bridge_url', DEFAULT_BRIDGE);
+    if (!localStorage.getItem('ceo_cal_bridge_url'))    localStorage.setItem('ceo_cal_bridge_url',    DEFAULT_BRIDGE);
+    // Auch in FIN state preset
+    try { var fs = JSON.parse(localStorage.getItem('wb_fin_v2') || '{}'); if (!fs.bridgeUrl) { fs.bridgeUrl = DEFAULT_BRIDGE; localStorage.setItem('wb_fin_v2', JSON.stringify(fs)); } } catch(e){}
+  } catch(e){}
+})();
+</script>
 </head>
 <body>
-<div class="orb orb-1"></div>
-<div class="orb orb-2"></div>
-<div class="orb orb-3"></div>
 
-<div id="app">
-<!-- TOP NAV -->
-<nav class="topnav">
-  <div class="brand">
-    <div class="brand-icon">⚡</div>
-    <div>
-      <div class="brand-name">Wavebyte Financial OS</div>
-      <div class="brand-sub">Intelligence Center</div>
-    </div>
-  </div>
-  <div class="nav-tabs">
-    <button class="nav-tab active" onclick="showPage('mission')">🎯 Mission Control</button>
-    <button class="nav-tab" onclick="showPage('cashflow')">💸 Cashflow</button>
-    <button class="nav-tab" onclick="showPage('invoices')">🧾 Rechnungen</button>
-    <button class="nav-tab" onclick="showPage('analytics')">📊 Analytics</button>
-    <button class="nav-tab" onclick="showPage('forecast')">🔮 Forecast</button>
-    <button class="nav-tab" onclick="showPage('funding')">🚀 Funding</button>
-    <button class="nav-tab" onclick="showPage('ai')">🤖 AI CFO</button>
-    <button class="nav-tab" onclick="showPage('settings')">⚙️ Settings</button>
-  </div>
-  <div class="nav-right">
-    <div class="nav-status"><div class="pulse"></div> Live</div>
-    <div class="btn-icon" onclick="showPage('ai')" title="AI CFO">🤖</div>
-    <div class="btn-icon" title="Benachrichtigungen">🔔</div>
-    <div class="btn-icon" title="Export">📤</div>
-  </div>
-</nav>
+<div class="container">
 
-<!-- MOBILE NAV -->
-<div style="display:flex;gap:4px;padding:10px 16px;overflow-x:auto;border-bottom:1px solid var(--border);background:rgba(4,8,16,0.95)" id="mobile-nav">
-  <button class="pill active" onclick="showPage('mission')">🎯 Dashboard</button>
-  <button class="pill" onclick="showPage('cashflow')">💸 Cashflow</button>
-  <button class="pill" onclick="showPage('invoices')">🧾 Invoices</button>
-  <button class="pill" onclick="showPage('analytics')">📊 Analytics</button>
-  <button class="pill" onclick="showPage('forecast')">🔮 Forecast</button>
-  <button class="pill" onclick="showPage('funding')">🚀 Funding</button>
-  <button class="pill" onclick="showPage('ai')">🤖 AI CFO</button>
+<!-- ════════════════════════ TOPBAR ════════════════════════ -->
+<div class="topbar">
+  <div>
+    <div class="brand">💰 WAVE BITE · FINANCIAL OS v2</div>
+    <div class="brand-sub">PRIVAT (CH) · GESCHÄFT (DE) · FAMILIE · AI CFO</div>
+  </div>
+  <div class="spacer"></div>
+  <div class="entity-pill" id="entity-pill">
+    <button class="entity-btn active" data-ent="all" onclick="setEntity('all')">📊 Alle</button>
+    <button class="entity-btn" data-ent="de-bus" onclick="setEntity('de-bus')">🇩🇪 Geschäft</button>
+    <button class="entity-btn" data-ent="ch-priv" onclick="setEntity('ch-priv')">🇨🇭 Privat</button>
+    <button class="entity-btn" data-ent="family" onclick="setEntity('family')">👨‍👩‍👧 Familie</button>
+  </div>
+  <div class="nav-status"><div class="live-dot"></div> Live · <span id="sync-time">—</span></div>
+  <a href="index.html" class="btn btn-outline">← Office</a>
 </div>
 
-<div class="main">
+<!-- ════════════════════════ NAV TABS ════════════════════════ -->
+<div class="nav-tabs">
+  <button class="nav-tab active" onclick="showPage('mission',this)">🎯 Mission Control</button>
+  <button class="nav-tab" onclick="showPage('business',this)">🇩🇪 Geschäft DE</button>
+  <button class="nav-tab" onclick="showPage('private',this)">🇨🇭 Privat CH</button>
+  <button class="nav-tab" onclick="showPage('family',this)">👨‍👩‍👧 Familie</button>
+  <button class="nav-tab" onclick="showPage('insurance',this)">🏥 Versicherung &amp; KK</button>
+  <button class="nav-tab" onclick="showPage('cashflow',this)">💸 Cashflow</button>
+  <button class="nav-tab" onclick="showPage('invoices',this)">🧾 Rechnungen</button>
+  <button class="nav-tab" onclick="showPage('taxes',this)">📋 Steuern</button>
+  <button class="nav-tab" onclick="showPage('forecast',this)">🔮 Forecast</button>
+  <button class="nav-tab" onclick="showPage('funding',this)">🚀 Funding</button>
+  <button class="nav-tab" onclick="showPage('ai',this)">🤖 AI CFO</button>
+  <button class="nav-tab" onclick="showPage('settings',this)">⚙ Settings</button>
+</div>
 
-<!-- ═══════════════════════════════════════════════════ -->
+<!-- ════════════════════════════════════════════════════════ -->
 <!-- PAGE: MISSION CONTROL -->
-<!-- ═══════════════════════════════════════════════════ -->
+<!-- ════════════════════════════════════════════════════════ -->
 <div class="page active" id="page-mission">
   <div class="section-header">
     <div>
       <div class="section-title">Financial <span>Mission Control</span></div>
-      <div class="section-sub">Mai 2025 · Wavebyte / Wave Bite</div>
+      <div class="section-sub">Konsolidiert · Geschäft DE + Privat CH + Familie · <span id="period-label">Mai 2026</span></div>
     </div>
     <div style="display:flex;gap:8px;align-items:center">
       <span class="badge badge-gold">⚡ Live</span>
-      <button class="btn btn-gold" onclick="showPage('invoices')">+ Rechnung</button>
+      <button class="btn btn-gold" onclick="openTxModal()">+ Transaktion</button>
     </div>
   </div>
 
-  <!-- KPI ROW -->
-  <div class="grid-4" style="margin-bottom:20px">
-    <div class="card">
-      <div class="card-header">
-        <div class="card-title">Liquidität Gesamt</div>
-        <div class="card-icon icon-cyan">💧</div>
-      </div>
-      <div class="kpi-value" style="color:var(--cyan)">€12.840</div>
-      <div class="kpi-change up">▲ +8,4% vs. Vormonat</div>
-      <div class="progress-bar"><div class="progress-fill fill-cyan" style="width:64%"></div></div>
-      <div class="kpi-label">64% des Zielwertes (€20k)</div>
+  <!-- KPI ROW: Konsolidiert über alle Entities -->
+  <div class="grid-4" style="margin-bottom:16px">
+    <div class="card gold-edge">
+      <div class="card-header"><div class="card-title">Liquidität Gesamt</div><div class="card-icon">💧</div></div>
+      <div class="kpi-value" style="color:var(--cyan)" data-kpi="liquidity-total">€14.000</div>
+      <div class="kpi-change up" data-kpi="liquidity-delta">▲ Aggregiert über alle Entities</div>
+      <div class="progress-bar"><div class="progress-fill fill-cyan" style="width:35%" data-kpi-fill="liquidity"></div></div>
+      <div class="kpi-label">35 % des Sicherheits-Ziels (€40k)</div>
     </div>
-
-    <div class="card">
-      <div class="card-header">
-        <div class="card-title">Monatlicher Cashflow</div>
-        <div class="card-icon icon-green">📈</div>
-      </div>
-      <div class="kpi-value" style="color:var(--green)">+€2.340</div>
-      <div class="kpi-change up">▲ Positiv · Ziel erreicht</div>
-      <div class="progress-bar"><div class="progress-fill fill-green" style="width:78%"></div></div>
-      <div class="kpi-label">78% Fortschritt zum Monatsziel</div>
+    <div class="card green-edge">
+      <div class="card-header"><div class="card-title">Netto-Cashflow Mai</div><div class="card-icon">📈</div></div>
+      <div class="kpi-value" style="color:var(--green)" data-kpi="cashflow">−€450</div>
+      <div class="kpi-change neutral" data-kpi="cashflow-sub">Privat positiv, Geschäft negativ</div>
+      <div class="progress-bar"><div class="progress-fill fill-green" style="width:40%"></div></div>
+      <div class="kpi-label">Trend: Stabilisierung</div>
     </div>
-
-    <div class="card">
-      <div class="card-header">
-        <div class="card-title">Burn Rate / Monat</div>
-        <div class="card-icon icon-red">🔥</div>
-      </div>
-      <div class="kpi-value" style="color:var(--orange)">€4.260</div>
-      <div class="kpi-change neutral">— Stabil · Runway: 3,0 Mo.</div>
+    <div class="card red-edge">
+      <div class="card-header"><div class="card-title">Burn Rate Geschäft</div><div class="card-icon">🔥</div></div>
+      <div class="kpi-value" style="color:var(--orange)" data-kpi="burn">€2.800</div>
+      <div class="kpi-change down">— Runway: <span data-kpi="runway">5,0</span> Mo.</div>
       <div class="runway-bar"><div class="runway-fill" style="width:30%"></div></div>
-      <div class="kpi-label" style="color:var(--orange)">⚠ Runway unter 4 Monate</div>
+      <div class="kpi-label" style="color:var(--orange)">⚠ Seed bis Q3 2026 erforderlich</div>
     </div>
-
-    <div class="card">
-      <div class="card-header">
-        <div class="card-title">Offene Rechnungen</div>
-        <div class="card-icon icon-gold">📋</div>
-      </div>
-      <div class="kpi-value" style="color:var(--gold)">€6.750</div>
-      <div class="kpi-change down">▼ 3 überfällig</div>
-      <div class="progress-bar"><div class="progress-fill fill-gold" style="width:45%"></div></div>
-      <div class="kpi-label">4 Rechnungen offen · 1 überfällig</div>
+    <div class="card purple-edge">
+      <div class="card-header"><div class="card-title">Familie · Fixkosten</div><div class="card-icon">👨‍👩‍👧</div></div>
+      <div class="kpi-value" style="color:var(--purple)" data-kpi="family-fixed">CHF 4.250</div>
+      <div class="kpi-change neutral">Miete · KK · Kinder · Schule</div>
+      <div class="progress-bar"><div class="progress-fill fill-purple" style="width:72%"></div></div>
+      <div class="kpi-label">72 % des Haushalts-Budgets</div>
     </div>
   </div>
 
-  <!-- MAIN ROW -->
-  <div class="grid-5-3" style="margin-bottom:20px">
-    <!-- CASHFLOW CHART -->
+  <!-- KONSOLIDIERTER 6-MONATS-CHART + AI INSIGHTS -->
+  <div class="grid-5-3" style="margin-bottom:16px">
     <div class="card">
       <div class="card-header">
-        <div>
-          <div class="card-title">Cashflow · 6 Monate</div>
-        </div>
-        <div class="pill-select">
-          <button class="pill active" onclick="togglePill(this)">6M</button>
-          <button class="pill" onclick="togglePill(this)">12M</button>
-          <button class="pill" onclick="togglePill(this)">YTD</button>
+        <div class="card-title">Cashflow · 6 Monate · Alle Entities</div>
+        <div style="display:flex;gap:6px">
+          <button class="btn btn-outline" onclick="cycleTimespan(this)" data-span="6">6M</button>
+          <button class="btn btn-outline" onclick="cycleTimespan(this)" data-span="12">12M</button>
+          <button class="btn btn-outline" onclick="cycleTimespan(this)" data-span="ytd">YTD</button>
         </div>
       </div>
-      <div class="chart-container">
-        <canvas id="cashflowChart"></canvas>
-      </div>
+      <div class="chart-container tall"><canvas id="chart-master"></canvas></div>
     </div>
-
-    <!-- AI QUICK INSIGHTS -->
     <div class="card">
       <div class="card-header">
-        <div class="card-title">🤖 AI CFO Insights</div>
-        <div class="ai-thinking"><div class="ai-dot"></div><div class="ai-dot"></div><div class="ai-dot"></div></div>
+        <div class="card-title">🤖 AI CFO · Top-Insights</div>
+        <span class="badge badge-cyan">LIVE</span>
       </div>
+      <div id="ai-insights-mini"></div>
+    </div>
+  </div>
+
+  <!-- ENTITY OVERVIEW STRIP -->
+  <div class="grid-3" style="margin-bottom:16px">
+    <div class="card gold-edge">
+      <div class="card-header"><div class="card-title">🇩🇪 Geschäft Deutschland</div><span class="badge badge-gold">UG i.Gr.</span></div>
+      <div class="metric-row"><span class="metric-label">Rechtsform Status</span><span class="metric-val" style="color:var(--orange)">UG-Eintragung läuft</span></div>
+      <div class="metric-row"><span class="metric-label">Vorgesehen</span><span class="metric-val">→ GmbH ab €25k Stammkapital</span></div>
+      <div class="metric-row"><span class="metric-label">Cash (Geschäfts-Konto)</span><span class="metric-val" style="color:var(--gold)">€11.500</span></div>
+      <div class="metric-row"><span class="metric-label">Umsatz MTD</span><span class="metric-val" style="color:var(--green)">€2.350</span></div>
+      <div class="metric-row"><span class="metric-label">Ausgaben MTD</span><span class="metric-val" style="color:var(--red)">€2.800</span></div>
+      <button class="btn btn-outline" style="width:100%;margin-top:8px" onclick="showPage('business',document.querySelector('[onclick*=business]'))">→ Geschäft öffnen</button>
+    </div>
+    <div class="card red-edge">
+      <div class="card-header"><div class="card-title">🇨🇭 Privat Schweiz</div><span class="badge badge-red">CHF</span></div>
+      <div class="metric-row"><span class="metric-label">Wohnsitz</span><span class="metric-val">Schweiz</span></div>
+      <div class="metric-row"><span class="metric-label">Cash (Privat-Konto)</span><span class="metric-val" style="color:var(--cyan)">CHF 2.500</span></div>
+      <div class="metric-row"><span class="metric-label">Einnahmen MTD</span><span class="metric-val" style="color:var(--green)">CHF 3.800</span></div>
+      <div class="metric-row"><span class="metric-label">Ausgaben MTD</span><span class="metric-val" style="color:var(--red)">CHF 3.450</span></div>
+      <div class="metric-row"><span class="metric-label">Quellensteuer-Status</span><span class="metric-val">Pflichtig</span></div>
+      <button class="btn btn-outline" style="width:100%;margin-top:8px" onclick="showPage('private',document.querySelector('[onclick*=private]'))">→ Privat öffnen</button>
+    </div>
+    <div class="card purple-edge">
+      <div class="card-header"><div class="card-title">👨‍👩‍👧 Familie</div><span class="badge badge-purple">HAUSHALT</span></div>
+      <div class="metric-row"><span class="metric-label">Mitglieder</span><span class="metric-val">— (Settings)</span></div>
+      <div class="metric-row"><span class="metric-label">Miete / Wohnen</span><span class="metric-val" style="color:var(--purple)">CHF 1.900</span></div>
+      <div class="metric-row"><span class="metric-label">Krankenkasse Familie</span><span class="metric-val">CHF 1.250</span></div>
+      <div class="metric-row"><span class="metric-label">Lebensmittel</span><span class="metric-val">CHF 800</span></div>
+      <div class="metric-row"><span class="metric-label">Kinder / Schule</span><span class="metric-val">CHF 300</span></div>
+      <button class="btn btn-outline" style="width:100%;margin-top:8px" onclick="showPage('family',document.querySelector('[onclick*=family]'))">→ Familie öffnen</button>
+    </div>
+  </div>
+
+  <!-- LETZTE TRANSAKTIONEN + KPI SIDEBAR -->
+  <div class="grid-3-2">
+    <div class="card">
+      <div class="card-header"><div class="card-title">Letzte Transaktionen · Alle Entities</div><button class="btn btn-outline" onclick="showPage('cashflow',document.querySelector('[onclick*=cashflow]'))">Alle anzeigen</button></div>
+      <div id="tx-list-mission"></div>
+    </div>
+    <div class="card">
+      <div class="card-header"><div class="card-title">Konsolidierte KPIs</div><span class="badge badge-cyan" id="period-badge">Mai 2026</span></div>
+      <div class="metric-row"><span class="metric-label">Umsatz total</span><span class="metric-val" style="color:var(--green)" id="kpi-revenue">€2.350 + CHF 3.800</span></div>
+      <div class="metric-row"><span class="metric-label">Kosten total</span><span class="metric-val" style="color:var(--red)" id="kpi-costs">€2.800 + CHF 3.450</span></div>
+      <div class="metric-row"><span class="metric-label">EBITDA Geschäft</span><span class="metric-val" style="color:var(--orange)">−€450</span></div>
+      <div class="metric-row"><span class="metric-label">Sparquote Privat</span><span class="metric-val" style="color:var(--green)">9 %</span></div>
+      <div class="divider"></div>
+      <div class="metric-row"><span class="metric-label">Steuerrückstellung DE</span><span class="metric-val">€350</span></div>
+      <div class="metric-row"><span class="metric-label">Steuerrückstellung CH</span><span class="metric-val">CHF 480</span></div>
+      <div class="metric-row"><span class="metric-label">Vorsteuer offen (DE)</span><span class="metric-val">€220</span></div>
+      <div class="divider"></div>
+      <div class="metric-row"><span class="metric-label">Kalk. Ø Burn</span><span class="metric-val">€2.800/Mon</span></div>
+      <div class="metric-row"><span class="metric-label">Familie Fixkosten</span><span class="metric-val">CHF 4.250</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════ -->
+<!-- PAGE: GESCHÄFT DE -->
+<!-- ════════════════════════════════════════════════════════ -->
+<div class="page" id="page-business">
+  <div class="section-header">
+    <div>
+      <div class="section-title">Geschäft <span>Deutschland</span></div>
+      <div class="section-sub">Wave Bite / WaveByte · Aktuell: UG (haftungsbeschränkt) i.Gr. · Geplant: GmbH · Vision: AG</div>
+    </div>
+    <span class="badge badge-gold">EUR · DE Steuerrecht</span>
+  </div>
+
+  <!-- LEGAL FORM SWITCHER -->
+  <div class="card" style="margin-bottom:16px">
+    <div class="card-title" style="margin-bottom:10px">⚖ Rechtsform</div>
+    <div class="legal-form-switcher">
+      <button class="lf-btn" data-form="einzel">Einzelunternehmen</button>
+      <button class="lf-btn active" data-form="ug" data-status="pending" onclick="setLegalForm('ug',this)">UG</button>
+      <button class="lf-btn" data-form="gmbh" data-status="planned" onclick="setLegalForm('gmbh',this)">GmbH</button>
+      <button class="lf-btn" data-form="ag" data-status="planned" onclick="setLegalForm('ag',this)">AG</button>
+    </div>
+    <div id="legal-form-info" style="margin-top:10px;font-size:12px;color:var(--text-dim);line-height:1.6">
+      <strong style="color:var(--gold)">UG (haftungsbeschränkt) — Status: Anmeldung läuft.</strong><br>
+      Stammkapital ab €1. Beschränkte Haftung. 25 % Gewinn-Thesaurierungspflicht bis €25k erreicht → dann GmbH-Umwandlung sinnvoll.<br>
+      <span style="color:var(--orange)">Nächster Schritt:</span> Handelsregister-Eintragung beim Amtsgericht abschließen, IHK-Mitgliedschaft, Steuernummer beantragen (ELSTER), Geschäftskonto eröffnen (z.B. Holvi/Qonto/Penta).
+    </div>
+  </div>
+
+  <!-- KPI GESCHÄFT -->
+  <div class="grid-4" style="margin-bottom:16px">
+    <div class="card"><div class="card-title">Geschäftskonto</div><div class="kpi-value" style="color:var(--gold)">€11.500</div><div class="kpi-change neutral">Holvi / Qonto</div></div>
+    <div class="card"><div class="card-title">Umsatz Mai</div><div class="kpi-value" style="color:var(--green)">€2.350</div><div class="kpi-change up">▲ +18 % vs. Vormonat</div></div>
+    <div class="card"><div class="card-title">Ausgaben Mai</div><div class="kpi-value" style="color:var(--red)">€2.800</div><div class="kpi-change neutral">Hosting · Tools · Anwalt</div></div>
+    <div class="card"><div class="card-title">USt-Saldo (Mai)</div><div class="kpi-value" style="color:var(--cyan)">€-130</div><div class="kpi-change neutral">Vorsteuer-Überhang</div></div>
+  </div>
+
+  <!-- CHARTS -->
+  <div class="grid-2" style="margin-bottom:16px">
+    <div class="card">
+      <div class="card-header"><div class="card-title">Geschäft · Cashflow Trend</div></div>
+      <div class="chart-container"><canvas id="chart-biz-cashflow"></canvas></div>
+    </div>
+    <div class="card">
+      <div class="card-header"><div class="card-title">Geschäft · Ausgaben nach Kategorie</div></div>
+      <div class="chart-container"><canvas id="chart-biz-donut"></canvas></div>
+    </div>
+  </div>
+
+  <!-- KOSTENPLAN / FUNDING -->
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title" style="margin-bottom:10px">Fixe Geschäftskosten / Monat</div>
+      <div class="metric-row"><span class="metric-label">Hosting / Domain / Cloud</span><span class="metric-val">€180</span></div>
+      <div class="metric-row"><span class="metric-label">FlutterFlow / Glide / Tools</span><span class="metric-val">€220</span></div>
+      <div class="metric-row"><span class="metric-label">Buchhaltung / Lexoffice</span><span class="metric-val">€39</span></div>
+      <div class="metric-row"><span class="metric-label">Steuerberater (geplant)</span><span class="metric-val">€350</span></div>
+      <div class="metric-row"><span class="metric-label">Anwalt / IHK / Notar</span><span class="metric-val">€180</span></div>
+      <div class="metric-row"><span class="metric-label">Marketing / Ads</span><span class="metric-val">€450</span></div>
+      <div class="metric-row"><span class="metric-label">Geschäftshandy / Mobilfunk</span><span class="metric-val">€45</span></div>
+      <div class="divider"></div>
+      <div class="metric-row"><span class="metric-label" style="font-weight:700">Summe Fix</span><span class="metric-val" style="color:var(--red)">€1.464</span></div>
+      <div class="metric-row"><span class="metric-label">Variable Ø</span><span class="metric-val">€1.336</span></div>
+      <div class="metric-row"><span class="metric-label" style="color:var(--gold)">Burn Rate gesamt</span><span class="metric-val" style="color:var(--gold)">€2.800</span></div>
+    </div>
+    <div class="card gold-edge">
+      <div class="card-title" style="margin-bottom:10px">Funding-Roadmap</div>
+      <div class="metric-row"><span class="metric-label">Phase aktuell</span><span class="metric-val">Pre-Seed</span></div>
+      <div class="metric-row"><span class="metric-label">Seed-Ziel</span><span class="metric-val" style="color:var(--gold)">€250k – €500k</span></div>
+      <div class="metric-row"><span class="metric-label">Timeline</span><span class="metric-val">Q3 2026</span></div>
+      <div class="metric-row"><span class="metric-label">Seedmatch DD</span><span class="metric-val" style="color:var(--orange)">KW 21/22</span></div>
+      <div class="metric-row"><span class="metric-label">HTGF</span><span class="metric-val">Erstkontakt KW 22</span></div>
+      <div class="metric-row"><span class="metric-label">EXIST-Antrag</span><span class="metric-val">Vorbereitung</span></div>
+      <div class="metric-row"><span class="metric-label">Bewertung Pre-Money</span><span class="metric-val">€1.2M – €1.8M</span></div>
+      <div class="divider"></div>
       <div class="insight-card warning">
-        <div class="insight-icon">⚠️</div>
-        <div>
-          <div class="insight-title">Runway-Warnung</div>
-          <div class="insight-text">3 Monate Runway. Ohne neue Einnahmen kritisch ab August.</div>
-          <div class="insight-action" onclick="showPage('forecast')">→ Forecast öffnen</div>
-        </div>
-      </div>
-      <div class="insight-card success">
-        <div class="insight-icon">✅</div>
-        <div>
-          <div class="insight-title">Cashflow positiv</div>
-          <div class="insight-text">+€2.340 diesen Monat. Stärkster Monat seit Q1.</div>
-        </div>
-      </div>
-      <div class="insight-card gold">
-        <div class="insight-icon">💡</div>
-        <div>
-          <div class="insight-title">Förderpotenzial erkannt</div>
-          <div class="insight-text">2 passende Förderprogramme (bis €25k).</div>
-          <div class="insight-action" onclick="showPage('funding')">→ Funding öffnen</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- BOTTOM ROW -->
-  <div class="grid-3">
-    <!-- RECENT TRANSACTIONS -->
-    <div class="card" style="grid-column:span 2">
-      <div class="card-header">
-        <div class="card-title">Letzte Transaktionen</div>
-        <button class="btn btn-outline" style="padding:5px 12px;font-size:11px" onclick="showPage('cashflow')">Alle anzeigen</button>
-      </div>
-      <div id="tx-list"></div>
-    </div>
-
-    <!-- KPI SIDEBAR -->
-    <div class="card">
-      <div class="card-header">
-        <div class="card-title">Business KPIs</div>
-        <span class="badge badge-cyan">Mai 2025</span>
-      </div>
-      <div class="metric-row">
-        <span class="metric-label">Umsatz MTD</span>
-        <span class="metric-val" style="color:var(--green)">€6.600</span>
-      </div>
-      <div class="metric-row">
-        <span class="metric-label">Kosten MTD</span>
-        <span class="metric-val" style="color:var(--red)">€4.260</span>
-      </div>
-      <div class="metric-row">
-        <span class="metric-label">EBITDA</span>
-        <span class="metric-val" style="color:var(--gold)">€2.340</span>
-      </div>
-      <div class="metric-row">
-        <span class="metric-label">Marge</span>
-        <span class="metric-val">35,5%</span>
-      </div>
-      <div class="metric-row">
-        <span class="metric-label">Fixkosten</span>
-        <span class="metric-val">€2.850</span>
-      </div>
-      <div class="metric-row">
-        <span class="metric-label">Variabel</span>
-        <span class="metric-val">€1.410</span>
-      </div>
-      <div class="divider"></div>
-      <div class="metric-row">
-        <span class="metric-label">ROI Marketing</span>
-        <span class="metric-val" style="color:var(--cyan)">2,4x</span>
-      </div>
-      <div class="metric-row">
-        <span class="metric-label">CAC (est.)</span>
-        <span class="metric-val">€48</span>
+        <div class="insight-icon">⚠</div>
+        <div><div class="insight-title">Runway-Hebel</div><div class="insight-text">Bei aktuellem Burn ohne Funding kritisch ab Oktober. Empfehlung: parallel EXIST + Seedmatch + HTGF.</div></div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- ═══════════════════════════════════════════════════ -->
-<!-- PAGE: CASHFLOW -->
-<!-- ═══════════════════════════════════════════════════ -->
-<div class="page" id="page-cashflow">
+<!-- ════════════════════════════════════════════════════════ -->
+<!-- PAGE: PRIVAT CH -->
+<!-- ════════════════════════════════════════════════════════ -->
+<div class="page" id="page-private">
   <div class="section-header">
     <div>
-      <div class="section-title">Cashflow <span>Center</span></div>
-      <div class="section-sub">Einnahmen, Ausgaben & Liquiditätsplanung</div>
+      <div class="section-title">Privat <span>Schweiz</span></div>
+      <div class="section-sub">Wohnsitz CH · CHF · Schweizer Steuer- &amp; Sozialsystem</div>
     </div>
-    <button class="btn btn-gold">+ Transaktion</button>
+    <span class="badge badge-red">CHF · CH Steuerrecht</span>
   </div>
 
-  <div class="grid-4" style="margin-bottom:20px">
-    <div class="card">
-      <div class="card-title" style="margin-bottom:10px">Einnahmen Mai</div>
-      <div class="kpi-value" style="color:var(--green);font-size:24px">+€6.600</div>
-      <div class="kpi-change up">▲ +12% vs. April</div>
-    </div>
-    <div class="card">
-      <div class="card-title" style="margin-bottom:10px">Ausgaben Mai</div>
-      <div class="kpi-value" style="color:var(--red);font-size:24px">-€4.260</div>
-      <div class="kpi-change down">▼ -3% vs. April</div>
-    </div>
-    <div class="card">
-      <div class="card-title" style="margin-bottom:10px">Netto Cashflow</div>
-      <div class="kpi-value" style="color:var(--cyan);font-size:24px">+€2.340</div>
-      <div class="kpi-change up">▲ Positiv</div>
-    </div>
-    <div class="card">
-      <div class="card-title" style="margin-bottom:10px">Liquiditätsreserve</div>
-      <div class="kpi-value" style="color:var(--gold);font-size:24px">€12.840</div>
-      <div class="kpi-change neutral">— 3,0 Mo. Runway</div>
-    </div>
+  <!-- KPI PRIVAT -->
+  <div class="grid-4" style="margin-bottom:16px">
+    <div class="card"><div class="card-title">Privat-Konto CH</div><div class="kpi-value" style="color:var(--cyan)">CHF 2.500</div><div class="kpi-change up">▲ Stabil</div></div>
+    <div class="card"><div class="card-title">Einnahmen Mai</div><div class="kpi-value" style="color:var(--green)">CHF 3.800</div><div class="kpi-change neutral">Hauptjob / Selbstauszahlung</div></div>
+    <div class="card"><div class="card-title">Ausgaben Mai</div><div class="kpi-value" style="color:var(--red)">CHF 3.450</div><div class="kpi-change down">Miete · KK · Lebensmittel</div></div>
+    <div class="card"><div class="card-title">Sparquote</div><div class="kpi-value" style="color:var(--purple)">9 %</div><div class="kpi-change neutral">Ziel: 15 %</div></div>
   </div>
 
-  <div class="grid-3-2">
-    <div class="card">
-      <div class="card-header">
-        <div class="card-title">Einnahmen vs. Ausgaben</div>
-        <div class="pill-select">
-          <button class="pill active" onclick="togglePill(this)">Monat</button>
-          <button class="pill" onclick="togglePill(this)">Quartal</button>
-          <button class="pill" onclick="togglePill(this)">Jahr</button>
-        </div>
+  <!-- 3-SÄULEN-SCHWEIZ -->
+  <div class="card" style="margin-bottom:16px">
+    <div class="card-title" style="margin-bottom:12px">🏛 Schweizer 3-Säulen-System</div>
+    <div class="grid-3">
+      <div style="padding:14px;background:rgba(0,212,255,0.05);border:1px solid var(--border-cyan);border-radius:10px">
+        <div style="font-size:11px;color:var(--cyan);font-weight:700;letter-spacing:.08em">SÄULE 1 · AHV/IV/EO</div>
+        <div style="font-size:18px;font-weight:800;margin-top:6px">staatlich</div>
+        <div style="font-size:11px;color:var(--text-dim);margin-top:4px">Beitragspflicht: ja · Auto-Abzug Lohnabrechnung</div>
       </div>
-      <div class="chart-container">
-        <canvas id="incomeExpenseChart"></canvas>
+      <div style="padding:14px;background:rgba(201,168,76,0.05);border:1px solid var(--border);border-radius:10px">
+        <div style="font-size:11px;color:var(--gold);font-weight:700;letter-spacing:.08em">SÄULE 2 · BVG / Pensionskasse</div>
+        <div style="font-size:18px;font-weight:800;margin-top:6px">beruflich</div>
+        <div style="font-size:11px;color:var(--text-dim);margin-top:4px">Pflicht bei Lohn &gt; CHF 22'050</div>
+      </div>
+      <div style="padding:14px;background:rgba(0,230,118,0.05);border:1px solid var(--border);border-radius:10px">
+        <div style="font-size:11px;color:var(--green);font-weight:700;letter-spacing:.08em">SÄULE 3a · Private Vorsorge</div>
+        <div style="font-size:18px;font-weight:800;margin-top:6px">CHF 0 / 7'056</div>
+        <div style="font-size:11px;color:var(--text-dim);margin-top:4px">Max 2026: CHF 7'056 · steuerlich absetzbar</div>
       </div>
     </div>
-
-    <div class="card">
-      <div class="card-header">
-        <div class="card-title">Ausgaben nach Kategorie</div>
-      </div>
-      <div class="chart-container">
-        <canvas id="expenseDonut"></canvas>
-      </div>
+    <div class="insight-card gold" style="margin-top:14px">
+      <div class="insight-icon">💡</div>
+      <div><div class="insight-title">3a-Empfehlung</div><div class="insight-text">Auch bei knappen Reserven: 3a-Einzahlung bringt direkten Steuerabzug (je nach Kanton 20-35 % Rendite via Steuer). Start mit CHF 200/Monat erwägen.</div></div>
     </div>
   </div>
 
-  <div class="spacer"></div>
-
-  <div class="card">
-    <div class="card-header">
-      <div class="card-title">Alle Transaktionen</div>
-      <div style="display:flex;gap:8px">
-        <input class="input-field" placeholder="Suchen..." style="width:200px;padding:6px 12px">
-        <select class="input-field" style="width:140px;padding:6px 12px">
-          <option>Alle Kategorien</option>
-          <option>Marketing</option>
-          <option>Software</option>
-          <option>Infrastruktur</option>
-          <option>Personal</option>
-        </select>
-      </div>
+  <!-- PRIVATE CHARTS -->
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-header"><div class="card-title">Einnahmen vs. Ausgaben (CHF)</div></div>
+      <div class="chart-container"><canvas id="chart-priv-cashflow"></canvas></div>
     </div>
-    <table class="data-table">
-      <thead>
-        <tr>
-          <th>Datum</th>
-          <th>Beschreibung</th>
-          <th>Kategorie</th>
-          <th>Status</th>
-          <th style="text-align:right">Betrag</th>
-        </tr>
-      </thead>
-      <tbody id="tx-table"></tbody>
-    </table>
-  </div>
-</div>
-
-<!-- ═══════════════════════════════════════════════════ -->
-<!-- PAGE: INVOICES -->
-<!-- ═══════════════════════════════════════════════════ -->
-<div class="page" id="page-invoices">
-  <div class="section-header">
-    <div>
-      <div class="section-title">Invoice <span>Intelligence</span></div>
-      <div class="section-sub">OCR-Scanning · KI-Kategorisierung · Auto-Buchung</div>
-    </div>
-    <span class="badge badge-cyan">🤖 AI-powered</span>
-  </div>
-
-  <div class="grid-3-2">
-    <div>
-      <!-- UPLOAD -->
-      <div class="upload-zone" onclick="simulateOCR()">
-        <div class="upload-icon">📄</div>
-        <div class="upload-title">Rechnung hochladen</div>
-        <div class="upload-sub">PDF · Foto · Screenshot · Drag & Drop<br>KI erkennt automatisch alle Felder</div>
-        <div style="margin-top:16px">
-          <button class="btn btn-gold" style="margin:4px">📷 Foto</button>
-          <button class="btn btn-outline" style="margin:4px">📁 Datei</button>
-          <button class="btn btn-outline" style="margin:4px">📧 E-Mail</button>
-        </div>
-      </div>
-
-      <div class="spacer-sm"></div>
-
-      <!-- OCR RESULT (hidden initially) -->
-      <div class="card" id="ocr-result" style="display:none">
-        <div class="card-header">
-          <div class="card-title">🤖 KI Erkennung</div>
-          <span class="badge badge-green">✓ 94% Konfidenz</span>
-        </div>
-        <div class="grid-2">
-          <div class="ocr-field">
-            <div class="ocr-label">Lieferant</div>
-            <div class="ocr-value">AWS GmbH</div>
-          </div>
-          <div class="ocr-field">
-            <div class="ocr-label">Rechnungsnr.</div>
-            <div class="ocr-value">INV-2025-1842</div>
-          </div>
-          <div class="ocr-field">
-            <div class="ocr-label">Datum</div>
-            <div class="ocr-value">15.05.2025</div>
-          </div>
-          <div class="ocr-field">
-            <div class="ocr-label">Fällig</div>
-            <div class="ocr-value" style="color:var(--orange)">14.06.2025</div>
-          </div>
-          <div class="ocr-field">
-            <div class="ocr-label">Nettobetrag</div>
-            <div class="ocr-value highlight">€189,00</div>
-          </div>
-          <div class="ocr-field">
-            <div class="ocr-label">MwSt. 19%</div>
-            <div class="ocr-value">€35,91</div>
-          </div>
-        </div>
-        <div class="divider"></div>
-        <div class="ocr-field">
-          <div class="ocr-label">KI Kategorie</div>
-          <div style="display:flex;gap:8px;align-items:center;margin-top:4px">
-            <span class="tag" style="background:var(--cyan-dim);color:var(--cyan);border:1px solid rgba(0,212,255,0.2)">☁️ Cloud Infrastruktur</span>
-            <span style="font-size:11px;color:var(--text-secondary)">Vorsteuerabzugsfähig ✓</span>
-          </div>
-        </div>
-        <div class="divider"></div>
-        <div style="display:flex;gap:8px">
-          <button class="btn btn-gold">✓ Bestätigen & Buchen</button>
-          <button class="btn btn-outline">✏ Bearbeiten</button>
-        </div>
-      </div>
-
-      <!-- INVOICE LIST -->
-      <div class="spacer-sm"></div>
-      <div class="card">
-        <div class="card-header">
-          <div class="card-title">Rechnungsübersicht</div>
-          <div style="display:flex;gap:8px">
-            <span class="badge badge-red">1 Überfällig</span>
-            <span class="badge badge-gold">3 Offen</span>
-          </div>
-        </div>
-        <div id="invoice-list"></div>
-      </div>
-    </div>
-
-    <!-- RIGHT: Stats + AI -->
-    <div>
-      <div class="card" style="margin-bottom:16px">
-        <div class="card-title" style="margin-bottom:14px">Rechnungs-KPIs</div>
-        <div class="metric-row">
-          <span class="metric-label">Gesamt offen</span>
-          <span class="metric-val" style="color:var(--gold)">€6.750</span>
-        </div>
-        <div class="metric-row">
-          <span class="metric-label">Überfällig</span>
-          <span class="metric-val" style="color:var(--red)">€1.200</span>
-        </div>
-        <div class="metric-row">
-          <span class="metric-label">Diesen Monat bezahlt</span>
-          <span class="metric-val" style="color:var(--green)">€3.840</span>
-        </div>
-        <div class="metric-row">
-          <span class="metric-label">Ø Zahlungsverzug</span>
-          <span class="metric-val">12 Tage</span>
-        </div>
-        <div class="metric-row">
-          <span class="metric-label">OCR Erkennungsrate</span>
-          <span class="metric-val" style="color:var(--cyan)">94%</span>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-title" style="margin-bottom:14px">🤖 AI Steuerhinweise</div>
-        <div class="insight-card info">
-          <div class="insight-icon">💡</div>
-          <div>
-            <div class="insight-title">Vorsteuer Mai</div>
-            <div class="insight-text">€680 Vorsteuer belegbar. Dokumente vollständig.</div>
-          </div>
-        </div>
-        <div class="insight-card warning">
-          <div class="insight-icon">⏰</div>
-          <div>
-            <div class="insight-title">Rechnung überfällig</div>
-            <div class="insight-text">INV-2025-1609 seit 18 Tagen offen. Mahnung empfohlen.</div>
-          </div>
-        </div>
-        <div class="insight-card gold">
-          <div class="insight-icon">📊</div>
-          <div>
-            <div class="insight-title">USt-Voranmeldung</div>
-            <div class="insight-text">Mai-Daten exportbereit für Steuerberater.</div>
-            <div class="insight-action">→ Export vorbereiten</div>
-          </div>
-        </div>
-      </div>
+    <div class="card">
+      <div class="card-header"><div class="card-title">Private Ausgaben nach Kategorie</div></div>
+      <div class="chart-container"><canvas id="chart-priv-donut"></canvas></div>
     </div>
   </div>
 </div>
 
-<!-- ═══════════════════════════════════════════════════ -->
-<!-- PAGE: ANALYTICS -->
-<!-- ═══════════════════════════════════════════════════ -->
-<div class="page" id="page-analytics">
+<!-- ════════════════════════════════════════════════════════ -->
+<!-- PAGE: FAMILIE -->
+<!-- ════════════════════════════════════════════════════════ -->
+<div class="page" id="page-family">
   <div class="section-header">
     <div>
-      <div class="section-title">Business <span>Analytics</span></div>
-      <div class="section-sub">KPI-System · Trends · Wirtschaftlichkeitsanalyse</div>
+      <div class="section-title">Familie &amp; <span>Haushalt</span></div>
+      <div class="section-sub">Gemeinsame Ausgaben · Kinder · Bildung · Wohnen · Mobilität</div>
     </div>
-    <div class="pill-select">
-      <button class="pill active" onclick="togglePill(this)">Q2 2025</button>
-      <button class="pill" onclick="togglePill(this)">Q1 2025</button>
-      <button class="pill" onclick="togglePill(this)">YTD</button>
-    </div>
+    <button class="btn btn-gold" onclick="alert('Familienmitglieder bitte unter Settings konfigurieren.')">+ Mitglied</button>
   </div>
 
-  <div class="grid-4" style="margin-bottom:20px">
-    <div class="card">
-      <div class="card-title" style="margin-bottom:10px">Gesamtumsatz YTD</div>
-      <div class="kpi-value" style="color:var(--green);font-size:22px">€29.400</div>
-      <div class="kpi-change up">▲ +34% vs. Vorjahr</div>
-    </div>
-    <div class="card">
-      <div class="card-title" style="margin-bottom:10px">EBITDA-Marge</div>
-      <div class="kpi-value" style="color:var(--gold);font-size:22px">35,5%</div>
-      <div class="kpi-change up">▲ Ziel: 40%</div>
-    </div>
-    <div class="card">
-      <div class="card-title" style="margin-bottom:10px">Wachstumsrate</div>
-      <div class="kpi-value" style="color:var(--cyan);font-size:22px">+12%</div>
-      <div class="kpi-change up">▲ MoM Durchschnitt</div>
-    </div>
-    <div class="card">
-      <div class="card-title" style="margin-bottom:10px">Marketing ROI</div>
-      <div class="kpi-value" style="color:var(--text-primary);font-size:22px">2,4x</div>
-      <div class="kpi-change neutral">— Ziel: 3x</div>
-    </div>
-  </div>
-
-  <div class="grid-2" style="margin-bottom:20px">
-    <div class="card">
-      <div class="card-header">
-        <div class="card-title">Umsatzentwicklung YTD</div>
-      </div>
-      <div class="chart-container">
-        <canvas id="revenueChart"></canvas>
-      </div>
-    </div>
-    <div class="card">
-      <div class="card-header">
-        <div class="card-title">Kostenstruktur</div>
-      </div>
-      <div class="chart-container">
-        <canvas id="costChart"></canvas>
-      </div>
-    </div>
-  </div>
-
-  <div class="grid-3">
-    <div class="card">
-      <div class="card-title" style="margin-bottom:14px">Einnahmenquellen</div>
-      <div class="metric-row">
-        <span class="metric-label"><span class="cat-dot" style="background:var(--cyan)"></span>Wavebyte Plattform</span>
-        <span class="metric-val" style="color:var(--cyan)">€3.200</span>
-      </div>
-      <div class="metric-row">
-        <span class="metric-label"><span class="cat-dot" style="background:var(--gold)"></span>Sponsoring</span>
-        <span class="metric-val" style="color:var(--gold)">€1.800</span>
-      </div>
-      <div class="metric-row">
-        <span class="metric-label"><span class="cat-dot" style="background:var(--green)"></span>Beratungsleistungen</span>
-        <span class="metric-val" style="color:var(--green)">€1.200</span>
-      </div>
-      <div class="metric-row">
-        <span class="metric-label"><span class="cat-dot" style="background:var(--orange)"></span>Events / Wave Bite</span>
-        <span class="metric-val" style="color:var(--orange)">€400</span>
-      </div>
-    </div>
-    <div class="card">
-      <div class="card-title" style="margin-bottom:14px">Top Kostentreiber</div>
-      <div class="metric-row">
-        <span class="metric-label">Software & Tools</span>
-        <span class="metric-val">€980 · 23%</span>
-      </div>
-      <div class="metric-row">
-        <span class="metric-label">Marketing</span>
-        <span class="metric-val">€840 · 20%</span>
-      </div>
-      <div class="metric-row">
-        <span class="metric-label">Cloud Infrastruktur</span>
-        <span class="metric-val">€620 · 15%</span>
-      </div>
-      <div class="metric-row">
-        <span class="metric-label">Büro / Verwaltung</span>
-        <span class="metric-val">€520 · 12%</span>
-      </div>
-      <div class="metric-row">
-        <span class="metric-label">Sonstiges</span>
-        <span class="metric-val">€1.300 · 30%</span>
-      </div>
-    </div>
-    <div class="card">
-      <div class="card-title" style="margin-bottom:14px">Effizienz-KPIs</div>
-      <div class="metric-row">
-        <span class="metric-label">Umsatz/Woche</span>
-        <span class="metric-val" style="color:var(--green)">€1.650</span>
-      </div>
-      <div class="metric-row">
-        <span class="metric-label">Kosten/Woche</span>
-        <span class="metric-val" style="color:var(--red)">€1.065</span>
-      </div>
-      <div class="metric-row">
-        <span class="metric-label">Break-Even Punkt</span>
-        <span class="metric-val">€8.500/Mo.</span>
-      </div>
-      <div class="metric-row">
-        <span class="metric-label">Fixkosten-Quote</span>
-        <span class="metric-val">67%</span>
-      </div>
-      <div class="metric-row">
-        <span class="metric-label">Ø Tagsumsatz</span>
-        <span class="metric-val">€220</span>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- ═══════════════════════════════════════════════════ -->
-<!-- PAGE: FORECAST -->
-<!-- ═══════════════════════════════════════════════════ -->
-<div class="page" id="page-forecast">
-  <div class="section-header">
-    <div>
-      <div class="section-title">Forecast <span>& Szenarien</span></div>
-      <div class="section-sub">Liquiditätsplanung · Szenarioanalyse · AI-Prognose</div>
-    </div>
-    <span class="badge badge-cyan">🔮 AI-Prognose</span>
-  </div>
-
-  <div class="scenario-btns">
-    <button class="scenario-btn active" onclick="switchScenario(this,'base')">📊 Base Case</button>
-    <button class="scenario-btn" onclick="switchScenario(this,'optimistic')">🚀 Optimistisch</button>
-    <button class="scenario-btn" onclick="switchScenario(this,'pessimistic')">⚠️ Pessimistisch</button>
-    <button class="scenario-btn" onclick="switchScenario(this,'funding')">💰 Mit Förderung</button>
-  </div>
-
-  <div class="grid-4" style="margin-bottom:20px">
-    <div class="card">
-      <div class="card-title" style="margin-bottom:10px">Forecast Umsatz (12M)</div>
-      <div class="kpi-value" style="color:var(--green);font-size:22px" id="fc-revenue">€92.400</div>
-      <div class="kpi-change up" id="fc-rev-change">▲ +57% vs. aktuell</div>
-    </div>
-    <div class="card">
-      <div class="card-title" style="margin-bottom:10px">Forecast Kosten (12M)</div>
-      <div class="kpi-value" style="color:var(--red);font-size:22px" id="fc-costs">€64.800</div>
-      <div class="kpi-change neutral" id="fc-cost-change">— Skalierung inkl.</div>
-    </div>
-    <div class="card">
-      <div class="card-title" style="margin-bottom:10px">Forecast EBITDA</div>
-      <div class="kpi-value" style="color:var(--gold);font-size:22px" id="fc-ebitda">€27.600</div>
-      <div class="kpi-change up" id="fc-ebitda-change">▲ Marge: 30%</div>
-    </div>
-    <div class="card">
-      <div class="card-title" style="margin-bottom:10px">Runway (Forecast)</div>
-      <div class="kpi-value" style="color:var(--cyan);font-size:22px" id="fc-runway">8,2 Mo.</div>
-      <div class="kpi-change up" id="fc-runway-change">▲ Deutlich besser</div>
-    </div>
-  </div>
-
-  <div class="card" style="margin-bottom:20px">
-    <div class="card-header">
-      <div class="card-title">Cashflow Prognose · 12 Monate</div>
-      <div class="ai-thinking"><div class="ai-dot"></div><div class="ai-dot"></div><div class="ai-dot"></div><span style="font-size:11px;color:var(--cyan);margin-left:4px">AI berechnet...</span></div>
-    </div>
-    <div class="chart-container" style="height:260px">
-      <canvas id="forecastChart"></canvas>
-    </div>
-  </div>
-
-  <div class="grid-3-2">
-    <div class="card">
-      <div class="card-title" style="margin-bottom:14px">Planungsannahmen</div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
-        <div>
-          <div class="ocr-label">Monatl. Wachstum</div>
-          <input class="input-field" value="8%" style="margin-top:4px">
-        </div>
-        <div>
-          <div class="ocr-label">Neue Kunden/Monat</div>
-          <input class="input-field" value="3" style="margin-top:4px">
-        </div>
-        <div>
-          <div class="ocr-label">Fixkostenwachstum</div>
-          <input class="input-field" value="2%" style="margin-top:4px">
-        </div>
-        <div>
-          <div class="ocr-label">Sponsoring-Ziel</div>
-          <input class="input-field" value="€3.000/Mo." style="margin-top:4px">
-        </div>
-      </div>
-      <div style="margin-top:14px">
-        <button class="btn btn-gold">🔮 Prognose aktualisieren</button>
-      </div>
-    </div>
-    <div class="card">
-      <div class="card-title" style="margin-bottom:14px">🤖 AI Forecast-Analyse</div>
-      <div class="insight-card info">
-        <div class="insight-icon">📈</div>
-        <div>
-          <div class="insight-title">Break-Even erreichbar</div>
-          <div class="insight-text">Bei 8% Wachstum: Break-Even in Monat 4 (September 2025).</div>
-        </div>
-      </div>
-      <div class="insight-card gold">
-        <div class="insight-icon">🎯</div>
-        <div>
-          <div class="insight-title">Investorenfähig ab Q3</div>
-          <div class="insight-text">Positiver Cashflow + Wachstum erfüllen Seed-Kriterien.</div>
-        </div>
-      </div>
-      <div class="insight-card warning">
-        <div class="insight-icon">⚡</div>
-        <div>
-          <div class="insight-title">Engpass Juli 2025</div>
-          <div class="insight-text">Liquidität sinkt auf €4.200. Puffer aufbauen empfohlen.</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- ═══════════════════════════════════════════════════ -->
-<!-- PAGE: FUNDING -->
-<!-- ═══════════════════════════════════════════════════ -->
-<div class="page" id="page-funding">
-  <div class="section-header">
-    <div>
-      <div class="section-title">Funding & <span>Investment Layer</span></div>
-      <div class="section-sub">Fördermittel · Investoren · Sponsoring · Kapitalplanung</div>
-    </div>
-    <span class="badge badge-green">💰 2 Matches aktiv</span>
-  </div>
-
-  <div class="grid-4" style="margin-bottom:20px">
-    <div class="card">
-      <div class="card-title" style="margin-bottom:10px">Förderpotenzial</div>
-      <div class="kpi-value" style="color:var(--green);font-size:22px">€85.000</div>
-      <div class="kpi-change up">▲ 4 Programme identifiziert</div>
-    </div>
-    <div class="card">
-      <div class="card-title" style="margin-bottom:10px">Aktive Anträge</div>
-      <div class="kpi-value" style="color:var(--gold);font-size:22px">2</div>
-      <div class="kpi-change neutral">— In Bearbeitung</div>
-    </div>
-    <div class="card">
-      <div class="card-title" style="margin-bottom:10px">Sponsoring Gesamt</div>
-      <div class="kpi-value" style="color:var(--cyan);font-size:22px">€4.500</div>
-      <div class="kpi-change up">▲ YTD gesichert</div>
-    </div>
-    <div class="card">
-      <div class="card-title" style="margin-bottom:10px">Kapitalbedarf (12M)</div>
-      <div class="kpi-value" style="color:var(--orange);font-size:22px">€45.000</div>
-      <div class="kpi-change neutral">— Seed-Runde vorbereiten</div>
-    </div>
-  </div>
-
-  <div class="grid-3">
-    <div class="card">
-      <div class="card-title" style="margin-bottom:16px">🚀 Förderprogramme</div>
-      <div class="funding-card" style="margin-bottom:12px">
-        <div style="display:flex;justify-content:space-between;align-items:start">
-          <div>
-            <div class="funding-title">EXIST Gründerstipendium</div>
-            <div style="font-size:11px;color:var(--text-secondary);margin-bottom:6px">BMWK · Technologiegründungen</div>
-            <div class="funding-amount">€30.000</div>
-            <div class="funding-match"><span style="color:var(--green)">✓</span> <span style="color:var(--text-secondary);font-size:11px">92% Match · Antrag empfohlen</span></div>
-          </div>
-          <span class="badge badge-green">Passen</span>
-        </div>
-        <div style="margin-top:12px">
-          <button class="btn btn-gold" style="font-size:11px;padding:7px 14px">→ Antrag starten</button>
-        </div>
-      </div>
-      <div class="funding-card">
-        <div style="display:flex;justify-content:space-between;align-items:start">
-          <div>
-            <div class="funding-title">Digitalbonus Bayern</div>
-            <div style="font-size:11px;color:var(--text-secondary);margin-bottom:6px">Bayerisches Wirtschaftsministerium</div>
-            <div class="funding-amount">€10.000</div>
-            <div class="funding-match"><span style="color:var(--green)">✓</span> <span style="color:var(--text-secondary);font-size:11px">78% Match · Prüfen</span></div>
-          </div>
-          <span class="badge badge-cyan">Möglich</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="card-title" style="margin-bottom:16px">🤝 Sponsoring-Tracking</div>
-      <div class="metric-row">
-        <span class="metric-label">Hafen Hamburg AG</span>
-        <span class="metric-val" style="color:var(--green)">€2.000 ✓</span>
-      </div>
-      <div class="metric-row">
-        <span class="metric-label">Marina Düsseldorf</span>
-        <span class="metric-val" style="color:var(--green)">€1.500 ✓</span>
-      </div>
-      <div class="metric-row">
-        <span class="metric-label">Yamaha Marine</span>
-        <span class="metric-val" style="color:var(--orange)">€3.000 (offen)</span>
-      </div>
-      <div class="metric-row">
-        <span class="metric-label">DEKRA</span>
-        <span class="metric-val" style="color:var(--text-secondary)">In Verhandlung</span>
-      </div>
-      <div class="divider"></div>
-      <button class="btn btn-gold" style="width:100%">+ Sponsor hinzufügen</button>
-    </div>
-
-    <div class="card">
-      <div class="card-title" style="margin-bottom:16px">💼 Investor Readiness</div>
-      <div class="metric-row">
-        <span class="metric-label">Pitch Deck</span>
-        <span class="metric-val" style="color:var(--green)">✓ Bereit</span>
-      </div>
-      <div class="metric-row">
-        <span class="metric-label">Finanzplan</span>
-        <span class="metric-val" style="color:var(--orange)">⚠ In Arbeit</span>
-      </div>
-      <div class="metric-row">
-        <span class="metric-label">Due Diligence</span>
-        <span class="metric-val" style="color:var(--red)">✗ Ausstehend</span>
-      </div>
-      <div class="metric-row">
-        <span class="metric-label">Bewertung (est.)</span>
-        <span class="metric-val" style="color:var(--cyan)">€180.000</span>
-      </div>
-      <div class="metric-row">
-        <span class="metric-label">Seed-Ziel</span>
-        <span class="metric-val" style="color:var(--gold)">€45.000</span>
-      </div>
-      <div class="divider"></div>
-      <div class="progress-bar" style="height:6px">
-        <div class="progress-fill fill-gold" style="width:35%"></div>
-      </div>
-      <div style="font-size:11px;color:var(--text-secondary);margin-top:6px">35% Investor-Readiness Score</div>
-    </div>
-  </div>
-</div>
-
-<!-- ═══════════════════════════════════════════════════ -->
-<!-- PAGE: AI CFO -->
-<!-- ═══════════════════════════════════════════════════ -->
-<div class="page" id="page-ai">
-  <div class="section-header">
-    <div>
-      <div class="section-title">🤖 AI <span>CFO Command</span></div>
-      <div class="section-sub">Intelligente Finanzanalyse · Handlungsempfehlungen · Risikokontrolle</div>
-    </div>
-    <div class="ai-thinking"><div class="ai-dot"></div><div class="ai-dot"></div><div class="ai-dot"></div><span style="font-size:12px;color:var(--cyan);margin-left:6px">Analysiert...</span></div>
-  </div>
-
-  <div class="grid-3" style="margin-bottom:20px">
-    <div class="card-glass" style="border-color:rgba(201,168,76,0.3)">
-      <div style="font-size:24px;margin-bottom:8px">💼</div>
-      <div class="card-title" style="color:var(--gold)">CFO AI</div>
-      <div style="font-size:13px;color:var(--text-secondary);line-height:1.6;margin-top:8px">
-        Analysiert Cashflow, Liquidität und Investorenfähigkeit in Echtzeit.
-      </div>
-      <div class="divider"></div>
-      <div style="font-size:12px;color:var(--text-primary)">Aktuelle Einschätzung:</div>
-      <div style="font-size:13px;margin-top:6px;line-height:1.7;color:var(--text-secondary)">
-        „Cashflow ist positiv. Runway jedoch kritisch (3 Monate). Empfehle sofortige Funding-Aktivitäten und Kostenoptimierung bei Software-Abonnements (€340/Monat Einsparpotenzial identifiziert)."
-      </div>
-    </div>
-    <div class="card-glass">
-      <div style="font-size:24px;margin-bottom:8px">📊</div>
-      <div class="card-title" style="color:var(--cyan)">Tax Advisor AI</div>
-      <div style="font-size:13px;color:var(--text-secondary);line-height:1.6;margin-top:8px">
-        Steuerlogik, Kategorien, Vorsteuer & Dokumentationshinweise.
-      </div>
-      <div class="divider"></div>
-      <div style="font-size:12px;color:var(--text-primary)">Aktuelle Einschätzung:</div>
-      <div style="font-size:13px;margin-top:6px;line-height:1.7;color:var(--text-secondary)">
-        „€680 Vorsteuer für Mai erfasst. Alle Belege kategorisiert. USt-VA-Export kann erstellt werden. Achtung: 2 Rechnungen fehlen noch."
-      </div>
-    </div>
-    <div class="card-glass" style="border-color:rgba(255,71,87,0.2)">
-      <div style="font-size:24px;margin-bottom:8px">⚠️</div>
-      <div class="card-title" style="color:var(--red)">Risk Controller AI</div>
-      <div style="font-size:13px;color:var(--text-secondary);line-height:1.6;margin-top:8px">
-        Risiken, Warnungen, kritische Entwicklungen & Cashflow-Gefahren.
-      </div>
-      <div class="divider"></div>
-      <div style="font-size:12px;color:var(--text-primary)">Aktuelle Einschätzung:</div>
-      <div style="font-size:13px;margin-top:6px;line-height:1.7;color:var(--text-secondary)">
-        „3 Risiken aktiv: Runway unter 4 Monate, 1 überfällige Rechnung (€1.200), Juli-Liquiditätsengpass prognostiziert."
-      </div>
-    </div>
-  </div>
-
-  <div class="grid-3-2">
-    <div class="card">
-      <div class="card-header">
-        <div class="card-title">🎯 Prioritäten & Empfehlungen</div>
-        <span class="badge badge-gold">5 aktiv</span>
-      </div>
-      <div class="insight-card danger">
-        <div class="insight-icon">🚨</div>
-        <div>
-          <div class="insight-title">Kritisch: Runway sichern</div>
-          <div class="insight-text">3 Monate Runway. Sofort: EXIST-Antrag stellen + Sponsoring-Gespräche führen. Geschätzter Effekt: +5 Monate Runway.</div>
-          <div class="insight-action" onclick="showPage('funding')">→ Funding öffnen</div>
-        </div>
-      </div>
-      <div class="insight-card warning">
-        <div class="insight-icon">💸</div>
-        <div>
-          <div class="insight-title">Einsparpotenzial: Software</div>
-          <div class="insight-text">6 redundante Abonnements erkannt. Konsolidierung spart €340/Monat = €4.080/Jahr.</div>
-        </div>
-      </div>
-      <div class="insight-card gold">
-        <div class="insight-icon">📈</div>
-        <div>
-          <div class="insight-title">Umsatzhebel: Sponsoring</div>
-          <div class="insight-text">Yamaha Marine noch offen (€3.000). Abschluss jetzt priorisieren — höchster ROI aller Maßnahmen.</div>
-        </div>
-      </div>
-      <div class="insight-card success">
-        <div class="insight-icon">✅</div>
-        <div>
-          <div class="insight-title">Break-Even im Zielkorridor</div>
-          <div class="insight-text">Bei 8% Wachstum: Break-Even September 2025. Plan hält. Keine Anpassung nötig.</div>
-        </div>
-      </div>
-      <div class="insight-card info">
-        <div class="insight-icon">🏛️</div>
-        <div>
-          <div class="insight-title">GmbH-Gründung vorbereiten</div>
-          <div class="insight-text">Ab €10k/Monat Umsatz lohnt GmbH steuerlich. Schwelle in ~3 Monaten erreichbar.</div>
-        </div>
-      </div>
-    </div>
-
-    <div>
-      <div class="card" style="margin-bottom:16px">
-        <div class="card-title" style="margin-bottom:14px">💬 AI fragen</div>
-        <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:12px">
-          <button class="btn btn-outline" style="text-align:left;font-size:12px" onclick="askAI('Wie verbessere ich meinen Cashflow?')">💡 Wie verbessere ich meinen Cashflow?</button>
-          <button class="btn btn-outline" style="text-align:left;font-size:12px" onclick="askAI('Bin ich investorenbereit?')">📊 Bin ich investorenbereit?</button>
-          <button class="btn btn-outline" style="text-align:left;font-size:12px" onclick="askAI('Welche Kosten kann ich optimieren?')">💸 Welche Kosten kann ich optimieren?</button>
-          <button class="btn btn-outline" style="text-align:left;font-size:12px" onclick="askAI('Was bedeutet mein EBITDA?')">🔢 Was bedeutet mein EBITDA?</button>
-        </div>
-        <div style="display:flex;gap:8px">
-          <input class="input-field" id="ai-input" placeholder="Finanzfrage stellen..." style="flex:1">
-          <button class="btn btn-gold" onclick="askAI()">→</button>
-        </div>
-        <div id="ai-response" style="display:none;margin-top:12px;padding:12px;background:rgba(0,212,255,0.05);border:1px solid rgba(0,212,255,0.15);border-radius:8px;font-size:13px;line-height:1.7;color:var(--text-secondary)"></div>
-      </div>
-
-      <div class="card">
-        <div class="card-title" style="margin-bottom:14px">📋 Monatsbericht</div>
-        <div style="font-size:12px;color:var(--text-secondary);line-height:1.8">
-          <strong style="color:var(--text-primary)">Mai 2025 Zusammenfassung:</strong><br>
-          Cashflow: <span style="color:var(--green)">+€2.340</span><br>
-          Umsatz: <span style="color:var(--green)">€6.600</span> (+12% MoM)<br>
-          Kosten: <span style="color:var(--red)">€4.260</span> (stabil)<br>
-          Offene RGs: <span style="color:var(--gold)">€6.750</span><br>
-          Runway: <span style="color:var(--orange)">3,0 Monate</span>
-        </div>
-        <div style="margin-top:12px">
-          <button class="btn btn-outline" style="font-size:11px">📤 PDF Export</button>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- ═══════════════════════════════════════════════════ -->
-<!-- PAGE: SETTINGS -->
-<!-- ═══════════════════════════════════════════════════ -->
-<div class="page" id="page-settings">
-  <div class="section-header">
-    <div>
-      <div class="section-title">⚙️ <span>Einstellungen</span></div>
-      <div class="section-sub">System · Automatisierung · Integration · Sicherheit</div>
-    </div>
+  <div class="grid-4" style="margin-bottom:16px">
+    <div class="card purple-edge"><div class="card-title">Haushalt Gesamt</div><div class="kpi-value" style="color:var(--purple)">CHF 4.250</div><div class="kpi-change neutral">Fixkosten Monat</div></div>
+    <div class="card"><div class="card-title">Wohnen</div><div class="kpi-value">CHF 1.900</div><div class="kpi-change neutral">Miete + Nebenkosten</div></div>
+    <div class="card"><div class="card-title">Krankenkasse Familie</div><div class="kpi-value" style="color:var(--red)">CHF 1.250</div><div class="kpi-change down">Inkl. KVG-Prämien</div></div>
+    <div class="card"><div class="card-title">Lebensmittel</div><div class="kpi-value">CHF 800</div><div class="kpi-change neutral">Ø Monatlich</div></div>
   </div>
 
   <div class="grid-2">
     <div class="card">
-      <div class="card-title" style="margin-bottom:16px">🔗 Integrationen</div>
-      <div class="metric-row">
-        <div><div style="font-size:13px;font-weight:600">Google Sheets</div><div style="font-size:11px;color:var(--text-secondary)">Automatische Datensyncronisation</div></div>
-        <label class="toggle"><input type="checkbox" checked><span class="toggle-slider"></span></label>
-      </div>
-      <div class="metric-row">
-        <div><div style="font-size:13px;font-weight:600">Gmail OCR</div><div style="font-size:11px;color:var(--text-secondary)">Rechnungen aus E-Mails erkennen</div></div>
-        <label class="toggle"><input type="checkbox"><span class="toggle-slider"></span></label>
-      </div>
-      <div class="metric-row">
-        <div><div style="font-size:13px;font-weight:600">Google Drive</div><div style="font-size:11px;color:var(--text-secondary)">Rechnungsarchiv automatisch speichern</div></div>
-        <label class="toggle"><input type="checkbox" checked><span class="toggle-slider"></span></label>
-      </div>
-      <div class="metric-row">
-        <div><div style="font-size:13px;font-weight:600">Make / N8N</div><div style="font-size:11px;color:var(--text-secondary)">Automatisierungs-Workflows</div></div>
-        <label class="toggle"><input type="checkbox"><span class="toggle-slider"></span></label>
-      </div>
+      <div class="card-title" style="margin-bottom:10px">Haushaltsbudget · Detail</div>
+      <div class="metric-row"><span class="metric-label">Miete + NK</span><span class="metric-val">CHF 1.900</span></div>
+      <div class="metric-row"><span class="metric-label">Strom / Heizung</span><span class="metric-val">CHF 180</span></div>
+      <div class="metric-row"><span class="metric-label">Internet / TV / Mobilfunk</span><span class="metric-val">CHF 140</span></div>
+      <div class="metric-row"><span class="metric-label">Krankenkasse alle</span><span class="metric-val" style="color:var(--red)">CHF 1.250</span></div>
+      <div class="metric-row"><span class="metric-label">Lebensmittel</span><span class="metric-val">CHF 800</span></div>
+      <div class="metric-row"><span class="metric-label">Mobilität (ÖV/Auto)</span><span class="metric-val">CHF 220</span></div>
+      <div class="metric-row"><span class="metric-label">Kinder · Schule · Hobbys</span><span class="metric-val">CHF 300</span></div>
+      <div class="metric-row"><span class="metric-label">Kleidung / Drogerie</span><span class="metric-val">CHF 200</span></div>
+      <div class="metric-row"><span class="metric-label">Versicherungen (HR/HP/RS)</span><span class="metric-val">CHF 145</span></div>
+      <div class="metric-row"><span class="metric-label">Freizeit / Hobbys</span><span class="metric-val">CHF 250</span></div>
+      <div class="divider"></div>
+      <div class="metric-row"><span class="metric-label" style="font-weight:700">Summe Familie</span><span class="metric-val" style="color:var(--purple)">CHF 5.385</span></div>
     </div>
-
     <div class="card">
-      <div class="card-title" style="margin-bottom:16px">🤖 AI-Einstellungen</div>
-      <div class="metric-row">
-        <div><div style="font-size:13px;font-weight:600">Tägliches Briefing</div><div style="font-size:11px;color:var(--text-secondary)">KI-Zusammenfassung morgens 8 Uhr</div></div>
-        <label class="toggle"><input type="checkbox" checked><span class="toggle-slider"></span></label>
-      </div>
-      <div class="metric-row">
-        <div><div style="font-size:13px;font-weight:600">Liquiditätswarnungen</div><div style="font-size:11px;color:var(--text-secondary)">Alert bei Runway unter 2 Monaten</div></div>
-        <label class="toggle"><input type="checkbox" checked><span class="toggle-slider"></span></label>
-      </div>
-      <div class="metric-row">
-        <div><div style="font-size:13px;font-weight:600">Auto-Kategorisierung</div><div style="font-size:11px;color:var(--text-secondary)">Rechnungen automatisch einordnen</div></div>
-        <label class="toggle"><input type="checkbox" checked><span class="toggle-slider"></span></label>
-      </div>
-      <div class="metric-row">
-        <div><div style="font-size:13px;font-weight:600">Monatsbericht</div><div style="font-size:11px;color:var(--text-secondary)">PDF-Bericht letzter Werktag</div></div>
-        <label class="toggle"><input type="checkbox"><span class="toggle-slider"></span></label>
-      </div>
+      <div class="card-header"><div class="card-title">Familie · Ausgaben-Mix</div></div>
+      <div class="chart-container"><canvas id="chart-family-mix"></canvas></div>
     </div>
+  </div>
 
-    <div class="card">
-      <div class="card-title" style="margin-bottom:16px">🏢 Firmenstruktur</div>
-      <div class="metric-row"><span class="metric-label">Rechtsform</span><span class="metric-val">Einzelunternehmen</span></div>
-      <div class="metric-row"><span class="metric-label">Steuernummer</span><span class="metric-val" style="color:var(--text-muted)">Noch nicht hinterlegt</span></div>
-      <div class="metric-row"><span class="metric-label">USt-ID</span><span class="metric-val" style="color:var(--text-muted)">Ausstehend</span></div>
-      <div class="metric-row"><span class="metric-label">Geschäftsjahr</span><span class="metric-val">Jan–Dez</span></div>
-      <div class="metric-row"><span class="metric-label">Nächster Schritt</span><span class="metric-val" style="color:var(--gold)">GmbH vorbereiten</span></div>
-      <div style="margin-top:12px"><button class="btn btn-gold" style="font-size:11px">GmbH-Gründungsplan</button></div>
-    </div>
-
-    <div class="card">
-      <div class="card-title" style="margin-bottom:16px">💾 Daten & Export</div>
-      <div style="display:flex;flex-direction:column;gap:10px">
-        <button class="btn btn-outline">📊 Excel-Export (alle Daten)</button>
-        <button class="btn btn-outline">📋 DATEV-Export</button>
-        <button class="btn btn-outline">📑 USt-Voranmeldung</button>
-        <button class="btn btn-outline">📁 Archiv (Google Drive)</button>
-        <button class="btn btn-outline">🔒 Backup erstellen</button>
+  <div class="card" style="margin-top:16px">
+    <div class="card-title" style="margin-bottom:10px">🎯 Familien-Spar-Ziele</div>
+    <div class="grid-3">
+      <div style="padding:12px;background:rgba(163,102,255,0.06);border:1px solid rgba(163,102,255,0.25);border-radius:10px">
+        <div style="font-size:11px;color:var(--purple);font-weight:700">SCHULE / AUSBILDUNG</div>
+        <div style="font-size:20px;font-weight:800;margin-top:4px">CHF 4'500 / 10'000</div>
+        <div class="progress-bar"><div class="progress-fill fill-purple" style="width:45%"></div></div>
+      </div>
+      <div style="padding:12px;background:rgba(0,212,255,0.05);border:1px solid var(--border-cyan);border-radius:10px">
+        <div style="font-size:11px;color:var(--cyan);font-weight:700">NOTFALL-RESERVE</div>
+        <div style="font-size:20px;font-weight:800;margin-top:4px">CHF 2'500 / 15'000</div>
+        <div class="progress-bar"><div class="progress-fill fill-cyan" style="width:17%"></div></div>
+      </div>
+      <div style="padding:12px;background:rgba(0,230,118,0.05);border:1px solid rgba(0,230,118,0.2);border-radius:10px">
+        <div style="font-size:11px;color:var(--green);font-weight:700">FERIEN 2026</div>
+        <div style="font-size:20px;font-weight:800;margin-top:4px">CHF 800 / 4'000</div>
+        <div class="progress-bar"><div class="progress-fill fill-green" style="width:20%"></div></div>
       </div>
     </div>
   </div>
 </div>
 
-</div> <!-- /main -->
-</div> <!-- /app -->
+<!-- ════════════════════════════════════════════════════════ -->
+<!-- PAGE: VERSICHERUNG & KRANKENKASSE -->
+<!-- ════════════════════════════════════════════════════════ -->
+<div class="page" id="page-insurance">
+  <div class="section-header">
+    <div>
+      <div class="section-title">Versicherung &amp; <span>Krankenkasse</span></div>
+      <div class="section-sub">CH KVG (Grund &amp; Zusatz) · DE Geschäfts-Versicherungen · Familie · Vorsorge</div>
+    </div>
+    <button class="btn btn-gold" onclick="alert('Policen können in Settings hinterlegt werden.')">+ Police</button>
+  </div>
 
-<script>
-// ═══════════════════════════════════════════════════
-// DATA
-// ═══════════════════════════════════════════════════
+  <!-- KRANKENKASSE CH -->
+  <div class="card" style="margin-bottom:16px">
+    <div class="card-title" style="margin-bottom:10px">🇨🇭 Krankenkasse Schweiz · KVG (Obligatorisch) + VVG (Zusatz)</div>
+    <table class="data-table">
+      <thead><tr><th>Person</th><th>Modell</th><th>Franchise</th><th>Zusatz</th><th>Status</th><th class="right">Prämie/Mo.</th></tr></thead>
+      <tbody>
+        <tr><td>Carsten</td><td>HMO</td><td>CHF 2'500</td><td>Spital halbprivat</td><td><span class="badge badge-green">aktiv</span></td><td class="right">CHF 385</td></tr>
+        <tr><td>Partner:in</td><td>Standard</td><td>CHF 300</td><td>Komplementär</td><td><span class="badge badge-green">aktiv</span></td><td class="right">CHF 420</td></tr>
+        <tr><td>Kind 1</td><td>Hausarzt</td><td>CHF 300</td><td>Zahn 2'000</td><td><span class="badge badge-green">aktiv</span></td><td class="right">CHF 165</td></tr>
+        <tr><td>Kind 2</td><td>Hausarzt</td><td>CHF 300</td><td>Zahn 2'000</td><td><span class="badge badge-green">aktiv</span></td><td class="right">CHF 165</td></tr>
+        <tr><td>+ ergänzen</td><td colspan="4" style="color:var(--text-dim)">Settings → Familienmitglieder</td><td class="right">—</td></tr>
+        <tr style="background:rgba(255,71,87,0.05)"><td colspan="5" style="font-weight:700">Summe Krankenkasse / Mon.</td><td class="right" style="color:var(--red);font-weight:800">CHF 1'135</td></tr>
+      </tbody>
+    </table>
+    <div class="insight-card warning" style="margin-top:12px">
+      <div class="insight-icon">💡</div>
+      <div><div class="insight-title">Optimierungs-Check (Comparis)</div><div class="insight-text">Vergleich Mai 2026: Bei Wechsel zu Assura/CSS HMO-Modell bis zu CHF 130/Monat Ersparnis möglich. Kündigungsfrist KVG: Ende September.</div></div>
+    </div>
+  </div>
 
-const transactions = [
-  { date:'19.05.25', name:'AWS Cloud Services', cat:'☁️ Infrastruktur', amount:-189, status:'bezahlt', icon:'☁️', color:'var(--cyan-dim)' },
-  { date:'18.05.25', name:'Sponsoring Hafen Hamburg', cat:'💼 Einnahme', amount:+2000, status:'eingegangen', icon:'💰', color:'var(--green-dim)' },
-  { date:'17.05.25', name:'Figma Pro', cat:'🎨 Software', amount:-45, status:'bezahlt', icon:'🎨', color:'var(--gold-dim)' },
-  { date:'16.05.25', name:'Google Workspace', cat:'💻 Software', amount:-12, status:'bezahlt', icon:'💻', color:'var(--gold-dim)' },
-  { date:'15.05.25', name:'Beratungshonorar WaveBite', cat:'💼 Einnahme', amount:+1200, status:'eingegangen', icon:'💼', color:'var(--green-dim)' },
-  { date:'14.05.25', name:'Meta Ads', cat:'📢 Marketing', amount:-380, status:'bezahlt', icon:'📢', color:'var(--red-dim)' },
-  { date:'13.05.25', name:'Bürobedarf', cat:'🏢 Verwaltung', amount:-68, status:'bezahlt', icon:'🏢', color:'var(--gold-dim)' },
-  { date:'12.05.25', name:'Sponsoring Marina Düsseldorf', cat:'💼 Einnahme', amount:+1500, status:'eingegangen', icon:'💰', color:'var(--green-dim)' },
-  { date:'11.05.25', name:'Vercel Pro', cat:'☁️ Infrastruktur', amount:-20, status:'bezahlt', icon:'🔧', color:'var(--cyan-dim)' },
-  { date:'10.05.25', name:'Freelancer Design', cat:'🎨 Dienstleistung', amount:-450, status:'bezahlt', icon:'🎨', color:'var(--gold-dim)' },
-];
+  <!-- WEITERE VERSICHERUNGEN -->
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title" style="margin-bottom:10px">🏠 Privat-Versicherungen CH</div>
+      <div class="metric-row"><span class="metric-label">Haftpflicht-/Hausrat</span><span class="metric-val">CHF 35/Mo</span></div>
+      <div class="metric-row"><span class="metric-label">Rechtsschutz</span><span class="metric-val">CHF 28/Mo</span></div>
+      <div class="metric-row"><span class="metric-label">Lebensversicherung 3a</span><span class="metric-val">noch nicht</span></div>
+      <div class="metric-row"><span class="metric-label">Unfallversicherung</span><span class="metric-val">UVG (Arbeitgeber)</span></div>
+      <div class="metric-row"><span class="metric-label">Reise / Annullation</span><span class="metric-val">CHF 12/Mo</span></div>
+      <div class="metric-row"><span class="metric-label">Auto / ÖV</span><span class="metric-val">CHF 70/Mo</span></div>
+      <div class="divider"></div>
+      <div class="metric-row"><span class="metric-label" style="font-weight:700">Summe Privat-Vers.</span><span class="metric-val" style="color:var(--ch-priv)">CHF 145</span></div>
+    </div>
+    <div class="card">
+      <div class="card-title" style="margin-bottom:10px">🏢 Geschäfts-Versicherungen DE</div>
+      <div class="metric-row"><span class="metric-label">Berufshaftpflicht (gepl.)</span><span class="metric-val">€38/Mo</span></div>
+      <div class="metric-row"><span class="metric-label">Cyber-Versicherung</span><span class="metric-val" style="color:var(--orange)">offen</span></div>
+      <div class="metric-row"><span class="metric-label">D&amp;O (ab GmbH)</span><span class="metric-val" style="color:var(--text-dim)">geplant</span></div>
+      <div class="metric-row"><span class="metric-label">Rechtsschutz Geschäft</span><span class="metric-val">€25/Mo</span></div>
+      <div class="metric-row"><span class="metric-label">Inhalt / Equipment</span><span class="metric-val">€18/Mo</span></div>
+      <div class="metric-row"><span class="metric-label">IHK-Pflicht-Beitrag</span><span class="metric-val">€30/Mo</span></div>
+      <div class="divider"></div>
+      <div class="metric-row"><span class="metric-label" style="font-weight:700">Summe Geschäft</span><span class="metric-val" style="color:var(--gold)">€111</span></div>
+    </div>
+  </div>
+</div>
 
-const invoices = [
-  { nr:'INV-2025-1842', vendor:'AWS GmbH', amount:224.91, due:'14.06.25', status:'open' },
-  { nr:'INV-2025-1609', vendor:'Werbeagentur Berlin', amount:1200, due:'01.05.25', status:'overdue' },
-  { nr:'INV-2025-1788', vendor:'Freiberufler App Dev', amount:2800, due:'30.05.25', status:'open' },
-  { nr:'INV-2025-1701', vendor:'Google Ads Rechnung', amount:525, due:'20.05.25', status:'open' },
-  { nr:'INV-2025-1650', vendor:'Vercel Services', amount:89, due:'15.05.25', status:'paid' },
-  { nr:'INV-2025-1590', vendor:'Figma Inc.', amount:45, due:'10.05.25', status:'paid' },
-];
+<!-- ════════════════════════════════════════════════════════ -->
+<!-- PAGE: CASHFLOW -->
+<!-- ════════════════════════════════════════════════════════ -->
+<div class="page" id="page-cashflow">
+  <div class="section-header">
+    <div>
+      <div class="section-title">Cashflow <span>Center</span></div>
+      <div class="section-sub">Alle Transaktionen · Filter nach Entity, Kategorie, Zeitraum</div>
+    </div>
+    <button class="btn btn-gold" onclick="openTxModal()">+ Transaktion</button>
+  </div>
 
-// ═══════════════════════════════════════════════════
-// PAGE NAVIGATION
-// ═══════════════════════════════════════════════════
+  <div class="ent-strip">
+    <div class="ent-bubble active" data-filter="all" onclick="filterTxs('all',this)">Alle</div>
+    <div class="ent-bubble" data-filter="de-bus" onclick="filterTxs('de-bus',this)">🇩🇪 Geschäft</div>
+    <div class="ent-bubble" data-filter="ch-priv" onclick="filterTxs('ch-priv',this)">🇨🇭 Privat</div>
+    <div class="ent-bubble" data-filter="family" onclick="filterTxs('family',this)">👨‍👩‍👧 Familie</div>
+    <div class="ent-bubble" data-filter="pos" onclick="filterTxs('pos',this)">+ Einnahmen</div>
+    <div class="ent-bubble" data-filter="neg" onclick="filterTxs('neg',this)">− Ausgaben</div>
+  </div>
 
-function showPage(id) {
-  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  document.getElementById('page-' + id).classList.add('active');
-  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
-  document.querySelectorAll('.nav-tab').forEach(t => {
-    if(t.getAttribute('onclick') && t.getAttribute('onclick').includes("'"+id+"'")) t.classList.add('active');
-  });
-  document.querySelectorAll('#mobile-nav .pill').forEach(t => t.classList.remove('active'));
-  document.querySelectorAll('#mobile-nav .pill').forEach(t => {
-    if(t.getAttribute('onclick') && t.getAttribute('onclick').includes("'"+id+"'")) t.classList.add('active');
-  });
-}
+  <div class="card">
+    <div class="card-header"><div class="card-title">Transaktionen · <span id="tx-count">—</span></div>
+      <input class="input" id="tx-search" placeholder="🔍 Suchen…" oninput="renderTxList()" style="width:240px"></div>
+    <div class="tx-row" style="font-size:10px;color:var(--text-dim);text-transform:uppercase;letter-spacing:.08em;background:rgba(0,0,0,0.2);border-radius:6px">
+      <div>Datum</div><div>Beschreibung</div><div>Kategorie</div><div>Entity</div><div class="tx-amount">Betrag</div>
+    </div>
+    <div id="tx-list"></div>
+  </div>
+</div>
 
-function togglePill(el) {
-  el.parentElement.querySelectorAll('.pill').forEach(p => p.classList.remove('active'));
-  el.classList.add('active');
-}
+<!-- ════════════════════════════════════════════════════════ -->
+<!-- PAGE: INVOICES -->
+<!-- ════════════════════════════════════════════════════════ -->
+<div class="page" id="page-invoices">
+  <div class="section-header">
+    <div>
+      <div class="section-title">Rechnungs- <span>Intelligence</span></div>
+      <div class="section-sub">OCR · KI-Kategorisierung · Vorsteuer-Tracking · Mahn-Status</div>
+    </div>
+    <span class="badge badge-cyan">🤖 AI-powered</span>
+  </div>
 
-// ═══════════════════════════════════════════════════
-// RENDER TRANSACTIONS
-// ═══════════════════════════════════════════════════
-
-function renderTransactions() {
-  const list = document.getElementById('tx-list');
-  if(!list) return;
-  list.innerHTML = transactions.slice(0,6).map(t => `
-    <div class="tx-row">
-      <div class="tx-icon" style="background:${t.color}">${t.icon}</div>
-      <div class="tx-info">
-        <div class="tx-name">${t.name}</div>
-        <div class="tx-cat">${t.cat}</div>
-      </div>
-      <div style="text-align:right">
-        <div class="tx-amount" style="color:${t.amount>0?'var(--green)':'var(--red)'}">
-          ${t.amount>0?'+':''}€${Math.abs(t.amount).toLocaleString('de')}
-        </div>
-        <div class="tx-date">${t.date}</div>
+  <div class="grid-2" style="margin-bottom:16px">
+    <div class="card" style="border:2px dashed rgba(201,168,76,0.3);cursor:pointer;text-align:center;padding:30px" onclick="alert('Upload-Funktion benötigt Backend-Bridge. Aktuell Demo-Modus.')">
+      <div style="font-size:36px;margin-bottom:8px">📄</div>
+      <div style="font-size:14px;font-weight:700">Rechnung hochladen</div>
+      <div style="font-size:11px;color:var(--text-dim);margin-top:6px">PDF · Foto · Screenshot · Drag &amp; Drop<br>KI erkennt automatisch alle Felder</div>
+      <div style="margin-top:14px;display:flex;gap:8px;justify-content:center">
+        <button class="btn btn-gold">📷 Foto</button>
+        <button class="btn btn-outline">📁 Datei</button>
+        <button class="btn btn-outline">📧 E-Mail</button>
       </div>
     </div>
-  `).join('');
+    <div class="card">
+      <div class="card-title" style="margin-bottom:10px">Rechnungs-KPIs · Mai 2026</div>
+      <div class="metric-row"><span class="metric-label">Gesamt offen</span><span class="metric-val" style="color:var(--gold)">€2.850</span></div>
+      <div class="metric-row"><span class="metric-label">Überfällig</span><span class="metric-val" style="color:var(--red)">€340</span></div>
+      <div class="metric-row"><span class="metric-label">Diesen Monat bezahlt</span><span class="metric-val" style="color:var(--green)">€1.840</span></div>
+      <div class="metric-row"><span class="metric-label">Ø Zahlungsverzug</span><span class="metric-val">9 Tage</span></div>
+      <div class="metric-row"><span class="metric-label">Vorsteuer Mai (DE)</span><span class="metric-val" style="color:var(--cyan)">€220</span></div>
+      <div class="metric-row"><span class="metric-label">MwSt-Saldo</span><span class="metric-val">€-130</span></div>
+    </div>
+  </div>
 
-  const table = document.getElementById('tx-table');
-  if(!table) return;
-  table.innerHTML = transactions.map(t => `
-    <tr>
-      <td style="color:var(--text-secondary)">${t.date}</td>
-      <td>${t.icon} ${t.name}</td>
-      <td><span class="tag" style="background:rgba(255,255,255,0.04);color:var(--text-secondary);border:1px solid var(--border)">${t.cat}</span></td>
-      <td><span class="badge ${t.amount>0?'badge-green':'badge-gold'}">${t.status}</span></td>
-      <td style="text-align:right;color:${t.amount>0?'var(--green)':'var(--red)'}">
-        ${t.amount>0?'+':''}€${Math.abs(t.amount).toLocaleString('de')}
-      </td>
-    </tr>
-  `).join('');
+  <div class="card">
+    <div class="card-header"><div class="card-title">Rechnungsübersicht</div>
+      <div style="display:flex;gap:8px"><span class="badge badge-red">1 Überfällig</span><span class="badge badge-gold">3 Offen</span></div>
+    </div>
+    <table class="data-table">
+      <thead><tr><th>Nr.</th><th>Lieferant</th><th>Datum</th><th>Fällig</th><th>Status</th><th class="right">Betrag</th></tr></thead>
+      <tbody id="invoice-tbody"></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════ -->
+<!-- PAGE: STEUERN -->
+<!-- ════════════════════════════════════════════════════════ -->
+<div class="page" id="page-taxes">
+  <div class="section-header">
+    <div><div class="section-title">Steuer- <span>Cockpit</span></div><div class="section-sub">DE Geschäft · CH Privat · Fristen · Rückstellungen · Belege</div></div>
+    <span class="badge badge-cyan">Mai 2026</span>
+  </div>
+
+  <div class="grid-2" style="margin-bottom:16px">
+    <div class="card gold-edge">
+      <div class="card-title" style="margin-bottom:10px">🇩🇪 Steuern Deutschland (UG)</div>
+      <div class="metric-row"><span class="metric-label">USt-Voranmeldung</span><span class="metric-val" style="color:var(--orange)">10. Juni fällig</span></div>
+      <div class="metric-row"><span class="metric-label">USt-Saldo Mai</span><span class="metric-val">€-130 (Erstattung)</span></div>
+      <div class="metric-row"><span class="metric-label">Körperschaftsteuer-Vorz.</span><span class="metric-val">€0 (UG i.Gr.)</span></div>
+      <div class="metric-row"><span class="metric-label">Gewerbesteuer-Vorz.</span><span class="metric-val">€0</span></div>
+      <div class="metric-row"><span class="metric-label">Steuernummer DE</span><span class="metric-val">in Beantragung</span></div>
+      <div class="metric-row"><span class="metric-label">ELSTER-Konto</span><span class="metric-val" style="color:var(--green)">✓ aktiv</span></div>
+      <div class="divider"></div>
+      <div class="metric-row"><span class="metric-label">Rückstellung KSt+GewSt</span><span class="metric-val" style="color:var(--gold)">€350</span></div>
+      <div class="metric-row"><span class="metric-label">Rückstellung USt</span><span class="metric-val">enthält bereits</span></div>
+    </div>
+    <div class="card red-edge">
+      <div class="card-title" style="margin-bottom:10px">🇨🇭 Steuern Schweiz (Privat)</div>
+      <div class="metric-row"><span class="metric-label">Steuererklärung 2025</span><span class="metric-val" style="color:var(--orange)">31. März 2026 abgegeben</span></div>
+      <div class="metric-row"><span class="metric-label">Akontorechnungen 2026</span><span class="metric-val">CHF 480/Mo</span></div>
+      <div class="metric-row"><span class="metric-label">Direkte Bundessteuer</span><span class="metric-val">CHF 1'200/Jahr</span></div>
+      <div class="metric-row"><span class="metric-label">Kantonal + Gemeinde</span><span class="metric-val">CHF 4'560/Jahr</span></div>
+      <div class="metric-row"><span class="metric-label">Quellensteuer (falls)</span><span class="metric-val">Auto-Abzug Lohn</span></div>
+      <div class="metric-row"><span class="metric-label">3a Steuerabzug 2026</span><span class="metric-val" style="color:var(--green)">CHF 0 / 7'056</span></div>
+      <div class="divider"></div>
+      <div class="metric-row"><span class="metric-label">Rückstellung gesamt</span><span class="metric-val" style="color:var(--ch-priv)">CHF 5'760 / Jahr</span></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title" style="margin-bottom:10px">📅 Fristen-Kalender (kommende 60 Tage)</div>
+    <table class="data-table">
+      <thead><tr><th>Datum</th><th>Frist / Abgabe</th><th>Entity</th><th>Action</th><th class="right">Betrag</th></tr></thead>
+      <tbody>
+        <tr><td>10.06.2026</td><td>USt-Voranmeldung Mai</td><td>🇩🇪 Geschäft</td><td>ELSTER online</td><td class="right">€-130</td></tr>
+        <tr><td>15.06.2026</td><td>Akontorechnung CH Q2</td><td>🇨🇭 Privat</td><td>e-Banking</td><td class="right">CHF 480</td></tr>
+        <tr><td>30.06.2026</td><td>Lexoffice Buchhaltung Q2</td><td>🇩🇪 Geschäft</td><td>Bestätigen</td><td class="right">€0</td></tr>
+        <tr><td>10.07.2026</td><td>USt-Voranmeldung Juni</td><td>🇩🇪 Geschäft</td><td>ELSTER online</td><td class="right">offen</td></tr>
+        <tr><td>15.07.2026</td><td>Belege Lohn Familie</td><td>👨‍👩‍👧 Familie</td><td>Drive sortieren</td><td class="right">—</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════ -->
+<!-- PAGE: FORECAST -->
+<!-- ════════════════════════════════════════════════════════ -->
+<div class="page" id="page-forecast">
+  <div class="section-header"><div><div class="section-title">Liquiditäts- <span>Forecast</span></div><div class="section-sub">12-Monats-Projektion · 3 Szenarien · Live-Berechnung</div></div></div>
+
+  <div class="grid-2" style="margin-bottom:16px">
+    <div class="card">
+      <div class="card-header"><div class="card-title">Cash-Projektion · 12 Monate</div></div>
+      <div class="chart-container tall"><canvas id="chart-forecast"></canvas></div>
+    </div>
+    <div class="card">
+      <div class="card-title" style="margin-bottom:10px">Szenarien</div>
+      <div class="insight-card warning"><div class="insight-icon">🔴</div><div><div class="insight-title">Worst Case · ohne Funding</div><div class="insight-text">Cash-Out: Oktober 2026 · Burn unverändert · keine zusätzlichen Einnahmen. Empfehlung: SOFORT Kosten-Cut auf €2.000/Mo.</div></div></div>
+      <div class="insight-card info"><div class="insight-icon">🟡</div><div><div class="insight-title">Base Case · EXIST + Bootstrapping</div><div class="insight-text">EXIST €30k + €5k/Mo Service-Einnahmen ab August. Runway bis März 2027.</div></div></div>
+      <div class="insight-card success"><div class="insight-icon">🟢</div><div><div class="insight-title">Best Case · Seedmatch + HTGF</div><div class="insight-text">€250k Seed bis Q3 2026 · Runway > 18 Monate · Team-Aufbau möglich.</div></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════ -->
+<!-- PAGE: FUNDING -->
+<!-- ════════════════════════════════════════════════════════ -->
+<div class="page" id="page-funding">
+  <div class="section-header"><div><div class="section-title">Funding <span>Pipeline</span></div><div class="section-sub">Seedmatch · HTGF · EXIST · Business-Angels · Förderprogramme</div></div></div>
+
+  <div class="card">
+    <div class="card-title" style="margin-bottom:10px">Investor-Pipeline</div>
+    <table class="data-table">
+      <thead><tr><th>Stage</th><th>Investor / Programm</th><th>Typ</th><th>Ticket-Größe</th><th>Status</th><th class="right">Next</th></tr></thead>
+      <tbody>
+        <tr><td><span class="badge badge-red">DD</span></td><td>Seedmatch (Crowdinvesting)</td><td>Schwarmkapital</td><td>€50k – 250k</td><td>Datenraum 80 %</td><td class="right">KW 21/22</td></tr>
+        <tr><td><span class="badge badge-gold">TALK</span></td><td>High-Tech Gründerfonds (HTGF)</td><td>Public VC</td><td>€600k Seed</td><td>Erstkontakt KW 22</td><td class="right">Call planen</td></tr>
+        <tr><td><span class="badge badge-cyan">PREP</span></td><td>EXIST-Gründerstipendium</td><td>Förderprogramm</td><td>€30k pro Person</td><td>Antrag in Vorbereitung</td><td class="right">Hochschule Cont.</td></tr>
+        <tr><td><span class="badge badge-cyan">SCOUT</span></td><td>Hafen Hamburg AG</td><td>Strat. Partner</td><td>Pilot + LOI</td><td>LOI-Anfrage</td><td class="right">Juni</td></tr>
+        <tr><td><span class="badge badge-cyan">SCOUT</span></td><td>Marina Müggelsee</td><td>Strat. Partner</td><td>Pilot</td><td>Follow-up offen</td><td class="right">heute</td></tr>
+        <tr><td><span class="badge badge-purple">IDEA</span></td><td>Business-Angels Hamburg</td><td>Angel-Netzwerk</td><td>€25k – 100k</td><td>Pitch-Vorbereitung</td><td class="right">Q3</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════ -->
+<!-- PAGE: AI CFO -->
+<!-- ════════════════════════════════════════════════════════ -->
+<div class="page" id="page-ai">
+  <div class="section-header"><div><div class="section-title">AI CFO · <span>Intelligence</span></div><div class="section-sub">Live-Analyse · Empfehlungen · Optimierung über alle Entities</div></div></div>
+
+  <div class="card" style="margin-bottom:16px">
+    <div class="card-header"><div class="card-title">🤖 Aktuelle CFO-Empfehlungen</div><span class="badge badge-cyan">Auto-Refresh 5 Min</span></div>
+    <div id="ai-insights-full"></div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title" style="margin-bottom:10px">⚡ Quick Actions</div>
+      <button class="btn btn-gold" style="display:block;width:100%;margin-bottom:6px;text-align:left;padding:12px" onclick="aiAction('cashCut')">💰 Sofort-Spar-Plan generieren</button>
+      <button class="btn btn-outline" style="display:block;width:100%;margin-bottom:6px;text-align:left;padding:12px" onclick="aiAction('pitchPrep')">📊 Pitch-Vorbereitung für Investor</button>
+      <button class="btn btn-outline" style="display:block;width:100%;margin-bottom:6px;text-align:left;padding:12px" onclick="aiAction('taxOpt')">📋 Steuer-Optimierung CH+DE</button>
+      <button class="btn btn-outline" style="display:block;width:100%;margin-bottom:6px;text-align:left;padding:12px" onclick="aiAction('kkOpt')">🏥 Krankenkasse-Wechsel-Check</button>
+      <button class="btn btn-outline" style="display:block;width:100%;margin-bottom:6px;text-align:left;padding:12px" onclick="aiAction('ugGmbh')">⚖ UG → GmbH Umwandlungs-Check</button>
+      <button class="btn btn-outline" style="display:block;width:100%;text-align:left;padding:12px" onclick="aiAction('familyBudget')">👨‍👩‍👧 Familien-Budget-Optimierung</button>
+    </div>
+    <div class="card">
+      <div class="card-title" style="margin-bottom:10px">📊 Smart-Metrics</div>
+      <div class="metric-row"><span class="metric-label">Finanz-Gesundheit</span><span class="metric-val" style="color:var(--orange)">6,2 / 10</span></div>
+      <div class="metric-row"><span class="metric-label">Runway-Score</span><span class="metric-val" style="color:var(--red)">3,5 / 10</span></div>
+      <div class="metric-row"><span class="metric-label">Steuer-Optimierung</span><span class="metric-val" style="color:var(--gold)">7,1 / 10</span></div>
+      <div class="metric-row"><span class="metric-label">Privat-Liquidität</span><span class="metric-val" style="color:var(--green)">7,8 / 10</span></div>
+      <div class="metric-row"><span class="metric-label">Familie-Stabilität</span><span class="metric-val" style="color:var(--green)">8,4 / 10</span></div>
+      <div class="metric-row"><span class="metric-label">Versicherungs-Coverage</span><span class="metric-val" style="color:var(--gold)">7,2 / 10</span></div>
+      <div class="metric-row"><span class="metric-label">Funding-Wahrscheinlichkeit</span><span class="metric-val" style="color:var(--cyan)">62 %</span></div>
+      <div class="divider"></div>
+      <div class="metric-row"><span class="metric-label" style="font-weight:700">CFO-Score Gesamt</span><span class="metric-val" style="color:var(--gold);font-size:18px">6,7 / 10</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════ -->
+<!-- PAGE: SETTINGS -->
+<!-- ════════════════════════════════════════════════════════ -->
+<div class="page" id="page-settings">
+  <div class="section-header"><div><div class="section-title">Settings</div><div class="section-sub">Familienmitglieder · Konten · Bridge · Datensicherung</div></div></div>
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title" style="margin-bottom:10px">👨‍👩‍👧 Familienmitglieder</div>
+      <div id="family-members-list"></div>
+      <div style="display:flex;gap:6px;margin-top:10px">
+        <input class="input" id="new-member-name" placeholder="Name" style="flex:1">
+        <input class="input" id="new-member-role" placeholder="Rolle (Kind/Partner)" style="flex:1">
+        <button class="btn btn-gold" onclick="addMember()">+ Hinzufügen</button>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title" style="margin-bottom:10px">🔗 Master-Bridge (Apps Script)</div>
+      <input class="input" id="bridge-url" placeholder="https://script.google.com/macros/s/…/exec" style="width:100%;margin-bottom:8px">
+      <button class="btn btn-gold" onclick="saveBridge()" style="width:100%">Bridge speichern &amp; testen</button>
+      <div id="bridge-status" style="margin-top:10px;font-size:11px;color:var(--text-dim)">Status: nicht verbunden</div>
+      <div class="divider"></div>
+      <div class="card-title" style="margin-bottom:10px">📧 Mail-Account info@wave-bite.com</div>
+      <div style="font-size:11px;color:var(--text-dim);line-height:1.5">
+        Ionos-IMAP-Scan benötigt eigenes Apps-Script-Deployment mit IMAP-Connector.<br>
+        Server: <code>imap.ionos.de:993</code> (TLS), User: info@wave-bite.com, Auth-Token im Apps-Script speichern.
+      </div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:16px">
+    <div class="card-title" style="margin-bottom:10px">💾 Datensicherung</div>
+    <div style="display:flex;gap:8px">
+      <button class="btn btn-outline" onclick="exportAll()">📥 Alle Daten exportieren (JSON)</button>
+      <button class="btn btn-outline" onclick="document.getElementById('import-file').click()">📤 Daten importieren</button>
+      <input type="file" id="import-file" accept=".json" style="display:none" onchange="importAll(this)">
+      <button class="btn btn-outline" onclick="if(confirm('Wirklich ALLE lokalen Daten löschen?')){localStorage.clear();location.reload();}" style="color:var(--red);border-color:rgba(255,71,87,0.3)">🗑 Alles zurücksetzen</button>
+    </div>
+  </div>
+</div>
+
+</div><!-- /container -->
+
+<!-- MODAL: NEW TX -->
+<div class="modal-overlay" id="tx-modal">
+  <div class="modal">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+      <h3 style="font-size:16px">Neue Transaktion</h3>
+      <button class="btn btn-outline" onclick="closeTxModal()">✕</button>
+    </div>
+    <div style="display:grid;gap:10px">
+      <div><label style="font-size:11px;color:var(--text-dim)">Beschreibung</label><input class="input" id="m-desc" style="width:100%"></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+        <div><label style="font-size:11px;color:var(--text-dim)">Datum</label><input class="input" id="m-date" type="date" style="width:100%"></div>
+        <div><label style="font-size:11px;color:var(--text-dim)">Betrag</label><input class="input" id="m-amount" type="number" step="0.01" style="width:100%" placeholder="z.B. 250.00 oder -120"></div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+        <div><label style="font-size:11px;color:var(--text-dim)">Entity</label>
+          <select class="input" id="m-entity" style="width:100%">
+            <option value="de-bus">🇩🇪 Geschäft DE</option>
+            <option value="ch-priv">🇨🇭 Privat CH</option>
+            <option value="family">👨‍👩‍👧 Familie</option>
+          </select>
+        </div>
+        <div><label style="font-size:11px;color:var(--text-dim)">Kategorie</label>
+          <select class="input" id="m-cat" style="width:100%">
+            <option>Umsatz</option><option>Marketing</option><option>Software/Tools</option><option>Hosting</option><option>Anwalt/Notar</option><option>Steuern</option>
+            <option>Miete</option><option>Krankenkasse</option><option>Lebensmittel</option><option>Schule/Kinder</option><option>Mobilität</option><option>Versicherung</option><option>Sonstiges</option>
+          </select>
+        </div>
+      </div>
+      <div><label style="font-size:11px;color:var(--text-dim)">Währung</label>
+        <select class="input" id="m-currency" style="width:100%"><option>EUR</option><option>CHF</option></select>
+      </div>
+      <button class="btn btn-gold" onclick="saveTx()" style="margin-top:8px">Speichern</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════ SCRIPT ═══════════════════ -->
+<script>
+'use strict';
+
+const FIN = {
+  state: {
+    entity: 'all',  // 'all' | 'de-bus' | 'ch-priv' | 'family'
+    legalForm: 'ug',
+    txs: [],
+    familyMembers: [],
+    bridgeUrl: '',
+    legalFormStatus: 'pending',
+  },
+  charts: {},
+  KEY: 'wb_fin_v2'
+};
+
+// ─── Persist ───
+function loadState() {
+  try {
+    const s = localStorage.getItem(FIN.KEY);
+    if (s) Object.assign(FIN.state, JSON.parse(s));
+  } catch(e){}
+  if (!FIN.state.txs || FIN.state.txs.length === 0) FIN.state.txs = seedTxs();
+  if (!FIN.state.familyMembers || FIN.state.familyMembers.length === 0) {
+    FIN.state.familyMembers = [
+      {name:'Carsten', role:'CEO/Founder'},
+      {name:'Partner:in', role:'Partner:in'},
+      {name:'Kind 1', role:'Kind'},
+      {name:'Kind 2', role:'Kind'}
+    ];
+  }
+}
+function saveState() {
+  try { localStorage.setItem(FIN.KEY, JSON.stringify(FIN.state)); } catch(e){}
+  broadcastState();
+}
+
+// ─── Demo-Daten (seed only if empty) ───
+function seedTxs() {
+  const t = new Date();
+  const d = (offset) => { const dt = new Date(t); dt.setDate(dt.getDate()+offset); return dt.toISOString().split('T')[0]; };
+  return [
+    {id:'t1', date:d(-1), desc:'Stripe Subscription (Tool)', cat:'Software/Tools', entity:'de-bus', amount:-29, curr:'EUR'},
+    {id:'t2', date:d(-2), desc:'Beratungsvertrag Kunde X', cat:'Umsatz', entity:'de-bus', amount:+850, curr:'EUR'},
+    {id:'t3', date:d(-3), desc:'Lohn Hauptjob CH', cat:'Umsatz', entity:'ch-priv', amount:+3800, curr:'CHF'},
+    {id:'t4', date:d(-3), desc:'Miete Mai', cat:'Miete', entity:'family', amount:-1900, curr:'CHF'},
+    {id:'t5', date:d(-4), desc:'KK Prämie Familie', cat:'Krankenkasse', entity:'family', amount:-1135, curr:'CHF'},
+    {id:'t6', date:d(-5), desc:'AWS Cloud Hosting', cat:'Hosting', entity:'de-bus', amount:-89, curr:'EUR'},
+    {id:'t7', date:d(-5), desc:'Lebensmittel Coop', cat:'Lebensmittel', entity:'family', amount:-220, curr:'CHF'},
+    {id:'t8', date:d(-6), desc:'IHK Beitrag Mai', cat:'Steuern', entity:'de-bus', amount:-30, curr:'EUR'},
+    {id:'t9', date:d(-7), desc:'Notar UG-Gründung', cat:'Anwalt/Notar', entity:'de-bus', amount:-180, curr:'EUR'},
+    {id:'t10', date:d(-8), desc:'Google Workspace', cat:'Software/Tools', entity:'de-bus', amount:-12, curr:'EUR'},
+    {id:'t11', date:d(-9), desc:'Restaurant Familie', cat:'Lebensmittel', entity:'family', amount:-85, curr:'CHF'},
+    {id:'t12', date:d(-10), desc:'BunBo Pilot-Anzahlung', cat:'Umsatz', entity:'de-bus', amount:+1500, curr:'EUR'},
+    {id:'t13', date:d(-12), desc:'SBB Generalabo', cat:'Mobilität', entity:'ch-priv', amount:-340, curr:'CHF'},
+    {id:'t14', date:d(-14), desc:'Schule Kind 1', cat:'Schule/Kinder', entity:'family', amount:-150, curr:'CHF'},
+    {id:'t15', date:d(-15), desc:'Marketing Meta-Ads', cat:'Marketing', entity:'de-bus', amount:-220, curr:'EUR'},
+    {id:'t16', date:d(-18), desc:'Haftpflicht-Vers.', cat:'Versicherung', entity:'ch-priv', amount:-35, curr:'CHF'},
+  ];
+}
+
+// ─── Page Switcher ───
+function showPage(id, btn) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  const pg = document.getElementById('page-'+id);
+  if (pg) pg.classList.add('active');
+  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  setTimeout(renderAllCharts, 50);
+}
+
+// ─── Entity Filter ───
+function setEntity(ent) {
+  FIN.state.entity = ent;
+  document.querySelectorAll('.entity-btn').forEach(b => b.classList.toggle('active', b.dataset.ent === ent));
+  saveState();
+  renderAll();
+}
+
+// ─── Legal-Form Switcher ───
+function setLegalForm(form, btn) {
+  FIN.state.legalForm = form;
+  document.querySelectorAll('.lf-btn').forEach(b => b.classList.toggle('active', b.dataset.form === form));
+  const infos = {
+    einzel: '<strong style="color:var(--gold)">Einzelunternehmen.</strong><br>Schnellste Form, keine Mindesteinlage. Persönliche Haftung. Kein Trennung Privat/Geschäft. Empfehlung: nur für Test-Phase.',
+    ug: '<strong style="color:var(--gold)">UG (haftungsbeschränkt) — Status: Anmeldung läuft.</strong><br>Stammkapital ab €1. Beschränkte Haftung. 25 % Gewinn-Thesaurierungspflicht bis €25k erreicht → dann GmbH-Umwandlung sinnvoll.<br><span style="color:var(--orange)">Nächster Schritt:</span> Handelsregister-Eintragung beim Amtsgericht abschließen, IHK-Mitgliedschaft, Steuernummer beantragen (ELSTER), Geschäftskonto eröffnen (z.B. Holvi/Qonto/Penta).',
+    gmbh: '<strong style="color:var(--gold)">GmbH — geplant nach UG-Umwandlung.</strong><br>Stammkapital €25k (mind. €12.500 einzuzahlen). Höhere Glaubwürdigkeit bei Investoren/Banken. Volle Haftungsbeschränkung. Empfehlung: bei Seedmatch-Funding ≥ €25k direkt umwandeln.',
+    ag: '<strong style="color:var(--gold)">AG — Vision für Skalierung.</strong><br>Stammkapital €50k. Aufsichtsrat + Vorstand erforderlich. Sinnvoll bei: Börsengang, große Investoren-Beteiligung, > €5M Bewertung. Frühestens ab Series A.'
+  };
+  document.getElementById('legal-form-info').innerHTML = infos[form];
+  saveState();
+}
+
+// ─── Render Helpers ───
+const SYNC = () => { const e = document.getElementById('sync-time'); if (e) e.textContent = new Date().toLocaleTimeString('de-DE',{hour:'2-digit',minute:'2-digit',second:'2-digit'}); };
+setInterval(SYNC, 1000); SYNC();
+
+function fmtCurr(amt, curr) {
+  const sym = curr === 'CHF' ? 'CHF' : '€';
+  const sign = amt < 0 ? '−' : '+';
+  return sign + sym + Math.abs(amt).toLocaleString('de-DE');
+}
+
+// ─── Render TX List ───
+function renderTxList() {
+  const list = document.getElementById('tx-list');
+  if (!list) return;
+  const search = (document.getElementById('tx-search')?.value || '').toLowerCase();
+  const filter = list.dataset.filter || 'all';
+  const txs = FIN.state.txs.filter(tx => {
+    if (filter === 'pos' && tx.amount <= 0) return false;
+    if (filter === 'neg' && tx.amount >= 0) return false;
+    if (['de-bus','ch-priv','family'].includes(filter) && tx.entity !== filter) return false;
+    if (search && !(tx.desc.toLowerCase().includes(search) || tx.cat.toLowerCase().includes(search))) return false;
+    return true;
+  }).sort((a,b) => b.date.localeCompare(a.date));
+  list.innerHTML = txs.map(tx => `
+    <div class="tx-row">
+      <div style="color:var(--text-dim);font-size:11px">${tx.date.slice(5)}</div>
+      <div>${tx.desc}</div>
+      <div><span class="tx-cat">${tx.cat}</span></div>
+      <div><span class="tx-entity ${tx.entity === 'de-bus' ? 'de' : tx.entity === 'ch-priv' ? 'ch' : 'fam'}">${tx.entity === 'de-bus' ? '🇩🇪 DE' : tx.entity === 'ch-priv' ? '🇨🇭 CH' : '👨‍👩 FAM'}</span></div>
+      <div class="tx-amount ${tx.amount > 0 ? 'pos' : 'neg'}">${fmtCurr(tx.amount, tx.curr)}</div>
+    </div>`).join('');
+  const count = document.getElementById('tx-count');
+  if (count) count.textContent = txs.length + ' Transaktionen';
+}
+
+function filterTxs(filter, btn) {
+  document.querySelectorAll('.ent-bubble').forEach(b => b.classList.toggle('active', b === btn));
+  document.getElementById('tx-list').dataset.filter = filter;
+  renderTxList();
+}
+
+function renderTxListMission() {
+  const list = document.getElementById('tx-list-mission');
+  if (!list) return;
+  const txs = [...FIN.state.txs].sort((a,b) => b.date.localeCompare(a.date)).slice(0,7);
+  list.innerHTML = txs.map(tx => `
+    <div class="tx-row">
+      <div style="color:var(--text-dim);font-size:11px">${tx.date.slice(5)}</div>
+      <div>${tx.desc}</div>
+      <div><span class="tx-cat">${tx.cat}</span></div>
+      <div><span class="tx-entity ${tx.entity === 'de-bus' ? 'de' : tx.entity === 'ch-priv' ? 'ch' : 'fam'}">${tx.entity === 'de-bus' ? '🇩🇪' : tx.entity === 'ch-priv' ? '🇨🇭' : '👨‍👩'}</span></div>
+      <div class="tx-amount ${tx.amount > 0 ? 'pos' : 'neg'}">${fmtCurr(tx.amount, tx.curr)}</div>
+    </div>`).join('');
 }
 
 function renderInvoices() {
-  const list = document.getElementById('invoice-list');
-  if(!list) return;
-  list.innerHTML = invoices.map(inv => {
-    const s = inv.status === 'paid' ? ['inv-paid','✓ Bezahlt'] : inv.status === 'overdue' ? ['inv-overdue','⚠ Überfällig'] : ['inv-open','⏳ Offen'];
-    return `
-      <div class="invoice-item">
-        <div style="flex:1">
-          <div style="font-size:13px;font-weight:600">${inv.vendor}</div>
-          <div style="font-size:11px;color:var(--text-secondary)">${inv.nr} · Fällig: ${inv.due}</div>
-        </div>
-        <span class="invoice-status ${s[0]}">${s[1]}</span>
-        <div style="font-size:14px;font-weight:700;color:${inv.status==='paid'?'var(--green)':inv.status==='overdue'?'var(--red)':'var(--gold)'}">€${inv.amount.toLocaleString('de')}</div>
-      </div>
-    `;
+  const tbody = document.getElementById('invoice-tbody');
+  if (!tbody) return;
+  const items = [
+    {nr:'INV-2026-051', vendor:'AWS GmbH', date:'15.05.26', due:'14.06.26', status:'open', amount:'€224,91'},
+    {nr:'INV-2026-052', vendor:'Notar Schmidt', date:'12.05.26', due:'11.06.26', status:'open', amount:'€180,00'},
+    {nr:'INV-2026-049', vendor:'Lexoffice', date:'01.05.26', due:'15.05.26', status:'overdue', amount:'€39,00'},
+    {nr:'INV-2026-046', vendor:'Meta Ads', date:'28.04.26', due:'10.05.26', status:'paid', amount:'€220,00'},
+    {nr:'INV-2026-045', vendor:'IHK Hamburg', date:'01.04.26', due:'30.04.26', status:'paid', amount:'€30,00'},
+  ];
+  tbody.innerHTML = items.map(i => {
+    const badge = i.status === 'overdue' ? '<span class="badge badge-red">überfällig</span>'
+                : i.status === 'open' ? '<span class="badge badge-gold">offen</span>'
+                : '<span class="badge badge-green">bezahlt</span>';
+    return `<tr><td>${i.nr}</td><td>${i.vendor}</td><td>${i.date}</td><td>${i.due}</td><td>${badge}</td><td class="right">${i.amount}</td></tr>`;
   }).join('');
 }
 
-// ═══════════════════════════════════════════════════
-// CHARTS
-// ═══════════════════════════════════════════════════
-
-Chart.defaults.color = 'rgba(120,140,170,0.8)';
-Chart.defaults.borderColor = 'rgba(201,168,76,0.08)';
-Chart.defaults.font.family = "-apple-system,'SF Pro Display','Segoe UI',sans-serif";
-
-const months = ['Dez','Jan','Feb','Mär','Apr','Mai'];
-const months12 = ['Jun','Jul','Aug','Sep','Okt','Nov','Dez','Jan','Feb','Mär','Apr','Mai'];
-
-function mkCashflow() {
-  const ctx = document.getElementById('cashflowChart');
-  if(!ctx) return;
-  new Chart(ctx, {
-    type: 'bar',
-    data: {
-      labels: months,
-      datasets: [
-        { label: 'Einnahmen', data: [3200, 3800, 4100, 5200, 5900, 6600],
-          backgroundColor: 'rgba(0,230,118,0.5)', borderColor: 'rgba(0,230,118,0.8)', borderWidth: 1, borderRadius: 6 },
-        { label: 'Ausgaben', data: [4100, 4200, 3900, 4100, 4400, 4260],
-          backgroundColor: 'rgba(255,71,87,0.35)', borderColor: 'rgba(255,71,87,0.7)', borderWidth: 1, borderRadius: 6 },
-        { label: 'Netto', data: [-900, -400, 200, 1100, 1500, 2340],
-          type: 'line', borderColor: 'rgba(201,168,76,0.9)', backgroundColor: 'rgba(201,168,76,0.08)',
-          borderWidth: 2, pointBackgroundColor: 'var(--gold)', tension: 0.4, fill: true }
-      ]
-    },
-    options: { responsive:true, maintainAspectRatio:false, plugins:{legend:{position:'top',labels:{boxWidth:10,font:{size:11}}}},
-      scales:{ x:{grid:{display:false}}, y:{grid:{color:'rgba(255,255,255,0.04)'}} } }
-  });
+function renderFamilyMembers() {
+  const list = document.getElementById('family-members-list');
+  if (!list) return;
+  list.innerHTML = FIN.state.familyMembers.map((m, i) => `
+    <div style="display:flex;justify-content:space-between;padding:8px;background:rgba(163,102,255,0.05);border-radius:7px;margin-bottom:5px;border:1px solid rgba(163,102,255,0.15)">
+      <div><strong>${m.name}</strong> · <span style="color:var(--text-dim);font-size:11px">${m.role}</span></div>
+      <button class="btn btn-outline" style="font-size:10px;padding:3px 8px" onclick="removeMember(${i})">✕</button>
+    </div>`).join('');
 }
 
-function mkIncomeExpense() {
-  const ctx = document.getElementById('incomeExpenseChart');
-  if(!ctx) return;
-  new Chart(ctx, {
-    type: 'line',
-    data: {
-      labels: months,
-      datasets: [
-        { label: 'Einnahmen', data: [3200,3800,4100,5200,5900,6600],
-          borderColor:'var(--green)', backgroundColor:'rgba(0,230,118,0.08)', borderWidth:2, tension:0.4, fill:true },
-        { label: 'Ausgaben', data: [4100,4200,3900,4100,4400,4260],
-          borderColor:'var(--red)', backgroundColor:'rgba(255,71,87,0.06)', borderWidth:2, tension:0.4, fill:true }
-      ]
-    },
-    options: { responsive:true, maintainAspectRatio:false,
-      plugins:{legend:{position:'top',labels:{boxWidth:10,font:{size:11}}}},
-      scales:{ x:{grid:{display:false}}, y:{grid:{color:'rgba(255,255,255,0.04)'}} } }
-  });
+function addMember() {
+  const n = document.getElementById('new-member-name').value.trim();
+  const r = document.getElementById('new-member-role').value.trim() || 'Mitglied';
+  if (!n) return;
+  FIN.state.familyMembers.push({name:n, role:r});
+  document.getElementById('new-member-name').value = '';
+  document.getElementById('new-member-role').value = '';
+  saveState(); renderFamilyMembers();
+}
+function removeMember(i) {
+  FIN.state.familyMembers.splice(i,1);
+  saveState(); renderFamilyMembers();
 }
 
-function mkExpenseDonut() {
-  const ctx = document.getElementById('expenseDonut');
-  if(!ctx) return;
-  new Chart(ctx, {
-    type: 'doughnut',
-    data: {
-      labels: ['Software', 'Marketing', 'Infrastruktur', 'Büro', 'Dienstleister', 'Sonstiges'],
-      datasets: [{
-        data: [980, 840, 620, 520, 450, 850],
-        backgroundColor: ['rgba(201,168,76,0.7)','rgba(255,71,87,0.6)','rgba(0,212,255,0.6)',
-                          'rgba(0,230,118,0.6)','rgba(255,167,38,0.6)','rgba(120,140,170,0.5)'],
-        borderColor: 'rgba(0,0,0,0.3)', borderWidth: 2
-      }]
-    },
-    options: { responsive:true, maintainAspectRatio:false, cutout:'68%',
-      plugins:{ legend:{ position:'right', labels:{ boxWidth:8, font:{size:10}, padding:6 } } } }
-  });
+// ─── AI Insights ───
+function aiInsights() {
+  return [
+    {type:'warning', icon:'⚠', title:'Runway-Warnung Geschäft', text:'Bei aktuellem Burn (€2.800/Mo) reicht das Cash (€11.500) noch ~4 Monate. EXIST + Seedmatch parallel pushen.', action:'→ Funding'},
+    {type:'gold', icon:'💡', title:'Krankenkasse-Wechsel Familie', text:'Comparis-Check ergibt: Wechsel zu Assura HMO spart ~CHF 130/Monat. Kündigungsfrist: 30. September.', action:'→ KK-Check starten'},
+    {type:'info', icon:'📊', title:'USt-Voranmeldung fällig', text:'10. Juni: Mai-USt-Voranmeldung. Saldo: €-130 (Erstattung). ELSTER-Login vorbereiten.', action:'→ Steuern'},
+    {type:'success', icon:'✅', title:'Sparquote stabil', text:'9 % Sparquote in CH stabil. Empfehlung: 3a-Einzahlung starten (CHF 200/Monat) — direkter Steuerabzug.', action:'→ Privat'},
+    {type:'purple', icon:'👨‍👩‍👧', title:'Familien-Notfall-Reserve', text:'Aktuell CHF 2.500 — Ziel CHF 15.000 (3 Monatsausgaben). Erhöhung um CHF 200/Monat empfohlen.', action:'→ Familie'},
+    {type:'warning', icon:'⚖', title:'UG-Eintragung priorisieren', text:'Ohne abgeschlossene UG-Eintragung kein Geschäftskonto, keine Investoren-DD. Notartermin <strong>diese Woche</strong> bestätigen.', action:'→ Geschäft'},
+  ];
 }
-
-function mkRevenue() {
-  const ctx = document.getElementById('revenueChart');
-  if(!ctx) return;
-  new Chart(ctx, {
-    type: 'bar',
-    data: {
-      labels: months12,
-      datasets: [
-        { label: 'Umsatz', data: [2800,3200,3800,4100,5200,5900,6600,null,null,null,null,null],
-          backgroundColor: 'rgba(0,230,118,0.5)', borderColor: 'rgba(0,230,118,0.8)', borderWidth:1, borderRadius:5 },
-        { label: 'Forecast', data: [null,null,null,null,null,null,6600,7200,7800,8400,9200,9900],
-          backgroundColor: 'rgba(201,168,76,0.3)', borderColor: 'rgba(201,168,76,0.7)', borderWidth:1, borderRadius:5 }
-      ]
-    },
-    options: { responsive:true, maintainAspectRatio:false,
-      plugins:{legend:{position:'top',labels:{boxWidth:10,font:{size:11}}}},
-      scales:{ x:{grid:{display:false}}, y:{grid:{color:'rgba(255,255,255,0.04)'}} } }
-  });
-}
-
-function mkCost() {
-  const ctx = document.getElementById('costChart');
-  if(!ctx) return;
-  new Chart(ctx, {
-    type: 'bar',
-    data: {
-      labels: ['Software','Marketing','Cloud','Büro','Freelancer','Sonstiges'],
-      datasets: [{
-        label: 'Kosten €',
-        data: [980, 840, 620, 520, 450, 850],
-        backgroundColor: ['rgba(201,168,76,0.6)','rgba(255,71,87,0.6)','rgba(0,212,255,0.6)',
-                          'rgba(0,230,118,0.6)','rgba(255,167,38,0.6)','rgba(120,140,170,0.5)'],
-        borderRadius: 6
-      }]
-    },
-    options: { responsive:true, maintainAspectRatio:false, indexAxis:'y',
-      plugins:{legend:{display:false}},
-      scales:{ x:{grid:{color:'rgba(255,255,255,0.04)'}}, y:{grid:{display:false}} } }
-  });
-}
-
-const fcData = {
-  base: { rev:'€92.400', rch:'▲ +57% vs. aktuell', cost:'€64.800', cch:'— Skalierung inkl.', ebitda:'€27.600', ech:'▲ Marge: 30%', run:'8,2 Mo.', runch:'▲ Deutlich besser',
-    data:[12840,11200,13500,10800,14200,15800,12500,17200,18600,19400,21000,22800] },
-  optimistic: { rev:'€124.800', rch:'▲ +112% vs. aktuell', cost:'€72.000', cch:'↑ Wachstumskosten', ebitda:'€52.800', ech:'▲ Marge: 42%', run:'14,5 Mo.', runch:'▲ Sehr stark',
-    data:[12840,14200,16800,15000,19400,22000,18500,24200,26600,28400,31000,34800] },
-  pessimistic: { rev:'€68.400', rch:'▲ +16% vs. aktuell', cost:'€60.000', cch:'— Kostenkontrolle', ebitda:'€8.400', ech:'— Marge: 12%', run:'4,8 Mo.', runch:'⚠ Kritisch',
-    data:[12840,10200,9500,8800,9200,10800,8500,11200,12600,11400,12000,12800] },
-  funding: { rev:'€138.400', rch:'▲ inkl. €45k Förderung', cost:'€78.000', cch:'↑ Investitionen', ebitda:'€60.400', ech:'▲ Marge: 44%', run:'18,2 Mo.', runch:'▲ Sehr sicher',
-    data:[12840,55000,58000,54000,62000,65000,61000,68000,72000,75000,80000,88000] }
-};
-
-let forecastChart;
-function mkForecast() {
-  const ctx = document.getElementById('forecastChart');
-  if(!ctx) return;
-  const d = fcData.base;
-  forecastChart = new Chart(ctx, {
-    type: 'line',
-    data: {
-      labels: ['Mai','Jun','Jul','Aug','Sep','Okt','Nov','Dez','Jan','Feb','Mär','Apr'],
-      datasets: [{
-        label: 'Liquidität',
-        data: d.data,
-        borderColor: 'rgba(201,168,76,0.9)',
-        backgroundColor: 'rgba(201,168,76,0.08)',
-        borderWidth: 2.5, tension: 0.4, fill: true,
-        pointBackgroundColor: 'var(--gold)', pointRadius: 4
-      }, {
-        label: 'Kritische Grenze',
-        data: Array(12).fill(5000),
-        borderColor: 'rgba(255,71,87,0.4)',
-        borderWidth: 1.5, borderDash: [6,4], pointRadius: 0, tension: 0
-      }]
-    },
-    options: { responsive:true, maintainAspectRatio:false,
-      plugins:{legend:{position:'top',labels:{boxWidth:10,font:{size:11}}}},
-      scales:{ x:{grid:{display:false}}, y:{grid:{color:'rgba(255,255,255,0.04)'},
-        ticks:{callback:v=>'€'+v.toLocaleString('de')}} } }
-  });
-}
-
-function switchScenario(el, key) {
-  document.querySelectorAll('.scenario-btn').forEach(b => b.classList.remove('active'));
-  el.classList.add('active');
-  const d = fcData[key];
-  document.getElementById('fc-revenue').textContent = d.rev;
-  document.getElementById('fc-rev-change').textContent = d.rch;
-  document.getElementById('fc-costs').textContent = d.cost;
-  document.getElementById('fc-cost-change').textContent = d.cch;
-  document.getElementById('fc-ebitda').textContent = d.ebitda;
-  document.getElementById('fc-ebitda-change').textContent = d.ech;
-  document.getElementById('fc-runway').textContent = d.run;
-  document.getElementById('fc-runway-change').textContent = d.runch;
-  if(forecastChart) {
-    forecastChart.data.datasets[0].data = d.data;
-    forecastChart.update();
+function renderAIInsights() {
+  const mini = document.getElementById('ai-insights-mini');
+  if (mini) {
+    mini.innerHTML = aiInsights().slice(0,3).map(i => `
+      <div class="insight-card ${i.type}">
+        <div class="insight-icon">${i.icon}</div>
+        <div><div class="insight-title">${i.title}</div><div class="insight-text">${i.text}</div></div>
+      </div>`).join('');
+  }
+  const full = document.getElementById('ai-insights-full');
+  if (full) {
+    full.innerHTML = aiInsights().map(i => `
+      <div class="insight-card ${i.type}">
+        <div class="insight-icon">${i.icon}</div>
+        <div><div class="insight-title">${i.title}</div><div class="insight-text">${i.text}</div><div class="insight-action">${i.action}</div></div>
+      </div>`).join('');
   }
 }
 
-// ═══════════════════════════════════════════════════
-// OCR SIMULATION
-// ═══════════════════════════════════════════════════
-
-function simulateOCR() {
-  const result = document.getElementById('ocr-result');
-  if(result) { result.style.display='block'; result.scrollIntoView({behavior:'smooth',block:'nearest'}); }
+function aiAction(kind) {
+  const actions = {
+    cashCut: '💰 SOFORT-SPAR-PLAN\n\n1. Marketing-Budget halbieren: €450 → €225/Mo (Ersparnis: €225)\n2. Software-Tools konsolidieren (FlutterFlow ODER Glide): −€100\n3. Steuerberater verschieben bis nach UG-Eintragung: −€350 (3 Mo)\n4. Anwalt-Pauschale: nach UG-Abschluss prüfen\n\nGESAMT-EINSPARUNG: bis zu €700/Monat — neuer Burn: €2.100',
+    pitchPrep: '📊 PITCH-VORBEREITUNG\n\nFolien-Reihenfolge:\n1. Problem (Wasserlage-Pain auf Wasser)\n2. Lösung (BunBo App + WaveBite Ecosystem)\n3. Markt (DE Marinas + Bootstourismus)\n4. Traction (BunBo MVP, Wasserlage Live, Partner)\n5. Team (Carsten + Berater)\n6. Business-Modell (B2B + B2C + Provision)\n7. Funding (€250k Seed)\n8. Ask\n\nDokumente: Datenraum 80 % — Fehlt: Cap Table aktualisiert, Term Sheet Template.',
+    taxOpt: '📋 STEUER-OPTIMIERUNG CH + DE\n\nDE Geschäft (UG):\n• Vorsteuerabzug: Hosting, Tools, Beratung — alle Belege archivieren\n• 25 % Gewinn-Thesaurierung bis €25k → Pflicht beachten\n• Investitionsabzugsbetrag IAB: bis 40 % auf geplante Anschaffungen\n\nCH Privat:\n• Säule 3a: Max CHF 7\'056 → bei vollem Abzug = ~CHF 1.500 Steuerersparnis\n• Berufsauslagen: Pendlerpauschale, Weiterbildungen ansetzen\n• Krankenkasse-Selbstbehalt: belegen\n• Spendenabzug: bis 20 % Einkommen',
+    kkOpt: '🏥 KRANKENKASSE WECHSEL-CHECK\n\nAktuell: CHF 1\'135/Monat (Familie)\n\nVergleich Mai 2026 (Comparis):\n• Assura HMO: CHF 1\'005/Mo (−130/Mo)\n• Concordia: CHF 1\'050/Mo (−85/Mo)\n• Aktuell (Helsana/CSS): CHF 1\'135/Mo\n\nWechselfrist: Kündigung bis 30. September für Wechsel zum 1. Januar 2027.\n\nNächste Schritte:\n1. Comparis-Offerte einholen\n2. Vorerkrankungen prüfen (Zusatzversicherung)\n3. Kündigung Einschreiben',
+    ugGmbh: '⚖ UG → GmbH UMWANDLUNGS-CHECK\n\nVoraussetzungen:\n✓ UG eingetragen (in Bearbeitung)\n✓ Stammkapital min. €25k (aktuell: €1)\n✗ Erforderlich: Thesaurierung von €24.999 oder Kapitalerhöhung\n\nKosten Umwandlung:\n• Notar: ~€500\n• Handelsregister: ~€250\n• Steuerberater: ~€800\n• Gesamt: ~€1.550\n\nEmpfehlung: Umwandlung bei Erreichen €25k Stammkapital ODER bei Seed-Funding (Investoren bevorzugen GmbH).',
+    familyBudget: '👨‍👩‍👧 FAMILIEN-BUDGET-OPTIMIERUNG\n\nIst-Stand: CHF 5\'385/Mon\n\nOptimierungs-Hebel:\n1. KK-Wechsel: −CHF 130/Mo\n2. Mobilfunk-Bündel statt Einzelverträge: −CHF 40/Mo\n3. Energie-Vergleich (Strom): −CHF 25/Mo\n4. Streaming-Abos konsolidieren: −CHF 30/Mo\n5. Lebensmittel-Apps (Too Good To Go, Coop-Apps): −CHF 60/Mo\n\nGESAMT-EINSPARUNG: CHF 285/Mo = CHF 3\'420/Jahr\n\nZiel: 12 % Familien-Sparquote (statt 0 %).'
+  };
+  alert(actions[kind] || 'Kein Plan hinterlegt.');
 }
 
-// ═══════════════════════════════════════════════════
-// AI RESPONSES
-// ═══════════════════════════════════════════════════
-
-const aiAnswers = {
-  'Wie verbessere ich meinen Cashflow?': '📊 Analyse: Dein Cashflow ist positiv (+€2.340), aber der Runway ist mit 3 Monaten kritisch. Drei sofortige Hebel: (1) Yamaha Marine Sponsoring abschließen (+€3.000/Mo.), (2) redundante Software konsolidieren (-€340/Mo.), (3) EXIST-Antrag stellen (+€30k einmalig). Effekt: Runway von 3 auf ~9 Monate verlängern.',
-  'Bin ich investorenbereit?': '💼 Investor-Readiness Score: 35%. Positiv: positiver Cashflow, klares Produkt, erste Einnahmen. Fehlend: vollständiger Finanzplan (3J), Due-Diligence-Dokumentation, validiertes Unit-Economics-Modell. Empfehle 6-8 Wochen gezieltes Vorbereiten — dann Seed-Runde realistisch.',
-  'Welche Kosten kann ich optimieren?': '💸 6 redundante Abonnements erkannt (€340/Mo. Einsparung): Figma + Canva (nur eines nötig), 2x Cloud-Dienste überlappend, ungenutzte Analytics-Tools. Dazu: Meta Ads ROI prüfen (2,4x gut, aber Targeting optimierbar). Gesamt-Einsparpotenzial: €4.080/Jahr.',
-  'Was bedeutet mein EBITDA?': '📈 EBITDA = €2.340 diese Monat (Marge: 35,5%). Das bedeutet: Pro €100 Umsatz bleiben €35,50 operativer Gewinn. Für ein Startup sehr gut. Ziel: über 40% für Investoren-Attraktivität. Haupthebel: Umsatz steigern ohne proportionale Kostensteigerung.'
-};
-
-function askAI(question) {
-  const input = document.getElementById('ai-input');
-  const response = document.getElementById('ai-response');
-  if(!response) return;
-  const q = question || (input ? input.value : '');
-  if(!q) return;
-  response.style.display = 'block';
-  response.innerHTML = '<div class="ai-thinking"><div class="ai-dot"></div><div class="ai-dot"></div><div class="ai-dot"></div><span style="margin-left:6px">AI analysiert...</span></div>';
-  setTimeout(() => {
-    const ans = aiAnswers[q] || '🤖 Basierend auf deinen Finanzdaten: ' + q.replace('?','') + ' ist ein wichtiger Punkt. Cashflow positiv (+€2.340), Runway 3 Monate, EBITDA-Marge 35,5%. Empfehle: (1) Sponsoring-Pipeline priorisieren, (2) Kosten optimieren, (3) EXIST-Förderantrag stellen.';
-    response.textContent = ans;
-    if(input) input.value = '';
-  }, 1000);
+// ─── Bridge ───
+function saveBridge() {
+  const url = document.getElementById('bridge-url').value.trim();
+  if (!url) return;
+  FIN.state.bridgeUrl = url;
+  saveState();
+  testBridge();
+}
+function testBridge() {
+  const s = document.getElementById('bridge-status');
+  if (!FIN.state.bridgeUrl) { s.textContent = 'Status: nicht verbunden'; return; }
+  s.textContent = 'Status: prüfe …';
+  fetch(FIN.state.bridgeUrl + '?action=ping')
+    .then(r => r.json())
+    .then(d => { s.innerHTML = '<span style="color:var(--green)">✓ Verbunden · '+(d.ts||'OK')+'</span>'; })
+    .catch(() => { s.innerHTML = '<span style="color:var(--red)">✗ Fehler – URL/Deployment prüfen</span>'; });
 }
 
-// ═══════════════════════════════════════════════════
-// INIT
-// ═══════════════════════════════════════════════════
+// ─── Export / Import ───
+function exportAll() {
+  const blob = new Blob([JSON.stringify(FIN.state, null, 2)], {type:'application/json'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'wavebite-financial-os_'+new Date().toISOString().slice(0,10)+'.json';
+  a.click();
+}
+function importAll(input) {
+  const f = input.files[0]; if (!f) return;
+  const r = new FileReader();
+  r.onload = e => { try { FIN.state = JSON.parse(e.target.result); saveState(); renderAll(); alert('✓ Daten importiert.'); } catch(err) { alert('✗ Datei ungültig.'); } };
+  r.readAsText(f);
+}
 
-document.addEventListener('DOMContentLoaded', () => {
-  renderTransactions();
+// ─── Modal ───
+function openTxModal() { document.getElementById('tx-modal').classList.add('active'); document.getElementById('m-date').value = new Date().toISOString().split('T')[0]; }
+function closeTxModal() { document.getElementById('tx-modal').classList.remove('active'); }
+function saveTx() {
+  const tx = {
+    id: 't_'+Date.now(),
+    date: document.getElementById('m-date').value,
+    desc: document.getElementById('m-desc').value,
+    amount: parseFloat(document.getElementById('m-amount').value),
+    entity: document.getElementById('m-entity').value,
+    cat: document.getElementById('m-cat').value,
+    curr: document.getElementById('m-currency').value
+  };
+  if (!tx.desc || !tx.date || isNaN(tx.amount)) { alert('Bitte alle Felder ausfüllen.'); return; }
+  FIN.state.txs.unshift(tx);
+  saveState();
+  closeTxModal();
+  renderAll();
+}
+
+// ─── Charts ───
+function destroyChart(id) { if (FIN.charts[id]) { FIN.charts[id].destroy(); delete FIN.charts[id]; } }
+
+function renderAllCharts() {
+  renderMasterChart();
+  renderBizCharts();
+  renderPrivCharts();
+  renderFamilyMixChart();
+  renderForecastChart();
+}
+
+function renderMasterChart() {
+  const c = document.getElementById('chart-master');
+  if (!c) return;
+  destroyChart('master');
+  const months = ['Dez','Jan','Feb','Mär','Apr','Mai'];
+  FIN.charts.master = new Chart(c.getContext('2d'), {
+    type: 'line',
+    data: {
+      labels: months,
+      datasets: [
+        {label:'🇩🇪 Geschäft EUR', data:[-1800,-2400,-2100,-2800,-2600,-450], borderColor:'#c9a84c', backgroundColor:'rgba(201,168,76,0.1)', tension:.3, fill:true},
+        {label:'🇨🇭 Privat CHF', data:[350,180,260,420,330,350], borderColor:'#ff4757', backgroundColor:'rgba(255,71,87,0.08)', tension:.3, fill:true},
+        {label:'👨‍👩 Familie CHF', data:[-4200,-4300,-4180,-4400,-4250,-4250], borderColor:'#a366ff', backgroundColor:'rgba(163,102,255,0.05)', tension:.3, fill:true}
+      ]
+    },
+    options: { responsive:true, maintainAspectRatio:false,
+      plugins:{ legend:{ labels:{ color:'#7a8ba8', font:{size:10} } } },
+      scales:{ x:{ticks:{color:'#7a8ba8'},grid:{color:'rgba(0,212,255,0.05)'}}, y:{ticks:{color:'#7a8ba8'},grid:{color:'rgba(0,212,255,0.05)'}} } }
+  });
+}
+
+function renderBizCharts() {
+  const cf = document.getElementById('chart-biz-cashflow');
+  if (cf) {
+    destroyChart('bizCashflow');
+    FIN.charts.bizCashflow = new Chart(cf.getContext('2d'), {
+      type:'bar',
+      data:{ labels:['Dez','Jan','Feb','Mär','Apr','Mai'], datasets:[
+        {label:'Einnahmen',data:[1200,800,950,1400,2100,2350],backgroundColor:'#00e676'},
+        {label:'Ausgaben',data:[3000,3200,3050,4200,4700,2800],backgroundColor:'#ff4757'}
+      ]},
+      options:{ responsive:true, maintainAspectRatio:false, plugins:{ legend:{labels:{color:'#7a8ba8',font:{size:10}}}}, scales:{ x:{ticks:{color:'#7a8ba8'},grid:{display:false}}, y:{ticks:{color:'#7a8ba8'},grid:{color:'rgba(0,212,255,0.05)'}} } }
+    });
+  }
+  const do_ = document.getElementById('chart-biz-donut');
+  if (do_) {
+    destroyChart('bizDonut');
+    FIN.charts.bizDonut = new Chart(do_.getContext('2d'), {
+      type:'doughnut',
+      data:{ labels:['Hosting','Tools','Marketing','Beratung','Steuern','IHK'], datasets:[{ data:[180,220,450,710,580,30], backgroundColor:['#c9a84c','#00d4ff','#a366ff','#00e676','#ff4757','#ffa726']}]},
+      options:{ responsive:true, maintainAspectRatio:false, plugins:{ legend:{position:'bottom',labels:{color:'#7a8ba8',font:{size:10},padding:6,boxWidth:8}}}}
+    });
+  }
+}
+
+function renderPrivCharts() {
+  const cf = document.getElementById('chart-priv-cashflow');
+  if (cf) {
+    destroyChart('privCashflow');
+    FIN.charts.privCashflow = new Chart(cf.getContext('2d'), {
+      type:'line',
+      data:{ labels:['Dez','Jan','Feb','Mär','Apr','Mai'], datasets:[
+        {label:'Einnahmen CHF',data:[3800,3800,3800,3950,3800,3800],borderColor:'#00e676',backgroundColor:'rgba(0,230,118,0.1)',tension:.3,fill:true},
+        {label:'Ausgaben CHF',data:[3450,3620,3360,3530,3470,3450],borderColor:'#ff4757',backgroundColor:'rgba(255,71,87,0.08)',tension:.3,fill:true}
+      ]},
+      options:{ responsive:true, maintainAspectRatio:false, plugins:{ legend:{labels:{color:'#7a8ba8',font:{size:10}}}}, scales:{ x:{ticks:{color:'#7a8ba8'},grid:{color:'rgba(0,212,255,0.05)'}}, y:{ticks:{color:'#7a8ba8'},grid:{color:'rgba(0,212,255,0.05)'}} }}
+    });
+  }
+  const do_ = document.getElementById('chart-priv-donut');
+  if (do_) {
+    destroyChart('privDonut');
+    FIN.charts.privDonut = new Chart(do_.getContext('2d'), {
+      type:'doughnut',
+      data:{ labels:['Miete-Anteil','Krankenkasse','Lebensmittel','Mobilität','Versicherung','Freizeit'], datasets:[{ data:[950,385,400,340,145,230], backgroundColor:['#ff4757','#c9a84c','#00d4ff','#a366ff','#00e676','#ffa726']}]},
+      options:{ responsive:true, maintainAspectRatio:false, plugins:{ legend:{position:'bottom',labels:{color:'#7a8ba8',font:{size:10},padding:6,boxWidth:8}}}}
+    });
+  }
+}
+
+function renderFamilyMixChart() {
+  const c = document.getElementById('chart-family-mix');
+  if (!c) return;
+  destroyChart('familyMix');
+  FIN.charts.familyMix = new Chart(c.getContext('2d'), {
+    type:'doughnut',
+    data:{ labels:['Wohnen','Krankenkasse','Lebensmittel','Mobilität','Kinder/Schule','Versicherungen','Freizeit'], datasets:[{ data:[1900,1250,800,220,300,145,250], backgroundColor:['#a366ff','#ff4757','#00d4ff','#c9a84c','#00e676','#ffa726','#7c3aed']}]},
+    options:{ responsive:true, maintainAspectRatio:false, plugins:{ legend:{position:'bottom',labels:{color:'#7a8ba8',font:{size:10},padding:6,boxWidth:8}}}}
+  });
+}
+
+function renderForecastChart() {
+  const c = document.getElementById('chart-forecast');
+  if (!c) return;
+  destroyChart('forecast');
+  const months = ['Mai','Jun','Jul','Aug','Sep','Okt','Nov','Dez','Jan','Feb','Mär','Apr'];
+  FIN.charts.forecast = new Chart(c.getContext('2d'), {
+    type:'line',
+    data:{ labels: months, datasets:[
+      {label:'Worst Case (ohne Funding)', data:[14000,11500,9000,6500,4000,1500,-1000,-3500,-6000,-8500,-11000,-13500], borderColor:'#ff4757', borderDash:[6,3], tension:.2},
+      {label:'Base Case (EXIST + Service)', data:[14000,11500,9000,11500,10500,9500,9000,8500,8000,7500,7000,6500], borderColor:'#ffa726', tension:.3},
+      {label:'Best Case (Seed €250k)', data:[14000,11500,9000,259000,257000,255000,253000,251000,248000,245000,242000,239000], borderColor:'#00e676', tension:.3}
+    ]},
+    options:{ responsive:true, maintainAspectRatio:false, plugins:{ legend:{labels:{color:'#7a8ba8',font:{size:10}}}, tooltip:{callbacks:{label:ctx=>ctx.dataset.label+': €'+ctx.parsed.y.toLocaleString('de-DE')}}}, scales:{ x:{ticks:{color:'#7a8ba8'},grid:{color:'rgba(0,212,255,0.05)'}}, y:{ticks:{color:'#7a8ba8',callback:v=>'€'+v.toLocaleString('de-DE')},grid:{color:'rgba(0,212,255,0.05)'}} }}
+  });
+}
+
+// ─── BroadcastChannel zum Office ───
+let bc = null;
+try { bc = new BroadcastChannel('ceo-wave'); } catch(e) { bc = null; }
+function broadcastState() {
+  const summary = {
+    burn: 2800, cash: 11500, runway: 4,
+    bunbo: 65,
+    fundingProgress: 35,
+    legalForm: FIN.state.legalForm,
+    lastTx: FIN.state.txs[0]
+  };
+  const msg = {type:'state_update', source:'financial-os', patch: summary};
+  if (bc) { try { bc.postMessage(msg); } catch(e){} }
+  try { localStorage.setItem('ceo_wave_msg', JSON.stringify({t:Date.now(), msg:msg})); } catch(e){}
+}
+if (bc) {
+  bc.onmessage = function(ev) {
+    if (ev.data?.type === 'request_state') broadcastState();
+  };
+}
+
+// ─── Master Render ───
+function renderAll() {
+  renderTxList();
+  renderTxListMission();
   renderInvoices();
-  mkCashflow();
-  mkIncomeExpense();
-  mkExpenseDonut();
-  mkRevenue();
-  mkCost();
-  mkForecast();
-});
+  renderFamilyMembers();
+  renderAIInsights();
+  setTimeout(renderAllCharts, 50);
+}
+
+// ─── Init ───
+function init() {
+  loadState();
+  if (FIN.state.bridgeUrl) document.getElementById('bridge-url').value = FIN.state.bridgeUrl;
+  renderAll();
+  if (typeof testBridge === 'function' && FIN.state.bridgeUrl) testBridge();
+  broadcastState();
+}
+if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
+else init();
+
 </script>
 </body>
 </html>

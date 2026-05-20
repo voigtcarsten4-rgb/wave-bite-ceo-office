@@ -1678,7 +1678,8 @@ input[type=range]{accent-color:var(--teal);flex:1}
    STATE
 ═══════════════════════════════════════════ */
 const S = {
-  apiKey: localStorage.getItem('leo_api_key') || '600c559b-933d-4c83-a3d9-d778b8da119d',
+  // Leonardo API Key 2026-05-20: über localStorage änderbar (Settings → Leonardo)
+  apiKey: localStorage.getItem('leo_api_key') || '16170745-9b17-4d2a-9c38-139378d9f835',
   currentMedia: null,
   library: JSON.parse(localStorage.getItem('wb_library') || '[]'),
   selectedMood: 'luxury',
@@ -1698,8 +1699,18 @@ const S = {
   tvMedia: null,
   genPollingInterval: null
 };
-// Pre-save API key on load
-if (!localStorage.getItem('leo_api_key')) localStorage.setItem('leo_api_key', S.apiKey);
+// 2026-05-20: alten/geleakten Key purgen und neuen Key auto-setzen falls noch nicht gesetzt
+try {
+  var leaked = localStorage.getItem('leo_api_key');
+  if (leaked && leaked.indexOf('600c559b') === 0) {
+    localStorage.removeItem('leo_api_key');
+    S.apiKey = '16170745-9b17-4d2a-9c38-139378d9f835';
+    localStorage.setItem('leo_api_key', S.apiKey);
+  }
+  if (!localStorage.getItem('leo_api_key') && S.apiKey) {
+    localStorage.setItem('leo_api_key', S.apiKey);
+  }
+} catch(e){}
 
 /* ═══════════════════════════════════════════
    DATA

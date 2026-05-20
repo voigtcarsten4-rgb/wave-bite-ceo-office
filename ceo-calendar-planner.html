@@ -1497,5 +1497,32 @@ function toast(msg, type) {
   _nt = setTimeout(() => el.classList.remove('show'), 4200);
 }
 </script>
+
+<!-- WAVE BITE Office-Sync (BroadcastChannel) 2026-05-20 -->
+<script>
+(function(){
+  'use strict';
+  var ch = null;
+  try { ch = new BroadcastChannel('ceo-wave'); } catch(e) {}
+  window.__waveSync = {
+    send: function(patch, type) {
+      var msg = { type: type || 'state_update', source: document.title, patch: patch || {}, ts: Date.now() };
+      if (ch) { try { ch.postMessage(msg); } catch(e){} }
+      try { localStorage.setItem('ceo_wave_msg', JSON.stringify({t: Date.now(), msg: msg})); } catch(e){}
+    },
+    onMessage: function(cb) {
+      if (ch) ch.onmessage = function(ev){ try { cb(ev.data); } catch(e){} };
+      window.addEventListener('storage', function(ev){
+        if (ev.key === 'ceo_wave_msg' && ev.newValue) {
+          try { var p = JSON.parse(ev.newValue); if (p.msg) cb(p.msg); } catch(e){}
+        }
+      });
+    }
+  };
+  // Ping Office on load
+  setTimeout(function(){ window.__waveSync.send({ active: true, page: document.title }, 'detail_loaded'); }, 500);
+})();
+</script>
+
 </body>
 </html>

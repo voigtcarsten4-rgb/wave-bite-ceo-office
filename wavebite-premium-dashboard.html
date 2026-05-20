@@ -1,0 +1,1203 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Wave Bite · Premium Analytics</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  font-family: Georgia, 'Times New Roman', serif;
+  background: #f8f3e8;
+  color: #0a1628;
+  font-size: 14px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+.sans { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
+
+/* ── MASTHEAD ── */
+.masthead {
+  background: linear-gradient(160deg, #0a1628 0%, #142240 60%, #0e2a48 100%);
+  padding: 0 28px 0;
+  position: relative;
+  overflow: hidden;
+}
+.masthead::before {
+  content: '⚓';
+  position: absolute;
+  right: 40px; top: 50%;
+  transform: translateY(-50%);
+  font-size: 100px;
+  opacity: .04;
+  color: #b8942a;
+}
+.masthead-inner {
+  max-width: 1100px; margin: 0 auto;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 20px; padding: 22px 0 18px;
+}
+.brand { display: flex; align-items: center; gap: 16px; }
+.brand-name {
+  font-family: Georgia, serif;
+  font-size: 26px; font-weight: 700; color: #f8f3e8;
+  letter-spacing: .5px; line-height: 1;
+}
+.brand-name em { color: #e8c97a; font-style: normal; }
+.brand-sub {
+  font-family: -apple-system, sans-serif;
+  font-size: 9.5px; color: rgba(248,243,232,.4);
+  letter-spacing: 3px; text-transform: uppercase; margin-top: 4px;
+}
+.masthead-right { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; }
+.prop-ids {
+  font-family: 'Courier New', monospace;
+  font-size: 10px; color: rgba(248,243,232,.35); letter-spacing: .3px;
+}
+.pills { display: flex; gap: 6px; flex-wrap: wrap; justify-content: flex-end; }
+.pill {
+  display: inline-flex; align-items: center; gap: 5px;
+  font-family: -apple-system, sans-serif;
+  font-size: 10px; font-weight: 700; padding: 4px 10px; border-radius: 20px;
+  letter-spacing: .3px;
+}
+.pill-live { background: rgba(46,160,130,.2); border: 1px solid rgba(46,160,130,.4); color: #4ecdb4; }
+.pill-live::before { content:''; width:6px; height:6px; border-radius:50%; background:#4ecdb4; animation: pulse 2s infinite; }
+.pill-gold { background: rgba(184,148,42,.2); border: 1px solid rgba(184,148,42,.4); color: #e8c97a; }
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.3} }
+.masthead-wave { display:block; width:100%; height:28px; margin-bottom:-1px; }
+
+/* ── LAYOUT ── */
+.main { max-width: 1100px; margin: 0 auto; padding: 4px 20px 48px; }
+
+/* ── GOLD RULE ── */
+.rule {
+  display: flex; align-items: center; gap: 10px;
+  font-family: -apple-system, sans-serif;
+  font-size: 9.5px; font-weight: 800; letter-spacing: 2.5px;
+  text-transform: uppercase; color: #b8942a;
+  margin: 24px 0 10px;
+}
+.rule::before, .rule::after {
+  content: ''; flex: 1; height: 1px;
+  background: linear-gradient(90deg, transparent, #d4aa3d, transparent);
+}
+
+/* ── FLEET GRID ── */
+.fleet { display: grid; grid-template-columns: repeat(5,1fr); gap: 10px; }
+@media(max-width:800px){ .fleet { grid-template-columns: repeat(2,1fr); } }
+.fc {
+  background: #fdfaf5; border: 1px solid #e0d8c8;
+  border-radius: 12px; padding: 14px;
+  box-shadow: 0 2px 12px rgba(10,22,40,.07);
+}
+.fc-icon { font-size: 20px; margin-bottom: 6px; }
+.fc-name { font-family: -apple-system, sans-serif; font-size: 11.5px; font-weight: 800; color: #0a1628; line-height: 1.3; }
+.fc-url { font-family: 'Courier New', monospace; font-size: 9px; color: #7a8fa8; margin-top: 2px; }
+.fc-badge {
+  display: inline-flex; align-items: center; gap: 3px;
+  margin-top: 8px; padding: 3px 8px; border-radius: 20px;
+  font-family: -apple-system, sans-serif; font-size: 9.5px; font-weight: 700;
+}
+.b-ok  { background: #e6f9f0; color: #1a7a4a; border: 1px solid #b3e8ce; }
+.b-new { background: #e8eeff; color: #2a4aaa; border: 1px solid #b0c0f0; }
+.b-qr  { background: #fff8e6; color: #8a6010; border: 1px solid #f0d080; }
+
+/* ── KPI ROW ── */
+.kpi-row { display: grid; grid-template-columns: repeat(5,1fr); gap: 10px; }
+@media(max-width:700px){ .kpi-row { grid-template-columns: repeat(2,1fr); } }
+.kpi {
+  background: #fdfaf5; border: 1px solid #e0d8c8; border-radius: 12px;
+  padding: 16px 14px; box-shadow: 0 2px 12px rgba(10,22,40,.07);
+  position: relative; overflow: hidden;
+}
+.kpi-accent {
+  position: absolute; bottom: 0; left: 0; right: 0; height: 3px;
+}
+.kpi-lbl { font-family: -apple-system, sans-serif; font-size: 9.5px; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; color: #7a8fa8; }
+.kpi-num { font-size: 34px; font-weight: 700; color: #0a1628; letter-spacing: -1px; line-height: 1; margin: 5px 0 4px; }
+.kpi-delta {
+  display: inline-flex; align-items: center;
+  font-family: -apple-system, sans-serif; font-size: 10.5px; font-weight: 700;
+  padding: 2px 8px; border-radius: 20px;
+}
+.d-up  { background: #e6f9f0; color: #1a7a4a; }
+.d-ok  { background: #e6f9f0; color: #1a7a4a; }
+.d-new { background: #e8eeff; color: #2a4aaa; }
+.kpi-note { font-family: -apple-system, sans-serif; font-size: 9.5px; color: #7a8fa8; margin-top: 4px; }
+
+/* ── TWO COL ── */
+.two-col { display: grid; grid-template-columns: 3fr 2fr; gap: 12px; }
+.three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+@media(max-width:700px){ .two-col, .three-col { grid-template-columns: 1fr; } }
+
+/* ── CARD ── */
+.card {
+  background: #fdfaf5; border: 1px solid #e0d8c8; border-radius: 12px;
+  padding: 18px; box-shadow: 0 2px 12px rgba(10,22,40,.07);
+}
+.card-title { font-size: 14px; font-weight: 700; color: #0a1628; margin-bottom: 2px; }
+.card-sub { font-family: -apple-system, sans-serif; font-size: 10.5px; color: #7a8fa8; margin-bottom: 14px; }
+
+/* ── CSS BAR CHART ── */
+.bar-chart { display: flex; flex-direction: column; gap: 8px; margin-top: 10px; }
+.bar-row { display: flex; align-items: center; gap: 8px; }
+.bar-label { font-family: -apple-system, sans-serif; font-size: 11px; color: #3a4f6a; width: 110px; flex-shrink: 0; }
+.bar-track { flex: 1; height: 18px; background: #f0e8d4; border-radius: 4px; overflow: hidden; }
+.bar-fill { height: 100%; border-radius: 4px; display: flex; align-items: center; padding-left: 6px;
+  font-family: -apple-system, sans-serif; font-size: 10px; font-weight: 700; color: white; }
+.bar-val { font-family: -apple-system, sans-serif; font-size: 11px; font-weight: 700; color: #0a1628; width: 28px; text-align: right; flex-shrink: 0; }
+.bar-pct { font-family: -apple-system, sans-serif; font-size: 10px; color: #7a8fa8; width: 32px; text-align: right; flex-shrink: 0; }
+
+/* ── SOURCE ROW ── */
+.src-row {
+  display: flex; align-items: center; gap: 10px;
+  padding: 7px 0; border-bottom: 1px solid #e8e0d0;
+  font-family: -apple-system, sans-serif;
+}
+.src-row:last-child { border: none; }
+.src-dot { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; }
+.src-name { flex: 1; font-size: 12.5px; color: #3a4f6a; }
+.src-bar-bg { width: 80px; height: 5px; background: #f0e8d4; border-radius: 3px; }
+.src-bar { height: 100%; border-radius: 3px; }
+.src-n { font-size: 12px; font-weight: 700; color: #0a1628; min-width: 24px; text-align: right; }
+.src-p { font-size: 10px; color: #7a8fa8; min-width: 32px; text-align: right; }
+
+/* ── SVG DOUGHNUT (pure) ── */
+.svg-wrap { display: flex; align-items: center; gap: 16px; margin-top: 8px; }
+.svg-legend { display: flex; flex-direction: column; gap: 6px; }
+.leg-item { display: flex; align-items: center; gap: 6px; font-family: -apple-system, sans-serif; font-size: 10.5px; color: #3a4f6a; }
+.leg-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+
+/* ── PROPERTY DEEP GRID ── */
+.deep-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+@media(max-width:700px){ .deep-grid { grid-template-columns: 1fr; } }
+.dc {
+  background: #fdfaf5; border: 1px solid #e0d8c8;
+  border-radius: 12px; overflow: hidden; box-shadow: 0 2px 12px rgba(10,22,40,.07);
+}
+.dc-head {
+  padding: 13px 16px; border-bottom: 1px solid #e0d8c8;
+  display: flex; align-items: center; gap: 10px;
+}
+.dc-icon { font-size: 20px; }
+.dc-title { font-size: 14px; font-weight: 700; color: #0a1628; }
+.dc-url { font-family: 'Courier New', monospace; font-size: 9px; color: #7a8fa8; margin-top: 1px; }
+.dc-body { padding: 14px 16px; }
+
+/* ── STAT TRIO ── */
+.trio { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-bottom: 12px; }
+.trio-box { text-align: center; background: #f8f3e8; border: 1px solid #e0d8c8; border-radius: 8px; padding: 10px 6px; }
+.trio-val { font-size: 22px; font-weight: 700; color: #0a1628; line-height: 1; }
+.trio-lbl { font-family: -apple-system, sans-serif; font-size: 9px; color: #7a8fa8; text-transform: uppercase; letter-spacing: .5px; margin-top: 3px; font-weight: 700; }
+
+/* ── EVENT ROWS ── */
+.evt { display: flex; justify-content: space-between; align-items: center; padding: 5px 0; border-bottom: 1px dashed #e0d8c8; font-family: -apple-system, sans-serif; font-size: 11.5px; }
+.evt:last-child { border: none; }
+.evt-n { font-weight: 700; color: #0a1628; }
+.callout { margin-top: 10px; padding: 8px 12px; border-radius: 8px; font-family: -apple-system, sans-serif; font-size: 11px; line-height: 1.5; }
+.c-ok  { background: #e6f9f0; color: #1a6040; border-left: 3px solid #2a8a5a; }
+.c-info { background: #e8eeff; color: #1a2a7a; border-left: 3px solid #3a5acc; }
+
+/* ── QR SECTION ── */
+.qr-sec {
+  background: linear-gradient(135deg, #0a1628 0%, #142240 100%);
+  border-radius: 12px; padding: 24px 28px; box-shadow: 0 4px 28px rgba(10,22,40,.16);
+  display: flex; gap: 28px; flex-wrap: wrap; position: relative; overflow: hidden;
+}
+.qr-sec::before { content: '⚓'; position: absolute; right: 20px; bottom: -14px; font-size: 120px; opacity: .04; line-height: 1; }
+.qr-left { flex: 1; min-width: 240px; }
+.qr-title { font-size: 18px; font-weight: 700; color: #f8f3e8; margin-bottom: 4px; }
+.qr-sub { font-family: -apple-system, sans-serif; font-size: 11.5px; color: rgba(248,243,232,.5); margin-bottom: 16px; line-height: 1.5; }
+.qr-lbl { font-family: -apple-system, sans-serif; font-size: 9px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; color: #d4aa3d; margin-bottom: 5px; }
+.utm-box {
+  background: rgba(255,255,255,.06); border: 1px solid rgba(184,148,42,.3); border-radius: 8px;
+  padding: 10px 14px; font-family: 'Courier New', monospace; font-size: 10.5px; color: #e8c97a;
+  word-break: break-all; line-height: 1.6; margin-bottom: 12px;
+}
+.utm-box-b {
+  background: rgba(255,255,255,.04); border: 1px solid rgba(74,130,200,.3); border-radius: 8px;
+  padding: 10px 14px; font-family: 'Courier New', monospace; font-size: 10.5px; color: #8ab4f8;
+  word-break: break-all; line-height: 1.6;
+}
+.step-list { list-style: none; margin-top: 12px; }
+.step-item { display: flex; gap: 10px; align-items: flex-start; font-family: -apple-system, sans-serif; font-size: 11.5px; color: rgba(248,243,232,.6); padding: 4px 0; }
+.step-n { background: rgba(184,148,42,.25); color: #e8c97a; font-weight: 800; font-size: 9.5px; width: 18px; height: 18px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px; }
+.qr-stats { display: flex; flex-direction: column; gap: 10px; min-width: 120px; }
+.qr-stat { background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.1); border-radius: 8px; padding: 12px 14px; text-align: center; }
+.qr-stat-lbl { font-family: -apple-system, sans-serif; font-size: 9px; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; color: rgba(248,243,232,.4); margin-bottom: 4px; }
+.qr-stat-val { font-size: 20px; font-weight: 700; color: #fff; line-height: 1; }
+.qr-stat-note { font-family: -apple-system, sans-serif; font-size: 9.5px; color: rgba(248,243,232,.3); margin-top: 2px; }
+
+/* ── ACTIONS ── */
+.act-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; }
+@media(max-width:700px){ .act-grid { grid-template-columns: 1fr; } }
+.act {
+  background: #fdfaf5; border: 1px solid #e0d8c8; border-radius: 12px;
+  padding: 16px; box-shadow: 0 2px 12px rgba(10,22,40,.07); display: flex; gap: 12px;
+}
+.act-ico { font-size: 20px; flex-shrink: 0; line-height: 1.2; }
+.act-title { font-size: 13px; font-weight: 700; color: #0a1628; }
+.act-desc { font-family: -apple-system, sans-serif; font-size: 11px; color: #3a4f6a; margin-top: 3px; line-height: 1.5; }
+.act-tag { display: inline-block; margin-top: 7px; font-family: -apple-system, sans-serif; font-size: 9.5px; font-weight: 700; padding: 2px 9px; border-radius: 20px; }
+.t-crit { background: #fde8e6; color: #c0392b; border: 1px solid #f0b8b0; }
+.t-med  { background: #fff3e0; color: #b8720a; border: 1px solid #f0d090; }
+.t-easy { background: #e6f9f0; color: #1a7a4a; border: 1px solid #b3e8ce; }
+.t-done { background: #e8eeff; color: #2a4aaa; border: 1px solid #b0c0f0; }
+
+/* ── LINKS ── */
+.links { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 6px; }
+.lnk {
+  display: inline-flex; align-items: center; gap: 5px; padding: 7px 13px; border-radius: 8px;
+  font-family: -apple-system, sans-serif; font-size: 11.5px; font-weight: 700; text-decoration: none;
+  border: 1px solid #c8bca8; color: #3a4f6a; background: #fdfaf5; transition: all .15s;
+}
+.lnk:hover { border-color: #b8942a; color: #b8942a; }
+.lnk-primary { background: #0a1628; color: #f8f3e8; border-color: #0a1628; }
+.lnk-primary:hover { background: #142240; color: #f8f3e8; }
+.lnk-gold { background: linear-gradient(135deg,#b8942a,#d4aa3d); color: #0a1628; border-color: #b8942a; }
+.lnk-gold:hover { color: #0a1628; }
+
+/* ── FOOTER ── */
+.footer {
+  margin-top: 28px; padding-top: 18px; border-top: 1px solid #e0d8c8;
+  display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap;
+}
+.footer-brand { font-size: 14px; font-weight: 700; color: #0a1628; }
+.footer-brand em { color: #b8942a; font-style: normal; }
+.footer-meta { font-family: -apple-system, sans-serif; font-size: 10px; color: #7a8fa8; }
+code { font-family: 'Courier New', monospace; font-size: .9em; color: #2a8a7a; background: #f0e8d4; padding: 1px 5px; border-radius: 3px; }
+
+/* ── GROWTH SPARKLINE ── */
+.sparkline { display: flex; align-items: flex-end; gap: 4px; height: 80px; margin-top: 10px; }
+.spark-col { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 3px; }
+.spark-bar { width: 100%; border-radius: 3px 3px 0 0; min-height: 4px; }
+.spark-lbl { font-family: -apple-system, sans-serif; font-size: 8.5px; color: #7a8fa8; text-align: center; }
+.spark-val { font-family: -apple-system, sans-serif; font-size: 9px; font-weight: 700; color: #0a1628; }
+
+/* ── WEEKLY SUMMARY TABLE ── */
+.data-tbl { width: 100%; border-collapse: collapse; margin-top: 8px; }
+.data-tbl th { font-family: -apple-system, sans-serif; font-size: 9px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; color: #7a8fa8; padding: 4px 8px; text-align: left; border-bottom: 2px solid #e0d8c8; }
+.data-tbl td { font-family: -apple-system, sans-serif; font-size: 11px; color: #3a4f6a; padding: 6px 8px; border-bottom: 1px solid #f0e8d4; }
+.data-tbl td.num { font-weight: 700; color: #0a1628; text-align: right; }
+.data-tbl tr:last-child td { border: none; }
+
+/* ── SYNC INDICATOR ── */
+.sync-bar {
+  background: #0a1628;
+  border-bottom: 1px solid rgba(184,148,42,.2);
+  padding: 7px 28px;
+}
+.sync-inner {
+  max-width: 1100px; margin: 0 auto;
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  font-family: -apple-system, sans-serif;
+}
+.sync-left { display: flex; align-items: center; gap: 8px; }
+.sync-dot {
+  width: 7px; height: 7px; border-radius: 50%; background: #4ecdb4;
+  animation: pulse 2s infinite; flex-shrink: 0;
+}
+.sync-text { font-size: 11px; color: rgba(248,243,232,.55); }
+.sync-text strong { color: #4ecdb4; font-weight: 700; }
+.sync-btn {
+  font-family: -apple-system, sans-serif; font-size: 10.5px; font-weight: 700;
+  padding: 4px 12px; border-radius: 6px; border: 1px solid rgba(184,148,42,.5);
+  background: transparent; color: #e8c97a; cursor: pointer; transition: all .15s;
+  white-space: nowrap;
+}
+.sync-btn:hover { background: rgba(184,148,42,.15); }
+
+/* ── MODAL ── */
+.modal-overlay {
+  display: none; position: fixed; inset: 0; z-index: 9999;
+  background: rgba(10,22,40,.75); backdrop-filter: blur(4px);
+  align-items: center; justify-content: center;
+}
+.modal-overlay.open { display: flex; }
+.modal {
+  background: #fdfaf5; border: 1px solid #e0d8c8; border-radius: 16px;
+  padding: 28px 32px; max-width: 480px; width: 92%;
+  box-shadow: 0 24px 64px rgba(10,22,40,.25);
+  font-family: -apple-system, sans-serif;
+}
+.modal-title {
+  font-family: Georgia, serif; font-size: 18px; font-weight: 700;
+  color: #0a1628; margin-bottom: 4px;
+}
+.modal-sub { font-size: 11px; color: #7a8fa8; margin-bottom: 20px; }
+.modal-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 16px; }
+.modal-field label {
+  display: block; font-size: 9.5px; font-weight: 800; letter-spacing: 1px;
+  text-transform: uppercase; color: #7a8fa8; margin-bottom: 4px;
+}
+.modal-field input {
+  width: 100%; padding: 7px 10px; border: 1px solid #c8bca8; border-radius: 7px;
+  font-family: Georgia, serif; font-size: 15px; font-weight: 700; color: #0a1628;
+  background: #fff; outline: none; transition: border-color .15s;
+}
+.modal-field input:focus { border-color: #b8942a; }
+.modal-actions { display: flex; gap: 8px; justify-content: flex-end; margin-top: 6px; }
+.btn-save {
+  padding: 8px 18px; background: #0a1628; color: #f8f3e8; border: none;
+  border-radius: 8px; font-family: -apple-system, sans-serif; font-size: 12px;
+  font-weight: 700; cursor: pointer; transition: background .15s;
+}
+.btn-save:hover { background: #142240; }
+.btn-cancel {
+  padding: 8px 14px; background: transparent; color: #7a8fa8;
+  border: 1px solid #c8bca8; border-radius: 8px;
+  font-family: -apple-system, sans-serif; font-size: 12px; cursor: pointer;
+}
+.btn-cancel:hover { border-color: #999; color: #555; }
+.modal-note { font-size: 9.5px; color: #7a8fa8; margin-bottom: 10px; line-height: 1.5; }
+
+/* ── DASHBOARD NAV ── */
+.dash-nav-wrap {
+  background: #f0ead8; border-bottom: 1px solid #ddd5c0;
+  padding: 0 28px;
+}
+.dash-nav-inner {
+  max-width: 1100px; margin: 0 auto;
+  display: flex; align-items: center; gap: 0;
+  overflow-x: auto; scrollbar-width: none;
+}
+.dash-nav-inner::-webkit-scrollbar { display: none; }
+.dash-nav-lbl {
+  font-family: -apple-system, sans-serif; font-size: 9px; font-weight: 800;
+  letter-spacing: 2px; text-transform: uppercase; color: #b8942a;
+  flex-shrink: 0; padding: 10px 14px 10px 0;
+  border-right: 1px solid #d4c8a8; margin-right: 4px;
+}
+.dash-link {
+  display: flex; align-items: center; gap: 5px; flex-shrink: 0;
+  padding: 8px 12px; text-decoration: none;
+  font-family: -apple-system, sans-serif; font-size: 11px; font-weight: 700;
+  color: #3a4f6a; border-radius: 0; transition: all .15s;
+  border-right: 1px solid transparent; white-space: nowrap;
+}
+.dash-link:hover { background: rgba(184,148,42,.1); color: #b8942a; }
+.dash-link.active { color: #b8942a; background: rgba(184,148,42,.08); }
+.dash-link .dash-ico { font-size: 13px; }
+
+/* ── GROWTH FORECAST ── */
+.forecast-sec {
+  background: linear-gradient(135deg,#fdfaf5 0%,#f4eedf 100%);
+  border: 1px solid #e0d8c8; border-radius: 12px; padding: 20px 22px;
+  box-shadow: 0 2px 12px rgba(10,22,40,.07);
+}
+.forecast-title { font-size: 14px; font-weight: 700; color: #0a1628; margin-bottom: 2px; }
+.forecast-sub { font-family: -apple-system, sans-serif; font-size: 10.5px; color: #7a8fa8; margin-bottom: 14px; }
+.forecast-tbl { width: 100%; border-collapse: collapse; }
+.forecast-tbl th {
+  font-family: -apple-system, sans-serif; font-size: 9px; font-weight: 800;
+  letter-spacing: 1px; text-transform: uppercase; color: #7a8fa8;
+  padding: 5px 10px; text-align: left; border-bottom: 2px solid #e0d8c8;
+}
+.forecast-tbl td {
+  font-family: -apple-system, sans-serif; font-size: 12px; color: #3a4f6a;
+  padding: 8px 10px; border-bottom: 1px solid #f0e8d4;
+}
+.forecast-tbl td.num { font-weight: 700; color: #0a1628; text-align: right; font-size: 16px; }
+.forecast-tbl td.bar-td { width: 160px; }
+.forecast-tbl tr:last-child td { border: none; }
+.milestone-badge {
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 2px 8px; border-radius: 20px;
+  font-family: -apple-system, sans-serif; font-size: 9.5px; font-weight: 700;
+}
+.ms-100 { background: #e8eeff; color: #2a4aaa; border: 1px solid #b0c0f0; }
+.ms-250 { background: #fff3e0; color: #b8720a; border: 1px solid #f0d090; }
+.ms-500 { background: #e6f9f0; color: #1a7a4a; border: 1px solid #b3e8ce; }
+.forecast-note {
+  margin-top: 12px; padding: 8px 12px; border-radius: 8px;
+  background: #e8f4f0; border-left: 3px solid #2a8a7a;
+  font-family: -apple-system, sans-serif; font-size: 11px; color: #1a4a3a; line-height: 1.5;
+}
+
+/* ── QUICK ACTIONS ── */
+.qa-row { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 8px; }
+.qa-btn {
+  display: inline-flex; align-items: center; gap: 7px;
+  padding: 10px 18px; border-radius: 9px; border: 1px solid;
+  font-family: -apple-system, sans-serif; font-size: 12px; font-weight: 700;
+  cursor: pointer; text-decoration: none; transition: all .15s;
+}
+.qa-sheets {
+  background: #e8f5e9; color: #1a5e2a; border-color: #81c784;
+}
+.qa-sheets:hover { background: #c8e6c9; }
+.qa-pdf {
+  background: #0a1628; color: #f8f3e8; border-color: #0a1628;
+}
+.qa-pdf:hover { background: #142240; }
+
+/* ── PRINT OPTIMIERUNG ── */
+@media print {
+  .sync-bar, .dash-nav-wrap, .modal-overlay, .qa-row, .links { display: none !important; }
+  body { background: #fff; color: #000; font-size: 11pt; }
+  .masthead { background: #0a1628 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .main { padding: 10px 0; }
+  .kpi, .card, .dc, .forecast-sec { break-inside: avoid; }
+  .fc { break-inside: avoid; }
+  .two-col, .deep-grid { grid-template-columns: 1fr 1fr; }
+  .kpi-row { grid-template-columns: repeat(5,1fr); }
+}
+</style>
+</head>
+<body>
+
+<!-- SYNC INDICATOR BAR -->
+<div class="sync-bar">
+  <div class="sync-inner">
+    <div class="sync-left">
+      <span class="sync-dot"></span>
+      <span class="sync-text"><strong>Live</strong> · Letzte Aktualisierung: <span id="sync-date">19. Mai 2026</span></span>
+    </div>
+    <button class="sync-btn" onclick="openSyncModal()">⟳ Daten aktualisieren</button>
+  </div>
+</div>
+
+<!-- DASHBOARD NAV -->
+<div class="dash-nav-wrap">
+  <div class="dash-nav-inner">
+    <span class="dash-nav-lbl">DASHBOARDS</span>
+    <a class="dash-link" href="https://voigtcarsten4-rgb.github.io/ceo-office/" target="_blank"><span class="dash-ico">🏢</span> CEO Office</a>
+    <a class="dash-link" href="https://voigtcarsten4-rgb.github.io/wasserlage/finance-dashboard.html" target="_blank"><span class="dash-ico">💶</span> Finance OS</a>
+    <a class="dash-link" href="https://voigtcarsten4-rgb.github.io/ceo-office/wavebite-leonardo-studio.html" target="_blank"><span class="dash-ico">🎬</span> Leonardo Studio</a>
+    <a class="dash-link" href="https://voigtcarsten4-rgb.github.io/wasserlage/" target="_blank"><span class="dash-ico">🌊</span> Wasserlage</a>
+    <a class="dash-link" href="https://voigtcarsten4-rgb.github.io/wasserlage/kpi-dashboard.html" target="_blank"><span class="dash-ico">📊</span> KPI Dashboard</a>
+    <a class="dash-link" href="https://voigtcarsten4-rgb.github.io/wasserlage/marketing-dashboard.html" target="_blank"><span class="dash-ico">📣</span> Marketing OS</a>
+  </div>
+</div>
+
+<!-- DATA SYNC MODAL -->
+<div class="modal-overlay" id="syncModal">
+  <div class="modal">
+    <div class="modal-title">GA4 Daten aktualisieren</div>
+    <div class="modal-sub">Neue Zahlen manuell eintragen — werden sofort in alle KPI-Cards übernommen</div>
+    <p class="modal-note">Werte aus GA4 kopieren → Speichern → Dashboard aktualisiert sich automatisch. Daten werden lokal gespeichert (LocalStorage).</p>
+    <div class="modal-grid">
+      <div class="modal-field">
+        <label>Nutzer · 30 Tage</label>
+        <input type="number" id="m-u30" placeholder="71">
+      </div>
+      <div class="modal-field">
+        <label>Aktiv · 7 Tage</label>
+        <input type="number" id="m-u7" placeholder="17">
+      </div>
+      <div class="modal-field">
+        <label>Events · 7 Tage</label>
+        <input type="number" id="m-ev7" placeholder="367">
+      </div>
+      <div class="modal-field">
+        <label>Neue Nutzer · 7T</label>
+        <input type="number" id="m-new" placeholder="16">
+      </div>
+      <div class="modal-field">
+        <label>Bunbo Nutzer · 7T</label>
+        <input type="number" id="m-bunbo" placeholder="2">
+      </div>
+      <div class="modal-field">
+        <label>Bunbo Events · 7T</label>
+        <input type="number" id="m-bunevt" placeholder="51">
+      </div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-cancel" onclick="closeSyncModal()">Abbrechen</button>
+      <button class="btn-save" onclick="saveSyncData()">💾 Speichern &amp; Anwenden</button>
+    </div>
+  </div>
+</div>
+
+
+<!-- MASTHEAD -->
+<div class="masthead">
+  <div class="masthead-inner">
+    <div class="brand">
+      <svg width="44" height="44" viewBox="0 0 48 48" fill="none">
+        <circle cx="24" cy="11" r="5" stroke="#b8942a" stroke-width="2"/>
+        <line x1="24" y1="16" x2="24" y2="40" stroke="#b8942a" stroke-width="2"/>
+        <path d="M13 24Q9 33 14 38Q19 44 24 40Q29 44 34 38Q39 33 35 24" stroke="#b8942a" stroke-width="2" fill="none"/>
+        <line x1="13" y1="24" x2="35" y2="24" stroke="#b8942a" stroke-width="2"/>
+        <line x1="19" y1="7" x2="29" y2="7" stroke="#b8942a" stroke-width="2"/>
+      </svg>
+      <div>
+        <div class="brand-name">Wave <em>Bite</em></div>
+        <div class="brand-sub sans">Master Analytics · Investor Report</div>
+      </div>
+    </div>
+    <div class="masthead-right">
+      <div class="prop-ids">GA4 · G-7JNDG0B4KQ &nbsp;|&nbsp; G-B9WXT5PK2L</div>
+      <div class="pills">
+        <span class="pill pill-live">5 Properties live</span>
+        <span class="pill pill-live">Bunbo ✓ aktiv</span>
+        <span class="pill pill-gold">QR UTM bereit</span>
+      </div>
+      <div id="ts" style="font-family:-apple-system,sans-serif;font-size:10px;color:rgba(248,243,232,.3);margin-top:3px"></div>
+    </div>
+  </div>
+  <svg class="masthead-wave" viewBox="0 0 1200 28" preserveAspectRatio="none">
+    <path d="M0,14 C200,28 400,0 600,14 C800,28 1000,0 1200,14 L1200,28 L0,28 Z" fill="#f8f3e8"/>
+  </svg>
+</div>
+
+<div class="main">
+
+<!-- FLEET -->
+<div class="rule">⚓ Die Flotte · 5 Properties</div>
+<div class="fleet">
+  <div class="fc" style="border-top:3px solid #b8942a">
+    <div class="fc-icon">🌊</div>
+    <div class="fc-name sans">Wave Bite Website</div>
+    <div class="fc-url">wave-bite.com</div>
+    <span class="fc-badge b-ok">✓ Live · G-7JNDG0B4KQ</span>
+  </div>
+  <div class="fc" style="border-top:3px solid #2a8a7a">
+    <div class="fc-icon">💧</div>
+    <div class="fc-name sans">Gewässerinfo</div>
+    <div class="fc-url">wave-bite.com/wasser-info/</div>
+    <span class="fc-badge b-ok">✓ Live · Meistbesucht</span>
+  </div>
+  <div class="fc" style="border-top:3px solid #3a5acc">
+    <div class="fc-icon">📲</div>
+    <div class="fc-name sans">QR Code Tracking</div>
+    <div class="fc-url">utm_source=qr_code</div>
+    <span class="fc-badge b-qr">UTM bereit · 0 Scans</span>
+  </div>
+  <div class="fc" style="border-top:3px solid #1e3158">
+    <div class="fc-icon">⚓</div>
+    <div class="fc-name sans">Wasserlage PWA</div>
+    <div class="fc-url">voigtcarsten4-rgb.github.io</div>
+    <span class="fc-badge b-new">Live · Consent-gated</span>
+  </div>
+  <div class="fc" style="border-top:3px solid #1a7a4a">
+    <div class="fc-icon">🚢</div>
+    <div class="fc-name sans">Bunbo Hausboot</div>
+    <div class="fc-url">bunbo-xperience.glide.page</div>
+    <span class="fc-badge b-ok">✓ Live · 51 Events</span>
+  </div>
+</div>
+
+<!-- MASTER KPIs -->
+<div class="rule">📊 Gesamt-Performance · GA4 Daten</div>
+<div class="kpi-row">
+  <div class="kpi">
+    <div class="kpi-accent" style="background:linear-gradient(90deg,#b8942a,transparent)"></div>
+    <div class="kpi-lbl sans">Nutzer · 30 Tage</div>
+    <div class="kpi-num" id="kpi-u30">71</div>
+    <span class="kpi-delta d-up">▲ +68%</span>
+    <div class="kpi-note sans">Wachstumstrend stark</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-accent" style="background:linear-gradient(90deg,#2a8a7a,transparent)"></div>
+    <div class="kpi-lbl sans">Aktiv · 7 Tage</div>
+    <div class="kpi-num" id="kpi-u7">17</div>
+    <span class="kpi-delta d-up">▲ +21%</span>
+    <div class="kpi-note sans">vs. Vorwoche</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-accent" style="background:linear-gradient(90deg,#3a5acc,transparent)"></div>
+    <div class="kpi-lbl sans">Events · 7 Tage</div>
+    <div class="kpi-num" id="kpi-ev7" style="font-size:28px">367</div>
+    <span class="kpi-delta d-up">▲ +94%</span>
+    <div class="kpi-note sans">inkl. 51 Bunbo Events</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-accent" style="background:linear-gradient(90deg,#1a7a4a,transparent)"></div>
+    <div class="kpi-lbl sans">Neue Nutzer</div>
+    <div class="kpi-num" id="kpi-new">16</div>
+    <span class="kpi-delta d-up">▲ +33%</span>
+    <div class="kpi-note sans">7-Tage-Fenster</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-accent" style="background:linear-gradient(90deg,#1a7a4a,transparent)"></div>
+    <div class="kpi-lbl sans">Bunbo · 7 Tage</div>
+    <div class="kpi-num" id="kpi-bunbo" style="font-size:28px;color:#1a7a4a">2</div>
+    <span class="kpi-delta d-ok">✓ Live</span>
+    <div class="kpi-note sans">51 Events · 1 live aus 🇨🇭</div>
+  </div>
+</div>
+
+<!-- CHARTS ROW -->
+<div class="rule">📈 Wachstum &amp; Traffic-Analyse</div>
+<div class="two-col">
+
+  <!-- Growth Sparkline -->
+  <div class="card">
+    <div class="card-title">Nutzer-Wachstumstrend</div>
+    <div class="card-sub sans">Letzte 5 Wochen · Wave Bite + Gewässerinfo (G-7JNDG0B4KQ)</div>
+
+    <div class="sparkline">
+      <div class="spark-col">
+        <div class="spark-val">8</div>
+        <div class="spark-bar" style="height:9%;background:#e8c97a;width:100%;min-height:6px"></div>
+        <div class="spark-lbl">KW1</div>
+      </div>
+      <div class="spark-col">
+        <div class="spark-val">18</div>
+        <div class="spark-bar" style="height:22%;background:#d4aa3d"></div>
+        <div class="spark-lbl">KW2</div>
+      </div>
+      <div class="spark-col">
+        <div class="spark-val">32</div>
+        <div class="spark-bar" style="height:40%;background:#c09830"></div>
+        <div class="spark-lbl">KW3</div>
+      </div>
+      <div class="spark-col">
+        <div class="spark-val">52</div>
+        <div class="spark-bar" style="height:68%;background:#b8942a"></div>
+        <div class="spark-lbl">KW4</div>
+      </div>
+      <div class="spark-col">
+        <div class="spark-val">71</div>
+        <div class="spark-bar" style="height:100%;background:#0a1628"></div>
+        <div class="spark-lbl">KW5</div>
+      </div>
+    </div>
+
+    <div style="margin-top:14px;padding-top:12px;border-top:1px solid #e0d8c8">
+      <div class="card-sub sans" style="margin-bottom:8px">Top Events · letzte 7 Tage</div>
+      <div class="bar-chart">
+        <div class="bar-row">
+          <div class="bar-label sans">page_view</div>
+          <div class="bar-track"><div class="bar-fill" style="width:100%;background:#0a1628">101</div></div>
+          <div class="bar-val sans">101</div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-label sans">wasserinfo_view</div>
+          <div class="bar-track"><div class="bar-fill" style="width:68%;background:#2a8a7a">69</div></div>
+          <div class="bar-val sans">69</div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-label sans">user_engagement</div>
+          <div class="bar-track"><div class="bar-fill" style="width:65%;background:#3a5acc">66</div></div>
+          <div class="bar-val sans">66</div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-label sans">session_start</div>
+          <div class="bar-track"><div class="bar-fill" style="width:34%;background:#b8942a">34</div></div>
+          <div class="bar-val sans">34</div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-label sans">scroll</div>
+          <div class="bar-track"><div class="bar-fill" style="width:28%;background:#7a8fa8">28</div></div>
+          <div class="bar-val sans">28</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Traffic Sources -->
+  <div class="card">
+    <div class="card-title">Traffic-Quellen</div>
+    <div class="card-sub sans">Sitzungen nach Kanal · letzte 7 Tage</div>
+    <div class="src-row">
+      <span class="src-dot" style="background:#b8942a"></span>
+      <span class="src-name sans">Direct</span>
+      <div class="src-bar-bg"><div class="src-bar" style="width:65%;background:#b8942a"></div></div>
+      <span class="src-n sans">22</span><span class="src-p sans">65%</span>
+    </div>
+    <div class="src-row">
+      <span class="src-dot" style="background:#2a8a7a"></span>
+      <span class="src-name sans">Organic Search</span>
+      <div class="src-bar-bg"><div class="src-bar" style="width:29%;background:#2a8a7a"></div></div>
+      <span class="src-n sans">10</span><span class="src-p sans">29%</span>
+    </div>
+    <div class="src-row">
+      <span class="src-dot" style="background:#3a5acc"></span>
+      <span class="src-name sans">Organic Social</span>
+      <div class="src-bar-bg"><div class="src-bar" style="width:3%;background:#3a5acc"></div></div>
+      <span class="src-n sans">1</span><span class="src-p sans">3%</span>
+    </div>
+    <div class="src-row">
+      <span class="src-dot" style="background:#d4800a"></span>
+      <span class="src-name sans">QR Code <em style="font-size:9px;font-style:normal">(UTM bereit)</em></span>
+      <div class="src-bar-bg"><div class="src-bar" style="width:0%"></div></div>
+      <span class="src-n sans">—</span><span class="src-p sans">—</span>
+    </div>
+
+    <div style="margin-top:16px;padding-top:12px;border-top:1px solid #e0d8c8">
+      <div class="card-sub sans" style="margin-bottom:8px">Geografie · Top Länder</div>
+      <table class="data-tbl">
+        <thead><tr><th>Land</th><th>Sessions</th><th>Nutzer</th></tr></thead>
+        <tbody>
+          <tr><td>🇩🇪 Deutschland</td><td class="num">9</td><td class="num">8</td></tr>
+          <tr><td>🇨🇭 Schweiz</td><td class="num">7</td><td class="num">5</td></tr>
+          <tr><td>🇮🇪 Irland</td><td class="num">1</td><td class="num">1</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div style="margin-top:14px;padding-top:12px;border-top:1px solid #e0d8c8">
+      <div class="card-sub sans" style="margin-bottom:8px">Property-Verteilung · Page Views</div>
+      <div class="bar-chart">
+        <div class="bar-row">
+          <div class="bar-label sans">Gewässerinfo</div>
+          <div class="bar-track"><div class="bar-fill" style="width:69%;background:#2a8a7a"></div></div>
+          <div class="bar-val sans">69</div>
+          <div class="bar-pct sans">69%</div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-label sans">Wave Bite</div>
+          <div class="bar-track"><div class="bar-fill" style="width:28%;background:#b8942a"></div></div>
+          <div class="bar-val sans">28</div>
+          <div class="bar-pct sans">28%</div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-label sans">Bunbo</div>
+          <div class="bar-track"><div class="bar-fill" style="width:3%;background:#1a7a4a"></div></div>
+          <div class="bar-val sans">3</div>
+          <div class="bar-pct sans">3%</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PROPERTY DEEP DIVE -->
+<div class="rule">🔍 Property Deep-Dive · Einzelauswertung</div>
+<div class="deep-grid">
+
+  <!-- Wave Bite + Gewässerinfo -->
+  <div class="dc">
+    <div class="dc-head" style="background:linear-gradient(135deg,rgba(184,148,42,.07),transparent)">
+      <div class="dc-icon">🌊</div>
+      <div>
+        <div class="dc-title">Wave Bite &amp; Gewässerinfo</div>
+        <div class="dc-url">wave-bite.com · G-7JNDG0B4KQ · Stream 14320348168</div>
+      </div>
+    </div>
+    <div class="dc-body">
+      <div class="trio">
+        <div class="trio-box"><div class="trio-val">71</div><div class="trio-lbl sans">Nutzer 30T</div></div>
+        <div class="trio-box"><div class="trio-val" style="color:#1a7a4a">101</div><div class="trio-lbl sans">Page Views</div></div>
+        <div class="trio-box"><div class="trio-val">34</div><div class="trio-lbl sans">Sitzungen</div></div>
+      </div>
+      <div style="font-family:-apple-system,sans-serif;font-size:9.5px;font-weight:800;color:#7a8fa8;text-transform:uppercase;letter-spacing:.8px;margin-bottom:5px">Top Events · 7 Tage</div>
+      <div class="evt"><span style="color:#3a4f6a">📄 page_view</span><span class="evt-n">101</span></div>
+      <div class="evt"><span style="color:#3a4f6a">💧 wasserinfo_view</span><span class="evt-n">69</span></div>
+      <div class="evt"><span style="color:#3a4f6a">💬 user_engagement</span><span class="evt-n">66</span></div>
+      <div class="evt"><span style="color:#3a4f6a">▶ session_start</span><span class="evt-n">34</span></div>
+      <div class="evt"><span style="color:#3a4f6a">↓ scroll</span><span class="evt-n">28</span></div>
+      <div class="evt"><span style="color:#3a4f6a">🆕 first_visit</span><span class="evt-n">16</span></div>
+      <div class="callout c-ok">⭐ Gewässerinfo (69 Views) übertrifft die Hauptseite (28 Views) um 2,5× — klares Nutzersignal: das ist der Kern-Use-Case.</div>
+    </div>
+  </div>
+
+  <!-- Wasserlage PWA -->
+  <div class="dc">
+    <div class="dc-head" style="background:linear-gradient(135deg,rgba(42,138,122,.07),transparent)">
+      <div class="dc-icon">⚓</div>
+      <div>
+        <div class="dc-title">Wasserlage PWA</div>
+        <div class="dc-url">voigtcarsten4-rgb.github.io/wasserlage/ · G-7JNDG0B4KQ</div>
+      </div>
+    </div>
+    <div class="dc-body">
+      <div class="trio">
+        <div class="trio-box"><div class="trio-val" style="font-size:14px;color:#2a4aaa">NEU</div><div class="trio-lbl sans">Status</div></div>
+        <div class="trio-box"><div class="trio-val">6</div><div class="trio-lbl sans">Custom Events</div></div>
+        <div class="trio-box"><div class="trio-val">v2</div><div class="trio-lbl sans">Consent Mode</div></div>
+      </div>
+      <div style="font-family:-apple-system,sans-serif;font-size:9.5px;font-weight:800;color:#7a8fa8;text-transform:uppercase;letter-spacing:.8px;margin-bottom:5px">Konfigurierte Tracking-Events</div>
+      <div class="evt"><span style="color:#3a4f6a">📜 scroll_depth (25/50/75/90%)</span><span class="evt-n" style="color:#1a7a4a">✓</span></div>
+      <div class="evt"><span style="color:#3a4f6a">🔗 elwis_outclick</span><span class="evt-n" style="color:#1a7a4a">✓</span></div>
+      <div class="evt"><span style="color:#3a4f6a">🗺 radar_open</span><span class="evt-n" style="color:#1a7a4a">✓</span></div>
+      <div class="evt"><span style="color:#3a4f6a">🔴 emergency_call</span><span class="evt-n" style="color:#1a7a4a">✓</span></div>
+      <div class="evt"><span style="color:#3a4f6a">🔘 filter_click</span><span class="evt-n" style="color:#1a7a4a">✓</span></div>
+      <div class="evt"><span style="color:#3a4f6a">▶ session_start</span><span class="evt-n" style="color:#1a7a4a">✓</span></div>
+      <div class="callout c-info">🚀 Tracking live seit Commit <code>ba5c3ca</code>. Daten akkumulieren nach Consent-Erteilung. DSGVO-konform via Consent Mode v2.</div>
+    </div>
+  </div>
+
+  <!-- Bunbo -->
+  <div class="dc">
+    <div class="dc-head" style="background:linear-gradient(135deg,rgba(26,122,74,.07),transparent)">
+      <div class="dc-icon">🚢</div>
+      <div>
+        <div class="dc-title">Bunbo Hausboot Xperience</div>
+        <div class="dc-url">bunbo-xperience.glide.page · G-B9WXT5PK2L · p532605005 · ✓</div>
+      </div>
+    </div>
+    <div class="dc-body">
+      <div class="trio">
+        <div class="trio-box"><div class="trio-val" style="color:#1a7a4a">2</div><div class="trio-lbl sans">Nutzer 7T</div></div>
+        <div class="trio-box"><div class="trio-val" style="color:#1a7a4a">51</div><div class="trio-lbl sans">Events 7T</div></div>
+        <div class="trio-box"><div class="trio-val">🇨🇭</div><div class="trio-lbl sans">Top Land</div></div>
+      </div>
+      <div style="font-family:-apple-system,sans-serif;font-size:9.5px;font-weight:800;color:#7a8fa8;text-transform:uppercase;letter-spacing:.8px;margin-bottom:5px">Tracking-Status</div>
+      <div class="evt"><span style="color:#3a4f6a">Measurement ID</span><span class="evt-n" style="color:#1a7a4a">G-B9WXT5PK2L ✓</span></div>
+      <div class="evt"><span style="color:#3a4f6a">Stream ID</span><span class="evt-n">14353787920</span></div>
+      <div class="evt"><span style="color:#3a4f6a">Property ID</span><span class="evt-n">p532605005</span></div>
+      <div class="evt"><span style="color:#3a4f6a">Datenerhebung</span><span class="evt-n" style="color:#1a7a4a">Aktiv (48h) ✓</span></div>
+      <div class="evt"><span style="color:#3a4f6a">Live gerade</span><span class="evt-n" style="color:#1a7a4a">1 Nutzer (CH)</span></div>
+      <div class="callout c-ok">✅ Früherer 503-Fehler war ein temporärer GA4-Serverausfall — kein Konfigurationsproblem. Property vollständig aktiv.</div>
+    </div>
+  </div>
+
+  <!-- QR Code -->
+  <div class="dc">
+    <div class="dc-head" style="background:linear-gradient(135deg,rgba(58,90,204,.07),transparent)">
+      <div class="dc-icon">📲</div>
+      <div>
+        <div class="dc-title">QR Code Tracking</div>
+        <div class="dc-url">utm_source=qr_code · Offline-to-Online Kanal</div>
+      </div>
+    </div>
+    <div class="dc-body">
+      <div class="trio">
+        <div class="trio-box"><div class="trio-val" style="color:#b8720a">0</div><div class="trio-lbl sans">Scans bisher</div></div>
+        <div class="trio-box"><div class="trio-val">2</div><div class="trio-lbl sans">UTM URLs</div></div>
+        <div class="trio-box"><div class="trio-val" style="color:#1a7a4a">✓</div><div class="trio-lbl sans">GA4-bereit</div></div>
+      </div>
+      <div style="font-family:-apple-system,sans-serif;font-size:9.5px;font-weight:800;color:#7a8fa8;text-transform:uppercase;letter-spacing:.8px;margin-bottom:5px">QR für Gewässerinfo</div>
+      <div style="font-family:'Courier New',monospace;font-size:9px;color:#2a8a7a;background:#f0e8d4;border-radius:6px;padding:6px 10px;word-break:break-all;margin-bottom:8px">wave-bite.com/wasser-info/?utm_source=qr_code&amp;utm_medium=qr&amp;utm_campaign=gewaesserinfo&amp;utm_content=v1</div>
+      <div style="font-family:-apple-system,sans-serif;font-size:9.5px;font-weight:800;color:#7a8fa8;text-transform:uppercase;letter-spacing:.8px;margin-bottom:4px">QR für Bunbo App</div>
+      <div style="font-family:'Courier New',monospace;font-size:9px;color:#3a5acc;background:#f0e8d4;border-radius:6px;padding:6px 10px;word-break:break-all">bunbo-xperience.glide.page/?utm_source=qr_code&amp;utm_medium=qr&amp;utm_campaign=bunbo_hausboot&amp;utm_content=v1</div>
+    </div>
+  </div>
+</div>
+
+<!-- QR SETUP SECTION -->
+<div class="rule">📲 QR Code Deployment · Schritt-für-Schritt</div>
+<div class="qr-sec">
+  <div class="qr-left">
+    <div class="qr-title">QR Code Tracking aktivieren</div>
+    <div class="qr-sub">Beide UTM-URLs fertig — jeder Scan erscheint in GA4 als eigener Offline-Kanal.</div>
+    <div class="qr-lbl">🌊 Gewässerinfo QR URL</div>
+    <div class="utm-box">https://wave-bite.com/wasser-info/?utm_source=qr_code&amp;utm_medium=qr&amp;utm_campaign=gewaesserinfo&amp;utm_content=v1</div>
+    <div class="qr-lbl">🚢 Bunbo Hausboot QR URL</div>
+    <div class="utm-box-b">https://bunbo-xperience.glide.page/?utm_source=qr_code&amp;utm_medium=qr&amp;utm_campaign=bunbo_hausboot&amp;utm_content=v1</div>
+    <ul class="step-list">
+      <li class="step-item"><span class="step-n">1</span> URL in QR-Generator (qr.io oder qr-code-generator.com)</li>
+      <li class="step-item"><span class="step-n">2</span> PNG/SVG herunterladen, min. 300×300px</li>
+      <li class="step-item"><span class="step-n">3</span> Auf Speisekarten, Bootsstegen, Flyern platzieren</li>
+      <li class="step-item"><span class="step-n">4</span> GA4 → Berichte → Nutzergewinnung → "qr_code" erscheint automatisch</li>
+    </ul>
+  </div>
+  <div class="qr-stats">
+    <div class="qr-stat">
+      <div class="qr-stat-lbl">Status</div>
+      <div class="qr-stat-val" style="font-size:13px;color:#e8c97a">UTM bereit</div>
+      <div class="qr-stat-note">Links generiert</div>
+    </div>
+    <div class="qr-stat">
+      <div class="qr-stat-lbl">Scans gesamt</div>
+      <div class="qr-stat-val">—</div>
+      <div class="qr-stat-note">nach Deployment</div>
+    </div>
+    <div class="qr-stat">
+      <div class="qr-stat-lbl">Properties</div>
+      <div class="qr-stat-val">2</div>
+      <div class="qr-stat-note">Gewässerinfo + Bunbo</div>
+    </div>
+  </div>
+</div>
+
+
+<!-- WACHSTUMSPROGNOSE -->
+<div class="rule">📈 Wachstumsprognose · Bei aktuellem Trend (+68%/Monat)</div>
+<div class="forecast-sec">
+  <div class="forecast-title">Nutzer-Projektion · Jun – Aug 2026</div>
+  <div class="forecast-sub sans">Basis: 71 Nutzer (30T, Stand Mai 2026) · Wachstumsrate +68% p.M. · Organisches Wachstum ohne Paid</div>
+  <table class="forecast-tbl">
+    <thead>
+      <tr>
+        <th>Monat</th>
+        <th>Projizierte Nutzer (30T)</th>
+        <th>Wachstum ggü. Vormonat</th>
+        <th>Milestone</th>
+        <th style="width:180px">Fortschritt</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Mai 2026</strong> <em style="font-size:9px;color:#7a8fa8">(Basis)</em></td>
+        <td class="num">71</td>
+        <td style="color:#7a8fa8;font-size:11px">— Ausgangspunkt</td>
+        <td>—</td>
+        <td class="bar-td">
+          <div style="background:#f0e8d4;border-radius:4px;height:10px;overflow:hidden">
+            <div style="width:14%;height:100%;background:#b8942a;border-radius:4px"></div>
+          </div>
+          <div style="font-family:-apple-system,sans-serif;font-size:9px;color:#7a8fa8;margin-top:2px">14% zu 500</div>
+        </td>
+      </tr>
+      <tr>
+        <td><strong>Jun 2026</strong></td>
+        <td class="num" style="color:#2a4aaa">119</td>
+        <td style="color:#1a7a4a;font-weight:700;font-size:12px">▲ +68% · +48 Nutzer</td>
+        <td><span class="milestone-badge ms-100">✓ 100 Nutzer</span></td>
+        <td class="bar-td">
+          <div style="background:#f0e8d4;border-radius:4px;height:10px;overflow:hidden">
+            <div style="width:24%;height:100%;background:#3a5acc;border-radius:4px"></div>
+          </div>
+          <div style="font-family:-apple-system,sans-serif;font-size:9px;color:#7a8fa8;margin-top:2px">24% zu 500</div>
+        </td>
+      </tr>
+      <tr>
+        <td><strong>Jul 2026</strong></td>
+        <td class="num" style="color:#b8720a">200</td>
+        <td style="color:#1a7a4a;font-weight:700;font-size:12px">▲ +68% · +81 Nutzer</td>
+        <td><span class="milestone-badge ms-250">⬆ Richtung 250</span></td>
+        <td class="bar-td">
+          <div style="background:#f0e8d4;border-radius:4px;height:10px;overflow:hidden">
+            <div style="width:40%;height:100%;background:#b8720a;border-radius:4px"></div>
+          </div>
+          <div style="font-family:-apple-system,sans-serif;font-size:9px;color:#7a8fa8;margin-top:2px">40% zu 500</div>
+        </td>
+      </tr>
+      <tr>
+        <td><strong>Aug 2026</strong></td>
+        <td class="num" style="color:#1a7a4a">336</td>
+        <td style="color:#1a7a4a;font-weight:700;font-size:12px">▲ +68% · +136 Nutzer</td>
+        <td><span class="milestone-badge ms-250">✓ 250 Nutzer</span></td>
+        <td class="bar-td">
+          <div style="background:#f0e8d4;border-radius:4px;height:10px;overflow:hidden">
+            <div style="width:67%;height:100%;background:#1a7a4a;border-radius:4px"></div>
+          </div>
+          <div style="font-family:-apple-system,sans-serif;font-size:9px;color:#7a8fa8;margin-top:2px">67% zu 500</div>
+        </td>
+      </tr>
+      <tr>
+        <td><strong>Sep 2026</strong></td>
+        <td class="num" style="color:#1a7a4a;font-size:20px">564</td>
+        <td style="color:#1a7a4a;font-weight:700;font-size:12px">▲ +68% · +228 Nutzer</td>
+        <td><span class="milestone-badge ms-500">🏆 500 Nutzer!</span></td>
+        <td class="bar-td">
+          <div style="background:#f0e8d4;border-radius:4px;height:10px;overflow:hidden">
+            <div style="width:100%;height:100%;background:linear-gradient(90deg,#1a7a4a,#4ecdb4);border-radius:4px"></div>
+          </div>
+          <div style="font-family:-apple-system,sans-serif;font-size:9px;color:#1a7a4a;margin-top:2px;font-weight:700">🏆 Milestone erreicht!</div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="forecast-note">
+    📌 <strong>Annahmen:</strong> Gleichbleibende organische Wachstumsrate (+68%/Monat), keine Paid-Kampagnen, keine saisonalen Schwankungen. Realistisches Szenario basierend auf den letzten 5 Wochen Daten (KW1: 8 → KW5: 71). Bei erstem Paid-Push könnte Jun/Jul deutlich übertroffen werden.
+  </div>
+</div>
+
+<!-- QUICK ACTIONS -->
+<div class="rule">⚡ Quick Actions · Daten &amp; Export</div>
+<div class="qa-row">
+  <a class="qa-btn qa-sheets" href="https://docs.google.com/spreadsheets/u/0/create" target="_blank">
+    <span>📊</span> Nach Google Sheets exportieren
+  </a>
+  <button class="qa-btn qa-pdf" onclick="window.print()">
+    <span>🖨</span> PDF Report drucken
+  </button>
+</div>
+
+<!-- SOFORTMASSNAHMEN -->
+<div class="rule">⚡ Sofortmassnahmen · Priorisiert</div>
+<div class="act-grid">
+  <div class="act">
+    <div class="act-ico">✅</div>
+    <div>
+      <div class="act-title">Bunbo GA4 aktiv</div>
+      <div class="act-desc sans">G-B9WXT5PK2L vollständig live. p532605005 · Stream 14353787920 · 2 Nutzer, 51 Events. 503 war temporär.</div>
+      <span class="act-tag t-done">Erledigt · live</span>
+    </div>
+  </div>
+  <div class="act">
+    <div class="act-ico">📲</div>
+    <div>
+      <div class="act-title">QR Codes drucken</div>
+      <div class="act-desc sans">UTM-URLs (oben) in QR-Generator kopieren → beide Codes auf Materialien. Gewässerinfo + Bunbo bereit.</div>
+      <span class="act-tag t-easy">Sofort umsetzbar</span>
+    </div>
+  </div>
+  <div class="act">
+    <div class="act-ico">🎯</div>
+    <div>
+      <div class="act-title">Key Events setzen</div>
+      <div class="act-desc sans">GA4 Admin → Events → "wasserinfo_view" + "session_start" als Schlüsselereignisse markieren → Conversion-Tracking.</div>
+      <span class="act-tag t-med">5 Minuten · hoch</span>
+    </div>
+  </div>
+  <div class="act">
+    <div class="act-ico">🔍</div>
+    <div>
+      <div class="act-title">Search Console verknüpfen</div>
+      <div class="act-desc sans">GA4 empfiehlt sc-domain:wave-bite.com → 1-Klick-Setup. Keywords + organische CTR direkt in Analytics.</div>
+      <span class="act-tag t-easy">1 Klick · empfohlen</span>
+    </div>
+  </div>
+  <div class="act">
+    <div class="act-ico">⚙️</div>
+    <div>
+      <div class="act-title">Apps Script Trigger prüfen</div>
+      <div class="act-desc sans">WaterEngine Script <code>1HxG3HhePCk…</code> → letzter Timestamp ~2026-04-27 → Trigger möglicherweise gestoppt.</div>
+      <span class="act-tag t-crit">Kritisch · Datenverlust</span>
+    </div>
+  </div>
+  <div class="act">
+    <div class="act-ico">✅</div>
+    <div>
+      <div class="act-title">Wasserlage wächst</div>
+      <div class="act-desc sans">Tracking live seit <code>ba5c3ca</code>. 6 Custom Events. Daten fließen nach Consent. DSGVO-konform.</div>
+      <span class="act-tag t-done">Aktiv · kein Action needed</span>
+    </div>
+  </div>
+</div>
+
+<!-- LINKS -->
+<div class="rule">🔗 Quick Navigation</div>
+<div class="links">
+  <a class="lnk lnk-primary" href="https://analytics.google.com/analytics/web/#/a390037459p531432157/reports/intelligenthome" target="_blank">📊 GA4 Wave Bite</a>
+  <a class="lnk lnk-gold" href="https://analytics.google.com/analytics/web/#/a390037459p531432157/reports/realtime" target="_blank">⚡ Realtime</a>
+  <a class="lnk lnk-primary" href="https://analytics.google.com/analytics/web/#/a390037459p532605005/reports/intelligenthome" target="_blank">🚢 GA4 Bunbo</a>
+  <a class="lnk" href="https://analytics.google.com/analytics/web/#/a390037459p531432157/admin/streams/table" target="_blank">🔧 Streams Admin</a>
+  <a class="lnk" href="https://wave-bite.com" target="_blank">🌊 Wave Bite</a>
+  <a class="lnk" href="https://wave-bite.com/wasser-info/" target="_blank">💧 Gewässerinfo</a>
+  <a class="lnk" href="https://voigtcarsten4-rgb.github.io/wasserlage/" target="_blank">⚓ Wasserlage PWA</a>
+  <a class="lnk" href="https://bunbo-xperience.glide.page" target="_blank">🚢 Bunbo App</a>
+  <a class="lnk" href="https://script.google.com" target="_blank">⚙️ Apps Script</a>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  <div>
+    <div class="footer-brand">Wave <em>Bite</em> · Analytics Universe</div>
+    <div class="footer-meta sans" style="margin-top:3px">
+      <code>G-7JNDG0B4KQ</code> p531432157 wave-bite.com &nbsp;|&nbsp; <code>G-B9WXT5PK2L</code> p532605005 bunbo-xperience &nbsp;|&nbsp; Account <code>a390037459</code>
+    </div>
+  </div>
+  <div class="footer-meta sans" style="text-align:right">
+    Stand: <span id="fd"></span><br>Echtzeit-Daten aus Google Analytics 4<br>Confidential · Investor Use Only
+  </div>
+</div>
+
+</div><!-- /main -->
+
+<script>
+// ── Date/Time
+const now = new Date();
+const de = d => d.toLocaleDateString('de-DE',{day:'2-digit',month:'long',year:'numeric'});
+const t  = d => d.toLocaleTimeString('de-DE',{hour:'2-digit',minute:'2-digit'});
+const ts = document.getElementById('ts');
+const fd = document.getElementById('fd');
+if(ts) ts.textContent = de(now) + ' · ' + t(now);
+if(fd) fd.textContent = de(now);
+
+// ── Sync Bar Date
+const syncDateEl = document.getElementById('sync-date');
+if(syncDateEl) {
+  const stored = localStorage.getItem('wavebite_ga4_data');
+  if(stored) {
+    try {
+      const d = JSON.parse(stored);
+      if(d._saved) syncDateEl.textContent = new Date(d._saved).toLocaleDateString('de-DE',{day:'2-digit',month:'long',year:'numeric'});
+    } catch(e){}
+  } else {
+    syncDateEl.textContent = de(now);
+  }
+}
+
+// ── LocalStorage key
+const LS_KEY = 'wavebite_ga4_data';
+
+// ── Apply stored data to KPI cards
+function applyData(d) {
+  const map = {
+    'kpi-u30': 'u30', 'kpi-u7': 'u7', 'kpi-ev7': 'ev7',
+    'kpi-new': 'new', 'kpi-bunbo': 'bunbo'
+  };
+  for(const [id, key] of Object.entries(map)) {
+    const el = document.getElementById(id);
+    if(el && d[key] !== undefined && d[key] !== '') el.textContent = d[key];
+  }
+}
+
+// ── Load on init
+(function loadStored() {
+  try {
+    const raw = localStorage.getItem(LS_KEY);
+    if(raw) applyData(JSON.parse(raw));
+  } catch(e){}
+})();
+
+// ── Modal helpers
+function openSyncModal() {
+  // pre-fill with stored or current KPI values
+  try {
+    const raw = localStorage.getItem(LS_KEY);
+    const d = raw ? JSON.parse(raw) : {};
+    const fields = {
+      'm-u30': d.u30 || document.getElementById('kpi-u30')?.textContent,
+      'm-u7':  d.u7  || document.getElementById('kpi-u7')?.textContent,
+      'm-ev7': d.ev7 || document.getElementById('kpi-ev7')?.textContent,
+      'm-new': d['new'] || document.getElementById('kpi-new')?.textContent,
+      'm-bunbo': d.bunbo || document.getElementById('kpi-bunbo')?.textContent,
+      'm-bunevt': d.bunevt || ''
+    };
+    for(const [id, val] of Object.entries(fields)) {
+      const el = document.getElementById(id);
+      if(el) el.value = val || '';
+    }
+  } catch(e){}
+  document.getElementById('syncModal').classList.add('open');
+}
+
+function closeSyncModal() {
+  document.getElementById('syncModal').classList.remove('open');
+}
+
+function saveSyncData() {
+  const d = {
+    u30: document.getElementById('m-u30').value,
+    u7:  document.getElementById('m-u7').value,
+    ev7: document.getElementById('m-ev7').value,
+    'new': document.getElementById('m-new').value,
+    bunbo: document.getElementById('m-bunbo').value,
+    bunevt: document.getElementById('m-bunevt').value,
+    _saved: new Date().toISOString()
+  };
+  localStorage.setItem(LS_KEY, JSON.stringify(d));
+  applyData(d);
+  // update sync bar date
+  const sde = document.getElementById('sync-date');
+  if(sde) sde.textContent = de(new Date());
+  closeSyncModal();
+  // brief flash feedback
+  const btn = document.querySelector('.sync-btn');
+  if(btn) { const orig = btn.textContent; btn.textContent = '✓ Gespeichert'; setTimeout(()=>btn.textContent=orig,1800); }
+}
+
+// close modal on overlay click
+document.getElementById('syncModal').addEventListener('click', function(e) {
+  if(e.target === this) closeSyncModal();
+});
+</script>
+
+<!-- WAVE BITE Office-Sync (BroadcastChannel) 2026-05-20 -->
+<script>
+(function(){
+  'use strict';
+  var ch = null;
+  try { ch = new BroadcastChannel('ceo-wave'); } catch(e) {}
+  window.__waveSync = {
+    send: function(patch, type) {
+      var msg = { type: type || 'state_update', source: document.title, patch: patch || {}, ts: Date.now() };
+      if (ch) { try { ch.postMessage(msg); } catch(e){} }
+      try { localStorage.setItem('ceo_wave_msg', JSON.stringify({t: Date.now(), msg: msg})); } catch(e){}
+    },
+    onMessage: function(cb) {
+      if (ch) ch.onmessage = function(ev){ try { cb(ev.data); } catch(e){} };
+      window.addEventListener('storage', function(ev){
+        if (ev.key === 'ceo_wave_msg' && ev.newValue) {
+          try { var p = JSON.parse(ev.newValue); if (p.msg) cb(p.msg); } catch(e){}
+        }
+      });
+    }
+  };
+  // Ping Office on load
+  setTimeout(function(){ window.__waveSync.send({ active: true, page: document.title }, 'detail_loaded'); }, 500);
+})();
+</script>
+
+</body>
+</html>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 

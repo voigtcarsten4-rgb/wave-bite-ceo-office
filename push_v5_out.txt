@@ -1,0 +1,42 @@
+[1] Staging index.html...
+STAGE: 0
+[2] Committing...
+On branch main
+Your branch is up to date with 'origin/main'.
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   push_to_github.bat
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+	DEPLOY_MOBILE_FIX.ps1
+	P.bat
+	PUSH_EXEC_OS.bat
+	PUSH_FINAL_V3.bat
+	PUSH_FIXES.ps1
+	PUSH_NOW.bat
+	PUSH_TERMIN_UPDATE.bat
+	PUSH_V3_CLEAN.ps1
+	PUSH_V4_UPGRADE.bat
+	PUSH_V5.bat
+	PUSH_V5_FIXES.ps1
+	RUN_FIXES.bat
+	RUN_MOBILE_DEPLOY.bat
+	RUN_PUSH.bat
+	SCHED_DEPLOY.vbs
+	deploy_log.txt
+	index.html.bak_mobile_intel_2026-05-18
+	index.html.bak_pre95fix
+	index_BACKUP_20260519_1903.html
+	push_95_final.bat
+	push_intelligence_95.bat
+	push_v5_err.txt
+	push_v5_out.txt
+
+no changes added to commit (use "git add" and/or "git commit -a")
+COMMIT: 1
+[3] Pushing to GitHub...
+PUSH: 0
+DONE.

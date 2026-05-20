@@ -1,0 +1,1047 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Wave Bite — AI Creative Studio</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#030810;--bg2:#07111d;--bg3:#0d1929;
+  --teal:#00d4b4;--teal2:rgba(0,212,180,.08);--teal3:rgba(0,212,180,.15);
+  --gold:#c9a84c;--gold2:rgba(201,168,76,.12);
+  --cyan:#00b4d8;--orange:#ff6b35;
+  --white:#e8edf5;--dim:rgba(232,237,245,.5);--dimmer:rgba(232,237,245,.25);
+  --border:rgba(0,212,180,.12);--border2:rgba(0,212,180,.2);
+  --glass:rgba(0,212,180,.04);--glass2:rgba(13,25,41,.85);
+  --glow:0 0 24px rgba(0,212,180,.18);--glow-gold:0 0 20px rgba(201,168,76,.2);
+  --r:14px;--r2:10px;--nav:68px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--white);font-family:'Inter',system-ui,sans-serif;font-size:14px}
+canvas#bg{position:fixed;inset:0;z-index:0;pointer-events:none}
+#app{position:relative;z-index:1;display:flex;height:100vh}
+
+/* ── NAV ── */
+#nav{width:var(--nav);min-width:var(--nav);height:100vh;background:rgba(7,17,29,.96);border-right:1px solid var(--border);display:flex;flex-direction:column;align-items:center;padding:18px 0;gap:4px;backdrop-filter:blur(20px)}
+.brand-logo{width:40px;height:40px;border-radius:10px;background:linear-gradient(135deg,var(--teal),var(--cyan));display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-size:13px;font-weight:800;color:#030810;letter-spacing:-0.5px;margin-bottom:16px;box-shadow:var(--glow)}
+.nav-sep{width:36px;height:1px;background:var(--border);margin:8px 0}
+.nav-btn{width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:18px;transition:all .2s;position:relative;border:1px solid transparent;flex-shrink:0}
+.nav-btn:hover{background:var(--teal2);border-color:var(--border2)}
+.nav-btn.active{background:var(--teal2);border-color:var(--teal);box-shadow:var(--glow)}
+.nav-btn::after{content:attr(data-tip);position:absolute;left:54px;background:var(--bg3);border:1px solid var(--border2);color:var(--white);padding:5px 10px;border-radius:6px;white-space:nowrap;font-size:11px;opacity:0;pointer-events:none;transition:opacity .15s;z-index:99}
+.nav-btn:hover::after{opacity:1}
+.nav-spacer{flex:1}
+
+/* ── MAIN ── */
+#main{flex:1;display:flex;flex-direction:column;overflow:hidden}
+#topbar{height:54px;background:rgba(7,17,29,.9);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 22px;gap:14px;backdrop-filter:blur(20px);flex-shrink:0}
+.tb-title{font-family:'Syne',sans-serif;font-size:15px;font-weight:800;letter-spacing:.5px;background:linear-gradient(90deg,var(--teal),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.tb-sub{font-size:11px;color:var(--dim)}
+.tb-spacer{flex:1}
+.tb-pill{padding:4px 10px;border-radius:20px;font-size:10px;font-weight:600;letter-spacing:.5px}
+.pill-live{background:rgba(0,212,180,.15);color:var(--teal);border:1px solid var(--border2)}
+.pill-ai{background:rgba(0,180,216,.1);color:var(--cyan);border:1px solid rgba(0,180,216,.2)}
+.tb-dot{width:6px;height:6px;border-radius:50%;background:var(--teal);box-shadow:0 0 8px var(--teal);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+
+#content{flex:1;overflow-y:auto;padding:22px;scroll-behavior:smooth}
+#content::-webkit-scrollbar{width:4px}
+#content::-webkit-scrollbar-thumb{background:var(--border2);border-radius:2px}
+
+/* sections */
+.section{display:none}.section.active{display:block}
+
+/* ── CARDS ── */
+.card{background:var(--glass);border:1px solid var(--border);border-radius:var(--r);padding:20px;backdrop-filter:blur(12px)}
+.card:hover{border-color:var(--border2);box-shadow:var(--glow)}
+.card-hd{display:flex;align-items:center;gap:10px;margin-bottom:16px}
+.card-title{font-size:13px;font-weight:600;color:var(--white)}
+.card-sub{font-size:11px;color:var(--dim);margin-top:2px}
+.icon-badge{width:34px;height:34px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.ib-teal{background:rgba(0,212,180,.12)}
+.ib-gold{background:rgba(201,168,76,.12)}
+.ib-cyan{background:rgba(0,180,216,.12)}
+.ib-orange{background:rgba(255,107,53,.12)}
+
+/* grids */
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px}
+.g4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.gfull{grid-column:1/-1}
+
+/* kpi */
+.kpi-val{font-family:'Syne',sans-serif;font-size:28px;font-weight:800;background:linear-gradient(90deg,var(--teal),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;line-height:1}
+.kpi-val.gold{background:linear-gradient(90deg,var(--gold),#e8c97a);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.kpi-label{font-size:11px;color:var(--dim);margin-top:4px}
+.kpi-trend{font-size:11px;color:var(--teal);margin-top:6px}
+
+/* status */
+.status-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.s-online{background:var(--teal);box-shadow:0 0 8px var(--teal);animation:pulse 2s infinite}
+.s-busy{background:var(--gold);animation:pulse 1.2s infinite}
+.s-idle{background:var(--dimmer)}
+.status-badge{display:inline-flex;align-items:center;gap:5px;padding:3px 8px;border-radius:12px;font-size:10px;font-weight:600;letter-spacing:.4px}
+.sb-online{background:rgba(0,212,180,.1);color:var(--teal);border:1px solid rgba(0,212,180,.2)}
+.sb-busy{background:rgba(201,168,76,.1);color:var(--gold);border:1px solid rgba(201,168,76,.2)}
+.sb-idle{background:rgba(232,237,245,.06);color:var(--dim);border:1px solid rgba(232,237,245,.1)}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;gap:7px;padding:9px 16px;border-radius:9px;border:none;cursor:pointer;font-size:12px;font-weight:600;transition:all .2s;font-family:inherit}
+.btn-primary{background:linear-gradient(135deg,var(--teal),var(--cyan));color:#030810}
+.btn-primary:hover{box-shadow:var(--glow);transform:translateY(-1px)}
+.btn-ghost{background:var(--teal2);color:var(--teal);border:1px solid var(--border2)}
+.btn-ghost:hover{background:var(--teal3);box-shadow:var(--glow)}
+.btn-gold{background:var(--gold2);color:var(--gold);border:1px solid rgba(201,168,76,.25)}
+.btn-copy{background:rgba(232,237,245,.06);color:var(--dim);border:1px solid var(--border);font-size:11px;padding:5px 10px}
+.btn-copy:hover{color:var(--teal);border-color:var(--border2)}
+.btn-sm{padding:6px 12px;font-size:11px}
+
+/* section title */
+.sec-title{font-family:'Syne',sans-serif;font-size:20px;font-weight:800;letter-spacing:.3px;margin-bottom:4px}
+.sec-sub{font-size:12px;color:var(--dim);margin-bottom:20px}
+
+/* agent cards */
+.agent-card{background:var(--glass);border:1px solid var(--border);border-radius:var(--r);padding:18px;cursor:pointer;transition:all .25s}
+.agent-card:hover{border-color:var(--border2);box-shadow:var(--glow);transform:translateY(-2px)}
+.agent-card.expanded{border-color:var(--teal)}
+.agent-avatar{width:46px;height:46px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
+.agent-name{font-size:13px;font-weight:700;color:var(--white)}
+.agent-role{font-size:10px;color:var(--teal);font-weight:600;letter-spacing:.5px;text-transform:uppercase;margin-top:1px}
+.agent-task{font-size:11px;color:var(--dim);margin-top:8px;line-height:1.4}
+.agent-prompts{display:none;margin-top:14px;border-top:1px solid var(--border);padding-top:14px}
+.agent-card.expanded .agent-prompts{display:block}
+.prompt-item{background:rgba(0,0,0,.3);border:1px solid var(--border);border-radius:8px;padding:10px 12px;margin-bottom:8px;display:flex;align-items:flex-start;gap:8px}
+.prompt-text{font-size:11px;color:var(--dim);line-height:1.5;flex:1}
+.prompt-num{font-size:10px;color:var(--teal);font-weight:700;margin-top:1px;flex-shrink:0}
+
+/* campaign builder */
+.form-group{margin-bottom:14px}
+.form-label{font-size:11px;color:var(--dim);font-weight:600;letter-spacing:.4px;text-transform:uppercase;margin-bottom:6px;display:block}
+.form-select,.form-input,.form-textarea{width:100%;background:rgba(0,0,0,.4);border:1px solid var(--border);border-radius:9px;padding:10px 14px;color:var(--white);font-size:12px;font-family:inherit;transition:border-color .2s;outline:none}
+.form-select:focus,.form-input:focus,.form-textarea:focus{border-color:var(--teal)}
+.form-select option{background:#07111d}
+.form-textarea{min-height:70px;resize:vertical;line-height:1.5}
+
+/* output */
+.output-box{background:rgba(0,0,0,.5);border:1px solid var(--border);border-radius:var(--r);padding:20px;font-size:12px;line-height:1.7;color:var(--dim);min-height:200px;white-space:pre-wrap;font-family:inherit}
+.output-box strong{color:var(--teal)}
+.output-box em{color:var(--gold)}
+
+/* code blocks */
+.code-block{background:rgba(0,0,0,.6);border:1px solid var(--border);border-radius:9px;padding:14px;font-family:'Courier New',monospace;font-size:11px;color:#a8d8c0;overflow-x:auto;position:relative;margin:8px 0}
+.code-block .copy-btn{position:absolute;top:8px;right:8px}
+
+/* progress bar */
+.prog-bar{height:4px;background:rgba(255,255,255,.06);border-radius:2px;overflow:hidden;margin-top:8px}
+.prog-fill{height:100%;border-radius:2px;background:linear-gradient(90deg,var(--teal),var(--cyan));transition:width .5s}
+
+/* tag */
+.tag{display:inline-flex;padding:3px 8px;border-radius:12px;font-size:10px;font-weight:600}
+.tag-teal{background:rgba(0,212,180,.1);color:var(--teal)}
+.tag-gold{background:rgba(201,168,76,.1);color:var(--gold)}
+.tag-cyan{background:rgba(0,180,216,.1);color:var(--cyan)}
+.tag-orange{background:rgba(255,107,53,.1);color:var(--orange)}
+
+/* tool card */
+.tool-card{background:var(--glass);border:1px solid var(--border);border-radius:12px;padding:16px;text-align:center;transition:all .2s}
+.tool-card:hover{border-color:var(--border2);box-shadow:var(--glow);transform:translateY(-2px)}
+.tool-icon{font-size:28px;margin-bottom:8px}
+.tool-name{font-size:12px;font-weight:700}
+.tool-cat{font-size:10px;color:var(--dim);margin-top:2px}
+.tool-status{font-size:10px;font-weight:600;margin-top:8px}
+.ts-live{color:var(--teal)}
+.ts-avail{color:var(--gold)}
+.ts-plan{color:var(--dimmer)}
+
+/* social tabs */
+.stab-bar{display:flex;gap:4px;margin-bottom:16px;flex-wrap:wrap}
+.stab{padding:6px 14px;border-radius:8px;font-size:11px;font-weight:600;cursor:pointer;border:1px solid var(--border);color:var(--dim);transition:all .2s}
+.stab.active{background:var(--teal2);color:var(--teal);border-color:var(--teal)}
+.splat{display:none}.splat.active{display:block}
+
+/* ── BRAND SCORE GAUGE ── */
+.gauge-ring{width:110px;height:110px;position:relative;margin:0 auto 12px}
+.gauge-ring svg{transform:rotate(-90deg)}
+.gauge-ring .val{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-size:24px;font-weight:800;color:var(--teal)}
+
+/* mb shortcuts */
+.mb-2{margin-bottom:8px}.mb-3{margin-bottom:12px}.mb-4{margin-bottom:16px}
+.mt-2{margin-top:8px}.mt-3{margin-top:12px}
+.flex{display:flex}.ai-c{align-items:center}.jc-sb{justify-content:space-between}
+.gap-2{gap:8px}.gap-3{gap:12px}
+.text-teal{color:var(--teal)}.text-gold{color:var(--gold)}.text-dim{color:var(--dim)}
+.fw-7{font-weight:700}.fs-11{font-size:11px}.fs-12{font-size:12px}
+.w100{width:100%}
+.divider{height:1px;background:var(--border);margin:16px 0}
+
+/* activity feed */
+.feed-item{display:flex;gap:10px;padding:10px 0;border-bottom:1px solid var(--border)}
+.feed-icon{width:28px;height:28px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0}
+.feed-text{font-size:11px;color:var(--dim);line-height:1.4}
+.feed-time{font-size:10px;color:var(--dimmer);margin-top:2px}
+
+/* glows */
+.glow-teal{text-shadow:0 0 20px rgba(0,212,180,.5)}
+</style>
+</head>
+<body>
+<canvas id="bg"></canvas>
+<div id="app">
+
+<!-- ── SIDEBAR ── -->
+<nav id="nav">
+  <div class="brand-logo">WB</div>
+  <button class="nav-btn active" data-sec="mission" data-tip="Mission Control">🎯</button>
+  <button class="nav-btn" data-sec="ai" data-tip="AI Command">🤖</button>
+  <button class="nav-btn" data-sec="campaign" data-tip="Campaign Builder">🚀</button>
+  <button class="nav-btn" data-sec="cgi" data-tip="CGI Studio">🎬</button>
+  <button class="nav-btn" data-sec="story" data-tip="Story Engine">📖</button>
+  <button class="nav-btn" data-sec="social" data-tip="Social Hub">📱</button>
+  <button class="nav-btn" data-sec="brand" data-tip="Brand Control">🛡️</button>
+  <button class="nav-btn" data-sec="tech" data-tip="Tech Stack">⚙️</button>
+  <div class="nav-spacer"></div>
+  <div style="font-size:10px;color:var(--dimmer);text-align:center;padding:0 4px;line-height:1.4">AI<br>v2.0</div>
+</nav>
+
+<!-- ── MAIN ── -->
+<main id="main">
+<header id="topbar">
+  <div class="tb-dot"></div>
+  <div>
+    <div class="tb-title">WAVE BITE — AI CREATIVE STUDIO</div>
+    <div class="tb-sub">Enterprise Media & Marketing Operating System</div>
+  </div>
+  <div class="tb-spacer"></div>
+  <span class="tb-pill pill-live">● LIVE</span>
+  <span class="tb-pill pill-ai">10 AI AGENTS ONLINE</span>
+</header>
+
+<div id="content">
+
+<!-- ══════════════════════════════════════════════════ -->
+<!-- MISSION CONTROL -->
+<!-- ══════════════════════════════════════════════════ -->
+<section class="section active" id="sec-mission">
+  <div class="sec-title glow-teal">Mission Control</div>
+  <div class="sec-sub">Zentrales Steuerungsdeck — Wave Bite AI Creative Studio</div>
+
+  <!-- KPIs -->
+  <div class="g4 mb-4">
+    <div class="card"><div class="kpi-val">9/10</div><div class="kpi-label">Brand Score</div><div class="kpi-trend">↑ +0.8 diese Woche</div></div>
+    <div class="card"><div class="kpi-val">10</div><div class="kpi-label">AI Agents Online</div><div class="kpi-trend">● Alle aktiv</div></div>
+    <div class="card"><div class="kpi-val gold">3</div><div class="kpi-label">Aktive Kampagnen</div><div class="kpi-trend">2 in Produktion</div></div>
+    <div class="card"><div class="kpi-val">2</div><div class="kpi-label">Videos fertig</div><div class="kpi-trend">Premium Spots bereit</div></div>
+  </div>
+
+  <div class="g2 mb-4">
+    <!-- AI Team Status -->
+    <div class="card">
+      <div class="card-hd"><div class="icon-badge ib-teal">🤖</div><div><div class="card-title">AI Team Status</div><div class="card-sub">10 Agenten — Echtzeit-Status</div></div></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+        <div class="flex ai-c gap-2"><div class="status-dot s-online"></div><span class="fs-11 text-dim">CMO AI</span></div>
+        <div class="flex ai-c gap-2"><div class="status-dot s-online"></div><span class="fs-11 text-dim">Creative Director AI</span></div>
+        <div class="flex ai-c gap-2"><div class="status-dot s-busy"></div><span class="fs-11 text-dim">Story Director AI</span></div>
+        <div class="flex ai-c gap-2"><div class="status-dot s-online"></div><span class="fs-11 text-dim">Viral Growth AI</span></div>
+        <div class="flex ai-c gap-2"><div class="status-dot s-online"></div><span class="fs-11 text-dim">Copywriter AI</span></div>
+        <div class="flex ai-c gap-2"><div class="status-dot s-busy"></div><span class="fs-11 text-dim">CGI Director AI</span></div>
+        <div class="flex ai-c gap-2"><div class="status-dot s-online"></div><span class="fs-11 text-dim">Audio Director AI</span></div>
+        <div class="flex ai-c gap-2"><div class="status-dot s-online"></div><span class="fs-11 text-dim">Brand Guardian AI</span></div>
+        <div class="flex ai-c gap-2"><div class="status-dot s-online"></div><span class="fs-11 text-dim">Automation AI</span></div>
+        <div class="flex ai-c gap-2"><div class="status-dot s-online"></div><span class="fs-11 text-dim">Asset Intelligence AI</span></div>
+      </div>
+    </div>
+
+    <!-- Activity Feed -->
+    <div class="card">
+      <div class="card-hd"><div class="icon-badge ib-cyan">⚡</div><div><div class="card-title">Live Activity</div><div class="card-sub">Systemaktivität in Echtzeit</div></div></div>
+      <div class="feed-item"><div class="feed-icon ib-teal">🎬</div><div><div class="feed-text text-teal fw-7">WaveBite_CGI_Hollywood_V1.mp4 fertig</div><div class="feed-time">Heute · 20s · 1080×1920 · H.264</div></div></div>
+      <div class="feed-item"><div class="feed-icon ib-gold">🏆</div><div><div class="feed-text">Premium Spot V1 gerendert · 540 BMP-Frames encoded</div><div class="feed-time">Heute · 18s · Post-ready</div></div></div>
+      <div class="feed-item"><div class="feed-icon ib-teal">🤖</div><div><div class="feed-text">AI Marketing OS gebaut · 10 AI-Rollen konfiguriert</div><div class="feed-time">Heute · Vollständig aktiv</div></div></div>
+      <div class="feed-item"><div class="feed-icon ib-cyan">📊</div><div><div class="feed-text">Campaign Builder bereit · Story Engine aktiv</div><div class="feed-time">Jetzt</div></div></div>
+    </div>
+  </div>
+
+  <!-- Quick Actions -->
+  <div class="card mb-4">
+    <div class="card-hd"><div class="icon-badge ib-gold">⚡</div><div><div class="card-title">Quick Launch</div><div class="card-sub">Sofort-Zugriff auf Kernfunktionen</div></div></div>
+    <div class="flex gap-2" style="flex-wrap:wrap">
+      <button class="btn btn-primary" onclick="showSection('campaign')">🚀 Kampagne starten</button>
+      <button class="btn btn-ghost" onclick="showSection('cgi')">🎬 CGI Video rendern</button>
+      <button class="btn btn-ghost" onclick="showSection('story')">📖 Hook generieren</button>
+      <button class="btn btn-gold" onclick="showSection('social')">📱 Social Content</button>
+      <button class="btn btn-ghost" onclick="showSection('ai')">🤖 AI Team öffnen</button>
+    </div>
+  </div>
+
+  <!-- Project Status -->
+  <div class="g3">
+    <div class="card"><div class="card-title mb-2">BunBo App</div><div class="prog-bar"><div class="prog-fill" style="width:65%"></div></div><div class="fs-11 text-dim mt-2">65% — MVP in Review</div></div>
+    <div class="card"><div class="card-title mb-2">Wave Bite Website</div><div class="prog-bar"><div class="prog-fill" style="width:70%"></div></div><div class="fs-11 text-dim mt-2">70% — WordPress Live</div></div>
+    <div class="card"><div class="card-title mb-2">Marketing System</div><div class="prog-bar"><div class="prog-fill" style="width:85%"></div></div><div class="fs-11 text-dim mt-2">85% — AI Studio aktiv</div></div>
+    <div class="card"><div class="card-title mb-2">Wasserlage Dashboard</div><div class="prog-bar"><div class="prog-fill" style="width:80%"></div></div><div class="fs-11 text-dim mt-2">80% — Live-Daten aktiv</div></div>
+    <div class="card"><div class="card-title mb-2">Funding / Seed</div><div class="prog-bar"><div class="prog-fill" style="width:35%;background:linear-gradient(90deg,var(--gold),#e8c97a)"></div></div><div class="fs-11 text-dim mt-2">35% — Q3/Q4 2026 Ziel</div></div>
+    <div class="card"><div class="card-title mb-2">CGI Video Production</div><div class="prog-bar"><div class="prog-fill" style="width:90%"></div></div><div class="fs-11 text-dim mt-2">2 Videos · Post-ready</div></div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════ -->
+<!-- AI COMMAND -->
+<!-- ══════════════════════════════════════════════════ -->
+<section class="section" id="sec-ai">
+  <div class="sec-title">AI Command Center</div>
+  <div class="sec-sub">10 spezialisierte AI-Agenten — Wave Bite Creative Team</div>
+  <div class="g2" id="agent-grid"></div>
+</section>
+
+<!-- ══════════════════════════════════════════════════ -->
+<!-- CAMPAIGN BUILDER -->
+<!-- ══════════════════════════════════════════════════ -->
+<section class="section" id="sec-campaign">
+  <div class="sec-title">Campaign Builder</div>
+  <div class="sec-sub">AI-gestützter Kampagnen-Generator — Wave Bite Edition</div>
+  <div class="g2">
+    <div class="card">
+      <div class="card-hd"><div class="icon-badge ib-teal">🚀</div><div><div class="card-title">Kampagnen-Parameter</div><div class="card-sub">Konfiguriere deine Kampagne</div></div></div>
+      <div class="form-group"><label class="form-label">Plattform</label>
+        <select class="form-select" id="cb-platform">
+          <option value="reels">Instagram Reels</option><option value="tiktok">TikTok</option>
+          <option value="shorts">YouTube Shorts</option><option value="facebook">Facebook</option>
+          <option value="linkedin">LinkedIn</option><option value="multi">Multi-Platform</option>
+        </select></div>
+      <div class="form-group"><label class="form-label">Kampagnen-Stimmung</label>
+        <select class="form-select" id="cb-mood">
+          <option value="epic">Episch / Inspirierend</option><option value="fun">Energetisch / Fun</option>
+          <option value="calm">Entspannt / Premium</option><option value="fomo">FOMO / Dringlichkeit</option>
+          <option value="community">Community / Gemeinschaft</option><option value="investor">Investor / Professional</option>
+        </select></div>
+      <div class="form-group"><label class="form-label">Thema</label>
+        <input class="form-input" id="cb-theme" placeholder="z.B. Wasserlage Live, Sommer Opening, App Launch..." value="Wasserlage Live — Das Erlebnis beginnt"></div>
+      <div class="form-group"><label class="form-label">Zielgruppe</label>
+        <input class="form-input" id="cb-target" placeholder="z.B. Outdoor-Enthusiasten 25-40, Familien..." value="Outdoor-Enthusiasten, 25-40, urban, erlebnisorientiert"></div>
+      <div class="form-group"><label class="form-label">CGI-Level</label>
+        <select class="form-select" id="cb-cgi">
+          <option value="high">Hoch — Vollständige CGI-Sequenzen</option>
+          <option value="mid">Mittel — CGI-Elemente + Live-Footage</option>
+          <option value="low">Minimal — Nur FX-Overlays</option>
+        </select></div>
+      <div class="form-group"><label class="form-label">Hook-Typ</label>
+        <select class="form-select" id="cb-hook">
+          <option value="fomo">FOMO / Verpasse nichts</option><option value="curiosity">Curiosity Gap</option>
+          <option value="aspiration">Aspirational Promise</option><option value="shock">Shocking Statement</option>
+          <option value="relatable">Relatable Moment</option>
+        </select></div>
+      <div class="form-group"><label class="form-label">Besondere Hinweise</label>
+        <textarea class="form-textarea" id="cb-notes" placeholder="Weitere Infos, Produkt-USPs, Partner-Erwähnungen..."></textarea></div>
+      <button class="btn btn-primary w100" onclick="generateCampaign()">⚡ Kampagnen-Brief generieren</button>
+    </div>
+    <div class="card">
+      <div class="card-hd"><div class="icon-badge ib-gold">📄</div><div><div class="card-title">Generierter Kampagnen-Brief</div><div class="card-sub">AI-Output — Wave Bite Edition</div></div></div>
+      <div class="output-box" id="cb-output">Fülle die Parameter aus und klicke „Generieren" um deinen vollständigen Kampagnen-Brief zu erhalten.
+
+Der Brief enthält:
+• Hook-Varianten
+• Script-Outline
+• Visual Direction
+• Audio-Brief
+• Captions & CTAs
+• Hashtag-Sets
+• Produktions-Hinweise</div>
+      <div class="flex gap-2 mt-3">
+        <button class="btn btn-copy btn-sm" onclick="copyOutput()">📋 Kopieren</button>
+        <button class="btn btn-ghost btn-sm" onclick="generateCampaign()">↻ Neu generieren</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════ -->
+<!-- CGI STUDIO -->
+<!-- ══════════════════════════════════════════════════ -->
+<section class="section" id="sec-cgi">
+  <div class="sec-title">CGI Studio</div>
+  <div class="sec-sub">High-End Cinematic Video Production — Wave Bite Python Renderer + Tools</div>
+
+  <!-- Render Presets -->
+  <div class="g2 mb-4">
+    <div class="card">
+      <div class="card-hd"><div class="icon-badge ib-teal">🎬</div><div><div class="card-title">Fertige Videos</div><div class="card-sub">Post-Ready für Instagram / Facebook</div></div></div>
+      <div class="feed-item"><div class="feed-icon ib-teal">✅</div><div><div class="feed-text fw-7 text-teal">WaveBite_CGI_Hollywood_V1.mp4</div><div class="feed-time">20s · 1080×1920 · H.264 · Caustics + God Rays + Lens Flare</div></div></div>
+      <div class="feed-item"><div class="feed-icon ib-gold">✅</div><div><div class="feed-text fw-7">WaveBite_PremiumSpot_V1_IG.mp4</div><div class="feed-time">18s · 1080×1920 · H.264 · 4-Scene Cinematic Spot</div></div></div>
+    </div>
+    <div class="card">
+      <div class="card-hd"><div class="icon-badge ib-gold">⚙️</div><div><div class="card-title">Render-Pipeline</div><div class="card-sub">Python CGI → BMP Frames → FFmpeg MP4</div></div></div>
+      <div class="fs-11 text-dim mb-3">600 Frames @ 30fps = 20s · 1080×1920 · ~25MB MP4</div>
+      <div class="code-block">
+<button class="btn btn-copy copy-btn btn-sm" onclick="copyCode(this)">📋</button>
+# RENDER (Batch à 25 Frames):
+python3 wb_cgi.py 0 25    # Batch 1
+python3 wb_cgi.py 25 25   # Batch 2
+# ... bis Frame 599
+
+# ENCODE:
+ffmpeg -y -framerate 30 \
+  -i wb_cgi_bmp/f%05d.bmp \
+  -i wb_audio.wav \
+  -c:v libx264 -preset ultrafast -crf 17 \
+  -pix_fmt yuv420p -c:a aac -b:a 192k \
+  -shortest -movflags +faststart output.mp4</div>
+    </div>
+  </div>
+
+  <!-- CGI Presets -->
+  <div class="card mb-4">
+    <div class="card-hd"><div class="icon-badge ib-cyan">🌊</div><div><div class="card-title">CGI Visual FX — Runway / Kling AI Prompts</div><div class="card-sub">Kopierfertige Prompts für KI-Videotools</div></div></div>
+    <div class="g2">
+      <div class="prompt-item"><span class="prompt-num">🌊</span><div><div class="fw-7 fs-11 text-teal mb-2">Underwater Abyss</div><div class="prompt-text">Ultra-cinematic underwater scene, deep ocean, caustic light patterns dancing on the ocean floor, golden particles rising slowly, volumetric god rays piercing from above, teal and deep navy color palette, film grain, anamorphic lens, 4K quality, Wave Bite brand aesthetic, hyperrealistic CGI</div><button class="btn btn-copy mt-2 btn-sm" onclick="copyPrompt(this)">📋 Kopieren</button></div></div>
+      <div class="prompt-item"><span class="prompt-num">💫</span><div><div class="fw-7 fs-11 text-gold mb-2">Surface Emergence</div><div class="prompt-text">Camera bursts through water surface in extreme slow motion, water droplets suspended in air catching golden sunlight, teal ocean water below, bright sky above, cinematic color grade teal-orange, lens flare on horizon, luxury marina in background, 4K ultra HD, Wave Bite brand film</div><button class="btn btn-copy mt-2 btn-sm" onclick="copyPrompt(this)">📋 Kopieren</button></div></div>
+      <div class="prompt-item"><span class="prompt-num">🌙</span><div><div class="fw-7 fs-11 text-cyan mb-2">Night Water Luxury</div><div class="prompt-text">Luxury yacht marina at night, reflections of city lights in dark water, ultra-smooth water surface, soft fog, ambient teal and gold lights, cinematic long exposure effect, premium lifestyle, peaceful and exclusive atmosphere, photorealistic CGI render</div><button class="btn btn-copy mt-2 btn-sm" onclick="copyPrompt(this)">📋 Kopieren</button></div></div>
+      <div class="prompt-item"><span class="prompt-num">🚁</span><div><div class="fw-7 fs-11 text-orange mb-2">Aerial Cinematic</div><div class="prompt-text">Epic aerial drone shot over crystal clear lake, slow rotating camera movement revealing stunning landscape, golden hour light, small boats on water, forests and mountains in background, teal water, cinematic grade, Wave Bite app logo appears in corner, premium brand film aesthetic</div><button class="btn btn-copy mt-2 btn-sm" onclick="copyPrompt(this)">📋 Kopieren</button></div></div>
+    </div>
+  </div>
+
+  <!-- Audio -->
+  <div class="card">
+    <div class="card-hd"><div class="icon-badge ib-gold">🎵</div><div><div class="card-title">Audio Production — Suno + ElevenLabs Prompts</div><div class="card-sub">Musik & Voiceover für Wave Bite Content</div></div></div>
+    <div class="g2">
+      <div>
+        <div class="fw-7 fs-11 text-gold mb-2">Suno AI — Musik Prompts</div>
+        <div class="prompt-item mb-2"><div class="prompt-text">Epic cinematic trailer music, slow build, orchestral + electronic fusion, teal wave sounds, emotional peak at 15s, perfect for 30s brand spot, Hans Zimmer inspired, premium luxury feel</div><button class="btn btn-copy mt-2 btn-sm" onclick="copyPrompt(this)">📋</button></div>
+        <div class="prompt-item"><div class="prompt-text">Relaxed summer water ambient, gentle waves, acoustic guitar, positive energy, perfect for lifestyle content, warm sunny feeling, 120 BPM, no lyrics</div><button class="btn btn-copy mt-2 btn-sm" onclick="copyPrompt(this)">📋</button></div>
+      </div>
+      <div>
+        <div class="fw-7 fs-11 text-cyan mb-2">ElevenLabs — Voiceover Brief</div>
+        <div class="prompt-item mb-2"><div class="prompt-text">Voice: Maskulin, tief, vertrauenswürdig. Tempo: 0.85× normal. Pausen bei Kommas. Ton: Premium, inspirierend. Keine Übertreibung. Kino-Atmosphäre. Script: "Wo das Wasser dein Tisch ist. Wave Bite."</div><button class="btn btn-copy mt-2 btn-sm" onclick="copyPrompt(this)">📋</button></div>
+        <div class="prompt-item"><div class="prompt-text">Voice: Feminin, warm, einladend. Tempo: Normal. Gefühl: Sommer, Freiheit, Erlebnis. Script: "Dein nächstes Erlebnis wartet. Auf dem Wasser. Mit Wave Bite."</div><button class="btn btn-copy mt-2 btn-sm" onclick="copyPrompt(this)">📋</button></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════ -->
+<!-- STORY ENGINE -->
+<!-- ══════════════════════════════════════════════════ -->
+<section class="section" id="sec-story">
+  <div class="sec-title">Story Engine</div>
+  <div class="sec-sub">Hooks, Scripts, Storyboards — Wave Bite Narrative Intelligence</div>
+
+  <div class="g2 mb-4">
+    <div class="card">
+      <div class="card-hd"><div class="icon-badge ib-teal">🎣</div><div><div class="card-title">Hook-Bibliothek</div><div class="card-sub">5 bewährte Hook-Typen für Wave Bite</div></div></div>
+      <div class="prompt-item mb-2"><span class="prompt-num tag tag-teal">FOMO</span><div class="prompt-text mt-2">„Diese Saison schaust du nicht mehr zu. Wave Bite macht's möglich."<br><button class="btn btn-copy mt-2 btn-sm" onclick="copyPrompt(this)">📋</button></div></div>
+      <div class="prompt-item mb-2"><span class="prompt-num tag tag-cyan">CURIOSITY</span><div class="prompt-text mt-2">„Was wäre, wenn dein Sommerurlaub direkt vor deiner Haustür wäre?"<br><button class="btn btn-copy mt-2 btn-sm" onclick="copyPrompt(this)">📋</button></div></div>
+      <div class="prompt-item mb-2"><span class="prompt-num tag tag-gold">ASPIRATION</span><div class="prompt-text mt-2">„Wo das Wasser dein Tisch ist. Das Erlebnis, das du verdienst."<br><button class="btn btn-copy mt-2 btn-sm" onclick="copyPrompt(this)">📋</button></div></div>
+      <div class="prompt-item mb-2"><span class="prompt-num tag tag-orange">SHOCK</span><div class="prompt-text mt-2">„Du hast die besten Wasserlagen in deiner Nähe noch nie gesehen."<br><button class="btn btn-copy mt-2 btn-sm" onclick="copyPrompt(this)">📋</button></div></div>
+      <div class="prompt-item"><span class="prompt-num tag tag-teal">RELATABLE</span><div class="prompt-text mt-2">„POV: Endlich weißt du, wo die echten Sommer-Spots sind. 🌊"<br><button class="btn btn-copy mt-2 btn-sm" onclick="copyPrompt(this)">📋</button></div></div>
+    </div>
+    <div class="card">
+      <div class="card-hd"><div class="icon-badge ib-gold">🎭</div><div><div class="card-title">30-Sekunden Script Template</div><div class="card-sub">Bewährte Dramaturgie für Reels/TikTok</div></div></div>
+      <div class="code-block">
+<button class="btn btn-copy copy-btn btn-sm" onclick="copyCode(this)">📋</button>
+0-3s  | HOOK
+       Visual: Dramatischer Eröffnungsshot
+       Audio: Musik einsetzt + Umgebungsgeräusche
+       Text: "Diese Saison kein FOMO mehr."
+
+4-12s | PROBLEM / TENSION
+       Visual: Kontrast — andere erleben, du nicht
+       Audio: Musik baut auf
+       Text: "Du weißt nie wo die besten Spots sind."
+
+13-22s | LÖSUNG / REVEAL
+       Visual: Wave Bite App / Wasserlage Live
+       Audio: Musik-Peak, epischer Moment
+       Text: "Wave Bite zeigt dir alles — in Echtzeit."
+
+23-28s | ERLEBNIS-MONTAGE
+       Visual: 3-4 Premium Shots (Wasser, Lifestyle)
+       Audio: Musik-Crescendo
+       Text: (kein Text — Bilder sprechen)
+
+29-30s | CTA + LOGO
+       Visual: App-Icon + Handle
+       Audio: Musik ausklingen
+       Text: "Jetzt entdecken. @wavebite"</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-hd"><div class="icon-badge ib-cyan">🎞️</div><div><div class="card-title">Storyboard — „Wasserlage Live" Kampagne</div><div class="card-sub">8 Shots · Premium Cinematic Storytelling</div></div></div>
+    <div class="g2">
+      <div class="prompt-item"><span class="prompt-num">Shot 1</span><div class="prompt-text"><strong>Underwater Abyss (0-3s)</strong><br>Kamera: Unterwasser-POV · Caustic Licht · Gold-Partikel steigen auf<br>Audio: Stille → sanfter Ambient-Drone baut ein</div></div>
+      <div class="prompt-item"><span class="prompt-num">Shot 2</span><div class="prompt-text"><strong>Surface Break (3-6s)</strong><br>Kamera: Extreme Slow-Mo Durchbruch der Wasseroberfläche<br>Audio: Wassergeräusch-Peak → Musik setzt ein</div></div>
+      <div class="prompt-item"><span class="prompt-num">Shot 3</span><div class="prompt-text"><strong>Aerial Reveal (6-10s)</strong><br>Kamera: Drone-Shot — Wasserfläche wird sichtbar<br>Audio: Musik-Build · Text: "Sieh deine Stadt von einer anderen Seite."</div></div>
+      <div class="prompt-item"><span class="prompt-num">Shot 4</span><div class="prompt-text"><strong>App Reveal (10-14s)</strong><br>Kamera: Close-Up Smartphone · Wave Bite App · Echtzeit-Karte<br>Audio: Musik · Text: "Wasserlage Live — überall, jederzeit."</div></div>
+      <div class="prompt-item"><span class="prompt-num">Shot 5</span><div class="prompt-text"><strong>Lifestyle Montage (14-20s)</strong><br>Kamera: 3 schnelle Cuts — Boot, Dock, Sonnenuntergang<br>Audio: Musik-Crescendo · Teal/Gold Farbwelt</div></div>
+      <div class="prompt-item"><span class="prompt-num">Shot 6</span><div class="prompt-text"><strong>Community Moment (20-24s)</strong><br>Kamera: Menschen am Wasser, Lachen, Erlebnis<br>Audio: Musik · Text: "Deine Community. Dein Wasser."</div></div>
+      <div class="prompt-item"><span class="prompt-num">Shot 7</span><div class="prompt-text"><strong>Brand Lockup (24-28s)</strong><br>Kamera: Logo auf dunklem Hintergrund, Teal-Glow<br>Audio: Musik fade · Text: "Wo das Wasser dein Tisch ist."</div></div>
+      <div class="prompt-item"><span class="prompt-num">Shot 8</span><div class="prompt-text"><strong>CTA (28-30s)</strong><br>Kamera: App-Icon + @wavebite + wavebite.de<br>Audio: Musik ausklingen · Text: "Jetzt entdecken — kostenlos."</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════ -->
+<!-- SOCIAL HUB -->
+<!-- ══════════════════════════════════════════════════ -->
+<section class="section" id="sec-social">
+  <div class="sec-title">Social Hub</div>
+  <div class="sec-sub">Platform-Ready Content — Captions, Hashtags, CTAs für alle Kanäle</div>
+  <div class="stab-bar">
+    <div class="stab active" onclick="showSocTab('instagram',this)">📸 Instagram</div>
+    <div class="stab" onclick="showSocTab('tiktok',this)">🎵 TikTok</div>
+    <div class="stab" onclick="showSocTab('youtube',this)">▶️ YouTube</div>
+    <div class="stab" onclick="showSocTab('facebook',this)">👥 Facebook</div>
+    <div class="stab" onclick="showSocTab('linkedin',this)">💼 LinkedIn</div>
+  </div>
+
+  <div class="splat active" id="soc-instagram">
+    <div class="g2 mb-4">
+      <div class="card">
+        <div class="card-title mb-3">📸 Instagram Reels — Captions</div>
+        <div class="prompt-item mb-2"><div class="prompt-text"><strong>Emotional:</strong> „Das Wasser ruft. Und dieses Mal antwortest du. 🌊<br>Entdecke die besten Wasserlagen in deiner Nähe — live, in Echtzeit.<br>Link in Bio → wavebite.de"</div><button class="btn btn-copy mt-2 btn-sm" onclick="copyPrompt(this)">📋</button></div>
+        <div class="prompt-item mb-2"><div class="prompt-text"><strong>FOMO:</strong> „Alle anderen wissen es bereits. Jetzt du auch. 👀<br>Wave Bite Wasserlage: Dein Geheimtipp für den Sommer.<br>#wavebite #wasserlage #erlebnis"</div><button class="btn btn-copy mt-2 btn-sm" onclick="copyPrompt(this)">📋</button></div>
+        <div class="prompt-item"><div class="prompt-text"><strong>Lifestyle:</strong> „Wo das Wasser dein Tisch ist 🥂<br>Bestellen. Erleben. Genießen.<br>Die Plattform für echte Wasser-Erlebnisse. Link in Bio."</div><button class="btn btn-copy mt-2 btn-sm" onclick="copyPrompt(this)">📋</button></div>
+      </div>
+      <div class="card">
+        <div class="card-title mb-3">Hashtag-Strategie</div>
+        <div class="mb-3">
+          <div class="fs-11 text-teal fw-7 mb-2">Brand Hashtags</div>
+          <div class="prompt-item"><div class="prompt-text">#WaveBite #Wasserlage #WaveBiteApp #WasserErlebnis #WaveBiteDE</div><button class="btn btn-copy mt-2 btn-sm" onclick="copyPrompt(this)">📋</button></div>
+        </div>
+        <div class="mb-3">
+          <div class="fs-11 text-gold fw-7 mb-2">Nischen Hashtags</div>
+          <div class="prompt-item"><div class="prompt-text">#Bootsurlaub #Wassersport #MarinaDreams #SeeUrlaub #BootFahren #WaterLife #LakeLife #RiverLife #FreizeitaufdemWasser</div><button class="btn btn-copy mt-2 btn-sm" onclick="copyPrompt(this)">📋</button></div>
+        </div>
+        <div>
+          <div class="fs-11 text-cyan fw-7 mb-2">Trend Hashtags</div>
+          <div class="prompt-item"><div class="prompt-text">#SommerGefühle #OutdoorLife #ErlebnisPlattform #LiveLife #WasserVibes #BootDeck #Hafenfeeling #MaritimLeben</div><button class="btn btn-copy mt-2 btn-sm" onclick="copyPrompt(this)">📋</button></div>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title mb-3">Posting-Strategie — 30 Tage</div>
+      <div class="g3 fs-11">
+        <div class="prompt-item"><strong class="text-teal">Mo/Do:</strong><br><span class="text-dim">CGI Brand Spots (Premium Video) — Hauptcontent</span></div>
+        <div class="prompt-item"><strong class="text-gold">Di/Fr:</strong><br><span class="text-dim">Behind-the-Scenes + App-Demos — Authentizität</span></div>
+        <div class="prompt-item"><strong class="text-cyan">Mi/Sa:</strong><br><span class="text-dim">Community-Content + User-Spots — Engagement</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="splat" id="soc-tiktok">
+    <div class="g2">
+      <div class="card">
+        <div class="card-title mb-3">🎵 TikTok — Caption & Hook Strategie</div>
+        <div class="prompt-item mb-2"><div class="prompt-text"><strong>Hook Text (erste Zeile):</strong><br>„POV: Du hast gerade den besten Sommer-Spot entdeckt 🌊" → direkt in Erlebnis</div><button class="btn btn-copy mt-2 btn-sm" onclick="copyPrompt(this)">📋</button></div>
+        <div class="prompt-item mb-2"><div class="prompt-text"><strong>Trending Format:</strong><br>„Dinge die du diesen Sommer noch nicht gemacht hast: [Liste] ← Das hier schon?" + Wave Bite Clip</div><button class="btn btn-copy mt-2 btn-sm" onclick="copyPrompt(this)">📋</button></div>
+        <div class="prompt-item"><div class="prompt-text"><strong>Sound-Hook:</strong><br>Trending Audio + Text-Overlay: „Mein Sommer sieht jetzt so aus... 🥂🌊" + B-Roll Wasser</div><button class="btn btn-copy mt-2 btn-sm" onclick="copyPrompt(this)">📋</button></div>
+      </div>
+      <div class="card">
+        <div class="card-title mb-3">TikTok Hashtags</div>
+        <div class="prompt-item"><div class="prompt-text">#wavebite #wasserlage #sommer2025 #wassersport #bootfahren #see #erlebnis #outdoor #sommergefühle #fyp #foryou #viral #lifestyle #wasserlife #freizeitapp</div><button class="btn btn-copy mt-2 btn-sm" onclick="copyPrompt(this)">📋</button></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="splat" id="soc-youtube">
+    <div class="card">
+      <div class="card-title mb-3">▶️ YouTube Shorts & Channel</div>
+      <div class="g2">
+        <div class="prompt-item"><div class="prompt-text"><strong>Shorts Titel:</strong><br>„Warum ich JETZT auf dem Wasser esse 🌊 #wavebite"<br>„Der geheimste See in [Region] — Wave Bite findet ihn"</div><button class="btn btn-copy mt-2 btn-sm" onclick="copyPrompt(this)">📋</button></div>
+        <div class="prompt-item"><div class="prompt-text"><strong>Beschreibung Template:</strong><br>„Entdecke die besten Wasserlagen in deiner Nähe mit Wave Bite 🌊<br>↓ App kostenlos laden: wavebite.de<br>Instagram: @wavebite | TikTok: @wavebite"</div><button class="btn btn-copy mt-2 btn-sm" onclick="copyPrompt(this)">📋</button></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="splat" id="soc-facebook">
+    <div class="card">
+      <div class="card-title mb-3">👥 Facebook — Reels & Posts</div>
+      <div class="g2">
+        <div class="prompt-item"><div class="prompt-text"><strong>Facebook Reel Caption:</strong><br>„🌊 Das Wasser wartet auf dich — und Wave Bite zeigt dir wo.<br><br>Ob ruhiger See, lebhafter Hafen oder verstecktes Flussidyll: Mit unserer Echtzeit-Wasserlage findest du deinen perfekten Spot.<br><br>👉 Jetzt kostenlos laden: wavebite.de<br>#wavebite #wasserlage #freizeit #sommer"</div><button class="btn btn-copy mt-2 btn-sm" onclick="copyPrompt(this)">📋</button></div>
+        <div class="prompt-item"><div class="prompt-text"><strong>Community Post:</strong><br>„Welche ist euer liebster Wasserlage-Spot in Deutschland? 👇<br><br>Kommentiert euren Geheimtipp — die besten landen in der Wave Bite App! 🗺️🌊<br><br>#wasserliebe #sommerspots #community"</div><button class="btn btn-copy mt-2 btn-sm" onclick="copyPrompt(this)">📋</button></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="splat" id="soc-linkedin">
+    <div class="card">
+      <div class="card-title mb-3">💼 LinkedIn — Founder & Investor Content</div>
+      <div class="g2">
+        <div class="prompt-item"><div class="prompt-text"><strong>Founder Story Post:</strong><br>„Vor einem Jahr stand ich an einem See und dachte: Warum ist es so schwer, einfach aufs Wasser zu kommen?<br><br>Heute bauen wir Wave Bite — die Plattform, die Wasserliebhaber mit den besten Erlebnissen verbindet.<br><br>Was wir in 12 Monaten gelernt haben: [3 Punkte]<br>#startup #entrepreneurship #wavebite #innovation"</div><button class="btn btn-copy mt-2 btn-sm" onclick="copyPrompt(this)">📋</button></div>
+        <div class="prompt-item"><div class="prompt-text"><strong>Market Insight Post:</strong><br>„Der deutschsprachige Wassertourismus-Markt: 8,2 Mrd. € p.a. — und trotzdem gibt es keine digitale Plattform die ihn wirklich erschließt.<br><br>Wave Bite will das ändern. 🌊<br><br>Wenn ihr mehr wissen möchtet: Link im Kommentar.<br>#marktanalyse #startup #investment #tourismus"</div><button class="btn btn-copy mt-2 btn-sm" onclick="copyPrompt(this)">📋</button></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════ -->
+<!-- BRAND CONTROL -->
+<!-- ══════════════════════════════════════════════════ -->
+<section class="section" id="sec-brand">
+  <div class="sec-title">Brand Control</div>
+  <div class="sec-sub">Brand Guardian AI — Premium Quality Assurance für Wave Bite</div>
+  <div class="g2 mb-4">
+    <div class="card">
+      <div class="card-hd"><div class="icon-badge ib-teal">🛡️</div><div><div class="card-title">Brand Score</div><div class="card-sub">Aktuelle Markenstärke</div></div></div>
+      <div class="gauge-ring">
+        <svg width="110" height="110" viewBox="0 0 110 110">
+          <circle cx="55" cy="55" r="46" fill="none" stroke="rgba(0,212,180,.1)" stroke-width="8"/>
+          <circle cx="55" cy="55" r="46" fill="none" stroke="url(#g1)" stroke-width="8" stroke-dasharray="260 289" stroke-linecap="round"/>
+          <defs><linearGradient id="g1" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#00d4b4"/><stop offset="100%" stop-color="#00b4d8"/></linearGradient></defs>
+        </svg>
+        <div class="val">9.0</div>
+      </div>
+      <div class="text-dim fs-11" style="text-align:center">von 10 — Premium Niveau ✓</div>
+    </div>
+    <div class="card">
+      <div class="card-title mb-3">Brand Do's & Don'ts</div>
+      <div class="mb-2">
+        <div class="fs-11 text-teal fw-7 mb-1">✅ IMMER</div>
+        <div class="fs-11 text-dim">Teal (#00D4B4) + Gold (#C9A84C) Farbwelt · Cinematic Stil · Emotional + Premium · Wasser als Hauptmotiv · Klare, starke Headline</div>
+      </div>
+      <div class="divider"></div>
+      <div>
+        <div class="fs-11 text-orange fw-7 mb-1">❌ NIE</div>
+        <div class="fs-11 text-dim">Generische Stock-Fotos · Clipart / Comic-Stil · Überladene Grafiken · Günstiger Template-Look · Mehr als 2 Schriften · Emojis als Hauptelement</div>
+      </div>
+    </div>
+  </div>
+  <div class="card mb-4">
+    <div class="card-title mb-3">Brand Checkliste — vor jedem Post</div>
+    <div class="g2 fs-11">
+      <div><div class="text-teal fw-7 mb-2">Visuell</div>
+        <div class="text-dim">☐ Farbpalette korrekt (Teal/Gold/Navy)?<br>☐ Mindestens 1080p Qualität?<br>☐ Kein Pixelrauschen / Kompressionsartefakte?<br>☐ Wassermoiv vorhanden?<br>☐ Premium-Feeling auf den ersten Blick?</div></div>
+      <div><div class="text-gold fw-7 mb-2">Text & Copy</div>
+        <div class="text-dim">☐ Headline klar und stark?<br>☐ Kein Tippfehler / Grammatikfehler?<br>☐ CTA vorhanden?<br>☐ Ton: Premium, nicht verspielt?<br>☐ Nicht mehr als 5 Hashtags im Text?</div></div>
+      <div><div class="text-cyan fw-7 mb-2">Video</div>
+        <div class="text-dim">☐ Richtige Auflösung je Plattform?<br>☐ Kein abrupter Schnitt am Anfang?<br>☐ Hook in ersten 2-3 Sekunden?<br>☐ Musik lizenzfrei / bereinigt?<br>☐ Untertitel / Captions für Stummton?</div></div>
+      <div><div class="text-orange fw-7 mb-2">Brand Safety</div>
+        <div class="text-dim">☐ Keine Konkurrenten sichtbar?<br>☐ Keine falschen Markenversprechen?<br>☐ DSGVO-konform (kein erkennbares Gesicht ohne Erlaubnis)?<br>☐ Keine sensiblen Gewässer-Gebiete?<br>☐ Impressum / Hinweise korrekt?</div></div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-title mb-3">Wave Bite Brand Voice — 5 Kernattribute</div>
+    <div class="flex gap-2" style="flex-wrap:wrap">
+      <span class="tag tag-teal" style="padding:8px 16px;font-size:12px">PREMIUM</span>
+      <span class="tag tag-cyan" style="padding:8px 16px;font-size:12px">CINEMATIC</span>
+      <span class="tag tag-gold" style="padding:8px 16px;font-size:12px">ERLEBNISORIENTIERT</span>
+      <span class="tag tag-teal" style="padding:8px 16px;font-size:12px">AUTHENTISCH</span>
+      <span class="tag tag-orange" style="padding:8px 16px;font-size:12px">ZUKUNFTSORIENTIERT</span>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════ -->
+<!-- TECH STACK -->
+<!-- ══════════════════════════════════════════════════ -->
+<section class="section" id="sec-tech">
+  <div class="sec-title">Tech Stack</div>
+  <div class="sec-sub">AI Tools, Renderer, APIs — das komplette Wave Bite Creative Arsenal</div>
+  <div id="tool-grid" class="g3 mb-4"></div>
+  <div class="card">
+    <div class="card-title mb-3">Lokale Produktions-Pipeline</div>
+    <div class="code-block">
+<button class="btn btn-copy copy-btn btn-sm" onclick="copyCode(this)">📋</button>
+WAVE BITE VIDEO PIPELINE:
+═══════════════════════════════════════════════
+1. CONCEPT  → Story Engine (Hooks, Script, Storyboard)
+2. DESIGN   → Creative Director AI (Visual Brief, Color Grade)
+3. CGI      → Python Renderer (wb_cgi.py) → BMP Frames
+4. AUDIO    → Suno AI (Musik) + ElevenLabs (Voiceover)
+5. ENCODE   → FFmpeg (libx264, ultrafast, crf17, aac192k)
+6. GRADE    → FFmpeg LUT (Teal-Gold Color Grade)
+7. FORMAT   → 9:16 (Reels), 16:9 (YT), 1:1 (Feed)
+8. CAPTION  → Social Copywriter AI
+9. APPROVE  → Brand Guardian AI Checkliste
+10.PUBLISH  → Social Scheduler (Manual / N8N)
+═══════════════════════════════════════════════
+
+FFMPEG FORMAT KONVERTIERUNG:
+# 9:16 → 1:1 (Feed)
+ffmpeg -i input.mp4 -vf "crop=1080:1080:0:420" output_square.mp4
+# 9:16 → 16:9 (YouTube)
+ffmpeg -i input.mp4 -vf "scale=1920:1080,setsar=1" output_wide.mp4
+# Slow Motion (2x)
+ffmpeg -i input.mp4 -filter:v "setpts=2.0*PTS" output_slow.mp4</div>
+  </div>
+</section>
+
+</div><!-- /content -->
+</main>
+</div><!-- /app -->
+
+<script>
+// ── CANVAS BACKGROUND ──────────────────────────────────────────
+const canvas = document.getElementById('bg');
+const ctx = canvas.getContext('2d');
+let W, H, particles=[], time=0;
+
+function resize(){
+  W=canvas.width=window.innerWidth;
+  H=canvas.height=window.innerHeight;
+}
+
+function initParticles(){
+  particles=[];
+  for(let i=0;i<70;i++){
+    particles.push({
+      x:Math.random()*W, y:Math.random()*H,
+      vy:-(Math.random()*.3+.08),
+      vx:(Math.random()-.5)*.08,
+      size:Math.random()*2+.4,
+      op:Math.random()*.4+.08,
+      gold:Math.random()>.72
+    });
+  }
+}
+
+function drawBg(){
+  // Radial glow center-top
+  const rg=ctx.createRadialGradient(W*.5,H*.25,0,W*.5,H*.25,H*.7);
+  rg.addColorStop(0,'rgba(0,90,110,.14)');
+  rg.addColorStop(1,'rgba(3,8,16,0)');
+  ctx.fillStyle=rg; ctx.fillRect(0,0,W,H);
+  // Bottom wave glow
+  const wg=ctx.createLinearGradient(0,H*.85,0,H);
+  wg.addColorStop(0,'rgba(0,212,180,.05)');
+  wg.addColorStop(1,'rgba(0,212,180,.01)');
+  ctx.fillStyle=wg; ctx.fillRect(0,H*.85,W,H*.15);
+}
+
+function drawWave(){
+  ctx.beginPath();
+  ctx.moveTo(0,H);
+  for(let x=0;x<=W;x+=4){
+    const y=H-55+Math.sin(x*.007+time*1.8)*18+Math.sin(x*.013-time*1.3)*10;
+    ctx.lineTo(x,y);
+  }
+  ctx.lineTo(W,H); ctx.closePath();
+  const wg=ctx.createLinearGradient(0,H-70,0,H);
+  wg.addColorStop(0,'rgba(0,212,180,.07)');
+  wg.addColorStop(1,'rgba(0,212,180,.015)');
+  ctx.fillStyle=wg; ctx.fill();
+}
+
+function animBg(){
+  ctx.clearRect(0,0,W,H);
+  time+=.008;
+  drawBg();
+  particles.forEach(p=>{
+    p.y+=p.vy; p.x+=Math.sin(time+p.x*.005)*.15+p.vx;
+    if(p.y<-5){p.y=H+5;p.x=Math.random()*W;}
+    ctx.beginPath();
+    ctx.arc(p.x,p.y,p.size,0,Math.PI*2);
+    const c=p.gold?`rgba(201,168,76,${p.op})`:`rgba(0,212,180,${p.op})`;
+    ctx.fillStyle=c; ctx.fill();
+  });
+  drawWave();
+  requestAnimationFrame(animBg);
+}
+window.addEventListener('resize',()=>{resize();initParticles();});
+resize(); initParticles(); animBg();
+
+// ── NAVIGATION ─────────────────────────────────────────────────
+function showSection(id){
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('sec-'+id)?.classList.add('active');
+  document.querySelector(`[data-sec="${id}"]`)?.classList.add('active');
+}
+document.querySelectorAll('.nav-btn').forEach(btn=>{
+  btn.addEventListener('click',()=>showSection(btn.dataset.sec));
+});
+
+// ── AI AGENTS ──────────────────────────────────────────────────
+const agents=[
+  {name:'CMO AI',role:'Chief Marketing Officer',icon:'📊',bg:'#0d2020',status:'online',task:'Investor-Narrativ analysieren',
+   prompts:['Entwickle eine 90-Tage Go-to-Market-Strategie für Wave Bite: Zielgruppen-Segmente, Kanal-Priorisierung, Budget-Allokation (80/20), KPIs, Seed-Funding-Narrativ.',
+    'Erstelle ein Investor-Brief für Wave Bite: Positioniere als „Airbnb für Wasseraktivitäten". TAM/SAM/SOM, Traction-Metriken, Exit-Möglichkeiten.',
+    'Bau einen Content-Funnel: Awareness (CGI) → Consideration (USP) → Conversion (Erlebnis) → Retention (Community). Konkrete Inhalte je Phase.',
+    'Identifiziere Top 5 Sponsoren-Kategorien für Wave Bite. Erstelle je einen 1-Seiter Sponsoring-Brief (Lifestyle, Outdoor, Tourismus, Getränke, Automotive).',
+    'Analysiere 3 Wave Bite Kampagnen auf: Conversion-Potenzial, Brand-Alignement, Plattform-Fit, Viral-Score. Output: Ranking + Optimierungsvorschläge.']},
+  {name:'Creative Director AI',role:'Visual & Brand Lead',icon:'🎨',bg:'#1a1208',status:'online',task:'Kampagnen-Moodboard erstellen',
+   prompts:['Bewerte dieses Wave Bite Asset: [Input]. Scoring: Cinematic Quality, Brand Alignment, Emotional Impact, Premium Feeling je 1-10. Upgrade-Empfehlungen.',
+    'Erstelle einen Shot-Plan für 30-Sek. Brand Spot: 8-12 Shots mit Kamerabewegung, Beleuchtung, Farbtemperatur, Stimmung, Übergangstyp.',
+    'Entwickle 3 Moodboard-Welten für Sommerkampagne: Ultra-Premium Luxury / Adventurous Freedom / Social Community. Je 5-7 Visual-Keywords.',
+    'Identifiziere in diesem Content-Entwurf alle Elemente die Premium-Wirkung schwächen. Priorisierte Fix-Liste mit konkreten Vorschlägen.',
+    'Definiere visuelle Identität für „Wave Bite × [Partner]" Kollab: Farbpalette, Motion Design, Tone of Voice. Alles auf Premium-Niveau.']},
+  {name:'Story Director AI',role:'Cinematic Narrative',icon:'🎭',bg:'#0d0d20',status:'busy',task:'60s Hook-Bogen schreiben',
+   prompts:['Schreib 60s Hook-to-Revelation: Hook (0-3s) → Tension (3-20s) → Turn (20-40s) → Resolution/CTA (40-60s). Platform: Instagram Reels.',
+    'Entwickle 5 Hook-Varianten für [Thema]: Curiosity Gap, Shocking Statement, Relatable Moment, FOMO, Aspirational Promise.',
+    'Schreib Voiceover-Script für 90s Investor-Film. Ton: Inspirierend, Premium, Ambitioniert. Keine Clichés. Kino-Atmosphäre.',
+    'Erstelle detailliertes Storyboard für Wave Bite TikTok-Serie (5 Episoden): Thema, Hook, Key Visual, Überraschungsmoment, CTA je Folge.',
+    'Analysiere Hook-Variante auf: Psychologische Wirkung, Retention-Wahrscheinlichkeit (3s), Verbesserungspotenzial. Input: [Hook-Text]']},
+  {name:'Viral Growth AI',role:'Platform & Trend Intelligence',icon:'📈',bg:'#081a0d',status:'online',task:'TikTok Trendanalyse läuft',
+   prompts:['Analysiere TikTok/Reels-Trendlage für: Wassersport, Outdoor, Foodie-Experiences, Maritime Travel. Top 5 Trends + Wave Bite Anwendung.',
+    'Entwickle Viral-Strategie für Wave Bite basierend auf [Trend]: Content-Typ, Hook-Format, Musik, Posting-Timing, Community-Trigger.',
+    'Baue 30-Tage Posting-Strategie: Mix CGI-Spots, Behind-the-Scenes, User-Content, Educational, Community, Sales. Ratio und Timing.',
+    'Identifiziere 10 Micro-Influencer (10k-100k) im deutschsprachigen Wassersport-/Lifestyle-Bereich: Engagement, Ästhetik, Zielgruppe.',
+    'Erstelle Hashtag-Strategie: 30 Tags in 3 Gruppen (Brand/Niche/Trend) für TikTok und Instagram. Reichweite vs. Konkurrenz-Analyse.']},
+  {name:'Copywriter AI',role:'Social & Platform Copy',icon:'✍️',bg:'#150d20',status:'online',task:'Caption-Set für Wasserlage-Post',
+   prompts:['Schreib 5 Instagram Caption-Varianten für [Asset]: Emotional, Informativ, Witzig, FOMO, Community-Building. Je 2 CTA-Optionen.',
+    'Entwickle 5-Tweet/Thread über Wave Bite Vision. Ton: Founder-Perspektive, Authentisch, Inspiring. Hashtags + Hooks für jeden Tweet.',
+    'Erstelle LinkedIn-Content für Wave Bite: 3 Posts zu Innovation in Freizeitbranche, Startup-Reise, Zukunft Wassertourismus.',
+    'Schreib 10 CTA-Varianten für Wave Bite App Download: FOMO, Social Proof, Benefit-First, Curiosity. Für Social und Landing Page.',
+    'Überarbeite Caption-Entwurf [Input] für maximale Engagement-Rate. Analyse: Hook-Stärke, Emotional Value, CTA-Klarheit. Optimierte Version.']},
+  {name:'CGI Director AI',role:'Motion FX & 3D Production',icon:'🎬',bg:'#0a1520',status:'busy',task:'Hollywood-Spot Rendering',
+   prompts:['Beschreibe perfekten CGI-Opener für Wave Bite: Kamerafahrt, Wasserphysik, Lichtbrechung, Farbwelt, Übergangsmoment. Für Runway Gen-3.',
+    'Runway Prompt für: Unterwasser-Sequenz → Goldpartikel aufsteigend → Surface-Break Slow-Mo → Wasserspritzer → Logo Reveal. Ultra HD Cinematic.',
+    'Entwickle 5 Transition-Konzepte: Wasser-Wipe, Licht-Burst, Partikel-Dissolve, Wave-Morph, Lens-Flare-Cut. Für Remotion/After Effects.',
+    'Erstelle Python/FFmpeg-Commands für: Wave Bite Color LUT, Slow-Motion (120→30fps), Untertitel-Overlay, Format-Konvertierung (9:16/16:9/1:1).',
+    'Plane vollständige 60s CGI-Sequenz: Shot-für-Shot mit Render-Anweisungen für Numpy-Renderer, Remotion, Runway, FFmpeg.']},
+  {name:'Audio Director AI',role:'Music, SFX & Voiceover',icon:'🎵',bg:'#1a0d1a',status:'online',task:'Suno Musikbrief generieren',
+   prompts:['ElevenLabs Voiceover-Brief für Wave Bite: Voice-Type, Tempo, Emotion-Layer, Pausen-Timing. Script: [Input]. Ziel: Premium Cinematic Narration.',
+    'Entwickle 5 Suno AI Musik-Prompts: Epic Brand Opener / Entspannter Sommer / Energetisches Event / Emotionales Brand Story / Triumphaler CTA.',
+    'Audio-Design-Konzept für Wave Bite Video: Ambient (Wasser/Natur), Musik-Track, SFX (Splash/Wind), Voiceover, Beat-Synchronisation.',
+    'Analysiere Audio-Konzept [Input]: Emotionale Wirkung, Brand Fit, Plattform-Eignung, Verbesserungspotenzial. Optimierter Audio-Brief.',
+    'Plane Wave Bite Audio-Bibliothek: Kategorien (Brand Sounds, Ambient, Music Beds, SFX, Voiceover). Lizenz-Strategie, Tool-Empfehlungen.']},
+  {name:'Brand Guardian AI',role:'Quality Control & Brand Safety',icon:'🛡️',bg:'#1a1000',status:'online',task:'Brand-Score Monitoring',
+   prompts:['Brand Audit für Wave Bite Asset [Input]: Farben (korrekt?), Typography, Logo, Ton, Qualität. Red Flags sofort mit Severity benennen.',
+    'Brand-Test: Checke Content gegen: „Keine KI-Spielzeug-Wirkung", „Kein billiges Template", „Kein Massen-Content-Stil". Bericht + Severity-Score.',
+    'Wave Bite Brand Guideline Kurzfassung: Farben (Hex), Schriften, Bildsprache (Dos/Don'ts), Ton (5 Adjektive), verbotene Elemente.',
+    'Überprüfe Social Post auf: Schreibweise, Ton-Konsistenz, Emoji-Einsatz, CTA-Stärke. Input: [Post]. Output: Optimierte Version.',
+    'Simuliere Reaktion eines High-End Investors auf Wave Bite Marketing-Material: Was überzeugt? Was wirkt amateurhaft? Prioritäts-Fixes.']},
+  {name:'Automation AI',role:'Pipelines & Engineering',icon:'⚙️',bg:'#0d1a0d',status:'online',task:'GitHub Actions Workflow',
+   prompts:['GitHub Actions Workflow für Wave Bite: Content-Export → Asset-Kategorisierung → Cloud-Upload → Slack-Notification → Social-Scheduler. YAML.',
+    'Python Script für Batch-Video-Produktion: Input: Themen-Liste → Output: Shorts in 9:16/16:9/1:1. Mit FFmpeg-Automatisierung.',
+    'N8N/Make Automation: Social Monitoring → KI-Analyse → Ideen-Generator → Approval-Queue → Auto-Post bei Freigabe. Flow-Diagramm.',
+    'Wave Bite Asset-Pipeline: Raw Media → AI-Analyse → Qualitätsprüfung → Format-Konvertierung → Metadaten → Cloud → CDN → Scheduler.',
+    'Render-Batch-Plan für 30 Videos: Priorisierung, Queue, Parallelisierung, Fehlerbehandlung, Output-Struktur. Für lokalen Python-Renderer.']},
+  {name:'Asset Intelligence AI',role:'Media Analysis & Organization',icon:'🗂️',bg:'#0a1020',status:'online',task:'Asset-Bibliothek aufbauen',
+   prompts:['Analysiere Asset-Set [Input]: Kategorisiere nach Quality Score, Reuse-Potenzial, Format-Kompatibilität, Brand-Alignement, Emotionalität.',
+    'Erstelle Asset-Tagging-System für Wave Bite: Hierarchische Kategorien (Saison/Stimmung/Format/Qualität/Thema/Plattform). Metadaten-Template.',
+    'Identifiziere aus Asset-Liste: Hero Assets / Support Assets / Repurpose Candidates. Begründung + Optimierungsplan.',
+    'Asset-Recycling-Konzept: Wie können bestehende Assets in neue Formate konvertiert werden? Workflow: Clips→Shorts→Stories→Thumbnails.',
+    'Asset-Lücken-Analyse für Wave Bite: Welche Visuals/Videos/Grafiken fehlen für vollständige Content-Bibliothek? Produktions-Roadmap.']}
+];
+
+function buildAgents(){
+  const grid=document.getElementById('agent-grid');
+  agents.forEach((ag,i)=>{
+    const statusClass=ag.status==='online'?'sb-online':ag.status==='busy'?'sb-busy':'sb-idle';
+    const statusDot=ag.status==='online'?'s-online':ag.status==='busy'?'s-busy':'s-idle';
+    const statusLabel=ag.status==='online'?'ONLINE':ag.status==='busy'?'AKTIV':'IDLE';
+    const promptsHtml=ag.prompts.map((p,j)=>`
+      <div class="prompt-item">
+        <span class="prompt-num">${j+1}</span>
+        <div style="flex:1">
+          <div class="prompt-text">${p}</div>
+          <button class="btn btn-copy mt-2 btn-sm" onclick="copyPrompt(this)">📋 Kopieren</button>
+        </div>
+      </div>`).join('');
+    grid.innerHTML+=`
+      <div class="agent-card" onclick="toggleAgent(this)">
+        <div class="flex ai-c gap-3 mb-2">
+          <div class="agent-avatar" style="background:${ag.bg}">${ag.icon}</div>
+          <div style="flex:1">
+            <div class="flex ai-c jc-sb">
+              <div class="agent-name">${ag.name}</div>
+              <span class="status-badge ${statusClass}"><div class="status-dot ${statusDot}"></div>${statusLabel}</span>
+            </div>
+            <div class="agent-role">${ag.role}</div>
+          </div>
+        </div>
+        <div class="agent-task">⚡ ${ag.task}</div>
+        <div class="agent-prompts">
+          <div class="fs-11 text-teal fw-7 mb-2">Prompt-Bibliothek (${ag.prompts.length} Prompts)</div>
+          ${promptsHtml}
+        </div>
+        <div class="fs-11 text-dim mt-2" style="text-align:right">▸ Klicken für Prompts</div>
+      </div>`;
+  });
+}
+function toggleAgent(card){
+  card.classList.toggle('expanded');
+  const hint=card.querySelector('.fs-11.text-dim:last-child');
+  if(hint) hint.textContent=card.classList.contains('expanded')?'▾ Schließen':'▸ Klicken für Prompts';
+}
+
+// ── TECH STACK ─────────────────────────────────────────────────
+const tools=[
+  {icon:'🎬',name:'Runway Gen-3',cat:'AI Video',status:'live'},{icon:'🎨',name:'Leonardo AI',cat:'AI Images',status:'live'},
+  {icon:'🌊',name:'Kling AI',cat:'AI Video',status:'avail'},{icon:'🔊',name:'ElevenLabs',cat:'AI Voice',status:'live'},
+  {icon:'🎵',name:'Suno AI',cat:'AI Music',status:'live'},{icon:'🎞️',name:'FFmpeg',cat:'Video Encoding',status:'live'},
+  {icon:'⚛️',name:'Remotion',cat:'Programmatic Video',status:'avail'},{icon:'🐍',name:'Python Renderer',cat:'CGI Engine',status:'live'},
+  {icon:'🔧',name:'N8N',cat:'Automation',status:'avail'},{icon:'🧠',name:'Make.com',cat:'Automation',status:'avail'},
+  {icon:'🐙',name:'GitHub Actions',cat:'CI/CD',status:'avail'},{icon:'🌐',name:'Webflow',cat:'Website',status:'live'},
+  {icon:'📊',name:'Google Analytics',cat:'Tracking',status:'live'},{icon:'📱',name:'FlutterFlow',cat:'App Dev',status:'live'},
+  {icon:'🗄️',name:'Google Sheets',cat:'Data',status:'live'},{icon:'📧',name:'Gmail API',cat:'Comms',status:'live'},
+  {icon:'🤖',name:'MCP Connectors',cat:'AI Integration',status:'live'},{icon:'☁️',name:'Cloudinary',cat:'Asset CDN',status:'avail'},
+];
+function buildTools(){
+  const g=document.getElementById('tool-grid');
+  tools.forEach(t=>{
+    const sl=t.status==='live'?'ts-live':t.status==='avail'?'ts-avail':'ts-plan';
+    const sl2=t.status==='live'?'● AKTIV':t.status==='avail'?'◎ VERFÜGBAR':'○ GEPLANT';
+    g.innerHTML+=`<div class="tool-card">
+      <div class="tool-icon">${t.icon}</div>
+      <div class="tool-name">${t.name}</div>
+      <div class="tool-cat text-dim">${t.cat}</div>
+      <div class="tool-status ${sl}">${sl2}</div>
+    </div>`;
+  });
+}
+
+// ── CAMPAIGN GENERATOR ─────────────────────────────────────────
+const CAMP_DATA={
+  platform:{reels:'Instagram Reels',tiktok:'TikTok',shorts:'YouTube Shorts',facebook:'Facebook Reels',linkedin:'LinkedIn',multi:'Multi-Platform (Reels+TikTok+Shorts)'},
+  mood:{epic:'Episch / Inspirierend',fun:'Energetisch / Fun',calm:'Entspannt / Premium',fomo:'FOMO / Dringlichkeit',community:'Community',investor:'Investor / Professional'},
+  hook:{fomo:['„Diese Saison schaust du nicht mehr zu."','„Während andere warten — bist du bereits dort."','„Alle reden davon. Du erlebst es.\"'],
+        curiosity:['„Was wäre, wenn dein Sommerurlaub direkt vor dir wäre?"','„Das haben die meisten noch nie gesehen."','„Wusstest du, dass es das gibt?"'],
+        aspiration:['„Wo das Wasser dein Tisch ist."','„Das Erlebnis, das du verdienst."','„So fühlt sich echter Sommer an."'],
+        shock:['„90% kennen die besten Wasserspots nicht."','„Das hast du in deiner Stadt übersehen."','\"Du hast Jahre lang das Falsche gebucht."'],
+        relatable:['„POV: Du hast endlich den perfekten Sommertag gefunden. 🌊"','„Das kenne ich. Das kannte ich."','„Mein Sommer sieht jetzt so aus:"']},
+  visual:{epic:'Cinematic CGI-Opener → Drone Shot → Brand Reveal mit Lens Flare → Erlebnis-Montage',
+          fun:'Schnelle Cuts → Bunte Energie → Menschen lachen → App in Action',
+          calm:'Langsame Kamerabewegungen → Goldene Stunde → Premium Close-Ups → Elegant Fade',
+          fomo:'Split-Screen (dann/jetzt) → Countdown-Visual → Reveal → CTA-Burn',
+          community:'Echte Menschen → Gemeinschaft → User-Generated-Style → Warm',
+          investor:'Clean Motion Graphics → KPI-Visualisierung → Professional → Data-Driven'},
+  caption:{reels:['Das Wasser ruft. Antwortest du? 🌊\nLink in Bio → wavebite.de',
+                   'Wo das Wasser dein Tisch ist 🥂\n@wavebite • wavebite.de'],
+           tiktok:['POV: Du hast den besten Sommer-Spot entdeckt 🌊 #wavebite',
+                   'Das braucht jeder dieser Sommer 🌊✨ #wasserlage #wavebite'],
+           shorts:['Die besten Wasserlagen in deiner Nähe – Wave Bite zeigt dir wo 🌊',
+                   'Entdecke versteckte Seeblicke mit Wave Bite 🗺️🌊'],
+           facebook:['🌊 Der Sommer beginnt auf dem Wasser.\n\nWave Bite zeigt dir die besten Spots – live, in Echtzeit.\n\n👉 wavebite.de | #wavebite #wasserlage',
+                      '✨ Wo andere suchen – findet Wave Bite.\n\nDie smarte App für Wasserliebhaber. Kostenlos testen!\n👉 wavebite.de'],
+           linkedin:['Wir bauen die erste digitale Plattform für Wassertourismus im DACH-Raum.\n\nWave Bite: Wo Technologie auf Erlebnis trifft. 🌊\n\n#startup #innovation #wavebite',
+                      'Der Wassertourismus-Markt wächst – und wir sind dabei ihn zu digitalisieren.\n\nWave Bite – App für Wasserliebhaber.\n#founderlife #startups'],
+           multi:['Das Wasser ruft. Jetzt auf allen Kanälen. 🌊 #wavebite','Wo das Wasser dein Tisch ist – überall zu erleben. @wavebite']}
+};
+
+function generateCampaign(){
+  const pl=document.getElementById('cb-platform').value;
+  const md=document.getElementById('cb-mood').value;
+  const th=document.getElementById('cb-theme').value||'Wasserlage Live';
+  const tg=document.getElementById('cb-target').value||'Wasserbegeisterte, 25-40';
+  const cg=document.getElementById('cb-cgi').value;
+  const hk=document.getElementById('cb-hook').value;
+  const nt=document.getElementById('cb-notes').value;
+  const hooks=CAMP_DATA.hook[hk]||CAMP_DATA.hook.fomo;
+  const plName=CAMP_DATA.platform[pl]||pl;
+  const mdName=CAMP_DATA.mood[md]||md;
+  const visual=CAMP_DATA.visual[md]||CAMP_DATA.visual.epic;
+  const captions=(CAMP_DATA.caption[pl]||CAMP_DATA.caption.reels);
+  const cgiNote=cg==='high'?'Vollständige CGI-Sequenzen (Python Renderer + Runway)':cg==='mid'?'CGI-Elemente + Live-Footage Mix':'Minimale FX-Overlays über Live-Footage';
+  const output=`WAVE BITE — KAMPAGNEN-BRIEF
+══════════════════════════════════════════════
+Kampagne: "${th}"
+Plattform: ${plName}
+Stimmung:  ${mdName}
+Zielgruppe: ${tg}
+CGI-Level: ${cgiNote}
+══════════════════════════════════════════════
+
+HOOK-VARIANTEN (0-3 Sekunden):
+1. ${hooks[0]}
+2. ${hooks[1]}
+3. ${hooks[2]||hooks[0]}
+
+SCRIPT-OUTLINE (30 Sekunden):
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+0-3s   HOOK — ${hooks[0]}
+       Visual: Dramatischer Einstieg / POV-Shot
+4-12s  SPANNUNG — Problem oder Sehnsucht aufbauen
+       Visual: Kontrast-Moment oder FOMO-Sequenz
+13-22s LÖSUNG / REVEAL — Wave Bite Erlebnis
+       Visual: ${visual}
+23-28s ERLEBNIS-MONTAGE — Premium Lifestyle-Shots
+       Visual: 3-4 schnelle Cuts, Gold/Teal-Welt
+29-30s CTA + LOGO — Klarer Handlungsaufruf
+       Visual: App-Icon | @wavebite | wavebite.de
+
+VISUAL DIRECTION:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+${visual}
+Farbwelt: Teal (#00D4B4) + Gold (#C9A84C) + Navy (#030810)
+Qualität: Premium Cinematic — kein Template-Look
+
+AUDIO-BRIEF:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Musik: ${md==='epic'?'Epischer Trailer-Beat, langsam aufbauend, Musik-Peak bei Reveal':md==='calm'?'Entspannter Ambient, Gitarre + Piano, warme Stimmung':md==='fun'?'Energetischer Beat, Uplifting, 120+ BPM':'Emotionaler Soundtrack, Aufbau → Peak → Resolution'}
+SFX: Wasser-Geräusche, leichter Wind, Ambiente
+Voiceover: Optional — Maskulin/Feminin, Premium-Ton, 0.85× Speed
+
+CAPTIONS (ready to post):
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Option 1: ${captions[0]}
+
+Option 2: ${captions[1]||captions[0]}
+
+HASHTAG-SET:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Brand:   #WaveBite #Wasserlage #WaveBiteApp
+Nische:  #Wassersport #MarinaDreams #WaterLife #SeeUrlaub #BootFahren
+Trend:   #SommerGefühle #OutdoorLife #ErlebnisPlattform #LiveLife
+
+CTA-OPTIONEN:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+● Jetzt kostenlos entdecken → wavebite.de
+● App laden — dein Sommer beginnt heute
+● Zeig mir meinen Spot → Link in Bio
+● Jetzt starten — kostenlos & sofort
+
+${nt?`SPEZIELLE HINWEISE:\n${nt}\n`:''}
+══════════════════════════════════════════════
+Generiert von: Wave Bite AI Creative Studio
+Brand Guardian: ✅ Geprüft · Premium-Niveau gesichert
+══════════════════════════════════════════════`;
+  document.getElementById('cb-output').textContent=output;
+}
+
+// ── SOCIAL TABS ────────────────────────────────────────────────
+function showSocTab(id,el){
+  document.querySelectorAll('.splat').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.stab').forEach(s=>s.classList.remove('active'));
+  document.getElementById('soc-'+id)?.classList.add('active');
+  el.classList.add('active');
+}
+
+// ── COPY HELPERS ───────────────────────────────────────────────
+function copyOutput(){
+  const t=document.getElementById('cb-output').textContent;
+  navigator.clipboard.writeText(t).then(()=>alert('Brief in Zwischenablage kopiert!'));
+}
+function copyPrompt(btn){
+  const t=btn.closest('.prompt-item')?.querySelector('.prompt-text')?.innerText||btn.parentElement.querySelector('.prompt-text')?.innerText||'';
+  navigator.clipboard.writeText(t).then(()=>{btn.textContent='✓ Kopiert!';setTimeout(()=>{btn.textContent='📋 Kopieren';},1500);});
+}
+function copyCode(btn){
+  const t=btn.closest('.code-block')?.innerText.replace(/📋\s*/,'').trim()||'';
+  navigator.clipboard.writeText(t).then(()=>{btn.textContent='✓';setTimeout(()=>{btn.textContent='📋';},1500);});
+}
+
+// ── INIT ───────────────────────────────────────────────────────
+buildAgents();
+buildTools();
+</script>
+
+<!-- WAVE BITE Office-Sync (BroadcastChannel) 2026-05-20 -->
+<script>
+(function(){
+  'use strict';
+  var ch = null;
+  try { ch = new BroadcastChannel('ceo-wave'); } catch(e) {}
+  window.__waveSync = {
+    send: function(patch, type) {
+      var msg = { type: type || 'state_update', source: document.title, patch: patch || {}, ts: Date.now() };
+      if (ch) { try { ch.postMessage(msg); } catch(e){} }
+      try { localStorage.setItem('ceo_wave_msg', JSON.stringify({t: Date.now(), msg: msg})); } catch(e){}
+    },
+    onMessage: function(cb) {
+      if (ch) ch.onmessage = function(ev){ try { cb(ev.data); } catch(e){} };
+      window.addEventListener('storage', function(ev){
+        if (ev.key === 'ceo_wave_msg' && ev.newValue) {
+          try { var p = JSON.parse(ev.newValue); if (p.msg) cb(p.msg); } catch(e){}
+        }
+      });
+    }
+  };
+  // Ping Office on load
+  setTimeout(function(){ window.__waveSync.send({ active: true, page: document.title }, 'detail_loaded'); }, 500);
+})();
+</script>
+
+</body>
+</html>

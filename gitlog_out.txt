@@ -1,0 +1,5 @@
+999339a fix: GitHub-Links korrekt, meta-description norobots, canvas IntersectionObserver Performance-Guard
+68dd444 fix: JS SyntaxError escaped backticks in template literals korrigiert
+6742e5e feat: Cream Design + Ionos Mail + Gmail Sent + Mobile Fix + Section Collapse
+7a6f0f2 fix: JS Bug behoben - CEO Heute Datum fehlte script-Tag, wird jetzt korrekt angezeigt
+6edad0f fix+refactor: CSS Bug behoben, Seiten-Restrukturierung (Mail+CEO-Heute oben, Tasks ans Ende), JARVIS Intelligence Center, Nav umgeordnet, Ops/Risk/Investor Dashboards aufgewertet mit Heatmap+Health-Bars+Kanban
