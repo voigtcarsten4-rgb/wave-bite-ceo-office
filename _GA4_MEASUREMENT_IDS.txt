@@ -1,0 +1,5 @@
+=== GA4 PROPERTY: Wave Bite Bunbo (Property-ID 532605005) ===
+Stream 1 (BunBo Glide App)        : bunbo-xperience.glide.page         : G-B9WXT5PK2L (Stream 14353787920)
+Stream 2 (Wave Bite Website)      : wave-bite.com                      : G-FYPLTGFS3Y (Stream 14916241883)
+Stream 3 (Wave Bite L1 Glide App) : wave-bite-l1-collrunings.glide.page : G-98ED20LWF0 (Stream 14916301093)
+Stream 4 (Wasserlage GitHub)      : voigtcarsten4-rgb.github.io/wasserlage : G-MMV14VET32 (Stream 14916302413)
