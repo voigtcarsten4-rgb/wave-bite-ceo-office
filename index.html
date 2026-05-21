@@ -5225,16 +5225,20 @@ const PROJECTS = [
    url:'https://go.glideapps.com'},
 ];
 
-// ─── INVESTOR READINESS SCORE (calculated) ───
+// ─── INVESTOR READINESS SCORE — ehrlich aus Wave-Bite-Status 2026-05-21 ───
 function calcInvestorScore() {
-  // Target: 95 — (95+95+98+92+95+95)/6 = 570/6 = 95
+  // Ehrlich gerechnet aus Faktenbuch:
+  // Stärken: WIPO Design EU+CH eingetragen (100), SHA finalisiert (100), 5 LOIs unterschrieben (100), Pitch-Deck v3 fertig (90)
+  // Schwächen: Live Traction = 0 Verkäufe (10), Funding 11% (50k/450k = 11), Team Single-Founder (55)
   const factors = {
-    'Product MVP':    95,
-    'Live Traction':  95,
-    'Market Size':    98,
-    'Team':           92,
-    'Financials':     95,
-    'Pitch Deck':     95,
+    'IP & Schutz':      100, // WIPO DM/248323 eingetragen
+    'Rechtsstruktur':    95, // SHA fertig, Holding+GmbH in Gründung
+    'Partner-LOIs':     100, // 5 LOIs unterschrieben
+    'Pitch-Deck':        88, // BP 03/26 + Investor-Onepager final
+    'Live Traction':     10, // Noch kein Umsatz, Liegeplatz offen
+    'Funding':           20, // 50k von 450k (11%) + 350k Bank in Vorber.
+    'Team':              55, // Carsten Solo + Marcus Bootsbau + David CTO offen
+    'Market & TAM':      85  // BB Markt verifiziert, 64-Kontakte-Liste live
   };
   return Math.round(Object.values(factors).reduce((a,b)=>a+b,0)/Object.keys(factors).length);
 }
