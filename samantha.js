@@ -361,5 +361,165 @@
     };
   }
 
-  console.log('🌊 Lucy v4.0 geladen — '+ACTIONS.length+' Actions, '+(typeof DOCS!=="undefined"?DOCS.length:0)+' Docs');
+  // ====================================================================
+  // LUCY UI — Floating Avatar + Side Panel (5 Tabs)
+  // Heute · Erweiterungen · Actions · Docs · Notizen
+  // ====================================================================
+  function injectLucyUI(){
+    if (document.getElementById('lucy-fab')) return;
+    if (!document.body) return setTimeout(injectLucyUI, 50);
+    var css = ''
+      + '#lucy-fab{position:fixed;right:1.2rem;bottom:1.2rem;width:62px;height:62px;border-radius:50%;'
+      + 'background:radial-gradient(circle at 35% 30%,#fde2c8 0%,#d4a8e8 55%,#5b3a8e 100%);'
+      + 'border:2px solid rgba(154,240,255,.55);box-shadow:0 0 28px rgba(154,240,255,.45),0 6px 22px rgba(0,0,0,.55);'
+      + 'cursor:pointer;z-index:1500000;display:flex;align-items:center;justify-content:center;'
+      + 'font-size:1.9rem;line-height:1;transition:transform .25s ease, box-shadow .25s ease;}'
+      + '#lucy-fab:hover{transform:scale(1.07);box-shadow:0 0 36px rgba(154,240,255,.75),0 8px 28px rgba(0,0,0,.6);}'
+      + '#lucy-fab .pulse{position:absolute;inset:-6px;border-radius:50%;border:1px solid rgba(0,212,170,.55);animation:lucyPulse 2.4s ease-out infinite;}'
+      + '@keyframes lucyPulse{0%{transform:scale(.9);opacity:.9}100%{transform:scale(1.45);opacity:0}}'
+      + '#lucy-panel{position:fixed;right:1.2rem;bottom:5.6rem;width:380px;max-width:94vw;max-height:78vh;'
+      + 'background:linear-gradient(180deg,rgba(8,16,28,.97),rgba(2,8,16,.98));border:1px solid rgba(0,200,255,.28);'
+      + 'border-radius:14px;box-shadow:0 18px 60px rgba(0,0,0,.75),0 0 32px rgba(0,200,255,.12);'
+      + 'color:#cce8ff;font-family:"JetBrains Mono","Inter",system-ui,sans-serif;z-index:1500001;'
+      + 'display:none;flex-direction:column;overflow:hidden;}'
+      + '#lucy-panel.open{display:flex;animation:lucyIn .28s ease-out;}'
+      + '@keyframes lucyIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}'
+      + '#lucy-panel .l-head{display:flex;align-items:center;gap:.6rem;padding:.85rem 1rem;border-bottom:1px solid rgba(0,200,255,.18);background:rgba(0,30,60,.4);}'
+      + '#lucy-panel .l-head .av{width:34px;height:34px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fde2c8 0%,#d4a8e8 55%,#5b3a8e 100%);display:flex;align-items:center;justify-content:center;font-size:1.1rem;}'
+      + '#lucy-panel .l-head .nm{font-weight:700;letter-spacing:.18em;font-size:.85rem;color:#9af0ff;}'
+      + '#lucy-panel .l-head .st{font-size:.55rem;letter-spacing:.25em;color:#00d4aa;}'
+      + '#lucy-panel .l-close{margin-left:auto;background:transparent;border:1px solid rgba(255,255,255,.18);color:#cce8ff;width:28px;height:28px;border-radius:50%;cursor:pointer;font-size:.9rem;}'
+      + '#lucy-panel .l-tabs{display:flex;border-bottom:1px solid rgba(0,200,255,.15);background:rgba(0,0,0,.35);}'
+      + '#lucy-panel .l-tabs button{flex:1;background:transparent;border:none;color:#8fa8c2;padding:.55rem .3rem;font-size:.6rem;letter-spacing:.15em;cursor:pointer;border-bottom:2px solid transparent;font-family:inherit;}'
+      + '#lucy-panel .l-tabs button.active{color:#9af0ff;border-bottom-color:#00d4aa;background:rgba(0,212,170,.06);}'
+      + '#lucy-panel .l-body{flex:1;overflow-y:auto;padding:.85rem 1rem;font-size:.72rem;line-height:1.55;}'
+      + '#lucy-panel .l-body::-webkit-scrollbar{width:6px}#lucy-panel .l-body::-webkit-scrollbar-thumb{background:rgba(0,200,255,.25);border-radius:3px}'
+      + '#lucy-panel .l-item{padding:.55rem .6rem;border:1px solid rgba(0,200,255,.12);border-radius:7px;margin-bottom:.45rem;background:rgba(0,40,80,.18);cursor:pointer;transition:all .18s ease;}'
+      + '#lucy-panel .l-item:hover{border-color:rgba(0,212,170,.45);background:rgba(0,212,170,.08);}'
+      + '#lucy-panel .l-item .t{font-weight:700;color:#9af0ff;font-size:.74rem;display:flex;align-items:center;gap:.4rem}'
+      + '#lucy-panel .l-item .s{color:#8fa8c2;font-size:.62rem;margin-top:.2rem}'
+      + '#lucy-panel .l-grp{font-size:.55rem;letter-spacing:.2em;color:#5e8ab0;margin:.6rem 0 .35rem;text-transform:uppercase;}'
+      + '#lucy-panel input.l-inp{width:100%;background:rgba(0,0,0,.4);border:1px solid rgba(0,200,255,.22);color:#cce8ff;padding:.45rem .55rem;border-radius:6px;font-size:.7rem;font-family:inherit;margin-bottom:.5rem;}'
+      + '@media (max-width:600px){#lucy-panel{right:.6rem;left:.6rem;width:auto;bottom:5rem;}}';
+    var st = document.createElement('style'); st.id='lucy-css'; st.textContent = css;
+    document.head.appendChild(st);
+    var fab = document.createElement('button');
+    fab.id = 'lucy-fab'; fab.title = 'Lucy oeffnen (Ctrl+J)';
+    fab.innerHTML = '<span class="pulse"></span><span>🧜🏻‍♀️</span>';
+    document.body.appendChild(fab);
+    var pnl = document.createElement('div');
+    pnl.id = 'lucy-panel';
+    pnl.innerHTML = '<div class="l-head"><div class="av">🧜🏻‍♀️</div><div><div class="nm">LUCY</div><div class="st">CEREBRAL · 100%</div></div><button class="l-close" type="button" aria-label="Schliessen">✕</button></div><div class="l-tabs"><button data-tab="heute" class="active">HEUTE</button><button data-tab="ext">ERWEITER.</button><button data-tab="act">ACTIONS</button><button data-tab="docs">DOCS</button><button data-tab="notes">NOTIZEN</button></div><div class="l-body" id="lucy-body"></div>';
+    document.body.appendChild(pnl);
+    var state = { tab: 'heute' };
+    function render(){
+      var b = document.getElementById('lucy-body'); if (!b) return;
+      var html = '';
+      if (state.tab === 'heute'){
+        var d = new Date(); var wd = ['Sonntag','Montag','Dienstag','Mittwoch','Donnerstag','Freitag','Samstag'][d.getDay()];
+        html += '<div class="l-grp">Heute · '+wd+', '+d.toLocaleDateString('de-DE')+'</div>';
+        html += '<div class="l-item"><div class="t">🔴 MVP App-Demo fertigstellen</div><div class="s">Hoechste Prioritaet · DHDL-Vorbereitung</div></div>';
+        html += '<div class="l-item"><div class="t">🟡 Investor-Pitch aktualisieren</div><div class="s">Pre-Money 1,5 M€ · Faktenbuch-Daten</div></div>';
+        html += '<div class="l-item"><div class="t">🔵 Wasserlage KPIs pruefen</div><div class="s">GA4-Streams · QR-Scans · Downloads</div></div>';
+        html += '<div class="l-grp">Permanente Blocker</div>';
+        html += '<div class="l-item" style="border-color:rgba(255,100,100,.35)"><div class="t">⚠ Liegeplatz Wolzig</div><div class="s">Heiko Schmidt (WFB) nachfassen</div></div>';
+        html += '<div class="l-item" style="border-color:rgba(255,200,80,.35)"><div class="t">⚠ David Deli Phantom</div><div class="s">Vertragsluecke schliessen</div></div>';
+        html += '<div class="l-item" style="border-color:rgba(255,200,80,.35)"><div class="t">⚠ Sichtbarkeit</div><div class="s">Social-Cadence wiederherstellen</div></div>';
+        b.innerHTML = html;
+      } else if (state.tab === 'ext'){
+        html += '<div class="l-grp">Aktive Erweiterungen / Plugins</div>';
+        var P = (window.Lucy && window.Lucy.PLUGINS) || {};
+        var keys = Object.keys(P);
+        if (!keys.length){
+          html += '<div class="l-item"><div class="t">📄 PDF Viewer</div><div class="s">PDFs lesen, annotieren, unterschreiben</div></div>'
+                + '<div class="l-item"><div class="t">📈 Daloopa Finance</div><div class="s">DCF · Comps · Earnings · Models</div></div>'
+                + '<div class="l-item"><div class="t">🎙️ Brand Voice</div><div class="s">Voice-Guidelines · Content-Enforcement</div></div>'
+                + '<div class="l-item"><div class="t">🎨 Figma</div><div class="s">Design · Libraries · Code Connect</div></div>'
+                + '<div class="l-item"><div class="t">🏪 Small Business</div><div class="s">Cash-Flow · Margin · Tax · Invoice</div></div>'
+                + '<div class="l-item"><div class="t">🔍 Enterprise Search</div><div class="s">Cross-Source Search · Daily Digest</div></div>'
+                + '<div class="l-item"><div class="t">📤 Postiz</div><div class="s">Social-Media-Posting (28+ Kanaele)</div></div>'
+                + '<div class="l-item"><div class="t">🌈 Adobe Creative</div><div class="s">Photo · Video · Design · Templates</div></div>';
+        } else {
+          keys.forEach(function(k){
+            var v = P[k] || {};
+            html += '<div class="l-item"><div class="t">'+(v.icon?v.icon+' ':'')+k+'</div><div class="s">'+(v.desc||v.use||'aktiv')+'</div></div>';
+          });
+        }
+        html += '<div class="l-grp">Tracking & Bridges</div>';
+        html += '<div class="l-item"><div class="t">🔗 Apps Script Bridge V3.2</div><div class="s">Gmail · Calendar · GA4 · Claude · Research</div></div>';
+        html += '<div class="l-item"><div class="t">📊 GA4 Multi-Stream</div><div class="s">Website · Wasserlage · BunBo · L1</div></div>';
+        b.innerHTML = html;
+      } else if (state.tab === 'act'){
+        var A = (window.Lucy && typeof window.Lucy.listActions === 'function') ? window.Lucy.listActions() : [];
+        html += '<div class="l-grp">'+A.length+' verfuegbare Actions</div>';
+        if (!A.length) html += '<div class="s">Keine Actions registriert.</div>';
+        A.forEach(function(a){
+          html += '<div class="l-item" data-act="'+a.id+'"><div class="t">'+(a.icon||'✨')+' '+a.title+'</div><div class="s">'+(a.sub||'')+'</div></div>';
+        });
+        b.innerHTML = html;
+        Array.prototype.forEach.call(b.querySelectorAll('[data-act]'), function(el){
+          el.addEventListener('click', function(){
+            var id = el.getAttribute('data-act');
+            var r = window.Lucy.runAction(id);
+            if (r && typeof r === 'string'){
+              var msg = document.createElement('div'); msg.className='l-item'; msg.style.borderColor='rgba(0,212,170,.5)';
+              msg.innerHTML = '<div class="t">✓ '+(id)+'</div><div class="s">'+r+'</div>';
+              b.insertBefore(msg, b.firstChild.nextSibling);
+            }
+          });
+        });
+      } else if (state.tab === 'docs'){
+        var D = (window.Lucy && window.Lucy.DOCS) || [];
+        html += '<div class="l-grp">'+D.length+' Dokumente</div>';
+        if (!D.length) html += '<div class="s">Faktenbuch noch nicht geladen.</div>';
+        D.forEach(function(d){
+          var p = d.path || d.file || '';
+          html += '<div class="l-item"><div class="t">📄 '+(d.title||d.name||'Doc')+'</div><div class="s">'+(d.tag||d.cat||'')+(p?' · <a href="'+p+'" target="_blank" style="color:#9af0ff">oeffnen</a>':'')+'</div></div>';
+        });
+        b.innerHTML = html;
+      } else if (state.tab === 'notes'){
+        var arr = [];
+        try { arr = JSON.parse(localStorage.getItem('samantha_notes_v1')||'[]'); } catch(e){}
+        html += '<input class="l-inp" id="lucy-note-in" placeholder="Neue Notiz · Enter speichert" />';
+        html += '<div class="l-grp">'+arr.length+' Notizen</div>';
+        arr.slice(0,40).forEach(function(n){
+          var dt = ''; try { dt = new Date(n.at).toLocaleString('de-DE'); } catch(e){}
+          html += '<div class="l-item"><div class="t">'+(n.text||'').replace(/</g,'&lt;')+'</div><div class="s">'+dt+'</div></div>';
+        });
+        b.innerHTML = html;
+        var inp = document.getElementById('lucy-note-in');
+        if (inp) inp.addEventListener('keydown', function(e){
+          if (e.key === 'Enter' && inp.value.trim()){ window.addNote(inp.value.trim()); inp.value=''; render(); }
+        });
+      }
+    }
+    fab.addEventListener('click', function(){ pnl.classList.toggle('open'); if (pnl.classList.contains('open')) render(); });
+    pnl.querySelector('.l-close').addEventListener('click', function(){ pnl.classList.remove('open'); });
+    Array.prototype.forEach.call(pnl.querySelectorAll('.l-tabs button'), function(btn){
+      btn.addEventListener('click', function(){
+        Array.prototype.forEach.call(pnl.querySelectorAll('.l-tabs button'), function(x){ x.classList.remove('active'); });
+        btn.classList.add('active'); state.tab = btn.getAttribute('data-tab'); render();
+      });
+    });
+    document.addEventListener('keydown', function(e){
+      if ((e.ctrlKey||e.metaKey) && e.key === 'j'){ e.preventDefault(); fab.click(); }
+      else if (e.key === 'Escape' && pnl.classList.contains('open')){ pnl.classList.remove('open'); }
+    });
+    window.Lucy.open = function(){ if (!pnl.classList.contains('open')){ pnl.classList.add('open'); render(); } };
+    window.Lucy.close = function(){ pnl.classList.remove('open'); };
+    window.Lucy.toggle = function(){ fab.click(); };
+    window.Lucy.say = function(msg){
+      if (!msg) return; window.Lucy.open();
+      var b = document.getElementById('lucy-body');
+      if (b){
+        var m = document.createElement('div'); m.className='l-item'; m.style.borderColor='rgba(0,212,170,.55)';
+        m.innerHTML = '<div class="t">🧜🏻‍♀️ Lucy</div><div class="s">'+String(msg).replace(/</g,'&lt;')+'</div>';
+        b.insertBefore(m, b.firstChild);
+      }
+    };
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', injectLucyUI);
+  else injectLucyUI();
+
+  console.log('🌊 Lucy v4.1 geladen — '+ACTIONS.length+' Actions, '+(typeof DOCS!=="undefined"?DOCS.length:0)+' Docs, UI online');
 })();
