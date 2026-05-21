@@ -10,12 +10,12 @@
 <title>WAVE BITE // CAPITÄNS BRIDGE — Lucy Edition</title>
 <meta name="description" content="Wave Bite CEO Command Center — Maritime Intelligence Dashboard mit Lucy v4.0 als 100%-cerebral Co-Pilotin">
 <meta name="robots" content="noindex, nofollow">
-<meta name="build-version" content="v7.1-2026-05-21-cal-sync">
+<meta name="build-version" content="v7.1.1-2026-05-21-mail-cal-inject">
 <!-- AUTO-VERSION-CHECK: vergleicht beim Boot die lokale Version mit GitHub Raw, force-reload bei Drift -->
 <script>
 (function(){
   try {
-    const LOCAL_VERSION = 'v7.1-2026-05-21-cal-sync';
+    const LOCAL_VERSION = 'v7.1.1-2026-05-21-mail-cal-inject';
     const VCHECK_KEY = 'wb_vcheck_last';
     const last = parseInt(sessionStorage.getItem(VCHECK_KEY) || '0');
     if (Date.now() - last < 60000) return; // max 1× pro Minute
@@ -5808,9 +5808,18 @@ function initJarvis() {
     loadEvents: function() {
       try {
         var stored = JSON.parse(localStorage.getItem('ceo_cal_events') || '[]');
-        // Demo events removed 2026-05-20 - nur echte Events
-        
-        CAL.events = stored;
+        // v7.1: Manuelle Pflicht-Mail-Termine immer dazu (aus Mails Schülin/Heiko/Abpacken/IONOS)
+        var manual = [
+          { id:'mail_schuelin_21', date:'2026-05-21', time:'14:30', title:'Therapie Pia Schülin', cal:'pr', dur:50, source:'mail' },
+          { id:'mail_giveaway_22', date:'2026-05-22', time:'06:00', title:'Abpacken Giveaway', cal:'bl', dur:240, source:'mail' },
+          { id:'mail_schuelin_28', date:'2026-05-28', time:'13:30', title:'Therapie Pia Schülin', cal:'pr', dur:50, source:'mail' },
+          { id:'mail_ionos_31',    date:'2026-05-31', time:'23:59', title:'⏳ IONOS E-Mail-Frist', cal:'wb', dur:1, source:'mail' },
+          { id:'mail_heiko_0601',  date:'2026-06-01', time:'14:00', title:'WFB Call · Heiko Schmidt (Teams)', cal:'wb', dur:60, source:'mail' }
+        ];
+        // Mit gespeicherten Events kombinieren (dedupliziert per id)
+        var byId = {};
+        stored.concat(manual).forEach(function(e){ if (e && e.id) byId[e.id] = e; else if (e) byId[(e.date||'')+'_'+(e.time||'')+'_'+(e.title||'')] = e; });
+        CAL.events = Object.values(byId);
       } catch(e) { CAL.events = []; }
     },
 
