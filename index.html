@@ -7938,18 +7938,38 @@ function restoreCollapsedSections() {
       if (el) el.textContent = new Date().toLocaleTimeString('de-DE',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
     }
     updateClock(); setInterval(updateClock, 1000);
-    // Section collapse — add toggle button + click handler to all section titles
+    // v12 Recovery: alle eventuell stale "sec_*" closed-Marker in localStorage einmal wegräumen
+    // damit Sektionen die durch frühere Bugs eingeklappt blieben, wieder sichtbar werden.
+    try {
+      var clearedSecs = 0;
+      Object.keys(localStorage).forEach(function(k){
+        if (k.indexOf('sec_') === 0) { localStorage.removeItem(k); clearedSecs++; }
+      });
+      if (clearedSecs) console.log('🔓 v12 cleanup: '+clearedSecs+' Sektion-Collapse-Marker entfernt');
+    } catch(e){}
+    // Section collapse — Toggle nur auf .sec-toggle Button, nicht auf gesamten Title
+    // Fix v12: Innere Buttons/Links (Tracking Dashboard ↓ etc.) lösten sonst Collapse aus
     setTimeout(function() {
       document.querySelectorAll('.section-title').forEach(function(el) {
         if (!el.querySelector('.sec-toggle') && !el.hasAttribute('data-no-toggle')) {
           var btn = document.createElement('span');
           btn.className = 'sec-toggle';
           btn.textContent = '▾';
-          btn.style.cssText = 'margin-left:auto;font-size:.6rem;cursor:pointer;padding:.15rem .5rem;border-radius:4px;border:1px solid rgba(0,200,255,0.2);background:rgba(0,200,255,0.05);user-select:none;transition:all .2s';
-          el.style.cssText += ';cursor:pointer;display:flex;align-items:center';
+          btn.title = 'Sektion ein-/ausklappen';
+          btn.style.cssText = 'margin-left:auto;font-size:.6rem;cursor:pointer;padding:.15rem .5rem;border-radius:4px;border:1px solid rgba(0,200,255,0.2);background:rgba(0,200,255,0.05);user-select:none;transition:all .2s;flex-shrink:0';
+          el.style.cssText += ';display:flex;align-items:center';
           el.appendChild(btn);
-          el.addEventListener('click', function() { toggleSection(el); });
+          // Click NUR auf den Toggle-Button — nicht auf das ganze Title-Element
+          btn.addEventListener('click', function(ev) {
+            ev.stopPropagation();
+            toggleSection(el);
+          });
         }
+      });
+      // Bestehende inline-Toggle-Klicks von Sections, die das ganze section-title als clickable hatten, neutralisieren
+      // (defensive: alle .section-title verlieren ihren pointer-cursor außer dem Toggle-Btn)
+      document.querySelectorAll('.section-title').forEach(function(el){
+        if (el.style.cursor === 'pointer') el.style.cursor = '';
       });
     }, 200);
   }
@@ -8620,9 +8640,8 @@ if (typeof window.addMemoryEntry !== 'function') {
 
 <!-- ===========================================================
      LUCY - KI Co-Pilotin (Avatar + Panel + Actions)
-     Bindet samantha.js (window.Lucy) ein - cache-buster Version
      =========================================================== -->
-<script src="samantha.js?v=2026-05-21-v11-r2p-allurls"></script>
+<script src="samantha.js?v=2026-05-21-v12-toggle-fix"></script>
 
 </body>
 </html>
