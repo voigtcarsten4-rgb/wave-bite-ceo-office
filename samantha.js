@@ -642,18 +642,34 @@ REGELN: Deutsch, präzise, max 8 Sätze Standard. Bei Strategie: erst Schwäche,
   // -------- CLAUDE-API HOOK -----------------------------------------------
   async function callClaude(userMessage, options){
     options = options||{};
-    try {
-      const r = await fetch(BRIDGE + '?action=claude', {
-        method:'POST',
-        headers:{ 'Content-Type':'text/plain' },
-        body: JSON.stringify({ action:'claude', system:SYSTEM_PROMPT, message:userMessage, history:options.history||[] })
-      });
-      if (r.ok) {
-        const j = await r.json();
-        if (j.reply) { addLearning(userMessage, j.reply); return { ok:true, text:j.reply, source:'claude' }; }
-      }
-    } catch(e) {}
-    return { ok:true, text:ruleBasedReply(userMessage), source:'rules' };
+    // Kompakter System-Prompt (Apps Script POST hat ein Caching/Size-Quirk bei sehr großen Bodies → Sonnet bekommt sonst kein case-Match)
+    const SHORT_SYS = 'Du bist Lucy, CEO-Co-Pilotin für Carsten Voigt (Wave Bite Holding AG + GmbH). Brillant, präzise, strategisch, 2 Schritte voraus. Deutsch, max 8 Sätze. Kontext: 95/5 Cap Table (Carsten/Marcus Börner), EK 50k€, Burn 10,4k/Mo, Ziel 450k€, Forecast J1 250k€, Bewertung 1,5M€. Blockers: Liegeplatz Wolzig, David Phantom, 0 Follower. 5 LOIs unterzeichnet. Therapie Di 08:45 Basel. Carsten arbeitet noch Bell Food. Niemals Platzhalter. Bei unsicher: ehrlich sagen.';
+    const body = JSON.stringify({ action:'claude', system: SHORT_SYS, message: userMessage, history: options.history || [] });
+    // Bis zu 2 Versuche (Apps Script Cold-Start / Cache-Quirk)
+    for (let attempt = 0; attempt < 2; attempt++) {
+      try {
+        const r = await fetch(BRIDGE + '?action=claude', {
+          method:'POST',
+          headers:{ 'Content-Type':'text/plain' },
+          body
+        });
+        if (r.ok) {
+          const text = await r.text();
+          let j = null;
+          try { j = JSON.parse(text); } catch(_) {}
+          if (j && j.reply) {
+            try { addLearning(userMessage, j.reply); } catch(_) {}
+            return { ok:true, text: j.reply, source:'claude' };
+          }
+          // Bei "Unbekannte POST-Aktion" → kurze Pause + Retry
+          if (j && j.error && /Unbekannte/.test(j.error)) {
+            await new Promise(res => setTimeout(res, 800));
+            continue;
+          }
+        }
+      } catch(e) { /* network / parse — Retry */ }
+    }
+    return { ok:true, text: ruleBasedReply(userMessage), source:'rules' };
   }
 
   function ruleBasedReply(q){
