@@ -488,13 +488,87 @@ REGELN: Deutsch, präzise, max 8 Sätze Standard. Bei Strategie: erst Schwäche,
   }
 
   // -------- INSIGHTS (scannt Mail/Kalender, erkennt Action-Bedarf) --------
-  // v5: Hardcoded kritische Manuell-Termine + erweitertes Mail-Triage
+  // v8.2: jedes Insight bekommt kontextspezifische Action-Buttons
   const MANUAL_DATES = [
-    { ts: new Date('2026-05-21T14:30:00').getTime(), title: 'Therapie Pia Schülin (Sonder-Termin)', loc: 'Praxis zum Falken, Basel · Falknerstrasse 26 · 4001 Basel', kind:'therapie', icon:'🧠', src:'Mail Pia Schülin 19.05.' },
-    { ts: new Date('2026-05-28T13:30:00').getTime(), title: 'Therapie Pia Schülin (Sonder-Termin)', loc: 'Praxis zum Falken, Basel · Falknerstrasse 26', kind:'therapie', icon:'🧠', src:'Mail Pia Schülin 19.05.' },
-    { ts: new Date('2026-06-01T14:00:00').getTime(), title: 'WFB Brandenburg Call (Heiko Schmidt)', loc: 'Microsoft Teams · Besprechungs-ID 366 350 …', kind:'wfb', icon:'🦅', src:'Mail Heiko Schmidt 19.05.' },
-    { ts: new Date('2026-05-31T23:59:00').getTime(), title: 'IONOS E-Mail-Nutzung prüfen', loc: 'kontoverwaltung.ionos.de', kind:'admin', icon:'📧', src:'IONOS Erinnerung 20.05.' }
+    { ts: new Date('2026-05-21T14:30:00').getTime(), title: 'Therapie Pia Schülin (Sonder-Termin)', loc: 'Praxis zum Falken, Basel · Falknerstrasse 26 · 4001 Basel', kind:'therapie', icon:'🧠', src:'Mail Pia Schülin 19.05.', urgency:7, impact:5 },
+    { ts: new Date('2026-05-22T06:00:00').getTime(), title: 'Abpacken Giveaway', loc: '— Ort offen · prüfen ob Bell Food Dänikon/Basel oder Wave-Bite-Standort', kind:'bell', icon:'🎁', src:'Kalender Bell Alumni-Bereich', urgency:9, impact:6 },
+    { ts: new Date('2026-05-28T13:30:00').getTime(), title: 'Therapie Pia Schülin (Sonder-Termin)', loc: 'Praxis zum Falken, Basel · Falknerstrasse 26', kind:'therapie', icon:'🧠', src:'Mail Pia Schülin 19.05.', urgency:5, impact:5 },
+    { ts: new Date('2026-06-01T14:00:00').getTime(), title: 'WFB Brandenburg Call (Heiko Schmidt)', loc: 'Microsoft Teams · Besprechungs-ID 366 350 …', kind:'wfb', icon:'🦅', src:'Mail Heiko Schmidt 19.05.', urgency:10, impact:10 },
+    { ts: new Date('2026-05-31T23:59:00').getTime(), title: 'IONOS E-Mail-Nutzung prüfen', loc: 'kontoverwaltung.ionos.de', kind:'admin', icon:'📧', src:'IONOS Erinnerung 20.05.', urgency:7, impact:6 }
   ];
+
+  // Liefert kontextspezifische Buttons pro Insight-Type
+  function insightActions(ins) {
+    const acts = [];
+    const k = ins.kind || '';
+    if (k === 'therapie') {
+      acts.push({ label:'🗺 Anfahrt', fn:() => { window.open('https://maps.google.com/?q=Praxis+zum+Falken+Falknerstrasse+26+4001+Basel','_blank'); return 'Maps geöffnet — Praxis zum Falken'; } });
+      acts.push({ label:'📋 Notes', fn:() => { addNote('Therapie Pia Schülin '+ins.title+' — Vorbereitung: aktuelle Themen sammeln'); return 'Notiz angelegt für Therapie-Vorbereitung'; } });
+      acts.push({ label:'⏰ Erinnerung -1h', fn:() => { addTask('Aufbruch Therapie '+new Date(ins.ts).toLocaleString('de-DE',{hour:'2-digit',minute:'2-digit'})+' — 1h vorher losfahren', 'high'); return 'Task angelegt'; } });
+      acts.push({ label:'✉ Absagen', fn:() => { corporateMailFor({ betreff:'Termin-Verschiebung', an:'Frau Pia Schülin · pia.schuelin@psychologie.ch', anrede:'Liebe Frau Schülin,', paragraphen:['leider muss ich unseren Termin am '+new Date(ins.ts).toLocaleDateString('de-DE')+' um '+new Date(ins.ts).toLocaleTimeString('de-DE',{hour:'2-digit',minute:'2-digit'})+' Uhr kurzfristig verschieben.','Ich melde mich umgehend mit Alternativen.'] }); return 'Absage-Brief geöffnet'; } });
+    } else if (k === 'bell') {
+      acts.push({ label:'🔍 Ort recherchieren', fn:() => { window.open('https://mail.google.com/mail/u/0/#search/abpacken+OR+giveaway+OR+bell','_blank'); return 'Gmail-Suche nach Bell-Mail mit Ort geöffnet'; } });
+      acts.push({ label:'📞 Bell kontaktieren', fn:() => { addTask('Bell Food: Standort für Abpacken-Giveaway 22.05. 06:00 klären', 'high'); return 'Task angelegt — Bell-Kontakt fragen'; } });
+      acts.push({ label:'❌ Nicht verfügbar', fn:() => { addNote('Abpacken-Giveaway 22.05. — Carsten NICHT verfügbar, Ersatz organisieren'); return 'Notiert. Bell-Kollege fragen.'; } });
+      acts.push({ label:'⏰ Wecker -90min', fn:() => { addTask('Aufbruch Abpacken 04:30 (Termin 06:00 + 1,5h Fahrt)', 'critical'); return 'Wecker-Task gesetzt'; } });
+      acts.push({ label:'🗺 Maps', fn:() => { window.open('https://maps.google.com/?q=Bell+Food+Group+D%C3%A4nikon','_blank'); return 'Bell-Standort in Maps'; } });
+    } else if (k === 'wfb') {
+      acts.push({ label:'🔗 Teams öffnen', fn:() => { window.open('https://teams.microsoft.com/l/meetup-join/19%3ameeting%3a366350338281537','_blank'); return 'Teams-Meeting geöffnet'; } });
+      acts.push({ label:'📋 Call-Prep', fn:() => { runAction('heiko_callprep'); return 'WFB-Call-Briefing erstellt'; } });
+      acts.push({ label:'📎 Material', fn:() => { window.open('docs/finale/businessplan_03_26.pdf','_blank'); setTimeout(()=>window.open('docs/finale/investor_onepager_v2.pdf','_blank'),300); setTimeout(()=>window.open('docs/finale/foerderlogik_onepager.pdf','_blank'),600); return 'BP+Onepager+Förderlogik in 3 Tabs'; } });
+      acts.push({ label:'⏰ Erinnerung -30min', fn:() => { addTask('WFB-Call 01.06. 14:00 · 30min vorher fertig sein, Teams-Test', 'critical'); return 'Erinnerung gesetzt'; } });
+      acts.push({ label:'✉ Vorab-Mail', fn:() => { runAction('cd_heiko'); return 'Corporate-Brief an Heiko offen'; } });
+    } else if (k === 'admin' || /ionos|frist/i.test(ins.title||'')) {
+      acts.push({ label:'🔗 IONOS öffnen', fn:() => { window.open('https://login.ionos.de','_blank'); return 'IONOS-Login geöffnet'; } });
+      acts.push({ label:'📋 Task anlegen', fn:() => { addTask(ins.title+' bis '+new Date(ins.ts).toLocaleDateString('de-DE'), 'high'); return 'Task in Pipeline'; } });
+      acts.push({ label:'📨 Mail-Verlauf', fn:() => { window.open('https://mail.google.com/mail/u/0/#search/ionos','_blank'); return 'Gmail-Verlauf IONOS'; } });
+      acts.push({ label:'✓ Erledigt', fn:() => { addNote('✓ '+ins.title+' erledigt am '+new Date().toLocaleDateString('de-DE')); return 'Als erledigt markiert'; } });
+    } else if (k === 'today' || k === 'tomorrow') {
+      acts.push({ label:'📋 Vorbereitung', fn:() => { addTask('Vorbereitung: '+ins.title, 'high'); return 'Prep-Task angelegt'; } });
+      acts.push({ label:'⏰ -30min Reminder', fn:() => { addTask('30min vorher: '+ins.title, 'normal'); return 'Reminder gesetzt'; } });
+      acts.push({ label:'📝 Briefing-Notiz', fn:() => { addNote('Briefing: '+ins.title+' — Punkte: …'); return 'Notiz angelegt'; } });
+    } else if (k && k.startsWith('mail')) {
+      acts.push({ label:'📨 Mail-Tab', fn:() => { currentTab='mails'; document.querySelector('[data-tab=mails]')?.click(); return 'Mail-Triage geöffnet'; } });
+      acts.push({ label:'📋 Notiz', fn:() => { addNote('Follow-up: '+ins.title); return 'Notiz angelegt'; } });
+    }
+    // Generische Buttons immer anhängen
+    acts.push({ label:'💤 Snooze', fn:() => { const k='ins_snooze_'+(ins.title||'').slice(0,30); const s=getSnoozed(); s[k]={until:Date.now()+86400000,subject:ins.title}; saveJSON(SNOOZE_KEY,s); renderBody(); return 'Snooze 24h'; } });
+    return acts;
+  }
+
+  // CEO-Mode: nächstbeste Aktion (höchste Urgency × Impact)
+  function highestPriorityAction(insightsList) {
+    // Aus MANUAL_DATES + Cross-Dashboard-Drifts den Top-Pick auswählen
+    const candidates = [];
+    const now = Date.now();
+    MANUAL_DATES.filter(m => m.ts > now - 3600000).forEach(m => {
+      const hours = (m.ts - now)/3600000;
+      const urgency = hours < 24 ? 10 : hours < 72 ? 8 : hours < 168 ? 6 : 4;
+      const score = urgency * (m.impact||5);
+      candidates.push({ ...m, score, hours });
+    });
+    // Cross-Dashboard-Drifts (synthetisch, basierend auf Wave-Bite-Kontext)
+    candidates.push({ title:'B2B-Wasserlage: 64 DACH-Kontakte aktivieren', kind:'marketing', icon:'📣', loc:'Outreach starten — 5 Marinas pro Tag', score:65, isCross:true,
+      actions:[
+        {label:'🚀 Kampagne starten', fn:()=>{ runAction('cd_wasserlage_b2b'); return 'Cold-Outreach-Brief offen'; }},
+        {label:'📋 5 Kontakte aussuchen', fn:()=>{ window.open('docs/wasserlage_b2b_64_dach.pdf','_blank'); return 'B2B-Liste geöffnet'; }},
+        {label:'💤 Morgen', fn:()=>{ const s=getSnoozed(); s['cross_b2b']={until:Date.now()+86400000}; saveJSON(SNOOZE_KEY,s); renderBody(); return 'Snooze 1 Tag'; }}
+      ]});
+    candidates.push({ title:'DHDL-Demo-Video Müggelsee (90s)', kind:'creative', icon:'🎬', loc:'Vor Heiko-Call 01.06. fertig haben', score:80, isCross:true,
+      actions:[
+        {label:'🎬 Plan erstellen', fn:()=>{ runAction('dhdl_prep'); return 'DHDL-Prep generiert'; }},
+        {label:'📍 Müggelsee-Termin', fn:()=>{ window.open('https://maps.google.com/?q=M%C3%BCggelsee+Berlin','_blank'); return 'Müggelsee in Maps'; }},
+        {label:'📋 Task', fn:()=>{ addTask('90s-Demo-Video Müggelsee drehen — bis 30.05.', 'critical'); return 'Task gesetzt'; }}
+      ]});
+    candidates.push({ title:'Cashflow 30/60/90 prüfen', kind:'finance', icon:'💵', loc:'4,8 Monate Reserve — Transgourmet 10k€ aktivieren?', score:60, isCross:true,
+      actions:[
+        {label:'💵 Snapshot', fn:()=>{ runAction('cashflow_snapshot'); return 'Cashflow-Snapshot generiert'; }},
+        {label:'📧 Transgourmet anschreiben', fn:()=>{ corporateMailFor({betreff:'Transgourmet Sponsoring — Aktivierung LOI bis 10k€', an:'Transgourmet (LOI-Kontakt)', anrede:'Sehr geehrte Damen und Herren,', paragraphen:['anknüpfend an unseren LOI vom 27.03.2026 möchte ich gerne den nächsten Schritt zur Sponsoring-Aktivierung bis 10.000 € besprechen.','Wäre nächste Woche ein kurzer Call möglich?']}); return 'Transgourmet-Brief offen'; }},
+        {label:'🏦 Bank-Call vorbereiten', fn:()=>{ addTask('Bank-Call 350k€-Darlehen vorbereiten · BP 03/26 + LOIs', 'high'); return 'Task gesetzt'; }}
+      ]});
+    candidates.sort((a,b) => b.score - a.score);
+    return candidates[0];
+  }
 
   async function generateInsights(){
     const insights = [];
@@ -1267,24 +1341,53 @@ REGELN: Deutsch, präzise, max 8 Sätze Standard. Bei Strategie: erst Schwäche,
   }
 
   async function renderToday(body){
-    body.innerHTML = `<div class="sam-h4">Lädt Live-Daten...</div>`;
-    const insights = await generateInsights();
+    body.innerHTML = `<div class="sam-h4">Lädt CEO-Briefing…</div>`;
+    const [insights, topAction] = await Promise.all([
+      generateInsights(),
+      Promise.resolve(highestPriorityAction([]))
+    ]);
     const greet = greeting();
-    let html = `
-      <div style="background:linear-gradient(135deg,rgba(255,158,177,.12),transparent);padding:12px;border-radius:12px;margin-bottom:14px;border-left:3px solid #ff9eb1">
-        <div style="font-size:13.5px;line-height:1.5">${greet}</div>
+    let html = '';
+
+    // ═══ CEO-MODE: WAS JETZT? Hero-Karte ═══
+    if (topAction) {
+      const hours = topAction.hours !== undefined ? topAction.hours : null;
+      const when = hours !== null
+        ? (hours < 1 ? Math.floor(hours*60)+' Min' : hours < 24 ? Math.floor(hours)+' Std' : Math.floor(hours/24)+' Tage')
+        : 'höchste Priorität';
+      html += `<div id="ceo-now-card" style="position:relative;background:linear-gradient(135deg,rgba(255,158,177,.18),rgba(154,240,255,.12));border:2px solid rgba(255,158,177,.45);border-radius:16px;padding:14px 16px;margin-bottom:14px;overflow:hidden;box-shadow:0 8px 32px rgba(255,158,177,.15)">
+        <div style="position:absolute;top:0;right:0;background:linear-gradient(135deg,#ff9eb1,#c9a84c);color:#0a0a14;padding:3px 10px;border-bottom-left-radius:10px;font-size:9.5px;font-weight:800;letter-spacing:.12em">WAS JETZT</div>
+        <div style="display:flex;align-items:flex-start;gap:12px;margin-top:6px">
+          <div style="font-size:30px;line-height:1;flex-shrink:0;filter:drop-shadow(0 0 12px rgba(255,158,177,.5))">${topAction.icon}</div>
+          <div style="flex:1;min-width:0">
+            <div style="font-size:14px;font-weight:700;color:#fff;line-height:1.3">${escapeHTML(topAction.title)}</div>
+            <div style="font-size:11.5px;color:#c8c8d4;margin-top:4px;line-height:1.5">${escapeHTML(topAction.loc||'')}</div>
+            <div style="font-size:10.5px;color:#ff9eb1;margin-top:4px;letter-spacing:.04em">⚡ ${escapeHTML(when)} · Score ${Math.round(topAction.score||0)}</div>
+            <div id="ceo-now-actions" style="display:flex;gap:5px;flex-wrap:wrap;margin-top:10px"></div>
+          </div>
+        </div>
       </div>`;
+    }
+
+    // ═══ Greeting ═══
+    html += `<div style="background:linear-gradient(135deg,rgba(154,240,255,.08),transparent);padding:11px 14px;border-radius:11px;margin-bottom:14px;border-left:3px solid #9af0ff">
+        <div style="font-size:13px;line-height:1.5;color:#e6e9ed">${greet}</div>
+      </div>`;
+
+    // ═══ INSIGHTS mit interaktiven Action-Buttons ═══
     if (insights.length) {
-      html += `<div class="sam-h4">🎯 Live aus Kalender & Mail</div>`;
-      insights.forEach(i => {
-        html += `<div class="sam-insight ${i.kind}">
+      html += `<div class="sam-h4">🎯 Live aus Kalender & Mail · interaktiv</div>`;
+      insights.forEach((i, idx) => {
+        html += `<div class="sam-insight ${i.kind}" data-insight-idx="${idx}" style="margin-bottom:10px">
           <div style="font-weight:600;font-size:12.5px">${i.icon} ${escapeHTML(i.title)}</div>
-          <div style="font-size:11.5px;color:#c8c8d4;margin-top:3px">${escapeHTML(i.body||'')}</div>
+          <div style="font-size:11.5px;color:#c8c8d4;margin-top:3px;line-height:1.5">${escapeHTML(i.body||'')}</div>
+          <div data-ins-actions="${idx}" style="display:flex;gap:4px;flex-wrap:wrap;margin-top:8px"></div>
         </div>`;
       });
     }
-    html += `<div class="sam-h4">⚡ Top-Actions (Tab "Actions" für alle)</div>`;
-    ACTIONS.slice(0,4).forEach(a => {
+
+    html += `<div class="sam-h4">⚡ Cross-Dashboard Quick-Actions</div>`;
+    ACTIONS.slice(0,5).forEach(a => {
       html += `<div class="sam-action-row" data-action="${a.id}">
         <div class="sam-act-icon">${a.icon}</div>
         <div class="sam-act-text">
@@ -1294,6 +1397,50 @@ REGELN: Deutsch, präzise, max 8 Sätze Standard. Bei Strategie: erst Schwäche,
       </div>`;
     });
     body.innerHTML = html;
+
+    // Bindings — CEO-Now-Card-Buttons
+    if (topAction && topAction.actions) {
+      const cont = document.getElementById('ceo-now-actions');
+      topAction.actions.forEach(a => {
+        const btn = document.createElement('button');
+        btn.style.cssText = 'background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);color:#fff;padding:5px 10px;border-radius:6px;font-size:10.5px;cursor:pointer;font-weight:600;transition:.15s';
+        btn.onmouseover = () => btn.style.background='rgba(255,158,177,.2)';
+        btn.onmouseout  = () => btn.style.background='rgba(255,255,255,.08)';
+        btn.textContent = a.label;
+        btn.onclick = () => { const r = a.fn(); toast('✓ '+r); };
+        cont.appendChild(btn);
+      });
+    } else if (topAction) {
+      // Wenn topAction aus MANUAL_DATES kommt → insightActions verwenden
+      const cont = document.getElementById('ceo-now-actions');
+      const acts = insightActions(topAction);
+      acts.forEach(a => {
+        const btn = document.createElement('button');
+        btn.style.cssText = 'background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);color:#fff;padding:5px 10px;border-radius:6px;font-size:10.5px;cursor:pointer;font-weight:600;transition:.15s';
+        btn.onmouseover = () => btn.style.background='rgba(255,158,177,.2)';
+        btn.onmouseout  = () => btn.style.background='rgba(255,255,255,.08)';
+        btn.textContent = a.label;
+        btn.onclick = () => { const r = a.fn(); toast('✓ '+r); };
+        cont.appendChild(btn);
+      });
+    }
+
+    // Bindings — Insight-Buttons
+    insights.forEach((i, idx) => {
+      const cont = body.querySelector('[data-ins-actions="'+idx+'"]');
+      if (!cont) return;
+      const acts = insightActions(i);
+      acts.forEach(a => {
+        const btn = document.createElement('button');
+        btn.style.cssText = 'background:rgba(154,240,255,.1);border:1px solid rgba(154,240,255,.3);color:#9af0ff;padding:4px 9px;border-radius:5px;font-size:10px;cursor:pointer;font-weight:500;transition:.15s';
+        btn.onmouseover = () => btn.style.background='rgba(154,240,255,.22)';
+        btn.onmouseout  = () => btn.style.background='rgba(154,240,255,.1)';
+        btn.textContent = a.label;
+        btn.onclick = () => { const r = a.fn(); toast('✓ '+r); };
+        cont.appendChild(btn);
+      });
+    });
+
     body.querySelectorAll('[data-action]').forEach(el => el.onclick = () => runAction(el.dataset.action));
   }
 
@@ -1557,6 +1704,31 @@ REGELN: Deutsch, präzise, max 8 Sätze Standard. Bei Strategie: erst Schwäche,
   }
 
   // -------- BOOT -----------------------------------------------------------
+  // -------- STILLSTAND-KILLER · Idle-Detection -----------------------------
+  // v8.2: Wenn Carsten >10 min keine Action geklickt hat → Lucy nudge
+  let lastActivity = Date.now();
+  const NUDGE_INTERVAL = 10 * 60 * 1000; // 10 min
+  let lastNudge = 0;
+  ['click','keydown','mousemove','scroll'].forEach(ev => document.addEventListener(ev, () => lastActivity = Date.now(), {passive:true}));
+  setInterval(async () => {
+    const idle = Date.now() - lastActivity;
+    const sinceNudge = Date.now() - lastNudge;
+    if (idle > NUDGE_INTERVAL && sinceNudge > 20*60*1000 && !document.hidden) {
+      lastNudge = Date.now();
+      const top = highestPriorityAction([]);
+      if (top) {
+        // Sanfte Nudge — kein modal, Toast mit "Was JETZT?"
+        const t = document.createElement('div');
+        t.style.cssText='position:fixed;bottom:100px;right:22px;width:340px;background:linear-gradient(135deg,rgba(18,26,40,.98),rgba(10,18,30,.98));color:#fff;padding:14px 16px;border-radius:14px;z-index:1000005;box-shadow:0 16px 50px rgba(0,0,0,.7),0 0 0 1px rgba(255,158,177,.45);border-left:3px solid #ff9eb1;font-family:inherit;font-size:12.5px;line-height:1.5;animation:samSlide .4s';
+        t.innerHTML = '<div style="font-size:10px;color:#ff9eb1;letter-spacing:.15em;font-weight:700;margin-bottom:4px">LUCY · KEIN STILLSTAND</div><div style="font-weight:600;color:#fff">'+top.icon+' '+escapeHTML(top.title)+'</div><div style="font-size:11px;color:#c8c8d4;margin-top:4px">'+escapeHTML((top.loc||'').slice(0,90))+'</div><div style="display:flex;gap:6px;margin-top:10px"><button id="nudge-go" style="flex:1;background:linear-gradient(135deg,#ff9eb1,#c9a84c);border:0;color:#0a0a14;padding:6px 10px;border-radius:6px;font-size:11px;font-weight:700;cursor:pointer">Anpacken</button><button id="nudge-snz" style="background:transparent;border:1px solid rgba(255,255,255,.18);color:#9d9db0;padding:6px 10px;border-radius:6px;font-size:11px;cursor:pointer">Später</button></div>';
+        document.body.appendChild(t);
+        document.getElementById('nudge-go').onclick = () => { window.Samantha.open(); currentTab='today'; renderBody(); t.remove(); };
+        document.getElementById('nudge-snz').onclick = () => { t.remove(); };
+        setTimeout(() => { if (t.parentNode) t.remove(); }, 22000);
+      }
+    }
+  }, 60000);
+
   function boot(){
     injectStyle();
     buildAvatar();
