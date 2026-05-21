@@ -8283,106 +8283,289 @@ if (typeof window.addMemoryEntry !== 'function') {
 </script>
 
 <!-- ===========================================================
-     WAVE BITE UNIVERSE - Header Hyperspace Animation (v7.1 FIX)
-     Initialisiert das #wb-universe-canvas im Hero
-     Sterne - Hyperspace-Tunnel - Holo-Planeten - Tie-Fighter-Trails
+     WAVE BITE UNIVERSE - Star-Wars-Style 3D Hero Animation (v7 fly-by)
+     Hyperspace Parallax-Sterne + Tie-Fighter-Streaks + Orbital Holo-Planets + Death-Star-Hub
      =========================================================== -->
+<!-- ═══════════════════════════════════════════════════════════
+     WAVE BITE UNIVERSE — Star-Wars-Style 3D Hero Animation
+     Hyperspace + Tie-Fighter-Streaks + Orbiting Holo-Planets + Death-Star-Pulse
+     ═══════════════════════════════════════════════════════════ -->
 <script>
-(function(){
-  function initWBUniverse(){
-    var c = document.getElementById('wb-universe-canvas');
-    if (!c || !c.getContext) return;
-    var ctx = c.getContext('2d');
-    var W=0, H=0, DPR = Math.min(window.devicePixelRatio||1, 2);
-    function resize(){
-      var r = c.getBoundingClientRect();
-      W = Math.max(320, r.width|0); H = Math.max(180, r.height|0);
-      c.width = (W*DPR)|0; c.height = (H*DPR)|0;
-      ctx.setTransform(DPR,0,0,DPR,0,0);
-    }
-    resize(); window.addEventListener('resize', resize);
-    var STARS = [];
-    for (var i=0;i<180;i++){
-      STARS.push({ x:(Math.random()-0.5)*2, y:(Math.random()-0.5)*2, z:Math.random()*1+0.1, s:0.4+Math.random()*1.3, ph:Math.random()*Math.PI*2 });
-    }
-    var PLANETS = [
-      { col:'rgba(0,212,170,0.85)',  r:7,  ang:0.0, sp:0.0025, rad:0.34, glow:'rgba(0,212,170,0.45)', label:'WB' },
-      { col:'rgba(154,240,255,0.9)', r:5,  ang:1.7, sp:0.0036, rad:0.42, glow:'rgba(154,240,255,0.45)', label:'WL' },
-      { col:'rgba(255,210,140,0.85)',r:4.5,ang:3.4, sp:0.0044, rad:0.48, glow:'rgba(255,210,140,0.45)', label:'BB' },
-      { col:'rgba(201,168,76,0.9)',  r:4,  ang:5.1, sp:0.0029, rad:0.55, glow:'rgba(201,168,76,0.45)',  label:'L1' }
-    ];
-    var TRAILS = []; var lastTrail = 0;
-    function spawnTrail(t){
-      if (t-lastTrail < 1400 || TRAILS.length>3) return;
-      lastTrail = t;
-      var side = Math.random()<0.5 ? -1 : 1;
-      TRAILS.push({ x: side<0?-40:W+40, y:H*(0.18+Math.random()*0.64), vx: side*(2.6+Math.random()*1.6), life:0 });
-    }
-    var t = 0; var running = true;
-    document.addEventListener('visibilitychange', function(){ running = !document.hidden; if (running) tick(); });
-    function tick(){
-      if (!running) return;
-      t += 0.016;
-      var g = ctx.createRadialGradient(W/2, H*0.45, 10, W/2, H*0.5, Math.max(W,H)*0.7);
-      g.addColorStop(0, 'rgba(0,30,60,0.0)');
-      g.addColorStop(0.7, 'rgba(0,8,18,0.12)');
-      g.addColorStop(1, 'rgba(0,0,0,0.28)');
-      ctx.clearRect(0,0,W,H);
-      ctx.fillStyle = g; ctx.fillRect(0,0,W,H);
-      ctx.lineCap = 'round';
-      for (var i=0;i<STARS.length;i++){
-        var s = STARS[i];
-        s.z -= 0.0045;
-        if (s.z < 0.04){ s.x=(Math.random()-0.5)*2; s.y=(Math.random()-0.5)*2; s.z=1; s.ph=Math.random()*Math.PI*2; }
-        var px = (s.x/s.z)*W*0.5 + W/2;
-        var py = (s.y/s.z)*H*0.5 + H/2;
-        if (px<-20||px>W+20||py<-20||py>H+20) continue;
-        var prev_z = s.z + 0.0045;
-        var ppx = (s.x/prev_z)*W*0.5 + W/2;
-        var ppy = (s.y/prev_z)*H*0.5 + H/2;
-        var a = 0.4 + Math.abs(Math.sin(t*1.2+s.ph))*0.5;
-        ctx.strokeStyle = 'rgba(180,220,255,'+(a*(1-s.z))+')';
-        ctx.lineWidth = s.s*(1-s.z)*1.4;
-        ctx.beginPath(); ctx.moveTo(ppx,ppy); ctx.lineTo(px,py); ctx.stroke();
-      }
-      ctx.strokeStyle = 'rgba(0,200,255,0.10)';
-      ctx.lineWidth = 1;
-      for (var k=0;k<PLANETS.length;k++){
-        var p = PLANETS[k];
-        var rx = W*0.5 * p.rad, ry = H*0.34 * p.rad;
-        ctx.beginPath(); ctx.ellipse(W/2, H/2, rx, ry, 0, 0, Math.PI*2); ctx.stroke();
-      }
-      for (var k=0;k<PLANETS.length;k++){
-        var p = PLANETS[k]; p.ang += p.sp;
-        var rx = W*0.5 * p.rad, ry = H*0.34 * p.rad;
-        var px = W/2 + Math.cos(p.ang)*rx;
-        var py = H/2 + Math.sin(p.ang)*ry;
-        var gr = ctx.createRadialGradient(px,py,1, px,py, p.r*5);
-        gr.addColorStop(0, p.glow); gr.addColorStop(1, 'rgba(0,0,0,0)');
-        ctx.fillStyle = gr; ctx.beginPath(); ctx.arc(px,py, p.r*5, 0, Math.PI*2); ctx.fill();
-        ctx.fillStyle = p.col; ctx.beginPath(); ctx.arc(px,py, p.r, 0, Math.PI*2); ctx.fill();
-        ctx.fillStyle = 'rgba(204,232,255,0.85)';
-        ctx.font = '600 9px JetBrains Mono, monospace';
-        ctx.textAlign='center'; ctx.fillText(p.label, px, py - p.r - 4);
-      }
-      spawnTrail(t*1000);
-      for (var i=TRAILS.length-1;i>=0;i--){
-        var tr = TRAILS[i]; tr.x += tr.vx; tr.life += 1;
-        ctx.strokeStyle = 'rgba(255,160,90,0.55)';
-        ctx.lineWidth = 1.2;
-        ctx.beginPath(); ctx.moveTo(tr.x - tr.vx*7, tr.y); ctx.lineTo(tr.x, tr.y); ctx.stroke();
-        ctx.fillStyle = 'rgba(220,230,255,0.85)';
-        ctx.fillRect(tr.x-2, tr.y-1.6, 3, 3.2);
-        if (tr.x < -60 || tr.x > W+60) TRAILS.splice(i,1);
-      }
-      requestAnimationFrame(tick);
-    }
-    tick();
-    window.__wbUniverseAlive = true;
-    console.log('Wave Bite Universe Animation laeuft');
+(function() {
+  const cv = document.getElementById('wb-universe-canvas');
+  if (!cv) return;
+  const ctx = cv.getContext('2d');
+  const dpr = Math.min(window.devicePixelRatio || 1, 2);
+
+  function resize() {
+    const r = cv.getBoundingClientRect();
+    cv.width = Math.max(600, r.width) * dpr;
+    cv.height = Math.max(420, r.height) * dpr;
   }
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initWBUniverse);
-  else setTimeout(initWBUniverse, 50);
+  resize();
+  window.addEventListener('resize', resize);
+
+  // ─── Star Field — PARALLAX FLY-BY (von rechts nach links) v7 ─
+  // 3 Layer mit unterschiedlichen Geschwindigkeiten, ruhig & elegant
+  const starLayers = [
+    { count: 80, depth: 0.5, color: 'rgba(180,210,255,', speed: 0.15 },  // Background — sehr langsam
+    { count: 50, depth: 0.85, color: 'rgba(220,235,255,', speed: 0.45 }, // Middle — gemächlich
+    { count: 22, depth: 1.0, color: 'rgba(255,255,255,', speed: 0.95 }   // Foreground — sichtbar fliegend
+  ];
+  const stars = [];
+  starLayers.forEach((l, li) => {
+    for (let i = 0; i < l.count; i++) stars.push({
+      x: Math.random(), // 0..1 normalized
+      y: Math.random(), // 0..1 normalized
+      layer: li,
+      ph: Math.random() * Math.PI * 2,
+      size: 0.3 + Math.random() * 1.2
+    });
+  });
+
+  // ─── Streaks — beruhigt, horizontal fliegend (sanfte Linien) ─
+  function spawnStreak() {
+    const y = Math.random();
+    return {
+      y,
+      x: 1.05 + Math.random() * 0.1, // startet rechts außerhalb
+      speed: 0.0015 + Math.random() * 0.0025, // langsam
+      len: 30 + Math.random() * 70,
+      depth: 0.6 + Math.random() * 0.4,
+      hue: 190 + Math.random() * 25,
+      op: 0.25 + Math.random() * 0.35
+    };
+  }
+  const streaks = Array.from({ length: 6 }, () => { const s = spawnStreak(); s.x = Math.random(); return s; });
+
+  // ─── Orbiting Wave-Bite-Planets (8 Projekte) ─────────────────
+  const PLANETS = [
+    { name: 'WASSERLAGE', col: '#00d4aa', size: 18, orbit: 220, speed: 0.0042, angle: 0, glow: 16, status: 'LIVE' },
+    { name: 'BUNBO',      col: '#1edfff', size: 14, orbit: 280, speed: 0.0028, angle: 0.7, glow: 14, status: 'BETA' },
+    { name: 'WIPO',       col: '#a78bfa', size: 12, orbit: 195, speed: -0.0035, angle: 1.4, glow: 12, status: 'SECURED' },
+    { name: 'FINANCE',    col: '#c9a84c', size: 16, orbit: 320, speed: 0.0021, angle: 2.1, glow: 16, status: 'HUNT' },
+    { name: 'PARTNER',    col: '#00c8ff', size: 14, orbit: 250, speed: -0.0026, angle: 2.8, glow: 13, status: '5 LOIs' },
+    { name: 'MARKETING',  col: '#ff9eb1', size: 13, orbit: 360, speed: 0.0017, angle: 3.5, glow: 11, status: '30-Tage' },
+    { name: 'HIMMELREICH',col: '#ffd166', size: 11, orbit: 175, speed: -0.0045, angle: 4.2, glow: 10, status: 'IDEA' },
+    { name: 'ROKA',       col: '#ff9e6a', size: 12, orbit: 295, speed: 0.0023, angle: 4.9, glow: 12, status: 'WARM' }
+  ];
+
+  // ─── Twin-Sun-Hub (Death Star ähnlich, aber Wave-Bite-Style) ─
+  // v7: alle Animation-Tempi halbiert für ruhigeres Gesamtbild
+  let frame = 0;
+  function draw() {
+    const W = cv.width, H = cv.height;
+    const cx = W / 2, cy = H / 2;
+    ctx.clearRect(0, 0, W, H);
+
+    // 1. DEEP-SPACE BACKGROUND mit Nebel
+    const bg = ctx.createRadialGradient(cx, cy, 0, cx, cy, Math.max(W, H) * 0.7);
+    bg.addColorStop(0, 'rgba(8,16,36,0.0)');
+    bg.addColorStop(0.45, 'rgba(2,8,22,0.45)');
+    bg.addColorStop(1, 'rgba(0,2,8,0.85)');
+    ctx.fillStyle = bg;
+    ctx.fillRect(0, 0, W, H);
+
+    // 2. Far nebula clouds (Wave-Bite-Farben)
+    ['rgba(0,200,255,0.04)', 'rgba(201,168,76,0.035)', 'rgba(255,158,177,0.03)'].forEach((color, i) => {
+      const nx = cx + Math.cos(frame * 0.0007 + i * 2) * 180;
+      const ny = cy + Math.sin(frame * 0.0009 + i * 2) * 90;
+      const ng = ctx.createRadialGradient(nx, ny, 0, nx, ny, 280);
+      ng.addColorStop(0, color);
+      ng.addColorStop(1, 'transparent');
+      ctx.fillStyle = ng;
+      ctx.fillRect(0, 0, W, H);
+    });
+
+    // 3. PARALLAX STARS — fliegen horizontal von rechts nach links
+    stars.forEach(s => {
+      const lay = starLayers[s.layer];
+      // Position pro Layer langsam nach links bewegen
+      s.x -= lay.speed * 0.0008;
+      if (s.x < -0.02) { s.x = 1.02; s.y = Math.random(); }
+      const px = s.x * W;
+      const py = s.y * H;
+      const al = 0.25 + Math.abs(Math.sin(frame * 0.018 + s.ph)) * 0.5;
+      ctx.fillStyle = lay.color + al + ')';
+      ctx.beginPath();
+      ctx.arc(px, py, s.size * lay.depth * dpr, 0, Math.PI * 2);
+      ctx.fill();
+    });
+
+    // 4. SANFTE FLY-BY-STREAKS (horizontal, langsam, parallax)
+    streaks.forEach((s, i) => {
+      s.x -= s.speed;
+      if (s.x < -0.1) { Object.assign(s, spawnStreak()); }
+      const x1 = s.x * W;
+      const y1 = s.y * H;
+      const x2 = x1 + s.len * dpr;
+      const grad = ctx.createLinearGradient(x1, y1, x2, y1);
+      grad.addColorStop(0, `hsla(${s.hue},80%,80%,${s.op})`);
+      grad.addColorStop(1, `hsla(${s.hue},80%,80%,0)`);
+      ctx.strokeStyle = grad;
+      ctx.lineWidth = 0.9 * dpr * s.depth;
+      ctx.beginPath();
+      ctx.moveTo(x1, y1);
+      ctx.lineTo(x2, y1);
+      ctx.stroke();
+    });
+
+    // 5. ORBIT-RINGS (4 Schichten, perspektivisch elliptisch)
+    [195, 250, 295, 340, 380].forEach((r, i) => {
+      ctx.beginPath();
+      ctx.ellipse(cx, cy, r * dpr, r * 0.42 * dpr, 0, 0, Math.PI * 2);
+      ctx.strokeStyle = `rgba(0,200,255,${0.05 + Math.sin(frame * 0.012 + i) * 0.025})`;
+      ctx.lineWidth = 0.7 * dpr;
+      ctx.setLineDash([3 * dpr, 6 * dpr]);
+      ctx.stroke();
+    });
+    ctx.setLineDash([]);
+
+    // 6. DEATH-STAR-STYLE CORE HUB (Wave-Bite-Universe-Zentrum) · v7 langsamer
+    const corePulse = 1 + Math.sin(frame * 0.012) * 0.04;
+    const coreR = 40 * dpr * corePulse;
+    // Outer glow halo
+    const haloGrad = ctx.createRadialGradient(cx, cy, coreR * 0.4, cx, cy, coreR * 3.5);
+    haloGrad.addColorStop(0, 'rgba(0,212,170,0.18)');
+    haloGrad.addColorStop(0.4, 'rgba(201,168,76,0.08)');
+    haloGrad.addColorStop(1, 'transparent');
+    ctx.fillStyle = haloGrad;
+    ctx.beginPath();
+    ctx.arc(cx, cy, coreR * 3.5, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Death-Star-Equatorial-Trench (Sci-Fi-Belt)
+    ctx.strokeStyle = `rgba(201,168,76,${0.6 + Math.sin(frame * 0.04) * 0.15})`;
+    ctx.lineWidth = 1.6 * dpr;
+    ctx.beginPath();
+    ctx.ellipse(cx, cy, coreR * 1.1, coreR * 0.35, frame * 0.005, 0, Math.PI * 2);
+    ctx.stroke();
+
+    // Rotating Hexagonal Beacons um Hub
+    for (let i = 0; i < 6; i++) {
+      const ang = (Math.PI * 2 / 6) * i + frame * 0.018;
+      const bx = cx + Math.cos(ang) * coreR * 1.4;
+      const by = cy + Math.sin(ang) * coreR * 1.4;
+      const bSize = 2.2 * dpr * (0.8 + Math.sin(frame * 0.08 + i) * 0.4);
+      ctx.fillStyle = `hsla(${50 + i * 30},90%,70%,0.85)`;
+      ctx.shadowColor = `hsla(${50 + i * 30},90%,70%,1)`;
+      ctx.shadowBlur = 10 * dpr;
+      ctx.beginPath();
+      ctx.arc(bx, by, bSize, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.shadowBlur = 0;
+    }
+
+    // 7. ORBITING PLANETS mit Trails + Holo-Beam zum Hub
+    PLANETS.forEach(p => {
+      p.angle += p.speed;
+      const px = cx + Math.cos(p.angle) * p.orbit * dpr;
+      const py = cy + Math.sin(p.angle) * p.orbit * 0.42 * dpr;
+
+      // Holo-Laser-Beam vom Hub zum Planeten (Sci-Fi-Verbindung)
+      const beamGrad = ctx.createLinearGradient(cx, cy, px, py);
+      beamGrad.addColorStop(0, p.col + 'CC');
+      beamGrad.addColorStop(0.6, p.col + '33');
+      beamGrad.addColorStop(1, p.col + '00');
+      ctx.strokeStyle = beamGrad;
+      ctx.lineWidth = 0.9 * dpr;
+      ctx.beginPath();
+      ctx.moveTo(cx, cy);
+      ctx.lineTo(px, py);
+      ctx.stroke();
+
+      // Trail (3 frames zurück)
+      for (let t = 1; t <= 5; t++) {
+        const ta = p.angle - p.speed * t * 3;
+        const tx = cx + Math.cos(ta) * p.orbit * dpr;
+        const ty = cy + Math.sin(ta) * p.orbit * 0.42 * dpr;
+        ctx.fillStyle = p.col + Math.round((1 - t / 6) * 100).toString(16).padStart(2, '0');
+        ctx.beginPath();
+        ctx.arc(tx, ty, p.size * dpr * 0.35, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      // Planet-Glow
+      const glowGrad = ctx.createRadialGradient(px, py, 0, px, py, p.glow * dpr);
+      glowGrad.addColorStop(0, p.col + 'FF');
+      glowGrad.addColorStop(0.4, p.col + '88');
+      glowGrad.addColorStop(1, p.col + '00');
+      ctx.fillStyle = glowGrad;
+      ctx.beginPath();
+      ctx.arc(px, py, p.glow * dpr, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Planet-Core
+      ctx.fillStyle = p.col;
+      ctx.shadowColor = p.col;
+      ctx.shadowBlur = 14 * dpr;
+      ctx.beginPath();
+      ctx.arc(px, py, p.size * dpr * 0.42, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.shadowBlur = 0;
+
+      // Inner highlight
+      ctx.fillStyle = 'rgba(255,255,255,0.6)';
+      ctx.beginPath();
+      ctx.arc(px - p.size * dpr * 0.12, py - p.size * dpr * 0.12, p.size * dpr * 0.16, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Label
+      ctx.fillStyle = 'rgba(220,235,255,0.85)';
+      ctx.shadowColor = 'rgba(0,0,0,0.9)';
+      ctx.shadowBlur = 4 * dpr;
+      ctx.font = `bold ${7.5 * dpr}px -apple-system,sans-serif`;
+      ctx.textAlign = 'center';
+      ctx.fillText(p.name, px, py + p.size * dpr * 0.62 + 12 * dpr);
+      ctx.shadowBlur = 0;
+      // Status-Pill
+      ctx.fillStyle = p.col + 'DD';
+      ctx.font = `${5.5 * dpr}px -apple-system,sans-serif`;
+      ctx.fillText(p.status, px, py + p.size * dpr * 0.62 + 22 * dpr);
+    });
+
+    // 8. SCAN-LINE Sweep (Star-Trek-Style HUD-Scanner) · v7 langsamer
+    const scanY = ((frame * 0.6) % (H + 100)) - 50;
+    const scanGrad = ctx.createLinearGradient(0, scanY - 40, 0, scanY + 40);
+    scanGrad.addColorStop(0, 'rgba(0,212,170,0)');
+    scanGrad.addColorStop(0.5, 'rgba(0,212,170,0.04)');
+    scanGrad.addColorStop(1, 'rgba(0,212,170,0)');
+    ctx.fillStyle = scanGrad;
+    ctx.fillRect(0, scanY - 40, W, 80);
+
+    // 9. HUD Corner Brackets (sci-fi tactical)
+    const corner = 18 * dpr;
+    const margin = 6 * dpr;
+    ctx.strokeStyle = 'rgba(201,168,76,0.55)';
+    ctx.lineWidth = 1.3 * dpr;
+    [[margin, margin, 1, 1], [W - margin, margin, -1, 1], [margin, H - margin, 1, -1], [W - margin, H - margin, -1, -1]].forEach(([x, y, sx, sy]) => {
+      ctx.beginPath();
+      ctx.moveTo(x, y + corner * sy);
+      ctx.lineTo(x, y);
+      ctx.lineTo(x + corner * sx, y);
+      ctx.stroke();
+    });
+
+    // 10. TACTICAL READOUT (links unten)
+    ctx.fillStyle = 'rgba(0,212,170,0.7)';
+    ctx.font = `${6 * dpr}px monospace`;
+    ctx.textAlign = 'left';
+    ctx.fillText('WBU-1A · WAVE BITE UNIVERSE', margin + 4 * dpr, H - margin - 14 * dpr);
+    ctx.fillText('SECTOR: BERLIN-BB · 8 PROJ-NODES · 5 LOI-SHIPS', margin + 4 * dpr, H - margin - 6 * dpr);
+    ctx.textAlign = 'right';
+    ctx.fillStyle = 'rgba(201,168,76,0.7)';
+    ctx.fillText('READINESS 69% · CO-PILOT SAMANTHA v3', W - margin - 4 * dpr, H - margin - 6 * dpr);
+
+    frame++;
+    if (!document.hidden) requestAnimationFrame(draw);
+    else cv._needRestart = true;
+  }
+  draw();
+
+  // Restart on tab focus
+  document.addEventListener('visibilitychange', () => {
+    if (!document.hidden && cv._needRestart) { cv._needRestart = false; draw(); }
+  });
 })();
 </script>
 
