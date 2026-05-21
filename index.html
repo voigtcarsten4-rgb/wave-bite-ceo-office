@@ -1745,8 +1745,15 @@
   /* Boot-Screen bleibt unverändert, alle anderen Animationen sichtbar */
 </style>
 
+  <meta http-equiv="cache-control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="pragma" content="no-cache">
+  <meta http-equiv="expires" content="0">
+  <meta name="version" content="v20-2026-05-22">
 </head>
 <body>
+<!-- v20 -->
+<div id="v20-cta-bar" style="position:fixed;top:64px;right:14px;z-index:998;display:flex;flex-direction:column;gap:.4rem;pointer-events:auto"><a href="#sec-studio" onclick="document.getElementById('sec-studio').scrollIntoView({behavior:'smooth'});return false;" style="display:flex;align-items:center;gap:.5rem;padding:.55rem .75rem;background:linear-gradient(135deg,rgba(232,201,106,0.4),rgba(232,201,106,0.18));border:1px solid rgba(232,201,106,0.6);border-radius:10px;color:#fff7c0;font-size:.65rem;font-weight:800;cursor:pointer;text-decoration:none;box-shadow:0 6px 20px rgba(0,0,0,.4);backdrop-filter:blur(8px);white-space:nowrap">🎬 STUDIO</a><a href="wavebite-ai-marketing-os.html" target="_blank" style="display:flex;align-items:center;gap:.5rem;padding:.55rem .75rem;background:linear-gradient(135deg,rgba(168,85,247,0.4),rgba(168,85,247,0.18));border:1px solid rgba(168,85,247,0.6);border-radius:10px;color:#fff;font-size:.65rem;font-weight:800;cursor:pointer;text-decoration:none;box-shadow:0 6px 20px rgba(0,0,0,.4);backdrop-filter:blur(8px);white-space:nowrap">📣 MARKETING-OS ↗</a><a href="wavebite-leonardo-studio.html" target="_blank" style="display:flex;align-items:center;gap:.5rem;padding:.55rem .75rem;background:linear-gradient(135deg,rgba(0,212,170,0.35),rgba(0,212,170,0.15));border:1px solid rgba(0,212,170,0.55);border-radius:10px;color:#9af0d8;font-size:.65rem;font-weight:800;cursor:pointer;text-decoration:none;box-shadow:0 6px 20px rgba(0,0,0,.4);backdrop-filter:blur(8px);white-space:nowrap">🎨 LEONARDO ↗</a></div>
+
 
 <script>
 // v19: Robust Nav-Delegation + Service-Worker Kill (top of body)
@@ -2151,24 +2158,24 @@
 <!-- NAVBAR -->
 <nav>
   <div class="nav-brand">WAVE<span>BITE</span> // JARVIS</div>
-  <div class="nav-pill active" onclick="scrollTo(0,0)">HOME</div>
-  <div class="nav-pill" onclick="document.getElementById('sec-calendar').scrollIntoView({behavior:'smooth'})" style="background:rgba(0,200,255,0.08);border:1px solid rgba(0,200,255,0.3)">📅 KALENDER</div>
-  <div class="nav-pill" onclick="document.getElementById('sec-mail-intel').scrollIntoView({behavior:'smooth'})">✉ MAILS</div>
-  <div class="nav-pill" onclick="document.getElementById('sec-projects').scrollIntoView({behavior:'smooth'})">⚓ PROJEKTE</div>
-  <div class="nav-pill" onclick="document.getElementById('sec-intel').scrollIntoView({behavior:'smooth'})" style="border-color:rgba(201,168,76,0.35);color:var(--gold)">🤖 JARVIS</div>
-  <div class="nav-pill" onclick="document.getElementById('sec-finance').scrollIntoView({behavior:'smooth'})">💰 FINANZEN</div>
-  <div class="nav-pill" onclick="document.getElementById('sec-tools').scrollIntoView({behavior:'smooth'})">🛠 TOOLS</div>
-  <div class="nav-pill" onclick="document.getElementById('sec-executive').scrollIntoView({behavior:'smooth'})" style="border-color:rgba(0,212,170,0.35);color:var(--teal)">⚡ EXEC</div>
-  <div class="nav-pill" onclick="document.getElementById('sec-crm').scrollIntoView({behavior:'smooth'})">🤝 CRM</div>
-  <div class="nav-pill" onclick="document.getElementById('sec-investor').scrollIntoView({behavior:'smooth'})" style="border-color:rgba(201,168,76,0.35);color:var(--gold)">💎 INVEST</div>
-  <div class="nav-pill" onclick="document.getElementById('sec-ops').scrollIntoView({behavior:'smooth'})">⚙ OPS</div>
-  <div class="nav-pill" onclick="document.getElementById('sec-risk').scrollIntoView({behavior:'smooth'})" data-target="sec-risk" style="border-color:rgba(255,68,68,0.35);color:#ff4757">🔴 RISK</div>
-  <div class="nav-pill nav-pill-studio" onclick="document.getElementById('sec-studio').scrollIntoView({behavior:'smooth'})" data-target="sec-studio" style="border-color:rgba(232,201,106,0.55);color:#e8c96a;background:rgba(232,201,106,0.06)">🎬 STUDIO</div>
-  <div class="nav-pill" onclick="document.getElementById('sec-studio').scrollIntoView({behavior:'smooth'})" data-target="sec-studio" style="border-color:rgba(168,85,247,0.5);color:#d9bbff;background:rgba(168,85,247,0.06)">📣 MARKETING</div>
+  <a class="nav-pill active" href="#" onclick="scrollTo(0,0);event.preventDefault?event.preventDefault():null;return false;" data-target="top">HOME</a>
+  <a class="nav-pill" href="#sec-calendar" onclick="document.getElementById('sec-calendar').scrollIntoView({behavior:'smooth'});event.preventDefault?event.preventDefault():null;return false;" data-target="sec-calendar" style="background:rgba(0,200,255,0.08);border:1px solid rgba(0,200,255,0.3)">📅 KALENDER</a>
+  <a class="nav-pill" href="#sec-mail-intel" onclick="document.getElementById('sec-mail-intel').scrollIntoView({behavior:'smooth'});event.preventDefault?event.preventDefault():null;return false;" data-target="sec-mail-intel">✉ MAILS</a>
+  <a class="nav-pill" href="#sec-projects" onclick="document.getElementById('sec-projects').scrollIntoView({behavior:'smooth'});event.preventDefault?event.preventDefault():null;return false;" data-target="sec-projects">⚓ PROJEKTE</a>
+  <a class="nav-pill" href="#sec-intel" onclick="document.getElementById('sec-intel').scrollIntoView({behavior:'smooth'});event.preventDefault?event.preventDefault():null;return false;" data-target="sec-intel" style="border-color:rgba(201,168,76,0.35);color:var(--gold)">🤖 JARVIS</a>
+  <a class="nav-pill" href="#sec-finance" onclick="document.getElementById('sec-finance').scrollIntoView({behavior:'smooth'});event.preventDefault?event.preventDefault():null;return false;" data-target="sec-finance">💰 FINANZEN</a>
+  <a class="nav-pill" href="#sec-tools" onclick="document.getElementById('sec-tools').scrollIntoView({behavior:'smooth'});event.preventDefault?event.preventDefault():null;return false;" data-target="sec-tools">🛠 TOOLS</a>
+  <a class="nav-pill" href="#sec-executive" onclick="document.getElementById('sec-executive').scrollIntoView({behavior:'smooth'});event.preventDefault?event.preventDefault():null;return false;" data-target="sec-executive" style="border-color:rgba(0,212,170,0.35);color:var(--teal)">⚡ EXEC</a>
+  <a class="nav-pill" href="#sec-crm" onclick="document.getElementById('sec-crm').scrollIntoView({behavior:'smooth'});event.preventDefault?event.preventDefault():null;return false;" data-target="sec-crm">🤝 CRM</a>
+  <a class="nav-pill" href="#sec-investor" onclick="document.getElementById('sec-investor').scrollIntoView({behavior:'smooth'});event.preventDefault?event.preventDefault():null;return false;" data-target="sec-investor" style="border-color:rgba(201,168,76,0.35);color:var(--gold)">💎 INVEST</a>
+  <a class="nav-pill" href="#sec-ops" onclick="document.getElementById('sec-ops').scrollIntoView({behavior:'smooth'});event.preventDefault?event.preventDefault():null;return false;" data-target="sec-ops">⚙ OPS</a>
+  <a class="nav-pill" href="#sec-risk" onclick="document.getElementById('sec-risk').scrollIntoView({behavior:'smooth'});event.preventDefault?event.preventDefault():null;return false;" data-target="sec-risk" data-target="sec-risk" style="border-color:rgba(255,68,68,0.35);color:#ff4757">🔴 RISK</a>
+  <a class="nav-pill nav-pill-studio" href="#sec-studio" onclick="document.getElementById('sec-studio').scrollIntoView({behavior:'smooth'});event.preventDefault?event.preventDefault():null;return false;" data-target="sec-studio" data-target="sec-studio" style="border-color:rgba(232,201,106,0.55);color:#e8c96a;background:rgba(232,201,106,0.06)">🎬 STUDIO</a>
+  <a class="nav-pill" href="#sec-studio" onclick="document.getElementById('sec-studio').scrollIntoView({behavior:'smooth'});event.preventDefault?event.preventDefault():null;return false;" data-target="sec-studio" data-target="sec-studio" style="border-color:rgba(168,85,247,0.5);color:#d9bbff;background:rgba(168,85,247,0.06)">📣 MARKETING</a>
   <a class="nav-pill" href="wavebite-ai-marketing-os.html" target="_blank" style="text-decoration:none;border-color:rgba(0,212,170,0.5);color:#9af0d8;background:rgba(0,212,170,0.06);display:inline-flex;align-items:center">⚡ MKT-OS ↗</a>
-  <div class="nav-pill" onclick="document.getElementById('sec-tasks').scrollIntoView({behavior:'smooth'})" data-target="sec-tasks">TASKS</div>
-  <div class="nav-pill" onclick="document.getElementById('sec-agents').scrollIntoView({behavior:'smooth'})">AGENTEN</div>
-  <div class="nav-pill" onclick="document.getElementById('sec-console').scrollIntoView({behavior:'smooth'})">CONSOLE</div>
+  <a class="nav-pill" href="#sec-tasks" onclick="document.getElementById('sec-tasks').scrollIntoView({behavior:'smooth'});event.preventDefault?event.preventDefault():null;return false;" data-target="sec-tasks" data-target="sec-tasks">TASKS</a>
+  <a class="nav-pill" href="#sec-agents" onclick="document.getElementById('sec-agents').scrollIntoView({behavior:'smooth'});event.preventDefault?event.preventDefault():null;return false;" data-target="sec-agents">AGENTEN</a>
+  <a class="nav-pill" href="#sec-console" onclick="document.getElementById('sec-console').scrollIntoView({behavior:'smooth'});event.preventDefault?event.preventDefault():null;return false;" data-target="sec-console">CONSOLE</a>
   <div class="nav-sep"></div>
   <!-- QUICK TOOL BUTTONS IN NAV -->
   <a href="https://mail.google.com" target="_blank" class="nav-tool-btn" title="Gmail öffnen">✉ Mail</a>
@@ -4255,7 +4262,7 @@
 
 <!-- MEDIA & SOCIAL -->
 <section>
-  <div class="section-title">📣 MARKETING & SOCIAL MEDIA</div>
+  <div class="section-title" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.5rem"><span>📣 MARKETING &amp; SOCIAL MEDIA</span><div style="display:flex;gap:.4rem;flex-wrap:wrap"><a href="wavebite-ai-marketing-os.html" target="_blank" style="padding:.35rem .85rem;background:linear-gradient(135deg,rgba(168,85,247,0.32),rgba(120,60,200,0.14));border:1px solid rgba(168,85,247,0.55);border-radius:8px;color:#fff7c0;font-size:.62rem;font-weight:800;text-decoration:none;letter-spacing:.05em;white-space:nowrap;display:inline-flex;align-items:center;gap:.3rem">📣 MARKETING DETAIL-DASHBOARD ↗</a><button onclick="openStudioOS &amp;&amp; openStudioOS('marketing-os')" style="padding:.35rem .85rem;background:rgba(232,201,106,0.15);border:1px solid rgba(232,201,106,0.4);border-radius:8px;color:#e8c96a;font-size:.62rem;font-weight:800;cursor:pointer;letter-spacing:.05em;white-space:nowrap;display:inline-flex;align-items:center;gap:.3rem">⚡ Inline öffnen</button></div></div>
   <div id="marketing-pulse-data" style="font-size:.65rem;color:var(--text-dim);padding:.4rem .75rem;background:rgba(0,200,255,0.03);border-radius:6px;margin-bottom:.75rem">⏳ Marketing Intelligence wird geladen...</div>
   <div class="grid-2">
     <div class="panel">
@@ -4343,6 +4350,8 @@
 <section id="sec-studio" style="margin-bottom:1.5rem">
   <div class="section-title" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.5rem">
     <span style="background:linear-gradient(90deg,#e8c96a,#fff7c0,#e8c96a);-webkit-background-clip:text;background-clip:text;color:transparent;font-weight:800;letter-spacing:.08em">🎬 NEXT-GEN STUDIO // AI MARKETING OS</span>
+    <a href="wavebite-ai-marketing-os.html" target="_blank" style="margin-left:.7rem;padding:.32rem .8rem;background:linear-gradient(135deg,rgba(168,85,247,0.32),rgba(120,60,200,0.14));border:1px solid rgba(168,85,247,0.55);border-radius:8px;color:#fff7c0;font-size:.62rem;font-weight:800;text-decoration:none;letter-spacing:.05em;white-space:nowrap;display:inline-flex;align-items:center;gap:.3rem">📣 MARKETING DETAIL-DASHBOARD ↗</a>
+    <a href="wavebite-leonardo-studio.html" target="_blank" style="margin-left:.3rem;padding:.32rem .8rem;background:linear-gradient(135deg,rgba(0,212,170,0.25),rgba(0,212,170,0.08));border:1px solid rgba(0,212,170,0.5);border-radius:8px;color:#9af0d8;font-size:.62rem;font-weight:800;text-decoration:none;letter-spacing:.05em;white-space:nowrap;display:inline-flex;align-items:center;gap:.3rem">🎨 LEONARDO STUDIO ↗</a>
     <span style="display:inline-flex;align-items:center;gap:.4rem;padding:.18rem .55rem;background:rgba(0,212,170,.12);border:1px solid rgba(0,212,170,.35);border-radius:99px;font-size:.55rem;letter-spacing:.12em;color:#00d4aa;font-weight:700">● SYSTEM AKTIV</span>
   </div>
 
