@@ -66,7 +66,9 @@
     wipo: 'DM/248323 EU+CH "Aufbauten für Hausboote" · 21.07.2025',
     apps: 'BunBo Glide · Wave Bite L1 · Wasserlage GitHub · QR-Bridge 310 Spots',
     bell_food: 'Carsten weiterhin Vollzeit Bell Food (Asset, kein Konflikt, FCB-Grilltrucks)',
-    therapie: 'Pia Schülin · Praxis zum Falken, Basel · jeden Dienstag 08:45',
+    therapie: 'Pia Schülin · Praxis zum Falken, Basel · DI-Termine pausiert · Sonderr-Termine: Do 21.05.2026 14:30 + Mi 28.05.2026 13:30 (E-Mail 19.05.)',
+    wfb_call: 'Heiko Schmidt WFB · Folge-Call 01.06.2026 14:00 Microsoft Teams (Einladung raus 19.05.)',
+    roka: 'Frank Burggraf · ROKA Werk · Gespräch 20.05. gelaufen — Anhänge gesendet · Follow-up offen',
     sozialhilfe: 'ZSozTH (Frau M. Mohan, m.mohan@zsth.ch) — Status nachfassen'
   };
 
@@ -219,6 +221,57 @@
       }
     },
     {
+      id:'schuelin_confirm', icon:'🧠', title:'Therapie-Termine Pia Schülin bestätigen',
+      sub:'Do 21.05. 14:30 + Mi 28.05. 13:30 · Praxis zum Falken, Basel',
+      run: () => {
+        const mail = `Betreff: AW: Vorübergehende Pause der Therapie — Terminbestätigung\n\nLiebe Frau Schülin,\n\nherzlichen Dank für Ihre Nachricht. Ich bestätige die beiden Sonder-Termine:\n\n• Donnerstag, 21.05.2026 um 14:30 Uhr\n• Mittwoch, 28.05.2026 um 13:30 Uhr\n\nbeide in der Praxis zum Falken in Basel.\n\nFalls ich noch Vorbereitendes mitbringen soll, lassen Sie es mich bitte wissen.\n\nMit freundlichen Grüssen\nCarsten Voigt`;
+        try { navigator.clipboard.writeText(mail); } catch(_) {}
+        addNote('Therapie-Bestätigung Schülin: Do 21.05. 14:30 + Mi 28.05. 13:30 (Praxis zum Falken). Mail in Zwischenablage.');
+        return 'Bestätigungsmail in Zwischenablage. Adresse: pia.schuelin@psychologie.ch';
+      }
+    },
+    {
+      id:'heiko_callprep', icon:'🦅', title:'WFB-Call 01.06.2026 14:00 vorbereiten',
+      sub:'Microsoft Teams · Heiko Schmidt · Folgeschritt zum Austausch',
+      run: () => {
+        const prep = `# WFB BRANDENBURG CALL · 01.06.2026 14:00\n\n## Anlass\nHeiko Schmidt hat am 19.05. den Folge-Call bestätigt (\"Einladung zum Call am 01.06. um 14 Uhr ist raus\"). Teams-Besprechungs-ID: 366 350 …\n\n## Ziel des Calls\nKonkrete nächste Schritte WFB ↔ Wave Bite festzurren. WFB ist Tier-1-Strategiepartner.\n\n## Vorzubereitende Punkte (auf Carstens Seite)\n- [ ] BP 03/2026 + Investor-Onepager als PDF-Anhang bereit halten\n- [ ] Förderlogik-Onepager (ILB / BRB / BAFA-Pfad)\n- [ ] 5 LOIs als Anlage (Hugentobler, Radeberger, Transgourmet bis 10k€, TV Dahme, Gifthüttli)\n- [ ] Standort-Karten Müggelsee/Krossinsee/Wolzig/Teupitz + Plan B Usedom\n- [ ] Zeitplan Pilot Saison 2026 (frühestens nach Liegeplatz-Lösung)\n- [ ] Kapitalbedarf-Aufteilung: 450k Pilot · 350k Bank in Vorber. · 50k EK eingelegt\n\n## Fragen, die ICH stellen werde\n1. Welches WFB-Förderprogramm passt am besten zur Pilot-Struktur?\n2. Gibt es eine WFB-Empfehlung für die ILB-Antragsstellung?\n3. Welche Vernetzung mit Tourismus-Brandenburg ist sinnvoll (TV Dahme als Anker)?\n4. Mögliche Ko-Finanzierung mit BAB Brandenburg (Bürgschaft auf das 350k-Darlehen)?\n5. Welche WFB-Veranstaltungen zwischen Juni–September wären Pflicht-Auftritte?\n\n## Fragen, die er stellen könnte (Antworten vorbereitet)\n- \"Wie weit ist der Liegeplatz?\" → 3 Alternativen, Stichtag 01.07., Plan B Usedom\n- \"Status DHDL?\" → Callback offen aus Staffel 19 (Feb–Apr 2026), Pitch finalisiert\n- \"Wie schaut Cap Table aus?\" → SHA §12: 95% Carsten / 5% Marcus voll vested\n- \"Welche Marge?\" → 71% brutto, 67,8% nach Club-Rabatt, Break-Even 72/Tag\n\n## Nach dem Call\n- [ ] Followup-Mail mit Memo + nächsten Schritten innerhalb 24h\n- [ ] Aktualisierung CRM + Faktenbuch\n- [ ] Falls Förderpfad konkret → ILB-Antragsmappe spätestens KW24`;
+        const blob = new Blob([prep], {type:'text/markdown'});
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a'); a.href = url; a.download = 'WFB_Call_01062026_Prep.md'; a.click();
+        setTimeout(()=>URL.revokeObjectURL(url), 5000);
+        addNote('WFB-Call 01.06. 14:00 Vorbereitung: Brief generiert. Anhänge: BP, Onepager, 5 LOIs.');
+        return 'Call-Prep heruntergeladen. Teams-Link aus Mail: 366 350 338 281 537';
+      }
+    },
+    {
+      id:'roka_followup', icon:'🤝', title:'ROKA Werk (Frank Burggraf) Follow-up',
+      sub:'Gespräch 20.05. gelaufen · Anhänge gesendet · Termin festzurren',
+      run: () => {
+        const mail = `Betreff: Wave Bite × ROKA — Folgetermin & Status\n\nHallo Frank,\n\ndanke nochmal für das offene Gespräch gestern. Wie versprochen folgen hier kompakt die nächsten Punkte:\n\n1) Ich habe dir die Anlagen (Businessplan 03/26, Investor-Onepager, WIPO-Designurkunde) bereits zugeschickt — falls etwas fehlt, sag Bescheid.\n2) Für den nächsten konkreten Schritt schlage ich vor, einen 30-min-Termin in KW22 oder KW23 zu finden, in dem wir die mögliche Kooperation (Bootsbau/Komponenten/Marketing-Partnerschaft) festzurren. Vorschläge: Mi 27.05. oder Do 28.05. nachmittags, oder eine Woche später Mi 03.06. / Do 04.06.\n3) Bei Bedarf kann ich euer Werk besuchen — sag mir einfach, was für euch passt.\n\nFreue mich auf eure Rückmeldung!\n\nBeste Grüße\nCarsten`;
+        try { navigator.clipboard.writeText(mail); } catch(_) {}
+        addNote('ROKA-Followup an Frank Burggraf vorbereitet (Zwischenablage). Termin-Vorschläge: Mi 27.05. / Do 28.05. / Mi 03.06. / Do 04.06.');
+        return 'Followup-Mail in Zwischenablage. 4 Termin-Vorschläge integriert.';
+      }
+    },
+    {
+      id:'anthropic_pay', icon:'🚨', title:'Anthropic Payment Failed — Kreditkarte prüfen',
+      sub:'$21.62 + $32.43 unsuccessful — Claude-API gefährdet',
+      run: () => {
+        window.open('https://console.anthropic.com/settings/billing', '_blank');
+        addNote('Anthropic Payment 2× failed (21,62 + 32,43 USD). Kreditkarte in Console aktualisieren — sonst API-Stop. Tab geöffnet.');
+        return 'Anthropic-Console geöffnet. Karte aktualisieren oder neue hinterlegen.';
+      }
+    },
+    {
+      id:'apps_script_fix', icon:'⚙️', title:'Wave_Bite_WaterInfos Apps Script reparieren',
+      sub:'Apps Script meldet Run-Failures — Daten-Pipeline kaputt',
+      run: () => {
+        window.open('https://script.google.com/home/projects/1mH7NmlaGx72KFH6kxD5DkOz0ga8B_YIktiqbWnbeUK3j2u1jNyODPm2J/edit', '_blank');
+        addNote('Wave_Bite_WaterInfos Apps Script: Run failed mehrfach (19.05., 20.05.). Trigger-Logs prüfen, Quota-Limits checken, evtl. OAuth-Scope.');
+        return 'Apps Script Editor geöffnet (QR-Bridge-Projekt). Executions-Tab → letzte Failures inspizieren.';
+      }
+    },
+    {
       id:'cashflow_snapshot', icon:'💵', title:'Cashflow-Snapshot 30/60/90 Tage',
       sub:'Aktuelle Liquiditätslage projezieren',
       run: () => {
@@ -309,37 +362,73 @@ REGELN: Deutsch, präzise, max 8 Sätze Standard. Bei Strategie: erst Schwäche,
   }
 
   // -------- INSIGHTS (scannt Mail/Kalender, erkennt Action-Bedarf) --------
+  // v5: Hardcoded kritische Manuell-Termine + erweitertes Mail-Triage
+  const MANUAL_DATES = [
+    { ts: new Date('2026-05-21T14:30:00').getTime(), title: 'Therapie Pia Schülin (Sonder-Termin)', loc: 'Praxis zum Falken, Basel · Falknerstrasse 26 · 4001 Basel', kind:'therapie', icon:'🧠', src:'Mail Pia Schülin 19.05.' },
+    { ts: new Date('2026-05-28T13:30:00').getTime(), title: 'Therapie Pia Schülin (Sonder-Termin)', loc: 'Praxis zum Falken, Basel · Falknerstrasse 26', kind:'therapie', icon:'🧠', src:'Mail Pia Schülin 19.05.' },
+    { ts: new Date('2026-06-01T14:00:00').getTime(), title: 'WFB Brandenburg Call (Heiko Schmidt)', loc: 'Microsoft Teams · Besprechungs-ID 366 350 …', kind:'wfb', icon:'🦅', src:'Mail Heiko Schmidt 19.05.' },
+    { ts: new Date('2026-05-31T23:59:00').getTime(), title: 'IONOS E-Mail-Nutzung prüfen', loc: 'kontoverwaltung.ionos.de', kind:'admin', icon:'📧', src:'IONOS Erinnerung 20.05.' }
+  ];
+
   async function generateInsights(){
     const insights = [];
     const cal = await bridgeGet('calendar_month', null, 300000);
-    const inbox = await bridgeGet('inbox', {max:30}, 300000);
+    const inbox = await bridgeGet('inbox', {max:50}, 300000);
+    const now = new Date();
+    const today = now.toISOString().slice(0,10);
+    const tomorrow = new Date(now.getTime()+86400000).toISOString().slice(0,10);
 
-    // 1. Heute & Morgen aus Kalender
+    // 1. Manuelle Pflicht-Termine aus Mails (alle, die in Zukunft liegen)
+    MANUAL_DATES.filter(m => m.ts > now.getTime() - 3600000).sort((a,b)=>a.ts-b.ts).slice(0,4).forEach(m => {
+      const d = new Date(m.ts);
+      const dStr = d.toLocaleString('de-DE',{weekday:'short',day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'});
+      const isToday = d.toISOString().slice(0,10) === today;
+      const isTomorrow = d.toISOString().slice(0,10) === tomorrow;
+      const prefix = isToday ? 'HEUTE ' : isTomorrow ? 'MORGEN ' : '';
+      insights.push({ kind: m.kind, icon: m.icon, title: prefix + m.title, body: dStr + ' · ' + m.loc + ' · [Quelle: '+m.src+']' });
+    });
+
+    // 2. Heute & Morgen aus Live-Kalender
     if (cal && cal.events) {
-      const now = new Date();
-      const today = now.toISOString().slice(0,10);
-      const tomorrow = new Date(now.getTime()+86400000).toISOString().slice(0,10);
       cal.events.forEach(e => {
         const day = (e.start||'').slice(0,10);
-        if (day === today) insights.push({ kind:'today', icon:'📅', title:'HEUTE: '+e.title, body:(e.start||'').slice(11,16)+' Uhr · '+(e.location||'kein Ort'), cta:null });
-        else if (day === tomorrow) insights.push({ kind:'tomorrow', icon:'⏰', title:'MORGEN: '+e.title, body:(e.start||'').slice(11,16)+' Uhr · '+(e.location||'kein Ort'), cta:null });
+        if (day === today) insights.push({ kind:'today', icon:'📅', title:'HEUTE: '+e.title, body:(e.start||'').slice(11,16)+' Uhr · '+(e.location||'kein Ort') });
+        else if (day === tomorrow) insights.push({ kind:'tomorrow', icon:'⏰', title:'MORGEN: '+e.title, body:(e.start||'').slice(11,16)+' Uhr · '+(e.location||'kein Ort') });
       });
-      // Therapie-Termin nächster
-      const therapieZukunft = cal.events.filter(e => /schülin|therapie|psycholog/i.test(e.title||'') && new Date(e.start) > now).sort((a,b)=>new Date(a.start)-new Date(b.start))[0];
-      if (therapieZukunft) {
-        const d = new Date(therapieZukunft.start);
-        insights.push({ kind:'therapie', icon:'🧠', title:'Nächste Therapie: Pia Schülin', body:d.toLocaleString('de-DE',{weekday:'long',day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'})+' · '+(therapieZukunft.location||'Praxis zum Falken, Basel'), cta:null });
-      }
     }
 
-    // 2. Mail-Hinweise (kritische Absender/Subjects)
+    // 3. Mail-Triage — vollständig (alle relevanten Absender/Subjects mit Tiering)
     if (inbox && inbox.messages) {
-      const critical = inbox.messages.filter(m => {
-        const s = ((m.subject||'')+' '+(m.from||'')).toLowerCase();
-        return /polizei|elwis|ionos|rechnung|zahlung|failed|sicherheit|betreibung|kündigung|notar|sozial|mohan|schmidt|wfb|heiko|transgourmet|radeberger|hugentobler|gericht/.test(s) && !m.read;
-      }).slice(0,5);
-      critical.forEach(m => {
-        insights.push({ kind:'mail', icon:'📧', title:'Mail: '+(m.fromName||m.from||'?'), body:(m.subject||'').slice(0,90), cta:null });
+      const tiered = inbox.messages.map(m => {
+        const s = ((m.subject||'')+' '+(m.from||'')+' '+(m.snippet||'')).toLowerCase();
+        let tier = 0; let label = '';
+        // TIER 1 — sofortige Action erforderlich
+        if (/heiko|wfb-brandenburg|wirtschaftsinitiative/.test(s)) { tier=1; label='WFB-Brandenburg'; }
+        else if (/burggraf|roka/.test(s)) { tier=1; label='ROKA / Frank Burggraf'; }
+        else if (/schülin|psychologie\.ch|therapie/.test(s)) { tier=1; label='Therapie Pia Schülin'; }
+        else if (/anthropic.*unsuccess|payment.*failed|payment.*declined/.test(s)) { tier=1; label='Anthropic Payment FAILED'; }
+        // TIER 2 — diese Woche prüfen
+        else if (/transgourmet|radeberger|hugentobler|hausboot|jacko/.test(s)) { tier=2; label='Partner-Mail'; }
+        else if (/ionos|kündigung|rechnung|abrechnung|mahnung|fristen/.test(s)) { tier=2; label='Admin / Finanzen'; }
+        else if (/betreibung|gericht|sozial|mohan|zsozth|justiz/.test(s)) { tier=2; label='Behörde'; }
+        else if (/glide.*usage|glide.*billing|apps.?script.*fail|microsoft.*upgrade|github.*run.*fail|wordpress.*plugin/.test(s)) { tier=2; label='Tech-Status'; }
+        else if (/dahme|tourismusverband|norman.*siehl/.test(s)) { tier=2; label='Tourismus-Partner'; }
+        // TIER 3 — kennen, aber kein Action
+        else if (/polizei|elwis|ticket|fc.*basel|fcb|sven.*chalupa|n8n|make\.com/.test(s)) { tier=3; label='Zur Kenntnis'; }
+        return tier ? {m, tier, label} : null;
+      }).filter(Boolean);
+      // Tier 1 alle, Tier 2 max 3, Tier 3 max 2
+      const t1 = tiered.filter(x=>x.tier===1);
+      const t2 = tiered.filter(x=>x.tier===2).slice(0,3);
+      const t3 = tiered.filter(x=>x.tier===3).slice(0,2);
+      [...t1, ...t2, ...t3].forEach(x => {
+        const tagIcon = x.tier===1 ? '🔥' : x.tier===2 ? '⚠️' : '📧';
+        insights.push({
+          kind: 'mail-t'+x.tier,
+          icon: tagIcon,
+          title: '['+x.label+'] '+(x.m.fromName||x.m.from||'?').slice(0,40),
+          body: (x.m.subject||'').slice(0,110) + ' · ' + (x.m.date||'').slice(0,10)
+        });
       });
     }
 
