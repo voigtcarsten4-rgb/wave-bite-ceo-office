@@ -5452,21 +5452,29 @@ function initNeuralCanvas() {
   resize();
   const ctx = canvas.getContext('2d');
 
-  // Echte Wave-Bite-Werte aus Faktenbuch 2026-05-21
-  // pct = realer Status (z.B. WIPO 100% eingetragen, Funding 11% = 50k von 450k EK)
+  // Wave-Bite-Universum v7 — alle Geschäftsbereiche + Boot + App ganzheitlich
+  // Hub-Position 0.50/0.50 = Wave Bite Schiff (zentrales Symbol)
+  // Werte = realer Status laut Faktenbuch 2026-05-21
   const NEURONS = [
-    { id:0, label:'CEO HUB',     color:'#c9a84c', x:.50, y:.50, r:14, pct:78, urgency:1.8, hub:true, depth:0 },
-    { id:1, label:'BunBo App',   color:'#00c8ff', x:.12, y:.32, r: 9, pct:60, urgency:1.5, depth:1 },
-    { id:2, label:'Wasserlage',  color:'#00d4aa', x:.26, y:.14, r: 8, pct:90, urgency:1.2, depth:2 },
-    { id:3, label:'Finance',     color:'#c9a84c', x:.75, y:.22, r: 8, pct:42, urgency:1.6, depth:1 },
-    { id:4, label:'5 LOIs',      color:'#00c8ff', x:.88, y:.52, r: 8, pct:100, urgency:0.6, depth:2 },
-    { id:5, label:'Marketing',   color:'#ff6b7a', x:.65, y:.80, r: 8, pct:25, urgency:1.4, depth:1 },
-    { id:6, label:'WIPO Design', color:'#a78bfa', x:.30, y:.76, r: 8, pct:100, urgency:0.5, depth:2 },
-    { id:7, label:'Automation',  color:'#c9a84c', x:.52, y:.12, r: 7, pct:65, urgency:1.0, depth:1 },
-    { id:8, label:'Wolzig ⚠',    color:'#ff4444', x:.14, y:.74, r: 8, pct:10, urgency:2.5, depth:0 },
-    { id:9, label:'Funding',     color:'#ff9e6a', x:.82, y:.80, r: 9, pct:11, urgency:2.2, depth:0 },
+    { id:0, label:'⚓ WAVE BITE',  color:'#c9a84c', x:.50, y:.50, r:16, pct:69, urgency:1.6, hub:true, depth:0 },
+    { id:1, label:'BunBo App',    color:'#00c8ff', x:.10, y:.30, r: 9, pct:60, urgency:1.4, depth:1, sub:'Glide Beta' },
+    { id:2, label:'Wasserlage',   color:'#00d4aa', x:.28, y:.13, r: 8, pct:90, urgency:1.0, depth:2, sub:'310 Spots LIVE' },
+    { id:3, label:'Finance',      color:'#c9a84c', x:.74, y:.18, r: 8, pct:42, urgency:1.6, depth:1, sub:'Hunt 350k Bank' },
+    { id:4, label:'5 LOIs',       color:'#00c8ff', x:.90, y:.50, r: 8, pct:100, urgency:0.5, depth:2, sub:'signed' },
+    { id:5, label:'Marketing',    color:'#ff6b7a', x:.62, y:.83, r: 8, pct:25, urgency:1.5, depth:1, sub:'0→100 Plan' },
+    { id:6, label:'WIPO Design',  color:'#a78bfa', x:.30, y:.85, r: 8, pct:100, urgency:0.4, depth:2, sub:'DM/248323' },
+    { id:7, label:'Automation',   color:'#c9a84c', x:.52, y:.08, r: 7, pct:65, urgency:1.0, depth:1, sub:'Apps Script · n8n' },
+    { id:8, label:'⚠ Wolzig',     color:'#ff4444', x:.10, y:.72, r: 8, pct:10, urgency:2.4, depth:0, sub:'Liegeplatz!' },
+    { id:9, label:'Funding',      color:'#ff9e6a', x:.84, y:.82, r: 9, pct:11, urgency:2.2, depth:0, sub:'50k von 450k' },
+    { id:10, label:'Himmelreich', color:'#ffd166', x:.91, y:.30, r: 6, pct:25, urgency:0.6, depth:2, sub:'Konzept' },
+    { id:11, label:'ROKA Werk',   color:'#ff9e6a', x:.46, y:.92, r: 7, pct:35, urgency:1.0, depth:1, sub:'Frank B. warm' }
   ];
-  const AXONS = [[1,0],[2,0],[0,3],[0,4],[0,5],[0,6],[0,7],[1,2],[2,7],[3,9],[5,6],[1,8],[3,4],[9,5]];
+  // Axone v7: alle 11 Außen-Knoten zum Hub + ein paar quer-Verbindungen für Datenfluss
+  const AXONS = [
+    [1,0],[2,0],[3,0],[4,0],[5,0],[6,0],[7,0],[8,0],[9,0],[10,0],[11,0],
+    // Quer-Verbindungen — semantisch (Wasserlage↔Automation, Finance↔Funding, WIPO↔5LOIs, Wolzig↔Funding, ROKA↔Marketing)
+    [2,7],[3,9],[6,4],[8,9],[11,5]
+  ];
   const DENDRITES = NEURONS.map(n => {
     const branches = [], count = n.hub ? 6 : (2 + Math.floor(Math.random()*3));
     for (let i=0;i<count;i++) {
@@ -5534,6 +5542,18 @@ function initNeuralCanvas() {
       ctx.stroke();
     }
     ctx.setLineDash([]);
+    // Futuristische Holo-Data-Rings auf dem Floor (perspektivisch)
+    const horizonY2 = H*.32;
+    [0.45, 0.65, 0.85, 1.0].forEach((d, ri) => {
+      const ry = horizonY2 + (H - horizonY2) * d;
+      const rrw = W * 0.45 * d;
+      const op = (0.06 - ri*0.012) + Math.sin(tf*1.2 + ri)*0.02;
+      ctx.beginPath();
+      ctx.ellipse(W/2, ry, rrw, rrw*0.12, 0, 0, Math.PI*2);
+      ctx.strokeStyle = `rgba(0,212,170,${Math.max(0,op)})`;
+      ctx.lineWidth = .7;
+      ctx.stroke();
+    });
     const nodes=NEURONS.map(n=>({...n,px:n.x*W,py:n.y*H}));
     // Build axon curves
     const curves=AXONS.map(([a,b])=>{
@@ -5601,18 +5621,50 @@ function initNeuralCanvas() {
       ctx.beginPath(); ctx.arc(n.px,n.py,n.r+5,as,ae);
       ctx.strokeStyle=n.color+'bb'; ctx.lineWidth=2; ctx.lineCap='round'; ctx.stroke();
       if(n.hub){
+        // Mini-Boot-Symbol im Hub (Wave-Bite-Schiff)
+        ctx.save();
+        ctx.translate(n.px, n.py);
+        ctx.scale(0.55, 0.55);
+        // Saucer
+        ctx.fillStyle = 'rgba(220,235,255,0.85)';
+        ctx.beginPath(); ctx.ellipse(-7, -3, 8, 2.5, 0, 0, Math.PI*2); ctx.fill();
+        // Hull
+        ctx.fillStyle = 'rgba(180,220,255,0.7)';
+        ctx.beginPath(); ctx.ellipse(5, 3, 10, 1.8, 0, 0, Math.PI*2); ctx.fill();
+        // Nacelle (top)
+        ctx.fillStyle = 'rgba(154,240,255,0.75)';
+        ctx.fillRect(4, -7, 9, 1.6);
+        // Nacelle (bottom)
+        ctx.fillRect(4, 5, 9, 1.6);
+        // Glow tips
+        ctx.fillStyle = '#9af0ff';
+        ctx.beginPath(); ctx.arc(13, -6.2, 1, 0, Math.PI*2); ctx.fill();
+        ctx.beginPath(); ctx.arc(13, 5.8, 1, 0, Math.PI*2); ctx.fill();
+        ctx.restore();
+        // Rotierende Hex-Beacons um Hub
         for(let si=0;si<6;si++){
-          const sa=(Math.PI*2/6)*si+tf*.4;
-          ctx.beginPath(); ctx.moveTo(n.px+Math.cos(sa)*3,n.py+Math.sin(sa)*3);
-          ctx.lineTo(n.px+Math.cos(sa)*(n.r-2),n.py+Math.sin(sa)*(n.r-2));
-          ctx.strokeStyle=n.color+'33'; ctx.lineWidth=.7; ctx.stroke();
+          const sa=(Math.PI*2/6)*si+tf*.25;
+          const bx=n.px+Math.cos(sa)*(n.r+8), by=n.py+Math.sin(sa)*(n.r+8);
+          ctx.beginPath(); ctx.arc(bx, by, 1.4, 0, Math.PI*2);
+          ctx.fillStyle = `hsla(${45+si*40},85%,70%,0.7)`;
+          ctx.shadowColor = ctx.fillStyle; ctx.shadowBlur = 6;
+          ctx.fill(); ctx.shadowBlur=0;
         }
-        ctx.fillStyle=n.color; ctx.font='bold 8px -apple-system,sans-serif'; ctx.textAlign='center';
-        ctx.fillText(n.pct+'%',n.px,n.py+3);
+        // Score
+        ctx.fillStyle='#fff'; ctx.font='bold 7px -apple-system,sans-serif'; ctx.textAlign='center';
+        ctx.fillText(n.pct+'%', n.px, n.py+n.r+8);
       }
-      ctx.fillStyle='rgba(210,235,255,0.82)'; ctx.shadowColor='rgba(0,0,0,0.8)'; ctx.shadowBlur=4;
-      ctx.font=`${n.hub?7.5:6.5}px -apple-system,sans-serif`; ctx.textAlign='center';
-      ctx.fillText(n.label,n.px,n.py+n.r+10); ctx.shadowBlur=0;
+      // Label
+      ctx.fillStyle='rgba(210,235,255,0.92)'; ctx.shadowColor='rgba(0,0,0,0.9)'; ctx.shadowBlur=4;
+      ctx.font=`${n.hub?8:6.5}px -apple-system,sans-serif`; ctx.textAlign='center';
+      ctx.fillText(n.label, n.px, n.py+n.r+(n.hub?18:10));
+      // Sub-Label (status)
+      if (n.sub && !n.hub) {
+        ctx.fillStyle = n.color + 'cc';
+        ctx.font = '5.2px -apple-system,sans-serif';
+        ctx.fillText(n.sub, n.px, n.py+n.r+18);
+      }
+      ctx.shadowBlur=0;
     });
     for(let i=discharges.length-1;i>=0;i--){discharges[i].t+=.06;if(discharges[i].t>=1)discharges.splice(i,1);}
     // HUD · echter Investor-Readiness-Score aus Wave-Bite-Daten
@@ -8520,34 +8572,38 @@ function refreshCalIntel() {
   resize();
   window.addEventListener('resize', resize);
 
-  // ─── Star Field (3 Layer Parallax) ───────────────────────────
+  // ─── Star Field — PARALLAX FLY-BY (von rechts nach links) v7 ─
+  // 3 Layer mit unterschiedlichen Geschwindigkeiten, ruhig & elegant
   const starLayers = [
-    { count: 90, depth: 0.4, color: 'rgba(180,210,255,', baseSpeed: 0.15 },   // Background nebula
-    { count: 60, depth: 0.7, color: 'rgba(220,235,255,', baseSpeed: 0.5 },    // Middle stars
-    { count: 30, depth: 1.0, color: 'rgba(255,255,255,', baseSpeed: 1.4 }     // Foreground stars
+    { count: 80, depth: 0.5, color: 'rgba(180,210,255,', speed: 0.15 },  // Background — sehr langsam
+    { count: 50, depth: 0.85, color: 'rgba(220,235,255,', speed: 0.45 }, // Middle — gemächlich
+    { count: 22, depth: 1.0, color: 'rgba(255,255,255,', speed: 0.95 }   // Foreground — sichtbar fliegend
   ];
   const stars = [];
   starLayers.forEach((l, li) => {
     for (let i = 0; i < l.count; i++) stars.push({
-      angle: Math.random() * Math.PI * 2,
-      r: 30 + Math.random() * 380,
+      x: Math.random(), // 0..1 normalized
+      y: Math.random(), // 0..1 normalized
       layer: li,
-      ph: Math.random() * Math.PI * 2
+      ph: Math.random() * Math.PI * 2,
+      size: 0.3 + Math.random() * 1.2
     });
   });
 
-  // ─── Hyperspace Streaks (Tie-Fighter-Style) ──────────────────
+  // ─── Streaks — beruhigt, horizontal fliegend (sanfte Linien) ─
   function spawnStreak() {
+    const y = Math.random();
     return {
-      angle: Math.random() * Math.PI * 2,
-      r: 600 + Math.random() * 200,
-      speed: 14 + Math.random() * 18,
-      len: 60 + Math.random() * 120,
-      hue: 180 + Math.random() * 40,
-      life: 1
+      y,
+      x: 1.05 + Math.random() * 0.1, // startet rechts außerhalb
+      speed: 0.0015 + Math.random() * 0.0025, // langsam
+      len: 30 + Math.random() * 70,
+      depth: 0.6 + Math.random() * 0.4,
+      hue: 190 + Math.random() * 25,
+      op: 0.25 + Math.random() * 0.35
     };
   }
-  const streaks = Array.from({ length: 12 }, spawnStreak);
+  const streaks = Array.from({ length: 6 }, () => { const s = spawnStreak(); s.x = Math.random(); return s; });
 
   // ─── Orbiting Wave-Bite-Planets (8 Projekte) ─────────────────
   const PLANETS = [
@@ -8562,6 +8618,7 @@ function refreshCalIntel() {
   ];
 
   // ─── Twin-Sun-Hub (Death Star ähnlich, aber Wave-Bite-Style) ─
+  // v7: alle Animation-Tempi halbiert für ruhigeres Gesamtbild
   let frame = 0;
   function draw() {
     const W = cv.width, H = cv.height;
@@ -8587,36 +8644,37 @@ function refreshCalIntel() {
       ctx.fillRect(0, 0, W, H);
     });
 
-    // 3. PARALLAX STARS
+    // 3. PARALLAX STARS — fliegen horizontal von rechts nach links
     stars.forEach(s => {
       const lay = starLayers[s.layer];
-      const px = cx + Math.cos(s.angle + frame * 0.00008 * lay.depth) * s.r * lay.depth * dpr;
-      const py = cy + Math.sin(s.angle + frame * 0.00008 * lay.depth) * s.r * lay.depth * 0.45 * dpr;
-      const al = 0.3 + Math.abs(Math.sin(frame * 0.04 + s.ph)) * 0.6;
+      // Position pro Layer langsam nach links bewegen
+      s.x -= lay.speed * 0.0008;
+      if (s.x < -0.02) { s.x = 1.02; s.y = Math.random(); }
+      const px = s.x * W;
+      const py = s.y * H;
+      const al = 0.25 + Math.abs(Math.sin(frame * 0.018 + s.ph)) * 0.5;
       ctx.fillStyle = lay.color + al + ')';
       ctx.beginPath();
-      ctx.arc(px, py, (0.5 + lay.depth) * dpr, 0, Math.PI * 2);
+      ctx.arc(px, py, s.size * lay.depth * dpr, 0, Math.PI * 2);
       ctx.fill();
     });
 
-    // 4. HYPERSPACE STREAKS
+    // 4. SANFTE FLY-BY-STREAKS (horizontal, langsam, parallax)
     streaks.forEach((s, i) => {
-      const x = cx + Math.cos(s.angle) * s.r * dpr;
-      const y = cy + Math.sin(s.angle) * s.r * 0.5 * dpr;
-      const x2 = cx + Math.cos(s.angle) * (s.r - s.len) * dpr;
-      const y2 = cy + Math.sin(s.angle) * (s.r - s.len) * 0.5 * dpr;
-      const grad = ctx.createLinearGradient(x, y, x2, y2);
-      grad.addColorStop(0, `hsla(${s.hue},100%,75%,0)`);
-      grad.addColorStop(0.5, `hsla(${s.hue},100%,75%,0.7)`);
-      grad.addColorStop(1, `hsla(${s.hue},100%,90%,0.95)`);
+      s.x -= s.speed;
+      if (s.x < -0.1) { Object.assign(s, spawnStreak()); }
+      const x1 = s.x * W;
+      const y1 = s.y * H;
+      const x2 = x1 + s.len * dpr;
+      const grad = ctx.createLinearGradient(x1, y1, x2, y1);
+      grad.addColorStop(0, `hsla(${s.hue},80%,80%,${s.op})`);
+      grad.addColorStop(1, `hsla(${s.hue},80%,80%,0)`);
       ctx.strokeStyle = grad;
-      ctx.lineWidth = 1.6 * dpr;
+      ctx.lineWidth = 0.9 * dpr * s.depth;
       ctx.beginPath();
-      ctx.moveTo(x, y);
-      ctx.lineTo(x2, y2);
+      ctx.moveTo(x1, y1);
+      ctx.lineTo(x2, y1);
       ctx.stroke();
-      s.r -= s.speed;
-      if (s.r < 50) streaks[i] = spawnStreak();
     });
 
     // 5. ORBIT-RINGS (4 Schichten, perspektivisch elliptisch)
@@ -8630,8 +8688,8 @@ function refreshCalIntel() {
     });
     ctx.setLineDash([]);
 
-    // 6. DEATH-STAR-STYLE CORE HUB (Wave-Bite-Universe-Zentrum)
-    const corePulse = 1 + Math.sin(frame * 0.025) * 0.06;
+    // 6. DEATH-STAR-STYLE CORE HUB (Wave-Bite-Universe-Zentrum) · v7 langsamer
+    const corePulse = 1 + Math.sin(frame * 0.012) * 0.04;
     const coreR = 40 * dpr * corePulse;
     // Outer glow halo
     const haloGrad = ctx.createRadialGradient(cx, cy, coreR * 0.4, cx, cy, coreR * 3.5);
@@ -8733,8 +8791,8 @@ function refreshCalIntel() {
       ctx.fillText(p.status, px, py + p.size * dpr * 0.62 + 22 * dpr);
     });
 
-    // 8. SCAN-LINE Sweep (Star-Trek-Style HUD-Scanner)
-    const scanY = ((frame * 1.4) % (H + 100)) - 50;
+    // 8. SCAN-LINE Sweep (Star-Trek-Style HUD-Scanner) · v7 langsamer
+    const scanY = ((frame * 0.6) % (H + 100)) - 50;
     const scanGrad = ctx.createLinearGradient(0, scanY - 40, 0, scanY + 40);
     scanGrad.addColorStop(0, 'rgba(0,212,170,0)');
     scanGrad.addColorStop(0.5, 'rgba(0,212,170,0.04)');
@@ -8777,6 +8835,6 @@ function refreshCalIntel() {
   });
 })();
 </script>
-<script src="samantha.js?v=2026-05-21-v6-lucy-enterprise"></script>
+<script src="samantha.js?v=2026-05-21-v7-flyby-stars-neuralhub"></script>
 </body>
 </html>
