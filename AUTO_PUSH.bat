@@ -1,10 +1,8 @@
 @echo off
 cd /d "%~dp0"
 if exist ".git\index.lock" del /f /q ".git\index.lock"
-git rm --cached wava.js 2>nul
-del /f /q wava.js 2>nul
 git add -A
-git commit -m "feat(Samantha v3): Action-Engine + Jarvis-Bar + Plugin-Bibliothek + Live-Mail/Cal-Insights" -m "- 9 echte Workflow-Actions (ILB-Antrag, B2B-Wasserlage 64 Kontakte, WFB-Follow-up, DHDL-Prep, Notar-MSA, LinkedIn-Post, David-Phantom, Sozialhilfe, Cashflow-Snapshot)" -m "- Jarvis Command-Bar (Ctrl+J) mit Fuzzy-Search ueber alle Actions+Docs+Navigation" -m "- Plugin-Bibliothek: 23 Plugins / 200+ Skills katalogisiert + kontextueller Use-Case" -m "- Tasks-Tab mit Toggle/Delete (Bug-Fix: stopPropagation auf row-icons)" -m "- Insights-Engine scannt Calendar+Inbox live (heute/morgen/Therapie Schuelin/kritische Mails)" -m "- 8 Tabs statt 5 (Heute/Actions/Tasks/Notes/Docs/Chat/Plugins/Health)" -m "- Toast-Notifications nach Action-Ausfuehrung" -m "- Faktenbuch + B2B-Wasserlage-PDF + CEO-Briefing in docs/"
+git commit -m "feat(Samantha v4): Sci-Fi Boot-Intro + 3D-Neural-Core + echte KPIs + SW-Auto-Kill" -m "- Sci-Fi Lade-Intro (4s): Avatar-Puls, rotierende Holo-Ringe, Sternenhintergrund, 10-Zeilen-Boot-Sequenz mit echten Wave-Bite-Fakten (SHA, LOIs, Cap Table, Runway), Gradient-Logo SAMANTHA, animierter Progress-Bar" -m "- Neural Core 3D-Effekte: Perspektivisches Grid-Floor, 60 Sterne, 4 holographische Ringe um CEO-Hub, echte Knoten-Werte (Wolzig 10%%, Funding 11%%, WIPO 100%%, 5 LOIs 100%%, Wasserlage 90%%), neue Beschriftung 'Wolzig WARN' + 'Funding'" -m "- Echte KPIs in Bridge-Right: EK 50k€ / Funding-Ziel 450k€ / Burn 10,4k€ / LOIs signed 5 (statt Demo 6/250k/71/12+)" -m "- HUD-Score: INVESTOR READINESS 62%% mit Begründung (WIPO+SHA+5 LOIs vs. Wolzig+Funding offen)" -m "- Service-Worker Auto-Kill beim Boot (verhindert Cache-Probleme bei nächsten Visits)"
 git push origin main > push_log.txt 2>&1
 type push_log.txt
 timeout /t 6 /nobreak

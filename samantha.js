@@ -10,6 +10,24 @@
   if (window.SAMANTHA_LOADED) return;
   window.SAMANTHA_LOADED = true;
 
+  // -------- SERVICE-WORKER AUTO-KILL (verhindert Cache-Probleme) ---------
+  (async () => {
+    try {
+      if ('serviceWorker' in navigator) {
+        const regs = await navigator.serviceWorker.getRegistrations();
+        for (const r of regs) {
+          // Behalte nur explizit erlaubte SW (z.B. eigene PWA falls vorhanden)
+          await r.unregister();
+        }
+        if (regs.length) console.log('🧹 Samantha: '+regs.length+' alte Service-Worker entfernt');
+      }
+      if (window.caches) {
+        const keys = await caches.keys();
+        for (const k of keys) if (/wava|cache-v1|workbox/i.test(k)) await caches.delete(k);
+      }
+    } catch(e) { /* silent */ }
+  })();
+
   // -------- STATE & MEMORY -------------------------------------------------
   const LSK = 'samantha_state_v1';
   const NOTES_KEY = 'samantha_notes_v1';

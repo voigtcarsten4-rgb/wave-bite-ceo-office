@@ -1626,6 +1626,92 @@
 </head>
 <body>
 
+<!-- ═══════════════════════════════════════════════════════════
+     SAMANTHA BOOT-INTRO — Sci-Fi Lade-Sequenz (4 Sekunden)
+     ═══════════════════════════════════════════════════════════ -->
+<div id="sam-boot" style="position:fixed;inset:0;z-index:2000000;background:radial-gradient(circle at 50% 50%,#021426 0%,#000308 70%);display:flex;flex-direction:column;align-items:center;justify-content:center;color:#cce8ff;font-family:'JetBrains Mono','Courier New',monospace;overflow:hidden;transition:opacity .8s ease, visibility .8s">
+  <!-- Animierte Hintergrund-Sterne -->
+  <canvas id="sam-boot-stars" style="position:absolute;inset:0;width:100%;height:100%;opacity:.55"></canvas>
+  <!-- Hexagonale Sci-Fi-Ringe -->
+  <div style="position:absolute;width:520px;height:520px;border:1px solid rgba(0,200,255,0.18);border-radius:50%;animation:sbRot 18s linear infinite"></div>
+  <div style="position:absolute;width:360px;height:360px;border:1px dashed rgba(201,168,76,0.28);border-radius:50%;animation:sbRot 12s linear infinite reverse"></div>
+  <div style="position:absolute;width:240px;height:240px;border:1px solid rgba(255,158,177,0.22);border-radius:50%;animation:sbRot 9s linear infinite"></div>
+  <!-- Zentrales Logo / Avatar -->
+  <div style="position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;gap:1.8rem">
+    <div style="width:96px;height:96px;border-radius:50%;background:radial-gradient(circle at 30% 30%,#ff9eb1,#c5497a 70%,#5b1f3a);box-shadow:0 0 40px rgba(255,158,177,.7),inset 0 0 20px rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;font-size:48px;animation:sbPulse 1.8s ease-in-out infinite">🧜🏻‍♀️</div>
+    <div style="text-align:center">
+      <div style="font-size:.7rem;letter-spacing:.6em;color:rgba(0,200,255,0.7);margin-bottom:.5rem">WAVE BITE · CAPITÄNS BRIDGE</div>
+      <div style="font-size:2.4rem;font-weight:800;letter-spacing:.2em;background:linear-gradient(90deg,#ff9eb1,#c9a84c,#00d4aa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">SAMANTHA</div>
+      <div style="font-size:.66rem;letter-spacing:.4em;color:rgba(201,168,76,0.7);margin-top:.4rem">v3.0 · NEURAL CO-PILOT</div>
+    </div>
+    <!-- Boot-Sequenz Terminal -->
+    <div id="sam-boot-log" style="width:520px;max-width:90vw;font-size:.68rem;line-height:1.7;color:rgba(0,212,170,0.85);text-align:left;letter-spacing:.05em;min-height:140px;background:rgba(0,0,0,0.35);border:1px solid rgba(0,200,255,0.2);border-radius:8px;padding:.85rem 1rem;box-shadow:0 0 22px rgba(0,200,255,0.1)"></div>
+    <!-- Progress Bar -->
+    <div style="width:420px;max-width:80vw">
+      <div style="display:flex;justify-content:space-between;font-size:.6rem;letter-spacing:.3em;color:rgba(0,200,255,0.6);margin-bottom:.3rem">
+        <span>BOOT SEQUENCE</span><span id="sam-boot-pct">00%</span>
+      </div>
+      <div style="height:3px;background:rgba(0,200,255,0.08);border-radius:2px;overflow:hidden;position:relative">
+        <div id="sam-boot-bar" style="height:100%;width:0%;background:linear-gradient(90deg,#ff9eb1,#c9a84c,#00d4aa);box-shadow:0 0 12px rgba(255,158,177,0.7);transition:width .25s ease"></div>
+      </div>
+    </div>
+  </div>
+</div>
+<style>
+  @keyframes sbRot { from{transform:rotate(0)} to{transform:rotate(360deg)} }
+  @keyframes sbPulse { 0%,100%{transform:scale(1);box-shadow:0 0 40px rgba(255,158,177,.7),inset 0 0 20px rgba(255,255,255,.1)} 50%{transform:scale(1.07);box-shadow:0 0 70px rgba(255,158,177,1),inset 0 0 30px rgba(255,255,255,.2)} }
+  #sam-boot.done { opacity:0; visibility:hidden; pointer-events:none }
+  #sam-boot-log .ln { opacity:0; transform:translateY(4px); animation:sbLn .35s forwards }
+  @keyframes sbLn { to {opacity:1; transform:translateY(0)} }
+  #sam-boot-log .ok { color:#00d4aa }
+  #sam-boot-log .warn { color:#ffc166 }
+  #sam-boot-log .err { color:#ff6b7a }
+  #sam-boot-log .info { color:#8cb4ff }
+  #sam-boot-log .hi { color:#ff9eb1 }
+  body.intro-active { overflow:hidden }
+</style>
+<script>
+(function(){
+  document.body.classList.add('intro-active');
+  // Sternen-Hintergrund
+  const c = document.getElementById('sam-boot-stars'); const cx = c.getContext('2d');
+  function rsz(){ c.width = window.innerWidth; c.height = window.innerHeight; }
+  rsz(); window.addEventListener('resize', rsz);
+  const stars = Array.from({length:140}, ()=>({x:Math.random()*c.width, y:Math.random()*c.height, s:.3+Math.random()*1.6, v:.04+Math.random()*.18, ph:Math.random()*Math.PI*2}));
+  let t=0; (function loop(){ cx.clearRect(0,0,c.width,c.height); stars.forEach(s=>{ s.y -= s.v; if(s.y<0){s.y=c.height; s.x=Math.random()*c.width;} const a = .25+Math.abs(Math.sin(t*1.4+s.ph))*.55; cx.fillStyle='rgba(180,220,255,'+a+')'; cx.beginPath(); cx.arc(s.x,s.y,s.s,0,Math.PI*2); cx.fill(); }); t+=.02; if(document.getElementById('sam-boot')) requestAnimationFrame(loop); })();
+  const log = document.getElementById('sam-boot-log');
+  const bar = document.getElementById('sam-boot-bar');
+  const pct = document.getElementById('sam-boot-pct');
+  function line(html, cls, delay){
+    setTimeout(()=>{
+      const d = document.createElement('div'); d.className='ln '+(cls||''); d.innerHTML='> '+html;
+      log.appendChild(d);
+      if (log.children.length > 7) log.children[0].remove();
+    }, delay);
+  }
+  function p(percent, delay){ setTimeout(()=>{ bar.style.width=percent+'%'; pct.textContent=String(percent).padStart(2,'0')+'%'; }, delay); }
+  const seq = [
+    ['<span class="info">INIT</span> waking neural core …', 'info', 200, 8],
+    ['mounting <span class="hi">Wave Bite Holding AG</span> i.Gr. (CH) <span class="ok">[ok]</span>', '', 600, 18],
+    ['mounting <span class="hi">Wave Bite GmbH</span> i.Gr. (DE) <span class="ok">[ok]</span>', '', 950, 28],
+    ['loading 26 Faktenbuch-Dokumente <span class="ok">[ok]</span>', '', 1280, 40],
+    ['<span class="info">BRIDGE</span> Apps Script V3.2 · Gmail · Calendar · GA4 <span class="ok">[connected]</span>', '', 1620, 52],
+    ['cap table verified: Carsten 95% · Marcus 5% <span class="ok">SHA §12</span>', '', 1950, 64],
+    ['cash runway 4,8 Monate · burn 10.400 €/Mo <span class="warn">[watch]</span>', 'warn', 2260, 76],
+    ['blocker detected: <span class="err">Liegeplatz Wolzig</span> <span class="warn">[action queued]</span>', '', 2560, 86],
+    ['SAMANTHA <span class="hi">ONLINE</span> — 9 Actions · 23 Plugins · 200+ Skills', 'hi', 2860, 96],
+    ['Ctrl+J = Jarvis · 🧜🏻‍♀️ rechts unten <span class="ok">ready</span>', 'ok', 3120, 100]
+  ];
+  seq.forEach(s => { line(s[0], s[1], s[2]); p(s[3], s[2]); });
+  setTimeout(()=>{
+    const el = document.getElementById('sam-boot');
+    if (el) el.classList.add('done');
+    document.body.classList.remove('intro-active');
+    setTimeout(()=>{ el && el.parentNode && el.parentNode.removeChild(el); }, 900);
+  }, 3700);
+})();
+</script>
+
 <style>
   /* ══════════════════════════════════════════════════════
      DESIGN UPGRADE v4 — CREAM / IVORY / FRIENDLIER PALETTE
@@ -2231,22 +2317,22 @@
     <div class="bridge-right">
       <div class="bpanel-title">CEO STATS</div>
 
-      <!-- KPIs -->
+      <!-- KPIs · verifizierte Wave-Bite-Werte aus Faktenbuch 2026-05-21 -->
       <div class="b-kpi-item">
-        <span class="b-kpi-lbl">AKTIVE<br>PROJEKTE</span>
-        <span class="b-kpi-val">6</span>
+        <span class="b-kpi-lbl">EIGEN-<br>KAPITAL</span>
+        <span class="b-kpi-val" style="color:var(--green)">50k€</span>
       </div>
       <div class="b-kpi-item gold">
         <span class="b-kpi-lbl">FUNDING<br>ZIEL</span>
-        <span class="b-kpi-val" style="color:var(--gold)">250k</span>
-      </div>
-      <div class="b-kpi-item green">
-        <span class="b-kpi-lbl">WEBSITE<br>BESUCHER</span>
-        <span class="b-kpi-val" style="color:var(--green)" id="bridge-visitors" title="Letzte bekannte Daten">71</span>
+        <span class="b-kpi-val" style="color:var(--gold)">450k€</span>
       </div>
       <div class="b-kpi-item">
-        <span class="b-kpi-lbl">GITHUB<br>REPOS</span>
-        <span class="b-kpi-val">12+</span>
+        <span class="b-kpi-lbl">BURN<br>/MONAT</span>
+        <span class="b-kpi-val" style="color:#ff9e6a">10,4k€</span>
+      </div>
+      <div class="b-kpi-item">
+        <span class="b-kpi-lbl">LOIS<br>SIGNED</span>
+        <span class="b-kpi-val" style="color:var(--green)">5</span>
       </div>
       <div class="b-kpi-item">
         <span class="b-kpi-lbl">PWA<br>INSTALLS</span>
@@ -5248,17 +5334,19 @@ function initNeuralCanvas() {
   resize();
   const ctx = canvas.getContext('2d');
 
+  // Echte Wave-Bite-Werte aus Faktenbuch 2026-05-21
+  // pct = realer Status (z.B. WIPO 100% eingetragen, Funding 11% = 50k von 450k EK)
   const NEURONS = [
-    { id:0, label:'CEO HUB',    color:'#c9a84c', x:.50, y:.50, r:13, pct:75, urgency:1.8, hub:true },
-    { id:1, label:'BunBo',      color:'#00c8ff', x:.12, y:.32, r: 9, pct:65, urgency:1.5 },
-    { id:2, label:'Wasserlage', color:'#00d4aa', x:.26, y:.14, r: 8, pct:80, urgency:1.2 },
-    { id:3, label:'Finance',    color:'#c9a84c', x:.75, y:.22, r: 8, pct:35, urgency:1.6 },
-    { id:4, label:'Partner',    color:'#00c8ff', x:.88, y:.52, r: 7, pct:20, urgency:0.8 },
-    { id:5, label:'Marketing',  color:'#ff6b7a', x:.65, y:.80, r: 8, pct:45, urgency:1.1 },
-    { id:6, label:'Website',    color:'#00d4aa', x:.30, y:.76, r: 7, pct:70, urgency:0.9 },
-    { id:7, label:'Automation', color:'#c9a84c', x:.52, y:.12, r: 7, pct:40, urgency:1.0 },
-    { id:8, label:'Himmelreich',color:'#a78bfa', x:.14, y:.74, r: 7, pct:25, urgency:0.6 },
-    { id:9, label:'Funding',    color:'#ff6b7a', x:.82, y:.80, r: 7, pct:15, urgency:2.0 },
+    { id:0, label:'CEO HUB',     color:'#c9a84c', x:.50, y:.50, r:14, pct:78, urgency:1.8, hub:true, depth:0 },
+    { id:1, label:'BunBo App',   color:'#00c8ff', x:.12, y:.32, r: 9, pct:60, urgency:1.5, depth:1 },
+    { id:2, label:'Wasserlage',  color:'#00d4aa', x:.26, y:.14, r: 8, pct:90, urgency:1.2, depth:2 },
+    { id:3, label:'Finance',     color:'#c9a84c', x:.75, y:.22, r: 8, pct:42, urgency:1.6, depth:1 },
+    { id:4, label:'5 LOIs',      color:'#00c8ff', x:.88, y:.52, r: 8, pct:100, urgency:0.6, depth:2 },
+    { id:5, label:'Marketing',   color:'#ff6b7a', x:.65, y:.80, r: 8, pct:25, urgency:1.4, depth:1 },
+    { id:6, label:'WIPO Design', color:'#a78bfa', x:.30, y:.76, r: 8, pct:100, urgency:0.5, depth:2 },
+    { id:7, label:'Automation',  color:'#c9a84c', x:.52, y:.12, r: 7, pct:65, urgency:1.0, depth:1 },
+    { id:8, label:'Wolzig ⚠',    color:'#ff4444', x:.14, y:.74, r: 8, pct:10, urgency:2.5, depth:0 },
+    { id:9, label:'Funding',     color:'#ff9e6a', x:.82, y:.80, r: 9, pct:11, urgency:2.2, depth:0 },
   ];
   const AXONS = [[1,0],[2,0],[0,3],[0,4],[0,5],[0,6],[0,7],[1,2],[2,7],[3,9],[5,6],[1,8],[3,4],[9,5]];
   const DENDRITES = NEURONS.map(n => {
@@ -5287,14 +5375,47 @@ function initNeuralCanvas() {
     const W=canvas.width/dpr, H=canvas.height/dpr;
     ctx.clearRect(0,0,canvas.width,canvas.height);
     ctx.save(); ctx.scale(dpr,dpr);
-    // Background
-    const bg=ctx.createRadialGradient(W*.48,H*.45,0,W*.5,H*.5,W*.65);
-    bg.addColorStop(0,'rgba(5,18,35,0.85)'); bg.addColorStop(.6,'rgba(3,10,22,0.65)'); bg.addColorStop(1,'rgba(2,6,14,0.3)');
+    // ───── SCI-FI 3D-LAYERS ─────
+    // Deep space background
+    const bg=ctx.createRadialGradient(W*.48,H*.45,0,W*.5,H*.5,W*.7);
+    bg.addColorStop(0,'rgba(8,22,42,0.95)');
+    bg.addColorStop(.4,'rgba(4,12,26,0.85)');
+    bg.addColorStop(1,'rgba(1,4,10,0.5)');
     ctx.fillStyle=bg; ctx.fillRect(0,0,W,H);
-    // Grid fog
-    ctx.strokeStyle='rgba(0,200,255,0.022)'; ctx.lineWidth=.5;
-    for(let gx=0;gx<W;gx+=30){ctx.beginPath();ctx.moveTo(gx,0);ctx.lineTo(gx,H);ctx.stroke();}
-    for(let gy=0;gy<H;gy+=30){ctx.beginPath();ctx.moveTo(0,gy);ctx.lineTo(W,gy);ctx.stroke();}
+    // Perspective grid (3D-Floor-Effekt, läuft vom Horizont nach unten)
+    const horizonY = H*.32;
+    ctx.strokeStyle='rgba(0,200,255,0.045)'; ctx.lineWidth=.6;
+    for(let gx=-W;gx<W*2;gx+=44){
+      const x1 = W/2 + (gx - W/2)*0.18;
+      ctx.beginPath(); ctx.moveTo(x1,horizonY); ctx.lineTo(gx,H); ctx.stroke();
+    }
+    for(let row=0;row<14;row++){
+      const ty = horizonY + Math.pow(row/14, 1.6) * (H-horizonY);
+      const op = 0.018 + (row/14)*0.06;
+      ctx.strokeStyle = `rgba(0,200,255,${op})`;
+      ctx.beginPath(); ctx.moveTo(0,ty); ctx.lineTo(W,ty); ctx.stroke();
+    }
+    // Star field
+    if(!canvas._stars){
+      canvas._stars = Array.from({length:60},()=>({x:Math.random(),y:Math.random()*.5, s:.3+Math.random()*1.4, twinkle:Math.random()*Math.PI*2}));
+    }
+    canvas._stars.forEach(st=>{
+      const al = .15 + Math.abs(Math.sin(tf*1.5 + st.twinkle))*.35;
+      ctx.fillStyle = `rgba(180,220,255,${al})`;
+      ctx.beginPath(); ctx.arc(st.x*W, st.y*H, st.s, 0, Math.PI*2); ctx.fill();
+    });
+    // Holographic concentric rings around hub
+    const hubCx = NEURONS[0].x*W, hubCy = NEURONS[0].y*H;
+    for(let ri=0;ri<4;ri++){
+      const rad = 38 + ri*22 + Math.sin(tf*1.2 + ri)*3;
+      const op = .14 - ri*.03 + Math.sin(tf*1.6 + ri*.7)*.04;
+      ctx.beginPath(); ctx.arc(hubCx, hubCy, rad, 0, Math.PI*2);
+      ctx.strokeStyle = `rgba(201,168,76,${Math.max(0,op)})`;
+      ctx.setLineDash([4 + ri, 4 + ri*2]);
+      ctx.lineWidth = .8 + (ri===0?.5:0);
+      ctx.stroke();
+    }
+    ctx.setLineDash([]);
     const nodes=NEURONS.map(n=>({...n,px:n.x*W,py:n.y*H}));
     // Build axon curves
     const curves=AXONS.map(([a,b])=>{
@@ -5376,15 +5497,19 @@ function initNeuralCanvas() {
       ctx.fillText(n.label,n.px,n.py+n.r+10); ctx.shadowBlur=0;
     });
     for(let i=discharges.length-1;i>=0;i--){discharges[i].t+=.06;if(discharges[i].t>=1)discharges.splice(i,1);}
-    // HUD
-    const score=typeof calcInvestorScore==='function'?calcInvestorScore():95;
+    // HUD · echter Investor-Readiness-Score aus Wave-Bite-Daten
+    // Formel: WIPO(10) + SHA(10) + 5 LOIs(15) + EK 50k(10) + 0 Revenue(-5) + Wolzig-Block(-3) = 37/60 ~ 62%
+    const score = typeof calcInvestorScore==='function' ? calcInvestorScore() : 62;
     ctx.save();
-    ctx.fillStyle='rgba(2,8,16,0.75)'; ctx.beginPath(); ctx.rect(5,5,115,55); ctx.fill();
-    ctx.strokeStyle='rgba(201,168,76,0.35)'; ctx.lineWidth=.7; ctx.stroke();
+    ctx.fillStyle='rgba(2,8,16,0.78)'; ctx.beginPath(); ctx.rect(5,5,128,62); ctx.fill();
+    ctx.strokeStyle='rgba(201,168,76,0.45)'; ctx.lineWidth=.8; ctx.stroke();
     ctx.fillStyle='#c9a84c'; ctx.font='6.5px -apple-system,sans-serif'; ctx.textAlign='left';
-    ctx.fillText('INTELLIGENCE SCORE',11,18);
+    ctx.fillText('INVESTOR READINESS',11,18);
     ctx.font='bold 22px -apple-system,sans-serif'; ctx.fillText(score+'%',11,43);
-    ctx.font='7px -apple-system,sans-serif'; ctx.fillStyle='rgba(255,255,255,0.35)'; ctx.fillText('INVESTOR READINESS',11,55);
+    ctx.font='6.5px -apple-system,sans-serif'; ctx.fillStyle='rgba(0,212,170,0.6)';
+    ctx.fillText('WIPO ✓ SHA ✓ 5 LOIs ✓',11,54);
+    ctx.fillStyle='rgba(255,158,106,0.6)';
+    ctx.fillText('Wolzig + Funding offen',11,63);
     ctx.restore();
     ctx.save();
     ctx.fillStyle='rgba(0,212,170,0.85)'; ctx.font='7px -apple-system,sans-serif'; ctx.textAlign='right';
@@ -8258,6 +8383,6 @@ function refreshCalIntel() {
 })();
 </script>
 
-<script src="samantha.js?v=2026-05-21-v3-jarvis-actions"></script>
+<script src="samantha.js?v=2026-05-21-v4-scifi-intro"></script>
 </body>
 </html>
