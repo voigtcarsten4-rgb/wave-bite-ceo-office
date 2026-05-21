@@ -2,8 +2,10 @@
 cd /d "%~dp0"
 if exist ".git\index.lock" del /f /q ".git\index.lock"
 git add -A
-git commit -m "feat(v7): Hero-Stars fly-by parallax (statt zentriert) + Neural Core = Wave-Bite-Universum" -m "- Hero-Canvas: Sterne fliegen horizontal von rechts nach links (3 Parallax-Layer mit unterschiedlichen Geschwindigkeiten), Streaks beruhigt + horizontal statt radial. Konvergenz zum Zentrum entfernt." -m "- Tempo halbiert: corePulse 0.025 -> 0.012, ScanLine 1.4 -> 0.6 fuer ruhigeres Gesamtbild" -m "- Neural Core (Synaptic Intelligence): 12 Knoten statt 10 — komplette Wave-Bite-Geschaeftsbereiche (BunBo, Wasserlage, Finance, 5 LOIs, Marketing, WIPO, Automation, Wolzig, Funding, Himmelreich, ROKA). Hub-Symbol zeigt Mini-Enterprise-Boot (Saucer+Hull+Nacellen). Sub-Labels (Status pro Bereich). Holo-Floor-Rings perspektivisch." -m "- Axone erweitert: alle Aussenknoten zum Hub + 5 semantische Quer-Verbindungen (Wasserlage-Automation, Finance-Funding, WIPO-LOIs, Wolzig-Funding, ROKA-Marketing)" -m "- Futuristischer 22. Jahrhundert Holo-Look durch animierte Floor-Rings"
+git commit -m "feat(v7-stable): permanenter Cache-Killer + Auto-Version-Check + Backup-Tag" -m "- Meta http-equiv Cache-Control: no-cache, no-store, must-revalidate, max-age=0" -m "- Pragma: no-cache · Expires: 0" -m "- build-version Meta-Tag v7-2026-05-21 fuer Auto-Reload-Erkennung" -m "- Auto-Version-Check Script: prueft beim Boot raw.githubusercontent.com build-version vs. lokal. Bei Drift → SW+Caches loeschen → Hard-Reload mit Versions-Query. Sessionstorage-Guard: max 1x pro Minute." -m "- Titel: 'Lucy Edition' statt 'JARVIS Edition'" -m "- Result: Desktop-Shortcuts laden ab sofort immer die neueste Version automatisch"
+git tag -a v7.0-stable -m "Wave Bite CEO Office v7 Stable · Lucy + USS Enterprise + Wave Bite Universe + Cache-Killer · 2026-05-21" 2>nul
 git push origin main > push_log.txt 2>&1
+git push origin --tags >> push_log.txt 2>&1
 type push_log.txt
-timeout /t 6 /nobreak
+timeout /t 8 /nobreak
 exit

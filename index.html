@@ -3,9 +3,39 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>WAVE BITE // CAPITÄNS BRIDGE — JARVIS Edition</title>
-<meta name="description" content="Wave Bite CEO Command Center — Maritime Intelligence Dashboard für Projekte, Finanzen, Daten und Strategie">
+<!-- v7.0 CACHE-KILLER: verhindert dass Desktop-Shortcut alte Versionen lädt -->
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate, max-age=0">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<title>WAVE BITE // CAPITÄNS BRIDGE — Lucy Edition</title>
+<meta name="description" content="Wave Bite CEO Command Center — Maritime Intelligence Dashboard mit Lucy v4.0 als 100%-cerebral Co-Pilotin">
 <meta name="robots" content="noindex, nofollow">
+<meta name="build-version" content="v7-2026-05-21">
+<!-- AUTO-VERSION-CHECK: vergleicht beim Boot die lokale Version mit GitHub Raw, force-reload bei Drift -->
+<script>
+(function(){
+  try {
+    const LOCAL_VERSION = 'v7-2026-05-21';
+    const VCHECK_KEY = 'wb_vcheck_last';
+    const last = parseInt(sessionStorage.getItem(VCHECK_KEY) || '0');
+    if (Date.now() - last < 60000) return; // max 1× pro Minute
+    sessionStorage.setItem(VCHECK_KEY, String(Date.now()));
+    // Hole raw HTML-Header von GitHub und prüfe build-version
+    fetch('https://raw.githubusercontent.com/voigtcarsten4-rgb/ceo-office/main/index.html?t='+Date.now(), {cache:'no-store'})
+      .then(r => r.text())
+      .then(t => {
+        const m = t.match(/name="build-version" content="([^"]+)"/);
+        if (m && m[1] && m[1] !== LOCAL_VERSION) {
+          console.warn('🔄 Neue Version erkannt:', m[1], '→ lade Office neu …');
+          // Kill SW & Cache, dann Hard-Reload
+          if (navigator.serviceWorker) navigator.serviceWorker.getRegistrations().then(rs => Promise.all(rs.map(r => r.unregister())));
+          if (window.caches) caches.keys().then(ks => Promise.all(ks.map(k => caches.delete(k))));
+          setTimeout(() => location.replace(location.pathname + '?v=' + m[1] + '&t=' + Date.now()), 400);
+        }
+      }).catch(()=>{});
+  } catch(_) {}
+})();
+</script>
 <!-- CDN scripts moved to bottom of body for instant boot-screen render -->
 <style>
   :root {
