@@ -363,6 +363,67 @@ REGELN: Deutsch, präzise, max 8 Sätze Standard. Bei Strategie: erst Schwäche,
     saveJSON(LEARN_KEY, all.slice(-200));
   }
 
+  // -------- MAIL-CLASSIFIER v3 — jede Mail bekommt Type + Action -----------
+  function classifyMail(m) {
+    var s = ((m.subject||'')+' '+(m.from||'')+' '+(m.snippet||'')).toLowerCase();
+    // 1. RECHNUNG / ZAHLUNG
+    if (/rechnung|invoice|receipt|beleg|zahlung|payment|mahnung|betrag|amount.*due|euro|usd|chf|fällig|frist|gebühr/.test(s)) {
+      // Extrahiere Betrag
+      var betrag = (s.match(/([0-9]+[.,][0-9]{2})\s*(€|eur|usd|chf|\$)/i)||[])[0] || '';
+      return { kind:'rechnung', label:'💰 Rechnung', color:'#ff9e6a', action:'note', actionLabel:'Als Ausgabe notieren',
+        actionFn:function(){ addNote('💰 Rechnung: '+(m.fromName||m.from)+' · '+(m.subject||'').slice(0,80)+(betrag?' · '+betrag:'')); return 'In Notizen archiviert. Betrag/Frist prüfen.'; }};
+    }
+    // 2. TERMIN-ANFRAGE
+    if (/termin|meeting|gespräch|call|zoom|teams|google.?meet|verfügbar|kalend|appointment|invite|einladung|schedule/.test(s)) {
+      return { kind:'termin', label:'📅 Termin', color:'#1edfff', action:'cal', actionLabel:'In Kalender anlegen',
+        actionFn:function(){ addNote('📅 Termin-Anfrage: '+(m.fromName||m.from)+' — '+(m.subject||'').slice(0,80)+' → Manuell Datum/Zeit prüfen + Calendar-Event anlegen'); return 'Notiz erstellt. Datum/Zeit aus Mail-Text extrahieren.'; }};
+    }
+    // 3. VERTRAG / RECHT
+    if (/vertrag|contract|nda|loi|sha|agreement|kanzlei|notar|gericht|abmahnung|datenschutz/.test(s)) {
+      return { kind:'vertrag', label:'⚖️ Vertrag', color:'#a78bfa', action:'review', actionLabel:'Zur Vertragsprüfung',
+        actionFn:function(){ addNote('⚖️ Vertrag: '+(m.fromName||m.from)+' — '+(m.subject||'').slice(0,80)+' · review nötig'); return 'Markiert für Vertragsprüfung.'; }};
+    }
+    // 4. BEHÖRDE / SOZIAL
+    if (/sozial|zsozth|mohan|behörde|amt|justiz|polizei|finanzamt|steuer|tax|betreibung/.test(s)) {
+      return { kind:'behörde', label:'🏛️ Behörde', color:'#ffc166', action:'archive', actionLabel:'Archivieren + Frist setzen',
+        actionFn:function(){ addNote('🏛️ Behörde: '+(m.fromName||m.from)+' — '+(m.subject||'').slice(0,80)+' · Frist prüfen!'); return 'Archiviert. Frist im Tab "Tasks" eintragen.'; }};
+    }
+    // 5. TECH / DEV
+    if (/github|apps.?script|run.?failed|deployment|webhook|api|cron|trigger|cloud|wordpress.*plugin/.test(s)) {
+      return { kind:'tech', label:'⚙️ Tech', color:'#00d4aa', action:'check', actionLabel:'Tech-Status prüfen',
+        actionFn:function(){ addNote('⚙️ Tech: '+(m.fromName||m.from)+' — '+(m.subject||'').slice(0,80)); return 'Notiert für Tech-Check.'; }};
+    }
+    // 6. PARTNER / LOI
+    if (/heiko|burggraf|roka|wfb|transgourmet|radeberger|hugentobler|dahme|gifthüttli|partner|kooperation/.test(s)) {
+      return { kind:'partner', label:'🤝 Partner', color:'#ff9eb1', action:'followup', actionLabel:'Follow-up vorbereiten',
+        actionFn:function(){ addNote('🤝 Partner: '+(m.fromName||m.from)+' — '+(m.subject||'').slice(0,80)+' · Follow-up vorbereiten'); return 'Notiz erstellt. Follow-up-Mail via Action-Tab.'; }};
+    }
+    // 7. THERAPIE / PRIVAT
+    if (/schülin|therapie|psycholog|arzt|behandlung|praxis/.test(s)) {
+      return { kind:'privat', label:'🧠 Privat', color:'#b48dfa', action:'cal', actionLabel:'Bestätigen + Cal',
+        actionFn:function(){ addNote('🧠 Privat-Termin: '+(m.subject||'').slice(0,80)); return 'Notiz erstellt.'; }};
+    }
+    // 8. MARKETING / NEWSLETTER (low-prio)
+    if (/newsletter|unsubscribe|abmelden|sale|angebot|webinar|free trial|growth/.test(s)) {
+      return { kind:'newsletter', label:'📨 Newsletter', color:'#7f7f93', action:'archive', actionLabel:'Archivieren',
+        actionFn:function(){ return 'Newsletter — kann archiviert werden.'; }};
+    }
+    // 9. SONSTIGES
+    return { kind:'sonstiges', label:'📧 Info', color:'#9d9db0', action:'note', actionLabel:'Lesen',
+      actionFn:function(){ addNote('📧 '+(m.fromName||m.from)+' — '+(m.subject||'').slice(0,80)); return 'In Notizen.'; }};
+  }
+
+  async function scanFullInbox(max){
+    max = max || 100;
+    var inb = await bridgeGet('inbox', {max:max}, 180000);
+    var sent = await bridgeGet('sent', {max:50}, 180000);
+    var all = [];
+    if (inb && inb.messages) inb.messages.forEach(function(m){ m._dir='in'; all.push(m); });
+    if (sent && sent.messages) sent.messages.forEach(function(m){ m._dir='out'; all.push(m); });
+    // klassifizieren
+    return all.map(function(m){ var c = classifyMail(m); return Object.assign({}, m, {_class:c}); });
+  }
+
   // -------- INSIGHTS (scannt Mail/Kalender, erkennt Action-Bedarf) --------
   // v5: Hardcoded kritische Manuell-Termine + erweitertes Mail-Triage
   const MANUAL_DATES = [
@@ -622,6 +683,7 @@ REGELN: Deutsch, präzise, max 8 Sätze Standard. Bei Strategie: erst Schwäche,
       </div>
       <div class="sam-tabs">
         <button class="sam-tab active" data-tab="today">🌊 Heute</button>
+        <button class="sam-tab" data-tab="mails">📨 Mails</button>
         <button class="sam-tab" data-tab="actions">⚡ Actions</button>
         <button class="sam-tab" data-tab="tasks">✅ Tasks</button>
         <button class="sam-tab" data-tab="notes">📝 Notes</button>
@@ -656,6 +718,7 @@ REGELN: Deutsch, präzise, max 8 Sätze Standard. Bei Strategie: erst Schwäche,
     const body = document.getElementById('sam-body');
     if (!body) return;
     if (currentTab === 'today') await renderToday(body);
+    else if (currentTab === 'mails') await renderMails(body);
     else if (currentTab === 'actions') renderActions(body);
     else if (currentTab === 'tasks') renderTasks(body);
     else if (currentTab === 'notes') renderNotes(body);
@@ -663,6 +726,51 @@ REGELN: Deutsch, präzise, max 8 Sätze Standard. Bei Strategie: erst Schwäche,
     else if (currentTab === 'chat') renderChat(body);
     else if (currentTab === 'plugins') renderPlugins(body);
     else if (currentTab === 'health') renderHealth(body);
+  }
+
+  async function renderMails(body){
+    body.innerHTML = '<div class="sam-h4">📨 Mail-Triage v3</div><div style="color:#9d9db0;font-size:12px;padding:10px">Scanne Inbox + Sent…</div>';
+    const mails = await scanFullInbox(80);
+    // Gruppieren nach kind
+    const groups = {};
+    mails.forEach(m => { (groups[m._class.kind] = groups[m._class.kind]||[]).push(m); });
+    const order = ['rechnung','termin','vertrag','behörde','partner','tech','privat','sonstiges','newsletter'];
+    let html = `<div class="sam-h4">📨 Mail-Triage · ${mails.length} Mails klassifiziert</div>
+      <div style="font-size:11px;color:#c8c8d4;margin-bottom:10px">Jede Mail bekommt Type + Auto-Action. Klick öffnet die Aktion.</div>`;
+    order.forEach(k => {
+      const list = groups[k]; if (!list) return;
+      const c = list[0]._class;
+      html += `<h4 style="margin:10px 0 6px;font-size:11px;color:${c.color};font-weight:700">${c.label} (${list.length})</h4>`;
+      list.slice(0,12).forEach((m,i) => {
+        const id = 'mail_'+k+'_'+i;
+        html += `<div class="sam-row" style="border-left:3px solid ${c.color};padding-left:10px;align-items:center">
+          <div style="flex:1;min-width:0">
+            <div style="font-size:12px;font-weight:600;color:#fff;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${escapeHTML((m.fromName||m.from||'?').slice(0,40))}${m._dir==='out'?' →':''}</div>
+            <div style="font-size:10.5px;color:#c8c8d4;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${escapeHTML((m.subject||'').slice(0,80))}</div>
+            <div style="font-size:9.5px;color:#9d9db0;margin-top:2px">${(m.date||'').slice(0,10)}</div>
+          </div>
+          <button data-mailact="${id}" style="background:${c.color}22;border:1px solid ${c.color}66;color:${c.color};padding:4px 8px;border-radius:6px;font-size:10.5px;cursor:pointer;white-space:nowrap;flex-shrink:0">${escapeHTML(c.actionLabel)}</button>
+        </div>`;
+        // Halte action-fn im element
+        setTimeout(() => { const btn = body.querySelector('[data-mailact="'+id+'"]'); if (btn) btn.onclick = () => { const r = m._class.actionFn(); toast('✓ '+r); }; }, 0);
+      });
+    });
+    body.innerHTML = html;
+    // Re-bind nach innerHTML-Replace
+    Object.keys(groups).forEach(k => {
+      groups[k].slice(0,12).forEach((m,i) => {
+        const id = 'mail_'+k+'_'+i;
+        const btn = body.querySelector('[data-mailact="'+id+'"]');
+        if (btn) btn.onclick = () => { const r = m._class.actionFn(); toast('✓ '+r); };
+      });
+    });
+  }
+  function toast(text){
+    const t = document.createElement('div');
+    t.style.cssText='position:fixed;bottom:100px;left:50%;transform:translateX(-50%);background:rgba(76,217,123,.95);color:#0a0a14;padding:10px 18px;border-radius:10px;font-size:13px;font-weight:600;z-index:1000001;box-shadow:0 12px 40px rgba(0,0,0,.5);max-width:90%';
+    t.textContent = text;
+    document.body.appendChild(t);
+    setTimeout(()=>t.remove(), 4000);
   }
 
   async function renderToday(body){

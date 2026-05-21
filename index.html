@@ -10,12 +10,12 @@
 <title>WAVE BITE // CAPITÄNS BRIDGE — Lucy Edition</title>
 <meta name="description" content="Wave Bite CEO Command Center — Maritime Intelligence Dashboard mit Lucy v4.0 als 100%-cerebral Co-Pilotin">
 <meta name="robots" content="noindex, nofollow">
-<meta name="build-version" content="v7.1.1-2026-05-21-mail-cal-inject">
+<meta name="build-version" content="v7.2-2026-05-21-mail-triage-cal-planner">
 <!-- AUTO-VERSION-CHECK: vergleicht beim Boot die lokale Version mit GitHub Raw, force-reload bei Drift -->
 <script>
 (function(){
   try {
-    const LOCAL_VERSION = 'v7.1.1-2026-05-21-mail-cal-inject';
+    const LOCAL_VERSION = 'v7.2-2026-05-21-mail-triage-cal-planner';
     const VCHECK_KEY = 'wb_vcheck_last';
     const last = parseInt(sessionStorage.getItem(VCHECK_KEY) || '0');
     if (Date.now() - last < 60000) return; // max 1× pro Minute
@@ -8079,20 +8079,26 @@ function _renderCalIntelInner(todayEvents, currentHour, allEvents) {
   }
   var adviceEl = document.getElementById('cal-intel-advice');
   if (adviceEl) {
+    // v7.2 — FLEXIBLES PLAYBOOK · Block-Logik statt Uhrzeit-Logik (Carsten startet 06-09)
+    var nextEv = todayEvents[0];
+    var minsToNext = nextEv && nextEv.start ? Math.floor((new Date(nextEv.start).getTime() - Date.now())/60000) : -1;
     var advice = '';
     if (todayEvents.length === 0) {
-      advice = '<div style="color:var(--green);font-weight:600;margin-bottom:.3rem">&#127919; FOKUS-TAG</div><div style="color:var(--text-dim)">BunBo Feature-Sprint, Investor-Deck oder Seed-Unterlagen finalisieren.</div>';
+      advice = '<div style="color:var(--green);font-weight:600;margin-bottom:.3rem">&#127919; FOKUS-SLOT</div><div style="color:var(--text-dim)">Heute frei — perfekt für: WFB-Call-Prep · DHDL-Video · B2B-Wasserlage-Mailings. Wähle EINEN Block, nicht alles auf einmal.</div>';
     } else if (todayEvents.length >= 4) {
-      advice = '<div style="color:var(--red);font-weight:600;margin-bottom:.3rem">&#9889; TERMIN-INTENSIV</div><div style="color:var(--text-dim)">15 Min Prep vor jedem Meeting. Notizen in ClickUp erfassen.</div>';
+      advice = '<div style="color:var(--red);font-weight:600;margin-bottom:.3rem">&#9889; TERMIN-DICHT</div><div style="color:var(--text-dim)">15 Min Pause zwischen Terminen einbauen. Notizen sofort nach jedem Call.</div>';
     } else if (todayEvents.length >= 2) {
-      advice = '<div style="color:var(--gold);font-weight:600;margin-bottom:.3rem">&#9878;&#65039; AUSGEWOGEN</div><div style="color:var(--text-dim)">Deep Work morgens, Meetings clustern. Abend: 15-Min-Review.</div>';
+      advice = '<div style="color:var(--gold);font-weight:600;margin-bottom:.3rem">&#9878;&#65039; AUSGEWOGEN</div><div style="color:var(--text-dim)">Termine clustern · Deep-Work-Block dazwischen reservieren.</div>';
     } else {
-      advice = '<div style="color:var(--blue);font-weight:600;margin-bottom:.3rem">&#128204; 1 TERMIN</div><div style="color:var(--text-dim)">Vorbereitung 20 Min vorher. Rest: strategische Arbeit.</div>';
+      advice = '<div style="color:var(--blue);font-weight:600;margin-bottom:.3rem">&#128204; 1 TERMIN HEUTE</div><div style="color:var(--text-dim)">20 Min Vorbereitung vorher. Restzeit: strategische Tiefenarbeit.</div>';
     }
-    if (currentHour >= 6 && currentHour < 10) {
-      advice += '<div style="margin-top:.4rem;padding:.3rem .5rem;background:rgba(0,200,255,0.06);border-radius:5px;font-size:.67rem;color:var(--blue)">&#127749; Morgen-Ritual: Top-3 Ziele definieren</div>';
-    } else if (currentHour >= 16 && currentHour < 20) {
-      advice += '<div style="margin-top:.4rem;padding:.3rem .5rem;background:rgba(0,212,170,0.06);border-radius:5px;font-size:.67rem;color:var(--teal)">&#127751; Abend-Review: Offene Tasks schliessen</div>';
+    // Block-Empfehlung statt starre Uhrzeit
+    if (minsToNext > 0 && minsToNext < 60) {
+      advice += '<div style="margin-top:.4rem;padding:.3rem .5rem;background:rgba(255,107,122,0.1);border-radius:5px;font-size:.67rem;color:#ff8a96">&#9203; Nächster Termin in '+minsToNext+' Min — jetzt vorbereiten, nicht starten</div>';
+    } else if (minsToNext > 60 && minsToNext < 240) {
+      advice += '<div style="margin-top:.4rem;padding:.3rem .5rem;background:rgba(201,168,76,0.08)+;border-radius:5px;font-size:.67rem;color:var(--gold)">&#127919; '+Math.floor(minsToNext/60)+'h Slot bis Termin — eine konkrete Sache komplett fertig machen</div>';
+    } else if (todayEvents.length === 0 || minsToNext > 240) {
+      advice += '<div style="margin-top:.4rem;padding:.3rem .5rem;background:rgba(0,212,170,0.08);border-radius:5px;font-size:.67rem;color:var(--teal)">&#127919; Offener Slot — DHDL-Video drehen ODER WFB-Pack vorbereiten ODER 5 Marinas anschreiben. EINE Sache, nicht drei.</div>';
     }
     adviceEl.innerHTML = advice;
   }
@@ -8930,6 +8936,6 @@ function _renderCalIntelInner(todayEvents, currentHour, allEvents) {
   });
 })();
 </script>
-<script src="samantha.js?v=2026-05-21-v7.1-cal-sync"></script>
+<script src="samantha.js?v=2026-05-21-v7.2-mail-triage"></script>
 </body>
 </html>

@@ -666,8 +666,9 @@ textarea.fi{resize:vertical;min-height:70px}
 // ═══════════════════════════════════════════════════════════════════════════
 // CEO CALENDAR v2 — State & Config
 // ═══════════════════════════════════════════════════════════════════════════
+// v7.2: Master-Bridge V3.2 fest hinterlegt (kein Eingabefeld mehr)
 var CFG = {
-  bridgeUrl:  localStorage.getItem('cal_bridge') || '',
+  bridgeUrl:  'https://script.google.com/macros/s/AKfycbzR2PXMHIx1NDVre9OUSaZ62tbBL3PlEvDf5QFz2IQVNq0-NXLi4pH7KYrXvXnZdUyG/exec',
   travelDef:  parseInt(localStorage.getItem('cal_travel') || 30),
   bufferDef:  parseInt(localStorage.getItem('cal_buffer') || 15),
 };
@@ -696,31 +697,21 @@ var ST = {
 };
 
 // ─── DEMO DATA ────────────────────────────────────────────────────────────
+// v7.2: Pflicht-Termine aus echten Mails (Schülin/Heiko/Abpacken/IONOS) als Sofort-Anzeige,
+// solange Live-Bridge-Daten noch laden. Werden überschrieben sobald Bridge antwortet.
 function getDemoEvents() {
-  var t = new Date(), y = t.getFullYear(), m = t.getMonth(), d = t.getDate();
-  function mkEv(id,cal,type,title,loc,h,mi,dur,prio) {
-    var s = new Date(y,m,d,h,mi); var e = new Date(y,m,d,h,mi+dur);
+  function mkAbs(id,cal,type,title,loc,iso,dur,prio) {
+    var s = new Date(iso); var e = new Date(s.getTime()+dur*60000);
     return {id,cal,type,title,location:loc,start:s.toISOString(),end:e.toISOString(),
-      startDate:fmt(s,'date'),startTime:fmt(s,'time'),endTime:fmt(e,'time'),prio:prio||'normal',notes:''};
+      startDate:fmt(s,'date'),startTime:fmt(s,'time'),endTime:fmt(e,'time'),prio:prio||'normal',notes:'',source:'mail'};
   }
   return [
-    mkEv('ev1','wb','Investor','📊 Investor-Call: Seed-Runde besprechen','Zoom',9,30,60,'high'),
-    mkEv('ev2','wb','Partner','🤝 Frank Burggraf — ROKA Werk','Berlin Mitte, Wilhelmstr. 30',13,0,90,'high'),
-    mkEv('ev3','wb','Entwicklung','💻 BunBo MVP Review — FlutterFlow','Google Meet',15,30,60,'normal'),
-    mkEv('ev4','bl','Rechtlich','⚖️ Datenschutz — Kanzlei Legal Berlin','Potsdamer Str. 1',17,0,60,'critical'),
-    // Weitere Tage
-    {id:'ev5',cal:'wb',type:'Marketing',title:'🎯 LinkedIn Strategie Workshop',location:'Home Office',
-      start:new Date(y,m,d+1,10,0).toISOString(),end:new Date(y,m,d+1,12,0).toISOString(),
-      startDate:fmt(new Date(y,m,d+1),'date'),startTime:'10:00',endTime:'12:00',prio:'normal',notes:''},
-    {id:'ev6',cal:'bl',type:'Finanzen',title:'🏦 Gespräch Hausbank — Finanzierung',location:'Commerzbank Berlin',
-      start:new Date(y,m,d+2,14,0).toISOString(),end:new Date(y,m,d+2,15,0).toISOString(),
-      startDate:fmt(new Date(y,m,d+2),'date'),startTime:'14:00',endTime:'15:00',prio:'high',notes:''},
-    {id:'ev7',cal:'pr',type:'Familie',title:'🏠 Familienwochenende',location:'Zu Hause',
-      start:new Date(y,m,d+5,10,0).toISOString(),end:new Date(y,m,d+5,20,0).toISOString(),
-      startDate:fmt(new Date(y,m,d+5),'date'),startTime:'10:00',endTime:'20:00',prio:'normal',notes:''},
-    {id:'ev8',cal:'wb',type:'Demo',title:'🚀 Glide App Demo — Marinapark',location:'Zoom',
-      start:new Date(y,m,d+3,11,0).toISOString(),end:new Date(y,m,d+3,12,0).toISOString(),
-      startDate:fmt(new Date(y,m,d+3),'date'),startTime:'11:00',endTime:'12:00',prio:'normal',notes:''},
+    mkAbs('mail_schuelin_21','pr','Therapie','🧠 Therapie Pia Schülin (Sonder-Termin)','Praxis zum Falken · Falknerstrasse 26 · 4001 Basel','2026-05-21T14:30:00',50,'high'),
+    mkAbs('mail_giveaway_22','bl','Bell','🎁 Abpacken Giveaway','Bell Food','2026-05-22T06:00:00',240,'normal'),
+    mkAbs('mail_alumni_26','bl','Bell','👥 Bell Alumni','Bell Food','2026-05-26T08:00:00',180,'normal'),
+    mkAbs('mail_schuelin_28','pr','Therapie','🧠 Therapie Pia Schülin (Sonder-Termin)','Praxis zum Falken · Basel','2026-05-28T13:30:00',50,'high'),
+    mkAbs('mail_ionos_31','wb','Frist','⏳ IONOS E-Mail-Nutzung Frist','kontoverwaltung.ionos.de','2026-05-31T23:59:00',1,'critical'),
+    mkAbs('mail_heiko_0601','wb','Investor','🦅 WFB-Call Heiko Schmidt (Microsoft Teams)','Teams · Besprechungs-ID 366 350 …','2026-06-01T14:00:00',60,'critical')
   ];
 }
 
@@ -755,9 +746,9 @@ window.addEventListener('DOMContentLoaded', function() {
 });
 
 function loadCFGBridge() {
-  if (!CFG.bridgeUrl) {
-    document.getElementById('conn-badge').innerHTML = '<span class="status-pill sp-warn"><span class="sp-dot"></span>DEMO MODUS</span>';
-  }
+  // v7.2: Bridge ist fest verbunden
+  var b = document.getElementById('conn-badge');
+  if (b) b.innerHTML = '<span class="status-pill sp-ok"><span class="sp-dot"></span>BRIDGE V3.2 LIVE</span>';
 }
 
 function loadLiveData() {
