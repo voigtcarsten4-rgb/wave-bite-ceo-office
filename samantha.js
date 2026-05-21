@@ -343,7 +343,8 @@
   ];
 
   // -------- BRIDGE-CALLS (cached) ------------------------------------------
-  const BRIDGE = (window.BRIDGE_URL || 'https://script.google.com/macros/s/AKfycbzR2PXMHIx1NDVre9OUSaZ62tbBL3PlEvDf5QFz2IQVNq0-NXLi4pH7KYrXvXnZdUyG/exec').trim();
+  // v9.2 NEXT-GEN: neue Deployment-URL nach Pro-Mode-Aktivierung
+  const BRIDGE = (window.BRIDGE_URL || 'https://script.google.com/macros/s/AKfycbzOcLq5leW8EmCaI0HE74ZVjAlhdFjJtoV5vhhzEoWHvoC6U8bn5zVxfs7MK_7c1RNu/exec').trim();
   const cache = loadJSON(CACHE_KEY, {});
 
   async function bridgeGet(action, params, maxAgeMs){
@@ -693,6 +694,9 @@ REGELN: Deutsch, präzise, max 8 Sätze Standard. Bei Strategie: erst Schwäche,
     #samantha-avatar.flash{animation:samFlash .6s 2}
     @keyframes samPulse{0%,100%{transform:scale(1);opacity:.6}50%{transform:scale(1.15);opacity:.1}}
     @keyframes samFlash{0%,100%{box-shadow:0 8px 24px rgba(197,73,122,.45)}50%{box-shadow:0 0 36px 8px rgba(255,210,140,.9)}}
+    @keyframes lucyDot{0%,30%{opacity:0}50%{opacity:1}100%{opacity:0}}
+    @keyframes lucyListen{0%,100%{box-shadow:0 0 0 0 rgba(154,240,255,.4)}50%{box-shadow:0 0 0 16px rgba(154,240,255,0)}}
+    .lucy-listening{animation:lucyListen 1.5s infinite!important}
     #samantha-badge{position:absolute;top:-4px;right:-4px;background:#ffd166;color:#1a1a1a;font-size:10px;font-weight:700;border-radius:10px;padding:2px 6px;border:2px solid #1a1a1a}
     /* v8.1 — strenges Grid: Header/Tabs/Body/Footer immer sichtbar */
     #samantha-panel{position:fixed;right:22px;bottom:100px;width:460px;height:min(720px,calc(100vh - 130px));background:rgba(18,20,28,.97);border:1px solid rgba(154,240,255,.28);border-radius:18px;box-shadow:0 24px 60px rgba(0,0,0,.7),0 0 0 1px rgba(154,240,255,.12);z-index:999999;display:none;color:#f4f4f8;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Inter,sans-serif;backdrop-filter:blur(22px);resize:both;min-width:360px;min-height:480px;max-width:90vw;max-height:calc(100vh - 110px);grid-template-rows:auto auto 1fr auto;grid-template-columns:100%;overflow:hidden}
@@ -851,6 +855,9 @@ REGELN: Deutsch, präzise, max 8 Sätze Standard. Bei Strategie: erst Schwäche,
         <button id="qb-quick-note" title="Schnell-Notiz">📝 Note</button>
         <button id="qb-quick-cal" title="Termin anlegen">📅 Termin</button>
         <button id="qb-quick-mail" title="Corporate-Mail entwerfen">✉ Mail</button>
+        <button id="qb-voice" title="Mikrofon — Lucy hört zu">🎤</button>
+        <button id="qb-tts" title="Sprachausgabe an/aus">🔊</button>
+        <button id="qb-briefing" title="Morning-Briefing generieren (Claude Pro)">☀</button>
         <button id="qb-refresh" title="Live-Daten neu laden">↻</button>
       </div>
     `;
@@ -899,11 +906,35 @@ REGELN: Deutsch, präzise, max 8 Sätze Standard. Bei Strategie: erst Schwäche,
       toast('✓ Corporate-Mail-Entwurf geöffnet');
     });
     qb('qb-refresh', () => {
-      // Cache invalidieren + neu rendern
       Object.keys(cache).forEach(k => delete cache[k]);
       saveJSON(CACHE_KEY, {});
       renderBody();
       toast('✓ Live-Daten neu geladen');
+    });
+    qb('qb-voice', () => startListening());
+    qb('qb-tts', () => window.LUCY_VOICE.toggleOutput());
+    qb('qb-briefing', async () => {
+      toast('☀ Lucy erstellt dein Morning-Briefing…');
+      const insights = await generateInsights();
+      const top = highestPriorityAction([]);
+      const contextLines = [
+        'Heute ist '+new Date().toLocaleDateString('de-DE',{weekday:'long',day:'2-digit',month:'long',year:'numeric'})+'.',
+        'Top-Priorität laut Score: '+(top?top.title+' (Score '+Math.round(top.score||0)+')':'keine kritischen'),
+        'Insights aus Mail+Kalender: '+insights.length,
+        ...insights.slice(0,8).map(i => '• '+i.title+' — '+(i.body||'').slice(0,80))
+      ].join('\n');
+      const prompt = 'Erstelle ein knackiges Morning-Briefing für Carsten (Wave Bite Solo-Founder), max 150 Wörter, in Carstens direktem Stil ohne KI-Floskeln. Struktur: 1) Wetter-Check des Tages (basierend auf Insights), 2) Top-3-Aktionen heute, 3) Eine Warnung, 4) Eine Motivation. Hier die Daten:\n\n'+contextLines;
+      const reply = await callClaude(prompt, { history: [] });
+      // Zeige in Modal
+      const m = document.createElement('div');
+      m.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:1000010;display:flex;align-items:center;justify-content:center;padding:24px;backdrop-filter:blur(8px)';
+      m.innerHTML = '<div style="max-width:640px;width:100%;background:linear-gradient(135deg,rgba(18,24,38,.98),rgba(8,14,24,.98));border:1px solid rgba(154,240,255,.4);border-radius:18px;padding:32px;color:#e6e9ed;box-shadow:0 30px 80px rgba(0,0,0,.7);position:relative"><div style="position:absolute;top:12px;right:14px;font-size:24px;color:#9d9db0;cursor:pointer" id="mb-close">×</div><div style="font-size:11px;letter-spacing:.4em;color:#9af0ff;font-weight:700;margin-bottom:6px">☀ MORNING BRIEFING · LUCY</div><div style="font-size:22px;font-weight:700;color:#fff;margin-bottom:18px">'+new Date().toLocaleDateString('de-DE',{weekday:'long',day:'2-digit',month:'long'})+'</div><div style="font-size:14px;line-height:1.7;color:#e6e9ed;white-space:pre-wrap">'+escapeHTML(reply.text||'(keine Antwort)')+'</div><div style="display:flex;gap:8px;margin-top:24px"><button id="mb-speak" style="flex:1;background:linear-gradient(135deg,#9af0ff,#00d4aa);border:0;color:#0a1424;padding:10px 16px;border-radius:8px;font-weight:700;cursor:pointer;font-size:12px">🔊 Vorlesen</button><button id="mb-task" style="flex:1;background:rgba(255,158,177,.14);border:1px solid rgba(255,158,177,.4);color:#ff9eb1;padding:10px 16px;border-radius:8px;font-weight:600;cursor:pointer;font-size:12px">📋 Als Notiz</button><button id="mb-close-btn" style="background:transparent;border:1px solid rgba(255,255,255,.15);color:#9d9db0;padding:10px 16px;border-radius:8px;cursor:pointer;font-size:12px">Schliessen</button></div><div style="font-size:10px;color:#7f7f93;margin-top:14px">'+reply.source+(reply.source==='claude'?' · Pro NEXT-GEN':'')+' · ★ täglich neu via ☀ Quickbar</div></div>';
+      document.body.appendChild(m);
+      m.querySelector('#mb-close').onclick = () => m.remove();
+      m.querySelector('#mb-close-btn').onclick = () => m.remove();
+      m.querySelector('#mb-speak').onclick = () => speakLucy(reply.text || '');
+      m.querySelector('#mb-task').onclick = () => { addNote('Morning-Briefing '+new Date().toLocaleDateString('de-DE')+': '+reply.text); toast('✓ Briefing in Notizen'); };
+      celebrate(0.8);
     });
   }
 
@@ -1139,6 +1170,7 @@ REGELN: Deutsch, präzise, max 8 Sätze Standard. Bei Strategie: erst Schwäche,
           </div>
           <div style="display:flex;gap:4px;flex-wrap:wrap">
             <button data-do="${id}" style="background:${c.color}22;border:1px solid ${c.color}66;color:${c.color};padding:3px 8px;border-radius:5px;font-size:10px;cursor:pointer;font-weight:600">${escapeHTML(c.actionLabel)}</button>
+            <button data-reply="${id}" title="Lucy entwirft 3 Antwort-Varianten (Pro)" style="background:rgba(154,240,255,.12);border:1px solid rgba(154,240,255,.5);color:#9af0ff;padding:3px 8px;border-radius:5px;font-size:10px;cursor:pointer;font-weight:600">✦ Reply</button>
             <button data-done="${id}" title="Erledigt" style="background:rgba(76,217,123,.12);border:1px solid rgba(76,217,123,.4);color:#7ce29d;padding:3px 8px;border-radius:5px;font-size:10px;cursor:pointer">✓</button>
             <button data-snooze="${id}" title="Snooze 1 Tag" style="background:rgba(140,180,255,.12);border:1px solid rgba(140,180,255,.4);color:#8cb4ff;padding:3px 8px;border-radius:5px;font-size:10px;cursor:pointer">💤</button>
             <button data-dismiss="${id}" title="Lucy lernt: nicht relevant" style="background:rgba(127,127,147,.12);border:1px solid rgba(127,127,147,.35);color:#9d9db0;padding:3px 8px;border-radius:5px;font-size:10px;cursor:pointer">🗑</button>
@@ -1158,10 +1190,25 @@ REGELN: Deutsch, präzise, max 8 Sätze Standard. Bei Strategie: erst Schwäche,
         const $done = body.querySelector('[data-done="'+id+'"]');
         const $sn  = body.querySelector('[data-snooze="'+id+'"]');
         const $dis = body.querySelector('[data-dismiss="'+id+'"]');
+        const $reply = body.querySelector('[data-reply="'+id+'"]');
         if ($do)   $do.onclick   = () => { const r = m._class.actionFn(); toast('✓ '+r); };
         if ($done) $done.onclick = () => { doneMail(m); toast('✓ Erledigt — Lucy lernt'); renderBody(); };
         if ($sn)   $sn.onclick   = () => { snoozeMail(m, 1); toast('💤 Snooze 1 Tag'); renderBody(); };
         if ($dis)  $dis.onclick  = () => { dismissMail(m); toast('🗑 Lucy ignoriert künftig'); renderBody(); };
+        if ($reply) $reply.onclick = async () => {
+          toast('✦ Lucy entwirft 3 Antwort-Varianten…');
+          const prompt = `Entwirf 3 kurze Antwort-Varianten auf folgende E-Mail. Stil: direkt, professionell, in Carsten Voigts Stimme (Wave Bite Founder), keine KI-Floskeln. Jede Variante max. 4 Sätze. Trenne mit ---\n\nVON: ${m.fromName||m.from||'?'}\nBETREFF: ${m.subject||''}\nINHALT: ${m.snippet||''}\n\n3 Varianten (1=knapp, 2=ausführlich, 3=verbindlich-höflich):`;
+          const r = await callClaude(prompt, { history: [] });
+          // Modal mit 3 Varianten
+          const variants = (r.text||'').split(/^---+\s*$/m).map(s=>s.trim()).filter(Boolean);
+          const modal = document.createElement('div');
+          modal.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:1000010;display:flex;align-items:center;justify-content:center;padding:24px;backdrop-filter:blur(8px)';
+          modal.innerHTML = '<div style="max-width:720px;width:100%;background:linear-gradient(135deg,rgba(18,24,38,.98),rgba(8,14,24,.98));border:1px solid rgba(154,240,255,.4);border-radius:16px;padding:28px;color:#e6e9ed;box-shadow:0 30px 80px rgba(0,0,0,.7);position:relative;max-height:88vh;overflow-y:auto"><div style="position:absolute;top:12px;right:14px;font-size:24px;color:#9d9db0;cursor:pointer" onclick="this.parentNode.parentNode.remove()">×</div><div style="font-size:11px;letter-spacing:.4em;color:#9af0ff;font-weight:700;margin-bottom:6px">✦ LUCY · 3 ANTWORT-VARIANTEN</div><div style="font-size:13px;color:#c8c8d4;margin-bottom:20px">An: '+escapeHTML(m.fromName||m.from)+' · Betreff: '+escapeHTML(m.subject||'')+'</div>'+
+            variants.map((v,i)=>'<div style="background:rgba(255,255,255,.04);border-left:3px solid '+(['#9af0ff','#ff9eb1','#c9a84c'][i%3])+';border-radius:8px;padding:14px 16px;margin-bottom:12px"><div style="font-size:10px;color:'+(['#9af0ff','#ff9eb1','#c9a84c'][i%3])+';font-weight:700;letter-spacing:.1em;margin-bottom:6px">VARIANTE '+(i+1)+' · '+['KNAPP','AUSFÜHRLICH','VERBINDLICH'][i%3]+'</div><div style="font-size:13px;line-height:1.6;white-space:pre-wrap">'+escapeHTML(v)+'</div><button onclick="navigator.clipboard.writeText(`'+v.replace(/`/g,'\\`').replace(/'/g,"\\'")+'`); window.Samantha && window.Samantha.open && setTimeout(()=>document.querySelectorAll(\'.lucy-mail-row\').forEach(e=>{}),100)" style="background:rgba(154,240,255,.1);border:1px solid rgba(154,240,255,.3);color:#9af0ff;padding:6px 12px;border-radius:6px;font-size:11px;cursor:pointer;margin-top:8px">📋 Diese Variante kopieren</button></div>').join('')+
+            '<div style="font-size:10px;color:#7f7f93;margin-top:14px">'+r.source+(r.source==='claude'?' · Pro NEXT-GEN':'')+'</div></div>';
+          document.body.appendChild(modal);
+          toast('✓ 3 Antworten generiert ('+r.source+')');
+        };
       });
     });
     const clr = document.getElementById('lucy-clear-hidden');
@@ -1221,6 +1268,80 @@ REGELN: Deutsch, präzise, max 8 Sätze Standard. Bei Strategie: erst Schwäche,
       body: bodyHtml ? '<p><strong>'+escapeHTML(opts.anrede||'Sehr geehrte Damen und Herren,')+'</strong></p>'+bodyHtml + (opts.ps ? '<p style="margin-top:20px;color:#5a6a7a;font-style:italic">'+opts.ps+'</p>' : '') + '<p style="margin-top:32px">Mit besten Grüssen<br><strong>Carsten Voigt</strong></p>' : html
     });
   }
+
+  // -------- LUCY VOICE MODULE v9.2 — TTS + STT (Web Speech API) ------------
+  window.LUCY_VOICE_OUT = loadJSON('lucy_voice_out', false);
+  let lucyVoiceSelected = null;
+  function pickGermanFemaleVoice(){
+    const voices = speechSynthesis.getVoices();
+    // Bevorzuge weibliche deutsche Stimme
+    return voices.find(v => /de.+(Anna|Petra|Marlene|Hedda|Vicki|Helena)/i.test(v.name))
+        || voices.find(v => /de.+female/i.test(v.name))
+        || voices.find(v => v.lang.startsWith('de'))
+        || voices[0];
+  }
+  function speakLucy(text, opts){
+    try {
+      if (!('speechSynthesis' in window)) return;
+      const clean = (text||'').replace(/[*_`#]/g,'').replace(/https?:\/\/\S+/g,'').replace(/\s+/g,' ').trim().slice(0,400);
+      if (!clean) return;
+      speechSynthesis.cancel();
+      const u = new SpeechSynthesisUtterance(clean);
+      if (!lucyVoiceSelected) lucyVoiceSelected = pickGermanFemaleVoice();
+      if (lucyVoiceSelected) u.voice = lucyVoiceSelected;
+      u.lang = 'de-DE';
+      u.rate = (opts && opts.rate) || 1.05;
+      u.pitch = (opts && opts.pitch) || 1.1;
+      u.volume = 0.9;
+      speechSynthesis.speak(u);
+    } catch(e) { /* silent */ }
+  }
+  if ('speechSynthesis' in window) {
+    speechSynthesis.onvoiceschanged = () => { lucyVoiceSelected = pickGermanFemaleVoice(); };
+  }
+
+  let lucyListening = false;
+  let lucyRecognition = null;
+  function startListening(){
+    const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (!SR) { toast('⚠ Voice-Input nicht verfügbar (Chrome/Edge nötig)'); return; }
+    if (lucyListening) return;
+    lucyRecognition = new SR();
+    lucyRecognition.lang = 'de-DE';
+    lucyRecognition.interimResults = false;
+    lucyRecognition.maxAlternatives = 1;
+    lucyRecognition.continuous = false;
+    const av = document.getElementById('samantha-avatar');
+    av && av.classList.add('lucy-listening');
+    lucyListening = true;
+    lucyRecognition.onresult = e => {
+      const txt = e.results[0][0].transcript;
+      lucyListening = false;
+      av && av.classList.remove('lucy-listening');
+      // Panel öffnen + Chat-Tab + Text einfügen
+      window.Samantha.open();
+      currentTab = 'chat';
+      document.querySelectorAll('.sam-tab').forEach(x => x.classList.toggle('active', x.dataset.tab==='chat'));
+      renderBody();
+      setTimeout(() => {
+        const inp = document.getElementById('sam-chat-input');
+        if (inp) { inp.value = txt; inp.focus(); }
+        toast('✓ Gehört: "'+txt.slice(0,40)+'"');
+      }, 200);
+    };
+    lucyRecognition.onerror = () => { lucyListening = false; av && av.classList.remove('lucy-listening'); };
+    lucyRecognition.onend = () => { lucyListening = false; av && av.classList.remove('lucy-listening'); };
+    try { lucyRecognition.start(); toast('🎤 Lucy hört zu …'); } catch(e) {}
+  }
+  function stopListening(){ if (lucyRecognition) try { lucyRecognition.stop(); } catch(_) {} lucyListening = false; }
+
+  // Voice-Toggle persistieren
+  window.LUCY_VOICE = {
+    toggleOutput: () => { window.LUCY_VOICE_OUT = !window.LUCY_VOICE_OUT; saveJSON('lucy_voice_out', window.LUCY_VOICE_OUT); toast('🔊 Sprachausgabe '+(window.LUCY_VOICE_OUT?'EIN':'AUS')); },
+    speak: speakLucy,
+    listen: startListening,
+    stop: stopListening
+  };
 
   // -------- LUCY CELEBRATION ENGINE v8 — Bestätigung + Motivation -----------
   const CELEBRATIONS = [
@@ -1573,8 +1694,19 @@ REGELN: Deutsch, präzise, max 8 Sätze Standard. Bei Strategie: erst Schwäche,
       if (/^note[:\s]/i.test(txt)) { addNote(txt.replace(/^note[:\s]/i,'').trim()); appendMsg('user',txt); appendMsg('sam','Notiz gespeichert ✓','memory'); return; }
       if (/^task[:\s]/i.test(txt)) { addTask(txt.replace(/^task[:\s]/i,'').trim()); appendMsg('user',txt); appendMsg('sam','Task hinzugefügt ✓','memory'); return; }
       appendMsg('user', txt);
+      // v9.2: typing-Indikator während Claude antwortet
+      const log = document.getElementById('sam-chat-log');
+      const typing = document.createElement('div');
+      typing.className = 'sam-msg sam';
+      typing.id = 'lucy-typing';
+      typing.innerHTML = '<span style="opacity:.7">Lucy denkt</span><span class="lucy-dots" style="display:inline-block;margin-left:6px"><span style="animation:lucyDot 1.2s infinite">.</span><span style="animation:lucyDot 1.2s infinite .2s">.</span><span style="animation:lucyDot 1.2s infinite .4s">.</span></span>';
+      log.appendChild(typing);
+      log.scrollTop = log.scrollHeight;
       const reply = await callClaude(txt, { history: history.slice(-8) });
+      document.getElementById('lucy-typing')?.remove();
       appendMsg('sam', reply.text, reply.source);
+      // Falls Voice aktiv: spreche die Antwort
+      if (window.LUCY_VOICE_OUT && reply.source === 'claude') speakLucy(reply.text);
     };
     btn.onclick = send;
     input.onkeydown = e => { if (e.key === 'Enter') send(); };
