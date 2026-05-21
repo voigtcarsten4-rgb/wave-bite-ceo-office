@@ -3625,3 +3625,44 @@ function showToast(msg){ toast(msg); }
 </script>
 </body>
 </html>
+<script>
+(function(){
+  // v9.0 — Master-Bridge V3.2 + Cross-Tab-Sync · auto-injected
+  window.MASTER_BRIDGE_URL = "https://script.google.com/macros/s/AKfycbzR2PXMHIx1NDVre9OUSaZ62tbBL3PlEvDf5QFz2IQVNq0-NXLi4pH7KYrXvXnZdUyG/exec";
+  window.BRIDGE_URL = window.MASTER_BRIDGE_URL;
+  try {
+    localStorage.setItem("ceo_master_bridge_url", window.MASTER_BRIDGE_URL);
+    localStorage.setItem("ceo_cal_bridge_url",    window.MASTER_BRIDGE_URL);
+  } catch(e){}
+  // Cross-Tab-Sync via BroadcastChannel (falls noch nicht vorhanden)
+  if (!window.__ceoWaveBC) {
+    try {
+      window.__ceoWaveBC = new BroadcastChannel("ceo-wave");
+      window.__ceoWaveBC.onmessage = (ev) => {
+        if (ev && ev.data && ev.data.type === "wave-state-update") {
+          // andere Sektion hat Daten geschickt — könnte hier verarbeitet werden
+        }
+      };
+    } catch(e){}
+  }
+  // Wave-Bite-Essenz für alle Dashboards verfügbar machen (sodass keine Platzhalter mehr)
+  window.WAVE_BITE_FACTS = window.WAVE_BITE_FACTS || {
+    eigenkapital: 50000,
+    funding_ziel: 450000,
+    burn_monat: 10400,
+    fixkosten_pa: 125000,
+    bankdarlehen: 350000,
+    bruttomarge: 0.71,
+    break_even_tag: 72,
+    saisontage: 150,
+    pre_money: 1500000,
+    lois_signed: 5,
+    wipo: "DM/248323 EU+CH",
+    cap_table: "Carsten 95% · Marcus 5%",
+    investor_readiness: 85,
+    forecast: { J1: 250000, J2: 415000, J3: 670000 },
+    ebitda: { J1: 93650, J2: 191866, J3: 363964 }
+  };
+  console.log("✦ Wave Bite Bridge V3.2 + Cross-Tab + Facts geladen");
+})();
+</script>
