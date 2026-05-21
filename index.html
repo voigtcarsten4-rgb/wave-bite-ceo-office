@@ -1748,6 +1748,39 @@
 </head>
 <body>
 
+<script>
+// v19: Robust Nav-Delegation + Service-Worker Kill (top of body)
+(function(){
+  // Service Worker Kill
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.getRegistrations().then(rs => rs.forEach(r => r.unregister().catch(()=>{})));
+    if (window.caches && caches.keys) caches.keys().then(keys => keys.forEach(k => caches.delete(k).catch(()=>{})));
+  }
+  // Robust nav delegation
+  function bindNav() {
+    var nav = document.querySelector('nav');
+    if (!nav) { setTimeout(bindNav, 200); return; }
+    nav.addEventListener('click', function(e){
+      var pill = e.target.closest('.nav-pill, [data-target]');
+      if (!pill) return;
+      var tgt = pill.dataset && pill.dataset.target;
+      if (!tgt && pill.getAttribute && pill.getAttribute('onclick')) {
+        // already has inline handler — let it run
+        return;
+      }
+      if (tgt) {
+        var sec = document.getElementById(tgt);
+        if (sec) { e.preventDefault(); sec.scrollIntoView({behavior:'smooth', block:'start'}); }
+      }
+    }, true); // capture phase
+    console.log('[v19] nav delegation bound on', nav.querySelectorAll('.nav-pill').length, 'pills');
+  }
+  if (document.readyState !== 'loading') bindNav();
+  else document.addEventListener('DOMContentLoaded', bindNav);
+})();
+</script>
+
+
 <!-- ═══════════════════════════════════════════════════════════
      LUCY BOOT-INTRO — Sci-Fi 100%-Brain-Activation (5 Sekunden)
      Inspired by Lucy (2014) · Wave Bite Universe Edition
@@ -2129,8 +2162,11 @@
   <div class="nav-pill" onclick="document.getElementById('sec-crm').scrollIntoView({behavior:'smooth'})">🤝 CRM</div>
   <div class="nav-pill" onclick="document.getElementById('sec-investor').scrollIntoView({behavior:'smooth'})" style="border-color:rgba(201,168,76,0.35);color:var(--gold)">💎 INVEST</div>
   <div class="nav-pill" onclick="document.getElementById('sec-ops').scrollIntoView({behavior:'smooth'})">⚙ OPS</div>
-  <div class="nav-pill" onclick="document.getElementById('sec-risk').scrollIntoView({behavior:'smooth'})" style="border-color:rgba(255,68,68,0.35);color:#ff4757">🔴 RISK</div>
-  <div class="nav-pill" onclick="document.getElementById('sec-tasks').scrollIntoView({behavior:'smooth'})">TASKS</div>
+  <div class="nav-pill" onclick="document.getElementById('sec-risk').scrollIntoView({behavior:'smooth'})" data-target="sec-risk" style="border-color:rgba(255,68,68,0.35);color:#ff4757">🔴 RISK</div>
+  <div class="nav-pill nav-pill-studio" onclick="document.getElementById('sec-studio').scrollIntoView({behavior:'smooth'})" data-target="sec-studio" style="border-color:rgba(232,201,106,0.55);color:#e8c96a;background:rgba(232,201,106,0.06)">🎬 STUDIO</div>
+  <div class="nav-pill" onclick="document.getElementById('sec-studio').scrollIntoView({behavior:'smooth'})" data-target="sec-studio" style="border-color:rgba(168,85,247,0.5);color:#d9bbff;background:rgba(168,85,247,0.06)">📣 MARKETING</div>
+  <a class="nav-pill" href="wavebite-ai-marketing-os.html" target="_blank" style="text-decoration:none;border-color:rgba(0,212,170,0.5);color:#9af0d8;background:rgba(0,212,170,0.06);display:inline-flex;align-items:center">⚡ MKT-OS ↗</a>
+  <div class="nav-pill" onclick="document.getElementById('sec-tasks').scrollIntoView({behavior:'smooth'})" data-target="sec-tasks">TASKS</div>
   <div class="nav-pill" onclick="document.getElementById('sec-agents').scrollIntoView({behavior:'smooth'})">AGENTEN</div>
   <div class="nav-pill" onclick="document.getElementById('sec-console').scrollIntoView({behavior:'smooth'})">CONSOLE</div>
   <div class="nav-sep"></div>
@@ -4200,6 +4236,22 @@
     </div>
   </div>
 </section>
+
+<!-- v19: MARKETING DETAIL-DASHBOARD HERO LINK -->
+<div style="margin:1rem 0 0.85rem 0;background:linear-gradient(135deg,rgba(168,85,247,0.18),rgba(0,212,170,0.10) 60%,rgba(232,201,106,0.12));border:1px solid rgba(168,85,247,0.45);border-radius:14px;padding:1rem 1.25rem;display:flex;align-items:center;gap:1rem;flex-wrap:wrap;position:relative;overflow:hidden">
+  <div style="position:absolute;inset:0;background:radial-gradient(600px 180px at 20% 0%,rgba(168,85,247,0.18),transparent 70%),radial-gradient(500px 160px at 90% 100%,rgba(0,212,170,0.10),transparent 70%);pointer-events:none"></div>
+  <div style="position:relative;font-size:2.2rem;flex-shrink:0">📣</div>
+  <div style="position:relative;flex:1;min-width:240px">
+    <div style="font-size:.6rem;letter-spacing:.18em;color:#d9bbff;font-weight:700;margin-bottom:.2rem">DETAIL-DASHBOARD</div>
+    <div style="font-size:1rem;font-weight:800;color:#fff7c0;line-height:1.2;margin-bottom:.2rem">🎬 Wave Bite — AI Marketing OS</div>
+    <div style="font-size:.65rem;color:var(--text-muted);line-height:1.45">Vollbild-Cockpit: 7 AI-Rollen · 8 Layer · Prompt-Library · Content-Pipeline · Brand-Governance · Quality-Gate · Complete Toolchain</div>
+  </div>
+  <div style="position:relative;display:flex;gap:.5rem;flex-wrap:wrap">
+    <button onclick="openStudioOS('marketing-os')" style="padding:.6rem 1rem;background:linear-gradient(135deg,rgba(168,85,247,0.35),rgba(120,60,200,0.15));border:1px solid rgba(168,85,247,0.6);border-radius:9px;color:#fff7c0;font-size:.72rem;font-weight:800;cursor:pointer;white-space:nowrap">⚡ Im Dashboard öffnen</button>
+    <a href="wavebite-ai-marketing-os.html" target="_blank" style="padding:.6rem 1rem;background:rgba(0,212,170,0.15);border:1px solid rgba(0,212,170,0.5);border-radius:9px;color:#9af0d8;font-size:.72rem;font-weight:800;cursor:pointer;white-space:nowrap;text-decoration:none">↗ Neuer Tab</a>
+    <a href="wavebite-leonardo-studio.html" target="_blank" style="padding:.6rem 1rem;background:rgba(232,201,106,0.15);border:1px solid rgba(232,201,106,0.5);border-radius:9px;color:#e8c96a;font-size:.72rem;font-weight:800;cursor:pointer;white-space:nowrap;text-decoration:none">🎨 Leonardo Studio</a>
+  </div>
+</div>
 
 <!-- MEDIA & SOCIAL -->
 <section>
