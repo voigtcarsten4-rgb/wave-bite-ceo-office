@@ -1606,6 +1606,14 @@ REGELN: Deutsch, präzise, max 8 Sätze Standard. Bei Strategie: erst Schwäche,
     body.innerHTML = html;
   }
 
+  async function checkProStatus(){
+    try {
+      const r = await fetch(BRIDGE + '?action=claude_test', {cache:'no-store'});
+      const j = await r.json();
+      return j;
+    } catch(e) { return { pro:false, status:'NETWORK_ERROR', message:e.message }; }
+  }
+
   function renderHealth(body){
     const issues = scanDashboard();
     let html = `<div class="sam-h4">🔍 Dashboard-Health</div>
@@ -1620,9 +1628,46 @@ REGELN: Deutsch, präzise, max 8 Sätze Standard. Bei Strategie: erst Schwäche,
     });
     const tasks = getTasks();
     const notes = getNotes();
-    html += `<div class="sam-h4" style="margin-top:14px">🧠 Lern-Memory</div>
+    html += `<div class="sam-h4" style="margin-top:14px">✨ Lucy Pro-Modus (Anthropic Claude)</div>
+      <div id="lucy-pro-card" style="background:rgba(154,240,255,.05);border:1px solid rgba(154,240,255,.2);border-radius:10px;padding:11px 13px;font-size:12px;line-height:1.5;color:#c8c8d4">
+        <div id="lucy-pro-status" style="font-size:11px;color:#9d9db0;margin-bottom:8px">Status wird geprüft…</div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap">
+          <button id="lucy-pro-check" style="background:linear-gradient(135deg,#9af0ff,#00d4aa);border:0;color:#0a1424;padding:7px 12px;border-radius:7px;font-size:11px;font-weight:700;cursor:pointer">🔍 Pro-Status prüfen</button>
+          <button id="lucy-pro-setup" style="background:rgba(255,158,177,.12);border:1px solid rgba(255,158,177,.4);color:#ff9eb1;padding:7px 12px;border-radius:7px;font-size:11px;font-weight:600;cursor:pointer">⚙ Properties öffnen</button>
+          <button id="lucy-pro-key" style="background:rgba(201,168,76,.12);border:1px solid rgba(201,168,76,.4);color:#c9a84c;padding:7px 12px;border-radius:7px;font-size:11px;font-weight:600;cursor:pointer">🔑 Key beziehen</button>
+        </div>
+        <div style="font-size:10.5px;color:#9d9db0;margin-top:10px;line-height:1.5;background:rgba(0,0,0,.25);padding:8px 10px;border-radius:6px">
+          <strong style="color:#fff">3-Schritte zum Pro-Modus:</strong><br>
+          1. <strong>🔑 Key beziehen</strong> → console.anthropic.com → Settings → API Keys → "Create Key"<br>
+          2. <strong>⚙ Properties öffnen</strong> → Apps Script → Skript-Eigenschaften → <code style="color:#9af0ff">ANTHROPIC_API_KEY</code> = sk-ant-…<br>
+          3. <strong>🔍 Pro-Status prüfen</strong> → bestätigt Live-Verbindung
+        </div>
+      </div>
+      <div class="sam-h4" style="margin-top:14px">🧠 Lern-Memory</div>
       <div style="font-size:11.5px;color:#c8c8d4">Session #${state.sessionCount} · ${loadJSON(LEARN_KEY,[]).length} Interaktionen · ${tasks.length} Tasks · ${notes.length} Notes · Letzter Login: ${new Date(state.lastSeen).toLocaleString('de-DE')}</div>`;
     body.innerHTML = html;
+
+    // Pro-Status-Bindings
+    const $check = document.getElementById('lucy-pro-check');
+    const $setup = document.getElementById('lucy-pro-setup');
+    const $key   = document.getElementById('lucy-pro-key');
+    const $stat  = document.getElementById('lucy-pro-status');
+
+    async function refreshProStatus(){
+      $stat.innerHTML = '<span style="color:#9af0ff">⟳ prüfe Anthropic-API…</span>';
+      const s = await checkProStatus();
+      if (s.pro) {
+        $stat.innerHTML = '<div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap"><span style="background:rgba(76,217,123,.18);color:#7ce29d;padding:3px 10px;border-radius:5px;font-size:10.5px;font-weight:700">● PRO LIVE</span><span style="color:#c8c8d4;font-size:11px">Model: '+(s.model||'claude')+' · Antwort: "'+(s.reply||'').slice(0,30)+'"</span></div>';
+      } else {
+        const colors = {NO_KEY:'#ffc166', BAD_KEY_FORMAT:'#ff8a96', NETWORK_ERROR:'#9d9db0'};
+        const c = colors[s.status] || '#ff8a96';
+        $stat.innerHTML = '<div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap"><span style="background:'+c+'22;color:'+c+';padding:3px 10px;border-radius:5px;font-size:10.5px;font-weight:700">○ '+(s.status||'OFFLINE')+'</span><span style="color:#9d9db0;font-size:11px">'+escapeHTML((s.message||'')+'').slice(0,80)+'</span></div><div style="margin-top:6px;font-size:10.5px;color:#c8c8d4">Fallback aktiv — Lucy antwortet regelbasiert (alle Aktionen funktionieren)</div>';
+      }
+    }
+    if ($check) $check.onclick = refreshProStatus;
+    if ($setup) $setup.onclick = () => { window.open('https://script.google.com/home/projects/1r1fRIJDTg9Ee3oV9rAxSKz-iSrclECXw3ZtSCpQqPHW-j-nI2nvfFcQL/settings','_blank'); toast('✓ Apps-Script-Properties geöffnet — füge ANTHROPIC_API_KEY hinzu'); };
+    if ($key)   $key.onclick   = () => { window.open('https://console.anthropic.com/settings/keys','_blank'); toast('✓ Anthropic-Console geöffnet — Create Key → sk-ant-… kopieren'); };
+    refreshProStatus();
   }
 
   function scanDashboard(){
