@@ -3126,8 +3126,8 @@
   </div>
   <div class="section-title" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.5rem">
     <span>🌊 WATER TOURISM INTELLIGENCE — WAVE BITE ANALYTICS</span>
-    <a href="#sec-tracking-center"
-      onclick="event.preventDefault(); document.getElementById('sec-tracking-center')?.scrollIntoView({behavior:'smooth',block:'start'});"
+    <a href="#sec-qr-intelligence"
+      onclick="event.preventDefault(); event.stopPropagation(); var t = document.getElementById('sec-qr-intelligence') || document.getElementById('analytics-grid'); if (t) t.scrollIntoView({behavior:'smooth',block:'start'});"
       style="display:inline-flex;align-items:center;gap:.4rem;padding:.35rem .85rem;background:linear-gradient(90deg,rgba(0,200,255,0.15),rgba(0,212,170,0.1));border:1px solid rgba(0,200,255,0.35);border-radius:8px;color:var(--teal);font-size:.6rem;font-weight:700;text-decoration:none;letter-spacing:.06em;transition:all .2s;cursor:pointer"
       onmouseover="this.style.background='rgba(0,200,255,0.25)'" onmouseout="this.style.background='linear-gradient(90deg,rgba(0,200,255,0.15),rgba(0,212,170,0.1))'">
       📊 Tracking Dashboard ↓
@@ -6554,60 +6554,133 @@ window.openDash = function(id) {
 // ════════════════════════════════════════════════════════════
 // LIVE DATA — Pegelonline
 // ════════════════════════════════════════════════════════════
-function loadWasserlage() {
-  const stationId = '5e3ef417-50b4-4d60-9f5a-e0f1d28a55fe'; // Berlin Spandau-West
-  fetch(`https://www.pegelonline.wsv.de/webservices/rest-api/v2/stations/${stationId}/W/measurements.json?start=P1D`)
-    .then(r => r.json())
-    .then(data => {
-      if (!data || !data.length) return;
-      const latest = data[data.length - 1];
-      const val = latest.value;
-      const el = document.getElementById('wl-pegel-status');
-      if (el) {
-        el.textContent = val + ' cm';
-        el.style.color = val > 200 ? '#ff4757' : val > 150 ? '#c9a84c' : '#00d4aa';
-      }
-      const badge = document.getElementById('wl-nav-text');
-      if (badge) {
-        const ok = val < 200;
-        badge.textContent = ok ? '✅ Schifffahrt freigegeben — Pegel normal (' + val + ' cm)' : '⚠️ Erhöhter Pegel — Einschränkungen möglich (' + val + ' cm)';
-        badge.style.color = ok ? 'var(--green)' : '#c9a84c';
-        badge.parentElement.style.borderColor = ok ? 'rgba(0,255,136,0.18)' : 'rgba(201,168,76,0.25)';
-        badge.parentElement.style.background = ok ? 'rgba(0,255,136,0.07)' : 'rgba(201,168,76,0.06)';
-      }
-    })
-    .catch(() => {
-      const el = document.getElementById('wl-pegel-status');
-      if (el) { el.textContent = '—'; }
-    });
+// v13: Wasserlage Cockpit synchron mit Detail-Dashboard (wasserlage/index.html)
+// Same APIs, gleiche Codes, gleiche Sonnenzeit-Berechnung, gleicher Status-Logik
+function _wlCalcSunTimes(date) {
+  const lat = 52.52 * Math.PI / 180;
+  const d = Math.floor((date - new Date(Date.UTC(date.getFullYear(),0,0))) / 86400000);
+  const B = (360/365) * (d - 81) * Math.PI / 180;
+  const EqT = 9.87*Math.sin(2*B) - 7.53*Math.cos(B) - 1.5*Math.sin(B);
+  const decl = Math.asin(0.39795 * Math.cos(0.98563 * (d - 173) * Math.PI / 180));
+  const HA = Math.acos(-Math.tan(lat)*Math.tan(decl));
+  const HAd = HA * 180 / Math.PI;
+  const tzOff = date.getTimezoneOffset() / -60;
+  const lng = 13.41;
+  const noon = 12 - lng/15 + tzOff - EqT/60;
+  const rise = noon - HAd/15, set = noon + HAd/15;
+  const toHM = v => { const h = Math.floor(v), m = Math.round((v-h)*60); return `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}`; };
+  return { rise: toHM(rise), set: toHM(set) };
+}
+// Cache: spiegelt Detail-Seite Ampel-Logik (oranges = Pegel unter Normal)
+let _wlOrangesCount = 0;
+function _wlUpdateStatus() {
+  const c = window._wlCurrentWeather || {};
+  const wind = c.windspeed_10m || 0;
+  const wmo = c.weathercode || 0;
+  const rain = wmo >= 60;
+  const caution = wind >= 38 /* Bft 5+ */ || rain || _wlOrangesCount > 0;
+  const wlStatus = document.getElementById('wl-status-label');
+  const wlSub = document.getElementById('wl-status-sub');
+  const icon = document.getElementById('wl-status-icon');
+  if (wlStatus) {
+    if (caution) { wlStatus.textContent = 'Mit Vorsicht'; wlStatus.style.color = '#ffaa00'; }
+    else { wlStatus.textContent = 'Günstige Bedingungen'; wlStatus.style.color = 'var(--gold)'; }
+  }
+  if (wlSub) wlSub.textContent = _wlOrangesCount > 0
+    ? _wlOrangesCount + ' Pegel unter Normal — ELWIS prüfen'
+    : (rain ? 'Niederschlag — Lage beobachten' : 'Berlin-Brandenburg · ' + new Date().toLocaleDateString('de-DE'));
+  if (icon) icon.textContent = caution ? '⚠️' : (wmo < 2 ? '☀️' : wmo < 60 ? '⛅' : '🌧');
+}
 
-  // Weather via open-meteo (Berlin)
-  fetch('https://api.open-meteo.com/v1/forecast?latitude=52.52&longitude=13.41&current=temperature_2m,apparent_temperature,weathercode,windspeed_10m&daily=sunrise,sunset&timezone=Europe/Berlin&forecast_days=1')
+function loadWasserlage() {
+  // ─── Pegel + Ampel (gleiche Logik wie Detail-Dashboard) ───
+  // 4 Hauptstationen wie Detail-Seite: prüfen ob unter Normal
+  const PEGEL_STATIONS = ['BERLIN-SPANDAU','POTSDAM','KÖPENICK','BERLIN-MÜGGELSEE'];
+  Promise.all(PEGEL_STATIONS.map(sn =>
+    fetch('https://www.pegelonline.wsv.de/webservices/rest-api/v2/stations/'+encodeURIComponent(sn)+'.json?includeCurrentMeasurement=true&includeCharacteristicValues=true')
+      .then(r => r.ok ? r.json() : null).catch(() => null)
+  )).then(stations => {
+    let oranges = 0, primaryVal = null;
+    stations.forEach(s => {
+      if (!s || !s.timeseries || !s.timeseries[0]) return;
+      const ts = s.timeseries[0];
+      const cur = ts.currentMeasurement && ts.currentMeasurement.value;
+      if (cur == null) return;
+      if (primaryVal == null && /SPANDAU|POTSDAM/.test(s.shortname||'')) primaryVal = cur;
+      // Ampel via Characteristic Values (Mittelwasser MW)
+      const mw = (ts.characteristicValues || []).find(v => v.shortname === 'MW');
+      if (mw && cur < mw.value * 0.85) oranges++; // 15% unter MW = orange
+    });
+    _wlOrangesCount = oranges;
+    const el = document.getElementById('wl-pegel-status');
+    if (el) {
+      if (oranges > 0) { el.textContent = oranges + ' Hinweis'; el.style.color = '#ffaa00'; }
+      else if (primaryVal != null) { el.textContent = Math.round(primaryVal) + ' cm'; el.style.color = '#00d4aa'; }
+      else { el.textContent = '✓ frei'; el.style.color = '#00d4aa'; }
+    }
+    const badge = document.getElementById('wl-nav-text');
+    if (badge) {
+      if (oranges > 0) {
+        badge.textContent = '⚠️ ' + oranges + ' Pegel unter Normal — ELWIS prüfen';
+        badge.style.color = '#ffaa00';
+        badge.parentElement.style.borderColor = 'rgba(255,170,0,0.25)';
+        badge.parentElement.style.background = 'rgba(255,170,0,0.06)';
+      } else {
+        badge.textContent = '✅ Schifffahrt freigegeben — Pegel normal';
+        badge.style.color = 'var(--green)';
+        badge.parentElement.style.borderColor = 'rgba(0,255,136,0.18)';
+        badge.parentElement.style.background = 'rgba(0,255,136,0.07)';
+      }
+    }
+    _wlUpdateStatus();
+  }).catch(() => {});
+
+  // ─── Wassertemperatur via PegelOnline (gleiche Stationen wie Detail) ───
+  (function fetchWaterTemp(){
+    const candidates = [
+      'https://www.pegelonline.wsv.de/webservices/rest-api/v2/stations/'+encodeURIComponent('POTSDAM')+'/WT/measurements.json?start=PT3H',
+      'https://www.pegelonline.wsv.de/webservices/rest-api/v2/stations/'+encodeURIComponent('BERLIN-KÖPENICK')+'/WT/measurements.json?start=PT3H'
+    ];
+    (async function(){
+      for (const url of candidates) {
+        try {
+          const r = await fetch(url); if (!r.ok) continue;
+          const data = await r.json(); if (!data || !data.length) continue;
+          const val = data[data.length - 1].value; if (val == null) continue;
+          const el = document.getElementById('wl-water-temp');
+          if (el) el.textContent = val.toFixed(1) + '°C';
+          return;
+        } catch(_) {}
+      }
+    })();
+  })();
+
+  // ─── Wetter via open-meteo (gleiche URL wie Detail-Dashboard) ───
+  fetch('https://api.open-meteo.com/v1/forecast?latitude=52.52&longitude=13.40&current=weathercode,temperature_2m,apparent_temperature,windspeed_10m,winddirection_10m&windspeed_unit=kmh&timezone=Europe%2FBerlin')
     .then(r => r.json())
     .then(d => {
-      const c = d.current;
+      const c = d.current; window._wlCurrentWeather = c;
       const temp = document.getElementById('wl-temp');
       const feels = document.getElementById('wl-feels');
       const wind = document.getElementById('wl-wind-status');
-      const rise = document.getElementById('wl-sunrise');
-      const set = document.getElementById('wl-sunset');
       const up = document.getElementById('live-updated');
       const weather = document.getElementById('wl-weather-status');
       if (temp) temp.textContent = Math.round(c.temperature_2m) + '°C';
       if (feels) feels.textContent = 'Gefühlt ' + Math.round(c.apparent_temperature) + '°C';
       if (wind) { wind.textContent = Math.round(c.windspeed_10m) + ' km/h'; wind.style.color = c.windspeed_10m > 30 ? '#ff4757' : '#00d4aa'; }
-      if (weather) { const codes = {0:'☀️ Klar',1:'🌤 Meist klar',2:'⛅ Teilweise bewölkt',3:'☁️ Bewölkt',61:'🌧 Regen',80:'🌦 Schauer',95:'⛈ Gewitter'}; weather.textContent = codes[c.weathercode] || '🌡 ' + c.weathercode; }
-      if (d.daily && d.daily.sunrise) { if (rise) rise.textContent = d.daily.sunrise[0].split('T')[1].substring(0,5); if (set) set.textContent = d.daily.sunset[0].split('T')[1].substring(0,5); }
-      if (up) up.textContent = '✓ Aktualisiert ' + new Date().toLocaleTimeString('de-DE',{hour:'2-digit',minute:'2-digit'});
-      const wlStatus = document.getElementById('wl-status-label');
-      const wlSub = document.getElementById('wl-status-sub');
-      if (wlStatus) { wlStatus.textContent = c.windspeed_10m < 20 && c.weathercode < 60 ? 'Günstige Bedingungen' : c.weathercode >= 80 ? 'Schlechte Bedingungen' : 'Mittlere Bedingungen'; }
-      if (wlSub) wlSub.textContent = 'Berlin-Brandenburg · ' + new Date().toLocaleDateString('de-DE');
-      const icon = document.getElementById('wl-status-icon');
-      if (icon) icon.textContent = c.weathercode < 2 ? '☀️' : c.weathercode < 60 ? '⛅' : '🌧';
-      // Water temp estimate
-      const waterTmp = document.getElementById('wl-water-temp');
-      if (waterTmp) { const wt = Math.round(c.temperature_2m - 3 + (new Date().getMonth() > 4 ? 3 : 0)); waterTmp.textContent = wt + '°C'; }
+      // Wetter-Codes 1:1 wie Detail-Dashboard
+      if (weather) {
+        const codes = {0:'☀️ Klar',1:'🌤 Heiter',2:'⛅ Wechselnd bewölkt',3:'☁️ Bedeckt',45:'🌫 Nebel',48:'🌫 Reifnebel',51:'🌦 Leichter Nieselregen',53:'🌦 Nieselregen',55:'🌧 Starker Niesel',61:'🌧 Leichter Regen',63:'🌧 Regen',65:'🌧 Starker Regen',71:'🌨 Leichter Schnee',73:'🌨 Schnee',75:'❄️ Starker Schnee',80:'🌦 Schauer',81:'🌦 Starke Schauer',82:'⛈ Heftige Schauer',95:'⛈ Gewitter',96:'⛈ Hagel-Gewitter',99:'⛈ Schwerer Hagel'};
+        weather.textContent = codes[c.weathercode] || '🌡 Code ' + c.weathercode;
+      }
+      // Sonnenzeiten via lokale Berechnung (gleiche Formel wie Detail-Dashboard)
+      const s = _wlCalcSunTimes(new Date());
+      const rise = document.getElementById('wl-sunrise');
+      const set = document.getElementById('wl-sunset');
+      if (rise) rise.textContent = s.rise;
+      if (set) set.textContent = s.set;
+      if (up) up.textContent = '✓ ' + new Date().toLocaleTimeString('de-DE',{hour:'2-digit',minute:'2-digit'});
+      _wlUpdateStatus();
     })
     .catch(() => {});
 }
@@ -8544,7 +8617,7 @@ if (typeof window.addMemoryEntry !== 'function') {
       ctx.lineTo(px, py);
       ctx.stroke();
 
-      // Trail (3 frames zurück)
+      // Trail (3 frames zurueck)
       for (let t = 1; t <= 5; t++) {
         const ta = p.angle - p.speed * t * 3;
         const tx = cx + Math.cos(ta) * p.orbit * dpr;
@@ -8574,13 +8647,11 @@ if (typeof window.addMemoryEntry !== 'function') {
       ctx.fill();
       ctx.shadowBlur = 0;
 
-      // Inner highlight
       ctx.fillStyle = 'rgba(255,255,255,0.6)';
       ctx.beginPath();
       ctx.arc(px - p.size * dpr * 0.12, py - p.size * dpr * 0.12, p.size * dpr * 0.16, 0, Math.PI * 2);
       ctx.fill();
 
-      // Label
       ctx.fillStyle = 'rgba(220,235,255,0.85)';
       ctx.shadowColor = 'rgba(0,0,0,0.9)';
       ctx.shadowBlur = 4 * dpr;
@@ -8588,13 +8659,12 @@ if (typeof window.addMemoryEntry !== 'function') {
       ctx.textAlign = 'center';
       ctx.fillText(p.name, px, py + p.size * dpr * 0.62 + 12 * dpr);
       ctx.shadowBlur = 0;
-      // Status-Pill
       ctx.fillStyle = p.col + 'DD';
       ctx.font = `${5.5 * dpr}px -apple-system,sans-serif`;
       ctx.fillText(p.status, px, py + p.size * dpr * 0.62 + 22 * dpr);
     });
 
-    // 8. SCAN-LINE Sweep (Star-Trek-Style HUD-Scanner) · v7 langsamer
+    // SCAN-LINE Sweep
     const scanY = ((frame * 0.6) % (H + 100)) - 50;
     const scanGrad = ctx.createLinearGradient(0, scanY - 40, 0, scanY + 40);
     scanGrad.addColorStop(0, 'rgba(0,212,170,0)');
@@ -8603,7 +8673,7 @@ if (typeof window.addMemoryEntry !== 'function') {
     ctx.fillStyle = scanGrad;
     ctx.fillRect(0, scanY - 40, W, 80);
 
-    // 9. HUD Corner Brackets (sci-fi tactical)
+    // HUD Corner Brackets
     const corner = 18 * dpr;
     const margin = 6 * dpr;
     ctx.strokeStyle = 'rgba(201,168,76,0.55)';
@@ -8616,7 +8686,7 @@ if (typeof window.addMemoryEntry !== 'function') {
       ctx.stroke();
     });
 
-    // 10. TACTICAL READOUT (links unten)
+    // TACTICAL READOUT
     ctx.fillStyle = 'rgba(0,212,170,0.7)';
     ctx.font = `${6 * dpr}px monospace`;
     ctx.textAlign = 'left';
@@ -8638,10 +8708,8 @@ if (typeof window.addMemoryEntry !== 'function') {
 })();
 </script>
 
-<!-- ===========================================================
-     LUCY - KI Co-Pilotin (Avatar + Panel + Actions)
-     =========================================================== -->
-<script src="samantha.js?v=2026-05-21-v12-toggle-fix"></script>
+<!-- LUCY KI Co-Pilotin -->
+<script src="samantha.js?v=2026-05-21-v13-wlsync-trackbtn"></script>
 
 </body>
 </html>
