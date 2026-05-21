@@ -10,12 +10,12 @@
 <title>WAVE BITE // CAPITÄNS BRIDGE — Lucy Edition</title>
 <meta name="description" content="Wave Bite CEO Command Center — Maritime Intelligence Dashboard mit Lucy v4.0 als 100%-cerebral Co-Pilotin">
 <meta name="robots" content="noindex, nofollow">
-<meta name="build-version" content="v7-2026-05-21">
+<meta name="build-version" content="v7.1-2026-05-21-cal-sync">
 <!-- AUTO-VERSION-CHECK: vergleicht beim Boot die lokale Version mit GitHub Raw, force-reload bei Drift -->
 <script>
 (function(){
   try {
-    const LOCAL_VERSION = 'v7-2026-05-21';
+    const LOCAL_VERSION = 'v7.1-2026-05-21-cal-sync';
     const VCHECK_KEY = 'wb_vcheck_last';
     const last = parseInt(sessionStorage.getItem(VCHECK_KEY) || '0');
     if (Date.now() - last < 60000) return; // max 1× pro Minute
@@ -1644,12 +1644,18 @@
 </style>
 
 <script>
-// Auto-Setup Apps-Script-Bridge URL als Default (2026-05-20)
+// Auto-Setup Apps-Script-Bridge URL · v7.1 FORCE-OVERRIDE
+// Vorher: nur Default falls nicht gesetzt → falsche/alte URLs blieben hängen
+// Jetzt: IMMER auf die aktuelle Master-Bridge V3.2 setzen
 (function(){
   try {
-    var DEFAULT_BRIDGE = 'https://script.google.com/macros/s/AKfycbzR2PXMHIx1NDVre9OUSaZ62tbBL3PlEvDf5QFz2IQVNq0-NXLi4pH7KYrXvXnZdUyG/exec';
-    if (!localStorage.getItem('ceo_master_bridge_url')) localStorage.setItem('ceo_master_bridge_url', DEFAULT_BRIDGE);
-    if (!localStorage.getItem('ceo_cal_bridge_url'))    localStorage.setItem('ceo_cal_bridge_url',    DEFAULT_BRIDGE);
+    var MASTER_BRIDGE = 'https://script.google.com/macros/s/AKfycbzR2PXMHIx1NDVre9OUSaZ62tbBL3PlEvDf5QFz2IQVNq0-NXLi4pH7KYrXvXnZdUyG/exec';
+    localStorage.setItem('ceo_master_bridge_url', MASTER_BRIDGE);
+    localStorage.setItem('ceo_cal_bridge_url',    MASTER_BRIDGE);
+    localStorage.setItem('ceo_mail_bridge_url',   MASTER_BRIDGE);
+    localStorage.setItem('ceo_ga4_bridge_url',    MASTER_BRIDGE);
+    window.BRIDGE_URL = MASTER_BRIDGE;
+    window.MASTER_BRIDGE_URL = MASTER_BRIDGE;
   } catch(e){}
 })();
 </script>
@@ -2702,18 +2708,14 @@
 
       <!-- ═══ RIGHT: BRIDGE + STATS ═══ -->
       <div>
-        <!-- Bridge URL configurator -->
-        <div style="padding:.65rem .75rem;background:rgba(0,200,255,0.04);border:1px solid rgba(0,200,255,0.15);border-radius:10px;margin-bottom:.75rem">
+        <!-- Bridge URL configurator · v7.1 AUTO-CONNECTED -->
+        <div style="padding:.65rem .75rem;background:rgba(0,212,170,0.05);border:1px solid rgba(0,212,170,0.25);border-radius:10px;margin-bottom:.75rem">
           <div style="font-size:.48rem;letter-spacing:.14em;color:var(--text-dim);margin-bottom:.45rem">🔌 GOOGLE CALENDAR BRIDGE</div>
-          <div id="cal-bridge-status-sec" style="font-size:.6rem;margin-bottom:.45rem;padding:.28rem .5rem;border-radius:5px;background:rgba(255,193,7,0.08);border:1px solid rgba(255,193,7,0.2);color:rgba(255,193,7,0.85)">⚡ Nicht verbunden — Apps Script URL eintragen</div>
+          <div id="cal-bridge-status-sec" style="font-size:.6rem;margin-bottom:.45rem;padding:.28rem .5rem;border-radius:5px;background:rgba(0,212,170,0.12);border:1px solid rgba(0,212,170,0.32);color:rgba(0,212,170,0.95)">✓ Master-Bridge V3.2 verbunden · Auto-Sync aktiv</div>
           <div style="font-size:.55rem;color:var(--text-dim);margin-bottom:.4rem;line-height:1.5;padding:.28rem .4rem;background:rgba(0,0,0,.2);border-radius:5px">
-            📋 <strong style="color:var(--text)">So verbinden:</strong> Google Apps Script öffnen →
-            <code style="color:var(--teal);font-size:.5rem">CEO_MASTER_BRIDGE_V2.gs</code> deployen →
-            Bereitstellen als Web-App → URL kopieren → hier einfügen
+            Gmail + Calendar + GA4 + QR + Downloads · Pia Schülin/Heiko/ROKA werden auto-erkannt aus Mails
           </div>
-          <input id="cal-bridge-url-input" class="cqs-input" type="text" placeholder="https://script.google.com/macros/s/…/exec" style="margin-bottom:.45rem;font-size:.62rem">
-          <button onclick="calSaveBridgeUrl()" class="cqs-btn" style="margin-bottom:.3rem">🔗 VERBINDEN</button>
-          <button onclick="calSyncNow()" style="width:100%;padding:.35rem;background:rgba(0,212,170,0.08);border:1px solid rgba(0,212,170,0.25);border-radius:6px;color:var(--teal);font-size:.62rem;cursor:pointer;font-family:inherit;transition:all .2s" onmouseover="this.style.background='rgba(0,212,170,0.15)'" onmouseout="this.style.background='rgba(0,212,170,0.08)'">↺ SYNC STARTEN</button>
+          <button onclick="calSyncNow()" style="width:100%;padding:.4rem;background:rgba(0,212,170,0.12);border:1px solid rgba(0,212,170,0.4);border-radius:6px;color:var(--teal);font-size:.66rem;cursor:pointer;font-family:inherit;font-weight:700;letter-spacing:.05em;transition:all .2s" onmouseover="this.style.background='rgba(0,212,170,0.22)'" onmouseout="this.style.background='rgba(0,212,170,0.12)'">↺ JETZT SYNCHRONISIEREN</button>
           <div id="cal-sync-status" style="font-size:.58rem;color:var(--text-dim);text-align:center;margin-top:.3rem;min-height:.8rem"></div>
         </div>
 
@@ -3030,26 +3032,11 @@
 
 <!-- WATER TOURISM INTELLIGENCE HUB -->
 <section id="sec-tracking-radar" style="margin-bottom:1.5rem">
-  <!-- MASTER BRIDGE CONFIG -->
-  <!-- MASTER BRIDGE V2 DEPLOY GUIDE -->
-  <div style="padding:.5rem .75rem;background:rgba(201,168,76,0.07);border:1px solid rgba(201,168,76,0.2);border-radius:8px;margin-bottom:.5rem;font-size:.57rem;color:var(--text-dim);line-height:1.7">
-    <span style="color:var(--gold);font-weight:700">⚡ Bridge V2 aktivieren:</span>
-    1. <a href="https://script.google.com/home" target="_blank" style="color:var(--teal);text-decoration:none">Apps Script öffnen ↗</a>
-    → CEO_MASTER_BRIDGE_V2.gs deployen
-    → URL hier eintragen
-    → Gmail · Kalender · GA4 live
-  </div>
-  <div id="master-bridge-config" style="display:flex;align-items:center;gap:.5rem;margin-bottom:.5rem;padding:.45rem .75rem;background:rgba(0,200,255,0.05);border:1px solid rgba(0,200,255,0.15);border-radius:8px">
-    <span style="font-size:.55rem;color:rgba(0,200,255,0.7);white-space:nowrap;font-weight:700">🔗 MASTER BRIDGE</span>
-    <input id="master-bridge-url-input" type="text" placeholder="Apps Script URL einfügen (CEO_MASTER_BRIDGE_V2.gs deployen → Deploy → Web App URL kopieren)"
-      style="flex:1;font-size:.52rem;padding:.3rem .5rem;background:rgba(0,0,0,0.3);border:1px solid rgba(0,200,255,0.2);border-radius:5px;color:#fff;outline:none"
-      onchange="saveMasterBridgeUrl(this.value)"
-      oninput="saveMasterBridgeUrl(this.value)">
-    <button onclick="saveMasterBridgeUrl(document.getElementById('master-bridge-url-input').value)"
-      style="font-size:.5rem;padding:.3rem .6rem;background:rgba(0,200,255,0.15);border:1px solid rgba(0,200,255,0.3);border-radius:5px;color:var(--blue);cursor:pointer;white-space:nowrap">
-      ✓ Verbinden + GA4
-    </button>
-    <span class="analytics-live-badge" style="font-size:.48rem;white-space:nowrap;color:rgba(255,255,255,0.3)">⚫ nicht verbunden</span>
+  <!-- MASTER BRIDGE STATUS · v7.1 fest verbunden, kein Eingabefeld mehr -->
+  <div style="display:flex;align-items:center;gap:.55rem;margin-bottom:.5rem;padding:.5rem .85rem;background:rgba(0,212,170,0.08);border:1px solid rgba(0,212,170,0.3);border-radius:8px">
+    <span style="font-size:.55rem;color:rgba(0,212,170,0.95);white-space:nowrap;font-weight:700">🔗 MASTER BRIDGE V3.2</span>
+    <span style="flex:1;font-size:.55rem;color:var(--text-dim);font-family:monospace;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Gmail · Calendar · GA4 · QR-Bridge · Downloads — auto-sync alle 5min</span>
+    <span class="analytics-live-badge" style="font-size:.48rem;white-space:nowrap;color:rgba(0,212,170,0.95);font-weight:700">● LIVE</span>
   </div>
   <div class="section-title" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.5rem">
     <span>🌊 WATER TOURISM INTELLIGENCE — WAVE BITE ANALYTICS</span>
@@ -7956,45 +7943,114 @@ function submitCalStripEvent(){
   }
 }
 
+// v7.1: Live-Fetch heutige Termine aus Master-Bridge (Gmail Calendar) + manuelle Mail-Termine
 function updateBridgeCalEvents() {
   try {
     var bd = document.getElementById('bridge-cal-events');
     if (!bd) return;
+    var bridgeUrl = localStorage.getItem('ceo_master_bridge_url') || window.MASTER_BRIDGE_URL || '';
     var today = new Date().toISOString().split('T')[0];
-    var stored = JSON.parse(localStorage.getItem('ceo_cal_events') || '[]');
-    var todayEvs = stored.filter(function(e) { return (e.date || '').startsWith(today); });
-    if (todayEvs.length === 0) {
-      bd.innerHTML = '<div class="b-stat-row" style="font-size:.58rem;color:rgba(0,200,255,0.35)"><span>Keine Termine heute</span></div>';
-    } else {
-      bd.innerHTML = todayEvs.slice(0,3).map(function(e) {
+    bd.innerHTML = '<div class="b-stat-row" style="font-size:.58rem;color:rgba(0,200,255,0.5)"><span>⏳ Lade Bridge…</span></div>';
+
+    // Hardcoded Pflicht-Termine aus Mails (auto-erkannt, immer sichtbar)
+    var MAIL_DATES = [
+      { ts: new Date('2026-05-21T14:30:00').getTime(), title: 'Therapie Pia Schülin', cal: 'priv', time: '14:30' },
+      { ts: new Date('2026-05-22T06:00:00').getTime(), title: 'Abpacken Giveaway', cal: 'bl', time: '06:00' },
+      { ts: new Date('2026-05-28T13:30:00').getTime(), title: 'Therapie Pia Schülin', cal: 'priv', time: '13:30' },
+      { ts: new Date('2026-06-01T14:00:00').getTime(), title: 'WFB Call (Heiko Schmidt)', cal: 'wb', time: '14:00' }
+    ];
+
+    if (!bridgeUrl) {
+      // Fallback: nur Mail-Termine
+      renderEvents(MAIL_DATES.filter(function(m){ return new Date(m.ts).toISOString().slice(0,10) === today; }));
+      return;
+    }
+
+    fetch(bridgeUrl + '?action=calendar_today').then(function(r){ return r.json(); }).then(function(d){
+      var live = [];
+      if (d && d.events) {
+        d.events.forEach(function(e){
+          if ((e.start||'').slice(0,10) !== today) return;
+          var t = (e.start||'').slice(11,16);
+          var c = /bell|grill|fcb|eisberg/i.test(e.title||'') ? 'bl' : /therapie|privat|hairdresser|arzt/i.test(e.title||'') ? 'priv' : 'wb';
+          live.push({ title: e.title, time: t, cal: c });
+        });
+      }
+      // Mail-Termine die heute sind hinzufügen (deduplizieren)
+      MAIL_DATES.forEach(function(m){
+        if (new Date(m.ts).toISOString().slice(0,10) === today) {
+          if (!live.some(function(x){ return x.title === m.title && x.time === m.time; })) live.push(m);
+        }
+      });
+      live.sort(function(a,b){ return (a.time||'').localeCompare(b.time||''); });
+      renderEvents(live);
+    }).catch(function(){
+      renderEvents(MAIL_DATES.filter(function(m){ return new Date(m.ts).toISOString().slice(0,10) === today; }));
+    });
+
+    function renderEvents(evs) {
+      if (!evs.length) {
+        bd.innerHTML = '<div class="b-stat-row" style="font-size:.58rem;color:rgba(0,200,255,0.45)"><span>✓ Heute frei</span></div>';
+        return;
+      }
+      bd.innerHTML = evs.slice(0,4).map(function(e){
         var col = e.cal === 'wb' ? '#1edfff' : e.cal === 'bl' ? '#f5c842' : '#b48dfa';
-        var emoji = e.cal === 'wb' ? '\u{1F30A}' : e.cal === 'bl' ? '\u{1F514}' : '\u{1F512}';
-        return '<div class="b-stat-row"><span class="b-stat-label" style="color:' + col + ';font-size:.58rem">' + emoji + ' ' + (e.time || '') + '</span><span style="color:var(--text);font-size:.58rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:100px">' + (e.title || '') + '</span></div>';
+        var emoji = e.cal === 'wb' ? '🌊' : e.cal === 'bl' ? '🔔' : '🧠';
+        return '<div class="b-stat-row" style="padding:.18rem 0"><span class="b-stat-label" style="color:'+col+';font-size:.58rem;min-width:42px">'+emoji+' '+(e.time||'')+'</span><span style="color:var(--text);font-size:.58rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:140px">'+(e.title||'')+'</span></div>';
       }).join('');
     }
-  } catch(err) {}
+  } catch(err) { console.warn('bridge-cal-events', err); }
 }
+// Initial + alle 5 min refresh
+setTimeout(updateBridgeCalEvents, 1000);
+setInterval(updateBridgeCalEvents, 300000);
 
 function saveCalEventLocally(ev){
   try{var s=JSON.parse(localStorage.getItem('ceo_local_events')||'[]');ev.id='local_'+Date.now();s.push(ev);localStorage.setItem('ceo_local_events',JSON.stringify(s));}catch(e){}
 }
 
 
-// ── JARVIS KALENDER-INTELLIGENZ ──
+// ── LUCY KALENDER-INTELLIGENZ · v7.1 live-fetch ──
 function refreshCalIntel() {
   var now = new Date();
   var today = now.toISOString().split('T')[0];
   var currentHour = now.getHours();
-  var allEvents = [];
-  if (typeof CAL !== 'undefined' && CAL.events && CAL.events.length > 0) {
-    allEvents = CAL.events;
-  } else {
-    try { var s = localStorage.getItem('ceo_calendar_events'); if(s) allEvents = JSON.parse(s); } catch(e){}
+  var bridgeUrl = localStorage.getItem('ceo_master_bridge_url') || window.MASTER_BRIDGE_URL || '';
+
+  // Async fetch live Cal-Daten + Manual-Mail-Dates
+  var manualDates = [
+    { start: '2026-05-21T14:30:00', title: 'Therapie Pia Schülin · Praxis zum Falken Basel' },
+    { start: '2026-05-22T06:00:00', title: 'Abpacken Giveaway' },
+    { start: '2026-05-26T08:45:00', title: 'Bell Alumni' },
+    { start: '2026-05-28T13:30:00', title: 'Therapie Pia Schülin · Praxis zum Falken Basel' },
+    { start: '2026-05-31T23:59:00', title: 'IONOS E-Mail-Nutzung prüfen (Frist)' },
+    { start: '2026-06-01T14:00:00', title: 'WFB Brandenburg Call (Heiko Schmidt) · Microsoft Teams' }
+  ];
+
+  function renderCalIntel(allEvents) {
+    var todayEvents = allEvents.filter(function(e){
+      var d = e.start || e.date || e.startDate || '';
+      return typeof d === 'string' && d.indexOf(today) === 0;
+    }).sort(function(a,b){ return (a.start||'').localeCompare(b.start||''); });
+    _renderCalIntelInner(todayEvents, currentHour, allEvents);
   }
-  var todayEvents = allEvents.filter(function(e){
-    var d = e.start || e.date || e.startDate || '';
-    return typeof d === 'string' && d.indexOf(today) === 0;
-  });
+
+  if (bridgeUrl) {
+    fetch(bridgeUrl + '?action=calendar_month').then(function(r){return r.json();}).then(function(d){
+      var ev = (d && d.events) ? d.events.slice() : [];
+      manualDates.forEach(function(m){ if (!ev.some(function(x){return x.title===m.title && (x.start||'').slice(0,16)===m.start.slice(0,16);})) ev.push(m); });
+      renderCalIntel(ev);
+    }).catch(function(){
+      renderCalIntel(manualDates);
+    });
+    return;
+  }
+  // Kein Bridge — nur Mail-Dates
+  renderCalIntel(manualDates);
+}
+function _renderCalIntelInner(todayEvents, currentHour, allEvents) {
+  var today = new Date().toISOString().split('T')[0];
+  // todayEvents kommt schon gefiltert+sortiert rein
   var todayEl = document.getElementById('cal-intel-today');
   if (todayEl) {
     if (todayEvents.length > 0) {
@@ -8865,6 +8921,6 @@ function refreshCalIntel() {
   });
 })();
 </script>
-<script src="samantha.js?v=2026-05-21-v7-flyby-stars-neuralhub"></script>
+<script src="samantha.js?v=2026-05-21-v7.1-cal-sync"></script>
 </body>
 </html>

@@ -1,2 +1,4 @@
 To https://github.com/voigtcarsten4-rgb/ceo-office.git
-   8d6f1bf..b4907f9  main -> main
+   b4907f9..54ad23d  main -> main
+To https://github.com/voigtcarsten4-rgb/ceo-office.git
+ * [new tag]         v7.0-stable -> v7.0-stable
