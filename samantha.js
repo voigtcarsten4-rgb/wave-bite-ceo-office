@@ -274,6 +274,61 @@
       }
     },
     {
+      id:'cd_schuelin', icon:'📝', title:'Brief Pia Schülin (Corporate Design)',
+      sub:'Wave-Bite-Corporate-Stil · Helvetica · Holding-Header · PDF-ready',
+      run: () => {
+        corporateMailFor({
+          betreff:'Bestätigung der Sondertermine',
+          an:'Frau Pia Schülin, eidg. anerkannte Psychotherapeutin · Praxis zum Falken, Basel',
+          anrede:'Liebe Frau Schülin,',
+          paragraphen:[
+            'herzlichen Dank für Ihre Nachricht vom 19.05.2026 und die Terminierung trotz der vorübergehenden Pause.',
+            'Ich bestätige hiermit gerne beide Sondertermine in Ihrer Praxis zum Falken in Basel:<br><br>• <strong>Donnerstag, 21. Mai 2026 um 14:30 Uhr</strong><br>• <strong>Mittwoch, 28. Mai 2026 um 13:30 Uhr</strong>',
+            'Sollten Sie spezifische Unterlagen oder Vorbereitendes von mir benötigen, lassen Sie es mich bitte wissen.',
+          ],
+          ps:'Eine Antwort ist nicht erforderlich, sofern keine Änderungen bestehen.'
+        });
+        return 'Brief im Wave-Bite-Corporate-Design im neuen Tab geöffnet. Strg+P → PDF speichern → Mail-Anhang.';
+      }
+    },
+    {
+      id:'cd_heiko', icon:'📝', title:'Brief WFB Brandenburg (Heiko Schmidt) — Corporate',
+      sub:'Folge-Anhang zum Call 01.06.2026 · Wave-Bite-Briefkopf',
+      run: () => {
+        corporateMailFor({
+          betreff:'Vorbereitung zum Folge-Call am 01.06.2026, 14:00 Uhr',
+          an:'Herrn Heiko Schmidt · Wirtschaftsinitiative Brandenburg WFB',
+          anrede:'Sehr geehrter Herr Schmidt,',
+          paragraphen:[
+            'vielen Dank für die Bestätigung des Folge-Termins via Microsoft Teams. Ich freue mich auf den Austausch.',
+            'Zur Vorbereitung erhalten Sie anbei kompakt zusammengefasst die wichtigsten Eckpunkte:<br><br>• <strong>Funding-Ziel Pilot:</strong> 450.000 € (EK 50k eingelegt · Bankdarlehen 350k in Vorbereitung)<br>• <strong>Bruttomarge:</strong> 71% · Break-Even bei 72 Verkäufen/Tag (10.820/Jahr) auf 150 Saisontagen<br>• <strong>Forecast J1–J3:</strong> 250k → 415k → 670k € Umsatz · EBITDA 93,6k → 191,8k → 363,9k €<br>• <strong>5 LOIs unterzeichnet:</strong> Hugentobler · Radeberger · Transgourmet (bis 10k€) · TV Dahme-Seenland · Gifthüttli<br>• <strong>WIPO Design DM/248323</strong> (EU+CH) eingetragen 21.07.2025<br>• <strong>Rechtsstruktur:</strong> Wave Bite Holding AG (CH, Laufen BL) + GmbH (DE, Zeuthen)',
+            'Im Anhang finden Sie den Businessplan 03/2026, den Investor-Onepager sowie den Förderlogik-Onepager. Falls Sie weitere Unterlagen vorab benötigen, sende ich diese gerne zu.',
+            'Für den Call habe ich folgende Punkte vorbereitet, die wir gemeinsam klären könnten:<br><br>1. Welches WFB-Förderprogramm passt strukturell am besten?<br>2. Empfehlungen zur ILB-Antragsstellung (Investitionsbank Brandenburg)?<br>3. Mögliche Ko-Finanzierung mit BAB (Bürgschaftsbank) auf das 350k-Darlehen?<br>4. Pflicht-Auftritte im Tourismus-Brandenburg-Kalender Juni–September?'
+          ]
+        });
+        return 'Brief im Corporate-Design geöffnet. Anhänge bereithalten: BP 03/26, Investor-Onepager, Förderlogik, 5 LOIs.';
+      }
+    },
+    {
+      id:'cd_wasserlage_b2b', icon:'📝', title:'Cold-Outreach Wasserlage-B2B (Corporate)',
+      sub:'Rechtskonforme Mail für Marinas/Yachtclubs/Bootsschulen DACH',
+      run: () => {
+        corporateMailFor({
+          betreff:'Kostenlose Live-Wasser-Infos für Ihre Mitglieder · Wave Bite Wasserlage',
+          an:'(Marina / Yachtclub / Bootsschule · DACH)',
+          anrede:'Guten Tag,',
+          paragraphen:[
+            'mein Name ist Carsten Voigt, Founder von Wave Bite. Wir betreiben seit 2025 die offene Wasserlage-Plattform (wasserlage.wave-bite.com) mit Live-Pegelständen, ELWIS-Hinweisen und Revierinformationen — derzeit für Berlin-Brandenburg und in Erweiterung auf den DACH-Raum.',
+            'Da Ihre Einrichtung direkt am Wasser arbeitet, würde ich Ihnen gerne drei kurze Fragen stellen:<br><br>• Sind Live-Pegel- und Reviewinfos für Ihre Mitglieder oder Gäste relevant?<br>• Hätten Sie Interesse, Ihren Standort als verifizierte Quelle einzubinden?<br>• Welche Datenpunkte fehlen Ihnen aktuell am häufigsten?',
+            'Die Plattform ist und bleibt kostenfrei. Ein Link auf Ihrer Website oder eine Erwähnung im Newsletter wäre eine grosse Hilfe — im Gegenzug bauen wir Ihre wichtigsten Spots gerne prominent in unseren Karten ein.',
+            'Über eine kurze Rückmeldung würde ich mich sehr freuen.'
+          ],
+          ps:'Diese Nachricht wurde an eine öffentlich verfügbare Kontaktadresse Ihrer Organisation gesendet. Sollten Sie keine weitere Kommunikation wünschen, antworten Sie bitte mit „Bitte austragen".'
+        });
+        return 'B2B-Outreach im Corporate-Design im neuen Tab. Rechtshinweis (§7 UWG) im PS inkludiert.';
+      }
+    },
+    {
       id:'cashflow_snapshot', icon:'💵', title:'Cashflow-Snapshot 30/60/90 Tage',
       sub:'Aktuelle Liquiditätslage projezieren',
       run: () => {
@@ -349,7 +404,13 @@ REGELN: Deutsch, präzise, max 8 Sätze Standard. Bei Strategie: erst Schwäche,
   function toggleTask(id){
     const all = getTasks();
     const t = all.find(x => x.id===id);
-    if (t) { t.done = !t.done; if(t.done) t.doneAt = new Date().toISOString(); else delete t.doneAt; }
+    if (t) {
+      t.done = !t.done;
+      if (t.done) {
+        t.doneAt = new Date().toISOString();
+        setTimeout(() => toast('✓ Erledigt: '+t.text.slice(0,40)), 60);
+      } else delete t.doneAt;
+    }
     saveJSON(TASKS_KEY, all);
     renderBody();
   }
@@ -554,7 +615,7 @@ REGELN: Deutsch, präzise, max 8 Sätze Standard. Bei Strategie: erst Schwäche,
     @keyframes samPulse{0%,100%{transform:scale(1);opacity:.6}50%{transform:scale(1.15);opacity:.1}}
     @keyframes samFlash{0%,100%{box-shadow:0 8px 24px rgba(197,73,122,.45)}50%{box-shadow:0 0 36px 8px rgba(255,210,140,.9)}}
     #samantha-badge{position:absolute;top:-4px;right:-4px;background:#ffd166;color:#1a1a1a;font-size:10px;font-weight:700;border-radius:10px;padding:2px 6px;border:2px solid #1a1a1a}
-    #samantha-panel{position:fixed;right:22px;bottom:100px;width:420px;max-height:calc(100vh - 140px);background:rgba(18,20,28,.97);border:1px solid rgba(255,158,177,.25);border-radius:18px;box-shadow:0 24px 60px rgba(0,0,0,.6),0 0 0 1px rgba(255,158,177,.1);z-index:999999;display:none;flex-direction:column;overflow:hidden;color:#f4f4f8;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Inter,sans-serif;backdrop-filter:blur(20px)}
+    #samantha-panel{position:fixed;right:22px;bottom:100px;width:440px;max-height:min(720px,calc(100vh - 130px));height:auto;background:rgba(18,20,28,.97);border:1px solid rgba(154,240,255,.28);border-radius:18px;box-shadow:0 24px 60px rgba(0,0,0,.7),0 0 0 1px rgba(154,240,255,.12);z-index:999999;display:none;flex-direction:column;overflow:hidden;color:#f4f4f8;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Inter,sans-serif;backdrop-filter:blur(22px);resize:both;min-width:340px;min-height:420px}
     #samantha-panel.open{display:flex;animation:samSlide .25s ease-out}
     @keyframes samSlide{from{transform:translateY(20px);opacity:0}to{transform:translateY(0);opacity:1}}
     .sam-head{padding:14px 16px;border-bottom:1px solid rgba(255,255,255,.08);display:flex;align-items:center;gap:10px;background:linear-gradient(135deg,rgba(197,73,122,.18),transparent)}
@@ -565,7 +626,8 @@ REGELN: Deutsch, präzise, max 8 Sätze Standard. Bei Strategie: erst Schwäche,
     .sam-tabs{display:flex;gap:2px;padding:8px 10px;background:rgba(255,255,255,.03);border-bottom:1px solid rgba(255,255,255,.05);overflow-x:auto}
     .sam-tab{flex-shrink:0;font-size:11px;padding:6px 10px;border:none;background:transparent;color:#9d9db0;cursor:pointer;border-radius:8px;font-weight:500;transition:.15s;white-space:nowrap}
     .sam-tab.active{background:rgba(255,158,177,.18);color:#ffd6df}
-    .sam-body{flex:1;overflow-y:auto;padding:14px 16px;font-size:13px;line-height:1.5}
+    .sam-body{flex:1;overflow-y:auto;overflow-x:hidden;padding:14px 16px 60px;font-size:13px;line-height:1.5;scroll-behavior:smooth}
+    .sam-body::after{content:'';position:sticky;bottom:0;display:block;height:30px;margin:-30px -16px 0;background:linear-gradient(transparent,rgba(18,20,28,.95));pointer-events:none}
     .sam-body::-webkit-scrollbar{width:6px}.sam-body::-webkit-scrollbar-thumb{background:rgba(255,158,177,.3);border-radius:3px}
     .sam-h4{margin:14px 0 8px;font-size:11px;text-transform:uppercase;letter-spacing:1.2px;color:#ff9eb1;font-weight:600}
     .sam-h4:first-child{margin-top:0}
@@ -683,6 +745,7 @@ REGELN: Deutsch, präzise, max 8 Sätze Standard. Bei Strategie: erst Schwäche,
       </div>
       <div class="sam-tabs">
         <button class="sam-tab active" data-tab="today">🌊 Heute</button>
+        <button class="sam-tab" data-tab="foresight">👁 Foresight</button>
         <button class="sam-tab" data-tab="mails">📨 Mails</button>
         <button class="sam-tab" data-tab="actions">⚡ Actions</button>
         <button class="sam-tab" data-tab="tasks">✅ Tasks</button>
@@ -718,6 +781,7 @@ REGELN: Deutsch, präzise, max 8 Sätze Standard. Bei Strategie: erst Schwäche,
     const body = document.getElementById('sam-body');
     if (!body) return;
     if (currentTab === 'today') await renderToday(body);
+    else if (currentTab === 'foresight') await renderForesight(body);
     else if (currentTab === 'mails') await renderMails(body);
     else if (currentTab === 'actions') renderActions(body);
     else if (currentTab === 'tasks') renderTasks(body);
@@ -728,49 +792,412 @@ REGELN: Deutsch, präzise, max 8 Sätze Standard. Bei Strategie: erst Schwäche,
     else if (currentTab === 'health') renderHealth(body);
   }
 
+  // -------- LUCY LERN-MEMORY v8 -------------------------------------------
+  const DISMISS_KEY = 'lucy_dismiss_v1';
+  const SNOOZE_KEY  = 'lucy_snooze_v1';
+  const DONE_KEY    = 'lucy_done_v1';
+  const SENDER_PREF_KEY = 'lucy_sender_pref_v1';
+  function getDismissed(){ return loadJSON(DISMISS_KEY, {}); }
+  function getSnoozed(){ return loadJSON(SNOOZE_KEY, {}); }
+  function getDone(){ return loadJSON(DONE_KEY, {}); }
+  function getSenderPref(){ return loadJSON(SENDER_PREF_KEY, {}); }
+  function mailKey(m){ return (m.id || m.threadId || (m.from||'')+'_'+(m.subject||'').slice(0,30)); }
+  function dismissMail(m){ const d=getDismissed(); d[mailKey(m)]={at:Date.now(), subject:m.subject, from:m.from}; saveJSON(DISMISS_KEY,d); // Sender lernen
+    const sp=getSenderPref(); const f=(m.from||'').replace(/.*<(.+?)>.*/,'$1'); if(f){ sp[f]=(sp[f]||{count:0,score:0}); sp[f].count++; sp[f].score--; saveJSON(SENDER_PREF_KEY,sp); } }
+  function doneMail(m){ const d=getDone(); d[mailKey(m)]={at:Date.now()}; saveJSON(DONE_KEY,d);
+    const sp=getSenderPref(); const f=(m.from||'').replace(/.*<(.+?)>.*/,'$1'); if(f){ sp[f]=(sp[f]||{count:0,score:0}); sp[f].count++; sp[f].score++; saveJSON(SENDER_PREF_KEY,sp); } }
+  function snoozeMail(m, days){ const s=getSnoozed(); s[mailKey(m)]={until:Date.now()+(days||1)*86400000, subject:m.subject}; saveJSON(SNOOZE_KEY,s); }
+  function isHidden(m){
+    const k=mailKey(m);
+    if (getDismissed()[k]) return true;
+    const sn=getSnoozed()[k]; if (sn && sn.until > Date.now()) return true;
+    if (getDone()[k]) return true;
+    return false;
+  }
+
+  // -------- PATTERN-DETECTION (vorausschauend) ----------------------------
+  async function detectPatterns(){
+    const patterns = [];
+    const now = Date.now();
+    const cal = await bridgeGet('calendar_month', null, 300000);
+    const inbox = await bridgeGet('inbox', {max:50}, 300000);
+
+    // 1. FRIST-DRIFT (kritische Termine <72h)
+    const manualDates = [
+      { ts: new Date('2026-05-31T23:59:00').getTime(), title: 'IONOS E-Mail-Frist', severity:'high' },
+      { ts: new Date('2026-06-01T14:00:00').getTime(), title: 'WFB-Call Heiko Schmidt', severity:'critical', prep:'90s-Video Müggelsee + BP + LOIs' }
+    ];
+    manualDates.forEach(d => {
+      const hours = (d.ts - now) / 3600000;
+      if (hours > 0 && hours < 168) {
+        patterns.push({
+          icon: hours < 24 ? '🚨' : hours < 72 ? '⚠️' : '⏰',
+          severity: hours < 24 ? 'critical' : hours < 72 ? 'warning' : 'info',
+          title: `${d.title} in ${Math.floor(hours)}h`,
+          detail: d.prep || 'Vorbereitung jetzt starten — keine letzte Minute',
+          actionLabel: 'Vorbereiten',
+          actionFn: () => { addNote('⏰ Frist-Vorbereitung: '+d.title+' in '+Math.floor(hours)+'h'); return 'Zur Vorbereitung notiert.'; }
+        });
+      }
+    });
+
+    // 2. ANTHROPIC PAYMENT FAIL — kritisch
+    if (inbox && inbox.messages) {
+      const anth = inbox.messages.filter(m => /anthropic.*unsuccess|payment.*failed/i.test((m.subject||'')+' '+(m.from||'')));
+      if (anth.length >= 2) {
+        patterns.push({
+          icon:'🚨', severity:'critical',
+          title:'Anthropic Payment 2× fehlgeschlagen',
+          detail:'Claude-API gleich abgeschnitten · Karte sofort updaten ($21.62 + $32.43 offen)',
+          actionLabel:'Console öffnen',
+          actionFn: () => { window.open('https://console.anthropic.com/settings/billing','_blank'); return 'Console geöffnet.'; }
+        });
+      }
+    }
+
+    // 3. IONOS-FRIST
+    if (inbox && inbox.messages) {
+      const ionos = inbox.messages.find(m => /ionos.*letzte erinnerung|ionos.*31\.05/i.test((m.subject||'')+' '+(m.snippet||'')));
+      if (ionos) {
+        patterns.push({
+          icon:'📧', severity:'warning',
+          title:'IONOS E-Mail-Nutzung Frist 31.05.',
+          detail:'Kontoverwaltung öffnen, Status prüfen — sonst Account-Risiko',
+          actionLabel:'IONOS öffnen',
+          actionFn: () => { window.open('https://login.ionos.de','_blank'); return 'IONOS-Login geöffnet.'; }
+        });
+      }
+    }
+
+    // 4. FOLLOW-UP-DRIFT: Heiko-Call rückt näher, ist 90s-Demo-Video gedreht?
+    const wfbHours = (new Date('2026-06-01T14:00:00').getTime() - now) / 3600000;
+    if (wfbHours > 0 && wfbHours < 240) {
+      patterns.push({
+        icon:'🎬', severity:'info',
+        title:`WFB-Call in ${Math.floor(wfbHours/24)} Tagen — Demo-Video?`,
+        detail:'90-Sek-Müggelsee-Demo-Video drehen jetzt, nicht 24h vorher',
+        actionLabel:'Action öffnen',
+        actionFn: () => { runAction('dhdl_prep'); return 'DHDL/Demo-Prep gestartet.'; }
+      });
+    }
+
+    // 5. WOLZIG-LIEGEPLATZ — Stichtag 01.07.
+    const wolzigDays = (new Date('2026-07-01T00:00:00').getTime() - now) / 86400000;
+    if (wolzigDays > 0 && wolzigDays < 50) {
+      patterns.push({
+        icon:'⚓', severity:'warning',
+        title:`Wolzig-Liegeplatz Stichtag in ${Math.floor(wolzigDays)} Tagen`,
+        detail:'3 Alternativen jetzt schreiben (Müggelsee/Krossinsee/Teupitz) — kein Liegeplatz = keine Saison',
+        actionLabel:'Notieren',
+        actionFn: () => { addNote('Wolzig-Alternativen schreiben: Müggelsee, Krossinsee, Teupitz · Stichtag '+new Date('2026-07-01').toLocaleDateString('de-DE')); return 'Notiz erstellt.'; }
+      });
+    }
+
+    // 6. STAGNATION-CHECK: Mails ohne Sent-Antwort >7 Tage
+    if (inbox && inbox.messages) {
+      const stagnating = inbox.messages.filter(m => {
+        const age = (now - new Date(m.date||0).getTime()) / 86400000;
+        if (age < 5 || age > 14) return false;
+        return /partner|burggraf|heiko|investor|loi|kooperation/i.test((m.subject||'')+' '+(m.from||''));
+      });
+      if (stagnating.length) {
+        patterns.push({
+          icon:'⏳', severity:'info',
+          title:`${stagnating.length} Partner-Mails ohne Followup (5-14 Tage)`,
+          detail:stagnating.slice(0,2).map(m => (m.fromName||m.from||'?').slice(0,30)+': '+(m.subject||'').slice(0,40)).join(' · '),
+          actionLabel:'Followup-Mails',
+          actionFn: () => { document.querySelector('[data-tab=mails]')?.click(); return 'Mail-Tab geöffnet.'; }
+        });
+      }
+    }
+
+    return patterns;
+  }
+
+  // -------- CORPORATE TEMPLATE GENERATOR (Wave Bite Style, kein KI-Look) --
+  function generateCorporateDoc(opts){
+    // opts: {title, body, type:'mail|memo|brief|onepager'}
+    const today = new Date().toLocaleDateString('de-DE',{day:'2-digit',month:'long',year:'numeric'});
+    const css = `<style>
+      @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+      body{font-family:'Inter','Helvetica Neue',Arial,sans-serif;line-height:1.65;color:#1a2433;margin:0;padding:48px 64px;background:#fff;max-width:900px;margin:0 auto}
+      .wb-header{display:flex;justify-content:space-between;align-items:flex-start;padding-bottom:24px;border-bottom:2px solid #c9a84c}
+      .wb-logo{font-size:24px;font-weight:800;letter-spacing:.18em;color:#0a2138}
+      .wb-logo .wb-accent{color:#c9a84c}
+      .wb-meta{text-align:right;font-size:11px;color:#5a6a7a;line-height:1.5;letter-spacing:.04em}
+      .wb-title{font-size:28px;font-weight:700;color:#0a2138;margin:32px 0 8px;letter-spacing:-.02em}
+      .wb-subtitle{font-size:13px;color:#7a8896;font-weight:500;margin-bottom:32px;letter-spacing:.06em;text-transform:uppercase}
+      .wb-content{font-size:14.5px;color:#283544}
+      .wb-content p{margin:0 0 14px}
+      .wb-content strong{color:#0a2138;font-weight:600}
+      .wb-content a{color:#0a4d8e;text-decoration:none;border-bottom:1px solid rgba(10,77,142,.3)}
+      .wb-content ul{padding-left:20px;margin:12px 0}
+      .wb-content li{margin:6px 0}
+      .wb-callout{background:linear-gradient(135deg,#fdf8ee,#fefcf7);border-left:3px solid #c9a84c;padding:14px 20px;border-radius:4px;margin:18px 0;font-size:13.5px}
+      .wb-footer{margin-top:48px;padding-top:24px;border-top:1px solid #e6e9ed;font-size:11px;color:#7a8896;line-height:1.7}
+      .wb-footer .wb-sig{font-weight:600;color:#0a2138;font-size:13px;letter-spacing:.02em;margin-bottom:8px}
+      .wb-print-tip{font-size:10px;color:#bcc4cc;text-align:center;margin-top:30px;letter-spacing:.08em;text-transform:uppercase}
+      @media print{ .wb-print-tip{display:none} body{padding:24px 36px} }
+    </style>`;
+    const html = `<!doctype html><html lang="de"><head><meta charset="utf-8"><title>${escapeHTML(opts.title||'Wave Bite Dokument')}</title>${css}</head><body>
+      <div class="wb-header">
+        <div class="wb-logo">WAVE <span class="wb-accent">BITE</span></div>
+        <div class="wb-meta">
+          Wave Bite Holding AG i.Gr.<br>
+          Hauptstrasse 23 · 4242 Laufen BL · Schweiz<br>
+          info@wave-bite.com · wave-bite.com<br>
+          <span style="color:#c9a84c;font-weight:600">${today}</span>
+        </div>
+      </div>
+      <div class="wb-title">${escapeHTML(opts.title||'Dokument')}</div>
+      ${opts.subtitle ? `<div class="wb-subtitle">${escapeHTML(opts.subtitle)}</div>` : ''}
+      <div class="wb-content">${opts.body || ''}</div>
+      <div class="wb-footer">
+        <div class="wb-sig">Carsten Voigt</div>
+        Founder · Wave Bite Holding AG i.Gr. (CH) + Wave Bite GmbH i.Gr. (DE)<br>
+        info@wave-bite.com · wave-bite.com<br>
+        <span style="font-size:10px;color:#bcc4cc">WIPO Design DM/248323 (EU+CH) · ${today}</span>
+      </div>
+      <div class="wb-print-tip">Strg+P für PDF-Export</div>
+    </body></html>`;
+    const blob = new Blob([html], {type:'text/html'});
+    const url = URL.createObjectURL(blob);
+    window.open(url, '_blank');
+    setTimeout(()=>URL.revokeObjectURL(url), 30000);
+  }
+
   async function renderMails(body){
-    body.innerHTML = '<div class="sam-h4">📨 Mail-Triage v3</div><div style="color:#9d9db0;font-size:12px;padding:10px">Scanne Inbox + Sent…</div>';
-    const mails = await scanFullInbox(80);
+    body.innerHTML = '<div class="sam-h4">📨 Mail-Triage v4 — Lucy klassifiziert + lernt</div><div style="color:#9d9db0;font-size:12px;padding:10px">Scanne Inbox + Sent…</div>';
+    const allMails = await scanFullInbox(100);
+    // Hidden (dismissed/snoozed/done) rausfiltern
+    const visible = allMails.filter(m => !isHidden(m));
+    const hidden = allMails.length - visible.length;
     // Gruppieren nach kind
     const groups = {};
-    mails.forEach(m => { (groups[m._class.kind] = groups[m._class.kind]||[]).push(m); });
+    visible.forEach(m => { (groups[m._class.kind] = groups[m._class.kind]||[]).push(m); });
     const order = ['rechnung','termin','vertrag','behörde','partner','tech','privat','sonstiges','newsletter'];
-    let html = `<div class="sam-h4">📨 Mail-Triage · ${mails.length} Mails klassifiziert</div>
-      <div style="font-size:11px;color:#c8c8d4;margin-bottom:10px">Jede Mail bekommt Type + Auto-Action. Klick öffnet die Aktion.</div>`;
+
+    let html = `<div class="sam-h4" style="display:flex;justify-content:space-between;align-items:center">
+        <span>📨 Mail-Triage · ${visible.length} aktiv${hidden ? ' / '+hidden+' archiviert':''}</span>
+        ${hidden ? '<button id="lucy-clear-hidden" style="background:transparent;border:1px solid rgba(255,255,255,.15);color:#9d9db0;padding:3px 8px;border-radius:6px;font-size:10px;cursor:pointer">Archiv zurück</button>' : ''}
+      </div>
+      <div style="font-size:11px;color:#c8c8d4;margin-bottom:10px;line-height:1.5">Pro Mail: Auto-Action · ✓ Erledigt · 💤 Snooze · 🗑 Dismiss (Lucy lernt). Lucy merkt sich, welche Absender du dismissed und priorisiert künftig anders.</div>`;
     order.forEach(k => {
       const list = groups[k]; if (!list) return;
       const c = list[0]._class;
-      html += `<h4 style="margin:10px 0 6px;font-size:11px;color:${c.color};font-weight:700">${c.label} (${list.length})</h4>`;
-      list.slice(0,12).forEach((m,i) => {
+      html += `<h4 style="margin:12px 0 6px;font-size:11px;color:${c.color};font-weight:700;display:flex;justify-content:space-between"><span>${c.label} (${list.length})</span></h4>`;
+      list.slice(0,15).forEach((m,i) => {
         const id = 'mail_'+k+'_'+i;
-        html += `<div class="sam-row" style="border-left:3px solid ${c.color};padding-left:10px;align-items:center">
-          <div style="flex:1;min-width:0">
-            <div style="font-size:12px;font-weight:600;color:#fff;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${escapeHTML((m.fromName||m.from||'?').slice(0,40))}${m._dir==='out'?' →':''}</div>
-            <div style="font-size:10.5px;color:#c8c8d4;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${escapeHTML((m.subject||'').slice(0,80))}</div>
-            <div style="font-size:9.5px;color:#9d9db0;margin-top:2px">${(m.date||'').slice(0,10)}</div>
+        html += `<div class="lucy-mail-row" style="background:rgba(255,255,255,.03);border-left:3px solid ${c.color};border-radius:8px;padding:8px 10px;margin-bottom:6px">
+          <div style="display:flex;align-items:flex-start;gap:8px;margin-bottom:6px">
+            <div style="flex:1;min-width:0">
+              <div style="font-size:12px;font-weight:600;color:#fff;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${escapeHTML((m.fromName||m.from||'?').slice(0,42))}${m._dir==='out'?' →':''}</div>
+              <div style="font-size:10.5px;color:#c8c8d4;line-height:1.4;margin-top:1px">${escapeHTML((m.subject||'').slice(0,90))}</div>
+              <div style="font-size:9.5px;color:#7f7f93;margin-top:2px">${(m.date||'').slice(0,10)}</div>
+            </div>
           </div>
-          <button data-mailact="${id}" style="background:${c.color}22;border:1px solid ${c.color}66;color:${c.color};padding:4px 8px;border-radius:6px;font-size:10.5px;cursor:pointer;white-space:nowrap;flex-shrink:0">${escapeHTML(c.actionLabel)}</button>
+          <div style="display:flex;gap:4px;flex-wrap:wrap">
+            <button data-do="${id}" style="background:${c.color}22;border:1px solid ${c.color}66;color:${c.color};padding:3px 8px;border-radius:5px;font-size:10px;cursor:pointer;font-weight:600">${escapeHTML(c.actionLabel)}</button>
+            <button data-done="${id}" title="Erledigt" style="background:rgba(76,217,123,.12);border:1px solid rgba(76,217,123,.4);color:#7ce29d;padding:3px 8px;border-radius:5px;font-size:10px;cursor:pointer">✓</button>
+            <button data-snooze="${id}" title="Snooze 1 Tag" style="background:rgba(140,180,255,.12);border:1px solid rgba(140,180,255,.4);color:#8cb4ff;padding:3px 8px;border-radius:5px;font-size:10px;cursor:pointer">💤</button>
+            <button data-dismiss="${id}" title="Lucy lernt: nicht relevant" style="background:rgba(127,127,147,.12);border:1px solid rgba(127,127,147,.35);color:#9d9db0;padding:3px 8px;border-radius:5px;font-size:10px;cursor:pointer">🗑</button>
+          </div>
         </div>`;
-        // Halte action-fn im element
-        setTimeout(() => { const btn = body.querySelector('[data-mailact="'+id+'"]'); if (btn) btn.onclick = () => { const r = m._class.actionFn(); toast('✓ '+r); }; }, 0);
       });
     });
+    if (!visible.length) {
+      html += `<div style="padding:30px;text-align:center;color:#86e09c;font-size:13px">🎯 Inbox aufgeräumt · alle Mails klassifiziert</div>`;
+    }
     body.innerHTML = html;
-    // Re-bind nach innerHTML-Replace
+    // Bindings
     Object.keys(groups).forEach(k => {
-      groups[k].slice(0,12).forEach((m,i) => {
+      groups[k].slice(0,15).forEach((m,i) => {
         const id = 'mail_'+k+'_'+i;
-        const btn = body.querySelector('[data-mailact="'+id+'"]');
-        if (btn) btn.onclick = () => { const r = m._class.actionFn(); toast('✓ '+r); };
+        const $do  = body.querySelector('[data-do="'+id+'"]');
+        const $done = body.querySelector('[data-done="'+id+'"]');
+        const $sn  = body.querySelector('[data-snooze="'+id+'"]');
+        const $dis = body.querySelector('[data-dismiss="'+id+'"]');
+        if ($do)   $do.onclick   = () => { const r = m._class.actionFn(); toast('✓ '+r); };
+        if ($done) $done.onclick = () => { doneMail(m); toast('✓ Erledigt — Lucy lernt'); renderBody(); };
+        if ($sn)   $sn.onclick   = () => { snoozeMail(m, 1); toast('💤 Snooze 1 Tag'); renderBody(); };
+        if ($dis)  $dis.onclick  = () => { dismissMail(m); toast('🗑 Lucy ignoriert künftig'); renderBody(); };
       });
+    });
+    const clr = document.getElementById('lucy-clear-hidden');
+    if (clr) clr.onclick = () => { saveJSON(DISMISS_KEY,{}); saveJSON(SNOOZE_KEY,{}); saveJSON(DONE_KEY,{}); toast('Archiv zurückgesetzt'); renderBody(); };
+  }
+  async function renderForesight(body){
+    body.innerHTML = `<div class="sam-h4">👁 Foresight Engine — Probleme erkennen bevor sie auftreten</div>
+      <div style="color:#9d9db0;font-size:11.5px;margin-bottom:14px;line-height:1.5">Lucy scannt Kalender, Mails, Fristen und Cap-Table-Bewegungen — und meldet Risiken bevor sie kritisch werden.</div>
+      <div id="lucy-foresight-list">Analysiere Muster…</div>`;
+    const patterns = await detectPatterns();
+    const listEl = document.getElementById('lucy-foresight-list');
+    if (!patterns.length) {
+      listEl.innerHTML = `<div style="padding:24px;text-align:center;color:#86e09c;font-size:13px">🎯 Aktuell keine drohenden Risiken erkannt.<div style="font-size:11px;color:#9d9db0;margin-top:6px">Wenn neue Mails reinkommen oder Fristen näher rücken, meldet Lucy sich.</div></div>`;
+      return;
+    }
+    listEl.innerHTML = patterns.map((p, idx) => {
+      const colors = { critical:'#ff6b7a', warning:'#ffc166', info:'#1edfff' };
+      const bg = colors[p.severity] || '#9af0ff';
+      return `<div class="lucy-holo-card" data-idx="${idx}" style="position:relative;background:linear-gradient(135deg,rgba(255,255,255,.04),rgba(255,255,255,.01));border:1px solid ${bg}44;border-left:4px solid ${bg};border-radius:12px;padding:12px 14px;margin-bottom:10px;cursor:pointer;transition:all .3s;overflow:hidden">
+        <div style="position:absolute;inset:0;background:linear-gradient(135deg,${bg}10,transparent);pointer-events:none"></div>
+        <div style="display:flex;align-items:flex-start;gap:10px;position:relative">
+          <div style="font-size:22px;flex-shrink:0">${p.icon}</div>
+          <div style="flex:1">
+            <div style="font-size:13px;font-weight:700;color:#fff;letter-spacing:.01em">${escapeHTML(p.title)}</div>
+            <div style="font-size:11.5px;color:#c8c8d4;margin-top:4px;line-height:1.5">${escapeHTML(p.detail||'')}</div>
+            <button data-pact="${idx}" style="background:${bg}22;border:1px solid ${bg}66;color:${bg};padding:5px 12px;border-radius:6px;font-size:11px;cursor:pointer;font-weight:600;margin-top:10px">${escapeHTML(p.actionLabel||'Aktion')}</button>
+          </div>
+        </div>
+      </div>`;
+    }).join('');
+    // Holo-Tilt-Hover-Effekt
+    listEl.querySelectorAll('.lucy-holo-card').forEach((card, idx) => {
+      card.onmousemove = e => {
+        const r = card.getBoundingClientRect();
+        const x = (e.clientX - r.left) / r.width - .5;
+        const y = (e.clientY - r.top) / r.height - .5;
+        card.style.transform = `perspective(800px) rotateY(${x*4}deg) rotateX(${-y*4}deg) translateY(-2px)`;
+        card.style.boxShadow = '0 12px 32px rgba(0,0,0,.4)';
+      };
+      card.onmouseleave = () => { card.style.transform = ''; card.style.boxShadow = ''; };
+      const btn = card.querySelector('[data-pact]');
+      if (btn) btn.onclick = e => { e.stopPropagation(); const r = patterns[idx].actionFn(); toast('✓ '+r); };
     });
   }
-  function toast(text){
+
+  // Mail-Template-Action: erzeugt Corporate-Brief im Wave-Bite-Design
+  function corporateMailFor(opts){
+    // opts: {betreff, an, anrede, paragraphen[], ps?}
+    const bodyHtml = (opts.paragraphen||[]).map(p => `<p>${p}</p>`).join('');
+    const html = `<p><strong>${escapeHTML(opts.anrede||'Sehr geehrte Damen und Herren,')}</strong></p>
+      ${bodyHtml}
+      ${opts.ps ? `<p style="margin-top:24px;color:#5a6a7a;font-style:italic">${opts.ps}</p>` : ''}
+      <p style="margin-top:32px">Mit besten Grüssen<br><strong>Carsten Voigt</strong></p>`;
+    generateCorporateDoc({
+      title: opts.betreff || 'Wave Bite — Schreiben',
+      subtitle: opts.an ? 'An: '+opts.an : '',
+      body: bodyHtml ? '<p><strong>'+escapeHTML(opts.anrede||'Sehr geehrte Damen und Herren,')+'</strong></p>'+bodyHtml + (opts.ps ? '<p style="margin-top:20px;color:#5a6a7a;font-style:italic">'+opts.ps+'</p>' : '') + '<p style="margin-top:32px">Mit besten Grüssen<br><strong>Carsten Voigt</strong></p>' : html
+    });
+  }
+
+  // -------- LUCY CELEBRATION ENGINE v8 — Bestätigung + Motivation -----------
+  const CELEBRATIONS = [
+    'Gut gemacht, Carsten. 👏', 'Sauber gelöst.', 'Eine Sache weniger im Kopf.',
+    'Das war richtig.', 'Weiter so — du machst Tempo.', 'Geschafft. ✓',
+    'Boom. Nächstes.', 'Lucky shot? Nein — Können.', 'Ein Schritt näher dran.',
+    'Habe ich notiert. Strong move.', 'Carsten 1 : 0 Chaos.', 'Erledigt — frische Luft.',
+    'Das war wichtig. Danke dir.', 'Brillant.', '+1 Punkt für Wave Bite.',
+    'Klare Linie. ✓', 'Eingetütet. Nächstes Level.', 'Sauber durch.'
+  ];
+  function pickCelebration(){ return CELEBRATIONS[Math.floor(Math.random()*CELEBRATIONS.length)]; }
+
+  // Confetti-Particles (kein Bibliothek, pure Canvas)
+  function celebrate(intensity){
+    intensity = intensity || 1;
+    const c = document.createElement('canvas');
+    c.style.cssText = 'position:fixed;inset:0;z-index:1000002;pointer-events:none';
+    document.body.appendChild(c);
+    c.width = window.innerWidth; c.height = window.innerHeight;
+    const ctx = c.getContext('2d');
+    const colors = ['#ff9eb1','#c9a84c','#00d4aa','#9af0ff','#a78bfa','#ffd166','#7ce29d'];
+    const particles = [];
+    const N = Math.floor(60 * intensity);
+    const cx = window.innerWidth - 70; // Avatar-Position
+    const cy = window.innerHeight - 70;
+    for (let i = 0; i < N; i++) {
+      const ang = -Math.PI/2 + (Math.random()-.5) * Math.PI * 0.9;
+      const speed = 6 + Math.random()*9;
+      particles.push({
+        x: cx, y: cy,
+        vx: Math.cos(ang) * speed * (Math.random()*0.6+0.8),
+        vy: Math.sin(ang) * speed * (Math.random()*0.6+0.8),
+        size: 3 + Math.random()*5,
+        color: colors[Math.floor(Math.random()*colors.length)],
+        rot: Math.random()*Math.PI*2,
+        vrot: (Math.random()-.5)*0.3,
+        life: 1.0,
+        gravity: 0.18 + Math.random()*0.06,
+        shape: Math.random() < 0.4 ? 'rect' : 'circ'
+      });
+    }
+    let frame = 0;
+    function loop(){
+      ctx.clearRect(0, 0, c.width, c.height);
+      let alive = 0;
+      particles.forEach(p => {
+        p.x += p.vx; p.y += p.vy;
+        p.vy += p.gravity; p.vx *= 0.99;
+        p.rot += p.vrot;
+        p.life -= 0.012;
+        if (p.life > 0) {
+          alive++;
+          ctx.save();
+          ctx.translate(p.x, p.y);
+          ctx.rotate(p.rot);
+          ctx.globalAlpha = Math.max(0, p.life);
+          ctx.fillStyle = p.color;
+          ctx.shadowColor = p.color;
+          ctx.shadowBlur = 6;
+          if (p.shape === 'rect') {
+            ctx.fillRect(-p.size/2, -p.size/2, p.size, p.size*0.6);
+          } else {
+            ctx.beginPath();
+            ctx.arc(0, 0, p.size/2, 0, Math.PI*2);
+            ctx.fill();
+          }
+          ctx.restore();
+        }
+      });
+      frame++;
+      if (alive > 0 && frame < 200) requestAnimationFrame(loop);
+      else c.remove();
+    }
+    loop();
+    // Avatar glüht kurz auf
+    const av = document.getElementById('samantha-avatar');
+    if (av) {
+      av.style.transition = 'transform .25s ease, box-shadow .4s ease';
+      av.style.transform = 'scale(1.15)';
+      av.style.boxShadow = '0 0 60px 12px rgba(154,240,255,.85), 0 8px 24px rgba(197,73,122,.6)';
+      setTimeout(() => { av.style.transform = ''; av.style.boxShadow = ''; }, 800);
+    }
+  }
+
+  function toast(text, opts){
+    opts = opts || {};
+    const isOk = !/fehler|err|error|fail/i.test(text);
+    const isCelebration = opts.celebrate !== false && isOk && /✓|geschafft|erledigt|gespeichert|notiz|notiert|live|kopiert|geöffnet/i.test(text);
+    const accent = isCelebration ? '#7ce29d' : '#9af0ff';
+    const motivation = isCelebration ? pickCelebration() : '';
+
     const t = document.createElement('div');
-    t.style.cssText='position:fixed;bottom:100px;left:50%;transform:translateX(-50%);background:rgba(76,217,123,.95);color:#0a0a14;padding:10px 18px;border-radius:10px;font-size:13px;font-weight:600;z-index:1000001;box-shadow:0 12px 40px rgba(0,0,0,.5);max-width:90%';
-    t.textContent = text;
+    t.style.cssText='position:fixed;bottom:100px;left:50%;transform:translateX(-50%) translateY(20px);background:linear-gradient(135deg,rgba(18,26,40,.98),rgba(10,18,30,.98));color:#fff;padding:14px 22px;border-radius:14px;font-size:13.5px;font-weight:500;z-index:1000001;box-shadow:0 16px 50px rgba(0,0,0,.65),0 0 0 1px '+accent+'55,0 0 30px '+accent+'22;max-width:92%;opacity:0;transition:opacity .35s ease, transform .35s cubic-bezier(.16,1,.3,1);border-left:3px solid '+accent;
+    t.innerHTML = '<div style="display:flex;align-items:flex-start;gap:10px"><div style="font-size:22px;line-height:1">'+(isCelebration?'✨':isOk?'ℹ️':'⚠️')+'</div><div style="flex:1"><div style="line-height:1.4">'+escapeHTML(text)+'</div>'+(motivation?'<div style="font-size:11.5px;color:'+accent+';margin-top:4px;font-style:italic;letter-spacing:.02em">— Lucy: '+escapeHTML(motivation)+'</div>':'')+'</div></div>';
     document.body.appendChild(t);
-    setTimeout(()=>t.remove(), 4000);
+    requestAnimationFrame(()=>{ t.style.opacity='1'; t.style.transform='translateX(-50%) translateY(0)'; });
+    setTimeout(()=>{ t.style.opacity='0'; t.style.transform='translateX(-50%) translateY(-10px)'; setTimeout(()=>t.remove(),400); }, isCelebration ? 4200 : 3200);
+
+    if (isCelebration) celebrate(opts.intensity || 1);
+
+    // Lucy lernt: wie viele Aktionen heute → "Streak"
+    try {
+      const today = new Date().toISOString().slice(0,10);
+      const k = 'lucy_streak_'+today;
+      const n = parseInt(localStorage.getItem(k)||'0') + 1;
+      localStorage.setItem(k, String(n));
+      // Special-Cheers bei Milestones
+      if (isCelebration && (n === 5 || n === 10 || n === 20)) {
+        setTimeout(()=>{
+          const m = document.createElement('div');
+          m.style.cssText='position:fixed;top:80px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,#c9a84c,#ff9eb1);color:#0a0a14;padding:18px 28px;border-radius:16px;font-size:16px;font-weight:800;z-index:1000003;box-shadow:0 20px 60px rgba(201,168,76,.4);letter-spacing:.04em;text-align:center';
+          m.innerHTML = (n===5?'🔥 5 Aktionen heute · du bist im Flow!':n===10?'⚡ 10 erledigt · das ist Spitze!':'🏆 20 Aktionen — du bist eine Maschine.');
+          document.body.appendChild(m);
+          celebrate(2);
+          setTimeout(()=>{ m.style.opacity='0'; m.style.transition='opacity .5s'; setTimeout(()=>m.remove(),600); }, 3500);
+        }, 600);
+      }
+    } catch(_) {}
   }
 
   async function renderToday(body){
@@ -823,14 +1250,7 @@ REGELN: Deutsch, präzise, max 8 Sätze Standard. Bei Strategie: erst Schwäche,
     const a = ACTIONS.find(x => x.id === id);
     if (!a) return;
     const result = a.run();
-    if (typeof result === 'string') {
-      // Result als kurze Bestätigung
-      const toast = document.createElement('div');
-      toast.style.cssText = 'position:fixed;bottom:100px;left:50%;transform:translateX(-50%);background:rgba(76,217,123,.95);color:#0a0a14;padding:10px 18px;border-radius:10px;font-size:13px;font-weight:600;z-index:1000001;box-shadow:0 12px 40px rgba(0,0,0,.5);max-width:90%;animation:samSlide .25s';
-      toast.textContent = '✓ ' + result;
-      document.body.appendChild(toast);
-      setTimeout(()=>toast.remove(), 5000);
-    }
+    if (typeof result === 'string') toast('✓ '+result);  // cinematic toast + Konfetti + Cheer
     addLearning('action:'+id, '');
   }
 
