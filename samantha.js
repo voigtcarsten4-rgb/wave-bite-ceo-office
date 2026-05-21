@@ -704,8 +704,9 @@ REGELN: Deutsch, präzise, max 8 Sätze Standard. Bei Strategie: erst Schwäche,
     .sam-head h3{margin:0;font-size:15px;font-weight:600}
     .sam-head .sam-sub{font-size:11px;color:#b9b9c8;margin-top:2px}
     .sam-head .sam-close{background:transparent;border:0;color:#9d9db0;font-size:20px;cursor:pointer;padding:4px 8px}
-    .sam-tabs{display:flex;gap:2px;padding:8px 10px;background:rgba(255,255,255,.03);border-bottom:1px solid rgba(255,255,255,.05);overflow-x:auto}
-    .sam-tab{flex-shrink:0;font-size:11px;padding:6px 10px;border:none;background:transparent;color:#9d9db0;cursor:pointer;border-radius:8px;font-weight:500;transition:.15s;white-space:nowrap}
+    .sam-tabs{display:flex;gap:2px;padding:6px 8px;background:rgba(255,255,255,.03);border-bottom:1px solid rgba(255,255,255,.05);overflow-x:auto;scrollbar-width:none}
+    .sam-tabs::-webkit-scrollbar{display:none}
+    .sam-tab{flex-shrink:0;font-size:11px;padding:6px 9px;border:none;background:transparent;color:#9d9db0;cursor:pointer;border-radius:8px;font-weight:500;transition:.15s;white-space:nowrap}
     .sam-tab.active{background:rgba(255,158,177,.18);color:#ffd6df}
     .sam-body{min-height:0;overflow-y:auto;overflow-x:hidden;padding:14px 16px;font-size:13px;line-height:1.5;scroll-behavior:smooth}
     .sam-body::-webkit-scrollbar{width:8px}

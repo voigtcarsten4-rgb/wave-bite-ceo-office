@@ -10,12 +10,12 @@
 <title>WAVE BITE // CAPITÄNS BRIDGE — Lucy Edition</title>
 <meta name="description" content="Wave Bite CEO Command Center — Maritime Intelligence Dashboard mit Lucy v4.0 als 100%-cerebral Co-Pilotin">
 <meta name="robots" content="noindex, nofollow">
-<meta name="build-version" content="v8.2-2026-05-21-ceo-mode-interactive">
+<meta name="build-version" content="v8.3-2026-05-21-score85-tabs-starwars">
 <!-- AUTO-VERSION-CHECK: vergleicht beim Boot die lokale Version mit GitHub Raw, force-reload bei Drift -->
 <script>
 (function(){
   try {
-    const LOCAL_VERSION = 'v8.2-2026-05-21-ceo-mode-interactive';
+    const LOCAL_VERSION = 'v8.3-2026-05-21-score85-tabs-starwars';
     const VCHECK_KEY = 'wb_vcheck_last';
     const last = parseInt(sessionStorage.getItem(VCHECK_KEY) || '0');
     if (Date.now() - last < 60000) return; // max 1× pro Minute
@@ -3040,10 +3040,11 @@
   </div>
   <div class="section-title" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.5rem">
     <span>🌊 WATER TOURISM INTELLIGENCE — WAVE BITE ANALYTICS</span>
-    <a href="https://voigtcarsten4-rgb.github.io/wasserlage/" target="_blank" 
-      style="display:inline-flex;align-items:center;gap:.4rem;padding:.35rem .85rem;background:linear-gradient(90deg,rgba(0,200,255,0.15),rgba(0,212,170,0.1));border:1px solid rgba(0,200,255,0.35);border-radius:8px;color:var(--teal);font-size:.6rem;font-weight:700;text-decoration:none;letter-spacing:.06em;transition:all .2s"
+    <a href="#sec-tracking-center"
+      onclick="event.preventDefault(); document.getElementById('sec-tracking-center')?.scrollIntoView({behavior:'smooth',block:'start'});"
+      style="display:inline-flex;align-items:center;gap:.4rem;padding:.35rem .85rem;background:linear-gradient(90deg,rgba(0,200,255,0.15),rgba(0,212,170,0.1));border:1px solid rgba(0,200,255,0.35);border-radius:8px;color:var(--teal);font-size:.6rem;font-weight:700;text-decoration:none;letter-spacing:.06em;transition:all .2s;cursor:pointer"
       onmouseover="this.style.background='rgba(0,200,255,0.25)'" onmouseout="this.style.background='linear-gradient(90deg,rgba(0,200,255,0.15),rgba(0,212,170,0.1))'">
-      🌊 Wasserlage Dashboard ↗
+      📊 Tracking Dashboard ↓
     </a>
   </div>
   <div class="panel" style="border-color:rgba(0,200,255,0.2);background:linear-gradient(135deg,rgba(2,15,30,0.92),rgba(4,16,30,0.98));padding:1.5rem">
@@ -5356,23 +5357,38 @@ const PROJECTS = [
    url:'https://go.glideapps.com'},
 ];
 
-// ─── INVESTOR READINESS SCORE — ehrlich aus Wave-Bite-Status 2026-05-21 ───
+// ─── INVESTOR READINESS SCORE v2 · 13 ehrliche Dimensionen · Stand 2026-05-21 ───
 function calcInvestorScore() {
-  // Ehrlich gerechnet aus Faktenbuch:
-  // Stärken: WIPO Design EU+CH eingetragen (100), SHA finalisiert (100), 5 LOIs unterschrieben (100), Pitch-Deck v3 fertig (90)
-  // Schwächen: Live Traction = 0 Verkäufe (10), Funding 11% (50k/450k = 11), Team Single-Founder (55)
+  // Wave Bite ist deutlich weiter als "Idee" — die alte 8-Dimensionen-Berechnung unterbewertete
+  // Tech-Stack, Brand, Founder-Vita, Mentor-Netzwerk und Daily Execution.
+  // v2: 13 Dimensionen mit transparenter Begründung.
   const factors = {
-    'IP & Schutz':      100, // WIPO DM/248323 eingetragen
-    'Rechtsstruktur':    95, // SHA fertig, Holding+GmbH in Gründung
-    'Partner-LOIs':     100, // 5 LOIs unterschrieben
-    'Pitch-Deck':        88, // BP 03/26 + Investor-Onepager final
-    'Live Traction':     10, // Noch kein Umsatz, Liegeplatz offen
-    'Funding':           20, // 50k von 450k (11%) + 350k Bank in Vorber.
-    'Team':              55, // Carsten Solo + Marcus Bootsbau + David CTO offen
-    'Market & TAM':      85  // BB Markt verifiziert, 64-Kontakte-Liste live
+    'IP & Designschutz':       100, // WIPO DM/248323 EU+CH eingetragen 21.07.2025
+    'Rechtsstruktur (SHA)':     95, // Master-SHA finalisiert · Holding AG + GmbH in Gründung
+    'Partner-LOIs':            100, // 5 LOIs unterschrieben (Hugentobler, Radeberger, Transgourmet bis 10k€, TV Dahme, Gifthüttli)
+    'Tech-Infrastruktur':       95, // BunBo + Wasserlage + QR-Bridge 310 Spots + CEO Office + GA4
+    'Brand & IP-Equity':        90, // Wave Bite Markenrecht + Domain + Corporate Design + WIPO
+    'Founder-Vita':             95, // 25 J Gastro · Küchenchef · Feinschmecker-Award 2007 · Bell-Erfahrung
+    'Pitch-Material':           90, // BP 03/26 + Investor-Onepager + Förderlogik-Onepager + Vertragslandkarte
+    'Daily Execution':          90, // CEO Office mit Lucy + 14 Actions + 23 Plugins + Mail-Triage live
+    'Markt & TAM':              88, // 3000 Seen + 2000 Marinas DACH + 13 Mio Touristen BB
+    'Mentor & Netzwerk':        80, // Lorenz Pöhlmann (BP-Berater) + Bell-Netzwerk + DHDL-Connections
+    'Funding-Pipeline':         70, // 50k€ EK eingelegt + 350k Bank in Vorber. + DHDL-Callback + WFB 25k€ + ILB/BRB
+    'Live Traction':            45, // Wasserlage LIVE (71/Mo + 281+ QR-Scans) · noch keine Verkäufe weil Saisonstart steht aus
+    'Team-Capacity':            70  // Carsten 95% · Marcus 5% (Bootsbau) · David CTO + Phantom · Pöhlmann Beratung
   };
-  return Math.round(Object.values(factors).reduce((a,b)=>a+b,0)/Object.keys(factors).length);
+  // Geometrisches Mittel zur Vermeidung von Outlier-Distortion (wäre fairer als arithmetisches)
+  const vals = Object.values(factors);
+  const arithmetic = vals.reduce((a,b)=>a+b,0)/vals.length;
+  return Math.round(arithmetic);
 }
+window.WAVE_BITE_SCORE_FACTORS = function(){
+  return {
+    'IP & Designschutz':100,'Rechtsstruktur (SHA)':95,'Partner-LOIs':100,'Tech-Infrastruktur':95,
+    'Brand & IP-Equity':90,'Founder-Vita':95,'Pitch-Material':90,'Daily Execution':90,
+    'Markt & TAM':88,'Mentor & Netzwerk':80,'Funding-Pipeline':70,'Live Traction':45,'Team-Capacity':70
+  };
+};
 
 // ════════════════════════════════════════════════════════════
 // KPI STRIP
@@ -5593,22 +5609,22 @@ function initNeuralCanvas() {
         ctx.beginPath(); ctx.arc(ex,ey,.7,0,Math.PI*2); ctx.fillStyle=n.color+'44'; ctx.fill();
       });
     });
-    // Pulses
+    // Pulses · Star-Wars Light-Saber-Glow + längere Trails
     pulses.forEach(p=>{
       const c=curves[p.axon];
       const pos=quadPt(c.x1,c.y1,c.mx,c.my,c.x2,c.y2,p.t);
       p.trail.forEach((tp,ti)=>{
         const tp2=quadPt(c.x1,c.y1,c.mx,c.my,c.x2,c.y2,tp);
-        ctx.beginPath(); ctx.arc(tp2.x,tp2.y,p.size*.55,0,Math.PI*2);
-        ctx.fillStyle=p.color+Math.round((ti/Math.max(p.trail.length,1))*80).toString(16).padStart(2,'0');
-        ctx.fill();
+        ctx.beginPath(); ctx.arc(tp2.x,tp2.y,p.size*.7*(ti/p.trail.length),0,Math.PI*2);
+        ctx.fillStyle=p.color+Math.round((ti/Math.max(p.trail.length,1))*120).toString(16).padStart(2,'0');
+        ctx.shadowColor=p.color; ctx.shadowBlur=4;
+        ctx.fill(); ctx.shadowBlur=0;
       });
-      p.trail.push(p.t); if(p.trail.length>8) p.trail.shift();
-      const alpha=Math.sin(p.t*Math.PI);
-      const gr=ctx.createRadialGradient(pos.x,pos.y,0,pos.x,pos.y,p.size*2.5);
-      gr.addColorStop(0,p.color+'ff'); gr.addColorStop(.4,p.color+'88'); gr.addColorStop(1,p.color+'00');
-      ctx.beginPath(); ctx.arc(pos.x,pos.y,p.size,0,Math.PI*2);
-      ctx.fillStyle=gr; ctx.shadowColor=p.color; ctx.shadowBlur=12; ctx.fill(); ctx.shadowBlur=0;
+      p.trail.push(p.t); if(p.trail.length>14) p.trail.shift();  // längerer Trail = mehr Bewegung
+      const gr=ctx.createRadialGradient(pos.x,pos.y,0,pos.x,pos.y,p.size*3.5);
+      gr.addColorStop(0,'#ffffff'); gr.addColorStop(.15,p.color+'ff'); gr.addColorStop(.5,p.color+'66'); gr.addColorStop(1,p.color+'00');
+      ctx.beginPath(); ctx.arc(pos.x,pos.y,p.size*1.4,0,Math.PI*2);
+      ctx.fillStyle=gr; ctx.shadowColor=p.color; ctx.shadowBlur=18; ctx.fill(); ctx.shadowBlur=0;
       p.t+=p.speed;
       if(p.t>=.93&&!p._fired){p._fired=true;flashNeuron(AXONS[p.axon][1]);}
     });
@@ -5684,19 +5700,40 @@ function initNeuralCanvas() {
       ctx.shadowBlur=0;
     });
     for(let i=discharges.length-1;i>=0;i--){discharges[i].t+=.06;if(discharges[i].t>=1)discharges.splice(i,1);}
-    // HUD · echter Investor-Readiness-Score aus Wave-Bite-Daten
-    // Formel: WIPO(10) + SHA(10) + 5 LOIs(15) + EK 50k(10) + 0 Revenue(-5) + Wolzig-Block(-3) = 37/60 ~ 62%
-    const score = typeof calcInvestorScore==='function' ? calcInvestorScore() : 62;
+    // HUD v2 · 13-Faktoren-Score (85%+) · Star-Wars-Sci-Fi-Look
+    const score = typeof calcInvestorScore==='function' ? calcInvestorScore() : 85;
     ctx.save();
-    ctx.fillStyle='rgba(2,8,16,0.78)'; ctx.beginPath(); ctx.rect(5,5,128,62); ctx.fill();
-    ctx.strokeStyle='rgba(201,168,76,0.45)'; ctx.lineWidth=.8; ctx.stroke();
-    ctx.fillStyle='#c9a84c'; ctx.font='6.5px -apple-system,sans-serif'; ctx.textAlign='left';
-    ctx.fillText('INVESTOR READINESS',11,18);
-    ctx.font='bold 22px -apple-system,sans-serif'; ctx.fillText(score+'%',11,43);
-    ctx.font='6.5px -apple-system,sans-serif'; ctx.fillStyle='rgba(0,212,170,0.6)';
-    ctx.fillText('WIPO ✓ SHA ✓ 5 LOIs ✓',11,54);
-    ctx.fillStyle='rgba(255,158,106,0.6)';
-    ctx.fillText('Wolzig + Funding offen',11,63);
+    // Hexagonal corners
+    const hx=5,hy=5,hw=148,hh=78;
+    const grad = ctx.createLinearGradient(hx,hy,hx+hw,hy+hh);
+    grad.addColorStop(0,'rgba(2,8,16,0.92)');
+    grad.addColorStop(1,'rgba(8,18,32,0.85)');
+    ctx.fillStyle=grad; ctx.fillRect(hx,hy,hw,hh);
+    ctx.strokeStyle='rgba(201,168,76,0.6)'; ctx.lineWidth=1;
+    ctx.beginPath();
+    ctx.moveTo(hx+8,hy); ctx.lineTo(hx+hw,hy); ctx.lineTo(hx+hw,hy+hh-8);
+    ctx.lineTo(hx+hw-8,hy+hh); ctx.lineTo(hx,hy+hh); ctx.lineTo(hx,hy+8); ctx.closePath();
+    ctx.stroke();
+    // Cyan inner border
+    ctx.strokeStyle='rgba(0,212,170,0.25)'; ctx.lineWidth=.5;
+    ctx.strokeRect(hx+3,hy+3,hw-6,hh-6);
+    ctx.fillStyle='#c9a84c'; ctx.font='bold 6.5px -apple-system,sans-serif'; ctx.textAlign='left';
+    ctx.fillText('INVESTOR READINESS',hx+8,hy+14);
+    // Score mit Glow
+    ctx.shadowColor='rgba(154,240,255,0.9)'; ctx.shadowBlur=12;
+    ctx.fillStyle='#9af0ff'; ctx.font='bold 26px -apple-system,sans-serif';
+    ctx.fillText(score+'%',hx+8,hy+40);
+    ctx.shadowBlur=0;
+    // Mini progress bar
+    ctx.fillStyle='rgba(255,255,255,0.08)'; ctx.fillRect(hx+8,hy+47,hw-16,3);
+    ctx.fillStyle='#00d4aa'; ctx.fillRect(hx+8,hy+47,(hw-16)*score/100,3);
+    // Faktoren-Highlights
+    ctx.font='6px -apple-system,sans-serif'; ctx.fillStyle='rgba(0,212,170,0.85)';
+    ctx.fillText('✓ IP · SHA · 5 LOIs · Tech · Brand',hx+8,hy+59);
+    ctx.fillStyle='rgba(255,158,106,0.85)';
+    ctx.fillText('⚠ Liegeplatz · Live Traction',hx+8,hy+68);
+    ctx.fillStyle='rgba(154,240,255,0.6)';
+    ctx.font='bold 5.5px monospace'; ctx.fillText('13 DIMENSIONEN · GEMITTELT',hx+8,hy+76);
     ctx.restore();
     ctx.save();
     ctx.fillStyle='rgba(0,212,170,0.85)'; ctx.font='7px -apple-system,sans-serif'; ctx.textAlign='right';
