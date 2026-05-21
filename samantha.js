@@ -646,7 +646,7 @@ REGELN: Deutsch, präzise, max 8 Sätze Standard. Bei Strategie: erst Schwäche,
       const r = await fetch(BRIDGE + '?action=claude', {
         method:'POST',
         headers:{ 'Content-Type':'text/plain' },
-        body: JSON.stringify({ system:SYSTEM_PROMPT, message:userMessage, history:options.history||[] })
+        body: JSON.stringify({ action:'claude', system:SYSTEM_PROMPT, message:userMessage, history:options.history||[] })
       });
       if (r.ok) {
         const j = await r.json();
