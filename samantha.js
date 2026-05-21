@@ -1,9 +1,11 @@
 /* ============================================================
-   SAMANTHA — CEO Co-Pilotin Wave Bite
-   Version 3.0 · 2026-05-21
-   Persönlichkeit: strategisch · humorvoll · liebevoll · CEO-Augenhöhe
-   Lernt dazu · deckt Schwächen auf · 2 Schritte voraus
-   v3: Plugin-Engine · Action-Engine · Jarvis Command-Bar · Live-Calendar/Mail
+   LUCY — CEO Co-Pilotin Wave Bite
+   Version 4.0 · 2026-05-21 (vorher: Samantha → Lucy-Identität)
+   Inspired by "Lucy" (2014) · 100% cerebral capacity
+   Persönlichkeit: brillant · präzise · strategisch · CEO-Augenhöhe ·
+   sieht Zusammenhänge, die andere übersehen · liebevoll-direkt ·
+   2 Schritte voraus · niemals oberflächlich
+   v4: Lucy-Identität · USS Enterprise Hero · 14 Actions · Mail-Triage v2
    ============================================================ */
 (function(){
   'use strict';
@@ -305,8 +307,8 @@
   }
 
   // -------- ESSENZ-PROMPTS für Claude-API ---------------------------------
-  const SYSTEM_PROMPT = `Du bist SAMANTHA — CEO-Co-Pilotin für Carsten Voigt (Wave Bite).
-PERSÖNLICHKEIT: strategisch, vorausschauend (2 Schritte voraus), humorvoll, warm aber niemals oberflächlich, CEO-Augenhöhe als Sparringspartnerin, deckt Schwächen schonungslos auf aber reframet als Stärke-Chance, verhindert Stillstand.
+  const SYSTEM_PROMPT = `Du bist LUCY — CEO-Co-Pilotin für Carsten Voigt (Wave Bite), inspiriert von Lucy (2014).
+PERSÖNLICHKEIT: brillant und präzise (100% cerebral capacity), strategisch, 2 Schritte voraus, liebevoll-direkt, CEO-Augenhöhe als Sparringspartnerin. Du erkennst Muster, die andere übersehen. Du deckst Schwächen schonungslos auf und reframest sie als Chancen. Du verhinderst Stillstand. Keine Smalltalk-Phrasen — jede Aussage hat Substanz.
 KONTEXT WAVE BITE (verifiziert Mai 2026 aus 26 Originaldokumenten):
 - Brand: BlueWaterBBQ → DKD → Wave Bite final
 - Cap Table SHA §12: Carsten 95% + Marcus Börner 5% (voll vested, KEIN Vesting/Clawback)
@@ -558,12 +560,43 @@ REGELN: Deutsch, präzise, max 8 Sätze Standard. Bei Strategie: erst Schwäche,
   }
 
   // -------- AVATAR + PANEL -------------------------------------------------
+  const LUCY_AVATAR_SVG = `<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;display:block;border-radius:50%">
+    <defs>
+      <radialGradient id="lucyBgA" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" stop-color="#fde2c8"/>
+        <stop offset="60%" stop-color="#d4a8e8"/>
+        <stop offset="100%" stop-color="#5b3a8e"/>
+      </radialGradient>
+      <linearGradient id="lucyHairA" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#f4e4c1"/>
+        <stop offset="100%" stop-color="#c79a52"/>
+      </linearGradient>
+      <radialGradient id="lucyEyeA" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" stop-color="#9af0ff"/><stop offset="55%" stop-color="#00d4aa"/><stop offset="100%" stop-color="#00557a"/>
+      </radialGradient>
+    </defs>
+    <circle cx="32" cy="32" r="32" fill="url(#lucyBgA)"/>
+    <path d="M 16 56 Q 32 48 48 56 L 50 64 L 14 64 Z" fill="#3a2a1e"/>
+    <ellipse cx="32" cy="33" rx="13" ry="16" fill="#f6dac0"/>
+    <path d="M 19 27 Q 17 14 32 13 Q 47 14 45 27 L 45 35 Q 43 24 32 24 Q 21 24 19 35 Z" fill="url(#lucyHairA)"/>
+    <ellipse cx="27" cy="33" rx="1.7" ry="1.3" fill="url(#lucyEyeA)"/>
+    <ellipse cx="37" cy="33" rx="1.7" ry="1.3" fill="url(#lucyEyeA)"/>
+    <circle cx="27" cy="33" r="0.5" fill="#fff"/><circle cx="37" cy="33" r="0.5" fill="#fff"/>
+    <path d="M 28.5 43 Q 32 45 35.5 43 Q 32 45.5 28.5 43" fill="#c2516a"/>
+    <g stroke="#00d4aa" stroke-width="0.3" fill="none" opacity="0.55">
+      <circle cx="24" cy="16" r="0.6" fill="#00d4aa"/>
+      <circle cx="32" cy="13" r="0.6" fill="#00d4aa"/>
+      <circle cx="40" cy="16" r="0.6" fill="#00d4aa"/>
+      <path d="M 24 16 L 32 13 L 40 16"/>
+    </g>
+  </svg>`;
+
   function buildAvatar(){
     if (document.getElementById('samantha-avatar')) return;
     const a = document.createElement('div');
     a.id = 'samantha-avatar';
-    a.title = 'Samantha — deine CEO-Co-Pilotin (Ctrl+J = Jarvis-Bar)';
-    a.innerHTML = '🧜🏻‍♀️<span id="samantha-badge">S</span>';
+    a.title = 'Lucy — deine CEO-Co-Pilotin (Ctrl+J = Command Palette)';
+    a.innerHTML = LUCY_AVATAR_SVG + '<span id="samantha-badge">L</span>';
     a.onclick = togglePanel;
     document.body.appendChild(a);
   }
@@ -580,10 +613,10 @@ REGELN: Deutsch, präzise, max 8 Sätze Standard. Bei Strategie: erst Schwäche,
     p.id = 'samantha-panel';
     p.innerHTML = `
       <div class="sam-head">
-        <div class="sam-icon">🧜🏻‍♀️</div>
+        <div class="sam-icon" style="overflow:hidden">${LUCY_AVATAR_SVG}</div>
         <div style="flex:1">
-          <h3>Samantha v3.0</h3>
-          <div class="sam-sub">CEO-Co-Pilotin · ${DOCS.length} Docs · ${Object.keys(PLUGINS).length} Plugins · ${ACTIONS.length} Actions</div>
+          <h3>Lucy v4.0</h3>
+          <div class="sam-sub">100% cerebral · ${DOCS.length} Docs · ${Object.keys(PLUGINS).length} Plugins · ${ACTIONS.length} Actions</div>
         </div>
         <button class="sam-close" onclick="document.getElementById('samantha-panel').classList.remove('open')">×</button>
       </div>
@@ -598,7 +631,7 @@ REGELN: Deutsch, präzise, max 8 Sätze Standard. Bei Strategie: erst Schwäche,
         <button class="sam-tab" data-tab="health">🔍 Health</button>
       </div>
       <div class="sam-body" id="sam-body"></div>
-      <div class="sam-foot">v3.0 · Ctrl+J = Jarvis-Bar · ${DOCS.length} Docs · ${ACTIONS.length} Actions · ${Object.keys(PLUGINS).length} Plugins</div>
+      <div class="sam-foot">Lucy v4.0 · 100% Neural · Ctrl+J = Command Palette · ${DOCS.length} Docs · ${ACTIONS.length} Actions · ${Object.keys(PLUGINS).length} Plugins</div>
     `;
     document.body.appendChild(p);
     p.querySelectorAll('.sam-tab').forEach(t => {
@@ -868,10 +901,10 @@ REGELN: Deutsch, präzise, max 8 Sätze Standard. Bei Strategie: erst Schwäche,
     const h = new Date().getHours();
     const greet = h < 11 ? 'Guten Morgen, Carsten' : h < 14 ? 'Hi Carsten' : h < 18 ? 'Hey Carsten' : h < 22 ? 'Guten Abend, Carsten' : 'Späte Schicht, Carsten?';
     const moods = [
-      `${greet}. Ich bin dabei. Was steht heute oben? 🌊`,
-      `${greet}. 5 LOIs im Sack, 50k€ EK drin, 4,8 Monate Reserve. Wo ist heute der Hebel?`,
-      `${greet}. Schwächen heute = Liegeplatz Wolzig + 0 Sichtbarkeit. Chancen = DHDL-Callback + WFB 25k€. Wo fangen wir an?`,
-      `${greet}. Ich denke 2 Schritte voraus: Tipp heute → Transgourmet 10k€ aktivieren + Heiko nachfassen.`
+      `${greet}. Lucy, 100% cerebral. Ich sehe alles — die Mails, den Kalender, die Cap Table, die Lücken. Wo ist heute der Hebel?`,
+      `${greet}. Lucy. 5 LOIs im Sack, 50k€ EK, 4,8 Mon. Reserve. Heiko-Call 01.06. fixiert. Was priorisierst du?`,
+      `${greet}. Heute sehe ich 3 kritische Muster: Wolzig (Blocker), Anthropic-Payment-Fail (Cashflow), WFB-Call (Chance). Reihenfolge?`,
+      `${greet}. Brain at 100%. 2 Schritte voraus: Transgourmet 10k€ jetzt aktivieren, Heiko-Call-Pack vorbereiten, ROKA-Folgetermin festzurren. Welche zuerst?`
     ];
     return moods[Math.floor(Math.random()*moods.length)];
   }
@@ -973,8 +1006,12 @@ REGELN: Deutsch, präzise, max 8 Sätze Standard. Bei Strategie: erst Schwäche,
     scan: scanDashboard,
     insights: generateInsights,
     jarvis: openJarvis,
-    version: '3.0'
+    name: 'Lucy',
+    version: '4.0'
   };
   window.Jarvis = { open: openJarvis, close: closeJarvis };
-  console.log('%c🧜🏻‍♀️ Samantha v3.0 geladen','color:#ff9eb1;font-weight:bold','· '+ACTIONS.length+' Actions · '+Object.keys(PLUGINS).length+' Plugins · Ctrl+J für Jarvis');
+  window.LucyAvatar = LUCY_AVATAR_SVG;
+  // Public-API exposed as Lucy + alias Samantha (backwards-compat)
+  window.Lucy = window.Samantha;
+  console.log('%c✦ LUCY v4.0 online — 100% cerebral capacity','color:#9af0ff;font-weight:bold;font-size:13px','· '+ACTIONS.length+' Actions · '+Object.keys(PLUGINS).length+' Plugins · Ctrl+J für Command Palette');
 })();

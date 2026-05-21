@@ -1,22 +1,2 @@
-=== GIT LOG === 
-4964b35 fix(v4.1): Investor-Score ehrlich aus echten Wave-Bite-Werten gerechnet (statt Demo-95%)
-3058b8c feat(Samantha v4): Sci-Fi Boot-Intro + 3D-Neural-Core + echte KPIs + SW-Auto-Kill
-b6f83cf feat(Samantha v3): Action-Engine + Jarvis-Bar + Plugin-Bibliothek + Live-Mail/Cal-Insights
-a71941e feat(WAVA): KI Co-Pilotin (Wave Vision Assistant) ÔÇö Avatar+Panel, Memory, Daily-Focus, Schw├ñchenÔåÆSt├ñrken-Reframe + echte Werte aus Discovery (EK 50k, Burn 10.4k, Funding-Ziel 450k, 95/5 Cap Table, 5 LOIs) + Fallback 0-Einnahmen
-eaba79d fix(office): Risk-statische-Matrix raus, Demo-KPIs durch Live-Platzhalter ersetzt, 13 Buttons mit echten Aktionen (Pitch/Businessplan/EXIST/SHA/LOIs PDFs in docs/), Bridge-URL als Default, Demo-Kalender-Events deaktiviert
- 
-=== GIT STATUS === 
-On branch main
-Your branch is up to date with 'origin/main'.
-
-Changes not staged for commit:
-  (use "git add <file>..." to update what will be committed)
-  (use "git restore <file>..." to discard changes in working directory)
-	modified:   AUTO_PUSH.bat
-	modified:   push_log.txt
-
-no changes added to commit (use "git add" and/or "git commit -a")
- 
-=== GIT DIFF HEAD index.html (first 50 lines) === 
-Der Befehl "head" ist entweder falsch geschrieben oder
-konnte nicht gefunden werden.
+To https://github.com/voigtcarsten4-rgb/ceo-office.git
+   4964b35..3ba7346  main -> main

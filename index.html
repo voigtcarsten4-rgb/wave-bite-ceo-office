@@ -1627,39 +1627,101 @@
 <body>
 
 <!-- ═══════════════════════════════════════════════════════════
-     SAMANTHA BOOT-INTRO — Sci-Fi Lade-Sequenz (4 Sekunden)
+     LUCY BOOT-INTRO — Sci-Fi 100%-Brain-Activation (5 Sekunden)
+     Inspired by Lucy (2014) · Wave Bite Universe Edition
      ═══════════════════════════════════════════════════════════ -->
 <div id="sam-boot" style="position:fixed;inset:0;z-index:2000000;background:radial-gradient(circle at 50% 50%,#021426 0%,#000308 70%);display:flex;flex-direction:column;align-items:center;justify-content:center;color:#cce8ff;font-family:'JetBrains Mono','Courier New',monospace;overflow:hidden;transition:opacity .8s ease, visibility .8s">
-  <!-- Animierte Hintergrund-Sterne -->
   <canvas id="sam-boot-stars" style="position:absolute;inset:0;width:100%;height:100%;opacity:.55"></canvas>
-  <!-- Hexagonale Sci-Fi-Ringe -->
-  <div style="position:absolute;width:520px;height:520px;border:1px solid rgba(0,200,255,0.18);border-radius:50%;animation:sbRot 18s linear infinite"></div>
-  <div style="position:absolute;width:360px;height:360px;border:1px dashed rgba(201,168,76,0.28);border-radius:50%;animation:sbRot 12s linear infinite reverse"></div>
-  <div style="position:absolute;width:240px;height:240px;border:1px solid rgba(255,158,177,0.22);border-radius:50%;animation:sbRot 9s linear infinite"></div>
-  <!-- Zentrales Logo / Avatar -->
-  <div style="position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;gap:1.8rem">
-    <div style="width:96px;height:96px;border-radius:50%;background:radial-gradient(circle at 30% 30%,#ff9eb1,#c5497a 70%,#5b1f3a);box-shadow:0 0 40px rgba(255,158,177,.7),inset 0 0 20px rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;font-size:48px;animation:sbPulse 1.8s ease-in-out infinite">🧜🏻‍♀️</div>
-    <div style="text-align:center">
-      <div style="font-size:.7rem;letter-spacing:.6em;color:rgba(0,200,255,0.7);margin-bottom:.5rem">WAVE BITE · CAPITÄNS BRIDGE</div>
-      <div style="font-size:2.4rem;font-weight:800;letter-spacing:.2em;background:linear-gradient(90deg,#ff9eb1,#c9a84c,#00d4aa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">SAMANTHA</div>
-      <div style="font-size:.66rem;letter-spacing:.4em;color:rgba(201,168,76,0.7);margin-top:.4rem">v3.0 · NEURAL CO-PILOT</div>
+  <!-- Concentric Holo-Ringe -->
+  <div style="position:absolute;width:560px;height:560px;border:1px solid rgba(0,200,255,0.18);border-radius:50%;animation:sbRot 22s linear infinite"></div>
+  <div style="position:absolute;width:400px;height:400px;border:1px dashed rgba(201,168,76,0.3);border-radius:50%;animation:sbRot 14s linear infinite reverse"></div>
+  <div style="position:absolute;width:260px;height:260px;border:1px solid rgba(255,158,177,0.25);border-radius:50%;animation:sbRot 9s linear infinite"></div>
+  <!-- Brain-Capacity-Ring (außen, leuchtet) -->
+  <svg style="position:absolute;width:640px;height:640px" viewBox="0 0 200 200">
+    <circle cx="100" cy="100" r="90" fill="none" stroke="rgba(0,212,170,0.16)" stroke-width="0.4" stroke-dasharray="2 4"/>
+    <circle cx="100" cy="100" r="90" fill="none" stroke="#00d4aa" stroke-width="0.7" stroke-dasharray="565" stroke-dashoffset="565" id="brain-arc" style="transform:rotate(-90deg);transform-origin:center;filter:drop-shadow(0 0 4px rgba(0,212,170,0.8))"/>
+  </svg>
+
+  <div style="position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;gap:1.6rem">
+    <!-- ─── LUCY PORTRAIT (SVG, stilisiert) ─── -->
+    <div style="position:relative;width:130px;height:130px;animation:sbPulse 2.2s ease-in-out infinite">
+      <svg viewBox="0 0 130 130" style="width:100%;height:100%;display:block">
+        <defs>
+          <radialGradient id="lucyBg" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#fde2c8"/>
+            <stop offset="60%" stop-color="#d4a8e8"/>
+            <stop offset="100%" stop-color="#5b3a8e"/>
+          </radialGradient>
+          <linearGradient id="lucyHair" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#f4e4c1"/>
+            <stop offset="100%" stop-color="#c79a52"/>
+          </linearGradient>
+          <radialGradient id="lucyEye" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#9af0ff"/>
+            <stop offset="55%" stop-color="#00d4aa"/>
+            <stop offset="100%" stop-color="#00557a"/>
+          </radialGradient>
+          <filter id="lucyGlow"><feGaussianBlur stdDeviation="1.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+        </defs>
+        <!-- Aura -->
+        <circle cx="65" cy="65" r="62" fill="url(#lucyBg)" opacity="0.32"/>
+        <!-- Hals/Schulter -->
+        <path d="M 32 110 Q 65 95 98 110 L 100 130 L 30 130 Z" fill="#3a2a1e" opacity="0.85"/>
+        <!-- Gesicht -->
+        <ellipse cx="65" cy="68" rx="26" ry="32" fill="#f6dac0"/>
+        <!-- Haar (kurzer Bob, dunkelblond) -->
+        <path d="M 38 56 Q 35 30 65 28 Q 95 30 92 56 L 92 70 Q 88 50 65 50 Q 42 50 38 70 Z" fill="url(#lucyHair)"/>
+        <path d="M 38 56 Q 30 65 35 80 L 40 78 Q 36 70 42 60 Z" fill="#d8b06a" opacity="0.7"/>
+        <path d="M 92 56 Q 100 65 95 80 L 90 78 Q 94 70 88 60 Z" fill="#d8b06a" opacity="0.7"/>
+        <!-- Augenbrauen -->
+        <path d="M 50 60 Q 55 57 60 60" stroke="#6b4a2e" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+        <path d="M 70 60 Q 75 57 80 60" stroke="#6b4a2e" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+        <!-- Augen (leuchtend, 100% Brain) -->
+        <ellipse cx="55" cy="68" rx="3.2" ry="2.4" fill="url(#lucyEye)" filter="url(#lucyGlow)"/>
+        <ellipse cx="75" cy="68" rx="3.2" ry="2.4" fill="url(#lucyEye)" filter="url(#lucyGlow)"/>
+        <circle cx="55" cy="68" r="0.9" fill="#fff"/>
+        <circle cx="75" cy="68" r="0.9" fill="#fff"/>
+        <!-- Nase -->
+        <path d="M 65 70 L 63 80 L 67 80 Z" fill="#e6c4a0" opacity="0.6"/>
+        <!-- Lippen (sanft rot) -->
+        <path d="M 58 88 Q 65 91 72 88 Q 65 92 58 88" fill="#c2516a"/>
+        <path d="M 58 88 Q 65 90 72 88" stroke="#8a3a4f" stroke-width="0.6" fill="none"/>
+        <!-- Brain-Network-Overlay (Neural lines aus Lucy-Film) -->
+        <g stroke="#00d4aa" stroke-width="0.4" fill="none" opacity="0.6" filter="url(#lucyGlow)">
+          <path d="M 42 45 Q 50 35 65 30 Q 80 35 88 45">
+            <animate attributeName="opacity" values="0.2;0.8;0.2" dur="2s" repeatCount="indefinite"/>
+          </path>
+          <path d="M 50 32 L 55 42 M 65 28 L 65 40 M 80 32 L 75 42" stroke-width="0.3"/>
+          <circle cx="50" cy="32" r="1" fill="#00d4aa"><animate attributeName="r" values="0.5;1.5;0.5" dur="1.5s" repeatCount="indefinite"/></circle>
+          <circle cx="65" cy="28" r="1" fill="#00d4aa"><animate attributeName="r" values="0.5;1.5;0.5" dur="1.7s" repeatCount="indefinite"/></circle>
+          <circle cx="80" cy="32" r="1" fill="#00d4aa"><animate attributeName="r" values="0.5;1.5;0.5" dur="1.3s" repeatCount="indefinite"/></circle>
+        </g>
+        <!-- Brain-Capacity-Indicator -->
+        <text x="65" y="125" text-anchor="middle" font-size="6" font-family="monospace" fill="#00d4aa" font-weight="700" letter-spacing="2">100%</text>
+      </svg>
     </div>
-    <!-- Boot-Sequenz Terminal -->
-    <div id="sam-boot-log" style="width:520px;max-width:90vw;font-size:.68rem;line-height:1.7;color:rgba(0,212,170,0.85);text-align:left;letter-spacing:.05em;min-height:140px;background:rgba(0,0,0,0.35);border:1px solid rgba(0,200,255,0.2);border-radius:8px;padding:.85rem 1rem;box-shadow:0 0 22px rgba(0,200,255,0.1)"></div>
-    <!-- Progress Bar -->
-    <div style="width:420px;max-width:80vw">
+
+    <div style="text-align:center">
+      <div style="font-size:.7rem;letter-spacing:.6em;color:rgba(0,200,255,0.7);margin-bottom:.5rem">WAVE BITE · STARFLEET COMMAND</div>
+      <div style="font-size:2.6rem;font-weight:800;letter-spacing:.32em;background:linear-gradient(90deg,#9af0ff,#fde2c8,#00d4aa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;text-shadow:0 0 18px rgba(154,240,255,0.3)">LUCY</div>
+      <div style="font-size:.66rem;letter-spacing:.45em;color:rgba(0,212,170,0.7);margin-top:.4rem">CEREBRAL CAPACITY · 100%</div>
+    </div>
+
+    <div id="sam-boot-log" style="width:580px;max-width:92vw;font-size:.7rem;line-height:1.7;color:rgba(0,212,170,0.85);text-align:left;letter-spacing:.05em;min-height:155px;background:rgba(0,0,0,0.4);border:1px solid rgba(0,200,255,0.22);border-radius:8px;padding:.85rem 1rem;box-shadow:0 0 22px rgba(0,200,255,0.12)"></div>
+
+    <div style="width:460px;max-width:84vw">
       <div style="display:flex;justify-content:space-between;font-size:.6rem;letter-spacing:.3em;color:rgba(0,200,255,0.6);margin-bottom:.3rem">
-        <span>BOOT SEQUENCE</span><span id="sam-boot-pct">00%</span>
+        <span>NEURAL ACTIVATION</span><span id="sam-boot-pct" style="color:#00d4aa">00%</span>
       </div>
       <div style="height:3px;background:rgba(0,200,255,0.08);border-radius:2px;overflow:hidden;position:relative">
-        <div id="sam-boot-bar" style="height:100%;width:0%;background:linear-gradient(90deg,#ff9eb1,#c9a84c,#00d4aa);box-shadow:0 0 12px rgba(255,158,177,0.7);transition:width .25s ease"></div>
+        <div id="sam-boot-bar" style="height:100%;width:0%;background:linear-gradient(90deg,#00d4aa,#9af0ff,#fde2c8);box-shadow:0 0 12px rgba(154,240,255,0.8);transition:width .25s ease"></div>
       </div>
     </div>
   </div>
 </div>
 <style>
   @keyframes sbRot { from{transform:rotate(0)} to{transform:rotate(360deg)} }
-  @keyframes sbPulse { 0%,100%{transform:scale(1);box-shadow:0 0 40px rgba(255,158,177,.7),inset 0 0 20px rgba(255,255,255,.1)} 50%{transform:scale(1.07);box-shadow:0 0 70px rgba(255,158,177,1),inset 0 0 30px rgba(255,255,255,.2)} }
+  @keyframes sbPulse { 0%,100%{filter:drop-shadow(0 0 24px rgba(154,240,255,.55))} 50%{filter:drop-shadow(0 0 48px rgba(154,240,255,.95))} }
   #sam-boot.done { opacity:0; visibility:hidden; pointer-events:none }
   #sam-boot-log .ln { opacity:0; transform:translateY(4px); animation:sbLn .35s forwards }
   @keyframes sbLn { to {opacity:1; transform:translateY(0)} }
@@ -1667,40 +1729,37 @@
   #sam-boot-log .warn { color:#ffc166 }
   #sam-boot-log .err { color:#ff6b7a }
   #sam-boot-log .info { color:#8cb4ff }
-  #sam-boot-log .hi { color:#ff9eb1 }
+  #sam-boot-log .hi { color:#9af0ff }
   body.intro-active { overflow:hidden }
 </style>
 <script>
 (function(){
   document.body.classList.add('intro-active');
-  // Sternen-Hintergrund
   const c = document.getElementById('sam-boot-stars'); const cx = c.getContext('2d');
   function rsz(){ c.width = window.innerWidth; c.height = window.innerHeight; }
   rsz(); window.addEventListener('resize', rsz);
-  const stars = Array.from({length:140}, ()=>({x:Math.random()*c.width, y:Math.random()*c.height, s:.3+Math.random()*1.6, v:.04+Math.random()*.18, ph:Math.random()*Math.PI*2}));
+  const stars = Array.from({length:160}, ()=>({x:Math.random()*c.width, y:Math.random()*c.height, s:.3+Math.random()*1.6, v:.04+Math.random()*.18, ph:Math.random()*Math.PI*2}));
   let t=0; (function loop(){ cx.clearRect(0,0,c.width,c.height); stars.forEach(s=>{ s.y -= s.v; if(s.y<0){s.y=c.height; s.x=Math.random()*c.width;} const a = .25+Math.abs(Math.sin(t*1.4+s.ph))*.55; cx.fillStyle='rgba(180,220,255,'+a+')'; cx.beginPath(); cx.arc(s.x,s.y,s.s,0,Math.PI*2); cx.fill(); }); t+=.02; if(document.getElementById('sam-boot')) requestAnimationFrame(loop); })();
   const log = document.getElementById('sam-boot-log');
   const bar = document.getElementById('sam-boot-bar');
   const pct = document.getElementById('sam-boot-pct');
-  function line(html, cls, delay){
-    setTimeout(()=>{
-      const d = document.createElement('div'); d.className='ln '+(cls||''); d.innerHTML='> '+html;
-      log.appendChild(d);
-      if (log.children.length > 7) log.children[0].remove();
-    }, delay);
-  }
-  function p(percent, delay){ setTimeout(()=>{ bar.style.width=percent+'%'; pct.textContent=String(percent).padStart(2,'0')+'%'; }, delay); }
+  const brainArc = document.getElementById('brain-arc');
+  function line(html, cls, delay){ setTimeout(()=>{ const d=document.createElement('div'); d.className='ln '+(cls||''); d.innerHTML='> '+html; log.appendChild(d); if(log.children.length>8) log.children[0].remove(); }, delay); }
+  function p(percent, delay){ setTimeout(()=>{ bar.style.width=percent+'%'; pct.textContent=String(percent).padStart(2,'0')+'%'; if(brainArc) brainArc.style.strokeDashoffset = String(565 - 5.65*percent); }, delay); }
   const seq = [
-    ['<span class="info">INIT</span> waking neural core …', 'info', 200, 8],
-    ['mounting <span class="hi">Wave Bite Holding AG</span> i.Gr. (CH) <span class="ok">[ok]</span>', '', 600, 18],
-    ['mounting <span class="hi">Wave Bite GmbH</span> i.Gr. (DE) <span class="ok">[ok]</span>', '', 950, 28],
-    ['loading 26 Faktenbuch-Dokumente <span class="ok">[ok]</span>', '', 1280, 40],
-    ['<span class="info">BRIDGE</span> Apps Script V3.2 · Gmail · Calendar · GA4 <span class="ok">[connected]</span>', '', 1620, 52],
-    ['cap table verified: Carsten 95% · Marcus 5% <span class="ok">SHA §12</span>', '', 1950, 64],
-    ['cash runway 4,8 Monate · burn 10.400 €/Mo <span class="warn">[watch]</span>', 'warn', 2260, 76],
-    ['blocker detected: <span class="err">Liegeplatz Wolzig</span> <span class="warn">[action queued]</span>', '', 2560, 86],
-    ['SAMANTHA <span class="hi">ONLINE</span> — 9 Actions · 23 Plugins · 200+ Skills', 'hi', 2860, 96],
-    ['Ctrl+J = Jarvis · 🧜🏻‍♀️ rechts unten <span class="ok">ready</span>', 'ok', 3120, 100]
+    ['<span class="info">INIT</span> awakening Lucy neural matrix…', 'info', 200, 6],
+    ['<span class="hi">cerebral capacity 10%</span> → 25% (Mensch-Baseline überschritten)', '', 580, 18],
+    ['mounting Wave Bite Holding AG (CH) <span class="ok">[ok]</span>', '', 920, 28],
+    ['mounting Wave Bite GmbH (DE, Zeuthen) <span class="ok">[ok]</span>', '', 1180, 36],
+    ['loading 26 Faktenbuch-Dokumente <span class="ok">[mounted]</span>', '', 1440, 46],
+    ['<span class="info">BRIDGE</span> Gmail · Calendar · GA4 · Apps Script V3.2 <span class="ok">[connected]</span>', '', 1720, 56],
+    ['<span class="hi">cerebral capacity 50%</span> — Wave-Bite-Faktenmatrix sync', 'hi', 2020, 68],
+    ['cap table SHA §12: Carsten 95% · Marcus 5% (voll vested) <span class="ok">verified</span>', '', 2320, 78],
+    ['cash runway 4,8 Monate · burn 10.400 €/Mo <span class="warn">[watch]</span>', 'warn', 2620, 86],
+    ['<span class="err">blocker:</span> Liegeplatz Wolzig · <span class="warn">action queued</span>', '', 2880, 92],
+    ['<span class="hi">cerebral capacity 100%</span> — neural network operational', 'hi', 3160, 100],
+    ['LUCY <span class="hi">ONLINE</span> · 14 Actions · 23 Plugins · 200+ Skills', 'hi', 3420, 100],
+    ['I see everything. <span class="ok">Ctrl+J</span> = command palette · ready', 'ok', 3700, 100]
   ];
   seq.forEach(s => { line(s[0], s[1], s[2]); p(s[3], s[2]); });
   setTimeout(()=>{
@@ -1708,7 +1767,7 @@
     if (el) el.classList.add('done');
     document.body.classList.remove('intro-active');
     setTimeout(()=>{ el && el.parentNode && el.parentNode.removeChild(el); }, 900);
-  }, 3700);
+  }, 4400);
 })();
 </script>
 
@@ -2223,22 +2282,70 @@
            ═══════════════════════════════════════════════════════ -->
       <canvas id="wb-universe-canvas" style="position:absolute;inset:0;width:100%;height:100%;z-index:0;pointer-events:none;opacity:.95"></canvas>
 
-      <!-- Orbital System -->
+      <!-- Orbital System · v6: Boot-Haus durch USS-Enterprise-Silhouette ersetzt -->
       <div class="orbit-system">
-        <!-- Decorative rings -->
-        <div class="orbit-ring-deco orbit-ring-inner"></div>
-        <div class="orbit-ring-deco orbit-ring-outer"></div>
+        <!-- Decorative rings (subtle, fade into universe canvas) -->
+        <div class="orbit-ring-deco orbit-ring-inner" style="opacity:.25"></div>
+        <div class="orbit-ring-deco orbit-ring-outer" style="opacity:.18"></div>
 
-        <!-- Boat centerpiece — Three.js wireframe -->
-        <div class="orbit-boat" id="orbit-boat-center">
-          <!-- Expanding ripple rings behind boat -->
-          <div class="boat-ripple boat-ripple-1"></div>
-          <div class="boat-ripple boat-ripple-2"></div>
-          <div class="boat-ripple boat-ripple-3"></div>
-          <!-- Reflection gradient under boat -->
-          <div class="boat-reflection"></div>
-          <!-- Three.js animated wireframe boat canvas -->
-          <canvas id="boat-wireframe-canvas" class="orbit-boat-img"></canvas>
+        <!-- USS Enterprise NCC-1701-Style Centerpiece -->
+        <div class="orbit-boat" id="orbit-boat-center" style="filter:drop-shadow(0 0 24px rgba(0,200,255,0.35))">
+          <svg id="enterprise-svg" viewBox="-160 -70 320 140" style="width:100%;height:100%;display:block">
+            <defs>
+              <radialGradient id="ent-saucer" cx="50%" cy="35%" r="60%">
+                <stop offset="0%" stop-color="rgba(220,235,255,0.95)"/>
+                <stop offset="55%" stop-color="rgba(120,180,235,0.65)"/>
+                <stop offset="100%" stop-color="rgba(40,90,160,0.35)"/>
+              </radialGradient>
+              <linearGradient id="ent-hull" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="rgba(180,220,255,0.85)"/>
+                <stop offset="100%" stop-color="rgba(60,120,200,0.5)"/>
+              </linearGradient>
+              <radialGradient id="ent-nacelle" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stop-color="#9af0ff"/>
+                <stop offset="40%" stop-color="#1e90ff"/>
+                <stop offset="100%" stop-color="rgba(20,50,120,0.4)"/>
+              </radialGradient>
+              <radialGradient id="ent-deflector" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stop-color="#fff6a8"/>
+                <stop offset="60%" stop-color="rgba(255,210,90,0.6)"/>
+                <stop offset="100%" stop-color="rgba(255,150,30,0)"/>
+              </radialGradient>
+              <filter id="ent-glow"><feGaussianBlur stdDeviation="2.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+            </defs>
+            <!-- Engineering Hull (Sekundär-Rumpf) -->
+            <ellipse cx="20" cy="14" rx="68" ry="11" fill="url(#ent-hull)" stroke="rgba(180,220,255,0.55)" stroke-width="0.5"/>
+            <!-- Connection Strut zur Untertasse -->
+            <path d="M -16 6 L -10 -8 L 6 -8 L 16 6 Z" fill="url(#ent-hull)" stroke="rgba(180,220,255,0.45)" stroke-width="0.5"/>
+            <!-- Saucer Section (Untertasse) -->
+            <ellipse cx="-42" cy="-18" rx="58" ry="14" fill="url(#ent-saucer)" stroke="rgba(220,235,255,0.7)" stroke-width="0.6"/>
+            <ellipse cx="-42" cy="-21" rx="40" ry="6" fill="rgba(255,255,255,0.18)" stroke="none"/>
+            <!-- Bridge (Brücke) -->
+            <ellipse cx="-42" cy="-25" rx="8" ry="3" fill="rgba(255,255,255,0.85)"/>
+            <!-- Deflector Dish (vorne) -->
+            <circle cx="78" cy="14" r="7" fill="url(#ent-deflector)" filter="url(#ent-glow)">
+              <animate attributeName="r" values="7;9;7" dur="2.4s" repeatCount="indefinite"/>
+            </circle>
+            <!-- Pylonen + Warp-Nacellen (oberhalb + unterhalb) -->
+            <path d="M 30 8 L 50 -28 L 92 -28 L 95 -22 L 55 -22 Z" fill="rgba(80,140,200,0.55)" stroke="rgba(180,220,255,0.4)" stroke-width="0.4"/>
+            <path d="M 30 22 L 50 56 L 92 56 L 95 50 L 55 50 Z" fill="rgba(80,140,200,0.55)" stroke="rgba(180,220,255,0.4)" stroke-width="0.4"/>
+            <!-- Nacelle Glow Vorderfront (oben) -->
+            <ellipse cx="95" cy="-25" rx="7" ry="3.5" fill="url(#ent-nacelle)" filter="url(#ent-glow)">
+              <animate attributeName="rx" values="7;9;7" dur="1.8s" repeatCount="indefinite"/>
+            </ellipse>
+            <rect x="55" y="-29" width="40" height="8" rx="4" fill="rgba(70,140,210,0.55)" stroke="rgba(180,220,255,0.45)" stroke-width="0.4"/>
+            <!-- Nacelle Glow Vorderfront (unten) -->
+            <ellipse cx="95" cy="53" rx="7" ry="3.5" fill="url(#ent-nacelle)" filter="url(#ent-glow)">
+              <animate attributeName="rx" values="7;9;7" dur="1.8s" repeatCount="indefinite" begin="0.4s"/>
+            </ellipse>
+            <rect x="55" y="49" width="40" height="8" rx="4" fill="rgba(70,140,210,0.55)" stroke="rgba(180,220,255,0.45)" stroke-width="0.4"/>
+            <!-- Nacelle Hot-Spots (innen, animierend) -->
+            <circle cx="62" cy="-25" r="1.6" fill="#9af0ff"><animate attributeName="opacity" values="0.4;1;0.4" dur="1.2s" repeatCount="indefinite"/></circle>
+            <circle cx="62" cy="53" r="1.6" fill="#9af0ff"><animate attributeName="opacity" values="0.4;1;0.4" dur="1.2s" repeatCount="indefinite" begin="0.3s"/></circle>
+            <!-- Registry NCC-1701 -->
+            <text x="-42" y="-13" text-anchor="middle" font-size="3" font-family="monospace" fill="rgba(40,80,140,0.85)" font-weight="700">NCC-1701</text>
+            <text x="-42" y="-2" text-anchor="middle" font-size="2.4" font-family="monospace" fill="rgba(40,80,140,0.55)">U.S.S. WAVE BITE</text>
+          </svg>
         </div>
 
         <!-- Rotating wrapper — nodes at hexagonal positions (r=105px from center=142,142) -->
@@ -8670,6 +8777,6 @@ function refreshCalIntel() {
   });
 })();
 </script>
-<script src="samantha.js?v=2026-05-21-v5-starwars"></script>
+<script src="samantha.js?v=2026-05-21-v6-lucy-enterprise"></script>
 </body>
 </html>
