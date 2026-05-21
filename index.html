@@ -10,12 +10,12 @@
 <title>WAVE BITE // CAPITÄNS BRIDGE — Lucy Edition</title>
 <meta name="description" content="Wave Bite CEO Command Center — Maritime Intelligence Dashboard mit Lucy v4.0 als 100%-cerebral Co-Pilotin">
 <meta name="robots" content="noindex, nofollow">
-<meta name="build-version" content="v9.2-2026-05-21-PRO-NEXT-GEN">
+<meta name="build-version" content="v9.3-2026-05-21-FIX-HEADER-ANIM">
 <!-- AUTO-VERSION-CHECK: vergleicht beim Boot die lokale Version mit GitHub Raw, force-reload bei Drift -->
 <script>
 (function(){
   try {
-    const LOCAL_VERSION = 'v9.2-2026-05-21-PRO-NEXT-GEN';
+    const LOCAL_VERSION = 'v9.3-2026-05-21-FIX-HEADER-ANIM';
     const VCHECK_KEY = 'wb_vcheck_last';
     const last = parseInt(sessionStorage.getItem(VCHECK_KEY) || '0');
     if (Date.now() - last < 60000) return; // max 1× pro Minute
@@ -1659,6 +1659,92 @@
   } catch(e){}
 })();
 </script>
+
+<!-- ═════════════════════════════════════════════════════════════════════════
+     v9.3 HEADER-ANIMATIONS PATCH (2026-05-21) — sichtbare Header-Effekte
+     Pulse für active Tabs, Glow für hover, Shimmer für Top-Bar
+═══════════════════════════════════════════════════════════════════════════ -->
+<style>
+  /* Header-Container animierter Untergrund-Shimmer */
+  body > div:first-of-type[style*="position:fixed"]:has(.nav-pill),
+  body > div:first-of-type[style*="position: fixed"]:has(.nav-pill) {
+    position: relative;
+  }
+  /* Glow + Pulse für aktiven nav-pill (HOME-Tab oder welcher auch aktiv ist) */
+  .nav-pill.active {
+    animation: navPillActivePulse 2.6s ease-in-out infinite;
+    box-shadow: 0 0 14px rgba(0,200,255,0.45), inset 0 0 8px rgba(0,200,255,0.12);
+    border-color: rgba(0,200,255,0.7) !important;
+  }
+  @keyframes navPillActivePulse {
+    0%,100% { box-shadow: 0 0 12px rgba(0,200,255,0.38), inset 0 0 6px rgba(0,200,255,0.1); }
+    50%     { box-shadow: 0 0 22px rgba(0,200,255,0.7),  inset 0 0 12px rgba(0,200,255,0.2); }
+  }
+  /* Hover-Glow für nav-pills + nav-tool-btn (sichtbar bei Hover) */
+  .nav-pill:hover {
+    box-shadow: 0 0 16px rgba(0,200,255,0.5), 0 4px 14px rgba(0,200,255,0.18);
+    transform: translateY(-1px);
+    background: rgba(0,200,255,0.14) !important;
+  }
+  .nav-tool-btn:hover {
+    animation: toolBtnHoverShine 1.4s ease-in-out infinite;
+  }
+  @keyframes toolBtnHoverShine {
+    0%,100% { box-shadow: 0 0 8px rgba(0,200,255,0.22); }
+    50%     { box-shadow: 0 0 18px rgba(0,200,255,0.55), 0 0 30px rgba(0,212,170,0.18); }
+  }
+  /* Top-Bar Bottom-Border Gradient-Sweep (sichtbar unter dem Header) */
+  body::before {
+    content: '';
+    position: fixed;
+    top: 56px; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg,
+      transparent 0%,
+      rgba(0,200,255,0.0) 10%,
+      rgba(0,200,255,0.7) 40%,
+      rgba(0,212,170,0.7) 50%,
+      rgba(201,168,76,0.7) 60%,
+      rgba(0,200,255,0.0) 90%,
+      transparent 100%);
+    background-size: 200% 100%;
+    animation: topBorderSweep 8s linear infinite;
+    pointer-events: none;
+    z-index: 500;
+    opacity: 0.85;
+  }
+  @keyframes topBorderSweep {
+    0%   { background-position: -100% 0; }
+    100% { background-position:  100% 0; }
+  }
+  /* Brand-Logo "WAVEBITE // JARVIS" subtle glow-pulse */
+  body > div:first-of-type *[style*="letter-spacing"]:not([class*="boot"]),
+  [class*="logo"], [class*="brand-mark"] {
+    animation: logoSubtlePulse 4s ease-in-out infinite;
+  }
+  @keyframes logoSubtlePulse {
+    0%,100% { text-shadow: 0 0 6px rgba(0,200,255,0.35); filter: brightness(1); }
+    50%     { text-shadow: 0 0 14px rgba(0,200,255,0.65), 0 0 24px rgba(0,200,255,0.25); filter: brightness(1.08); }
+  }
+  /* Status-Dot extra-glow + ring (nav-status hat schon pulse, hier verstärken) */
+  .nav-status {
+    box-shadow: 0 0 12px var(--green), 0 0 22px rgba(0,255,150,0.4) !important;
+  }
+  .nav-status::after {
+    content: '';
+    position: absolute;
+    inset: -3px;
+    border-radius: 50%;
+    border: 1px solid rgba(0,255,150,0.6);
+    animation: statusRing 2s ease-out infinite;
+  }
+  @keyframes statusRing {
+    0%   { transform: scale(0.8); opacity: 0.9; }
+    100% { transform: scale(2.5); opacity: 0;   }
+  }
+  /* Boot-Screen bleibt unverändert, alle anderen Animationen sichtbar */
+</style>
+
 </head>
 <body>
 
