@@ -6554,8 +6554,23 @@ window.openDash = function(id) {
 // ════════════════════════════════════════════════════════════
 // LIVE DATA — Pegelonline
 // ════════════════════════════════════════════════════════════
-// v13: Wasserlage Cockpit synchron mit Detail-Dashboard (wasserlage/index.html)
-// Same APIs, gleiche Codes, gleiche Sonnenzeit-Berechnung, gleicher Status-Logik
+// v14: Wasserlage Cockpit 100% synchron mit Detail-Dashboard
+// Identische Stations-Namen, identische calcAmpel-Logik, gleiche Sonnenzeit-Berechnung
+function _wlCalcAmpel(val, cv) {
+  if (val == null) return 'grey';
+  const {NNW, MNW, MHW, HHW} = cv;
+  if (HHW != null && val > HHW) return 'red';
+  if (NNW != null && val < NNW) return 'red';
+  if (MNW != null && val < MNW) return 'orange';
+  if (MHW != null && val > MHW) return 'orange';
+  return 'green';
+}
+function _wlKmhToBft(kmh) {
+  if (kmh == null) return -1;
+  const sc = [1,5,11,19,28,38,49,61,74,88,102,117];
+  for (let i=0;i<sc.length;i++) if (kmh < sc[i]) return i;
+  return 12;
+}
 function _wlCalcSunTimes(date) {
   const lat = 52.52 * Math.PI / 180;
   const d = Math.floor((date - new Date(Date.UTC(date.getFullYear(),0,0))) / 86400000);
@@ -6571,47 +6586,60 @@ function _wlCalcSunTimes(date) {
   const toHM = v => { const h = Math.floor(v), m = Math.round((v-h)*60); return `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}`; };
   return { rise: toHM(rise), set: toHM(set) };
 }
-// Cache: spiegelt Detail-Seite Ampel-Logik (oranges = Pegel unter Normal)
-let _wlOrangesCount = 0;
+// Cache: spiegelt Detail-Seite Ampel-Logik 1:1 (oranges = Pegel unter Normal, reds = kritisch)
+let _wlOrangesCount = 0, _wlRedsCount = 0;
 function _wlUpdateStatus() {
   const c = window._wlCurrentWeather || {};
   const wind = c.windspeed_10m || 0;
   const wmo = c.weathercode || 0;
-  const rain = wmo >= 60;
-  const caution = wind >= 38 /* Bft 5+ */ || rain || _wlOrangesCount > 0;
+  // Detail-Logik: rain = wmo 51-67 oder 80-82; storm = bft>=7 oder wmo>=95; caution = bft>=5 || rain || oranges>0
+  const rain = (wmo >= 51 && wmo <= 67) || (wmo >= 80 && wmo <= 82);
+  const bft = _wlKmhToBft(wind);
+  const storm = bft >= 7 || wmo >= 95;
+  const caution = bft >= 5 || rain || _wlOrangesCount > 0;
   const wlStatus = document.getElementById('wl-status-label');
   const wlSub = document.getElementById('wl-status-sub');
   const icon = document.getElementById('wl-status-icon');
   if (wlStatus) {
-    if (caution) { wlStatus.textContent = 'Mit Vorsicht'; wlStatus.style.color = '#ffaa00'; }
+    if (_wlRedsCount > 0 || storm) { wlStatus.textContent = 'Gefährlich'; wlStatus.style.color = '#ff4757'; }
+    else if (caution) { wlStatus.textContent = 'Mit Vorsicht'; wlStatus.style.color = '#ffaa00'; }
     else { wlStatus.textContent = 'Günstige Bedingungen'; wlStatus.style.color = 'var(--gold)'; }
   }
-  if (wlSub) wlSub.textContent = _wlOrangesCount > 0
-    ? _wlOrangesCount + ' Pegel unter Normal — ELWIS prüfen'
-    : (rain ? 'Niederschlag — Lage beobachten' : 'Berlin-Brandenburg · ' + new Date().toLocaleDateString('de-DE'));
-  if (icon) icon.textContent = caution ? '⚠️' : (wmo < 2 ? '☀️' : wmo < 60 ? '⛅' : '🌧');
+  if (wlSub) wlSub.textContent =
+    _wlRedsCount > 0 ? _wlRedsCount + ' Pegel kritisch — ELWIS prüfen' :
+    _wlOrangesCount > 0 ? _wlOrangesCount + ' Pegel unter Normal — ELWIS prüfen' :
+    rain ? 'Niederschlag — Lage beobachten' :
+    'Berlin-Brandenburg · ' + new Date().toLocaleDateString('de-DE');
+  if (icon) icon.textContent = (_wlRedsCount > 0 || storm) ? '🌊' : caution ? '⚠️' : (wmo < 2 ? '☀️' : wmo < 60 ? '⛅' : '🌧');
 }
 
 function loadWasserlage() {
-  // ─── Pegel + Ampel (gleiche Logik wie Detail-Dashboard) ───
-  // 4 Hauptstationen wie Detail-Seite: prüfen ob unter Normal
-  const PEGEL_STATIONS = ['BERLIN-SPANDAU','POTSDAM','KÖPENICK','BERLIN-MÜGGELSEE'];
+  // ─── Pegel + Ampel — IDENTISCHE Stations-Namen + calcAmpel wie Detail-Dashboard ───
+  // Berlin/Brandenburg-Hauptstationen aus wasserlage/index.html STATIONS-Array
+  const PEGEL_STATIONS = [
+    'BERLIN-SPANDAU UP', 'BERLIN-CHARLOTTENBURG UP', 'BERLIN-MÜHLENDAMM UP',
+    'BERLIN-KÖPENICK', 'BERLIN-SCHMÖCKWITZ', 'BERLIN-PLÖTZENSEE OP', 'POTSDAM'
+  ];
   Promise.all(PEGEL_STATIONS.map(sn =>
-    fetch('https://www.pegelonline.wsv.de/webservices/rest-api/v2/stations/'+encodeURIComponent(sn)+'.json?includeCurrentMeasurement=true&includeCharacteristicValues=true')
+    fetch('https://www.pegelonline.wsv.de/webservices/rest-api/v2/stations/'+encodeURIComponent(sn)+'.json?includeTimeseries=true&includeCurrentMeasurement=true&includeCharacteristicValues=true')
       .then(r => r.ok ? r.json() : null).catch(() => null)
   )).then(stations => {
-    let oranges = 0, primaryVal = null;
+    let oranges = 0, reds = 0, primaryVal = null;
     stations.forEach(s => {
       if (!s || !s.timeseries || !s.timeseries[0]) return;
       const ts = s.timeseries[0];
       const cur = ts.currentMeasurement && ts.currentMeasurement.value;
       if (cur == null) return;
       if (primaryVal == null && /SPANDAU|POTSDAM/.test(s.shortname||'')) primaryVal = cur;
-      // Ampel via Characteristic Values (Mittelwasser MW)
-      const mw = (ts.characteristicValues || []).find(v => v.shortname === 'MW');
-      if (mw && cur < mw.value * 0.85) oranges++; // 15% unter MW = orange
+      // calcAmpel identisch wie Detail-Dashboard
+      const cv = {};
+      (ts.characteristicValues || []).forEach(v => { cv[v.shortname] = v.value; });
+      const ampel = _wlCalcAmpel(cur, cv);
+      if (ampel === 'red') reds++;
+      else if (ampel === 'orange') oranges++;
     });
     _wlOrangesCount = oranges;
+    _wlRedsCount = reds;
     const el = document.getElementById('wl-pegel-status');
     if (el) {
       if (oranges > 0) { el.textContent = oranges + ' Hinweis'; el.style.color = '#ffaa00'; }
@@ -8708,8 +8736,7 @@ if (typeof window.addMemoryEntry !== 'function') {
 })();
 </script>
 
-<!-- LUCY KI Co-Pilotin -->
-<script src="samantha.js?v=2026-05-21-v13-wlsync-trackbtn"></script>
+<script src="samantha.js?v=2026-05-21-v14-wlsync-1to1"></script>
 
 </body>
 </html>
