@@ -6618,7 +6618,9 @@ function loadWasserlage() {
   // Berlin/Brandenburg-Hauptstationen aus wasserlage/index.html STATIONS-Array
   const PEGEL_STATIONS = [
     'BERLIN-SPANDAU UP', 'BERLIN-CHARLOTTENBURG UP', 'BERLIN-MÜHLENDAMM UP',
-    'BERLIN-KÖPENICK', 'BERLIN-SCHMÖCKWITZ', 'BERLIN-PLÖTZENSEE OP', 'POTSDAM'
+    'BERLIN-KÖPENICK', 'BERLIN-SCHMÖCKWITZ', 'BERLIN-PLÖTZENSEE OP',
+    'POTSDAM', 'RATHENOW UP', 'HAVELBERG STADT', 'NIEDERFINOW SHW UP',
+    'FRANKFURT1 (ODER)', 'SCHWEDT-ODERBRÜCKE'
   ];
   Promise.all(PEGEL_STATIONS.map(sn =>
     fetch('https://www.pegelonline.wsv.de/webservices/rest-api/v2/stations/'+encodeURIComponent(sn)+'.json?includeTimeseries=true&includeCurrentMeasurement=true&includeCharacteristicValues=true')
@@ -8736,7 +8738,7 @@ if (typeof window.addMemoryEntry !== 'function') {
 })();
 </script>
 
-<script src="samantha.js?v=2026-05-21-v14-wlsync-1to1"></script>
+<script src="samantha.js?v=2026-05-21-v15-allstations"></script>
 
 </body>
 </html>
