@@ -6496,6 +6496,193 @@ function initCharts() {
     });
   }
 
+  // v16: PREMIUM Risiko-Matrix mit custom Plugins
+  const riskEl = document.getElementById('risk-heatmap-chart');
+  if (riskEl && typeof Chart !== 'undefined') {
+    const risks = [
+      { x: 75, y: 95, r: 24, label: 'Runway ~5 Monate', sev: 'KRIT', trend: '↑', icon: '💸', action: 'Seedmatch DD bis KW22', color: 'rgba(255,71,87,0.85)', border: '#ff4757', glow: 'rgba(255,71,87,0.65)' },
+      { x: 88, y: 80, r: 22, label: 'Kein Rechtsstatus (UG)', sev: 'HOCH', trend: '→', icon: '⚖️', action: 'Notar-Termin fixieren', color: 'rgba(255,99,87,0.82)', border: '#ff6357', glow: 'rgba(255,99,87,0.55)' },
+      { x: 60, y: 62, r: 18, label: 'Wasserlage 302-Redirect', sev: 'HOCH', trend: '↓', icon: '🔧', action: 'Pages-Config prüfen', color: 'rgba(255,170,0,0.85)', border: '#ffaa00', glow: 'rgba(255,170,0,0.55)' },
+      { x: 55, y: 72, r: 19, label: 'Einzel-Abhängigkeit Carsten', sev: 'MIT', trend: '→', icon: '👤', action: 'Co-Founder Match-Making', color: 'rgba(255,170,0,0.72)', border: '#ffbb33', glow: 'rgba(255,170,0,0.50)' },
+      { x: 50, y: 52, r: 16, label: '5 LOIs · 0 Pilotpartner', sev: 'MIT', trend: '↑', icon: '🤝', action: 'Hugentobler+Transgourmet schließen', color: 'rgba(255,210,80,0.78)', border: '#ffd250', glow: 'rgba(255,210,80,0.45)' },
+      { x: 18, y: 22, r: 14, label: 'Core-Systeme stabil', sev: 'OK', trend: '↑', icon: '✓', action: 'Weiter monitoren', color: 'rgba(0,212,170,0.82)', border: '#00d4aa', glow: 'rgba(0,212,170,0.55)' }
+    ];
+
+    // Custom Plugin: Heatmap-Background mit 4 Quadranten + Threshold-Line
+    const matrixBgPlugin = {
+      id: 'matrixBg',
+      beforeDatasetsDraw(chart) {
+        const {ctx, chartArea: ca, scales: {x, y}} = chart;
+        if (!ca) return;
+        // Quadrant-Hintergründe (Gradient von grün→gelb→orange→rot)
+        const grd1 = ctx.createLinearGradient(ca.left, ca.bottom, ca.right, ca.top);
+        grd1.addColorStop(0, 'rgba(0,212,170,0.06)');
+        grd1.addColorStop(0.45, 'rgba(255,210,80,0.07)');
+        grd1.addColorStop(0.72, 'rgba(255,170,0,0.10)');
+        grd1.addColorStop(1, 'rgba(255,71,87,0.14)');
+        ctx.fillStyle = grd1;
+        ctx.fillRect(ca.left, ca.top, ca.right-ca.left, ca.bottom-ca.top);
+
+        // Diagonale Threshold-Linie (Akzept ↔ Eskalation)
+        ctx.save();
+        ctx.strokeStyle = 'rgba(255,210,80,0.45)';
+        ctx.lineWidth = 1.2;
+        ctx.setLineDash([6, 5]);
+        ctx.beginPath();
+        ctx.moveTo(x.getPixelForValue(0), y.getPixelForValue(100));
+        ctx.lineTo(x.getPixelForValue(100), y.getPixelForValue(0));
+        ctx.stroke();
+        ctx.restore();
+
+        // Quadrant-Labels
+        ctx.save();
+        ctx.font = '600 9px ui-monospace, monospace';
+        ctx.fillStyle = 'rgba(0,212,170,0.55)';
+        ctx.fillText('▢ AKZEPT', x.getPixelForValue(8), y.getPixelForValue(15));
+        ctx.fillStyle = 'rgba(255,210,80,0.55)';
+        ctx.fillText('◇ MONITOR', x.getPixelForValue(8), y.getPixelForValue(85));
+        ctx.fillStyle = 'rgba(255,170,0,0.65)';
+        ctx.fillText('◈ MITIGATE', x.getPixelForValue(72), y.getPixelForValue(15));
+        ctx.fillStyle = 'rgba(255,71,87,0.75)';
+        ctx.fillText('● ESKALATION', x.getPixelForValue(72), y.getPixelForValue(85));
+        ctx.restore();
+
+        // Animierte Scan-Line
+        const t = (Date.now() % 4000) / 4000;
+        const scanX = ca.left + (ca.right - ca.left) * t;
+        const grdScan = ctx.createLinearGradient(scanX-30, 0, scanX+30, 0);
+        grdScan.addColorStop(0, 'rgba(0,212,255,0)');
+        grdScan.addColorStop(0.5, 'rgba(0,212,255,0.18)');
+        grdScan.addColorStop(1, 'rgba(0,212,255,0)');
+        ctx.fillStyle = grdScan;
+        ctx.fillRect(scanX-30, ca.top, 60, ca.bottom-ca.top);
+      }
+    };
+
+    // Custom Plugin: Glow-Bubbles mit Icons, Severity-Pills, Trend-Pfeilen
+    const glowBubblePlugin = {
+      id: 'glowBubble',
+      afterDatasetsDraw(chart) {
+        const {ctx, data} = chart;
+        const meta = chart.getDatasetMeta(0);
+        if (!meta || !meta.data) return;
+        data.datasets[0].data.forEach((pt, i) => {
+          const el = meta.data[i];
+          if (!el) return;
+          const {x, y} = el.getProps(['x','y'], true);
+          const r = pt.r || 16;
+          // Outer-Glow (mehrfach gestapelt)
+          for (let g=3; g>=1; g--) {
+            ctx.beginPath();
+            ctx.arc(x, y, r + g*4, 0, Math.PI*2);
+            ctx.fillStyle = pt.glow.replace(/[\d.]+\)$/, (0.18/g) + ')');
+            ctx.fill();
+          }
+          // Hauptkreis
+          ctx.beginPath();
+          ctx.arc(x, y, r, 0, Math.PI*2);
+          ctx.fillStyle = pt.color;
+          ctx.fill();
+          ctx.lineWidth = 1.8;
+          ctx.strokeStyle = pt.border;
+          ctx.stroke();
+          // Inner Highlight (Tiefe)
+          const grd = ctx.createRadialGradient(x-r*0.35, y-r*0.35, 1, x, y, r);
+          grd.addColorStop(0, 'rgba(255,255,255,0.35)');
+          grd.addColorStop(0.5, 'rgba(255,255,255,0)');
+          ctx.fillStyle = grd;
+          ctx.beginPath();
+          ctx.arc(x, y, r, 0, Math.PI*2);
+          ctx.fill();
+          // Icon zentriert
+          ctx.font = (r*0.85)+'px system-ui';
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'middle';
+          ctx.fillText(pt.icon, x, y);
+
+          // Severity-Pill oberhalb
+          const pillW = pt.sev.length * 7 + 12;
+          const pillH = 14;
+          const pillY = y - r - 18;
+          ctx.fillStyle = pt.border;
+          ctx.beginPath();
+          if (ctx.roundRect) ctx.roundRect(x - pillW/2, pillY, pillW, pillH, 7);
+          else ctx.rect(x - pillW/2, pillY, pillW, pillH);
+          ctx.fill();
+          ctx.fillStyle = '#0a0e1a';
+          ctx.font = '700 9px ui-monospace, monospace';
+          ctx.fillText(pt.sev, x, pillY + pillH/2);
+
+          // Trend-Pfeil rechts daneben
+          ctx.font = '12px ui-monospace';
+          ctx.fillStyle = pt.trend === '↑' ? '#ff4757' : pt.trend === '↓' ? '#00d4aa' : '#ffd250';
+          ctx.fillText(pt.trend, x + pillW/2 + 8, pillY + pillH/2);
+        });
+      }
+    };
+
+    const riskChart = new Chart(riskEl.getContext('2d'), {
+      type: 'bubble',
+      data: {
+        datasets: [{
+          label: 'Risiken',
+          data: risks,
+          parsing: false
+        }]
+      },
+      plugins: [matrixBgPlugin, glowBubblePlugin],
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        layout: { padding: { top: 24, right: 12, bottom: 4, left: 4 } },
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            backgroundColor: 'rgba(10,14,26,0.96)',
+            borderColor: 'rgba(255,170,0,0.5)',
+            borderWidth: 1,
+            titleColor: '#ffd250',
+            titleFont: { size: 11, weight: 700 },
+            bodyColor: '#e0e6f0',
+            bodyFont: { size: 10 },
+            footerColor: '#00d4aa',
+            footerFont: { size: 10, weight: 600 },
+            padding: 10,
+            cornerRadius: 6,
+            displayColors: false,
+            callbacks: {
+              title: (items) => items[0].raw.icon + ' ' + items[0].raw.label,
+              label: (item) => ['Severity: ' + item.raw.sev + ' ' + item.raw.trend, 'Wahrscheinlichkeit: ' + item.raw.x + '%', 'Impact: ' + item.raw.y + '%'],
+              footer: (items) => '→ ' + items[0].raw.action
+            }
+          }
+        },
+        scales: {
+          x: {
+            min: 0, max: 100,
+            title: { display: true, text: 'WAHRSCHEINLICHKEIT →', color: 'rgba(255,210,80,0.7)', font: { size: 9, weight: 600 } },
+            grid: { color: 'rgba(255,255,255,0.04)' },
+            ticks: { color: 'rgba(160,170,190,0.6)', font: { size: 9 }, callback: (v) => v + '%' }
+          },
+          y: {
+            min: 0, max: 100,
+            title: { display: true, text: '↑ IMPACT', color: 'rgba(255,210,80,0.7)', font: { size: 9, weight: 600 } },
+            grid: { color: 'rgba(255,255,255,0.04)' },
+            ticks: { color: 'rgba(160,170,190,0.6)', font: { size: 9 }, callback: (v) => v + '%' }
+          }
+        },
+        animation: { duration: 1200, easing: 'easeOutCubic' }
+      }
+    });
+
+    // Live Scan-Line: 60fps Redraw via 'none' (kein Animation-Reset)
+    if (!window._riskScanInterval) {
+      window._riskScanInterval = setInterval(() => {
+        try { riskChart.draw(); } catch(e) {}
+      }, 80);
+    }
+  }
+
   // Finance Burn Chart
   const finEl = document.getElementById('chart-finance');
   if (finEl) {
