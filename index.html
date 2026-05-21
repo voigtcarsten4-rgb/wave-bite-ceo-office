@@ -8338,6 +8338,21 @@ if (typeof window.addMemoryEntry !== 'function') {
   }
   const streaks = Array.from({ length: 6 }, () => { const s = spawnStreak(); s.x = Math.random(); return s; });
 
+  // ─── HYPERSPACE-LAYER — Sterne fliegen radial vom Zentrum nach aussen (Star-Wars-Hyperspace) ─
+  // Diese Schicht laeuft auf das Zentrum zu (Perspektive z=1 -> 0) und schiesst dann nach aussen.
+  function spawnHyper() {
+    const ang = Math.random() * Math.PI * 2;
+    return {
+      ang,
+      r0: 0.02 + Math.random() * 0.04,         // Startradius (sehr klein, fast im Zentrum)
+      r: 0.02 + Math.random() * 0.04,
+      v: 0.0042 + Math.random() * 0.0055,      // Beschleunigung
+      hue: 200 + Math.random() * 30,
+      thick: 0.6 + Math.random() * 1.0
+    };
+  }
+  const hyperStars = Array.from({ length: 70 }, spawnHyper);
+
   // ─── Orbiting Wave-Bite-Planets (8 Projekte) ─────────────────
   const PLANETS = [
     { name: 'WASSERLAGE', col: '#00d4aa', size: 18, orbit: 220, speed: 0.0042, angle: 0, glow: 16, status: 'LIVE' },
@@ -8389,6 +8404,41 @@ if (typeof window.addMemoryEntry !== 'function') {
       ctx.fillStyle = lay.color + al + ')';
       ctx.beginPath();
       ctx.arc(px, py, s.size * lay.depth * dpr, 0, Math.PI * 2);
+      ctx.fill();
+    });
+
+    // 3b. HYPERSPACE — Sterne fliegen radial vom Zentrum nach aussen (Star-Wars-Hyperspace)
+    hyperStars.forEach(h => {
+      h.r += h.v;
+      if (h.r > 0.92) { Object.assign(h, spawnHyper()); }
+      const minDim = Math.min(W, H);
+      const r0 = h.r0 * minDim;
+      const r1 = h.r  * minDim;
+      const ca = Math.cos(h.ang), sa = Math.sin(h.ang);
+      const x0 = cx + ca * r0;
+      const y0 = cy + sa * r0;
+      const x1 = cx + ca * r1;
+      const y1 = cy + sa * r1;
+      // Tail-length skaliert mit Speed (visueller Hyperspace-Effekt)
+      const tail = Math.min(0.085, h.r * 0.18);
+      const r2 = (h.r - tail) * minDim;
+      const x2 = cx + ca * Math.max(0, r2);
+      const y2 = cy + sa * Math.max(0, r2);
+      const alpha = Math.min(0.95, 0.15 + h.r * 0.95);
+      const grad = ctx.createLinearGradient(x2, y2, x1, y1);
+      grad.addColorStop(0, `hsla(${h.hue},85%,85%,0)`);
+      grad.addColorStop(1, `hsla(${h.hue},90%,95%,${alpha})`);
+      ctx.strokeStyle = grad;
+      ctx.lineWidth = h.thick * dpr * (0.5 + h.r * 0.9);
+      ctx.lineCap = 'round';
+      ctx.beginPath();
+      ctx.moveTo(x2, y2);
+      ctx.lineTo(x1, y1);
+      ctx.stroke();
+      // Heller Kopf
+      ctx.fillStyle = `hsla(${h.hue},95%,98%,${alpha})`;
+      ctx.beginPath();
+      ctx.arc(x1, y1, h.thick * dpr * (0.4 + h.r), 0, Math.PI * 2);
       ctx.fill();
     });
 
@@ -8554,7 +8604,7 @@ if (typeof window.addMemoryEntry !== 'function') {
     ctx.fillText('SECTOR: BERLIN-BB · 8 PROJ-NODES · 5 LOI-SHIPS', margin + 4 * dpr, H - margin - 6 * dpr);
     ctx.textAlign = 'right';
     ctx.fillStyle = 'rgba(201,168,76,0.7)';
-    ctx.fillText('READINESS 69% · CO-PILOT SAMANTHA v3', W - margin - 4 * dpr, H - margin - 6 * dpr);
+    ctx.fillText('READINESS 69% · CO-PILOT LUCY v4.0', W - margin - 4 * dpr, H - margin - 6 * dpr);
 
     frame++;
     if (!document.hidden) requestAnimationFrame(draw);
@@ -8562,7 +8612,6 @@ if (typeof window.addMemoryEntry !== 'function') {
   }
   draw();
 
-  // Restart on tab focus
   document.addEventListener('visibilitychange', () => {
     if (!document.hidden && cv._needRestart) { cv._needRestart = false; draw(); }
   });
@@ -8573,7 +8622,7 @@ if (typeof window.addMemoryEntry !== 'function') {
      LUCY - KI Co-Pilotin (Avatar + Panel + Actions)
      Bindet samantha.js (window.Lucy) ein - cache-buster Version
      =========================================================== -->
-<script src="samantha.js?v=2026-05-21-v5-XL-claude"></script>
+<script src="samantha.js?v=2026-05-21-v6-XL-hyper"></script>
 
 </body>
 </html>
