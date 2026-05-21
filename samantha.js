@@ -344,7 +344,7 @@
 
   // -------- BRIDGE-CALLS (cached) ------------------------------------------
   // v9.2 NEXT-GEN: neue Deployment-URL nach Pro-Mode-Aktivierung
-  const BRIDGE = (window.BRIDGE_URL || 'https://script.google.com/macros/s/AKfycbzOcLq5leW8EmCaI0HE74ZVjAlhdFjJtoV5vhhzEoWHvoC6U8bn5zVxfs7MK_7c1RNu/exec').trim();
+  const BRIDGE = (window.BRIDGE_URL || 'https://script.google.com/macros/s/AKfycbzR2PXMHIx1NDVre9OUSaZ62tbBL3PlEvDf5QFz2IQVNq0-NXLi4pH7KYrXvXnZdUyG/exec').trim();
   const cache = loadJSON(CACHE_KEY, {});
 
   async function bridgeGet(action, params, maxAgeMs){
