@@ -476,13 +476,15 @@ REGELN: Deutsch, präzise, max 8 Sätze Standard. Bei Strategie: erst Schwäche,
 
   async function scanFullInbox(max){
     max = max || 100;
-    var inb = await bridgeGet('inbox', {max:max}, 180000);
-    var sent = await bridgeGet('sent', {max:50}, 180000);
-    var all = [];
-    if (inb && inb.messages) inb.messages.forEach(function(m){ m._dir='in'; all.push(m); });
-    if (sent && sent.messages) sent.messages.forEach(function(m){ m._dir='out'; all.push(m); });
-    // klassifizieren
-    return all.map(function(m){ var c = classifyMail(m); return Object.assign({}, m, {_class:c}); });
+    // v8.1: parallel · cache 3 min
+    const [inb, sent] = await Promise.all([
+      bridgeGet('inbox', {max:max}, 180000),
+      bridgeGet('sent',  {max:50},  180000)
+    ]);
+    const all = [];
+    if (inb && inb.messages) inb.messages.forEach(m => { m._dir='in'; all.push(m); });
+    if (sent && sent.messages) sent.messages.forEach(m => { m._dir='out'; all.push(m); });
+    return all.map(m => Object.assign({}, m, { _class: classifyMail(m) }));
   }
 
   // -------- INSIGHTS (scannt Mail/Kalender, erkennt Action-Bedarf) --------
@@ -496,8 +498,11 @@ REGELN: Deutsch, präzise, max 8 Sätze Standard. Bei Strategie: erst Schwäche,
 
   async function generateInsights(){
     const insights = [];
-    const cal = await bridgeGet('calendar_month', null, 300000);
-    const inbox = await bridgeGet('inbox', {max:50}, 300000);
+    // v8.1: parallel statt sequenziell — halbiert Wartezeit
+    const [cal, inbox] = await Promise.all([
+      bridgeGet('calendar_month', null, 300000),
+      bridgeGet('inbox', {max:50}, 300000)
+    ]);
     const now = new Date();
     const today = now.toISOString().slice(0,10);
     const tomorrow = new Date(now.getTime()+86400000).toISOString().slice(0,10);
@@ -615,8 +620,10 @@ REGELN: Deutsch, präzise, max 8 Sätze Standard. Bei Strategie: erst Schwäche,
     @keyframes samPulse{0%,100%{transform:scale(1);opacity:.6}50%{transform:scale(1.15);opacity:.1}}
     @keyframes samFlash{0%,100%{box-shadow:0 8px 24px rgba(197,73,122,.45)}50%{box-shadow:0 0 36px 8px rgba(255,210,140,.9)}}
     #samantha-badge{position:absolute;top:-4px;right:-4px;background:#ffd166;color:#1a1a1a;font-size:10px;font-weight:700;border-radius:10px;padding:2px 6px;border:2px solid #1a1a1a}
-    #samantha-panel{position:fixed;right:22px;bottom:100px;width:440px;max-height:min(720px,calc(100vh - 130px));height:auto;background:rgba(18,20,28,.97);border:1px solid rgba(154,240,255,.28);border-radius:18px;box-shadow:0 24px 60px rgba(0,0,0,.7),0 0 0 1px rgba(154,240,255,.12);z-index:999999;display:none;flex-direction:column;overflow:hidden;color:#f4f4f8;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Inter,sans-serif;backdrop-filter:blur(22px);resize:both;min-width:340px;min-height:420px}
-    #samantha-panel.open{display:flex;animation:samSlide .25s ease-out}
+    /* v8.1 — strenges Grid: Header/Tabs/Body/Footer immer sichtbar */
+    #samantha-panel{position:fixed;right:22px;bottom:100px;width:460px;height:min(720px,calc(100vh - 130px));background:rgba(18,20,28,.97);border:1px solid rgba(154,240,255,.28);border-radius:18px;box-shadow:0 24px 60px rgba(0,0,0,.7),0 0 0 1px rgba(154,240,255,.12);z-index:999999;display:none;color:#f4f4f8;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Inter,sans-serif;backdrop-filter:blur(22px);resize:both;min-width:360px;min-height:480px;max-width:90vw;max-height:calc(100vh - 110px);grid-template-rows:auto auto 1fr auto;grid-template-columns:100%;overflow:hidden}
+    #samantha-panel.open{display:grid;animation:samSlide .25s ease-out}
+    /* (duplicate-fallback) */
     @keyframes samSlide{from{transform:translateY(20px);opacity:0}to{transform:translateY(0);opacity:1}}
     .sam-head{padding:14px 16px;border-bottom:1px solid rgba(255,255,255,.08);display:flex;align-items:center;gap:10px;background:linear-gradient(135deg,rgba(197,73,122,.18),transparent)}
     .sam-head .sam-icon{width:36px;height:36px;border-radius:50%;background:radial-gradient(circle at 30% 30%,#ff9eb1,#c5497a);display:flex;align-items:center;justify-content:center;font-size:18px}
@@ -626,8 +633,15 @@ REGELN: Deutsch, präzise, max 8 Sätze Standard. Bei Strategie: erst Schwäche,
     .sam-tabs{display:flex;gap:2px;padding:8px 10px;background:rgba(255,255,255,.03);border-bottom:1px solid rgba(255,255,255,.05);overflow-x:auto}
     .sam-tab{flex-shrink:0;font-size:11px;padding:6px 10px;border:none;background:transparent;color:#9d9db0;cursor:pointer;border-radius:8px;font-weight:500;transition:.15s;white-space:nowrap}
     .sam-tab.active{background:rgba(255,158,177,.18);color:#ffd6df}
-    .sam-body{flex:1;overflow-y:auto;overflow-x:hidden;padding:14px 16px 60px;font-size:13px;line-height:1.5;scroll-behavior:smooth}
-    .sam-body::after{content:'';position:sticky;bottom:0;display:block;height:30px;margin:-30px -16px 0;background:linear-gradient(transparent,rgba(18,20,28,.95));pointer-events:none}
+    .sam-body{min-height:0;overflow-y:auto;overflow-x:hidden;padding:14px 16px;font-size:13px;line-height:1.5;scroll-behavior:smooth}
+    .sam-body::-webkit-scrollbar{width:8px}
+    .sam-body::-webkit-scrollbar-thumb{background:rgba(154,240,255,.35);border-radius:4px}
+    .sam-body::-webkit-scrollbar-track{background:rgba(255,255,255,.02)}
+    /* Quick-Action-Bar im Footer — IMMER sichtbar */
+    .sam-quickbar{display:flex;gap:6px;padding:8px 10px;background:rgba(0,0,0,.45);border-top:1px solid rgba(154,240,255,.18);align-items:center}
+    .sam-quickbar button{flex:1;background:rgba(154,240,255,.08);border:1px solid rgba(154,240,255,.25);color:#9af0ff;padding:8px 6px;border-radius:8px;font-size:11px;font-weight:600;cursor:pointer;transition:.15s;font-family:inherit}
+    .sam-quickbar button:hover{background:rgba(154,240,255,.18);transform:translateY(-1px)}
+    .sam-quickbar .qb-primary{background:linear-gradient(135deg,#9af0ff,#00d4aa);border-color:transparent;color:#0a1424}
     .sam-body::-webkit-scrollbar{width:6px}.sam-body::-webkit-scrollbar-thumb{background:rgba(255,158,177,.3);border-radius:3px}
     .sam-h4{margin:14px 0 8px;font-size:11px;text-transform:uppercase;letter-spacing:1.2px;color:#ff9eb1;font-weight:600}
     .sam-h4:first-child{margin-top:0}
@@ -661,7 +675,7 @@ REGELN: Deutsch, präzise, max 8 Sätze Standard. Bei Strategie: erst Schwäche,
     .sam-insight.tomorrow{background:rgba(140,180,255,.1);border-color:#8cb4ff}
     .sam-insight.therapie{background:rgba(160,255,200,.08);border-color:#a0ffc8}
     .sam-insight.mail{background:rgba(255,193,102,.08);border-color:#ffc166}
-    .sam-foot{padding:8px 12px;font-size:10px;color:#7f7f93;border-top:1px solid rgba(255,255,255,.05);text-align:center}
+    .sam-foot{padding:8px 12px;font-size:10px;color:#7f7f93;border-top:1px solid rgba(255,255,255,.05);text-align:center;display:none /* v8.1: ersetzt durch sam-quickbar */}
     .sam-plugin{background:rgba(255,255,255,.04);border-radius:8px;padding:8px 10px;margin-bottom:5px;font-size:11.5px}
     .sam-plugin-h{font-weight:600;font-size:12px;color:#fff;display:flex;align-items:center;gap:6px}
     .sam-plugin-use{color:#9d9db0;margin-top:3px;line-height:1.4}
@@ -756,7 +770,14 @@ REGELN: Deutsch, präzise, max 8 Sätze Standard. Bei Strategie: erst Schwäche,
         <button class="sam-tab" data-tab="health">🔍 Health</button>
       </div>
       <div class="sam-body" id="sam-body"></div>
-      <div class="sam-foot">Lucy v4.0 · 100% Neural · Ctrl+J = Command Palette · ${DOCS.length} Docs · ${ACTIONS.length} Actions · ${Object.keys(PLUGINS).length} Plugins</div>
+      <div class="sam-quickbar">
+        <button class="qb-primary" id="qb-jarvis" title="Command Palette (Ctrl+J)">⌘ Jarvis</button>
+        <button id="qb-quick-task" title="Schnell-Task">＋ Task</button>
+        <button id="qb-quick-note" title="Schnell-Notiz">📝 Note</button>
+        <button id="qb-quick-cal" title="Termin anlegen">📅 Termin</button>
+        <button id="qb-quick-mail" title="Corporate-Mail entwerfen">✉ Mail</button>
+        <button id="qb-refresh" title="Live-Daten neu laden">↻</button>
+      </div>
     `;
     document.body.appendChild(p);
     p.querySelectorAll('.sam-tab').forEach(t => {
@@ -766,6 +787,48 @@ REGELN: Deutsch, präzise, max 8 Sätze Standard. Bei Strategie: erst Schwäche,
         currentTab = t.dataset.tab;
         renderBody();
       };
+    });
+    // Quick-Action-Bar bindings
+    const qb = (sel, fn) => { const el = document.getElementById(sel); if (el) el.onclick = fn; };
+    qb('qb-jarvis', () => openJarvis());
+    qb('qb-quick-task', () => {
+      const txt = prompt('Schnell-Task — was muss erledigt werden?');
+      if (txt && txt.trim()) { addTask(txt.trim(), 'normal'); currentTab='tasks'; p.querySelectorAll('.sam-tab').forEach(x=>x.classList.toggle('active', x.dataset.tab==='tasks')); renderBody(); toast('✓ Task „'+txt.slice(0,40)+'" angelegt'); }
+    });
+    qb('qb-quick-note', () => {
+      const txt = prompt('Schnell-Notiz für Lucy:');
+      if (txt && txt.trim()) { addNote(txt.trim()); currentTab='notes'; p.querySelectorAll('.sam-tab').forEach(x=>x.classList.toggle('active', x.dataset.tab==='notes')); renderBody(); toast('✓ Notiz gespeichert'); }
+    });
+    qb('qb-quick-cal', () => {
+      const titel = prompt('Termin-Titel:'); if (!titel) return;
+      const datum = prompt('Datum (YYYY-MM-DD):', new Date().toISOString().slice(0,10)); if (!datum) return;
+      const zeit  = prompt('Uhrzeit (HH:MM):', '10:00'); if (!zeit) return;
+      // POST an Bridge
+      fetch(BRIDGE + '?action=create_event', {
+        method:'POST', headers:{'Content-Type':'text/plain'},
+        body: JSON.stringify({ action:'create_event', event:{ title:titel, startTime:datum+'T'+zeit+':00', endTime:datum+'T'+zeit.replace(/(\d+):(\d+)/,(m,h,mi)=>(parseInt(h)+1).toString().padStart(2,'0')+':'+mi)+':00', calendar:'wb' } })
+      }).then(r=>r.json()).then(d=>{
+        if (d && d.success) toast('✓ „'+titel+'" am '+datum+' '+zeit+' im Google Calendar angelegt');
+        else { addNote('📅 Termin (lokal): '+titel+' · '+datum+' '+zeit); toast('⚠ Lokal gespeichert. Bridge prüfen.'); }
+      }).catch(()=>{ addNote('📅 Termin (lokal): '+titel+' · '+datum+' '+zeit); toast('⚠ Offline · lokal gespeichert.'); });
+    });
+    qb('qb-quick-mail', () => {
+      const betreff = prompt('Betreff der Mail:'); if (!betreff) return;
+      const an = prompt('Empfänger (Name, optional):', '');
+      const txt = prompt('Hauptbotschaft (1–3 Sätze):'); if (!txt) return;
+      corporateMailFor({
+        betreff, an: an || '',
+        anrede: 'Sehr geehrte Damen und Herren,',
+        paragraphen: [txt]
+      });
+      toast('✓ Corporate-Mail-Entwurf geöffnet');
+    });
+    qb('qb-refresh', () => {
+      // Cache invalidieren + neu rendern
+      Object.keys(cache).forEach(k => delete cache[k]);
+      saveJSON(CACHE_KEY, {});
+      renderBody();
+      toast('✓ Live-Daten neu geladen');
     });
   }
 
@@ -819,8 +882,11 @@ REGELN: Deutsch, präzise, max 8 Sätze Standard. Bei Strategie: erst Schwäche,
   async function detectPatterns(){
     const patterns = [];
     const now = Date.now();
-    const cal = await bridgeGet('calendar_month', null, 300000);
-    const inbox = await bridgeGet('inbox', {max:50}, 300000);
+    // v8.1: parallel
+    const [cal, inbox] = await Promise.all([
+      bridgeGet('calendar_month', null, 300000),
+      bridgeGet('inbox', {max:50}, 300000)
+    ]);
 
     // 1. FRIST-DRIFT (kritische Termine <72h)
     const manualDates = [
