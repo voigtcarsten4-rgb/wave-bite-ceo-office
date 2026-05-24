@@ -1,0 +1,1834 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wave Bite — AI Marketing & Media OS</title>
+<style>
+:root {
+  --gold: #C9A84C;
+  --gold-light: #E8C96A;
+  --gold-dim: rgba(201,168,76,0.15);
+  --bg: #070B14;
+  --bg2: #0D1220;
+  --bg3: #111827;
+  --glass: rgba(255,255,255,0.04);
+  --glass-border: rgba(201,168,76,0.2);
+  --text: #E8EDF5;
+  --text-dim: #7A8CA0;
+  --blue: #1E6FA8;
+  --teal: #0E9E8A;
+  --red: #C94C4C;
+  --green: #4CAF82;
+  --purple: #7C4CC9;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', system-ui, sans-serif; min-height: 100vh; overflow-x: hidden; }
+
+/* ANIMATED BG */
+body::before {
+  content: '';
+  position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+  background: radial-gradient(ellipse at 20% 50%, rgba(14,158,138,0.06) 0%, transparent 60%),
+              radial-gradient(ellipse at 80% 20%, rgba(30,111,168,0.06) 0%, transparent 60%),
+              radial-gradient(ellipse at 50% 90%, rgba(201,168,76,0.04) 0%, transparent 60%);
+  pointer-events: none; z-index: 0;
+}
+
+/* HEADER */
+header {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(7,11,20,0.92); backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--glass-border);
+  padding: 0 32px;
+  display: flex; align-items: center; justify-content: space-between;
+  height: 64px;
+}
+.logo { display: flex; align-items: center; gap: 12px; }
+.logo-icon {
+  width: 36px; height: 36px;
+  background: linear-gradient(135deg, var(--teal), var(--blue));
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px;
+}
+.logo-text { font-size: 16px; font-weight: 700; letter-spacing: 0.5px; }
+.logo-text span { color: var(--gold); }
+.status-pill {
+  background: rgba(76,175,130,0.15); border: 1px solid rgba(76,175,130,0.4);
+  color: var(--green); padding: 4px 12px; border-radius: 20px;
+  font-size: 11px; font-weight: 600; letter-spacing: 1px;
+  display: flex; align-items: center; gap: 6px;
+}
+.status-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green); animation: pulse 2s infinite; }
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+
+/* NAV TABS */
+nav {
+  background: var(--bg2); border-bottom: 1px solid var(--glass-border);
+  padding: 0 32px; display: flex; gap: 4px; overflow-x: auto;
+}
+nav::-webkit-scrollbar { display: none; }
+.tab {
+  padding: 14px 20px; font-size: 13px; font-weight: 500; cursor: pointer;
+  color: var(--text-dim); border-bottom: 2px solid transparent;
+  white-space: nowrap; transition: all 0.2s; user-select: none;
+}
+.tab:hover { color: var(--text); }
+.tab.active { color: var(--gold); border-bottom-color: var(--gold); }
+
+/* MAIN */
+main { position: relative; z-index: 1; }
+.section { display: none; padding: 32px; max-width: 1400px; margin: 0 auto; }
+.section.active { display: block; }
+
+/* CARDS */
+.card {
+  background: var(--glass); border: 1px solid var(--glass-border);
+  border-radius: 16px; padding: 24px; backdrop-filter: blur(8px);
+}
+.card-gold { border-color: rgba(201,168,76,0.4); }
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; }
+.grid-4 { display: grid; grid-template-columns: repeat(4,1fr); gap: 16px; }
+@media(max-width:900px){ .grid-2,.grid-3,.grid-4{ grid-template-columns:1fr; } }
+
+h1 { font-size: 28px; font-weight: 800; margin-bottom: 8px; }
+h2 { font-size: 20px; font-weight: 700; margin-bottom: 16px; }
+h3 { font-size: 15px; font-weight: 700; margin-bottom: 10px; }
+h4 { font-size: 13px; font-weight: 600; color: var(--gold); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px; }
+p { color: var(--text-dim); font-size: 13px; line-height: 1.7; }
+.gold { color: var(--gold); }
+.teal { color: var(--teal); }
+.green { color: var(--green); }
+.red { color: var(--red); }
+.blue { color: var(--blue); }
+.mb8 { margin-bottom: 8px; }
+.mb16 { margin-bottom: 16px; }
+.mb24 { margin-bottom: 24px; }
+.mb32 { margin-bottom: 32px; }
+
+/* HERO SECTION */
+.hero {
+  background: linear-gradient(135deg, rgba(14,158,138,0.1), rgba(30,111,168,0.08), rgba(201,168,76,0.06));
+  border: 1px solid var(--glass-border); border-radius: 20px;
+  padding: 48px; margin-bottom: 32px; position: relative; overflow: hidden;
+}
+.hero::before {
+  content: '〜';
+  position: absolute; right: -20px; top: 50%; transform: translateY(-50%);
+  font-size: 300px; color: rgba(14,158,138,0.04); line-height: 1;
+}
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--gold-dim); border: 1px solid rgba(201,168,76,0.3);
+  padding: 6px 16px; border-radius: 20px; font-size: 11px;
+  font-weight: 600; color: var(--gold); letter-spacing: 1px; text-transform: uppercase;
+  margin-bottom: 20px;
+}
+.hero h1 { font-size: 36px; line-height: 1.2; margin-bottom: 12px; }
+.hero p { font-size: 15px; max-width: 600px; }
+.metrics-row {
+  display: flex; gap: 32px; margin-top: 32px; flex-wrap: wrap;
+}
+.metric { }
+.metric-val { font-size: 28px; font-weight: 800; color: var(--gold); }
+.metric-label { font-size: 11px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.5px; margin-top: 2px; }
+
+/* ROLE CARDS */
+.role-card {
+  background: var(--glass); border: 1px solid var(--glass-border);
+  border-radius: 16px; padding: 24px; cursor: pointer;
+  transition: all 0.3s; position: relative; overflow: hidden;
+}
+.role-card::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  background: linear-gradient(90deg, var(--teal), var(--blue));
+}
+.role-card:hover { border-color: rgba(201,168,76,0.4); transform: translateY(-2px); box-shadow: 0 8px 32px rgba(0,0,0,0.3); }
+.role-card.cmo::before { background: linear-gradient(90deg,#C9A84C,#E8C96A); }
+.role-card.creative::before { background: linear-gradient(90deg,#7C4CC9,#A06CE8); }
+.role-card.story::before { background: linear-gradient(90deg,#C94C4C,#E86C6C); }
+.role-card.video::before { background: linear-gradient(90deg,#1E6FA8,#4CA8E8); }
+.role-card.audio::before { background: linear-gradient(90deg,#0E9E8A,#4CE8D8); }
+.role-card.social::before { background: linear-gradient(90deg,#E8822C,#E8B44C); }
+.role-card.ops::before { background: linear-gradient(90deg,#4CAF82,#82C9A8); }
+
+.role-avatar {
+  width: 48px; height: 48px; border-radius: 12px;
+  display: flex; align-items: center; justify-content: center; font-size: 22px;
+  margin-bottom: 14px;
+}
+.role-title { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
+.role-subtitle { font-size: 11px; color: var(--gold); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 10px; }
+.role-desc { font-size: 12px; color: var(--text-dim); line-height: 1.6; margin-bottom: 14px; }
+.kpi-list { display: flex; flex-direction: column; gap: 4px; }
+.kpi-item { font-size: 11px; color: var(--text-dim); padding: 4px 0; border-bottom: 1px solid rgba(255,255,255,0.04); display: flex; align-items: center; gap: 6px; }
+.kpi-item::before { content: '▸'; color: var(--teal); font-size: 8px; }
+
+/* LAYER CARDS */
+.layer {
+  background: var(--glass); border: 1px solid var(--glass-border);
+  border-radius: 14px; padding: 20px; display: flex; gap: 16px;
+  transition: all 0.2s;
+}
+.layer:hover { border-color: rgba(201,168,76,0.3); }
+.layer-num {
+  width: 40px; height: 40px; border-radius: 10px; flex-shrink: 0;
+  background: var(--gold-dim); border: 1px solid rgba(201,168,76,0.3);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px; font-weight: 800; color: var(--gold);
+}
+.layer-content { flex: 1; }
+.layer-title { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+.layer-tools { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
+.tool-tag {
+  background: rgba(30,111,168,0.15); border: 1px solid rgba(30,111,168,0.3);
+  color: #6BB8E8; padding: 2px 8px; border-radius: 6px; font-size: 10px; font-weight: 500;
+}
+
+/* PROMPT CARDS */
+.prompt-card {
+  background: var(--bg3); border: 1px solid var(--glass-border);
+  border-radius: 12px; overflow: hidden; margin-bottom: 16px;
+}
+.prompt-header {
+  padding: 12px 16px; background: var(--glass); border-bottom: 1px solid var(--glass-border);
+  display: flex; justify-content: space-between; align-items: center;
+}
+.prompt-type {
+  font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;
+  padding: 3px 8px; border-radius: 4px;
+}
+.type-video { background: rgba(30,111,168,0.2); color: #6BB8E8; }
+.type-image { background: rgba(124,76,201,0.2); color: #B08CE8; }
+.type-voice { background: rgba(14,158,138,0.2); color: #4CE8D8; }
+.type-social { background: rgba(201,130,44,0.2); color: #E8A84C; }
+.type-hook { background: rgba(201,76,76,0.2); color: #E88C8C; }
+.prompt-body {
+  padding: 16px; font-size: 12px; color: var(--text-dim); line-height: 1.7;
+  font-family: 'Cascadia Code', 'Consolas', monospace; white-space: pre-wrap;
+  max-height: 200px; overflow-y: auto;
+}
+.prompt-body::-webkit-scrollbar { width: 4px; }
+.prompt-body::-webkit-scrollbar-track { background: transparent; }
+.prompt-body::-webkit-scrollbar-thumb { background: var(--glass-border); border-radius: 2px; }
+.copy-btn {
+  background: var(--gold-dim); border: 1px solid rgba(201,168,76,0.3);
+  color: var(--gold); padding: 5px 12px; border-radius: 6px;
+  font-size: 11px; cursor: pointer; transition: all 0.2s;
+}
+.copy-btn:hover { background: rgba(201,168,76,0.25); }
+
+/* PIPELINE */
+.pipeline { display: flex; align-items: center; gap: 0; overflow-x: auto; padding: 20px 0; }
+.pipe-step {
+  background: var(--glass); border: 1px solid var(--glass-border);
+  border-radius: 12px; padding: 16px 20px; min-width: 140px; text-align: center;
+  flex-shrink: 0;
+}
+.pipe-step .icon { font-size: 24px; margin-bottom: 8px; }
+.pipe-step .name { font-size: 12px; font-weight: 600; }
+.pipe-step .sub { font-size: 10px; color: var(--text-dim); margin-top: 2px; }
+.pipe-arrow { padding: 0 8px; color: var(--gold); font-size: 18px; flex-shrink: 0; }
+
+/* TOOL GRID */
+.tool-card {
+  background: var(--glass); border: 1px solid var(--glass-border);
+  border-radius: 12px; padding: 20px; text-align: center;
+  transition: all 0.2s;
+}
+.tool-card:hover { border-color: rgba(201,168,76,0.3); }
+.tool-card .icon { font-size: 32px; margin-bottom: 12px; }
+.tool-card .name { font-size: 13px; font-weight: 700; margin-bottom: 4px; }
+.tool-card .category { font-size: 10px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
+.tool-card .desc { font-size: 11px; color: var(--text-dim); line-height: 1.5; }
+.tool-status {
+  display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 10px; font-weight: 600; margin-top: 10px;
+}
+.status-active { background: rgba(76,175,130,0.15); color: var(--green); }
+.status-setup { background: rgba(201,168,76,0.15); color: var(--gold); }
+.status-planned { background: rgba(122,140,160,0.15); color: var(--text-dim); }
+
+/* CALENDAR */
+.calendar-week { display: grid; grid-template-columns: repeat(7,1fr); gap: 8px; }
+.cal-day { background: var(--glass); border: 1px solid var(--glass-border); border-radius: 10px; padding: 12px; min-height: 100px; }
+.cal-day-name { font-size: 10px; text-transform: uppercase; color: var(--text-dim); margin-bottom: 8px; letter-spacing: 0.5px; }
+.cal-post {
+  padding: 4px 8px; border-radius: 6px; font-size: 10px; margin-bottom: 4px; cursor: pointer;
+}
+.cal-reel { background: rgba(30,111,168,0.2); color: #6BB8E8; }
+.cal-story { background: rgba(124,76,201,0.2); color: #B08CE8; }
+.cal-tiktok { background: rgba(14,158,138,0.2); color: #4CE8D8; }
+.cal-post-type { background: rgba(201,130,44,0.2); color: #E8A84C; }
+.cal-shorts { background: rgba(201,76,76,0.2); color: #E88C8C; }
+
+/* KPI DASHBOARD */
+.kpi-card {
+  background: var(--glass); border: 1px solid var(--glass-border);
+  border-radius: 14px; padding: 20px; text-align: center;
+}
+.kpi-card .val { font-size: 32px; font-weight: 800; }
+.kpi-card .label { font-size: 11px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.5px; margin-top: 4px; }
+.kpi-card .trend { font-size: 11px; margin-top: 8px; }
+.trend-up { color: var(--green); }
+.trend-target { color: var(--gold); }
+
+/* BRAND RULES */
+.brand-block { margin-bottom: 24px; }
+.brand-colors { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 12px; }
+.color-swatch {
+  width: 64px; height: 64px; border-radius: 12px;
+  display: flex; align-items: flex-end; padding: 6px;
+  font-size: 9px; font-weight: 600;
+}
+.swatch-label { font-size: 10px; color: var(--text-dim); margin-top: 4px; text-align: center; }
+
+/* ACCORDION */
+.accordion { border: 1px solid var(--glass-border); border-radius: 12px; overflow: hidden; margin-bottom: 12px; }
+.accordion-header {
+  padding: 16px 20px; cursor: pointer; display: flex; justify-content: space-between;
+  align-items: center; background: var(--glass); transition: background 0.2s;
+  font-size: 14px; font-weight: 600;
+}
+.accordion-header:hover { background: rgba(255,255,255,0.06); }
+.accordion-icon { transition: transform 0.3s; color: var(--gold); }
+.accordion-body { padding: 20px; display: none; background: var(--bg3); }
+.accordion-body.open { display: block; }
+.accordion.open .accordion-icon { transform: rotate(180deg); }
+
+/* SEPARATOR */
+.sep { height: 1px; background: var(--glass-border); margin: 24px 0; }
+
+/* SCROLLBAR */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(201,168,76,0.2); border-radius: 3px; }
+
+/* NOTIFICATION */
+.toast {
+  position: fixed; bottom: 24px; right: 24px; z-index: 999;
+  background: var(--bg2); border: 1px solid var(--green);
+  color: var(--green); padding: 12px 20px; border-radius: 10px;
+  font-size: 13px; opacity: 0; transition: opacity 0.3s; pointer-events: none;
+}
+.toast.show { opacity: 1; }
+
+/* SECTION TITLE */
+.section-title {
+  display: flex; align-items: center; gap: 12px; margin-bottom: 28px;
+}
+.section-title .icon-wrap {
+  width: 44px; height: 44px; border-radius: 12px;
+  background: var(--gold-dim); border: 1px solid rgba(201,168,76,0.3);
+  display: flex; align-items: center; justify-content: center; font-size: 20px;
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <div class="logo-icon">🌊</div>
+    <div class="logo-text"><span>Wave Bite</span> — AI Marketing OS</div>
+  </div>
+  <div class="status-pill"><div class="status-dot"></div> SYSTEM AKTIV</div>
+</header>
+
+<nav>
+  <div class="tab active" onclick="showTab('overview')">🏠 Übersicht</div>
+  <div class="tab" onclick="showTab('team')">🤖 AI Team</div>
+  <div class="tab" onclick="showTab('layers')">🏗️ System Layer</div>
+  <div class="tab" onclick="showTab('prompts')">✍️ Prompt Library</div>
+  <div class="tab" onclick="showTab('pipeline')">⚙️ Content Pipeline</div>
+  <div class="tab" onclick="showTab('tools')">🛠️ Tools & Setup</div>
+  <div class="tab" onclick="showTab('calendar')">📅 Content Kalender</div>
+  <div class="tab" onclick="showTab('kpi')">📊 KPI Dashboard</div>
+  <div class="tab" onclick="showTab('brand')">🎨 Brand Governance</div>
+  <div class="tab" onclick="showTab('devtools')">🧑‍💻 Dev Tools</div>
+</nav>
+
+<main>
+
+<!-- ═══════════════ OVERVIEW ═══════════════ -->
+<div class="section active" id="sec-overview">
+  <div class="hero">
+    <div class="hero-badge">🎯 Wave Bite AI Media Operating System v1.0</div>
+    <h1>Das autonome Marketing-<span class="gold">Gehirn</span><br>für Wave Bite</h1>
+    <p>Apple × Red Bull × Airbnb × Tesla × Water Tourism. Ein vollständiges virtuelles Marketingteam, das hochwertige Werbespots, virale Social-Media-Inhalte und cinematic Videos produziert — automatisch, skalierbar, markenkonform.</p>
+    <div class="metrics-row">
+      <div class="metric"><div class="metric-val">7</div><div class="metric-label">AI Spezialisten</div></div>
+      <div class="metric"><div class="metric-val">8</div><div class="metric-label">System Layer</div></div>
+      <div class="metric"><div class="metric-val">60+</div><div class="metric-label">Prompt Templates</div></div>
+      <div class="metric"><div class="metric-val">∞</div><div class="metric-label">Skalierbarkeit</div></div>
+    </div>
+  </div>
+
+  <div class="grid-4 mb32">
+    <div class="kpi-card"><div class="val gold">Reel</div><div class="label">Format #1</div><div class="trend trend-up">↑ höchste Reichweite</div></div>
+    <div class="kpi-card"><div class="val" style="color:var(--teal)">60s</div><div class="label">Video-Ziel</div><div class="trend trend-target">TikTok + Reels + Shorts</div></div>
+    <div class="kpi-card"><div class="val" style="color:var(--blue)">3×</div><div class="label">Posts / Woche</div><div class="trend trend-up">↑ Posting-Frequenz</div></div>
+    <div class="kpi-card"><div class="val" style="color:var(--purple)">4K</div><div class="label">Video-Qualität</div><div class="trend trend-target">Cinematic Standard</div></div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card card-gold">
+      <h4>🎯 Marken-Positionierung</h4>
+      <div class="sep" style="margin:12px 0"></div>
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div style="display:flex;gap:12px;align-items:flex-start">
+          <span style="font-size:20px">🍎</span>
+          <div><strong style="font-size:13px">Apple</strong><p style="margin-top:2px">Premium-Ästhetik, minimalistische Eleganz, emotionale Markenwelt</p></div>
+        </div>
+        <div style="display:flex;gap:12px;align-items:flex-start">
+          <span style="font-size:20px">🐂</span>
+          <div><strong style="font-size:13px">Red Bull</strong><p style="margin-top:2px">Erlebnis-Content, Sport-Energie, virales Storytelling</p></div>
+        </div>
+        <div style="display:flex;gap:12px;align-items:flex-start">
+          <span style="font-size:20px">🏠</span>
+          <div><strong style="font-size:13px">Airbnb</strong><p style="margin-top:2px">Community-Gefühl, lokale Authentizität, User Stories</p></div>
+        </div>
+        <div style="display:flex;gap:12px;align-items:flex-start">
+          <span style="font-size:20px">⚡</span>
+          <div><strong style="font-size:13px">Tesla</strong><p style="margin-top:2px">Tech-Innovation, Zukunftsvision, Disruption</p></div>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <h4>🎯 Zielgruppen</h4>
+      <div class="sep" style="margin:12px 0"></div>
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <div><div style="font-size:13px;font-weight:600;margin-bottom:4px">⛵ Bootsfahrer & Wassersportler</div><p>Kaufkräftig, erlebnisorientiert, community-affin. Alter 28–55.</p></div>
+        <div><div style="font-size:13px;font-weight:600;margin-bottom:4px">🏖️ Freizeitreisende & Touristen</div><p>Suchen Premium-Wasserlebnisse, Instagram-würdige Momente.</p></div>
+        <div><div style="font-size:13px;font-weight:600;margin-bottom:4px">💼 Investoren & Partner</div><p>Suchen skalierbare Wasser-Tech-Plattformen mit klarem Vision.</p></div>
+        <div><div style="font-size:13px;font-weight:600;margin-bottom:4px">🏢 Sponsoren & B2B</div><p>Marinas, Häfen, Gastronomie-Brands, maritime Industrie.</p></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ AI TEAM ═══════════════ -->
+<div class="section" id="sec-team">
+  <div class="section-title">
+    <div class="icon-wrap">🤖</div>
+    <div><h2 style="margin:0">Virtuelles AI Marketing Team</h2><p style="margin:0">7 spezialisierte KI-Rollen — jede mit eigenem Fokus, Prompts und KPIs</p></div>
+  </div>
+
+  <div class="grid-2 mb32">
+    <!-- CMO AI -->
+    <div class="role-card cmo">
+      <div class="role-avatar" style="background:rgba(201,168,76,0.15)">🎯</div>
+      <div class="role-title">CMO AI</div>
+      <div class="role-subtitle">Chief Marketing Officer</div>
+      <div class="role-desc">Strategische Gesamtsteuerung. Entscheidet über Kampagnen-Prioritäten, überwacht alle KPIs, koordiniert das Team, setzt Quartalsziele. Erster Filter für jede Marketingentscheidung.</div>
+      <h4>Kernaufgaben</h4>
+      <div class="kpi-list">
+        <div class="kpi-item">Quartals-Kampagnenplanung (Hero / Hub / Hygiene)</div>
+        <div class="kpi-item">Budget-Allokation zwischen Kanälen</div>
+        <div class="kpi-item">Investoren-Narrativ und Pitch-Kommunikation</div>
+        <div class="kpi-item">Wettbewerbs-Monitoring und Repositionierung</div>
+        <div class="kpi-item">Brand Health Score überwachen (monatlich)</div>
+      </div>
+      <div class="sep" style="margin:14px 0"></div>
+      <h4>Haupt-Prompt</h4>
+      <div class="prompt-body" style="background:var(--bg);border-radius:8px;margin-top:6px;font-size:11px">Du bist der CMO von Wave Bite, einer Premium-Wasser-Erlebnisplattform. Deine Marken-DNA ist: Apple Ästhetik + Red Bull Energie + Airbnb Community + Tesla Innovation auf dem Wasser.
+
+Erstelle für den Monat [MONAT] einen vollständigen Kampagnenplan mit:
+1. Hero-Kampagne (1x monatlich, große Produktion)
+2. Hub-Content (4x wöchentlich, regulär)
+3. Hygiene-Content (täglich, Basis-Reichweite)
+
+Zielgruppe: [ZIELGRUPPE]
+Budget: [BUDGET]
+Hauptkanal: [KANAL]</div>
+    </div>
+
+    <!-- Creative Director AI -->
+    <div class="role-card creative">
+      <div class="role-avatar" style="background:rgba(124,76,201,0.15)">🎨</div>
+      <div class="role-title">Creative Director AI</div>
+      <div class="role-subtitle">Visual & Concept Lead</div>
+      <div class="role-desc">Verantwortlich für visuelle Konsistenz, Bildsprache und kreative Konzepte. Setzt Brand-Standards um und prüft alle visuellen Outputs vor Veröffentlichung.</div>
+      <h4>Kernaufgaben</h4>
+      <div class="kpi-list">
+        <div class="kpi-item">Moodboard-Erstellung für jede Kampagne</div>
+        <div class="kpi-item">Bild-Prompts für Leonardo AI / Midjourney</div>
+        <div class="kpi-item">Visuelle Brand-Konsistenz sicherstellen</div>
+        <div class="kpi-item">Thumbnail-Design und Cover-Konzepte</div>
+        <div class="kpi-item">Farb- und Typo-Guidelines durchsetzen</div>
+      </div>
+      <div class="sep" style="margin:14px 0"></div>
+      <h4>Haupt-Prompt</h4>
+      <div class="prompt-body" style="background:var(--bg);border-radius:8px;margin-top:6px;font-size:11px">Du bist Creative Director für Wave Bite. Dein visueller Stil: Cinematic + Premium Dark + Wasser-Ästhetik + Gold-Akzente.
+
+Erstelle für das Sujet "[THEMA]" folgende Assets:
+1. Moodboard-Beschreibung (5 visuelle Richtungen)
+2. Hero Image Prompt für Leonardo AI
+3. Farbpalette für diese Kampagne (HEX-Codes)
+4. Typografie-Empfehlung
+5. Kompositions-Regeln für Videos
+
+Stil: [FILMISCH/SOCIAL/ADVERTISING]
+Gefühl: [EMOTION/STIMMUNG]</div>
+    </div>
+
+    <!-- Story Architect AI -->
+    <div class="role-card story">
+      <div class="role-avatar" style="background:rgba(201,76,76,0.15)">📖</div>
+      <div class="role-title">Story Architect AI</div>
+      <div class="role-subtitle">Narrative & Storytelling</div>
+      <div class="role-desc">Entwickelt emotionale Geschichten, Scripts und Narrativ-Bögen für alle Formate. Transformiert Features in Gefühle und Fakten in Erlebnisse.</div>
+      <h4>Kernaufgaben</h4>
+      <div class="kpi-list">
+        <div class="kpi-item">Video-Scripts schreiben (15s / 30s / 60s)</div>
+        <div class="kpi-item">Hook-Entwicklung für TikTok & Reels</div>
+        <div class="kpi-item">Brand-Storytelling (Ursprung, Mission, Vision)</div>
+        <div class="kpi-item">Testimonial- und Case-Study-Frameworks</div>
+        <div class="kpi-item">Emotionale Kampagnen-Narrativ-Bögen</div>
+      </div>
+      <div class="sep" style="margin:14px 0"></div>
+      <h4>Haupt-Prompt</h4>
+      <div class="prompt-body" style="background:var(--bg);border-radius:8px;margin-top:6px;font-size:11px">Du bist Story Architect für Wave Bite. Dein Storytelling-Prinzip: Problem → Sehnsucht → Transformation → Wave Bite als Lösung.
+
+Schreibe ein [15s/30s/60s] Video-Script für:
+Thema: [THEMA]
+Hook (erste 3 Sekunden): Hook muss sofort fesseln
+Kernbotschaft: [BOTSCHAFT]
+Emotion: [EMOTION — z.B. Freiheit, Abenteuer, Luxus]
+CTA: [CALL TO ACTION]
+
+Format: Szene | Visuals | Voiceover/Text | Musik-Mood</div>
+    </div>
+
+    <!-- Video Architect AI -->
+    <div class="role-card video">
+      <div class="role-avatar" style="background:rgba(30,111,168,0.15)">🎬</div>
+      <div class="role-title">Video Architect AI</div>
+      <div class="role-subtitle">Video Production Lead</div>
+      <div class="role-desc">Orchestriert die gesamte Video-Produktion. Konfiguriert Runway, Kling AI, Veo für maximale visuelle Qualität. Baut Batch-Workflows und Export-Pipelines.</div>
+      <h4>Kernaufgaben</h4>
+      <div class="kpi-list">
+        <div class="kpi-item">Video-Prompts für Runway / Kling AI / Veo</div>
+        <div class="kpi-item">Cinematic Shot-Listen erstellen</div>
+        <div class="kpi-item">Multi-Format Export (9:16 / 16:9 / 1:1)</div>
+        <div class="kpi-item">Untertitel-Synchronisation via FFmpeg</div>
+        <div class="kpi-item">Batch-Rendering koordinieren</div>
+      </div>
+      <div class="sep" style="margin:14px 0"></div>
+      <h4>Haupt-Prompt</h4>
+      <div class="prompt-body" style="background:var(--bg);border-radius:8px;margin-top:6px;font-size:11px">Du bist Video Architect für Wave Bite. Erstelle einen Produktionsplan für:
+
+Kampagne: [KAMPAGNE]
+Dauer: [DAUER]
+Primär-Tool: [Runway ML / Kling AI / Veo / Kombination]
+
+Erstelle:
+1. Shot-Liste (Szene | Kamera | Bewegung | Dauer)
+2. Runway/Kling Prompt pro Shot
+3. Farbkorrektur-Anweisungen (LUT-Empfehlung)
+4. Musik-Sync-Punkte
+5. Export-Specs (Format | Auflösung | Codec | Plattform)</div>
+    </div>
+
+    <!-- Audio Director AI -->
+    <div class="role-card audio">
+      <div class="role-avatar" style="background:rgba(14,158,138,0.15)">🎵</div>
+      <div class="role-title">Audio Director AI</div>
+      <div class="role-subtitle">Sound & Voice Lead</div>
+      <div class="role-desc">Erstellt und kuratiert alle Audio-Elemente: Voiceovers via ElevenLabs, Musik via Suno/Udio, Sound Design, Mixing und Audio-Branding.</div>
+      <h4>Kernaufgaben</h4>
+      <div class="kpi-list">
+        <div class="kpi-item">ElevenLabs Voiceover-Prompts erstellen</div>
+        <div class="kpi-item">Musik-Prompts für Suno / Udio generieren</div>
+        <div class="kpi-item">Brand Voice Guidelines definieren</div>
+        <div class="kpi-item">Audio-Sync mit Videoclips koordinieren</div>
+        <div class="kpi-item">Sound-Bibliothek aufbauen und pflegen</div>
+      </div>
+      <div class="sep" style="margin:14px 0"></div>
+      <h4>Haupt-Prompt</h4>
+      <div class="prompt-body" style="background:var(--bg);border-radius:8px;margin-top:6px;font-size:11px">Du bist Audio Director für Wave Bite.
+
+VOICEOVER (ElevenLabs):
+Text: [TEXT]
+Stimme: Männlich, warm, vertrauenswürdig, leicht charismatisch
+Tonalität: [ENTSPANNT/DRAMATISCH/EINLADEND]
+Tempo: Mittel bis langsam für Premium-Feeling
+Pausen: nach Schlüsselwörtern für Wirkung
+
+MUSIK (Suno/Udio):
+Stil: [Cinematic Electronic / Acoustic Maritime / Epic Orchestral]
+Mood: [STIMMUNG]
+Tempo: [BPM ca.]
+Keine Lyrics, instrumental, Fade-out am Ende
+Loops: [JA/NEIN]</div>
+    </div>
+
+    <!-- Social Growth Strategist AI -->
+    <div class="role-card social">
+      <div class="role-avatar" style="background:rgba(201,130,44,0.15)">📱</div>
+      <div class="role-title">Social Growth Strategist AI</div>
+      <div class="role-subtitle">Platform & Growth Lead</div>
+      <div class="role-desc">Optimiert für alle Plattformen, entwickelt Hashtag-Strategien, analysiert Trends und baut virale Hooks. Maximiert organische Reichweite auf TikTok, Instagram und YouTube.</div>
+      <h4>Kernaufgaben</h4>
+      <div class="kpi-list">
+        <div class="kpi-item">Plattform-spezifische Content-Anpassung</div>
+        <div class="kpi-item">Hashtag-Recherche und -Strategie (wöchentlich)</div>
+        <div class="kpi-item">Trend-Monitoring und schnelle Adaption</div>
+        <div class="kpi-item">A/B-Test-Framework für Hooks und CTAs</div>
+        <div class="kpi-item">Community-Aufbau und Engagement-Taktiken</div>
+      </div>
+      <div class="sep" style="margin:14px 0"></div>
+      <h4>Haupt-Prompt</h4>
+      <div class="prompt-body" style="background:var(--bg);border-radius:8px;margin-top:6px;font-size:11px">Du bist Social Growth Strategist für Wave Bite.
+
+Optimiere folgenden Content für [PLATTFORM]:
+Content-Typ: [REEL/TIKTOK/SHORTS/POST]
+Thema: [THEMA]
+
+Erstelle:
+1. Caption (plattform-optimiert, max. [ZEICHEN])
+2. Hook-Varianten (3 verschiedene für A/B-Test)
+3. Hashtag-Set (30 Tags in 3 Kategorien: Broad/Niche/Brand)
+4. Posting-Zeit (beste für Zielgruppe und Plattform)
+5. Engagement-Trigger (Frage / Poll / CTA)
+6. First Comment (für Algorithmus-Boost)</div>
+    </div>
+
+    <!-- Content Ops Engineer AI -->
+    <div class="role-card ops" style="grid-column: 1 / -1;">
+      <div style="display:flex;gap:20px;align-items:flex-start">
+        <div>
+          <div class="role-avatar" style="background:rgba(76,175,130,0.15)">⚙️</div>
+        </div>
+        <div style="flex:1">
+          <div class="role-title">Content Ops Engineer AI</div>
+          <div class="role-subtitle">Automation & Systems Lead</div>
+          <div class="role-desc">Baut und wartet alle Automationen. Konfiguriert FFmpeg-Pipelines, Remotion-Templates, N8N-Workflows und GitHub-Actions für vollautomatische Content-Produktion.</div>
+          <div class="grid-3" style="margin-top:16px">
+            <div>
+              <h4>Kernaufgaben</h4>
+              <div class="kpi-list">
+                <div class="kpi-item">FFmpeg Batch-Pipeline aufbauen</div>
+                <div class="kpi-item">Remotion Templates erstellen</div>
+                <div class="kpi-item">N8N / Make Workflows konfigurieren</div>
+                <div class="kpi-item">Asset-Library strukturieren</div>
+                <div class="kpi-item">Auto-Posting Scheduler einrichten</div>
+              </div>
+            </div>
+            <div>
+              <h4>Tools</h4>
+              <div class="layer-tools" style="flex-direction:column;gap:6px">
+                <span class="tool-tag" style="display:inline-block">FFmpeg (Video-Processing)</span>
+                <span class="tool-tag" style="display:inline-block">Remotion (React-Videos)</span>
+                <span class="tool-tag" style="display:inline-block">N8N (Workflow-Automation)</span>
+                <span class="tool-tag" style="display:inline-block">GitHub Actions (CI/CD)</span>
+                <span class="tool-tag" style="display:inline-block">Make.com (Integrationen)</span>
+              </div>
+            </div>
+            <div>
+              <h4>KPIs</h4>
+              <div class="kpi-list">
+                <div class="kpi-item">Render-Zeit &lt; 5min pro Video</div>
+                <div class="kpi-item">Auto-Export 3 Formate gleichzeitig</div>
+                <div class="kpi-item">0 manuelle Schritte in Pipeline</div>
+                <div class="kpi-item">Asset-Versioning vollständig</div>
+                <div class="kpi-item">Posting-Fehlerrate &lt; 1%</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ SYSTEM LAYERS ═══════════════ -->
+<div class="section" id="sec-layers">
+  <div class="section-title">
+    <div class="icon-wrap">🏗️</div>
+    <div><h2 style="margin:0">8-Layer AI Media System</h2><p style="margin:0">Vollständige Architektur des Wave Bite Marketing Operating Systems</p></div>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:14px">
+    <div class="layer">
+      <div class="layer-num">1</div>
+      <div class="layer-content">
+        <div class="layer-title">🎯 Creative Direction Layer</div>
+        <p>Strategische Gesamtsteuerung aller kreativen Outputs. Definiert Kampagnen-Ziele, Brand-Richtung und Qualitäts-Standards. Alle Produktionen laufen durch diesen Filter.</p>
+        <div class="layer-tools">
+          <span class="tool-tag">CMO AI</span><span class="tool-tag">Creative Director AI</span><span class="tool-tag">Notion (Briefs)</span><span class="tool-tag">Claude (Strategie)</span><span class="tool-tag">ClickUp (Projekte)</span>
+        </div>
+      </div>
+    </div>
+    <div class="layer">
+      <div class="layer-num">2</div>
+      <div class="layer-content">
+        <div class="layer-title">📖 Storytelling Layer</div>
+        <p>Entwickelt emotionale Narrative, Scripts und Hook-Systeme für alle Content-Formate. Transformiert Produkt-Features in menschliche Geschichten und Sehnsüchte.</p>
+        <div class="layer-tools">
+          <span class="tool-tag">Story Architect AI</span><span class="tool-tag">Claude Scripts</span><span class="tool-tag">Hook Database</span><span class="tool-tag">CTA Library</span><span class="tool-tag">Prompt Templates</span>
+        </div>
+      </div>
+    </div>
+    <div class="layer">
+      <div class="layer-num">3</div>
+      <div class="layer-content">
+        <div class="layer-title">🎬 Video Generation Layer</div>
+        <p>Erzeugt hochwertige Videoclips aus Text-Prompts. Kombiniert AI-generierte Visuals mit echten Wasser-/Marina-Aufnahmen. Output: cinematic, realistisch, premium-qualitativ.</p>
+        <div class="layer-tools">
+          <span class="tool-tag">Runway ML</span><span class="tool-tag">Kling AI</span><span class="tool-tag">Veo (Google)</span><span class="tool-tag">Leonardo AI</span><span class="tool-tag">Video Architect AI</span>
+        </div>
+      </div>
+    </div>
+    <div class="layer">
+      <div class="layer-num">4</div>
+      <div class="layer-content">
+        <div class="layer-title">🎵 Voice & Audio Layer</div>
+        <p>Produziert Voiceovers, Original-Musik und Sound-Design. Vollständige Audio-Branding-Konsistenz über alle Kanäle. Synchronisation mit Video-Outputs automatisch.</p>
+        <div class="layer-tools">
+          <span class="tool-tag">ElevenLabs</span><span class="tool-tag">Suno AI</span><span class="tool-tag">Udio</span><span class="tool-tag">Audio Director AI</span><span class="tool-tag">FFmpeg (Mixing)</span>
+        </div>
+      </div>
+    </div>
+    <div class="layer">
+      <div class="layer-num">5</div>
+      <div class="layer-content">
+        <div class="layer-title">📱 Social Distribution Layer</div>
+        <p>Plattform-spezifische Optimierung, Hashtag-Strategie, automatisches Posting und Community-Management. A/B-Tests für maximale organische Reichweite.</p>
+        <div class="layer-tools">
+          <span class="tool-tag">Social Growth AI</span><span class="tool-tag">Buffer / Later</span><span class="tool-tag">Make.com</span><span class="tool-tag">Instagram API</span><span class="tool-tag">TikTok API</span>
+        </div>
+      </div>
+    </div>
+    <div class="layer">
+      <div class="layer-num">6</div>
+      <div class="layer-content">
+        <div class="layer-title">📊 Analytics Layer</div>
+        <p>Echtzeit-Tracking aller KPIs über alle Kanäle. Automatische Berichte, Trend-Erkennung, Content-Performance-Analyse und Optimierungsempfehlungen.</p>
+        <div class="layer-tools">
+          <span class="tool-tag">Google Analytics</span><span class="tool-tag">Meta Insights</span><span class="tool-tag">TikTok Analytics</span><span class="tool-tag">Google Sheets</span><span class="tool-tag">Ahrefs</span>
+        </div>
+      </div>
+    </div>
+    <div class="layer">
+      <div class="layer-num">7</div>
+      <div class="layer-content">
+        <div class="layer-title">🗄️ Asset Memory Layer</div>
+        <p>Zentrales Asset-Management für alle Logos, Videos, Bilder, Voiceovers, Musik-Tracks und Brand-Elemente. Versionierung, Tagging und schneller Zugriff für alle AI-Rollen.</p>
+        <div class="layer-tools">
+          <span class="tool-tag">Cloudinary</span><span class="tool-tag">Google Drive</span><span class="tool-tag">GitHub (Assets)</span><span class="tool-tag">Content Ops AI</span><span class="tool-tag">Airtable (DB)</span>
+        </div>
+      </div>
+    </div>
+    <div class="layer">
+      <div class="layer-num">8</div>
+      <div class="layer-content">
+        <div class="layer-title">🛡️ Brand Governance Layer</div>
+        <p>Durchsetzt Brand-Standards automatisch. Prüft alle Outputs auf Konsistenz, schützt Markenwerte und verhindert Qualitätsmängel bevor Content veröffentlicht wird.</p>
+        <div class="layer-tools">
+          <span class="tool-tag">Brand Guidelines Doc</span><span class="tool-tag">Creative Director AI</span><span class="tool-tag">CMO AI Review</span><span class="tool-tag">Quality Checklist</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ PROMPTS ═══════════════ -->
+<div class="section" id="sec-prompts">
+  <div class="section-title">
+    <div class="icon-wrap">✍️</div>
+    <div><h2 style="margin:0">Prompt Library</h2><p style="margin:0">Produktionsfertige Templates für Video, Image, Voice, Social</p></div>
+  </div>
+
+  <h3 class="mb16">🎬 Video Generation Prompts</h3>
+
+  <div class="prompt-card">
+    <div class="prompt-header">
+      <div><strong style="font-size:13px">Hero Werbespot — Wasser-Erlebnis</strong></div>
+      <button class="copy-btn" onclick="copyPrompt(this)">Kopieren</button>
+    </div>
+    <div style="padding:8px 16px;border-bottom:1px solid var(--glass-border)"><span class="prompt-type type-video">VIDEO / RUNWAY</span></div>
+    <div class="prompt-body">Cinematic commercial footage, golden hour at a serene marina, crystal clear water reflecting warm sunlight, modern wooden boat gliding silently through calm water, slight fog on the horizon, birds flying low over water surface, luxury waterfront restaurant visible in background, soft bokeh, anamorphic lens flare, color grade: warm teal and gold, 4K, realistic, not CGI, emotional and inviting atmosphere, wide establishing shot slowly pulling back, photorealistic.</div>
+  </div>
+
+  <div class="prompt-card">
+    <div class="prompt-header">
+      <div><strong style="font-size:13px">TikTok Reel Hook — Sonnenuntergang am Wasser</strong></div>
+      <button class="copy-btn" onclick="copyPrompt(this)">Kopieren</button>
+    </div>
+    <div style="padding:8px 16px;border-bottom:1px solid var(--glass-border)"><span class="prompt-type type-video">VIDEO / KLING AI</span></div>
+    <div class="prompt-body">Vertical 9:16 video, first-person POV from bow of boat, sunset over water, orange and purple sky reflection on calm river surface, gentle camera sway simulating boat movement, warm golden light, cinematic color grade, 60fps slow motion water ripples in foreground, authentic and emotional, not staged. Duration: 3-4 seconds. Perfect loop.</div>
+  </div>
+
+  <div class="prompt-card">
+    <div class="prompt-header">
+      <div><strong style="font-size:13px">Brand Film — Innovation & Technologie</strong></div>
+      <button class="copy-btn" onclick="copyPrompt(this)">Kopieren</button>
+    </div>
+    <div style="padding:8px 16px;border-bottom:1px solid var(--glass-border)"><span class="prompt-type type-video">VIDEO / VEO</span></div>
+    <div class="prompt-body">Premium tech brand video, aerial drone shot over modern marina at dawn, boats lined up perfectly, mist rising from water, cool blue tones transitioning to warm gold as sun rises, sleek smartphone visible in foreground showing app interface, clean and minimal, Apple-style cinematography, no people visible, pure atmosphere and emotion, 4K HDR, Dolby Vision color space, ultra-realistic.</div>
+  </div>
+
+  <div class="sep"></div>
+  <h3 class="mb16">🖼️ Image Generation Prompts</h3>
+
+  <div class="prompt-card">
+    <div class="prompt-header">
+      <div><strong style="font-size:13px">Hero Image — Premium Waterfront Dining</strong></div>
+      <button class="copy-btn" onclick="copyPrompt(this)">Kopieren</button>
+    </div>
+    <div style="padding:8px 16px;border-bottom:1px solid var(--glass-border)"><span class="prompt-type type-image">IMAGE / LEONARDO AI</span></div>
+    <div class="prompt-body">Photorealistic photography, premium waterfront restaurant on floating platform, sunset lighting, champagne glasses on table, blurred marina background with luxury boats, couple dining, warm amber and teal tones, shallow depth of field, 85mm portrait lens, editorial food photography style, no watermark, ultra-high resolution, magazine quality. Style: Architectural Digest meets National Geographic.</div>
+  </div>
+
+  <div class="prompt-card">
+    <div class="prompt-header">
+      <div><strong style="font-size:13px">App Screenshot Mockup — BunBo Interface</strong></div>
+      <button class="copy-btn" onclick="copyPrompt(this)">Kopieren</button>
+    </div>
+    <div style="padding:8px 16px;border-bottom:1px solid var(--glass-border)"><span class="prompt-type type-image">IMAGE / LEONARDO AI</span></div>
+    <div class="prompt-body">Photorealistic smartphone mockup, modern iOS app interface showing food delivery on water, minimal clean UI with blue and gold color scheme, floating restaurant map view with boat locations, premium app design similar to Airbnb and Uber Eats, hand holding phone with marina background, professional product photography, studio lighting, white background option.</div>
+  </div>
+
+  <div class="sep"></div>
+  <h3 class="mb16">🎙️ Voice & Music Prompts</h3>
+
+  <div class="prompt-card">
+    <div class="prompt-header">
+      <div><strong style="font-size:13px">ElevenLabs — Brand Voice Konfiguration</strong></div>
+      <button class="copy-btn" onclick="copyPrompt(this)">Kopieren</button>
+    </div>
+    <div style="padding:8px 16px;border-bottom:1px solid var(--glass-border)"><span class="prompt-type type-voice">VOICE / ELEVENLABS</span></div>
+    <div class="prompt-body">Voice Settings für Wave Bite Brand Voice:
+Stability: 0.65 (natürliche Variation)
+Clarity: 0.80 (klar aber warm)
+Style Exaggeration: 0.20 (minimal — kein Overacting)
+Speaker Boost: aktiviert
+
+Empfohlene Stimmen: "Adam" (männlich, warm), "Daniel" (britisch, elegant)
+
+Sprechtempo: 0.9x (leicht verlangsamt für Premium-Feeling)
+Pausen: nach Satzenden 0.5s, nach Abschnitten 1s</div>
+  </div>
+
+  <div class="prompt-card">
+    <div class="prompt-header">
+      <div><strong style="font-size:13px">Suno AI — Brand Music Theme</strong></div>
+      <button class="copy-btn" onclick="copyPrompt(this)">Kopieren</button>
+    </div>
+    <div style="padding:8px 16px;border-bottom:1px solid var(--glass-border)"><span class="prompt-type type-voice">MUSIC / SUNO AI</span></div>
+    <div class="prompt-body">Cinematic ambient electronic, maritime atmosphere, gentle water sounds layered with synthesizer pads, 85 BPM, key of A minor, builds slowly from quiet to full orchestral swell at 0:45, no lyrics, no vocals, loopable intro section (first 8 bars), teal and gold soundscape, evokes: freedom on water, premium lifestyle, adventure, calm luxury. Similar to: Hans Zimmer + Bonobo + Jon Hopkins. Duration: 2 minutes 30 seconds.</div>
+  </div>
+
+  <div class="sep"></div>
+  <h3 class="mb16">📱 Social Media Hooks & Captions</h3>
+
+  <div class="prompt-card">
+    <div class="prompt-header">
+      <div><strong style="font-size:13px">Hook Library — Top Performer Templates</strong></div>
+      <button class="copy-btn" onclick="copyPrompt(this)">Kopieren</button>
+    </div>
+    <div style="padding:8px 16px;border-bottom:1px solid var(--glass-border)"><span class="prompt-type type-hook">HOOKS / SOCIAL</span></div>
+    <div class="prompt-body">HOOK KATEGORIE 1 — Frage/Neugier:
+"Was wäre wenn du dein Lieblingsessen direkt aufs Boot geliefert bekommst? 🌊"
+"Wann hast du das letzte Mal etwas wirklich Neues auf dem Wasser erlebt?"
+"Du bist Bootsfahrer? Dann kennst du dieses Problem..."
+
+HOOK KATEGORIE 2 — Überraschung/Kontrast:
+"Niemand redet darüber — aber Wasserrestaurants sind das nächste große Ding"
+"In 5 Jahren ist das normal. Heute bist du dabei."
+"Was München für Biergärten ist, wird das Wasser für [Stadt]."
+
+HOOK KATEGORIE 3 — Emotion/Sehnsucht:
+"Der beste Sonnenuntergang ist der auf dem Wasser 🌅"
+"Stell dir vor: Abendessen, Wasser, kein Stress. Das ist Wave Bite."
+"Manche Momente brauchen das richtige Setting."</div>
+  </div>
+
+  <div class="prompt-card">
+    <div class="prompt-header">
+      <div><strong style="font-size:13px">Caption Templates — Instagram & TikTok</strong></div>
+      <button class="copy-btn" onclick="copyPrompt(this)">Kopieren</button>
+    </div>
+    <div style="padding:8px 16px;border-bottom:1px solid var(--glass-border)"><span class="prompt-type type-social">CAPTION / INSTAGRAM</span></div>
+    <div class="prompt-body">TEMPLATE A (Inspiration + CTA):
+[HOOK — eine Zeile, emotionaler Einstieg]
+
+[2-3 Zeilen Story / Mehrwert / Beschreibung]
+
+[Frage zur Community-Aktivierung]
+
+👇 [CTA — Link in Bio / Kommentar / Save]
+
+[Hashtags: 5 große + 10 Nischen + 5 Brand]
+
+---
+TEMPLATE B (Problem-Lösung):
+Das Problem mit [Situation]: [Problem kurz beschreiben]
+
+Wave Bite Lösung: [Wie WB das löst]
+
+Ergebnis: [Benefit für den User]
+
+Probiere es jetzt → Link in Bio 🌊
+
+---
+TEMPLATE C (Social Proof):
+"[Kundenaussage in Anführungszeichen]" — [Vorname, Stadt]
+
+Das ist [NUMBER]. so ein Erlebnis diese Woche.
+Wann ist dein erstes?</div>
+  </div>
+</div>
+
+<!-- ═══════════════ PIPELINE ═══════════════ -->
+<div class="section" id="sec-pipeline">
+  <div class="section-title">
+    <div class="icon-wrap">⚙️</div>
+    <div><h2 style="margin:0">Content Production Pipeline</h2><p style="margin:0">Vollautomatischer Workflow von Idee bis zur Veröffentlichung</p></div>
+  </div>
+
+  <div class="card mb24">
+    <h3 class="mb16">🎬 Standard Video Pipeline (60s Reel)</h3>
+    <div class="pipeline">
+      <div class="pipe-step"><div class="icon">💡</div><div class="name">Idee / Brief</div><div class="sub">CMO AI</div></div>
+      <div class="pipe-arrow">→</div>
+      <div class="pipe-step"><div class="icon">📖</div><div class="name">Script</div><div class="sub">Story Architect</div></div>
+      <div class="pipe-arrow">→</div>
+      <div class="pipe-step"><div class="icon">🎨</div><div class="name">Moodboard</div><div class="sub">Creative Director</div></div>
+      <div class="pipe-arrow">→</div>
+      <div class="pipe-step"><div class="icon">🖼️</div><div class="name">AI Images</div><div class="sub">Leonardo AI</div></div>
+      <div class="pipe-arrow">→</div>
+      <div class="pipe-step"><div class="icon">🎬</div><div class="name">AI Video</div><div class="sub">Runway / Kling</div></div>
+      <div class="pipe-arrow">→</div>
+      <div class="pipe-step"><div class="icon">🎙️</div><div class="name">Voiceover</div><div class="sub">ElevenLabs</div></div>
+      <div class="pipe-arrow">→</div>
+      <div class="pipe-step"><div class="icon">🎵</div><div class="name">Musik</div><div class="sub">Suno AI</div></div>
+      <div class="pipe-arrow">→</div>
+      <div class="pipe-step"><div class="icon">✂️</div><div class="name">Schnitt</div><div class="sub">FFmpeg</div></div>
+      <div class="pipe-arrow">→</div>
+      <div class="pipe-step"><div class="icon">📤</div><div class="name">Export</div><div class="sub">Multi-Format</div></div>
+      <div class="pipe-arrow">→</div>
+      <div class="pipe-step"><div class="icon">🚀</div><div class="name">Posting</div><div class="sub">Auto-Schedule</div></div>
+    </div>
+  </div>
+
+  <div class="grid-2 mb24">
+    <div class="card">
+      <h3 class="mb16">⚡ Quick Content Pipeline (Story / Post)</h3>
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div class="layer" style="padding:14px">
+          <div class="layer-num" style="width:32px;height:32px;font-size:13px">1</div>
+          <div class="layer-content"><div class="layer-title" style="font-size:13px">Hook aus Library auswählen</div><p style="font-size:11px">Passenden Hook aus der Hook-Datenbank wählen und anpassen</p></div>
+        </div>
+        <div class="layer" style="padding:14px">
+          <div class="layer-num" style="width:32px;height:32px;font-size:13px">2</div>
+          <div class="layer-content"><div class="layer-title" style="font-size:13px">Image mit Leonardo AI generieren</div><p style="font-size:11px">Image-Prompt aus Library → Generate → Best of 4 auswählen</p></div>
+        </div>
+        <div class="layer" style="padding:14px">
+          <div class="layer-num" style="width:32px;height:32px;font-size:13px">3</div>
+          <div class="layer-content"><div class="layer-title" style="font-size:13px">Caption via Social Growth AI</div><p style="font-size:11px">Template ausfüllen → Hashtag-Set generieren → Review</p></div>
+        </div>
+        <div class="layer" style="padding:14px">
+          <div class="layer-num" style="width:32px;height:32px;font-size:13px">4</div>
+          <div class="layer-content"><div class="layer-title" style="font-size:13px">Planen und posten</div><p style="font-size:11px">Buffer/Later → optimale Zeit → Auto-Post</p></div>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <h3 class="mb16">🔧 FFmpeg Batch Commands</h3>
+      <div class="prompt-body" style="background:var(--bg3);border-radius:8px;padding:16px;font-size:11px;border:1px solid var(--glass-border)">
+# Resize für alle Plattformen gleichzeitig
+ffmpeg -i input.mp4 \
+  -vf "scale=1080:1920" output_9x16.mp4 \
+  -vf "scale=1080:1080" output_1x1.mp4 \
+  -vf "scale=1920:1080" output_16x9.mp4
+
+# Voiceover + Musik mischen (Musik leiser)
+ffmpeg -i video.mp4 -i voiceover.mp3 -i music.mp3 \
+  -filter_complex "[2:a]volume=0.3[bg]; [1:a][bg]amix=inputs=2[out]" \
+  -map 0:v -map "[out]" output.mp4
+
+# Auto-Untertitel hinzufügen
+ffmpeg -i video.mp4 -vf "subtitles=subs.srt" output_sub.mp4
+
+# Batch Export alle Videos im Ordner
+for f in /raw/*.mp4; do
+  ffmpeg -i "$f" -vf "scale=1080:1920,setsar=1" \
+    /export/reels/"${f%.mp4}_reel.mp4"
+done</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3 class="mb16">📋 Quality Gate Checklist — vor jedem Post</h3>
+    <div class="grid-3">
+      <div>
+        <h4>Visual Check</h4>
+        <div class="kpi-list">
+          <div class="kpi-item">Bildqualität ≥ 1080p</div>
+          <div class="kpi-item">Farben markenkonform (Teal / Gold / Dark)</div>
+          <div class="kpi-item">Kein generischer Stock-Look</div>
+          <div class="kpi-item">Logo/Branding sichtbar aber dezent</div>
+          <div class="kpi-item">Format korrekt für Plattform</div>
+        </div>
+      </div>
+      <div>
+        <h4>Audio Check</h4>
+        <div class="kpi-list">
+          <div class="kpi-item">Voiceover klar und professionell</div>
+          <div class="kpi-item">Musik nicht zu laut (VO dominiert)</div>
+          <div class="kpi-item">Kein Copyright-Audio</div>
+          <div class="kpi-item">Untertitel korrekt synchron</div>
+          <div class="kpi-item">Kein Clipping / Verzerrung</div>
+        </div>
+      </div>
+      <div>
+        <h4>Content Check</h4>
+        <div class="kpi-list">
+          <div class="kpi-item">Hook in ersten 3 Sekunden stark</div>
+          <div class="kpi-item">Klarer CTA vorhanden</div>
+          <div class="kpi-item">Caption vollständig mit Hashtags</div>
+          <div class="kpi-item">Posting-Zeit optimal eingestellt</div>
+          <div class="kpi-item">First Comment vorbereitet</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ TOOLS ═══════════════ -->
+<div class="section" id="sec-tools">
+  <div class="section-title">
+    <div class="icon-wrap">🛠️</div>
+    <div><h2 style="margin:0">Tools & Setup</h2><p style="margin:0">Vollständige Toolchain mit Setup-Anleitung</p></div>
+  </div>
+
+  <h3 class="mb16">🎬 Video & Image Generation</h3>
+  <div class="grid-4 mb32">
+    <div class="tool-card">
+      <div class="icon">🎬</div>
+      <div class="name">Runway ML</div>
+      <div class="category">Video AI</div>
+      <div class="desc">Gen-3 Alpha für realistische Videos aus Text-Prompts. Bestes Tool für Kamera-Bewegungen.</div>
+      <div class="tool-status status-setup">⟳ Setup erforderlich</div>
+    </div>
+    <div class="tool-card">
+      <div class="icon">🎭</div>
+      <div class="name">Kling AI</div>
+      <div class="category">Video AI</div>
+      <div class="desc">Beste Qualität für Nahaufnahmen und Wasser-Szenen. Realistischste Physik-Simulation.</div>
+      <div class="tool-status status-setup">⟳ Setup erforderlich</div>
+    </div>
+    <div class="tool-card">
+      <div class="icon">🌐</div>
+      <div class="name">Veo (Google)</div>
+      <div class="category">Video AI</div>
+      <div class="desc">Google DeepMind Video AI — beste für lange Sequenzen und konsistente Charaktere.</div>
+      <div class="tool-status status-planned">◯ Geplant Q3</div>
+    </div>
+    <div class="tool-card">
+      <div class="icon">🎨</div>
+      <div class="name">Leonardo AI</div>
+      <div class="category">Image AI</div>
+      <div class="desc">Fotorealistische Bilder, Product Shots, Marketing Visuals. Beste Konsistenz für Branding.</div>
+      <div class="tool-status status-active">✓ Aktiv</div>
+    </div>
+  </div>
+
+  <h3 class="mb16">🎙️ Audio & Voice</h3>
+  <div class="grid-4 mb32">
+    <div class="tool-card">
+      <div class="icon">🎙️</div>
+      <div class="name">ElevenLabs</div>
+      <div class="category">Voice AI</div>
+      <div class="desc">Premium Voiceover, Voice Cloning, Mehrsprachig. Bestes Werkzeug für professionelle Narration.</div>
+      <div class="tool-status status-setup">⟳ Setup erforderlich</div>
+    </div>
+    <div class="tool-card">
+      <div class="icon">🎵</div>
+      <div class="name">Suno AI</div>
+      <div class="category">Music AI</div>
+      <div class="desc">KI-generierte Originalmusik. Cinematic, ambient, brand-spezifisch konfigurierbar.</div>
+      <div class="tool-status status-setup">⟳ Setup erforderlich</div>
+    </div>
+    <div class="tool-card">
+      <div class="icon">🎶</div>
+      <div class="name">Udio</div>
+      <div class="category">Music AI</div>
+      <div class="desc">Alternative zu Suno mit anderem Stil-Set. Gut für jingle und kurze Sounds.</div>
+      <div class="tool-status status-planned">◯ Geplant</div>
+    </div>
+    <div class="tool-card">
+      <div class="icon">🔊</div>
+      <div class="name">FFmpeg</div>
+      <div class="category">Processing</div>
+      <div class="desc">Open-Source Video/Audio Processing. Basis für alle Batch-Exports und Formatkonvertierungen.</div>
+      <div class="tool-status status-active">✓ Bereit</div>
+    </div>
+  </div>
+
+  <h3 class="mb16">⚙️ Automation & Distribution</h3>
+  <div class="grid-4 mb32">
+    <div class="tool-card">
+      <div class="icon">🔄</div>
+      <div class="name">N8N</div>
+      <div class="category">Automation</div>
+      <div class="desc">Open-Source Workflow-Automation. Verbindet alle Tools ohne Code. Lokales Hosting möglich.</div>
+      <div class="tool-status status-active">✓ Aktiv</div>
+    </div>
+    <div class="tool-card">
+      <div class="icon">⚡</div>
+      <div class="name">Make.com</div>
+      <div class="category">Automation</div>
+      <div class="desc">500+ Integrationen, visueller Builder. Gut für Social-Media-Posting-Workflows.</div>
+      <div class="tool-status status-active">✓ Aktiv</div>
+    </div>
+    <div class="tool-card">
+      <div class="icon">📅</div>
+      <div class="name">Buffer / Later</div>
+      <div class="category">Scheduling</div>
+      <div class="desc">Auto-Posting für alle Plattformen. Best-Time-Empfehlungen und Kalender-Ansicht.</div>
+      <div class="tool-status status-setup">⟳ Setup erforderlich</div>
+    </div>
+    <div class="tool-card">
+      <div class="icon">📽️</div>
+      <div class="name">Remotion</div>
+      <div class="category">Video Code</div>
+      <div class="desc">Videos programmieren mit React. Für Daten-Visualisierungen und automatisierte Branded Videos.</div>
+      <div class="tool-status status-planned">◯ Geplant</div>
+    </div>
+  </div>
+
+  <div class="accordion">
+    <div class="accordion-header" onclick="toggleAccordion(this)">
+      🚀 Setup-Anleitung: Runway ML <span class="accordion-icon">▼</span>
+    </div>
+    <div class="accordion-body">
+      <p style="margin-bottom:12px">1. Account erstellen: <strong>runwayml.com</strong> → Pro Plan empfohlen (500 Credits/Monat)</p>
+      <p style="margin-bottom:12px">2. API-Key generieren: Settings → API → New Token → In .env speichern</p>
+      <p style="margin-bottom:12px">3. Empfohlenes Modell: <strong>Gen-3 Alpha Turbo</strong> für schnelle Iterationen, Gen-3 Alpha für finale Qualität</p>
+      <p style="margin-bottom:12px">4. Workflow: Text → Image (Leonardo) → Image-to-Video (Runway) für beste Resultate</p>
+      <p>5. Wave Bite Settings: Immer "cinematic", "photorealistic", "no text overlays" in System-Prompt einfügen</p>
+    </div>
+  </div>
+  <div class="accordion">
+    <div class="accordion-header" onclick="toggleAccordion(this)">
+      🎙️ Setup-Anleitung: ElevenLabs <span class="accordion-icon">▼</span>
+    </div>
+    <div class="accordion-body">
+      <p style="margin-bottom:12px">1. Account: <strong>elevenlabs.io</strong> → Creator Plan (22.000 Zeichen/Monat)</p>
+      <p style="margin-bottom:12px">2. Empfohlene Stimme: Adam (en-US) oder Daniel (en-GB) für Premium-Feeling</p>
+      <p style="margin-bottom:12px">3. Voice Settings: Stability 0.65 | Clarity 0.80 | Style 0.20</p>
+      <p style="margin-bottom:12px">4. API Integration via Make.com: Text-Input → ElevenLabs API → MP3-Output → Cloudinary</p>
+      <p>5. Deutsche Stimme: "Antoni" oder "Matei" für DE-Märkte</p>
+    </div>
+  </div>
+  <div class="accordion">
+    <div class="accordion-header" onclick="toggleAccordion(this)">
+      🎵 Setup-Anleitung: Suno AI <span class="accordion-icon">▼</span>
+    </div>
+    <div class="accordion-body">
+      <p style="margin-bottom:12px">1. Account: <strong>suno.ai</strong> → Pro Plan (2.500 Credits/Monat)</p>
+      <p style="margin-bottom:12px">2. Modell: Suno v4 für beste Qualität</p>
+      <p style="margin-bottom:12px">3. Wave Bite Standard-Style: "cinematic ambient electronic, instrumental, no vocals, maritime atmosphere, 85-90 BPM"</p>
+      <p style="margin-bottom:12px">4. Custom Mode nutzen für präzise Kontrolle</p>
+      <p>5. Alle generierten Tracks in Cloudinary speichern mit Tags: [campaing-name] [format] [mood]</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ CALENDAR ═══════════════ -->
+<div class="section" id="sec-calendar">
+  <div class="section-title">
+    <div class="icon-wrap">📅</div>
+    <div><h2 style="margin:0">Content Kalender</h2><p style="margin:0">Wöchentlicher Posting-Plan — Woche 1 Template</p></div>
+  </div>
+
+  <div class="card mb24">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
+      <h3>📅 Woche — Content Plan Template</h3>
+      <div style="display:flex;gap:8px">
+        <span class="cal-reel" style="padding:4px 10px;border-radius:6px;font-size:11px">● Reel</span>
+        <span class="cal-story" style="padding:4px 10px;border-radius:6px;font-size:11px">● Story</span>
+        <span class="cal-tiktok" style="padding:4px 10px;border-radius:6px;font-size:11px">● TikTok</span>
+        <span class="cal-post-type" style="padding:4px 10px;border-radius:6px;font-size:11px">● Post</span>
+        <span class="cal-shorts" style="padding:4px 10px;border-radius:6px;font-size:11px">● Shorts</span>
+      </div>
+    </div>
+    <div class="calendar-week">
+      <div class="cal-day">
+        <div class="cal-day-name">Mo</div>
+        <div class="cal-post cal-reel">Reel: Morgen am Wasser</div>
+        <div class="cal-post cal-story">Story: Behind the Scenes</div>
+      </div>
+      <div class="cal-day">
+        <div class="cal-day-name">Di</div>
+        <div class="cal-post cal-post-type">Post: App Feature</div>
+        <div class="cal-post cal-story">Story: User Review</div>
+      </div>
+      <div class="cal-day">
+        <div class="cal-day-name">Mi</div>
+        <div class="cal-post cal-tiktok">TikTok: Hook-Video</div>
+        <div class="cal-post cal-story">Story: Wasserlage Update</div>
+      </div>
+      <div class="cal-day">
+        <div class="cal-day-name">Do</div>
+        <div class="cal-post cal-post-type">Post: Investor Update</div>
+        <div class="cal-post cal-reel">Reel: Sonnenuntergang</div>
+      </div>
+      <div class="cal-day">
+        <div class="cal-day-name">Fr</div>
+        <div class="cal-post cal-shorts">Shorts: Fun Moment</div>
+        <div class="cal-post cal-story">Story: Wochenend-Spot</div>
+      </div>
+      <div class="cal-day">
+        <div class="cal-day-name">Sa</div>
+        <div class="cal-post cal-reel">Reel: Wochenend Vibes</div>
+        <div class="cal-post cal-tiktok">TikTok: Trend-Adaption</div>
+      </div>
+      <div class="cal-day">
+        <div class="cal-day-name">So</div>
+        <div class="cal-post cal-post-type">Post: Community-Frage</div>
+        <div class="cal-post cal-story">Story: Wochenrückblick</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid-3">
+    <div class="card">
+      <h4>📅 Monatlich — Hero Kampagne</h4>
+      <div class="sep" style="margin:10px 0"></div>
+      <div class="kpi-list">
+        <div class="kpi-item">1x großer Werbespot (30–60s)</div>
+        <div class="kpi-item">Full Production Pipeline</div>
+        <div class="kpi-item">Multi-Plattform Launch</div>
+        <div class="kpi-item">Paid Boost Budget einplanen</div>
+        <div class="kpi-item">PR + Presse-Outreach</div>
+      </div>
+    </div>
+    <div class="card">
+      <h4>📅 Wöchentlich — Hub Content</h4>
+      <div class="sep" style="margin:10px 0"></div>
+      <div class="kpi-list">
+        <div class="kpi-item">3–4x Reels / TikToks</div>
+        <div class="kpi-item">7x Stories (täglich)</div>
+        <div class="kpi-item">2x Feed-Posts</div>
+        <div class="kpi-item">1x YouTube Short</div>
+        <div class="kpi-item">1x LinkedIn Update</div>
+      </div>
+    </div>
+    <div class="card">
+      <h4>📅 Täglich — Hygiene</h4>
+      <div class="sep" style="margin:10px 0"></div>
+      <div class="kpi-list">
+        <div class="kpi-item">Story: Live-Wasserlage Daten</div>
+        <div class="kpi-item">Kommentare beantworten</div>
+        <div class="kpi-item">DMs checken und antworten</div>
+        <div class="kpi-item">Trend-Monitoring (30min)</div>
+        <div class="kpi-item">Engagement-Rate tracken</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ KPI ═══════════════ -->
+<div class="section" id="sec-kpi">
+  <div class="section-title">
+    <div class="icon-wrap">📊</div>
+    <div><h2 style="margin:0">KPI Dashboard</h2><p style="margin:0">Erfolgsmessung für das Wave Bite AI Marketing OS</p></div>
+  </div>
+
+  <div class="grid-4 mb24">
+    <div class="kpi-card"><div class="val gold">10K</div><div class="label">Follower Ziel Q3</div><div class="trend trend-target">Target: August 2026</div></div>
+    <div class="kpi-card"><div class="val" style="color:var(--teal)">5%</div><div class="label">Engagement Rate Ziel</div><div class="trend trend-target">Benchmark: 3% Markt</div></div>
+    <div class="kpi-card"><div class="val" style="color:var(--blue)">100K</div><div class="label">Views / Monat Ziel</div><div class="trend trend-target">Alle Plattformen</div></div>
+    <div class="kpi-card"><div class="val" style="color:var(--green)">500</div><div class="label">App-Downloads / Monat</div><div class="trend trend-target">BunBo MVP Launch</div></div>
+  </div>
+
+  <div class="grid-2 mb24">
+    <div class="card">
+      <h3 class="mb16">📊 Plattform-KPIs</h3>
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <div>
+          <div style="display:flex;justify-content:space-between;margin-bottom:6px"><span style="font-size:13px">📸 Instagram</span><span class="gold" style="font-size:13px">Prio 1</span></div>
+          <div class="kpi-list">
+            <div class="kpi-item">Follower-Wachstum: +500/Monat Ziel</div>
+            <div class="kpi-item">Reel-Views: ≥ 10.000/Video</div>
+            <div class="kpi-item">Story-Views: ≥ 500/Tag</div>
+            <div class="kpi-item">Link-in-Bio Klicks: ≥ 100/Woche</div>
+          </div>
+        </div>
+        <div class="sep" style="margin:4px 0"></div>
+        <div>
+          <div style="display:flex;justify-content:space-between;margin-bottom:6px"><span style="font-size:13px">🎵 TikTok</span><span class="teal" style="font-size:13px">Prio 2</span></div>
+          <div class="kpi-list">
+            <div class="kpi-item">Video-Views: ≥ 5.000/Video</div>
+            <div class="kpi-item">Completion Rate: ≥ 50%</div>
+            <div class="kpi-item">Follower: +200/Monat Ziel</div>
+          </div>
+        </div>
+        <div class="sep" style="margin:4px 0"></div>
+        <div>
+          <div style="display:flex;justify-content:space-between;margin-bottom:6px"><span style="font-size:13px">▶️ YouTube</span><span style="font-size:13px;color:var(--text-dim)">Prio 3</span></div>
+          <div class="kpi-list">
+            <div class="kpi-item">Shorts Views: ≥ 1.000/Video</div>
+            <div class="kpi-item">Subscriber: +50/Monat Ziel</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <h3 class="mb16">🎯 Production KPIs</h3>
+      <div class="kpi-list" style="gap:12px">
+        <div class="kpi-item">Videos pro Monat: ≥ 12 (3/Woche)</div>
+        <div class="kpi-item">Hero-Spots pro Monat: ≥ 1</div>
+        <div class="kpi-item">Time-to-Publish: ≤ 48h von Brief bis Post</div>
+        <div class="kpi-item">Quality-Pass-Rate: ≥ 90% beim ersten Review</div>
+        <div class="kpi-item">Prompt-Erfolgsrate: ≥ 70% verwertbar</div>
+        <div class="kpi-item">Asset-Wiederverwendung: ≥ 30%</div>
+        <div class="kpi-item">Batch-Output: ≥ 3 Formate pro Produktion</div>
+      </div>
+      <div class="sep"></div>
+      <h3 class="mb16">💰 Business KPIs</h3>
+      <div class="kpi-list" style="gap:12px">
+        <div class="kpi-item">Investor-Anfragen durch Content: Track mit UTM</div>
+        <div class="kpi-item">Partner-Anfragen: ≥ 2/Monat Ziel</div>
+        <div class="kpi-item">App-Download-Attribution: 20% Social Ziel</div>
+        <div class="kpi-item">Brand Search Volume: monatlich messen</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ BRAND ═══════════════ -->
+<div class="section" id="sec-brand">
+  <div class="section-title">
+    <div class="icon-wrap">🎨</div>
+    <div><h2 style="margin:0">Brand Governance</h2><p style="margin:0">Verbindliche Standards für alle Marketingmaterialien</p></div>
+  </div>
+
+  <div class="grid-2 mb24">
+    <div class="card card-gold">
+      <h3 class="mb16">🎨 Farbpalette</h3>
+      <div class="brand-colors">
+        <div>
+          <div class="color-swatch" style="background:#0E9E8A;color:white">Primary</div>
+          <div class="swatch-label">#0E9E8A<br>Wave Teal</div>
+        </div>
+        <div>
+          <div class="color-swatch" style="background:#C9A84C;color:#1a1a1a">Gold</div>
+          <div class="swatch-label">#C9A84C<br>Champagne</div>
+        </div>
+        <div>
+          <div class="color-swatch" style="background:#1E6FA8;color:white">Blue</div>
+          <div class="swatch-label">#1E6FA8<br>Deep Water</div>
+        </div>
+        <div>
+          <div class="color-swatch" style="background:#070B14;border:1px solid #333;color:#aaa">Dark</div>
+          <div class="swatch-label">#070B14<br>Night Ocean</div>
+        </div>
+        <div>
+          <div class="color-swatch" style="background:#E8EDF5;color:#111">Light</div>
+          <div class="swatch-label">#E8EDF5<br>Sea Mist</div>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <h3 class="mb16">✍️ Typografie</h3>
+      <div style="display:flex;flex-direction:column;gap:16px">
+        <div>
+          <h4>Headlines</h4>
+          <p>Segoe UI Bold / SF Pro Display Bold — Großbuchstaben für Impact, normale Schreibweise für Emotion</p>
+        </div>
+        <div>
+          <h4>Bodycopy</h4>
+          <p>Segoe UI Regular / Inter — klar, gut lesbar, min. 14px für Mobile</p>
+        </div>
+        <div>
+          <h4>Akzente</h4>
+          <p>Gold-Farbe (#C9A84C) für Schlüsselwörter. Niemals zu viel — maximal 1–2 Wörter pro Headline.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card mb24">
+    <h3 class="mb16">🚫 DO NOT — Brand Verbote</h3>
+    <div class="grid-3">
+      <div>
+        <h4 style="color:var(--red)">Visuell verboten</h4>
+        <div class="kpi-list">
+          <div class="kpi-item">Generische Stock-Fotos</div>
+          <div class="kpi-item">Neon-Farben oder Knallig-Bunt</div>
+          <div class="kpi-item">Comic- oder Cartoon-Stile</div>
+          <div class="kpi-item">Billige CGI / offensichtliche KI</div>
+          <div class="kpi-item">Unordentliche Layouts</div>
+        </div>
+      </div>
+      <div>
+        <h4 style="color:var(--red)">Sprachlich verboten</h4>
+        <div class="kpi-list">
+          <div class="kpi-item">Übertreibungen ohne Substanz</div>
+          <div class="kpi-item">Zu viele Ausrufezeichen!!!</div>
+          <div class="kpi-item">Jugendsprache (außer TikTok-spezifisch)</div>
+          <div class="kpi-item">Technisches Kauderwelsch im Consumer-Content</div>
+          <div class="kpi-item">Negative Aussagen über Konkurrenz</div>
+        </div>
+      </div>
+      <div>
+        <h4 style="color:var(--red)">Inhaltlich verboten</h4>
+        <div class="kpi-list">
+          <div class="kpi-item">Unfertige Produkte als fertig zeigen</div>
+          <div class="kpi-item">Unrealistische Versprechen</div>
+          <div class="kpi-item">Privater Inhalt ohne Freigabe</div>
+          <div class="kpi-item">Politische Statements</div>
+          <div class="kpi-item">Content ohne Qualitäts-Check</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3 class="mb16">✅ Brand Voice — Dos</h3>
+    <div class="grid-3">
+      <div>
+        <h4>Ton & Stimme</h4>
+        <div class="kpi-list">
+          <div class="kpi-item">Einladend, warm, authentisch</div>
+          <div class="kpi-item">Selbstbewusst ohne Arroganz</div>
+          <div class="kpi-item">Visionär aber geerdet</div>
+          <div class="kpi-item">Premium ohne Distanz</div>
+          <div class="kpi-item">Storytelling vor Verkaufen</div>
+        </div>
+      </div>
+      <div>
+        <h4>Bildsprache</h4>
+        <div class="kpi-list">
+          <div class="kpi-item">Echtes Wasser immer bevorzugen</div>
+          <div class="kpi-item">Goldene Stunde / Blaue Stunde</div>
+          <div class="kpi-item">Wenig Menschen, viel Atmosphäre</div>
+          <div class="kpi-item">Bokeh und Tiefenschärfe</div>
+          <div class="kpi-item">Cinematic Letterbox (optional)</div>
+        </div>
+      </div>
+      <div>
+        <h4>Emotion</h4>
+        <div class="kpi-list">
+          <div class="kpi-item">Freiheit und Weite</div>
+          <div class="kpi-item">Ruhige Luxus-Energie</div>
+          <div class="kpi-item">Entdeckergeist</div>
+          <div class="kpi-item">Verbundenheit mit der Natur</div>
+          <div class="kpi-item">Zukunftsoptimismus</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ DEV TOOLS ═══════════════ -->
+<div class="section" id="sec-devtools">
+  <div class="section-title">
+    <div class="icon-wrap">🧑‍💻</div>
+    <div><h2 style="margin:0">Dev Tools — Remotion & Product Shot Generator</h2><p style="margin:0">Programmatische Video-Erstellung + AI Product Photography für Wave Bite</p></div>
+  </div>
+
+  <!-- REMOTION -->
+  <div class="card card-gold mb24">
+    <div style="display:flex;gap:16px;align-items:flex-start;margin-bottom:20px">
+      <div style="width:56px;height:56px;background:linear-gradient(135deg,#1E6FA8,#0E9E8A);border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:28px;flex-shrink:0">🎥</div>
+      <div>
+        <h2 style="margin:0 0 4px">Remotion</h2>
+        <p style="margin:0;font-size:13px">Videos programmatisch mit React erstellen — vollautomatisch, skalierbar, markenkonform</p>
+        <div class="layer-tools" style="margin-top:8px">
+          <a href="https://github.com/remotion-dev/remotion" target="_blank" style="text-decoration:none"><span class="tool-tag" style="cursor:pointer">⭐ GitHub Repo</span></a>
+          <span class="tool-tag">React + TypeScript</span>
+          <span class="tool-tag">MP4 Export</span>
+          <span class="tool-tag">Server-Side Rendering</span>
+          <span class="tool-tag">AWS Lambda</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid-3 mb24">
+      <div>
+        <h4>Was Remotion kann</h4>
+        <div class="kpi-list">
+          <div class="kpi-item">Videos mit React-Komponenten programmieren</div>
+          <div class="kpi-item">Daten-gesteuerte Videos automatisch generieren</div>
+          <div class="kpi-item">Batch-Rendering: 100 Videos mit einem Befehl</div>
+          <div class="kpi-item">Animationen via CSS, Canvas, SVG, WebGL</div>
+          <div class="kpi-item">Server-Side Rendering + Cloud-Deployment</div>
+          <div class="kpi-item">Hot Reload — Live Preview im Browser</div>
+        </div>
+      </div>
+      <div>
+        <h4>Wave Bite Use Cases</h4>
+        <div class="kpi-list">
+          <div class="kpi-item">📊 Wasserlage-Daten animiert als tägliche Story</div>
+          <div class="kpi-item">📱 App-Feature Screencasts automatisch</div>
+          <div class="kpi-item">📈 KPI-Reports als Video-Slideshow</div>
+          <div class="kpi-item">🎬 Intro/Outro für alle Reels (Branded)</div>
+          <div class="kpi-item">🗓️ Weekly Recap Videos automatisch</div>
+          <div class="kpi-item">💰 Investor-Update als animiertes Video</div>
+        </div>
+      </div>
+      <div>
+        <h4>Setup — Schnellstart</h4>
+        <div class="kpi-list">
+          <div class="kpi-item">Node.js 18+ erforderlich</div>
+          <div class="kpi-item">npx create-video@latest</div>
+          <div class="kpi-item">npm run dev → Browser-Preview</div>
+          <div class="kpi-item">npm run build → MP4-Export</div>
+          <div class="kpi-item">Lizenz: kostenlos bis 3 Videos/Tag</div>
+          <div class="kpi-item">Company License: ab $30/Monat</div>
+        </div>
+      </div>
+    </div>
+
+    <h4 class="mb8">Wave Bite — Remotion Starter Komponente</h4>
+    <div class="prompt-body" style="background:var(--bg);border:1px solid var(--glass-border);border-radius:10px;padding:20px;font-size:11px;max-height:320px">// wavebite-reel-intro.tsx
+// Automatisches Branded Intro für alle Wave Bite Reels
+import { AbsoluteFill, Sequence, useCurrentFrame, interpolate, spring } from 'remotion';
+
+const BRAND_TEAL = '#0E9E8A';
+const BRAND_GOLD = '#C9A84C';
+const BRAND_DARK = '#070B14';
+
+export const WaveBiteIntro: React.FC&lt;{
+  title: string;
+  subtitle?: string;
+  duration?: number;
+}&gt; = ({ title, subtitle, duration = 90 }) => {
+  const frame = useCurrentFrame();
+
+  // Logo fade in
+  const logoOpacity = interpolate(frame, [0, 20], [0, 1], { extrapolateRight: 'clamp' });
+  const logoScale = spring({ frame, fps: 30, config: { damping: 12 } });
+
+  // Title slide in
+  const titleY = interpolate(frame, [15, 40], [30, 0], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' });
+  const titleOpacity = interpolate(frame, [15, 40], [0, 1], { extrapolateRight: 'clamp' });
+
+  // Wave animation (CSS-based)
+  const waveOffset = interpolate(frame, [0, duration], [0, -200]);
+
+  return (
+    &lt;AbsoluteFill style={{ background: BRAND_DARK, fontFamily: 'Segoe UI, system-ui' }}&gt;
+      {/* Animated Wave Background */}
+      &lt;div style={{
+        position: 'absolute', bottom: 0, width: '120%', left: '-10%',
+        height: '40%', opacity: 0.15,
+        background: `linear-gradient(180deg, transparent, ${BRAND_TEAL})`,
+        transform: `translateX(${waveOffset}px)`,
+        borderRadius: '50% 50% 0 0 / 20% 20% 0 0',
+      }}/&gt;
+
+      {/* Gold accent line */}
+      &lt;div style={{
+        position: 'absolute', top: '50%', left: 0, right: 0, height: '1px',
+        background: `linear-gradient(90deg, transparent, ${BRAND_GOLD}, transparent)`,
+        opacity: logoOpacity,
+      }}/&gt;
+
+      {/* Logo + Brand */}
+      &lt;AbsoluteFill style={{ justifyContent: 'center', alignItems: 'center', flexDirection: 'column', gap: 16 }}&gt;
+        &lt;div style={{
+          fontSize: 64, transform: `scale(${logoScale})`, opacity: logoOpacity,
+        }}&gt;🌊&lt;/div&gt;
+        &lt;div style={{
+          fontSize: 32, fontWeight: 800, color: 'white',
+          opacity: titleOpacity, transform: `translateY(${titleY}px)`,
+        }}&gt;
+          &lt;span style={{ color: BRAND_GOLD }}&gt;Wave&lt;/span&gt; Bite
+        &lt;/div&gt;
+        {title && &lt;div style={{
+          fontSize: 18, color: BRAND_TEAL, fontWeight: 500,
+          opacity: titleOpacity, transform: `translateY(${titleY}px)`,
+          letterSpacing: '2px', textTransform: 'uppercase',
+        }}&gt;{title}&lt;/div&gt;}
+      &lt;/AbsoluteFill&gt;
+    &lt;/AbsoluteFill&gt;
+  );
+};
+
+// Composition registrieren:
+// registerRoot(() => &lt;Composition id="WaveBiteIntro" component={WaveBiteIntro}
+//   durationInFrames={90} fps={30} width={1080} height={1920}
+//   defaultProps={{ title: 'Neues Feature', subtitle: 'Wave Bite App' }} /&gt;)</div>
+
+    <div style="display:flex;gap:12px;margin-top:16px;flex-wrap:wrap">
+      <div class="card" style="flex:1;min-width:200px">
+        <h4>Batch Render Script</h4>
+        <div class="prompt-body" style="background:var(--bg);border-radius:8px;padding:14px;font-size:11px;border:1px solid var(--glass-border)">// render-batch.mjs
+// Rendert alle Kampagnen-Videos auf einmal
+import { renderMedia, selectComposition } from '@remotion/renderer';
+import { campaigns } from './campaigns.json';
+
+for (const campaign of campaigns) {
+  const composition = await selectComposition({
+    serveUrl: 'http://localhost:3000',
+    id: 'WaveBiteReel',
+    inputProps: campaign,
+  });
+  await renderMedia({
+    composition,
+    serveUrl: 'http://localhost:3000',
+    codec: 'h264',
+    outputLocation: `./output/${campaign.id}.mp4`,
+  });
+  console.log(`✓ Rendered: ${campaign.id}`);
+}</div>
+      </div>
+      <div class="card" style="flex:1;min-width:200px">
+        <h4>campaigns.json Beispiel</h4>
+        <div class="prompt-body" style="background:var(--bg);border-radius:8px;padding:14px;font-size:11px;border:1px solid var(--glass-border)">[
+  {
+    "id": "reel_week21_wasser",
+    "title": "Live Wasserlage",
+    "subtitle": "Dein Kanal heute",
+    "pegelstand": "3.42m",
+    "trend": "steigend",
+    "color": "#0E9E8A"
+  },
+  {
+    "id": "reel_week21_app",
+    "title": "BunBo App",
+    "subtitle": "Jetzt in der Beta",
+    "feature": "Bestellung auf dem Boot",
+    "color": "#C9A84C"
+  }
+]</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PRODUCT SHOT GENERATOR -->
+  <div class="card mb24">
+    <div style="display:flex;gap:16px;align-items:flex-start;margin-bottom:20px">
+      <div style="width:56px;height:56px;background:linear-gradient(135deg,#7C4CC9,#C9A84C);border-radius:14px;display:flex;align-items:center;justify-content:font-size:28px;flex-shrink:0;align-items:center;justify-content:center">📸</div>
+      <div>
+        <h2 style="margin:0 0 4px">Product Shot Generator</h2>
+        <p style="margin:0;font-size:13px">Professionelle Produktfotos automatisch generieren — kein Studio, kein Fotograf, nur AI</p>
+        <div class="layer-tools" style="margin-top:8px">
+          <a href="https://fal.ai/models/fal-ai/bria/product-shot" target="_blank" style="text-decoration:none"><span class="tool-tag" style="cursor:pointer">Bria via fal.ai</span></a>
+          <a href="https://flair.ai" target="_blank" style="text-decoration:none"><span class="tool-tag" style="cursor:pointer">Flair.ai</span></a>
+          <a href="https://github.com/302ai/302_ecom_image_generator" target="_blank" style="text-decoration:none"><span class="tool-tag" style="cursor:pointer">302ai (Open Source)</span></a>
+          <span class="tool-tag">$0.04/Generation</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid-3 mb24">
+      <div class="tool-card">
+        <div class="icon">🤖</div>
+        <div class="name">Bria AI — fal.ai</div>
+        <div class="category">Product Shot API</div>
+        <div class="desc">Platziert Produkt in beliebige Szene mit nur einem Prompt. Beste Produkt-Integrität, lizenzfreie Bilder, API-ready. Ideal für BunBo App Screenshots und Wave Bite Merch.</div>
+        <div class="tool-status status-setup">⟳ API-Key erforderlich</div>
+      </div>
+      <div class="tool-card">
+        <div class="icon">🎨</div>
+        <div class="name">Flair.ai</div>
+        <div class="category">Product Photography</div>
+        <div class="desc">Drag-and-Drop Product Shots mit AI-Lifestyle-Backgrounds. Beste UX für schnelle Produktion. Ideal für Social Media und E-Commerce Shots.</div>
+        <div class="tool-status status-setup">⟳ Account erstellen</div>
+      </div>
+      <div class="tool-card">
+        <div class="icon">🔓</div>
+        <div class="name">302ai Generator</div>
+        <div class="category">Open Source</div>
+        <div class="desc">Self-hosted E-Commerce Image Generator. Relighting + Szenen-Generierung. Kostenlos, keine API-Limits, eigene Kontrolle über Daten.</div>
+        <div class="tool-status status-planned">◯ Self-Hosting Setup</div>
+      </div>
+    </div>
+
+    <div class="grid-2 mb16">
+      <div>
+        <h4 class="mb8">Wave Bite Product Shot Use Cases</h4>
+        <div class="kpi-list">
+          <div class="kpi-item">🥤 Getränke / Speisen auf dem Boot (BunBo)</div>
+          <div class="kpi-item">📱 App-Interface auf Smartphone in Marina-Setting</div>
+          <div class="kpi-item">⛵ Produkte auf Bootsdecke / Wasserhintergrund</div>
+          <div class="kpi-item">🌅 Lifestyle-Shots: Essen + Sonnenuntergang auf dem Wasser</div>
+          <div class="kpi-item">🏷️ Merch / Branded Items (Tassen, Caps) in Szene</div>
+          <div class="kpi-item">📊 Investor-Deck Hero Images (professionell)</div>
+        </div>
+      </div>
+      <div>
+        <h4 class="mb8">Bria AI — fal.ai API Integration</h4>
+        <div class="prompt-body" style="background:var(--bg3);border-radius:8px;padding:14px;font-size:11px;border:1px solid var(--glass-border)">// product-shot-generator.js
+// Sendet Produktbild → erhält Lifestyle-Shot
+import * as fal from "@fal-ai/serverless-client";
+
+fal.config({ credentials: process.env.FAL_KEY });
+
+async function generateProductShot(productImageUrl, scene) {
+  const result = await fal.subscribe(
+    "fal-ai/bria/product-shot", {
+    input: {
+      image_url: productImageUrl,
+      scene_description: scene,
+      // Wave Bite Scenes:
+      // "Premium marina at golden hour, luxury boats background"
+      // "Wooden boat deck, calm water, sunset lighting"
+      // "Waterfront restaurant table, teal water background"
+      num_images: 4,
+      sync_mode: true,
+    },
+    logs: true,
+  });
+  return result.images; // Array von generierten Bildern
+}
+
+// Beispiel-Aufruf:
+generateProductShot(
+  "https://cdn.wavebite.de/bunbo-burger.jpg",
+  "Luxury wooden boat deck, golden hour sunset, calm river water in background, premium lifestyle photography"
+);</div>
+      </div>
+    </div>
+
+    <h4 class="mb8">Produktfoto-Prompts für Wave Bite</h4>
+    <div class="grid-2">
+      <div class="prompt-card" style="margin-bottom:0">
+        <div class="prompt-header">
+          <div><strong style="font-size:12px">Speisen / BunBo Delivery</strong></div>
+          <button class="copy-btn" onclick="copyPrompt(this)">Kopieren</button>
+        </div>
+        <div style="padding:6px 16px;border-bottom:1px solid var(--glass-border)"><span class="prompt-type type-image">BRIA AI / PRODUCT SHOT</span></div>
+        <div class="prompt-body">Premium food photography on wooden boat deck, calm teal river water visible in background, golden hour lighting from the right, professional studio quality, shallow depth of field, the food is the hero, garnishes fresh and vibrant, condensation on drinks, no distracting elements, photorealistic, Michelin-star presentation style, warm amber tones.</div>
+      </div>
+      <div class="prompt-card" style="margin-bottom:0">
+        <div class="prompt-header">
+          <div><strong style="font-size:12px">App Interface Mockup Shot</strong></div>
+          <button class="copy-btn" onclick="copyPrompt(this)">Kopieren</button>
+        </div>
+        <div style="padding:6px 16px;border-bottom:1px solid var(--glass-border)"><span class="prompt-type type-image">BRIA AI / PRODUCT SHOT</span></div>
+        <div class="prompt-body">Lifestyle product photography, hand holding modern iPhone with app interface screen, background: luxury marina with boats, golden hour, shallow depth of field, warm light on hand, screen clearly visible and sharp, authentic and natural — not staged, editorial technology photography style, dark teal water bokeh background, professional commercial photography.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- COMBINED WORKFLOW -->
+  <div class="card">
+    <h3 class="mb16">⚡ Kombinierter Workflow: Product Shot → Remotion Video</h3>
+    <div class="pipeline">
+      <div class="pipe-step"><div class="icon">📸</div><div class="name">Produktfoto</div><div class="sub">Original-Asset</div></div>
+      <div class="pipe-arrow">→</div>
+      <div class="pipe-step"><div class="icon">🤖</div><div class="name">Bria AI</div><div class="sub">Lifestyle Shot</div></div>
+      <div class="pipe-arrow">→</div>
+      <div class="pipe-step"><div class="icon">🖼️</div><div class="name">4 Varianten</div><div class="sub">Best-of wählen</div></div>
+      <div class="pipe-arrow">→</div>
+      <div class="pipe-step"><div class="icon">🎥</div><div class="name">Remotion</div><div class="sub">Animiert zu Video</div></div>
+      <div class="pipe-arrow">→</div>
+      <div class="pipe-step"><div class="icon">🎵</div><div class="name">Audio-Sync</div><div class="sub">Suno + ElevenLabs</div></div>
+      <div class="pipe-arrow">→</div>
+      <div class="pipe-step"><div class="icon">📱</div><div class="name">Multi-Export</div><div class="sub">FFmpeg Batch</div></div>
+      <div class="pipe-arrow">→</div>
+      <div class="pipe-step"><div class="icon">🚀</div><div class="name">Auto-Post</div><div class="sub">Buffer / Make</div></div>
+    </div>
+    <p style="margin-top:16px">Von einem Produktfoto zu einem vollständig produzierten, platzierten und geposteten Multi-Format Reel in unter 30 Minuten — vollautomatisch.</p>
+  </div>
+</div>
+
+</main>
+
+<div class="toast" id="toast">✓ Prompt kopiert!</div>
+
+<script>
+function showTab(name) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  event.target.classList.add('active');
+  document.getElementById('sec-' + name).classList.add('active');
+}
+
+function copyPrompt(btn) {
+  const body = btn.closest('.prompt-card').querySelector('.prompt-body');
+  if(!body) return;
+  navigator.clipboard.writeText(body.innerText).then(() => {
+    const toast = document.getElementById('toast');
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 2000);
+    btn.textContent = '✓ Kopiert';
+    setTimeout(() => btn.textContent = 'Kopieren', 2000);
+  });
+}
+
+function toggleAccordion(header) {
+  const acc = header.parentElement;
+  const body = acc.querySelector('.accordion-body');
+  acc.classList.toggle('open');
+  body.classList.toggle('open');
+}
+</script>
+
+<!-- WAVE BITE Office-Sync (BroadcastChannel) 2026-05-20 -->
+<script>
+(function(){
+  'use strict';
+  var ch = null;
+  try { ch = new BroadcastChannel('ceo-wave'); } catch(e) {}
+  window.__waveSync = {
+    send: function(patch, type) {
+      var msg = { type: type || 'state_update', source: document.title, patch: patch || {}, ts: Date.now() };
+      if (ch) { try { ch.postMessage(msg); } catch(e){} }
+      try { localStorage.setItem('ceo_wave_msg', JSON.stringify({t: Date.now(), msg: msg})); } catch(e){}
+    },
+    onMessage: function(cb) {
+      if (ch) ch.onmessage = function(ev){ try { cb(ev.data); } catch(e){} };
+      window.addEventListener('storage', function(ev){
+        if (ev.key === 'ceo_wave_msg' && ev.newValue) {
+          try { var p = JSON.parse(ev.newValue); if (p.msg) cb(p.msg); } catch(e){}
+        }
+      });
+    }
+  };
+  // Ping Office on load
+  setTimeout(function(){ window.__waveSync.send({ active: true, page: document.title }, 'detail_loaded'); }, 500);
+})();
+</script>
+
+<script>
+(function(){
+  // v9.0 — Master-Bridge V3.2 + Cross-Tab-Sync · auto-injected
+  window.MASTER_BRIDGE_URL = "https://script.google.com/macros/s/AKfycbzOcLq5leW8EmCaI0HE74ZVjAlhdFjJtoV5vhhzEoWHvoC6U8bn5zVxfs7MK_7c1RNu/exec";
+  window.BRIDGE_URL = window.MASTER_BRIDGE_URL;
+  try {
+    localStorage.setItem("ceo_master_bridge_url", window.MASTER_BRIDGE_URL);
+    localStorage.setItem("ceo_cal_bridge_url",    window.MASTER_BRIDGE_URL);
+  } catch(e){}
+  // Cross-Tab-Sync via BroadcastChannel (falls noch nicht vorhanden)
+  if (!window.__ceoWaveBC) {
+    try {
+      window.__ceoWaveBC = new BroadcastChannel("ceo-wave");
+      window.__ceoWaveBC.onmessage = (ev) => {
+        if (ev && ev.data && ev.data.type === "wave-state-update") {
+          // andere Sektion hat Daten geschickt — könnte hier verarbeitet werden
+        }
+      };
+    } catch(e){}
+  }
+  // Wave-Bite-Essenz für alle Dashboards verfügbar machen (sodass keine Platzhalter mehr)
+  window.WAVE_BITE_FACTS = window.WAVE_BITE_FACTS || {
+    eigenkapital: 50000,
+    funding_ziel: 450000,
+    burn_monat: 10400,
+    fixkosten_pa: 125000,
+    bankdarlehen: 350000,
+    bruttomarge: 0.71,
+    break_even_tag: 72,
+    saisontage: 150,
+    pre_money: 1500000,
+    lois_signed: 5,
+    wipo: "DM/248323 EU+CH",
+    cap_table: "Carsten 95% · Marcus 5%",
+    investor_readiness: 85,
+    forecast: { J1: 250000, J2: 415000, J3: 670000 },
+    ebitda: { J1: 93650, J2: 191866, J3: 363964 }
+  };
+  console.log("✦ Wave Bite Bridge V3.2 + Cross-Tab + Facts geladen");
+})();
+</script>
+</body>
+</html>

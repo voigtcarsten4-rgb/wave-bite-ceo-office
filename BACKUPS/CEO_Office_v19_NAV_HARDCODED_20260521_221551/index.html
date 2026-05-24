@@ -1680,47 +1680,6 @@
     0%,100% { box-shadow: 0 0 12px rgba(0,200,255,0.38), inset 0 0 6px rgba(0,200,255,0.1); }
     50%     { box-shadow: 0 0 22px rgba(0,200,255,0.7),  inset 0 0 12px rgba(0,200,255,0.2); }
   }
-  /* V21 — Highlight-Pulse, wenn eine Section vom Nav angesteuert wird */
-  .section-highlight-pulse {
-    animation: sectionHighlightPulse 1.6s ease-out;
-  }
-  @keyframes sectionHighlightPulse {
-    0%   { box-shadow: 0 0 0 0 rgba(168,85,247,0.55); }
-    60%  { box-shadow: 0 0 0 18px rgba(168,85,247,0); }
-    100% { box-shadow: 0 0 0 0 rgba(168,85,247,0); }
-  }
-  /* V21 — Lucy-Pill spezielles Pulse-Glow */
-  .nav-pill[data-lucy-open] {
-    animation: lucyPillGlow 3s ease-in-out infinite;
-  }
-  @keyframes lucyPillGlow {
-    0%,100% { box-shadow: 0 0 6px rgba(255,158,177,0.35); }
-    50%     { box-shadow: 0 0 14px rgba(255,158,177,0.7), 0 0 24px rgba(255,158,177,0.25); }
-  }
-  /* V21 — Marketing-Pill spezielles Glow */
-  .nav-pill-marketing {
-    background: linear-gradient(135deg,rgba(168,85,247,0.08),rgba(168,85,247,0.04)) !important;
-  }
-  .nav-pill-marketing:hover {
-    background: linear-gradient(135deg,rgba(168,85,247,0.22),rgba(168,85,247,0.10)) !important;
-    box-shadow: 0 0 14px rgba(168,85,247,0.5) !important;
-  }
-  /* V21.2 — Marketing-Hirn klickbare Steps */
-  .mc-link:hover{transform:translateY(-2px);background:rgba(168,85,247,.22) !important;border-color:rgba(168,85,247,.6) !important;box-shadow:0 8px 22px rgba(168,85,247,.3)}
-  .mc-action{transition:all .18s}
-  .mc-action:hover{transform:translateY(-1px);filter:brightness(1.2);box-shadow:0 6px 20px rgba(0,0,0,.4)}
-  /* V21.2 — Push-Live-Pill auffällig */
-  .nav-pill-push{
-    background: linear-gradient(135deg,rgba(0,212,170,0.18),rgba(0,150,120,0.06)) !important;
-    border:1px solid rgba(0,212,170,0.55) !important;
-    color:#9af0d8 !important;
-    animation: pushPillPulse 4s ease-in-out infinite;
-  }
-  .nav-pill-push:hover{box-shadow:0 0 18px rgba(0,212,170,0.55) !important;transform:translateY(-1px)}
-  @keyframes pushPillPulse {
-    0%,100% { box-shadow: 0 0 8px rgba(0,212,170,.35); }
-    50%     { box-shadow: 0 0 18px rgba(0,212,170,.65), 0 0 30px rgba(0,212,170,.18); }
-  }
   /* Hover-Glow für nav-pills + nav-tool-btn (sichtbar bei Hover) */
   .nav-pill:hover {
     box-shadow: 0 0 16px rgba(0,200,255,0.5), 0 4px 14px rgba(0,200,255,0.18);
@@ -1786,114 +1745,35 @@
   /* Boot-Screen bleibt unverändert, alle anderen Animationen sichtbar */
 </style>
 
-  <meta http-equiv="cache-control" content="no-cache, no-store, must-revalidate">
-  <meta http-equiv="pragma" content="no-cache">
-  <meta http-equiv="expires" content="0">
-  <meta name="version" content="v20-2026-05-22">
 </head>
 <body>
-<!-- v20 -->
-<div id="v20-cta-bar" style="position:fixed;top:64px;right:14px;z-index:998;display:flex;flex-direction:column;gap:.4rem;pointer-events:auto"><a href="#sec-studio" onclick="document.getElementById('sec-studio').scrollIntoView({behavior:'smooth'});return false;" style="display:flex;align-items:center;gap:.5rem;padding:.55rem .75rem;background:linear-gradient(135deg,rgba(232,201,106,0.4),rgba(232,201,106,0.18));border:1px solid rgba(232,201,106,0.6);border-radius:10px;color:#fff7c0;font-size:.65rem;font-weight:800;cursor:pointer;text-decoration:none;box-shadow:0 6px 20px rgba(0,0,0,.4);backdrop-filter:blur(8px);white-space:nowrap">🎬 STUDIO</a><a href="wavebite-ai-marketing-os.html" target="_blank" style="display:flex;align-items:center;gap:.5rem;padding:.55rem .75rem;background:linear-gradient(135deg,rgba(168,85,247,0.4),rgba(168,85,247,0.18));border:1px solid rgba(168,85,247,0.6);border-radius:10px;color:#fff;font-size:.65rem;font-weight:800;cursor:pointer;text-decoration:none;box-shadow:0 6px 20px rgba(0,0,0,.4);backdrop-filter:blur(8px);white-space:nowrap">📣 MARKETING-OS ↗</a><a href="wavebite-leonardo-studio.html" target="_blank" style="display:flex;align-items:center;gap:.5rem;padding:.55rem .75rem;background:linear-gradient(135deg,rgba(0,212,170,0.35),rgba(0,212,170,0.15));border:1px solid rgba(0,212,170,0.55);border-radius:10px;color:#9af0d8;font-size:.65rem;font-weight:800;cursor:pointer;text-decoration:none;box-shadow:0 6px 20px rgba(0,0,0,.4);backdrop-filter:blur(8px);white-space:nowrap">🎨 LEONARDO ↗</a></div>
-
 
 <script>
 // v19: Robust Nav-Delegation + Service-Worker Kill (top of body)
 (function(){
-  // Service Worker Kill (einmalig pro Browser via Flag, sonst läuft bei jedem Load)
+  // Service Worker Kill
   if ('serviceWorker' in navigator) {
-    try {
-      if (!localStorage.getItem('lucy_sw_killed_v21')) {
-        navigator.serviceWorker.getRegistrations().then(function(rs){
-          if (rs.length) console.log('🧹 Lucy: '+rs.length+' alte SW gelöscht (einmalig)');
-          rs.forEach(function(r){ r.unregister().catch(function(){}); });
-        });
-        if (window.caches && caches.keys) caches.keys().then(function(keys){
-          keys.forEach(function(k){ caches.delete(k).catch(function(){}); });
-        });
-        localStorage.setItem('lucy_sw_killed_v21', '1');
-      }
-    } catch(_) {}
+    navigator.serviceWorker.getRegistrations().then(rs => rs.forEach(r => r.unregister().catch(()=>{})));
+    if (window.caches && caches.keys) caches.keys().then(keys => keys.forEach(k => caches.delete(k).catch(()=>{})));
   }
-  // Robust nav delegation V21.1 — Lucy edition (active state + Lucy trigger + ScrollSpy mit Lock)
+  // Robust nav delegation
   function bindNav() {
     var nav = document.querySelector('nav');
     if (!nav) { setTimeout(bindNav, 200); return; }
-
-    // Lock-Mechanik: nach manuellem Klick blockt ScrollSpy für 1.4 s (Dauer des Smooth-Scrolls)
-    var spyLockUntil = 0;
-
-    function setActive(pill){
-      try {
-        nav.querySelectorAll('.nav-pill').forEach(function(p){ p.classList.remove('active'); });
-        if (pill) pill.classList.add('active');
-      } catch(_) {}
-    }
-    function lockSpy(ms){ spyLockUntil = Date.now() + (ms||1400); }
-
     nav.addEventListener('click', function(e){
-      var pill = e.target.closest('.nav-pill, [data-target], [data-lucy-open]');
+      var pill = e.target.closest('.nav-pill, [data-target]');
       if (!pill) return;
-      // Lucy open trigger
-      if (pill.hasAttribute('data-lucy-open')) {
-        e.preventDefault();
-        try { (window.Lucy||window.Samantha)?.open?.(); } catch(_) {}
-        setActive(pill);
-        return;
-      }
       var tgt = pill.dataset && pill.dataset.target;
-      if (tgt === 'top') {
-        e.preventDefault();
-        lockSpy(1400);
-        try { window.scrollTo({top:0,behavior:'smooth'}); } catch(_) { window.scrollTo(0,0); }
-        setActive(pill);
+      if (!tgt && pill.getAttribute && pill.getAttribute('onclick')) {
+        // already has inline handler — let it run
         return;
       }
       if (tgt) {
         var sec = document.getElementById(tgt);
-        if (sec) {
-          e.preventDefault();
-          lockSpy(1800); // länger als smooth scroll für weit entfernte Sections
-          try { sec.scrollIntoView({behavior:'smooth', block:'start'}); }
-          catch(_) { sec.scrollIntoView(true); }
-          setActive(pill);
-          try {
-            sec.classList.add('section-highlight-pulse');
-            setTimeout(function(){ sec.classList.remove('section-highlight-pulse'); }, 1800);
-          } catch(_) {}
-        } else {
-          console.warn('[Lucy-Nav] Section nicht gefunden:', tgt);
-        }
+        if (sec) { e.preventDefault(); sec.scrollIntoView({behavior:'smooth', block:'start'}); }
       }
-    }, true);
-
-    // ScrollSpy mit Lock — pausiert direkt nach Klick, damit Smooth-Scroll nicht "überfährt"
-    var pills = Array.prototype.slice.call(nav.querySelectorAll('.nav-pill[data-target]'));
-    function onScroll(){
-      if (Date.now() < spyLockUntil) return;        // ← Lock aktiv → kein Override
-      var y = window.scrollY + 120;
-      var best = null, bestTop = -Infinity;
-      pills.forEach(function(p){
-        var id = p.dataset.target;
-        if (id === 'top') return;
-        var sec = document.getElementById(id);
-        if (!sec) return;
-        var top = sec.getBoundingClientRect().top + window.scrollY;
-        if (top <= y && top > bestTop) { bestTop = top; best = p; }
-      });
-      if (window.scrollY < 80) best = nav.querySelector('.nav-pill[data-target="top"]');
-      if (best) setActive(best);
-    }
-    var raf = null;
-    window.addEventListener('scroll', function(){
-      if (raf) return;
-      raf = requestAnimationFrame(function(){ raf=null; onScroll(); });
-    }, {passive:true});
-    // Auch bei User-Wheel/Touch den Lock früher beenden, damit "freies Scrollen" weiterhin Active updated
-    ['wheel','touchstart'].forEach(function(ev){
-      window.addEventListener(ev, function(){ spyLockUntil = 0; }, {passive:true});
-    });
-    onScroll();
-    console.log('[v21.1-lucy] nav delegation bound on', pills.length, 'pills (scroll-spy-lock aktiv)');
+    }, true); // capture phase
+    console.log('[v19] nav delegation bound on', nav.querySelectorAll('.nav-pill').length, 'pills');
   }
   if (document.readyState !== 'loading') bindNav();
   else document.addEventListener('DOMContentLoaded', bindNav);
@@ -2268,31 +2148,27 @@
   </div>
 </div>
 
-<!-- NAVBAR — V21 LUCY · CLEAN · DEDUPED · MARKETING SECTION VERLINKT -->
+<!-- NAVBAR -->
 <nav>
   <div class="nav-brand">WAVE<span>BITE</span> // JARVIS</div>
-  <a class="nav-pill active" href="#" data-target="top">HOME</a>
-  <a class="nav-pill" href="#sec-calendar"    data-target="sec-calendar"  style="background:rgba(0,200,255,0.08);border:1px solid rgba(0,200,255,0.3)">📅 KALENDER</a>
-  <a class="nav-pill" href="#sec-mail-intel"  data-target="sec-mail-intel">✉ MAILS</a>
-  <a class="nav-pill" href="#sec-projects"    data-target="sec-projects">⚓ PROJEKTE</a>
-  <a class="nav-pill" href="#sec-intel"       data-target="sec-intel"      style="border-color:rgba(201,168,76,0.35);color:var(--gold)">🤖 JARVIS</a>
-  <a class="nav-pill" href="#sec-finance"     data-target="sec-finance">💰 FINANZEN</a>
-  <a class="nav-pill" href="#sec-tools"       data-target="sec-tools">🛠 TOOLS</a>
-  <a class="nav-pill" href="#sec-executive"   data-target="sec-executive"  style="border-color:rgba(0,212,170,0.35);color:var(--teal)">⚡ EXEC</a>
-  <a class="nav-pill" href="#sec-crm"         data-target="sec-crm">🤝 CRM</a>
-  <a class="nav-pill" href="#sec-investor"    data-target="sec-investor"   style="border-color:rgba(201,168,76,0.35);color:var(--gold)">💎 INVEST</a>
-  <a class="nav-pill" href="#sec-ops"         data-target="sec-ops">⚙ OPS</a>
-  <a class="nav-pill" href="#sec-risk"        data-target="sec-risk"       style="border-color:rgba(255,68,68,0.35);color:#ff4757">🔴 RISK</a>
-  <a class="nav-pill nav-pill-studio" href="#sec-studio" data-target="sec-studio"   style="border-color:rgba(232,201,106,0.55);color:#e8c96a;background:rgba(232,201,106,0.06)">🎬 STUDIO</a>
-  <a class="nav-pill nav-pill-marketing" href="#sec-marketing" data-target="sec-marketing" style="border-color:rgba(168,85,247,0.5);color:#d9bbff;background:rgba(168,85,247,0.06)">📣 MARKETING</a>
-  <a class="nav-pill" href="marketing-dashboard-detail.html" target="_blank" rel="noopener" style="text-decoration:none;border-color:rgba(168,85,247,0.6);color:#e2c4ff;background:rgba(168,85,247,0.10);display:inline-flex;align-items:center">📣 MKT-DETAIL ↗</a>
-  <a class="nav-pill" href="wavebite-ai-marketing-os.html" target="_blank" rel="noopener" style="text-decoration:none;border-color:rgba(0,212,170,0.5);color:#9af0d8;background:rgba(0,212,170,0.06);display:inline-flex;align-items:center">⚡ MKT-OS ↗</a>
-  <a class="nav-pill" href="#sec-tasks"   data-target="sec-tasks">TASKS</a>
-  <a class="nav-pill" href="#sec-agents"  data-target="sec-agents">AGENTEN</a>
-  <a class="nav-pill" href="#sec-console" data-target="sec-console">CONSOLE</a>
-  <a class="nav-pill" href="javascript:void(0)" data-lucy-open="1" title="Lucy — CEO Co-Pilotin öffnen" style="border-color:rgba(255,158,177,0.55);color:#ffc8d4;background:rgba(255,158,177,0.08)">🧜🏻‍♀️ LUCY</a>
-  <a class="nav-pill nav-pill-push" href="PUSH_V21_LUCY.bat" title="Push V21 zu GitHub Pages (BAT öffnet sich)">📤 PUSH LIVE</a>
-  <a class="nav-pill" href="https://voigtcarsten4-rgb.github.io/ceo-office/" target="_blank" rel="noopener" title="Live-URL im neuen Tab" style="border-color:rgba(96,165,250,0.5);color:#9bd4ff;background:rgba(96,165,250,0.07)">🌐 LIVE ↗</a>
+  <div class="nav-pill active" onclick="scrollTo(0,0)">HOME</div>
+  <div class="nav-pill" onclick="document.getElementById('sec-calendar').scrollIntoView({behavior:'smooth'})" style="background:rgba(0,200,255,0.08);border:1px solid rgba(0,200,255,0.3)">📅 KALENDER</div>
+  <div class="nav-pill" onclick="document.getElementById('sec-mail-intel').scrollIntoView({behavior:'smooth'})">✉ MAILS</div>
+  <div class="nav-pill" onclick="document.getElementById('sec-projects').scrollIntoView({behavior:'smooth'})">⚓ PROJEKTE</div>
+  <div class="nav-pill" onclick="document.getElementById('sec-intel').scrollIntoView({behavior:'smooth'})" style="border-color:rgba(201,168,76,0.35);color:var(--gold)">🤖 JARVIS</div>
+  <div class="nav-pill" onclick="document.getElementById('sec-finance').scrollIntoView({behavior:'smooth'})">💰 FINANZEN</div>
+  <div class="nav-pill" onclick="document.getElementById('sec-tools').scrollIntoView({behavior:'smooth'})">🛠 TOOLS</div>
+  <div class="nav-pill" onclick="document.getElementById('sec-executive').scrollIntoView({behavior:'smooth'})" style="border-color:rgba(0,212,170,0.35);color:var(--teal)">⚡ EXEC</div>
+  <div class="nav-pill" onclick="document.getElementById('sec-crm').scrollIntoView({behavior:'smooth'})">🤝 CRM</div>
+  <div class="nav-pill" onclick="document.getElementById('sec-investor').scrollIntoView({behavior:'smooth'})" style="border-color:rgba(201,168,76,0.35);color:var(--gold)">💎 INVEST</div>
+  <div class="nav-pill" onclick="document.getElementById('sec-ops').scrollIntoView({behavior:'smooth'})">⚙ OPS</div>
+  <div class="nav-pill" onclick="document.getElementById('sec-risk').scrollIntoView({behavior:'smooth'})" data-target="sec-risk" style="border-color:rgba(255,68,68,0.35);color:#ff4757">🔴 RISK</div>
+  <div class="nav-pill nav-pill-studio" onclick="document.getElementById('sec-studio').scrollIntoView({behavior:'smooth'})" data-target="sec-studio" style="border-color:rgba(232,201,106,0.55);color:#e8c96a;background:rgba(232,201,106,0.06)">🎬 STUDIO</div>
+  <div class="nav-pill" onclick="document.getElementById('sec-studio').scrollIntoView({behavior:'smooth'})" data-target="sec-studio" style="border-color:rgba(168,85,247,0.5);color:#d9bbff;background:rgba(168,85,247,0.06)">📣 MARKETING</div>
+  <a class="nav-pill" href="wavebite-ai-marketing-os.html" target="_blank" style="text-decoration:none;border-color:rgba(0,212,170,0.5);color:#9af0d8;background:rgba(0,212,170,0.06);display:inline-flex;align-items:center">⚡ MKT-OS ↗</a>
+  <div class="nav-pill" onclick="document.getElementById('sec-tasks').scrollIntoView({behavior:'smooth'})" data-target="sec-tasks">TASKS</div>
+  <div class="nav-pill" onclick="document.getElementById('sec-agents').scrollIntoView({behavior:'smooth'})">AGENTEN</div>
+  <div class="nav-pill" onclick="document.getElementById('sec-console').scrollIntoView({behavior:'smooth'})">CONSOLE</div>
   <div class="nav-sep"></div>
   <!-- QUICK TOOL BUTTONS IN NAV -->
   <a href="https://mail.google.com" target="_blank" class="nav-tool-btn" title="Gmail öffnen">✉ Mail</a>
@@ -4379,7 +4255,7 @@
 
 <!-- MEDIA & SOCIAL -->
 <section>
-  <div class="section-title" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.5rem"><span>📣 MARKETING &amp; SOCIAL MEDIA</span><div style="display:flex;gap:.4rem;flex-wrap:wrap"><a href="wavebite-ai-marketing-os.html" target="_blank" style="padding:.35rem .85rem;background:linear-gradient(135deg,rgba(168,85,247,0.32),rgba(120,60,200,0.14));border:1px solid rgba(168,85,247,0.55);border-radius:8px;color:#fff7c0;font-size:.62rem;font-weight:800;text-decoration:none;letter-spacing:.05em;white-space:nowrap;display:inline-flex;align-items:center;gap:.3rem">📣 MARKETING DETAIL-DASHBOARD ↗</a><button onclick="openStudioOS &amp;&amp; openStudioOS('marketing-os')" style="padding:.35rem .85rem;background:rgba(232,201,106,0.15);border:1px solid rgba(232,201,106,0.4);border-radius:8px;color:#e8c96a;font-size:.62rem;font-weight:800;cursor:pointer;letter-spacing:.05em;white-space:nowrap;display:inline-flex;align-items:center;gap:.3rem">⚡ Inline öffnen</button></div></div>
+  <div class="section-title">📣 MARKETING & SOCIAL MEDIA</div>
   <div id="marketing-pulse-data" style="font-size:.65rem;color:var(--text-dim);padding:.4rem .75rem;background:rgba(0,200,255,0.03);border-radius:6px;margin-bottom:.75rem">⏳ Marketing Intelligence wird geladen...</div>
   <div class="grid-2">
     <div class="panel">
@@ -4467,9 +4343,6 @@
 <section id="sec-studio" style="margin-bottom:1.5rem">
   <div class="section-title" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.5rem">
     <span style="background:linear-gradient(90deg,#e8c96a,#fff7c0,#e8c96a);-webkit-background-clip:text;background-clip:text;color:transparent;font-weight:800;letter-spacing:.08em">🎬 NEXT-GEN STUDIO // AI MARKETING OS</span>
-    <a href="marketing-dashboard-detail.html" target="_blank" rel="noopener" style="margin-left:.7rem;padding:.32rem .8rem;background:linear-gradient(135deg,rgba(168,85,247,0.32),rgba(120,60,200,0.14));border:1px solid rgba(168,85,247,0.55);border-radius:8px;color:#fff7c0;font-size:.62rem;font-weight:800;text-decoration:none;letter-spacing:.05em;white-space:nowrap;display:inline-flex;align-items:center;gap:.3rem">📣 MARKETING DETAIL-DASHBOARD ↗</a>
-    <a href="wavebite-ai-marketing-os.html" target="_blank" rel="noopener" style="margin-left:.3rem;padding:.32rem .8rem;background:linear-gradient(135deg,rgba(0,212,170,0.25),rgba(0,212,170,0.08));border:1px solid rgba(0,212,170,0.45);border-radius:8px;color:#9af0d8;font-size:.62rem;font-weight:800;text-decoration:none;letter-spacing:.05em;white-space:nowrap;display:inline-flex;align-items:center;gap:.3rem">⚡ MKT-OS ↗</a>
-    <a href="wavebite-leonardo-studio.html" target="_blank" style="margin-left:.3rem;padding:.32rem .8rem;background:linear-gradient(135deg,rgba(0,212,170,0.25),rgba(0,212,170,0.08));border:1px solid rgba(0,212,170,0.5);border-radius:8px;color:#9af0d8;font-size:.62rem;font-weight:800;text-decoration:none;letter-spacing:.05em;white-space:nowrap;display:inline-flex;align-items:center;gap:.3rem">🎨 LEONARDO STUDIO ↗</a>
     <span style="display:inline-flex;align-items:center;gap:.4rem;padding:.18rem .55rem;background:rgba(0,212,170,.12);border:1px solid rgba(0,212,170,.35);border-radius:99px;font-size:.55rem;letter-spacing:.12em;color:#00d4aa;font-weight:700">● SYSTEM AKTIV</span>
   </div>
 
@@ -4576,52 +4449,6 @@
       <a href="https://www.youtube.com" target="_blank" class="pc-link" style="font-size:.6rem">▶️ YouTube</a>
       <span style="flex:1"></span>
       <button onclick="lucyMarketingScan()" style="padding:.32rem .7rem;background:linear-gradient(135deg,rgba(0,212,170,.2),rgba(0,170,140,.08));border:1px solid rgba(0,212,170,.45);border-radius:8px;color:#9af0d8;font-size:.6rem;font-weight:700;cursor:pointer">🛰 Marketing Opportunity Scan</button>
-    </div>
-  </div>
-</section>
-
-<!-- ═══════════════════════════════════════════════════════════════
-     📣 MARKETING COCKPIT — End-to-End: Idee → Post (V21 LUCY)
-     Brücke zur Vollversion: marketing-dashboard-detail.html
-     ═══════════════════════════════════════════════════════════════ -->
-<section id="sec-marketing" style="margin-bottom:1.5rem">
-  <div class="section-title" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.5rem">
-    <span style="background:linear-gradient(90deg,#d9bbff,#fff5ff,#d9bbff);-webkit-background-clip:text;background-clip:text;color:transparent;font-weight:800;letter-spacing:.08em">📣 MARKETING COCKPIT — AUTONOM BIS ZUM POST</span>
-    <a href="marketing-dashboard-detail.html" target="_blank" rel="noopener" style="margin-left:.7rem;padding:.4rem .95rem;background:linear-gradient(135deg,rgba(168,85,247,0.42),rgba(120,60,200,0.18));border:1px solid rgba(168,85,247,0.7);border-radius:9px;color:#fff7ff;font-size:.66rem;font-weight:800;text-decoration:none;letter-spacing:.05em;white-space:nowrap;display:inline-flex;align-items:center;gap:.35rem;box-shadow:0 4px 18px rgba(168,85,247,.28)">🚀 VOLLES MARKETING-DASHBOARD ÖFFNEN ↗</a>
-    <span style="display:inline-flex;align-items:center;gap:.4rem;padding:.18rem .55rem;background:rgba(168,85,247,.14);border:1px solid rgba(168,85,247,.4);border-radius:99px;font-size:.55rem;letter-spacing:.12em;color:#d9bbff;font-weight:700">● LUCY INTEGRIERT</span>
-  </div>
-
-  <div style="background:linear-gradient(135deg,rgba(40,16,60,.32),rgba(7,12,30,.96) 60%,rgba(40,16,60,.18));border:1px solid rgba(168,85,247,.28);border-radius:16px;padding:1.25rem;position:relative;overflow:hidden">
-    <div style="position:absolute;inset:0;background:radial-gradient(800px 240px at 20% -10%,rgba(168,85,247,.12),transparent 60%),radial-gradient(700px 200px at 90% 110%,rgba(255,158,177,.07),transparent 60%);pointer-events:none"></div>
-
-    <!-- 7-STEP PIPELINE — KLICKBAR (öffnet Cockpit am jeweiligen Step) -->
-    <div style="position:relative;display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:.6rem;margin-bottom:1rem">
-      <a class="mc-step mc-link" href="marketing-dashboard-detail.html#step=1" target="_blank" rel="noopener" title="Öffnet Cockpit · Step 1 Idee" style="background:rgba(168,85,247,.08);border:1px solid rgba(168,85,247,.3);border-radius:10px;padding:.7rem;text-align:center;text-decoration:none;color:inherit;cursor:pointer;transition:all .2s"><div style="font-size:1.3rem">💡</div><div style="font-size:.55rem;letter-spacing:.14em;color:#d9bbff;font-weight:700;margin-top:.25rem">1 · IDEE</div><div style="font-size:.62rem;color:#c8c8d4;margin-top:.15rem">Lucy-Brainstorm</div></a>
-      <a class="mc-step mc-link" href="marketing-dashboard-detail.html#step=2" target="_blank" rel="noopener" title="Öffnet Cockpit · Step 2 Brief" style="background:rgba(168,85,247,.08);border:1px solid rgba(168,85,247,.3);border-radius:10px;padding:.7rem;text-align:center;text-decoration:none;color:inherit;cursor:pointer;transition:all .2s"><div style="font-size:1.3rem">📝</div><div style="font-size:.55rem;letter-spacing:.14em;color:#d9bbff;font-weight:700;margin-top:.25rem">2 · BRIEF</div><div style="font-size:.62rem;color:#c8c8d4;margin-top:.15rem">Auto-Brief</div></a>
-      <a class="mc-step mc-link" href="marketing-dashboard-detail.html#step=3" target="_blank" rel="noopener" title="Öffnet Cockpit · Step 3 Visual" style="background:rgba(168,85,247,.08);border:1px solid rgba(168,85,247,.3);border-radius:10px;padding:.7rem;text-align:center;text-decoration:none;color:inherit;cursor:pointer;transition:all .2s"><div style="font-size:1.3rem">🎨</div><div style="font-size:.55rem;letter-spacing:.14em;color:#d9bbff;font-weight:700;margin-top:.25rem">3 · VISUAL</div><div style="font-size:.62rem;color:#c8c8d4;margin-top:.15rem">Leonardo / Firefly</div></a>
-      <a class="mc-step mc-link" href="marketing-dashboard-detail.html#step=4" target="_blank" rel="noopener" title="Öffnet Cockpit · Step 4 Video" style="background:rgba(168,85,247,.08);border:1px solid rgba(168,85,247,.3);border-radius:10px;padding:.7rem;text-align:center;text-decoration:none;color:inherit;cursor:pointer;transition:all .2s"><div style="font-size:1.3rem">🎬</div><div style="font-size:.55rem;letter-spacing:.14em;color:#d9bbff;font-weight:700;margin-top:.25rem">4 · VIDEO</div><div style="font-size:.62rem;color:#c8c8d4;margin-top:.15rem">Schnitt+Sound+VO</div></a>
-      <a class="mc-step mc-link" href="marketing-dashboard-detail.html#step=5" target="_blank" rel="noopener" title="Öffnet Cockpit · Step 5 Caption" style="background:rgba(168,85,247,.08);border:1px solid rgba(168,85,247,.3);border-radius:10px;padding:.7rem;text-align:center;text-decoration:none;color:inherit;cursor:pointer;transition:all .2s"><div style="font-size:1.3rem">✍️</div><div style="font-size:.55rem;letter-spacing:.14em;color:#d9bbff;font-weight:700;margin-top:.25rem">5 · CAPTION</div><div style="font-size:.62rem;color:#c8c8d4;margin-top:.15rem">Brand-Voice</div></a>
-      <a class="mc-step mc-link" href="marketing-dashboard-detail.html#step=6" target="_blank" rel="noopener" title="Öffnet Cockpit · Step 6 Quality-Gate" style="background:rgba(168,85,247,.08);border:1px solid rgba(253,230,138,.45);border-radius:10px;padding:.7rem;text-align:center;text-decoration:none;color:inherit;cursor:pointer;transition:all .2s"><div style="font-size:1.3rem">✅</div><div style="font-size:.55rem;letter-spacing:.14em;color:#fde68a;font-weight:700;margin-top:.25rem">6 · QUALITY-GATE</div><div style="font-size:.62rem;color:#c8c8d4;margin-top:.15rem">Brand/Recht/Visual</div></a>
-      <a class="mc-step mc-link" href="marketing-dashboard-detail.html#step=7" target="_blank" rel="noopener" title="Öffnet Cockpit · Step 7 Post" style="background:linear-gradient(135deg,rgba(0,212,170,.18),rgba(0,150,120,.06));border:1px solid rgba(0,212,170,.45);border-radius:10px;padding:.7rem;text-align:center;text-decoration:none;color:inherit;cursor:pointer;transition:all .2s"><div style="font-size:1.3rem">🚀</div><div style="font-size:.55rem;letter-spacing:.14em;color:#9af0d8;font-weight:700;margin-top:.25rem">7 · POST</div><div style="font-size:.62rem;color:#c8c8d4;margin-top:.15rem">Postiz / Multi</div></a>
-    </div>
-
-    <!-- 5 Inline-Quick-Actions: echte Workflows, kein "nur Info" -->
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:.45rem;margin-bottom:1rem">
-      <button onclick="window.officeMarketingAction('brainstorm')" class="mc-action" style="padding:.55rem .7rem;background:rgba(168,85,247,.10);border:1px solid rgba(168,85,247,.4);border-radius:9px;color:#d9bbff;font-size:.62rem;font-weight:800;cursor:pointer;letter-spacing:.05em;display:flex;align-items:center;gap:.4rem">💡 Brainstorm starten</button>
-      <button onclick="window.officeMarketingAction('audit')" class="mc-action" style="padding:.55rem .7rem;background:rgba(96,165,250,.10);border:1px solid rgba(96,165,250,.4);border-radius:9px;color:#9bd4ff;font-size:.62rem;font-weight:800;cursor:pointer;letter-spacing:.05em;display:flex;align-items:center;gap:.4rem">🔍 Letzten Post auditieren</button>
-      <button onclick="window.officeMarketingAction('trends')" class="mc-action" style="padding:.55rem .7rem;background:rgba(0,212,170,.10);border:1px solid rgba(0,212,170,.4);border-radius:9px;color:#9af0d8;font-size:.62rem;font-weight:800;cursor:pointer;letter-spacing:.05em;display:flex;align-items:center;gap:.4rem">🛰 Trends scannen</button>
-      <button onclick="window.officeMarketingAction('calendar')" class="mc-action" style="padding:.55rem .7rem;background:rgba(253,230,138,.10);border:1px solid rgba(253,230,138,.4);border-radius:9px;color:#fde68a;font-size:.62rem;font-weight:800;cursor:pointer;letter-spacing:.05em;display:flex;align-items:center;gap:.4rem">📅 Posting-Plan</button>
-      <button onclick="window.officeMarketingAction('brandcheck')" class="mc-action" style="padding:.55rem .7rem;background:rgba(255,158,177,.10);border:1px solid rgba(255,158,177,.4);border-radius:9px;color:#ffc8d4;font-size:.62rem;font-weight:800;cursor:pointer;letter-spacing:.05em;display:flex;align-items:center;gap:.4rem">🛡 Brand-Voice-Check</button>
-    </div>
-
-    <div style="display:flex;flex-wrap:wrap;gap:.5rem;justify-content:space-between;align-items:center">
-      <div style="font-size:.7rem;color:#c8c8d4;line-height:1.5;max-width:680px">
-        Vollständiger End-to-End Workflow von Idee bis fertigem Post — autonom mit Lucy-Unterstützung. Quality-Gates verhindern fehlerhafte Veröffentlichungen. Video-Pipeline in optimaler Reihenfolge (Schnitt → Sound → Voiceover → Export). Mobile-optimiert. <b>Klick auf Step öffnet Cockpit direkt dort.</b>
-      </div>
-      <div style="display:flex;gap:.4rem;flex-wrap:wrap">
-        <a href="marketing-dashboard-detail.html" target="_blank" rel="noopener" style="padding:.45rem 1rem;background:linear-gradient(135deg,#a855f7,#6b21a8);border-radius:8px;color:#fff;font-size:.65rem;font-weight:800;text-decoration:none;letter-spacing:.05em">📣 COCKPIT ÖFFNEN</a>
-        <button onclick="try{(window.Lucy||window.Samantha)?.open?.()}catch(e){}" style="padding:.45rem 1rem;background:linear-gradient(135deg,rgba(255,158,177,.3),rgba(197,73,122,.15));border:1px solid rgba(255,158,177,.6);border-radius:8px;color:#ffc8d4;font-size:.65rem;font-weight:800;cursor:pointer;letter-spacing:.05em">🧜🏻‍♀️ LUCY FRAGEN</button>
-      </div>
     </div>
   </div>
 </section>
@@ -9205,7 +9032,7 @@ if (typeof window.addMemoryEntry !== 'function') {
 })();
 </script>
 
-<script src="samantha.js?v=2026-05-24-v21-lucy-marketing"></script>
+<script src="samantha.js?v=2026-05-21-v15-allstations"></script>
 
 <script>
 // ═════════════════════════════════════════════════════════════
@@ -9698,80 +9525,33 @@ if (typeof window.addMemoryEntry !== 'function') {
     switchStudioTab('roles');
   }
 
-  // V21 — Nav-Pills sind jetzt fest im HTML verankert (STUDIO, MARKETING, LUCY).
-  // Die alte injectNavPills()-Funktion ist daher deaktiviert,
-  // um keine Duplikate zur Laufzeit zu erzeugen.
-  function injectNavPills() { /* deaktiviert in V21-Lucy */ }
+  // Inject extra nav-pills (🎬 STUDIO, 📣 MKT-OS) into top nav if not present
+  function injectNavPills() {
+    const nav = document.querySelector('nav');
+    if (!nav) return;
+    if (nav.querySelector('[data-nav="studio"]')) return;
+    const sep = nav.querySelector('.nav-sep');
+    const make = (id, sec, label, color) => {
+      const d = document.createElement('div');
+      d.className = 'nav-pill';
+      d.dataset.nav = id;
+      d.onclick = () => document.getElementById(sec)?.scrollIntoView({behavior:'smooth'});
+      d.innerHTML = label;
+      if (color) d.style.cssText = `border-color:${color};color:${color}`;
+      return d;
+    };
+    const studioPill = make('studio', 'sec-studio', '🎬 STUDIO', 'rgba(232,201,106,0.45)');
+    const mktPill = make('marketing', 'sec-studio', '📣 MARKETING', 'rgba(168,85,247,0.45)');
+    if (sep) { nav.insertBefore(studioPill, sep); nav.insertBefore(mktPill, sep); }
+    else { nav.appendChild(studioPill); nav.appendChild(mktPill); }
+  }
 
   function boot() {
+    injectNavPills();
     injectMaxExpansion();
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);
   else setTimeout(boot, 100);
-})();
-</script>
-
-<!-- ═══════════════════════════════════════════════════════════════
-     V21 LUCY · MISSING-FUNCTION POLYFILL — Fängt Calls ab,
-     die sonst "ReferenceError: xxx is not defined" werfen würden.
-     ═══════════════════════════════════════════════════════════════ -->
-<script>
-(function(){
-  function safeToast(msg){
-    var t=document.getElementById('lucy-poly-toast');
-    if(!t){t=document.createElement('div');t.id='lucy-poly-toast';t.style.cssText='position:fixed;bottom:24px;left:50%;transform:translateX(-50%);padding:.55rem 1rem;background:rgba(0,14,26,.95);border:1px solid rgba(168,85,247,.5);border-radius:10px;color:#d9bbff;font-size:.7rem;font-weight:700;z-index:9999;box-shadow:0 8px 30px rgba(0,0,0,.5);transition:opacity .3s';document.body.appendChild(t);}
-    t.textContent=msg;t.style.opacity='1';clearTimeout(window._lucyPolyTo);
-    window._lucyPolyTo=setTimeout(function(){t.style.opacity='0';},2400);
-  }
-  function askLucy(prompt){
-    try{
-      var L=window.Lucy||window.Samantha;
-      if(L && L.open) L.open();
-      if(L && L.ask) L.ask(prompt);
-    }catch(_){}
-  }
-  // lucyRoleBrief — wird aus den 7 AI-Rollen-Karten gefeuert
-  if(typeof window.lucyRoleBrief!=='function'){
-    window.lucyRoleBrief=function(roleId){
-      safeToast('🧠 Lucy briefe Rolle „'+roleId+'"');
-      askLucy('Erstelle ein präzises Briefing für die Marketing-Rolle "'+roleId+'" speziell für Wave Bite. Inkl. Ziele, KPIs, Tonalität, 3 Beispiel-Outputs der nächsten 7 Tage.');
-    };
-  }
-  // switchStudioTab — fängt alte Tab-Switcher-Calls ab
-  if(typeof window.switchStudioTab!=='function'){
-    window.switchStudioTab=function(key){
-      safeToast('🎬 Studio-Tab „'+key+'" — bitte im Marketing-Cockpit öffnen');
-      var sec=document.getElementById('sec-marketing')||document.getElementById('sec-studio');
-      if(sec) sec.scrollIntoView({behavior:'smooth',block:'start'});
-    };
-  }
-  // Generischer Catcher: alle „lucyXxx" Calls landen in Lucy
-  ['lucyVoiceover','lucyEditCut','lucyVideoExport','lucyHashtagGen','lucyAutoCaption','lucyPromptRefine']
-    .forEach(function(fn){
-      if(typeof window[fn]!=='function'){
-        window[fn]=function(){ askLucy('Aktion: '+fn+'() — bitte ausführen oder Anleitung geben.'); };
-      }
-    });
-  // copyPromptToClip Fallback
-  if(typeof window.copyPromptToClip!=='function'){
-    window.copyPromptToClip=function(text){
-      try{ navigator.clipboard.writeText(text||''); safeToast('📋 In Zwischenablage kopiert'); }
-      catch(_){ safeToast('⚠ Kopieren fehlgeschlagen'); }
-    };
-  }
-  // V21.2 — Marketing-Hirn Inline-Actions
-  window.officeMarketingAction = function(kind){
-    const prompts = {
-      brainstorm: 'Brainstorm-Modus: gib mir 5 starke Reel-Ideen für die nächsten 7 Tage, basierend auf Wave-Bite-Faktenbuch + aktuellen Blockern.',
-      audit:      'Audit den letzten Wave-Bite-Post: was war gut, was schlecht, was würdest du beim nächsten anders machen?',
-      trends:     'Scan aktuelle Trends in Houseboat / Brandenburg-Tourismus / Marina-Gastronomie und schlage 3 Posts vor, die jetzt einschlagen würden.',
-      calendar:   'Erstelle einen 7-Tage Posting-Plan für Wave Bite mit Slots, Themen und Plattform-Empfehlungen (Instagram, TikTok, LinkedIn).',
-      brandcheck: 'Prüfe meinen letzten Post auf Brand-Voice-Konformität: verbotene Wörter (innovativ, einzigartig, Lösung), Tonalität, CTA-Schärfe.'
-    };
-    safeToast('🧜🏻‍♀️ '+kind.toUpperCase()+' — Lucy übernimmt');
-    askLucy(prompts[kind] || 'Marketing-Action: '+kind);
-  };
-  console.log('[v21-lucy] Polyfill aktiv — Missing functions gefangen');
 })();
 </script>
 
