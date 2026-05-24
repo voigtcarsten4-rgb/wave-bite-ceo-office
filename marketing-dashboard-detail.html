@@ -1026,5 +1026,33 @@
   console.log('[V21.2-Lucy] Marketing Cockpit ready · channel='+CHANNEL+' · auto-save + step-gates + versions aktiv');
 })();
 </script>
+<style id="v22-detail-calm">
+  /* V22 detail dashboard - ruhige Header */
+  nav, header { backdrop-filter: blur(10px) !important; }
+  @media (max-width: 768px) {
+    .nav-pill, .pipeline-step, .step-card { font-size: .78rem !important; min-height: 46px !important; }
+  }
+  @media (max-width: 480px) {
+    .nav-pill { font-size: .74rem !important; padding: .5rem .85rem !important; min-height: 46px !important; font-weight: 800 !important; }
+  }
+</style>
+<script id="v22-detail-back">
+(function(){
+  // Back-to-CEO-Office Button injection (oben rechts)
+  function addBackBtn(){
+    if (document.getElementById('v22-back-btn')) return;
+    var btn = document.createElement('a');
+    btn.id = 'v22-back-btn';
+    btn.href = 'index.html';
+    btn.textContent = '< Zurueck zum CEO Office';
+    btn.style.cssText = 'position:fixed;top:14px;left:14px;z-index:90000;background:linear-gradient(135deg,rgba(0,212,170,0.18),rgba(0,150,120,0.08));border:1px solid rgba(0,212,170,0.55);color:#9af0d8;padding:.55rem 1.1rem;border-radius:22px;font-weight:700;font-size:.82rem;text-decoration:none;letter-spacing:.04em;backdrop-filter:blur(8px);box-shadow:0 4px 14px rgba(0,0,0,0.3);transition:all .15s ease';
+    btn.onmouseenter = function(){ btn.style.background = 'linear-gradient(135deg,rgba(0,212,170,0.28),rgba(0,150,120,0.14))'; btn.style.transform = 'translateY(-1px)'; };
+    btn.onmouseleave = function(){ btn.style.background = 'linear-gradient(135deg,rgba(0,212,170,0.18),rgba(0,150,120,0.08))'; btn.style.transform = 'translateY(0)'; };
+    document.body.appendChild(btn);
+  }
+  if (document.readyState !== 'loading') addBackBtn();
+  else document.addEventListener('DOMContentLoaded', addBackBtn);
+})();
+</script>
 </body>
 </html>
