@@ -1,3 +1,4 @@
 To https://github.com/voigtcarsten4-rgb/ceo-office.git
-   b2c91db..93db3fe  main -> main
-Everything up-to-date
+   096f118..264728b  main -> main
+To https://github.com/voigtcarsten4-rgb/ceo-office.git
+ * [new tag]         v20-bulletproof -> v20-bulletproof
