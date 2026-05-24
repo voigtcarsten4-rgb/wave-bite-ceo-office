@@ -95,6 +95,8 @@
 
   /* V21.3.1 — Smooth-Scroll global aktivieren (Bug-Fix für scrollIntoView) */
   html{scroll-behavior:smooth}
+  /* V21.3.2 — Boot-Overlay nach 6s zwangs-entfernen (war Scroll-Blocker live) */
+  #boot.dismissed{display:none !important;visibility:hidden !important;pointer-events:none !important;opacity:0 !important;animation:none !important}
 
   /* NAVBAR · V21.3 — flex-wrap + scroll-x, damit ALLE Pills sichtbar/klickbar bleiben */
   nav{position:sticky;top:0;z-index:100;background:rgba(2,8,16,0.92);backdrop-filter:blur(24px);border-bottom:1px solid rgba(0,200,255,0.12);padding:.4rem 1rem;display:flex;flex-wrap:wrap;align-items:center;gap:.4rem .6rem;min-height:56px;overflow-x:auto;overflow-y:visible;-webkit-overflow-scrolling:touch;scrollbar-width:thin;scrollbar-color:rgba(0,200,255,0.4) transparent}
@@ -9651,6 +9653,32 @@ if (typeof window.addMemoryEntry !== 'function') {
 })();
 </script>
 
+
+<!-- V21.3.2 BOOT-OVERLAY WATCHDOG — verhindert dass #boot dauerhaft scroll blockiert -->
+<script>
+(function(){
+  function killBoot(){
+    var b = document.getElementById('boot');
+    if (b) {
+      b.classList.add('dismissed');
+      b.style.cssText = 'display:none !important;visibility:hidden !important;pointer-events:none !important;opacity:0 !important';
+      try { b.parentNode.removeChild(b); } catch(_) {}
+    }
+  }
+  // Erst: 6s warten (Animation), dann zwangs-entfernen
+  setTimeout(killBoot, 6500);
+  // Backup: bei jedem Klick auf Body checken ob boot noch da
+  document.addEventListener('click', function(){
+    var b = document.getElementById('boot');
+    if (b && b.offsetParent !== null) {
+      var op = parseFloat(getComputedStyle(b).opacity);
+      if (op < 0.05) killBoot();
+    }
+  }, true);
+  // Notbremse: ESC-Key entfernt sofort
+  document.addEventListener('keydown', function(e){ if(e.key==='Escape') killBoot(); });
+})();
+</script>
 
 <!-- V21.3 LUCY · MISSING-FUNCTION POLYFILL + MARKETING STUDIO -->
 <script>
