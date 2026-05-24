@@ -1,0 +1,190 @@
+{
+  "_meta": {
+    "version": "V21.5",
+    "purpose": "Lokale Wave-Bite Media-Library — kuratierte Übersicht aller verfügbaren Wave-Bite-Assets auf Carstens PC",
+    "totalAssets": "743 Bilder + 128 Videos + 30 fertige Werbespots",
+    "lastScan": "2026-05-24",
+    "note": "Pfade sind lokal (Windows). Für Web-Nutzung müssen Files zu CDN/YouTube/Cloud hochgeladen werden — siehe upload_workflow"
+  },
+
+  "local_paths_windows": {
+    "werbung_wave_bite": "C:\\Users\\Startklar\\Desktop\\Werbung_Wave Bite",
+    "wave_bite_neu":     "C:\\Users\\Startklar\\Desktop\\Wave Bite Neu",
+    "deli_kost_deluxe":  "C:\\Users\\Startklar\\Desktop\\Deli Kost Deluxe",
+    "downloads":         "C:\\Users\\Startklar\\Downloads"
+  },
+
+  "ready_to_post_master_videos": {
+    "_description": "20 fertig produzierte MASTER-Spots in Werbung_Wave Bite/19_Final_Videos/",
+    "_path_prefix": "Werbung_Wave Bite\\19_Final_Videos\\",
+    "videos": [
+      { "id": 1,  "file": "WAVEBITE_01_Die_Vision_MASTER_v1.mp4",                  "theme": "Founder Vision", "use": "Investor-DM, LinkedIn-Hero" },
+      { "id": 2,  "file": "WAVEBITE_02_Am_Wasser_Geboren_MASTER_v1.mp4",            "theme": "Origin Story",   "use": "Brand-Story Instagram" },
+      { "id": 3,  "file": "WAVEBITE_03_Wo_Wasser_Auf_Leben_Trifft_MASTER_v1.mp4",   "theme": "Cinematic",      "use": "Premium-Reel, TikTok-Hero" },
+      { "id": 4,  "file": "WAVEBITE_04_Die_Plattform_Von_Morgen_MASTER_v1.mp4",     "theme": "Future Tech",    "use": "Investor + B2B" },
+      { "id": 5,  "file": "WAVEBITE_05_Eine_Welle_Eine_Welt_MASTER_v1.mp4",         "theme": "Movement",       "use": "Community-Aufbau" },
+      { "id": 6,  "file": "WAVEBITE_06_Europas_Zukunft_Am_Wasser_MASTER_v1.mp4",    "theme": "Scaling",        "use": "Investor-Pitch" },
+      { "id": 7,  "file": "WAVEBITE_07_Die_App_Die_Wasser_Versteht_MASTER_v1.mp4",  "theme": "App-Feature",    "use": "Glide-App-Marketing" },
+      { "id": 8,  "file": "WAVEBITE_08_Wasser_In_Echtzeit_MASTER_v1.mp4",           "theme": "Live-Data",      "use": "Wasserlage-Promo" },
+      { "id": 9,  "file": "WAVEBITE_09_Scan_Bestell_Geniess_MASTER_v1.mp4",         "theme": "Customer-Journey","use": "Conversion-Reel" },
+      { "id": 10, "file": "WAVEBITE_10_Digital_Trifft_Natur_MASTER_v1.mp4",         "theme": "Brand-Essenz",   "use": "Hero-Spot Website" },
+      { "id": 11, "file": "WAVEBITE_11_Die_Wasserrevolution_MASTER_v1.mp4",         "theme": "Manifesto",      "use": "Founder-Story Linkedin" },
+      { "id": 12, "file": "WAVEBITE_12_Kulinarik_Auf_Dem_Wasser_MASTER_v1.mp4",     "theme": "Food",           "use": "Instagram-Reel Premium" },
+      { "id": 13, "file": "WAVEBITE_13_Der_Perfekte_Morgen_MASTER_v1.mp4",          "theme": "Lifestyle",      "use": "Story-Highlights" },
+      { "id": 14, "file": "WAVEBITE_14_Schmeck_Die_Welle_MASTER_v1.mp4",            "theme": "Punchy",         "use": "TikTok-Hook" },
+      { "id": 15, "file": "WAVEBITE_15_Premium_Schwebend_Frei_MASTER_v1.mp4",       "theme": "Premium",        "use": "Reel Premium-Zielgruppe" },
+      { "id": 16, "file": "WAVEBITE_16_Abende_Die_Bleiben_MASTER_v1.mp4",           "theme": "Sunset",         "use": "Romantik / DM-Magnet" },
+      { "id": 17, "file": "WAVEBITE_17_Menschen_Des_Wassers_MASTER_v1.mp4",         "theme": "Community",      "use": "User-Generated-Aufruf" },
+      { "id": 18, "file": "WAVEBITE_18_Gemeinsam_Auf_Der_Welle_MASTER_v1.mp4",      "theme": "Team",           "use": "Recruiting + Team-Story" },
+      { "id": 19, "file": "WAVEBITE_19_Fuer_Familien_Fuer_Momente_MASTER_v1.mp4",   "theme": "Family",         "use": "Brandenburg-Touristen" },
+      { "id": 20, "file": "WAVEBITE_20_Skalierbar_Europaweit_MASTER_v1.mp4",        "theme": "Scaling-Vision", "use": "Investor B2B" }
+    ]
+  },
+
+  "tv_spots": {
+    "_description": "10 fertige TV-Spots in Werbung_Wave Bite/19_Final_Videos/TV_Spots/",
+    "_path_prefix": "Werbung_Wave Bite\\19_Final_Videos\\TV_Spots\\",
+    "spots": [
+      { "id": 1,  "file": "TV_01_Der_Moment_SPOT_v1.mp4",            "duration": "15-30s", "use": "Premium-Hook" },
+      { "id": 2,  "file": "TV_02_Hafen_Der_Zukunft_SPOT_v1.mp4",     "duration": "15-30s", "use": "B2B Marina-Operator" },
+      { "id": 3,  "file": "TV_03_Die_App_Erklaert_SPOT_v1.mp4",      "duration": "15-30s", "use": "Customer-Conversion" },
+      { "id": 4,  "file": "TV_04_Investor_Pitch_SPOT_v1.mp4",        "duration": "15-30s", "use": "Investor-DM" },
+      { "id": 5,  "file": "TV_05_Sunset_Vibes_SPOT_v1.mp4",          "duration": "15-30s", "use": "Reel Romantik" },
+      { "id": 6,  "file": "TV_06_Franchise_Jetzt_SPOT_v1.mp4",       "duration": "15-30s", "use": "Partner-Akquise" },
+      { "id": 7,  "file": "TV_07_TikTok_Hook_SPOT_v1.mp4",           "duration": "15s",    "use": "TikTok primär" },
+      { "id": 8,  "file": "TV_08_Events_Am_Wasser_SPOT_v1.mp4",      "duration": "15-30s", "use": "Event-Promo" },
+      { "id": 9,  "file": "TV_09_Smart_Infrastruktur_SPOT_v1.mp4",   "duration": "15-30s", "use": "Tech-Story" },
+      { "id": 10, "file": "TV_10_Vision_2030_SPOT_v1.mp4",           "duration": "15-30s", "use": "Vision-Storytelling" }
+    ]
+  },
+
+  "mg_videos": {
+    "_description": "10 MG (Motion Graphics) Videos in Werbung_Wave Bite/19_Final_Videos/TV_MG/",
+    "_path_prefix": "Werbung_Wave Bite\\19_Final_Videos\\TV_MG\\",
+    "videos": [
+      "WAVEBITE_MG01_Das_Wasser_gehoert_dir_v1.mp4",
+      "WAVEBITE_MG02_Live_Daten_v1.mp4",
+      "WAVEBITE_MG03_Genuss_auf_dem_Wasser_v1.mp4",
+      "WAVEBITE_MG04_Events_die_bewegen_v1.mp4",
+      "WAVEBITE_MG05_Invest_in_Wasser_v1.mp4",
+      "WAVEBITE_MG06_Community_verbindet_v1.mp4",
+      "WAVEBITE_MG07_White_Label_Partner_v1.mp4",
+      "WAVEBITE_MG08_Smarte_Haefen_v1.mp4",
+      "WAVEBITE_MG09_Water_Intelligence_v1.mp4",
+      "WAVEBITE_MG10_Die_Zukunft_schwimmt_v1.mp4"
+    ]
+  },
+
+  "leonardo_hero_images": {
+    "_description": "20 Premium Leonardo-AI Hero-Images in Werbung_Wave Bite/09_Leonardo_Assets/Generated/",
+    "_path_prefix": "Werbung_Wave Bite\\09_Leonardo_Assets\\Generated\\",
+    "images": [
+      { "file": "01_Hero_Platform_GoldenHour.jpg",   "tags": ["hero","platform","golden hour"],   "use": "Website-Hero, LinkedIn-Cover" },
+      { "file": "02_Aerial_Lake_Sunrise.jpg",        "tags": ["aerial","lake","sunrise"],         "use": "Drone-Mood Instagram" },
+      { "file": "03_Food_GoldenHour_Water.jpg",      "tags": ["food","sunset","gastro"],          "use": "Instagram-Food-Reel" },
+      { "file": "04_App_Interface_Water.jpg",        "tags": ["app","ui","product"],              "use": "App-Marketing" },
+      { "file": "05_Community_Water_Sunset.jpg",     "tags": ["community","sunset","social"],     "use": "Community-Story" },
+      { "file": "06_QR_Scan_Platform.jpg",           "tags": ["qr","scan","ux"],                  "use": "Customer-Conversion" },
+      { "file": "07_Berlin_Spree_Aerial.jpg",        "tags": ["berlin","spree","aerial"],         "use": "Standort-Story" },
+      { "file": "08_Sunset_Dinner_Water.jpg",        "tags": ["sunset","dinner","romance"],       "use": "Premium-Dinner Reel" },
+      { "file": "09_Future_Vision_Network.jpg",      "tags": ["future","network","vision"],       "use": "Investor + B2B" },
+      { "file": "10_Jazz_Water_Evening.jpg",         "tags": ["jazz","evening","ambient"],        "use": "Event-Vibe" },
+      { "file": "11_Investor_Business_Platform.jpg", "tags": ["investor","business"],             "use": "Pitch-Deck-Cover" },
+      { "file": "12_Water_Ripple_Macro.jpg",         "tags": ["macro","abstract","water"],        "use": "Loopable Cover" },
+      { "file": "13_Floating_Cinema_Night.jpg",      "tags": ["cinema","night","event"],          "use": "Event-Promo" },
+      { "file": "14_Family_Summer_Water.jpg",        "tags": ["family","summer"],                 "use": "Family-Marketing" },
+      { "file": "15_Brandenburg_Lakes_Aerial.jpg",   "tags": ["brandenburg","lakes","drone"],     "use": "Regional + Tourismus" },
+      { "file": "16_White_Label_Platform.jpg",       "tags": ["white-label","b2b"],               "use": "B2B-Partner" },
+      { "file": "17_Water_Navigation_Captain.jpg",   "tags": ["navigation","captain"],            "use": "Sportboot-Zielgruppe" },
+      { "file": "18_Platform_Morning_Coffee.jpg",    "tags": ["morning","coffee","lifestyle"],    "use": "Lifestyle-Story" },
+      { "file": "19_Event_Sunset_Crowd.jpg",         "tags": ["event","crowd","sunset"],          "use": "Event-Highlight" },
+      { "file": "20_2030_Vision_Future.jpg",         "tags": ["2030","vision","future"],          "use": "Pitch-Vision-Folie" }
+    ]
+  },
+
+  "wave_bite_neu_food_images": {
+    "_description": "Food + Produkt-Bilder aus 'Wave Bite Neu/APP/Bilder' (368 Bilder, kuratierte Top 20)",
+    "_path_prefix": "Wave Bite Neu\\APP\\Bilder\\",
+    "categories": {
+      "bratwurst": ["Bratwurst im Brötchen.jpg", "Bratwurst im Brötchen1.jpg", "Bratwurst Wave Bite.jpg", "Bratwurst+Pommes.jpg"],
+      "chatgpt_ai_generated": "350+ ChatGPT-generierte Wave-Bite-Bilder (Datum 2026-01 bis 2026-03)",
+      "camper": ["camper.png", "CamperWave.jpg", "CamperWave.png"]
+    }
+  },
+
+  "dkd_assets": {
+    "_description": "Deli Kost Deluxe — Bau-Pläne, Finanz-Grafiken, Storyboards (353 Bilder)",
+    "highlights": [
+      "Bauen/Aufbau_14x4.85m_Bar.jpg — Bau-Plan Bar",
+      "Bauen/Beleuchtungskonzept/Konzept_DKD.jpg — Licht-Design",
+      "BwBBQ/Analyse Grafiken/break_even_analysis.png — Finanz-Chart",
+      "BwBBQ/Analyse Grafiken/financial_plan.png — Business-Plan",
+      "Franchise/DeliKost_Standortvergleich_verspielt.png — Franchise-Karte"
+    ]
+  },
+
+  "storyboards": {
+    "_description": "18 Storyboards in Werbung_Wave Bite/04_Storyboards/VIDEO_01..18",
+    "_path_prefix": "Werbung_Wave Bite\\04_Storyboards\\",
+    "available_videos": ["VIDEO_01", "VIDEO_02", "VIDEO_03", "VIDEO_04", "VIDEO_05", "VIDEO_06", "VIDEO_07", "VIDEO_08", "VIDEO_09", "VIDEO_10", "VIDEO_11", "VIDEO_12", "VIDEO_13", "VIDEO_14", "VIDEO_15", "VIDEO_16", "VIDEO_17", "VIDEO_18"]
+  },
+
+  "logos": {
+    "main_logo":  "Werbung_Wave Bite\\Logo_Neu.png",
+    "round_logo": "Werbung_Wave Bite\\Logo_Neu_rund.png",
+    "favicon":    "ceo-office-live\\favicon.ico"
+  },
+
+  "upload_workflow": {
+    "_description": "Wie aus lokalen Files Web-Assets werden",
+    "step_1": "Wähle Video aus ready_to_post_master_videos (lokal)",
+    "step_2": "Upload zu YouTube (unlisted) ODER Vimeo ODER Cloudflare-Stream — public URL erhalten",
+    "step_3": "URL ins Marketing-Cockpit Step 3 (Visual) oder Step 4 (Video) einfügen",
+    "step_4": "Quality-Gate + Caption + Post via Postiz/Buffer",
+    "alternative": "Direkt aus Werbung_Wave Bite zu Social-Plattform hochladen (Instagram/TikTok/LinkedIn) — keine Web-URL nötig"
+  },
+
+  "lucy_3_ready_to_post_proposals": {
+    "_description": "3 Lucy-fertige Vorschläge basierend auf existierenden Wave-Bite-Spots",
+    "_note": "Caption + Hashtags + CTA komplett vorgeneriert — User muss nur Video hochladen + posten",
+
+    "proposal_1_founder_vision": {
+      "title": "Die Vision (Founder-Story)",
+      "style": "ruhig, premium, ehrlich",
+      "video_file": "Werbung_Wave Bite\\19_Final_Videos\\WAVEBITE_01_Die_Vision_MASTER_v1.mp4",
+      "platform_primary": "LinkedIn + Instagram-Reel",
+      "aspect": "16:9 (LinkedIn) + 9:16 (Reel-Cut)",
+      "caption_de": "Ich habe heute unterschrieben.\n\nWave Bite — Premium-Gastronomie auf dem Wasser. Cap Table 95/5. Fünf LOIs in 3 Monaten. Pre-Money 1,5 Mio €.\n\nKein Promi-Endorsement. Kein Stockfoto. Echte Founder-Story.\n\nWer mitbauen will: DM mit BOOT.",
+      "hashtags": "#wavebite #hausboot #brandenburg #foundlife #startup #seedstage",
+      "cta": "DM mit BOOT",
+      "best_time": "Mi 12:00 (LinkedIn) · Di 19:00 (Instagram Reel)",
+      "ready": true
+    },
+
+    "proposal_2_cinematic_wo_wasser_leben": {
+      "title": "Wo Wasser auf Leben trifft (Cinematic)",
+      "style": "premium, sinnlich, Apple/Magnum-Vibe",
+      "video_file": "Werbung_Wave Bite\\19_Final_Videos\\WAVEBITE_03_Wo_Wasser_Auf_Leben_Trifft_MASTER_v1.mp4",
+      "platform_primary": "Instagram-Reel + TikTok",
+      "aspect": "9:16",
+      "caption_de": "Es gibt diesen Moment, wenn das Wasser ganz still liegt.\n\nUnd man denkt: hier könnte man bleiben.\n\nWave Bite. Brandenburg. Frühjahr 2027.\n\nDM mit RESERVIERUNG.",
+      "hashtags": "#wavebite #brandenburg #wolzigsee #goldenhour #premium #waterlife",
+      "cta": "DM mit RESERVIERUNG",
+      "best_time": "Sa 11:00 (Wochenend-Stimmung)",
+      "ready": true
+    },
+
+    "proposal_3_tiktok_hook": {
+      "title": "TikTok Hook (Punchy)",
+      "style": "schnell, viral, neugiermachend",
+      "video_file": "Werbung_Wave Bite\\19_Final_Videos\\TV_Spots\\TV_07_TikTok_Hook_SPOT_v1.mp4",
+      "platform_primary": "TikTok",
+      "aspect": "9:16",
+      "caption_de": "Diese 3 LOIs hat noch kein anderes Startup vor uns bekommen 🚢\n\nTransgourmet. Radeberger. Hugentobler.\n\nFolg uns — Tag 60 schwimmt das Boot.",
+      "hashtags": "#wavebite #startup #hausboot #brandenburg #foundlife #fyp #waterlife",
+      "cta": "Folg uns für Tag 60",
+      "best_time": "Mi 20:30 oder So 18:00",
+      "ready": true
+    }
+  }
+}

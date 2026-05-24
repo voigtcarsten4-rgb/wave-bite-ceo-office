@@ -484,9 +484,10 @@
   .bwl-module-desc{font-size:.62rem;color:var(--text-dim);line-height:1.5}
   /* ---- MOBILE IMPROVEMENTS ---- */
   @media(max-width:768px){
-    nav{padding:.4rem .6rem;gap:.35rem .5rem;flex-wrap:wrap;overflow-x:auto;overflow-y:visible;-webkit-overflow-scrolling:touch;scrollbar-width:thin}
+    nav{padding:.55rem .7rem;gap:.45rem .55rem;flex-wrap:wrap;overflow-x:auto;overflow-y:visible;-webkit-overflow-scrolling:touch;scrollbar-width:thin}
     nav::-webkit-scrollbar{height:5px}
-    .nav-pill{white-space:nowrap;flex-shrink:0;min-height:38px;font-size:.58rem;padding:.25rem .55rem;display:inline-flex;align-items:center;justify-content:center}
+    /* V21.5 Mobile-Fix lesbar */
+    .nav-pill{white-space:nowrap;flex-shrink:0;min-height:44px;font-size:.72rem;padding:.42rem .85rem;font-weight:700;letter-spacing:.04em;display:inline-flex;align-items:center;justify-content:center}
     .page{padding:0 .75rem 6rem}
     section{padding:1.25rem 0}
     .agent-grid{grid-template-columns:1fr!important}
@@ -672,7 +673,7 @@
 
     /* Navbar: V21.3 — flex-wrap erlauben, alle Pills sichtbar */
     nav{gap:.3rem;min-height:50px;height:auto;padding:.3rem .5rem;flex-wrap:wrap}
-    .nav-pill{min-height:38px;min-width:44px;padding:.22rem .55rem;font-size:.55rem;display:inline-flex;align-items:center;justify-content:center;border-radius:22px;white-space:nowrap}
+    .nav-pill{min-height:44px;min-width:44px;padding:.4rem .8rem;font-size:.7rem;font-weight:700;letter-spacing:.04em;display:inline-flex;align-items:center;justify-content:center;border-radius:22px;white-space:nowrap}
     .nav-clock{font-size:.75rem}
 
     /* Hero / Bridge: single column */
@@ -1288,7 +1289,8 @@
   .cal-next-bar { flex-wrap: wrap; gap: .4rem !important; padding: .5rem !important; }
   #cal-next-title { font-size: .65rem !important; }
   #cal-next-countdown { font-size: .7rem !important; }
-  .nav-pill { min-height: 38px !important; font-size: .48rem !important; padding: .3rem .55rem !important; }
+  /* V21.5 Mobile-Fix lesbar */
+  .nav-pill { min-height: 44px !important; font-size: .68rem !important; padding: .42rem .8rem !important; font-weight: 700 !important; }
   #quick-actions-bar { bottom: 10px !important; right: .65rem !important; flex-direction: row !important; gap: .35rem !important; }
   .bridge-title { font-size: 1.6rem !important; }
   .bridge-sub { font-size: .7rem !important; }
@@ -1307,7 +1309,9 @@
 @media (max-width: 480px) {
   .kpi-strip { grid-template-columns: repeat(2,1fr) !important; }
   .bridge-title { font-size: 1.3rem !important; }
-  .nav-pill { font-size: .44rem !important; padding: .25rem .5rem !important; }
+  /* V21.5 Mobile-Fix — lesbar (war .44rem) */
+  .nav-pill { font-size: .68rem !important; padding: .42rem .85rem !important; min-height: 44px !important; font-weight: 700 !important; letter-spacing: .04em !important; }
+  nav { padding: .55rem .7rem !important; gap: .4rem .55rem !important; }
 }
 
 @media (pointer: coarse) {
