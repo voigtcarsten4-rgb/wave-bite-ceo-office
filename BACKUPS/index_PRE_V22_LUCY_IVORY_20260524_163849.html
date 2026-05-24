@@ -21,7 +21,7 @@
     if (Date.now() - last < 60000) return; // max 1× pro Minute
     sessionStorage.setItem(VCHECK_KEY, String(Date.now()));
     // Hole raw HTML-Header von GitHub und prüfe build-version
-    fetch('https://raw.githubusercontent.com/voigtcarsten4-rgb/wave-bite-ceo-office/main/index.html?t='+Date.now(), {cache:'no-store'})
+    fetch('https://raw.githubusercontent.com/voigtcarsten4-rgb/ceo-office/main/index.html?t='+Date.now(), {cache:'no-store'})
       .then(r => r.text())
       .then(t => {
         const m = t.match(/name="build-version" content="([^"]+)"/);
@@ -1803,109 +1803,7 @@
   <meta http-equiv="cache-control" content="no-cache, no-store, must-revalidate">
   <meta http-equiv="pragma" content="no-cache">
   <meta http-equiv="expires" content="0">
-  <meta name="version" content="v22-2026-05-24-LUCY-IVORY">
-
-  <!-- ============================================================
-       v22 · LUCY-IVORY THEME LAYER (2026-05-24)
-       Hellere Premium-Optik (Ivory · Cream · Champagner · Navy)
-       Aktivierung: body.theme-ivory (default an)
-       Rueckgaengig: localStorage 'wb_theme'='dark' oder ?theme=dark
-       ============================================================ -->
-  <style id="v22-ivory-theme">
-    /* Mobile-Overflow-Schutz (theme-unabhaengig) */
-    html, body { max-width: 100vw; overflow-x: hidden; }
-    body.theme-ivory {
-      --void:#f3ebd9; --deep:#ebe1cb; --panel:#fdf8ec;
-      --blue:#2b6cb0; --teal:#1c8d7a; --gold:#b88b3c;
-      --gold-dim:rgba(184,139,60,0.18); --red:#c64545; --green:#2f9d6e;
-      --text:#2a2517; --text-dim:#6b6353; --text-mid:#8a8170;
-      --glow-blue:0 4px 18px rgba(43,108,176,0.18);
-      --glow-gold:0 4px 18px rgba(184,139,60,0.25);
-      --border-subtle:rgba(43,108,176,0.18);
-      --cream:#fdf8ec; --ivory:#f7f0dd;
-      --cream-glow:rgba(184,139,60,0.06); --cream-subtle:rgba(184,139,60,0.04);
-      --cream-border:rgba(184,139,60,0.18); --cream-mid:#efe5cc;
-      --cream-dark:#d9c89d; --sand:rgba(184,139,60,0.05);
-      background:#f3ebd9 !important; color:#2a2517 !important;
-    }
-    body.theme-ivory .panel, body.theme-ivory .social-card, body.theme-ivory .b-card {
-      background:linear-gradient(180deg,#fdf8ec 0%,#f7efda 100%) !important;
-      border:1px solid rgba(184,139,60,0.22) !important;
-      box-shadow:0 1px 2px rgba(42,37,23,0.04),0 6px 20px rgba(42,37,23,0.06) !important;
-      color:var(--text) !important;
-    }
-    body.theme-ivory .section-title, body.theme-ivory .gold-title {
-      color:#102a43 !important; letter-spacing:.14em !important;
-    }
-    body.theme-ivory .nav-pill {
-      background:rgba(253,248,236,0.85) !important; color:#102a43 !important;
-      border:1px solid rgba(184,139,60,0.32) !important;
-    }
-    body.theme-ivory .nav-pill.active, body.theme-ivory .nav-pill:hover {
-      background:linear-gradient(135deg,#b88b3c,#d2a35a) !important;
-      color:#fdf8ec !important; border-color:rgba(184,139,60,0.6) !important;
-    }
-    body.theme-ivory a { color:#2b6cb0; }
-    @media (max-width:720px){
-      body.theme-ivory .panel{padding:.9rem .85rem !important;}
-      body.theme-ivory .social-val{font-size:1.1rem !important;}
-      body.theme-ivory .nav-pill{font-size:.58rem !important;padding:.35rem .55rem !important;}
-    }
-    .v22-theme-toggle{
-      position:fixed; top:10px; right:12px; z-index:9999;
-      width:34px; height:34px; border-radius:50%;
-      border:1px solid rgba(184,139,60,0.4);
-      background:rgba(253,248,236,0.85); color:#102a43; cursor:pointer;
-      font-size:1rem; display:flex; align-items:center; justify-content:center;
-      box-shadow:0 2px 6px rgba(0,0,0,.15); transition:transform .15s ease;
-    }
-    .v22-theme-toggle:hover{transform:scale(1.08);}
-    body:not(.theme-ivory) .v22-theme-toggle{
-      background:rgba(7,24,40,0.85); color:#c9a84c; border-color:rgba(201,168,76,0.5);
-    }
-    [data-demo="true"]{position:relative;}
-    [data-demo="true"]::before{
-      content:"DEMO"; position:absolute; top:6px; right:6px;
-      font-size:.5rem; font-weight:800; letter-spacing:.12em;
-      background:#b88b3c; color:#fdf8ec; padding:2px 6px; border-radius:3px;
-      box-shadow:0 1px 3px rgba(0,0,0,.15); pointer-events:none; z-index:5;
-    }
-    body:not(.theme-ivory) [data-demo="true"]::before{background:#3a2a00; color:#ffb84a;}
-  </style>
-  <script id="v22-theme-bootstrap">
-  (function(){
-    try{
-      var qs=new URLSearchParams(location.search);
-      var forced=qs.get('theme');
-      var stored=localStorage.getItem('wb_theme');
-      var mode=forced||stored||'ivory';
-      if(mode==='ivory'){
-        document.documentElement.setAttribute('data-theme','ivory');
-        document.addEventListener('DOMContentLoaded',function(){
-          document.body.classList.add('theme-ivory'); mountThemeToggle();
-        });
-      } else {
-        document.addEventListener('DOMContentLoaded', mountThemeToggle);
-      }
-      if(forced){try{localStorage.setItem('wb_theme',forced);}catch(_){}}
-    }catch(_){}
-    function mountThemeToggle(){
-      if(document.querySelector('.v22-theme-toggle'))return;
-      var b=document.createElement('button');
-      b.className='v22-theme-toggle';
-      b.setAttribute('title','Theme umschalten Hell/Dunkel');
-      b.setAttribute('aria-label','Theme umschalten');
-      b.textContent=document.body.classList.contains('theme-ivory')?'☾':'☀';
-      b.onclick=function(){
-        var on=document.body.classList.toggle('theme-ivory');
-        try{localStorage.setItem('wb_theme',on?'ivory':'dark');}catch(_){}
-        b.textContent=on?'☾':'☀';
-      };
-      document.body.appendChild(b);
-    }
-  })();
-  </script>
-
+  <meta name="version" content="v20-2026-05-22">
 </head>
 <body>
 <!-- v20 CTA-Bar — V21.3: deaktiviert (Pills sind in Header-Nav verfügbar) -->
@@ -2289,7 +2187,7 @@
   <div class="boot-corner bl"></div><div class="boot-corner br"></div>
   <div class="boot-inner">
     <div class="boot-logo glitch">WAVE BITE</div>
-    <div class="boot-sub">CEO COMMAND CENTER &nbsp;//&nbsp; LUCY v4.0</div>
+    <div class="boot-sub">CEO COMMAND CENTER &nbsp;//&nbsp; JARVIS v3.0</div>
     <div class="boot-divider"></div>
     <div class="boot-bar-wrap"><div class="boot-bar"></div></div>
     <div class="boot-lines" id="boot-lines"></div>
@@ -2306,7 +2204,7 @@
 
 <!-- TICKER -->
 <div id="ticker">
-  <div class="ticker-label">▶ LUCY LIVE</div>
+  <div class="ticker-label">▶ JARVIS LIVE</div>
   <div class="ticker-scroll" id="ticker-scroll"></div>
 </div>
 
@@ -2324,12 +2222,12 @@
 
 <!-- NAVBAR · V21.3 LUCY · clean delegation -->
 <nav>
-  <div class="nav-brand">WAVE<span>BITE</span> // LUCY</div>
+  <div class="nav-brand">WAVE<span>BITE</span> // JARVIS</div>
   <a class="nav-pill active" href="#" data-target="top">HOME</a>
   <a class="nav-pill" href="#sec-calendar"   data-target="sec-calendar"   style="background:rgba(0,200,255,0.08);border:1px solid rgba(0,200,255,0.3)">📅 KALENDER</a>
   <a class="nav-pill" href="#sec-mail-intel" data-target="sec-mail-intel">✉ MAILS</a>
   <a class="nav-pill" href="#sec-projects"   data-target="sec-projects">⚓ PROJEKTE</a>
-  <a class="nav-pill" href="#sec-intel"      data-target="sec-intel"      style="border-color:rgba(201,168,76,0.35);color:var(--gold)">🤖 LUCY</a>
+  <a class="nav-pill" href="#sec-intel"      data-target="sec-intel"      style="border-color:rgba(201,168,76,0.35);color:var(--gold)">🤖 JARVIS</a>
   <a class="nav-pill" href="#sec-finance"    data-target="sec-finance">💰 FINANZEN</a>
   <a class="nav-pill" href="#sec-tools"      data-target="sec-tools">🛠 TOOLS</a>
   <a class="nav-pill" href="#sec-executive"  data-target="sec-executive"  style="border-color:rgba(0,212,170,0.35);color:var(--teal)">⚡ EXEC</a>
@@ -2346,7 +2244,7 @@
   <a class="nav-pill" href="#sec-console" data-target="sec-console">CONSOLE</a>
   <a class="nav-pill" href="javascript:void(0)" data-lucy-open="1" title="Lucy öffnen" style="border-color:rgba(255,158,177,0.55);color:#ffc8d4;background:rgba(255,158,177,0.08)">🧜🏻‍♀️ LUCY</a>
   <a class="nav-pill nav-pill-push" href="PUSH_NOW.bat" title="Push V21 zu GitHub">📤 PUSH LIVE</a>
-  <a class="nav-pill" href="https://voigtcarsten4-rgb.github.io/wave-bite-ceo-office/" target="_blank" rel="noopener" style="border-color:rgba(96,165,250,0.5);color:#9bd4ff;background:rgba(96,165,250,0.07)">🌐 LIVE ↗</a>
+  <a class="nav-pill" href="https://voigtcarsten4-rgb.github.io/ceo-office/" target="_blank" rel="noopener" style="border-color:rgba(96,165,250,0.5);color:#9bd4ff;background:rgba(96,165,250,0.07)">🌐 LIVE ↗</a>
   <div class="nav-sep"></div>
   <!-- QUICK TOOL BUTTONS IN NAV -->
   <a href="https://mail.google.com" target="_blank" class="nav-tool-btn" title="Gmail öffnen">✉ Mail</a>
@@ -2433,7 +2331,7 @@
   </div>
 
   <div style="font-size:.6rem;color:var(--text-dim);text-align:center;border-top:1px solid rgba(0,200,255,0.08);padding-top:.75rem">
-    LUCY CEO Toolbelt · Wave Bite v3
+    JARVIS CEO Toolbelt · Wave Bite v3
   </div>
 </div>
 <div id="toolbelt-backdrop" onclick="toggleToolbelt()" style="display:none;position:fixed;inset:0;z-index:499;background:rgba(2,8,16,0.4)"></div>
@@ -2563,7 +2461,7 @@
 
       <!-- JARVIS AI insight -->
       <div style="padding:.4rem .5rem;background:rgba(0,200,255,0.04);border:1px solid rgba(0,200,255,0.1);border-radius:6px;border-left:2px solid var(--teal)">
-        <div class="b-stat-label" style="margin-bottom:.2rem">🧠 LUCY AI</div>
+        <div class="b-stat-label" style="margin-bottom:.2rem">🧠 JARVIS AI</div>
         <div style="font-size:.62rem;color:var(--teal);line-height:1.4" id="hero-ai">Analysiere Daten...</div>
       </div>
 
@@ -2941,8 +2839,7 @@
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.6rem">
           <div>
             <div style="font-size:.48rem;letter-spacing:.15em;color:var(--text-dim)">AGENDA</div>
-            <div id="cal-agenda-date" style="font-size:.8rem;font-weight:800;color:var(--text)">Heute</div>
-            <script>(function(){var d=new Date();var el=document.getElementById('cal-agenda-date');if(el){try{el.textContent=d.toLocaleDateString('de-DE',{weekday:'long',day:'numeric',month:'long',year:'numeric'});}catch(_){}}})();</script>
+            <div id="cal-agenda-date" style="font-size:.8rem;font-weight:800;color:var(--text)">Montag, 18. Mai 2026</div>
           </div>
           <div style="display:flex;gap:.4rem">
             <button onclick="calSelectToday()" style="padding:.25rem .65rem;background:rgba(0,200,255,0.1);border:1px solid rgba(0,200,255,0.3);border-radius:5px;color:var(--blue);font-size:.58rem;cursor:pointer;font-family:inherit">Heute</button>
@@ -3169,7 +3066,7 @@
 
 <section id="sec-mail-intel">
   <div class="section-title" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.5rem">
-    <span>✉ MAIL HQ — LUCY MAIL INTELLIGENCE</span>
+    <span>✉ MAIL HQ — JARVIS MAIL INTELLIGENCE</span>
     <div style="display:flex;gap:.4rem;flex-shrink:0">
       <a href="https://mail.google.com" target="_blank" style="display:inline-flex;align-items:center;gap:.25rem;padding:.25rem .6rem;background:rgba(0,200,255,0.1);border:1px solid rgba(0,200,255,0.3);border-radius:6px;color:var(--blue);font-size:.55rem;font-weight:700;text-decoration:none;transition:all .2s" onmouseover="this.style.background='rgba(0,200,255,0.2)'" onmouseout="this.style.background='rgba(0,200,255,0.1)'">✉ Gmail ↗</a>
       <a href="https://outlook.live.com" target="_blank" style="display:inline-flex;align-items:center;gap:.25rem;padding:.25rem .6rem;background:rgba(0,100,200,0.1);border:1px solid rgba(0,100,200,0.3);border-radius:6px;color:#5b9bd5;font-size:.55rem;font-weight:700;text-decoration:none;transition:all .2s" onmouseover="this.style.background='rgba(0,100,200,0.2)'" onmouseout="this.style.background='rgba(0,100,200,0.1)'">📨 Outlook ↗</a>
@@ -3236,7 +3133,7 @@
     <div class="panel panel-cream" style="padding:.85rem">
       <div style="font-size:.58rem;letter-spacing:.1em;color:var(--gold);margin-bottom:.55rem;display:flex;align-items:center;gap:.4rem">
         <span>🧠</span>
-        <span>LUCY MAIL-ANALYSE</span>
+        <span>JARVIS MAIL-ANALYSE</span>
         <span style="font-size:.45rem;color:var(--text-dim);margin-left:auto">CEO ENTSCHEIDUNGEN</span>
       </div>
       <div id="jarvis-mail-analysis">
@@ -4136,7 +4033,7 @@
 <!-- INTELLIGENCE -->
 <section id="sec-intel">
   <div id="sec-jarvis"></div>
-  <div class="section-title gold-title">🤖 LUCY INTELLIGENCE CENTER — ANALYTICS & AI</div>
+  <div class="section-title gold-title">🤖 JARVIS INTELLIGENCE CENTER — ANALYTICS & AI</div>
   <div class="grid-2" style="margin-bottom:1.25rem">
     <div class="panel panel-cream">
       <div style="font-size:.65rem;letter-spacing:.15em;color:var(--gold);margin-bottom:.75rem">🧠 SYNAPTIC INTELLIGENCE — WAVE BITE NEURAL CORE</div>
@@ -4160,7 +4057,7 @@
   <!-- JARVIS KALENDER-INTELLIGENZ -->
   <div class="panel panel-cream" id="jarvis-cal-intel" style="margin-bottom:1.25rem">
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.85rem">
-      <div style="font-size:.65rem;letter-spacing:.15em;color:var(--gold)">🗓 LUCY KALENDER-INTELLIGENZ — AUTONOME TAGESPLANUNG</div>
+      <div style="font-size:.65rem;letter-spacing:.15em;color:var(--gold)">🗓 JARVIS KALENDER-INTELLIGENZ — AUTONOME TAGESPLANUNG</div>
       <button class="btn-outline" onclick="refreshCalIntel()" style="font-size:.58rem;padding:.25rem .6rem">⟳ Aktualisieren</button>
     </div>
     <div id="cal-intel-grid" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:.75rem">
@@ -4169,7 +4066,7 @@
         <div id="cal-intel-today" style="font-size:.72rem;color:var(--text-dim)">Wird geladen...</div>
       </div>
       <div>
-        <div style="font-size:.58rem;letter-spacing:.1em;color:var(--teal);margin-bottom:.5rem">🤖 LUCY EMPFEHLUNG</div>
+        <div style="font-size:.58rem;letter-spacing:.1em;color:var(--teal);margin-bottom:.5rem">🤖 JARVIS EMPFEHLUNG</div>
         <div id="cal-intel-advice" style="font-size:.72rem;color:var(--text-dim)">Analysiere Kalender...</div>
       </div>
       <div>
@@ -4188,7 +4085,7 @@
 
   <div class="grid-3">
     <div class="panel panel-cream">
-      <div style="font-size:.65rem;letter-spacing:.15em;color:var(--gold);margin-bottom:.75rem">🧠 LUCY AI — LIVE INSIGHTS</div>
+      <div style="font-size:.65rem;letter-spacing:.15em;color:var(--gold);margin-bottom:.75rem">🧠 JARVIS AI — LIVE INSIGHTS</div>
       <div class="ai-brain-card"><div class="brain-icon">🧠</div><div><div style="font-size:.6rem;color:var(--text-dim);letter-spacing:.08em">KI-SYSTEM AKTIV</div><div class="jarvis-thoughts" id="jarvis-thoughts" style="font-size:.75rem">Analysiere Aktivitäten...</div></div></div>
       <div style="height:1px;background:rgba(201,168,76,0.15);margin:.75rem 0"></div>
       <div id="jarvis-lines"></div>
@@ -4440,25 +4337,25 @@
     <div class="panel">
       <div style="font-size:.65rem;letter-spacing:.15em;color:var(--blue);margin-bottom:.75rem">SOCIAL MEDIA — STATUS</div>
       <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:.75rem">
-        <div class="social-card" data-demo="true">
+        <div class="social-card">
           <div class="social-icon">📸</div>
           <div class="social-val">1.2k</div>
           <div class="social-label">Instagram</div>
           <div class="social-delta">+12 diese Woche</div>
         </div>
-        <div class="social-card" data-demo="true">
+        <div class="social-card">
           <div class="social-icon">💼</div>
           <div class="social-val">890</div>
           <div class="social-label">LinkedIn</div>
           <div class="social-delta">+34 diese Woche</div>
         </div>
-        <div class="social-card" data-demo="true">
+        <div class="social-card">
           <div class="social-icon">▶️</div>
           <div class="social-val">340</div>
           <div class="social-label">YouTube</div>
           <div class="social-delta">+8 diese Woche</div>
         </div>
-        <div class="social-card" data-demo="true">
+        <div class="social-card">
           <div class="social-icon">🐦</div>
           <div class="social-val">215</div>
           <div class="social-label">X/Twitter</div>
@@ -4825,7 +4722,7 @@
       onmouseover="this.style.borderColor='rgba(201,168,76,0.5)'" onmouseout="this.style.borderColor='rgba(201,168,76,0.2)'">
       <span style="font-size:1.4rem">🤖</span>
       <span style="font-size:.58rem;font-weight:700;color:var(--gold)">Claude AI</span>
-      <span style="font-size:.48rem;color:var(--text-dim)">LUCY / KI</span>
+      <span style="font-size:.48rem;color:var(--text-dim)">JARVIS / KI</span>
     </a>
 
     <!-- Developer -->
@@ -4850,9 +4747,9 @@
     <div style="font-size:.52rem;letter-spacing:.12em;color:var(--text-dim);margin-bottom:.45rem">🌊 WAVE BITE / WAVEBYTE — DIREKTLINKS</div>
     <div style="display:flex;gap:.4rem;flex-wrap:wrap">
       <a href="https://wave-bite.com" target="_blank" style="padding:.25rem .6rem;background:rgba(0,200,255,0.08);border:1px solid rgba(0,200,255,0.22);border-radius:6px;color:var(--blue);font-size:.58rem;font-weight:700;text-decoration:none;white-space:nowrap;transition:all .2s" onmouseover="this.style.background='rgba(0,200,255,0.18)'" onmouseout="this.style.background='rgba(0,200,255,0.08)'">🌐 wave-bite.com</a>
-      <a href="https://voigtcarsten4-rgb.github.io/wave-bite-ceo-office/" target="_blank" style="padding:.25rem .6rem;background:rgba(201,168,76,0.08);border:1px solid rgba(201,168,76,0.25);border-radius:6px;color:var(--gold);font-size:.58rem;font-weight:700;text-decoration:none;white-space:nowrap;transition:all .2s" onmouseover="this.style.background='rgba(201,168,76,0.18)'" onmouseout="this.style.background='rgba(201,168,76,0.08)'">🏢 CEO Office</a>
+      <a href="https://voigtcarsten4-rgb.github.io/ceo-office/" target="_blank" style="padding:.25rem .6rem;background:rgba(201,168,76,0.08);border:1px solid rgba(201,168,76,0.25);border-radius:6px;color:var(--gold);font-size:.58rem;font-weight:700;text-decoration:none;white-space:nowrap;transition:all .2s" onmouseover="this.style.background='rgba(201,168,76,0.18)'" onmouseout="this.style.background='rgba(201,168,76,0.08)'">🏢 CEO Office</a>
       <a href="https://voigtcarsten4-rgb.github.io/wasserlage/" target="_blank" style="padding:.25rem .6rem;background:rgba(0,212,170,0.08);border:1px solid rgba(0,212,170,0.22);border-radius:6px;color:var(--teal);font-size:.58rem;font-weight:700;text-decoration:none;white-space:nowrap;transition:all .2s" onmouseover="this.style.background='rgba(0,212,170,0.18)'" onmouseout="this.style.background='rgba(0,212,170,0.08)'">🌊 Wasserlage</a>
-      <a href="https://voigtcarsten4-rgb.github.io/wave-bite-ceo-office/wavebyte-financial-os.html" target="_blank" style="padding:.25rem .6rem;background:rgba(201,168,76,0.08);border:1px solid rgba(201,168,76,0.22);border-radius:6px;color:var(--gold);font-size:.58rem;font-weight:700;text-decoration:none;white-space:nowrap;transition:all .2s" onmouseover="this.style.background='rgba(201,168,76,0.18)'" onmouseout="this.style.background='rgba(201,168,76,0.08)'">💰 Financial OS</a>
+      <a href="https://voigtcarsten4-rgb.github.io/ceo-office/wavebyte-financial-os.html" target="_blank" style="padding:.25rem .6rem;background:rgba(201,168,76,0.08);border:1px solid rgba(201,168,76,0.22);border-radius:6px;color:var(--gold);font-size:.58rem;font-weight:700;text-decoration:none;white-space:nowrap;transition:all .2s" onmouseover="this.style.background='rgba(201,168,76,0.18)'" onmouseout="this.style.background='rgba(201,168,76,0.08)'">💰 Financial OS</a>
       <a href="https://app.glideapps.com" target="_blank" style="padding:.25rem .6rem;background:rgba(120,80,200,0.08);border:1px solid rgba(120,80,200,0.22);border-radius:6px;color:#a78bfa;font-size:.58rem;font-weight:700;text-decoration:none;white-space:nowrap;transition:all .2s" onmouseover="this.style.background='rgba(120,80,200,0.18)'" onmouseout="this.style.background='rgba(120,80,200,0.08)'">📱 Glide Apps</a>
       <a href="https://docs.google.com/spreadsheets/d/1lROtjWlkeTpStbNURjyELWnO-8PETk-DeB3JThEHkqs" target="_blank" style="padding:.25rem .6rem;background:rgba(52,168,83,0.08);border:1px solid rgba(52,168,83,0.22);border-radius:6px;color:#34a853;font-size:.58rem;font-weight:700;text-decoration:none;white-space:nowrap;transition:all .2s" onmouseover="this.style.background='rgba(52,168,83,0.18)'" onmouseout="this.style.background='rgba(52,168,83,0.08)'">📊 KPI Tracking Sheet</a>
       <a href="https://www.flutterflow.io/dashboard" target="_blank" style="padding:.25rem .6rem;background:rgba(0,180,255,0.08);border:1px solid rgba(0,180,255,0.22);border-radius:6px;color:#38bdf8;font-size:.58rem;font-weight:700;text-decoration:none;white-space:nowrap;transition:all .2s" onmouseover="this.style.background='rgba(0,180,255,0.18)'" onmouseout="this.style.background='rgba(0,180,255,0.08)'">🔷 FlutterFlow</a>
@@ -5274,7 +5171,7 @@
     <div>
       <div style="display:flex;align-items:center;gap:1rem;flex-wrap:wrap">
       <h2 style="font-size:1rem;font-weight:700;letter-spacing:.12em;color:#ff4757;margin:0">🔴 RISK & CRISIS DASHBOARD</h2>
-      <a href="https://voigtcarsten4-rgb.github.io/wave-bite-ceo-office/" target="_blank"
+      <a href="https://voigtcarsten4-rgb.github.io/ceo-office/" target="_blank"
         style="display:inline-flex;align-items:center;gap:.3rem;padding:.25rem .65rem;background:rgba(255,68,68,0.1);border:1px solid rgba(255,68,68,0.3);border-radius:6px;color:#ff4757;font-size:.52rem;font-weight:700;text-decoration:none;letter-spacing:.05em">
         🔴 Live Monitor ↗
       </a>
@@ -5321,7 +5218,7 @@
 
 <!-- SCHEDULED TASKS -->
 <section id="sec-tasks">
-  <div class="section-title">⚙ AUTONOME TASKS — LUCY SCHEDULER</div>
+  <div class="section-title">⚙ AUTONOME TASKS — JARVIS SCHEDULER</div>
   <div class="grid-2">
     <div class="panel">
       <div style="font-size:.65rem;letter-spacing:.15em;color:var(--teal);margin-bottom:.75rem">🤖 AKTIVE AUTOMATISIERUNGEN</div>
@@ -5634,7 +5531,7 @@
 
     <!-- MEMORY CONSOLE -->
     <div class="panel" style="border-color:rgba(0,212,170,0.25)">
-      <div style="font-size:.65rem;letter-spacing:.15em;color:var(--teal);margin-bottom:.75rem">🗃 MEMORY CONSOLE — LUCY CONTEXT</div>
+      <div style="font-size:.65rem;letter-spacing:.15em;color:var(--teal);margin-bottom:.75rem">🗃 MEMORY CONSOLE — JARVIS CONTEXT</div>
       <div id="memory-console-log" style="font-size:.7rem;color:var(--text-dim);line-height:1.9;max-height:260px;overflow-y:auto">
         <div style="color:var(--teal);margin-bottom:.3rem">[17.05.2026 06:00] CEO Briefing generiert — 3 kritische Items</div>
         <div style="color:var(--text-dim);margin-bottom:.3rem">[17.05.2026 00:00] Wöchentlicher Status-Report gespeichert</div>
@@ -5652,7 +5549,7 @@
     </div>
 
     <!-- KPI REPORT -->
-    <div class="panel" data-demo="true" style="border-color:rgba(201,168,76,0.25)">
+    <div class="panel" style="border-color:rgba(201,168,76,0.25)">
       <div style="font-size:.65rem;letter-spacing:.15em;color:var(--gold);margin-bottom:.75rem">📊 KPI REPORT — LIVE STATUS</div>
       <div style="display:flex;flex-direction:column;gap:.6rem">
         <div style="display:flex;align-items:center;justify-content:space-between;padding:.5rem .7rem;background:rgba(0,200,255,0.05);border-radius:6px;border:1px solid rgba(0,200,255,0.1)">
@@ -6703,7 +6600,7 @@ function initBunboMentor() {
     {text:'🌊 <em class="mn">Wasserlage:</em> Live-Daten fließen, Community wächst. Feedback auswerten — die Nutzer reden! 📡', pct:80},
     {text:'🎯 <em class="mn">Fokus heute:</em> MVP-Demo ist der kritische Pfad. Alles andere kann warten. 🎖️', pct:60},
     {text:'📅 <em class="mn">Kalender-Check:</em> Nächster Investor-Termin schon eingetragen? Vollplaner warten auf dich!', pct:68},
-    {text:'🧠 <em class="mn">LUCY meldet:</em> Synapsen feuern auf Hochtouren. Deine KI arbeitet — du auch? 😄', pct:70},
+    {text:'🧠 <em class="mn">JARVIS meldet:</em> Synapsen feuern auf Hochtouren. Deine KI arbeitet — du auch? 😄', pct:70},
     {text:'🤝 <em class="mn">Partner-Pipeline:</em> Frank Burggraf / ROKA Werk — Termin fixieren. Chancenfenster 72h!', pct:62},
     {text:'🏆 <em class="mn">Maritime Awards 2026:</em> PR-Goldgrube. Bewerbung läuft — kurzer Status-Check heute?', pct:55},
   ];
@@ -10235,4 +10132,8 @@ if (typeof window.addMemoryEntry !== 'function') {
     scrollToSection: scrollToSection, openLucy: openLucy, showPushPanel: showPushPanel,
     rewire: rewireAllPills, toast: toast, version: 'V22.1'
   };
-  console
+  console.log(V, 'V22.1 ready. window.__v22.scrollToSection("sec-finance") to test.');
+})();
+</script>
+</body>
+</html>

@@ -694,7 +694,7 @@ REGELN: Deutsch, präzise, max 8 Sätze Standard. Bei Strategie: erst Schwäche,
     if (/therapie|schülin|psycholog/.test(q)) return `Pia Schülin · Praxis zum Falken, Basel · jeden Dienstag 08:45. Nächster Termin laut Kalender: prüfe Heute-Tab.`;
     if (/bell|food|job/.test(q)) return `Bell Food ist Asset, kein Konflikt. 25J Gastro-Expertise + Cashflow während Aufbau. FCB-Grilltrucks sind Bell-Einsätze — nutzbar für Sichtbarkeit. Erst kündigen wenn EK-Runde steht.`;
     if (/plugin|skill|tool|fähigkeit/.test(q)) return `Ich kenne ${Object.keys(PLUGINS).length} Plugins mit ${Object.values(PLUGINS).reduce((a,b)=>a+b.skills.length,0)}+ Skills: PDF-Viewer, Adobe Creative, Daloopa (Investor-Modelle), BrightData (Wettbewerber-Recherche), Marketing, Sales, Legal, Finance, Engineering, Figma — klick Health-Tab für die Liste.`;
-    if (/hilfe|help|kann.*du|was.*du/.test(q)) return `Frag mich: Cap Table · Funding · Wolzig · DHDL · Marcus · David · Forecast · Wasserlage · Notar · Sozialhilfe · Cashflow · Bell — oder klick eine Action oben. Ctrl+J öffnet die Lucy-Command-Bar mit allen Shortcuts.`;
+    if (/hilfe|help|kann.*du|was.*du/.test(q)) return `Frag mich: Cap Table · Funding · Wolzig · DHDL · Marcus · David · Forecast · Wasserlage · Notar · Sozialhilfe · Cashflow · Bell — oder klick eine Action oben. Ctrl+J öffnet die Jarvis-Bar mit allen Shortcuts.`;
     return `Mehr Kontext? Versuch: "Cap Table", "Funding", "Wolzig", "DHDL", "Marcus", "David", "Cashflow", "WFB", "Wasserlage", oder "Note: ..."`;
   }
 
@@ -866,7 +866,7 @@ REGELN: Deutsch, präzise, max 8 Sätze Standard. Bei Strategie: erst Schwäche,
       </div>
       <div class="sam-body" id="sam-body"></div>
       <div class="sam-quickbar">
-        <button class="qb-primary" id="qb-jarvis" title="Command Palette (Ctrl+J)">⌘ Command</button>
+        <button class="qb-primary" id="qb-jarvis" title="Command Palette (Ctrl+J)">⌘ Jarvis</button>
         <button id="qb-quick-task" title="Schnell-Task">＋ Task</button>
         <button id="qb-quick-note" title="Schnell-Notiz">📝 Note</button>
         <button id="qb-quick-cal" title="Termin anlegen">📅 Termin</button>
@@ -1852,7 +1852,7 @@ REGELN: Deutsch, präzise, max 8 Sätze Standard. Bei Strategie: erst Schwäche,
     const o = document.createElement('div');
     o.id = 'jarvis-overlay';
     o.innerHTML = `<div id="jarvis-box">
-      <input id="jarvis-input" placeholder="🪄 Lucy · was soll ich tun?  (Esc schließen · ↑↓ navigieren · Enter ausführen)" autocomplete="off"/>
+      <input id="jarvis-input" placeholder="🪄 Jarvis · was soll ich tun?  (Esc schließen · ↑↓ navigieren · Enter ausführen)" autocomplete="off"/>
       <div id="jarvis-list"></div>
     </div>`;
     o.onclick = e => { if (e.target === o) closeJarvis(); };
