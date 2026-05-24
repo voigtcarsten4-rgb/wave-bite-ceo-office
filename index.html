@@ -9833,5 +9833,44 @@ if (typeof window.addMemoryEntry !== 'function') {
 })();
 </script>
 
+
+<script>
+/* V21.4.1 - Cinematic Concept Function (fehlte im Polyfill-Push) */
+(function(){
+  function safeToast(msg){
+    var t=document.getElementById('lucy-poly-toast');
+    if(!t){t=document.createElement('div');t.id='lucy-poly-toast';t.style.cssText='position:fixed;bottom:24px;left:50%;transform:translateX(-50%);padding:.55rem 1rem;background:rgba(0,14,26,.95);border:1px solid rgba(168,85,247,.5);border-radius:10px;color:#d9bbff;font-size:.7rem;font-weight:700;z-index:99999;box-shadow:0 8px 30px rgba(0,0,0,.5);transition:opacity .3s';document.body.appendChild(t);}
+    t.textContent=msg;t.style.opacity='1';clearTimeout(window._lucyPolyTo);
+    window._lucyPolyTo=setTimeout(function(){t.style.opacity='0';},2800);
+  }
+  function askLucy(p){try{var L=window.Lucy||window.Samantha;if(L&&L.open)L.open();if(L&&L.ask)L.ask(p);}catch(_){}}
+  window.cinematicConcept = function(id){
+    var c = {
+      thursday_evening_lake:{t:'Ein Donnerstag am See',d:'45s · 16:9+9:16',p:'A premium houseboat docked at a wooden pier on a calm German lake at golden hour, aerial drone, cinematic 4K Veo'},
+      boot_umbau_zeitraffer:{t:'60 Tage Boot',d:'60s · 9:16',p:'Time-lapse of a premium houseboat being built from steel and oak, sparks flying, industrial cinematic'},
+      loi_signature_proof:{t:'Fünfte Unterschrift',d:'30s · 16:9+9:16',p:'Macro shot of a premium fountain pen drawing a signature on a formal LOI document, slow motion, cinematic 4K'},
+      investor_silent_pitch:{t:'Eine Minute Pitch',d:'60s · 16:9 no VO',p:'Programmatic data viz: cap table donut, LOI logos cascade, financial KPI bars, dark premium with gold, animated typography'},
+      sensory_food_porn:{t:'Drei Gänge auf dem Wasser',d:'30s · 9:16+1:1',p:'Macro food: olive oil drip, wine pour slow motion, plated dish steam, dark restaurant candle flicker, Magnum-quality cinematic'}
+    };
+    var k = c[id]; if(!k){safeToast('Konzept nicht gefunden: '+id); return;}
+    try{navigator.clipboard.writeText(k.p);}catch(_){}
+    safeToast('Hero-Prompt für "'+k.t+'" kopiert');
+    askLucy('Detailliertes Briefing zum Cinematic-Werbevideo "'+k.t+'" ('+k.d+'). Storyboard pro Shot, Higgsfield-Prompts, Voiceover-Script, Music-Style, Schnitt-Plan. Quelle: wave-bite-cinematic-concepts.json #'+id);
+  };
+  var oldFn = window.officeMarketingAction;
+  if (typeof oldFn === 'function') {
+    window.officeMarketingAction = function(kind){
+      if (kind === 'remotion-setup') {
+        safeToast('Remotion-Setup - Lucy übernimmt');
+        askLucy('REMOTION-SETUP für Wave Bite:\n\n1) npx create-video@latest wave-bite-videos\n2) Template: --prompt-to-motion-graphics oder --cinematic-intro\n3) cd wave-bite-videos && npm start\n4) Edit src/Composition.tsx\n5) Render: npx remotion render Composition out/video.mp4\n\nSoll ich 3 React-Components für FounderHero, LOIRevealCascade, InvestorSilentPitch entwerfen?');
+        return;
+      }
+      return oldFn(kind);
+    };
+  }
+  console.log('[v21.4.1] cinematicConcept + remotion-setup loaded');
+})();
+</script>
+
 </body>
 </html>
