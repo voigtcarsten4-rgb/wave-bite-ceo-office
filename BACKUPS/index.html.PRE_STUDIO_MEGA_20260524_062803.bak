@@ -1680,47 +1680,47 @@
     0%,100% { box-shadow: 0 0 12px rgba(0,200,255,0.38), inset 0 0 6px rgba(0,200,255,0.1); }
     50%     { box-shadow: 0 0 22px rgba(0,200,255,0.7),  inset 0 0 12px rgba(0,200,255,0.2); }
   }
-  /* V21.x — Highlight-Pulse für angesteuerte Sections */
-  .section-highlight-pulse { animation: sectionHighlightPulse 1.6s ease-out; }
+  /* V21 — Highlight-Pulse, wenn eine Section vom Nav angesteuert wird */
+  .section-highlight-pulse {
+    animation: sectionHighlightPulse 1.6s ease-out;
+  }
   @keyframes sectionHighlightPulse {
     0%   { box-shadow: 0 0 0 0 rgba(168,85,247,0.55); }
     60%  { box-shadow: 0 0 0 18px rgba(168,85,247,0); }
     100% { box-shadow: 0 0 0 0 rgba(168,85,247,0); }
   }
-  .nav-pill[data-lucy-open] { animation: lucyPillGlow 3s ease-in-out infinite; }
+  /* V21 — Lucy-Pill spezielles Pulse-Glow */
+  .nav-pill[data-lucy-open] {
+    animation: lucyPillGlow 3s ease-in-out infinite;
+  }
   @keyframes lucyPillGlow {
     0%,100% { box-shadow: 0 0 6px rgba(255,158,177,0.35); }
     50%     { box-shadow: 0 0 14px rgba(255,158,177,0.7), 0 0 24px rgba(255,158,177,0.25); }
   }
-  .nav-pill-marketing { background: linear-gradient(135deg,rgba(168,85,247,0.08),rgba(168,85,247,0.04)) !important; }
-  .nav-pill-marketing:hover { background: linear-gradient(135deg,rgba(168,85,247,0.22),rgba(168,85,247,0.10)) !important; box-shadow:0 0 14px rgba(168,85,247,0.5) !important; }
+  /* V21 — Marketing-Pill spezielles Glow */
+  .nav-pill-marketing {
+    background: linear-gradient(135deg,rgba(168,85,247,0.08),rgba(168,85,247,0.04)) !important;
+  }
+  .nav-pill-marketing:hover {
+    background: linear-gradient(135deg,rgba(168,85,247,0.22),rgba(168,85,247,0.10)) !important;
+    box-shadow: 0 0 14px rgba(168,85,247,0.5) !important;
+  }
+  /* V21.2 — Marketing-Hirn klickbare Steps */
   .mc-link:hover{transform:translateY(-2px);background:rgba(168,85,247,.22) !important;border-color:rgba(168,85,247,.6) !important;box-shadow:0 8px 22px rgba(168,85,247,.3)}
   .mc-action{transition:all .18s}
   .mc-action:hover{transform:translateY(-1px);filter:brightness(1.2);box-shadow:0 6px 20px rgba(0,0,0,.4)}
-  .nav-pill-push{ background: linear-gradient(135deg,rgba(0,212,170,0.18),rgba(0,150,120,0.06)) !important; border:1px solid rgba(0,212,170,0.55) !important; color:#9af0d8 !important; animation: pushPillPulse 4s ease-in-out infinite; }
+  /* V21.2 — Push-Live-Pill auffällig */
+  .nav-pill-push{
+    background: linear-gradient(135deg,rgba(0,212,170,0.18),rgba(0,150,120,0.06)) !important;
+    border:1px solid rgba(0,212,170,0.55) !important;
+    color:#9af0d8 !important;
+    animation: pushPillPulse 4s ease-in-out infinite;
+  }
   .nav-pill-push:hover{box-shadow:0 0 18px rgba(0,212,170,0.55) !important;transform:translateY(-1px)}
   @keyframes pushPillPulse {
     0%,100% { box-shadow: 0 0 8px rgba(0,212,170,.35); }
     50%     { box-shadow: 0 0 18px rgba(0,212,170,.65), 0 0 30px rgba(0,212,170,.18); }
   }
-  /* V21.3 — MARKETING STUDIO Mega-Sektion */
-  @keyframes msShine { 0%{background-position:0% 50%} 100%{background-position:200% 50%} }
-  .ms-tab{transition:all .2s}
-  .ms-tab:hover{background:rgba(168,85,247,.10) !important;border-color:rgba(168,85,247,.4) !important;color:#fff !important}
-  .ms-tab.active{background:rgba(168,85,247,.22) !important;border-color:rgba(168,85,247,.6) !important;color:#fff7ff !important;box-shadow:0 0 14px rgba(168,85,247,.35)}
-  .ms-pane{animation:msFadeIn .35s ease-out}
-  @keyframes msFadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
-  .ms-lib-link:hover{filter:brightness(1.25);transform:translateY(-1px)}
-  .ms-lib-filter{transition:all .15s}
-  .ms-lib-filter:hover{background:rgba(168,85,247,.12) !important;border-color:rgba(168,85,247,.4) !important;color:#fff !important}
-  .ms-filter-active{background:rgba(168,85,247,.22) !important;border-color:rgba(168,85,247,.55) !important;color:#fff !important}
-  .ms-template-card{background:rgba(255,255,255,.03);border:1px solid rgba(168,85,247,.25);border-radius:10px;padding:.7rem;cursor:pointer;transition:all .2s;display:flex;flex-direction:column;gap:.4rem}
-  .ms-template-card:hover{background:rgba(168,85,247,.10);border-color:rgba(168,85,247,.5);transform:translateY(-2px);box-shadow:0 8px 20px rgba(168,85,247,.2)}
-  .ms-tpl-h{font-size:.65rem;font-weight:800;color:#fff;letter-spacing:.04em}
-  .ms-tpl-preview{font-size:.6rem;color:#b9a8d4;line-height:1.5;font-style:italic;opacity:.85}
-  .ms-tpl-btn{padding:.35rem .55rem;background:rgba(168,85,247,.18);border:1px solid rgba(168,85,247,.45);border-radius:6px;color:#d9bbff;font-size:.55rem;font-weight:800;cursor:pointer;letter-spacing:.05em;margin-top:auto}
-  .ms-sb-btn{transition:all .2s}
-  .ms-sb-btn:hover{background:rgba(168,85,247,.12) !important;border-color:rgba(168,85,247,.4) !important;transform:translateY(-1px)}
   /* Hover-Glow für nav-pills + nav-tool-btn (sichtbar bei Hover) */
   .nav-pill:hover {
     box-shadow: 0 0 16px rgba(0,200,255,0.5), 0 4px 14px rgba(0,200,255,0.18);
@@ -1799,39 +1799,101 @@
 <script>
 // v19: Robust Nav-Delegation + Service-Worker Kill (top of body)
 (function(){
-  // Service Worker Kill
+  // Service Worker Kill (einmalig pro Browser via Flag, sonst läuft bei jedem Load)
   if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.getRegistrations().then(rs => rs.forEach(r => r.unregister().catch(()=>{})));
-    if (window.caches && caches.keys) caches.keys().then(keys => keys.forEach(k => caches.delete(k).catch(()=>{})));
+    try {
+      if (!localStorage.getItem('lucy_sw_killed_v21')) {
+        navigator.serviceWorker.getRegistrations().then(function(rs){
+          if (rs.length) console.log('🧹 Lucy: '+rs.length+' alte SW gelöscht (einmalig)');
+          rs.forEach(function(r){ r.unregister().catch(function(){}); });
+        });
+        if (window.caches && caches.keys) caches.keys().then(function(keys){
+          keys.forEach(function(k){ caches.delete(k).catch(function(){}); });
+        });
+        localStorage.setItem('lucy_sw_killed_v21', '1');
+      }
+    } catch(_) {}
   }
-  // V21.3 — Nav-Delegator mit ScrollSpy-Lock + Lucy-Trigger
+  // Robust nav delegation V21.1 — Lucy edition (active state + Lucy trigger + ScrollSpy mit Lock)
   function bindNav() {
     var nav = document.querySelector('nav');
     if (!nav) { setTimeout(bindNav, 200); return; }
+
+    // Lock-Mechanik: nach manuellem Klick blockt ScrollSpy für 1.4 s (Dauer des Smooth-Scrolls)
     var spyLockUntil = 0;
-    function setActive(pill){ try { nav.querySelectorAll('.nav-pill').forEach(function(p){ p.classList.remove('active'); }); if (pill) pill.classList.add('active'); } catch(_) {} }
+
+    function setActive(pill){
+      try {
+        nav.querySelectorAll('.nav-pill').forEach(function(p){ p.classList.remove('active'); });
+        if (pill) pill.classList.add('active');
+      } catch(_) {}
+    }
     function lockSpy(ms){ spyLockUntil = Date.now() + (ms||1400); }
+
     nav.addEventListener('click', function(e){
       var pill = e.target.closest('.nav-pill, [data-target], [data-lucy-open]');
       if (!pill) return;
-      if (pill.hasAttribute('data-lucy-open')) { e.preventDefault(); try { (window.Lucy||window.Samantha)?.open?.(); } catch(_) {} setActive(pill); return; }
+      // Lucy open trigger
+      if (pill.hasAttribute('data-lucy-open')) {
+        e.preventDefault();
+        try { (window.Lucy||window.Samantha)?.open?.(); } catch(_) {}
+        setActive(pill);
+        return;
+      }
       var tgt = pill.dataset && pill.dataset.target;
-      if (tgt === 'top') { e.preventDefault(); lockSpy(1400); try { window.scrollTo({top:0,behavior:'smooth'}); } catch(_) { window.scrollTo(0,0); } setActive(pill); return; }
-      if (tgt) { var sec = document.getElementById(tgt); if (sec) { e.preventDefault(); lockSpy(1800); try { sec.scrollIntoView({behavior:'smooth',block:'start'}); } catch(_) { sec.scrollIntoView(true); } setActive(pill); try { sec.classList.add('section-highlight-pulse'); setTimeout(function(){ sec.classList.remove('section-highlight-pulse'); }, 1800); } catch(_){} } }
+      if (tgt === 'top') {
+        e.preventDefault();
+        lockSpy(1400);
+        try { window.scrollTo({top:0,behavior:'smooth'}); } catch(_) { window.scrollTo(0,0); }
+        setActive(pill);
+        return;
+      }
+      if (tgt) {
+        var sec = document.getElementById(tgt);
+        if (sec) {
+          e.preventDefault();
+          lockSpy(1800); // länger als smooth scroll für weit entfernte Sections
+          try { sec.scrollIntoView({behavior:'smooth', block:'start'}); }
+          catch(_) { sec.scrollIntoView(true); }
+          setActive(pill);
+          try {
+            sec.classList.add('section-highlight-pulse');
+            setTimeout(function(){ sec.classList.remove('section-highlight-pulse'); }, 1800);
+          } catch(_) {}
+        } else {
+          console.warn('[Lucy-Nav] Section nicht gefunden:', tgt);
+        }
+      }
     }, true);
+
+    // ScrollSpy mit Lock — pausiert direkt nach Klick, damit Smooth-Scroll nicht "überfährt"
     var pills = Array.prototype.slice.call(nav.querySelectorAll('.nav-pill[data-target]'));
     function onScroll(){
-      if (Date.now() < spyLockUntil) return;
-      var y = window.scrollY + 120, best = null, bestTop = -Infinity;
-      pills.forEach(function(p){ var id = p.dataset.target; if (id === 'top') return; var sec = document.getElementById(id); if (!sec) return; var top = sec.getBoundingClientRect().top + window.scrollY; if (top <= y && top > bestTop) { bestTop = top; best = p; } });
+      if (Date.now() < spyLockUntil) return;        // ← Lock aktiv → kein Override
+      var y = window.scrollY + 120;
+      var best = null, bestTop = -Infinity;
+      pills.forEach(function(p){
+        var id = p.dataset.target;
+        if (id === 'top') return;
+        var sec = document.getElementById(id);
+        if (!sec) return;
+        var top = sec.getBoundingClientRect().top + window.scrollY;
+        if (top <= y && top > bestTop) { bestTop = top; best = p; }
+      });
       if (window.scrollY < 80) best = nav.querySelector('.nav-pill[data-target="top"]');
       if (best) setActive(best);
     }
     var raf = null;
-    window.addEventListener('scroll', function(){ if(raf) return; raf = requestAnimationFrame(function(){ raf=null; onScroll(); }); }, {passive:true});
-    ['wheel','touchstart'].forEach(function(ev){ window.addEventListener(ev, function(){ spyLockUntil=0; }, {passive:true}); });
+    window.addEventListener('scroll', function(){
+      if (raf) return;
+      raf = requestAnimationFrame(function(){ raf=null; onScroll(); });
+    }, {passive:true});
+    // Auch bei User-Wheel/Touch den Lock früher beenden, damit "freies Scrollen" weiterhin Active updated
+    ['wheel','touchstart'].forEach(function(ev){
+      window.addEventListener(ev, function(){ spyLockUntil = 0; }, {passive:true});
+    });
     onScroll();
-    console.log('[v21.3-lucy] nav delegation bound on', pills.length, 'pills');
+    console.log('[v21.1-lucy] nav delegation bound on', pills.length, 'pills (scroll-spy-lock aktiv)');
   }
   if (document.readyState !== 'loading') bindNav();
   else document.addEventListener('DOMContentLoaded', bindNav);
@@ -2206,31 +2268,31 @@
   </div>
 </div>
 
-<!-- NAVBAR · V21.3 LUCY · clean delegation -->
+<!-- NAVBAR — V21 LUCY · CLEAN · DEDUPED · MARKETING SECTION VERLINKT -->
 <nav>
   <div class="nav-brand">WAVE<span>BITE</span> // JARVIS</div>
   <a class="nav-pill active" href="#" data-target="top">HOME</a>
-  <a class="nav-pill" href="#sec-calendar"   data-target="sec-calendar"   style="background:rgba(0,200,255,0.08);border:1px solid rgba(0,200,255,0.3)">📅 KALENDER</a>
-  <a class="nav-pill" href="#sec-mail-intel" data-target="sec-mail-intel">✉ MAILS</a>
-  <a class="nav-pill" href="#sec-projects"   data-target="sec-projects">⚓ PROJEKTE</a>
-  <a class="nav-pill" href="#sec-intel"      data-target="sec-intel"      style="border-color:rgba(201,168,76,0.35);color:var(--gold)">🤖 JARVIS</a>
-  <a class="nav-pill" href="#sec-finance"    data-target="sec-finance">💰 FINANZEN</a>
-  <a class="nav-pill" href="#sec-tools"      data-target="sec-tools">🛠 TOOLS</a>
-  <a class="nav-pill" href="#sec-executive"  data-target="sec-executive"  style="border-color:rgba(0,212,170,0.35);color:var(--teal)">⚡ EXEC</a>
-  <a class="nav-pill" href="#sec-crm"        data-target="sec-crm">🤝 CRM</a>
-  <a class="nav-pill" href="#sec-investor"   data-target="sec-investor"   style="border-color:rgba(201,168,76,0.35);color:var(--gold)">💎 INVEST</a>
-  <a class="nav-pill" href="#sec-ops"        data-target="sec-ops">⚙ OPS</a>
-  <a class="nav-pill" href="#sec-risk"       data-target="sec-risk"       style="border-color:rgba(255,68,68,0.35);color:#ff4757">🔴 RISK</a>
-  <a class="nav-pill nav-pill-studio" href="#sec-studio" data-target="sec-studio" style="border-color:rgba(232,201,106,0.55);color:#e8c96a;background:rgba(232,201,106,0.06)">🎬 STUDIO</a>
+  <a class="nav-pill" href="#sec-calendar"    data-target="sec-calendar"  style="background:rgba(0,200,255,0.08);border:1px solid rgba(0,200,255,0.3)">📅 KALENDER</a>
+  <a class="nav-pill" href="#sec-mail-intel"  data-target="sec-mail-intel">✉ MAILS</a>
+  <a class="nav-pill" href="#sec-projects"    data-target="sec-projects">⚓ PROJEKTE</a>
+  <a class="nav-pill" href="#sec-intel"       data-target="sec-intel"      style="border-color:rgba(201,168,76,0.35);color:var(--gold)">🤖 JARVIS</a>
+  <a class="nav-pill" href="#sec-finance"     data-target="sec-finance">💰 FINANZEN</a>
+  <a class="nav-pill" href="#sec-tools"       data-target="sec-tools">🛠 TOOLS</a>
+  <a class="nav-pill" href="#sec-executive"   data-target="sec-executive"  style="border-color:rgba(0,212,170,0.35);color:var(--teal)">⚡ EXEC</a>
+  <a class="nav-pill" href="#sec-crm"         data-target="sec-crm">🤝 CRM</a>
+  <a class="nav-pill" href="#sec-investor"    data-target="sec-investor"   style="border-color:rgba(201,168,76,0.35);color:var(--gold)">💎 INVEST</a>
+  <a class="nav-pill" href="#sec-ops"         data-target="sec-ops">⚙ OPS</a>
+  <a class="nav-pill" href="#sec-risk"        data-target="sec-risk"       style="border-color:rgba(255,68,68,0.35);color:#ff4757">🔴 RISK</a>
+  <a class="nav-pill nav-pill-studio" href="#sec-studio" data-target="sec-studio"   style="border-color:rgba(232,201,106,0.55);color:#e8c96a;background:rgba(232,201,106,0.06)">🎬 STUDIO</a>
   <a class="nav-pill nav-pill-marketing" href="#sec-marketing" data-target="sec-marketing" style="border-color:rgba(168,85,247,0.5);color:#d9bbff;background:rgba(168,85,247,0.06)">📣 MARKETING</a>
   <a class="nav-pill" href="marketing-dashboard-detail.html" target="_blank" rel="noopener" style="text-decoration:none;border-color:rgba(168,85,247,0.6);color:#e2c4ff;background:rgba(168,85,247,0.10);display:inline-flex;align-items:center">📣 MKT-DETAIL ↗</a>
   <a class="nav-pill" href="wavebite-ai-marketing-os.html" target="_blank" rel="noopener" style="text-decoration:none;border-color:rgba(0,212,170,0.5);color:#9af0d8;background:rgba(0,212,170,0.06);display:inline-flex;align-items:center">⚡ MKT-OS ↗</a>
   <a class="nav-pill" href="#sec-tasks"   data-target="sec-tasks">TASKS</a>
   <a class="nav-pill" href="#sec-agents"  data-target="sec-agents">AGENTEN</a>
   <a class="nav-pill" href="#sec-console" data-target="sec-console">CONSOLE</a>
-  <a class="nav-pill" href="javascript:void(0)" data-lucy-open="1" title="Lucy öffnen" style="border-color:rgba(255,158,177,0.55);color:#ffc8d4;background:rgba(255,158,177,0.08)">🧜🏻‍♀️ LUCY</a>
-  <a class="nav-pill nav-pill-push" href="PUSH_NOW.bat" title="Push V21 zu GitHub">📤 PUSH LIVE</a>
-  <a class="nav-pill" href="https://voigtcarsten4-rgb.github.io/ceo-office/" target="_blank" rel="noopener" style="border-color:rgba(96,165,250,0.5);color:#9bd4ff;background:rgba(96,165,250,0.07)">🌐 LIVE ↗</a>
+  <a class="nav-pill" href="javascript:void(0)" data-lucy-open="1" title="Lucy — CEO Co-Pilotin öffnen" style="border-color:rgba(255,158,177,0.55);color:#ffc8d4;background:rgba(255,158,177,0.08)">🧜🏻‍♀️ LUCY</a>
+  <a class="nav-pill nav-pill-push" href="PUSH_V21_LUCY.bat" title="Push V21 zu GitHub Pages (BAT öffnet sich)">📤 PUSH LIVE</a>
+  <a class="nav-pill" href="https://voigtcarsten4-rgb.github.io/ceo-office/" target="_blank" rel="noopener" title="Live-URL im neuen Tab" style="border-color:rgba(96,165,250,0.5);color:#9bd4ff;background:rgba(96,165,250,0.07)">🌐 LIVE ↗</a>
   <div class="nav-sep"></div>
   <!-- QUICK TOOL BUTTONS IN NAV -->
   <a href="https://mail.google.com" target="_blank" class="nav-tool-btn" title="Gmail öffnen">✉ Mail</a>
@@ -4399,165 +4461,166 @@
 </section>
 
 <!-- ═══════════════════════════════════════════════════════════════
-     🎬 MARKETING STUDIO — Mega-Sektion V21.3 (Studio + Marketing fusioniert)
-     5 Tabs: COCKPIT · LIBRARY · TEMPLATES · AI · CALENDAR + LUCY
+     NEXT-GEN STUDIO / AI MARKETING OS — v17
+     Integriert: 13 AI-Tools, Quick-Launch, Lucy-Briefings, Pipeline
+═══════════════════════════════════════════════════════════════ -->
+<section id="sec-studio" style="margin-bottom:1.5rem">
+  <div class="section-title" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.5rem">
+    <span style="background:linear-gradient(90deg,#e8c96a,#fff7c0,#e8c96a);-webkit-background-clip:text;background-clip:text;color:transparent;font-weight:800;letter-spacing:.08em">🎬 NEXT-GEN STUDIO // AI MARKETING OS</span>
+    <a href="marketing-dashboard-detail.html" target="_blank" rel="noopener" style="margin-left:.7rem;padding:.32rem .8rem;background:linear-gradient(135deg,rgba(168,85,247,0.32),rgba(120,60,200,0.14));border:1px solid rgba(168,85,247,0.55);border-radius:8px;color:#fff7c0;font-size:.62rem;font-weight:800;text-decoration:none;letter-spacing:.05em;white-space:nowrap;display:inline-flex;align-items:center;gap:.3rem">📣 MARKETING DETAIL-DASHBOARD ↗</a>
+    <a href="wavebite-ai-marketing-os.html" target="_blank" rel="noopener" style="margin-left:.3rem;padding:.32rem .8rem;background:linear-gradient(135deg,rgba(0,212,170,0.25),rgba(0,212,170,0.08));border:1px solid rgba(0,212,170,0.45);border-radius:8px;color:#9af0d8;font-size:.62rem;font-weight:800;text-decoration:none;letter-spacing:.05em;white-space:nowrap;display:inline-flex;align-items:center;gap:.3rem">⚡ MKT-OS ↗</a>
+    <a href="wavebite-leonardo-studio.html" target="_blank" style="margin-left:.3rem;padding:.32rem .8rem;background:linear-gradient(135deg,rgba(0,212,170,0.25),rgba(0,212,170,0.08));border:1px solid rgba(0,212,170,0.5);border-radius:8px;color:#9af0d8;font-size:.62rem;font-weight:800;text-decoration:none;letter-spacing:.05em;white-space:nowrap;display:inline-flex;align-items:center;gap:.3rem">🎨 LEONARDO STUDIO ↗</a>
+    <span style="display:inline-flex;align-items:center;gap:.4rem;padding:.18rem .55rem;background:rgba(0,212,170,.12);border:1px solid rgba(0,212,170,.35);border-radius:99px;font-size:.55rem;letter-spacing:.12em;color:#00d4aa;font-weight:700">● SYSTEM AKTIV</span>
+  </div>
+
+  <div style="background:linear-gradient(135deg,rgba(40,28,0,.32),rgba(7,24,40,.96) 60%,rgba(40,28,0,.18));border:1px solid rgba(201,168,76,.28);border-radius:16px;padding:1.25rem;position:relative;overflow:hidden">
+    <!-- Subtile glow -->
+    <div style="position:absolute;inset:0;background:radial-gradient(800px 240px at 20% -10%,rgba(232,201,106,.10),transparent 60%),radial-gradient(700px 200px at 90% 110%,rgba(0,212,170,.06),transparent 60%);pointer-events:none"></div>
+
+    <!-- KPI ROW -->
+    <div style="position:relative;display:grid;grid-template-columns:repeat(5,1fr);gap:.7rem;margin-bottom:1.1rem">
+      <div class="kpi-mini" data-kpi="studio-videos" style="text-align:center;background:rgba(201,168,76,.07);border:1px solid rgba(201,168,76,.22);border-radius:12px;padding:.7rem .5rem">
+        <div style="font-size:1.55rem;font-weight:800;color:#e8c96a">2</div>
+        <div style="font-size:.58rem;color:rgba(232,201,106,.7);margin-top:.05rem;letter-spacing:.06em">VIDEOS LIVE</div>
+      </div>
+      <div class="kpi-mini" data-kpi="studio-tools" style="text-align:center;background:rgba(0,212,180,.06);border:1px solid rgba(0,212,180,.22);border-radius:12px;padding:.7rem .5rem">
+        <div style="font-size:1.55rem;font-weight:800;color:var(--teal)">13</div>
+        <div style="font-size:.58rem;color:rgba(0,212,180,.7);margin-top:.05rem;letter-spacing:.06em">AI TOOLS</div>
+      </div>
+      <div class="kpi-mini" data-kpi="studio-roles" style="text-align:center;background:rgba(124,76,201,.08);border:1px solid rgba(124,76,201,.25);border-radius:12px;padding:.7rem .5rem">
+        <div style="font-size:1.55rem;font-weight:800;color:#a855f7">7</div>
+        <div style="font-size:.58rem;color:rgba(168,85,247,.7);margin-top:.05rem;letter-spacing:.06em">AI ROLLEN</div>
+      </div>
+      <div class="kpi-mini" data-kpi="studio-pipelines" style="text-align:center;background:rgba(100,120,255,.07);border:1px solid rgba(100,120,255,.25);border-radius:12px;padding:.7rem .5rem">
+        <div style="font-size:1.55rem;font-weight:800;color:#8899ff">3</div>
+        <div style="font-size:.58rem;color:rgba(136,153,255,.7);margin-top:.05rem;letter-spacing:.06em">PIPELINES</div>
+      </div>
+      <div class="kpi-mini" data-kpi="studio-prompts" style="text-align:center;background:rgba(232,201,106,.06);border:1px solid rgba(232,201,106,.22);border-radius:12px;padding:.7rem .5rem">
+        <div style="font-size:1.55rem;font-weight:800;color:#e8c96a">40+</div>
+        <div style="font-size:.58rem;color:rgba(232,201,106,.7);margin-top:.05rem;letter-spacing:.06em">PROMPT TPLS</div>
+      </div>
+    </div>
+
+    <!-- HERO QUICK-LAUNCH ROW -->
+    <div style="position:relative;display:grid;grid-template-columns:repeat(4,1fr);gap:.6rem;margin-bottom:1.1rem">
+      <button onclick="openStudioOS('marketing-os')" class="hero-btn" style="display:flex;align-items:center;gap:.55rem;padding:.7rem .85rem;background:linear-gradient(135deg,rgba(201,168,76,.35),rgba(232,201,106,.15));border:1px solid rgba(201,168,76,.55);border-radius:11px;color:#fff7c0;font-size:.7rem;font-weight:700;cursor:pointer;transition:all .2s;text-align:left;line-height:1.15">
+        <span style="font-size:1.25rem">⚡</span>
+        <span><span style="display:block">AI Marketing OS</span><span style="font-size:.55rem;opacity:.75;font-weight:500">Vollbild öffnen</span></span>
+      </button>
+      <button onclick="openStudioOS('leonardo')" class="hero-btn" style="display:flex;align-items:center;gap:.55rem;padding:.7rem .85rem;background:linear-gradient(135deg,rgba(168,85,247,.25),rgba(120,60,200,.12));border:1px solid rgba(168,85,247,.45);border-radius:11px;color:#d9bbff;font-size:.7rem;font-weight:700;cursor:pointer;transition:all .2s;text-align:left;line-height:1.15">
+        <span style="font-size:1.25rem">🎨</span>
+        <span><span style="display:block">Leonardo Studio</span><span style="font-size:.55rem;opacity:.75;font-weight:500">Creative Studio</span></span>
+      </button>
+      <button onclick="lucyStudioBrief()" class="hero-btn" style="display:flex;align-items:center;gap:.55rem;padding:.7rem .85rem;background:linear-gradient(135deg,rgba(0,212,170,.25),rgba(0,170,140,.10));border:1px solid rgba(0,212,170,.45);border-radius:11px;color:#9af0d8;font-size:.7rem;font-weight:700;cursor:pointer;transition:all .2s;text-align:left;line-height:1.15">
+        <span style="font-size:1.25rem">🧠</span>
+        <span><span style="display:block">Lucy Studio-Brief</span><span style="font-size:.55rem;opacity:.75;font-weight:500">Content für heute</span></span>
+      </button>
+      <button onclick="runStudioPipeline()" class="hero-btn" style="display:flex;align-items:center;gap:.55rem;padding:.7rem .85rem;background:linear-gradient(135deg,rgba(136,153,255,.25),rgba(80,100,200,.10));border:1px solid rgba(136,153,255,.45);border-radius:11px;color:#bcc7ff;font-size:.7rem;font-weight:700;cursor:pointer;transition:all .2s;text-align:left;line-height:1.15">
+        <span style="font-size:1.25rem">🔄</span>
+        <span><span style="display:block">Pipeline starten</span><span style="font-size:.55rem;opacity:.75;font-weight:500">60s Reel · Idee → Live</span></span>
+      </button>
+    </div>
+
+    <!-- TOOL GRID -->
+    <div style="position:relative">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.55rem">
+        <div style="font-size:.6rem;letter-spacing:.18em;color:rgba(232,201,106,.85);font-weight:700">🛠 TOOLCHAIN — KLICKEN ZUM ÖFFNEN · LUCY-BUTTON FÜR PROMPT</div>
+        <div style="display:flex;gap:.35rem;font-size:.55rem">
+          <button onclick="filterStudioTools('all')" class="studio-filter active" style="padding:.2rem .55rem;background:rgba(232,201,106,.15);border:1px solid rgba(232,201,106,.35);border-radius:99px;color:#e8c96a;cursor:pointer">Alle</button>
+          <button onclick="filterStudioTools('video')" class="studio-filter" style="padding:.2rem .55rem;background:transparent;border:1px solid rgba(255,255,255,.12);border-radius:99px;color:var(--text-dim);cursor:pointer">🎬 Video</button>
+          <button onclick="filterStudioTools('image')" class="studio-filter" style="padding:.2rem .55rem;background:transparent;border:1px solid rgba(255,255,255,.12);border-radius:99px;color:var(--text-dim);cursor:pointer">🎨 Image</button>
+          <button onclick="filterStudioTools('voice')" class="studio-filter" style="padding:.2rem .55rem;background:transparent;border:1px solid rgba(255,255,255,.12);border-radius:99px;color:var(--text-dim);cursor:pointer">🎙 Voice</button>
+          <button onclick="filterStudioTools('music')" class="studio-filter" style="padding:.2rem .55rem;background:transparent;border:1px solid rgba(255,255,255,.12);border-radius:99px;color:var(--text-dim);cursor:pointer">🎵 Music</button>
+          <button onclick="filterStudioTools('auto')" class="studio-filter" style="padding:.2rem .55rem;background:transparent;border:1px solid rgba(255,255,255,.12);border-radius:99px;color:var(--text-dim);cursor:pointer">⚙ Auto</button>
+        </div>
+      </div>
+      <div id="studio-tool-grid" style="display:grid;grid-template-columns:repeat(4,1fr);gap:.6rem"></div>
+    </div>
+
+    <!-- VIDEO PREVIEWS -->
+    <div style="position:relative;margin-top:1.1rem;padding-top:1rem;border-top:1px solid rgba(201,168,76,.15)">
+      <div style="font-size:.6rem;letter-spacing:.18em;color:rgba(232,201,106,.85);font-weight:700;margin-bottom:.55rem">🎞 PRODUZIERTE INHALTE — HOVER = AUTO-PLAY</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:.75rem">
+        <div style="background:rgba(0,0,0,.45);border:1px solid rgba(201,168,76,.22);border-radius:11px;overflow:hidden;transition:all .2s" onmouseover="this.style.borderColor='rgba(232,201,106,.5)'" onmouseout="this.style.borderColor='rgba(201,168,76,.22)'">
+          <video src="Videos/WaveBite_CGI_Hollywood_V1.mp4" style="width:100%;max-height:160px;object-fit:cover;display:block" muted loop preload="metadata" onmouseover="this.play()" onmouseout="this.pause();this.currentTime=0"></video>
+          <div style="padding:.55rem .7rem">
+            <div style="font-size:.68rem;font-weight:700;color:#e8c96a">🎬 CGI Hollywood Spot</div>
+            <div style="font-size:.55rem;color:var(--text-muted);margin-top:.1rem">20s · Werbeclip · Leonardo AI</div>
+            <div style="margin-top:.35rem;display:flex;gap:.4rem;flex-wrap:wrap">
+              <a href="Videos/WaveBite_CGI_Hollywood_V1.mp4" target="_blank" class="pc-link" style="font-size:.55rem">▶ Ansehen</a>
+              <button onclick="lucyVideoConcept('Hollywood-CGI Variante')" class="pc-link" style="font-size:.55rem;background:none;border:none;cursor:pointer">🧠 Variante briefen</button>
+            </div>
+          </div>
+        </div>
+        <div style="background:rgba(0,0,0,.45);border:1px solid rgba(201,168,76,.22);border-radius:11px;overflow:hidden;transition:all .2s" onmouseover="this.style.borderColor='rgba(232,201,106,.5)'" onmouseout="this.style.borderColor='rgba(201,168,76,.22)'">
+          <video src="Videos/WaveBite_PremiumSpot_V1_IG.mp4" style="width:100%;max-height:160px;object-fit:cover;display:block" muted loop preload="metadata" onmouseover="this.play()" onmouseout="this.pause();this.currentTime=0"></video>
+          <div style="padding:.55rem .7rem">
+            <div style="font-size:.68rem;font-weight:700;color:#e8c96a">📱 Premium Instagram Reel</div>
+            <div style="font-size:.55rem;color:var(--text-muted);margin-top:.1rem">Social · Wave Bite Brand</div>
+            <div style="margin-top:.35rem;display:flex;gap:.4rem;flex-wrap:wrap">
+              <a href="Videos/WaveBite_PremiumSpot_V1_IG.mp4" target="_blank" class="pc-link" style="font-size:.55rem">▶ Ansehen</a>
+              <button onclick="lucyVideoConcept('Reel-Cut Variante')" class="pc-link" style="font-size:.55rem;background:none;border:none;cursor:pointer">🧠 Cut briefen</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DISTRIBUTION ROW -->
+    <div style="position:relative;margin-top:.9rem;display:flex;gap:.4rem;flex-wrap:wrap;align-items:center">
+      <span style="font-size:.58rem;color:var(--text-dim);letter-spacing:.1em">DISTRIBUTION:</span>
+      <a href="https://www.instagram.com/wavebiteplattform/" target="_blank" class="pc-link" style="font-size:.6rem">📷 Instagram</a>
+      <a href="https://www.tiktok.com/@wavebiteorginal" target="_blank" class="pc-link" style="font-size:.6rem">🎵 TikTok</a>
+      <a href="https://www.facebook.com/profile.php?id=61589205053718" target="_blank" class="pc-link" style="font-size:.6rem">👍 Facebook</a>
+      <a href="https://www.linkedin.com" target="_blank" class="pc-link" style="font-size:.6rem">💼 LinkedIn</a>
+      <a href="https://www.youtube.com" target="_blank" class="pc-link" style="font-size:.6rem">▶️ YouTube</a>
+      <span style="flex:1"></span>
+      <button onclick="lucyMarketingScan()" style="padding:.32rem .7rem;background:linear-gradient(135deg,rgba(0,212,170,.2),rgba(0,170,140,.08));border:1px solid rgba(0,212,170,.45);border-radius:8px;color:#9af0d8;font-size:.6rem;font-weight:700;cursor:pointer">🛰 Marketing Opportunity Scan</button>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     📣 MARKETING COCKPIT — End-to-End: Idee → Post (V21 LUCY)
+     Brücke zur Vollversion: marketing-dashboard-detail.html
      ═══════════════════════════════════════════════════════════════ -->
-<a id="sec-studio" style="display:block;position:relative;top:-80px"></a>
 <section id="sec-marketing" style="margin-bottom:1.5rem">
   <div class="section-title" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.5rem">
-    <span style="background:linear-gradient(90deg,#e8c96a,#d9bbff,#9af0d8,#e8c96a);background-size:200% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;font-weight:800;letter-spacing:.08em;animation:msShine 8s linear infinite">🎬 MARKETING STUDIO — DAS AUTONOME TEAM</span>
-    <a href="marketing-dashboard-detail.html" target="_blank" rel="noopener" style="margin-left:.7rem;padding:.4rem .95rem;background:linear-gradient(135deg,rgba(168,85,247,0.42),rgba(120,60,200,0.18));border:1px solid rgba(168,85,247,0.7);border-radius:9px;color:#fff7ff;font-size:.66rem;font-weight:800;text-decoration:none;letter-spacing:.05em;white-space:nowrap;display:inline-flex;align-items:center;gap:.35rem;box-shadow:0 4px 18px rgba(168,85,247,.28)">🚀 COCKPIT (DETAIL) ↗</a>
-    <span style="display:inline-flex;align-items:center;gap:.4rem;padding:.18rem .55rem;background:rgba(168,85,247,.14);border:1px solid rgba(168,85,247,.4);border-radius:99px;font-size:.55rem;letter-spacing:.12em;color:#d9bbff;font-weight:700">● LUCY · HIGGSFIELD · LIBRARY</span>
+    <span style="background:linear-gradient(90deg,#d9bbff,#fff5ff,#d9bbff);-webkit-background-clip:text;background-clip:text;color:transparent;font-weight:800;letter-spacing:.08em">📣 MARKETING COCKPIT — AUTONOM BIS ZUM POST</span>
+    <a href="marketing-dashboard-detail.html" target="_blank" rel="noopener" style="margin-left:.7rem;padding:.4rem .95rem;background:linear-gradient(135deg,rgba(168,85,247,0.42),rgba(120,60,200,0.18));border:1px solid rgba(168,85,247,0.7);border-radius:9px;color:#fff7ff;font-size:.66rem;font-weight:800;text-decoration:none;letter-spacing:.05em;white-space:nowrap;display:inline-flex;align-items:center;gap:.35rem;box-shadow:0 4px 18px rgba(168,85,247,.28)">🚀 VOLLES MARKETING-DASHBOARD ÖFFNEN ↗</a>
+    <span style="display:inline-flex;align-items:center;gap:.4rem;padding:.18rem .55rem;background:rgba(168,85,247,.14);border:1px solid rgba(168,85,247,.4);border-radius:99px;font-size:.55rem;letter-spacing:.12em;color:#d9bbff;font-weight:700">● LUCY INTEGRIERT</span>
   </div>
-  <div style="background:linear-gradient(135deg,rgba(40,16,60,.32),rgba(7,12,30,.96) 50%,rgba(40,28,0,.18));border:1px solid rgba(168,85,247,.32);border-radius:16px;padding:1.1rem;position:relative;overflow:hidden">
-    <div style="position:absolute;inset:0;background:radial-gradient(800px 240px at 0% 0%,rgba(168,85,247,.12),transparent 60%),radial-gradient(700px 200px at 100% 100%,rgba(232,201,106,.10),transparent 60%);pointer-events:none"></div>
-    <div id="ms-tabs" style="position:relative;display:flex;flex-wrap:wrap;gap:.35rem;border-bottom:1px solid rgba(168,85,247,.2);padding-bottom:.6rem;margin-bottom:.9rem">
-      <button class="ms-tab active" data-tab="cockpit" style="padding:.45rem .85rem;background:rgba(168,85,247,.22);border:1px solid rgba(168,85,247,.6);border-radius:8px;color:#fff7ff;font-size:.62rem;font-weight:800;cursor:pointer;letter-spacing:.06em">📣 COCKPIT</button>
-      <button class="ms-tab" data-tab="library" style="padding:.45rem .85rem;background:transparent;border:1px solid rgba(255,255,255,.12);border-radius:8px;color:#c8c8d4;font-size:.62rem;font-weight:800;cursor:pointer;letter-spacing:.06em">🎞 LIBRARY</button>
-      <button class="ms-tab" data-tab="templates" style="padding:.45rem .85rem;background:transparent;border:1px solid rgba(255,255,255,.12);border-radius:8px;color:#c8c8d4;font-size:.62rem;font-weight:800;cursor:pointer;letter-spacing:.06em">📋 TEMPLATES</button>
-      <button class="ms-tab" data-tab="ai" style="padding:.45rem .85rem;background:transparent;border:1px solid rgba(255,255,255,.12);border-radius:8px;color:#c8c8d4;font-size:.62rem;font-weight:800;cursor:pointer;letter-spacing:.06em">🪄 AI-STUDIO</button>
-      <button class="ms-tab" data-tab="calendar" style="padding:.45rem .85rem;background:transparent;border:1px solid rgba(255,255,255,.12);border-radius:8px;color:#c8c8d4;font-size:.62rem;font-weight:800;cursor:pointer;letter-spacing:.06em">📅 CALENDAR</button>
-      <button class="ms-tab" data-tab="lucy" style="padding:.45rem .85rem;background:transparent;border:1px solid rgba(255,158,177,.4);border-radius:8px;color:#ffc8d4;font-size:.62rem;font-weight:800;cursor:pointer;letter-spacing:.06em">🧜🏻‍♀️ LUCY</button>
+
+  <div style="background:linear-gradient(135deg,rgba(40,16,60,.32),rgba(7,12,30,.96) 60%,rgba(40,16,60,.18));border:1px solid rgba(168,85,247,.28);border-radius:16px;padding:1.25rem;position:relative;overflow:hidden">
+    <div style="position:absolute;inset:0;background:radial-gradient(800px 240px at 20% -10%,rgba(168,85,247,.12),transparent 60%),radial-gradient(700px 200px at 90% 110%,rgba(255,158,177,.07),transparent 60%);pointer-events:none"></div>
+
+    <!-- 7-STEP PIPELINE — KLICKBAR (öffnet Cockpit am jeweiligen Step) -->
+    <div style="position:relative;display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:.6rem;margin-bottom:1rem">
+      <a class="mc-step mc-link" href="marketing-dashboard-detail.html#step=1" target="_blank" rel="noopener" title="Öffnet Cockpit · Step 1 Idee" style="background:rgba(168,85,247,.08);border:1px solid rgba(168,85,247,.3);border-radius:10px;padding:.7rem;text-align:center;text-decoration:none;color:inherit;cursor:pointer;transition:all .2s"><div style="font-size:1.3rem">💡</div><div style="font-size:.55rem;letter-spacing:.14em;color:#d9bbff;font-weight:700;margin-top:.25rem">1 · IDEE</div><div style="font-size:.62rem;color:#c8c8d4;margin-top:.15rem">Lucy-Brainstorm</div></a>
+      <a class="mc-step mc-link" href="marketing-dashboard-detail.html#step=2" target="_blank" rel="noopener" title="Öffnet Cockpit · Step 2 Brief" style="background:rgba(168,85,247,.08);border:1px solid rgba(168,85,247,.3);border-radius:10px;padding:.7rem;text-align:center;text-decoration:none;color:inherit;cursor:pointer;transition:all .2s"><div style="font-size:1.3rem">📝</div><div style="font-size:.55rem;letter-spacing:.14em;color:#d9bbff;font-weight:700;margin-top:.25rem">2 · BRIEF</div><div style="font-size:.62rem;color:#c8c8d4;margin-top:.15rem">Auto-Brief</div></a>
+      <a class="mc-step mc-link" href="marketing-dashboard-detail.html#step=3" target="_blank" rel="noopener" title="Öffnet Cockpit · Step 3 Visual" style="background:rgba(168,85,247,.08);border:1px solid rgba(168,85,247,.3);border-radius:10px;padding:.7rem;text-align:center;text-decoration:none;color:inherit;cursor:pointer;transition:all .2s"><div style="font-size:1.3rem">🎨</div><div style="font-size:.55rem;letter-spacing:.14em;color:#d9bbff;font-weight:700;margin-top:.25rem">3 · VISUAL</div><div style="font-size:.62rem;color:#c8c8d4;margin-top:.15rem">Leonardo / Firefly</div></a>
+      <a class="mc-step mc-link" href="marketing-dashboard-detail.html#step=4" target="_blank" rel="noopener" title="Öffnet Cockpit · Step 4 Video" style="background:rgba(168,85,247,.08);border:1px solid rgba(168,85,247,.3);border-radius:10px;padding:.7rem;text-align:center;text-decoration:none;color:inherit;cursor:pointer;transition:all .2s"><div style="font-size:1.3rem">🎬</div><div style="font-size:.55rem;letter-spacing:.14em;color:#d9bbff;font-weight:700;margin-top:.25rem">4 · VIDEO</div><div style="font-size:.62rem;color:#c8c8d4;margin-top:.15rem">Schnitt+Sound+VO</div></a>
+      <a class="mc-step mc-link" href="marketing-dashboard-detail.html#step=5" target="_blank" rel="noopener" title="Öffnet Cockpit · Step 5 Caption" style="background:rgba(168,85,247,.08);border:1px solid rgba(168,85,247,.3);border-radius:10px;padding:.7rem;text-align:center;text-decoration:none;color:inherit;cursor:pointer;transition:all .2s"><div style="font-size:1.3rem">✍️</div><div style="font-size:.55rem;letter-spacing:.14em;color:#d9bbff;font-weight:700;margin-top:.25rem">5 · CAPTION</div><div style="font-size:.62rem;color:#c8c8d4;margin-top:.15rem">Brand-Voice</div></a>
+      <a class="mc-step mc-link" href="marketing-dashboard-detail.html#step=6" target="_blank" rel="noopener" title="Öffnet Cockpit · Step 6 Quality-Gate" style="background:rgba(168,85,247,.08);border:1px solid rgba(253,230,138,.45);border-radius:10px;padding:.7rem;text-align:center;text-decoration:none;color:inherit;cursor:pointer;transition:all .2s"><div style="font-size:1.3rem">✅</div><div style="font-size:.55rem;letter-spacing:.14em;color:#fde68a;font-weight:700;margin-top:.25rem">6 · QUALITY-GATE</div><div style="font-size:.62rem;color:#c8c8d4;margin-top:.15rem">Brand/Recht/Visual</div></a>
+      <a class="mc-step mc-link" href="marketing-dashboard-detail.html#step=7" target="_blank" rel="noopener" title="Öffnet Cockpit · Step 7 Post" style="background:linear-gradient(135deg,rgba(0,212,170,.18),rgba(0,150,120,.06));border:1px solid rgba(0,212,170,.45);border-radius:10px;padding:.7rem;text-align:center;text-decoration:none;color:inherit;cursor:pointer;transition:all .2s"><div style="font-size:1.3rem">🚀</div><div style="font-size:.55rem;letter-spacing:.14em;color:#9af0d8;font-weight:700;margin-top:.25rem">7 · POST</div><div style="font-size:.62rem;color:#c8c8d4;margin-top:.15rem">Postiz / Multi</div></a>
     </div>
-    <div class="ms-pane" data-pane="cockpit">
-      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:.55rem;margin-bottom:.9rem">
-        <a class="mc-step mc-link" href="marketing-dashboard-detail.html#step=1" target="_blank" rel="noopener" style="background:rgba(168,85,247,.08);border:1px solid rgba(168,85,247,.3);border-radius:10px;padding:.7rem;text-align:center;text-decoration:none;color:inherit;cursor:pointer;transition:all .2s"><div style="font-size:1.3rem">💡</div><div style="font-size:.55rem;letter-spacing:.14em;color:#d9bbff;font-weight:700;margin-top:.25rem">1 · IDEE</div><div style="font-size:.6rem;color:#c8c8d4;margin-top:.15rem">Brainstorm</div></a>
-        <a class="mc-step mc-link" href="marketing-dashboard-detail.html#step=2" target="_blank" rel="noopener" style="background:rgba(168,85,247,.08);border:1px solid rgba(168,85,247,.3);border-radius:10px;padding:.7rem;text-align:center;text-decoration:none;color:inherit;cursor:pointer;transition:all .2s"><div style="font-size:1.3rem">📝</div><div style="font-size:.55rem;letter-spacing:.14em;color:#d9bbff;font-weight:700;margin-top:.25rem">2 · BRIEF</div><div style="font-size:.6rem;color:#c8c8d4;margin-top:.15rem">Auto-Brief</div></a>
-        <a class="mc-step mc-link" href="marketing-dashboard-detail.html#step=3" target="_blank" rel="noopener" style="background:rgba(168,85,247,.08);border:1px solid rgba(168,85,247,.3);border-radius:10px;padding:.7rem;text-align:center;text-decoration:none;color:inherit;cursor:pointer;transition:all .2s"><div style="font-size:1.3rem">🎨</div><div style="font-size:.55rem;letter-spacing:.14em;color:#d9bbff;font-weight:700;margin-top:.25rem">3 · VISUAL</div><div style="font-size:.6rem;color:#c8c8d4;margin-top:.15rem">Leonardo</div></a>
-        <a class="mc-step mc-link" href="marketing-dashboard-detail.html#step=4" target="_blank" rel="noopener" style="background:rgba(168,85,247,.08);border:1px solid rgba(168,85,247,.3);border-radius:10px;padding:.7rem;text-align:center;text-decoration:none;color:inherit;cursor:pointer;transition:all .2s"><div style="font-size:1.3rem">🎬</div><div style="font-size:.55rem;letter-spacing:.14em;color:#d9bbff;font-weight:700;margin-top:.25rem">4 · VIDEO</div><div style="font-size:.6rem;color:#c8c8d4;margin-top:.15rem">Schnitt+VO</div></a>
-        <a class="mc-step mc-link" href="marketing-dashboard-detail.html#step=5" target="_blank" rel="noopener" style="background:rgba(168,85,247,.08);border:1px solid rgba(168,85,247,.3);border-radius:10px;padding:.7rem;text-align:center;text-decoration:none;color:inherit;cursor:pointer;transition:all .2s"><div style="font-size:1.3rem">✍️</div><div style="font-size:.55rem;letter-spacing:.14em;color:#d9bbff;font-weight:700;margin-top:.25rem">5 · CAPTION</div><div style="font-size:.6rem;color:#c8c8d4;margin-top:.15rem">Brand-Voice</div></a>
-        <a class="mc-step mc-link" href="marketing-dashboard-detail.html#step=6" target="_blank" rel="noopener" style="background:rgba(168,85,247,.08);border:1px solid rgba(253,230,138,.45);border-radius:10px;padding:.7rem;text-align:center;text-decoration:none;color:inherit;cursor:pointer;transition:all .2s"><div style="font-size:1.3rem">✅</div><div style="font-size:.55rem;letter-spacing:.14em;color:#fde68a;font-weight:700;margin-top:.25rem">6 · QUALITY</div><div style="font-size:.6rem;color:#c8c8d4;margin-top:.15rem">Gate-Check</div></a>
-        <a class="mc-step mc-link" href="marketing-dashboard-detail.html#step=7" target="_blank" rel="noopener" style="background:linear-gradient(135deg,rgba(0,212,170,.18),rgba(0,150,120,.06));border:1px solid rgba(0,212,170,.45);border-radius:10px;padding:.7rem;text-align:center;text-decoration:none;color:inherit;cursor:pointer;transition:all .2s"><div style="font-size:1.3rem">🚀</div><div style="font-size:.55rem;letter-spacing:.14em;color:#9af0d8;font-weight:700;margin-top:.25rem">7 · POST</div><div style="font-size:.6rem;color:#c8c8d4;margin-top:.15rem">Multi-Channel</div></a>
-      </div>
-      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(155px,1fr));gap:.45rem">
-        <button onclick="window.officeMarketingAction('brainstorm')" class="mc-action" style="padding:.55rem .7rem;background:rgba(168,85,247,.10);border:1px solid rgba(168,85,247,.4);border-radius:9px;color:#d9bbff;font-size:.62rem;font-weight:800;cursor:pointer;letter-spacing:.05em">💡 Brainstorm</button>
-        <button onclick="window.officeMarketingAction('audit')" class="mc-action" style="padding:.55rem .7rem;background:rgba(96,165,250,.10);border:1px solid rgba(96,165,250,.4);border-radius:9px;color:#9bd4ff;font-size:.62rem;font-weight:800;cursor:pointer;letter-spacing:.05em">🔍 Letzten Post auditieren</button>
-        <button onclick="window.officeMarketingAction('trends')" class="mc-action" style="padding:.55rem .7rem;background:rgba(0,212,170,.10);border:1px solid rgba(0,212,170,.4);border-radius:9px;color:#9af0d8;font-size:.62rem;font-weight:800;cursor:pointer;letter-spacing:.05em">🛰 Trends scannen</button>
-        <button onclick="window.officeMarketingAction('calendar')" class="mc-action" style="padding:.55rem .7rem;background:rgba(253,230,138,.10);border:1px solid rgba(253,230,138,.4);border-radius:9px;color:#fde68a;font-size:.62rem;font-weight:800;cursor:pointer;letter-spacing:.05em">📅 Posting-Plan</button>
-        <button onclick="window.officeMarketingAction('brandcheck')" class="mc-action" style="padding:.55rem .7rem;background:rgba(255,158,177,.10);border:1px solid rgba(255,158,177,.4);border-radius:9px;color:#ffc8d4;font-size:.62rem;font-weight:800;cursor:pointer;letter-spacing:.05em">🛡 Brand-Voice-Check</button>
-      </div>
+
+    <!-- 5 Inline-Quick-Actions: echte Workflows, kein "nur Info" -->
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:.45rem;margin-bottom:1rem">
+      <button onclick="window.officeMarketingAction('brainstorm')" class="mc-action" style="padding:.55rem .7rem;background:rgba(168,85,247,.10);border:1px solid rgba(168,85,247,.4);border-radius:9px;color:#d9bbff;font-size:.62rem;font-weight:800;cursor:pointer;letter-spacing:.05em;display:flex;align-items:center;gap:.4rem">💡 Brainstorm starten</button>
+      <button onclick="window.officeMarketingAction('audit')" class="mc-action" style="padding:.55rem .7rem;background:rgba(96,165,250,.10);border:1px solid rgba(96,165,250,.4);border-radius:9px;color:#9bd4ff;font-size:.62rem;font-weight:800;cursor:pointer;letter-spacing:.05em;display:flex;align-items:center;gap:.4rem">🔍 Letzten Post auditieren</button>
+      <button onclick="window.officeMarketingAction('trends')" class="mc-action" style="padding:.55rem .7rem;background:rgba(0,212,170,.10);border:1px solid rgba(0,212,170,.4);border-radius:9px;color:#9af0d8;font-size:.62rem;font-weight:800;cursor:pointer;letter-spacing:.05em;display:flex;align-items:center;gap:.4rem">🛰 Trends scannen</button>
+      <button onclick="window.officeMarketingAction('calendar')" class="mc-action" style="padding:.55rem .7rem;background:rgba(253,230,138,.10);border:1px solid rgba(253,230,138,.4);border-radius:9px;color:#fde68a;font-size:.62rem;font-weight:800;cursor:pointer;letter-spacing:.05em;display:flex;align-items:center;gap:.4rem">📅 Posting-Plan</button>
+      <button onclick="window.officeMarketingAction('brandcheck')" class="mc-action" style="padding:.55rem .7rem;background:rgba(255,158,177,.10);border:1px solid rgba(255,158,177,.4);border-radius:9px;color:#ffc8d4;font-size:.62rem;font-weight:800;cursor:pointer;letter-spacing:.05em;display:flex;align-items:center;gap:.4rem">🛡 Brand-Voice-Check</button>
     </div>
-    <div class="ms-pane" data-pane="library" style="display:none">
-      <div style="font-size:.66rem;color:#b9a8d4;line-height:1.55;margin-bottom:.7rem;padding:.55rem .7rem;background:rgba(168,85,247,.05);border-left:3px solid rgba(168,85,247,.4);border-radius:6px"><b style="color:#d9bbff">Kuratierte Asset-Library</b> — Pexels · Unsplash · Pixabay · Mixkit · Coverr · Freesound. Aktueller Query: <span id="ms-lib-current-q" style="color:#fff;font-weight:700">marina</span></div>
-      <div style="display:flex;flex-wrap:wrap;gap:.3rem;margin-bottom:.7rem">
-        <button class="ms-lib-filter ms-filter-active" data-q="marina" style="padding:.3rem .6rem;background:rgba(168,85,247,.22);border:1px solid rgba(168,85,247,.55);border-radius:99px;color:#fff;font-size:.55rem;font-weight:700;cursor:pointer">marina</button>
-        <button class="ms-lib-filter" data-q="houseboat" style="padding:.3rem .6rem;background:transparent;border:1px solid rgba(255,255,255,.15);border-radius:99px;color:#c8c8d4;font-size:.55rem;font-weight:700;cursor:pointer">houseboat</button>
-        <button class="ms-lib-filter" data-q="sunset water" style="padding:.3rem .6rem;background:transparent;border:1px solid rgba(255,255,255,.15);border-radius:99px;color:#c8c8d4;font-size:.55rem;font-weight:700;cursor:pointer">sunset</button>
-        <button class="ms-lib-filter" data-q="yacht luxury" style="padding:.3rem .6rem;background:transparent;border:1px solid rgba(255,255,255,.15);border-radius:99px;color:#c8c8d4;font-size:.55rem;font-weight:700;cursor:pointer">yacht</button>
-        <button class="ms-lib-filter" data-q="fine dining" style="padding:.3rem .6rem;background:transparent;border:1px solid rgba(255,255,255,.15);border-radius:99px;color:#c8c8d4;font-size:.55rem;font-weight:700;cursor:pointer">food</button>
-        <button class="ms-lib-filter" data-q="brandenburg lake" style="padding:.3rem .6rem;background:transparent;border:1px solid rgba(255,255,255,.15);border-radius:99px;color:#c8c8d4;font-size:.55rem;font-weight:700;cursor:pointer">brandenburg</button>
-        <input id="ms-lib-search" type="text" placeholder="oder eigenes Stichwort…" style="flex:1;min-width:160px;padding:.3rem .6rem;background:rgba(7,3,20,.65);color:#fff;border:1px solid rgba(168,85,247,.3);border-radius:99px;font-size:.6rem;outline:none">
+
+    <div style="display:flex;flex-wrap:wrap;gap:.5rem;justify-content:space-between;align-items:center">
+      <div style="font-size:.7rem;color:#c8c8d4;line-height:1.5;max-width:680px">
+        Vollständiger End-to-End Workflow von Idee bis fertigem Post — autonom mit Lucy-Unterstützung. Quality-Gates verhindern fehlerhafte Veröffentlichungen. Video-Pipeline in optimaler Reihenfolge (Schnitt → Sound → Voiceover → Export). Mobile-optimiert. <b>Klick auf Step öffnet Cockpit direkt dort.</b>
       </div>
-      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:.6rem">
-        <div style="background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:.7rem">
-          <div style="font-size:.6rem;letter-spacing:.14em;color:#fde68a;font-weight:800;margin-bottom:.5rem">📸 BILDER</div>
-          <a class="ms-lib-link" data-platform="pexels" target="_blank" rel="noopener" style="display:flex;align-items:center;gap:.4rem;padding:.4rem .55rem;background:rgba(0,212,170,.06);border:1px solid rgba(0,212,170,.25);border-radius:7px;color:#9af0d8;font-size:.62rem;text-decoration:none;margin-bottom:.3rem">🟢 Pexels Photos</a>
-          <a class="ms-lib-link" data-platform="unsplash" target="_blank" rel="noopener" style="display:flex;align-items:center;gap:.4rem;padding:.4rem .55rem;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.15);border-radius:7px;color:#fff;font-size:.62rem;text-decoration:none;margin-bottom:.3rem">⚫ Unsplash</a>
-          <a class="ms-lib-link" data-platform="pixabay" target="_blank" rel="noopener" style="display:flex;align-items:center;gap:.4rem;padding:.4rem .55rem;background:rgba(96,165,250,.06);border:1px solid rgba(96,165,250,.25);border-radius:7px;color:#9bd4ff;font-size:.62rem;text-decoration:none">🔵 Pixabay</a>
-        </div>
-        <div style="background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:.7rem">
-          <div style="font-size:.6rem;letter-spacing:.14em;color:#d9bbff;font-weight:800;margin-bottom:.5rem">🎞 VIDEOS</div>
-          <a class="ms-lib-link" data-platform="pexels-v" target="_blank" rel="noopener" style="display:flex;align-items:center;gap:.4rem;padding:.4rem .55rem;background:rgba(0,212,170,.06);border:1px solid rgba(0,212,170,.25);border-radius:7px;color:#9af0d8;font-size:.62rem;text-decoration:none;margin-bottom:.3rem">🟢 Pexels Video</a>
-          <a class="ms-lib-link" data-platform="mixkit-v" target="_blank" rel="noopener" style="display:flex;align-items:center;gap:.4rem;padding:.4rem .55rem;background:rgba(232,201,106,.06);border:1px solid rgba(232,201,106,.25);border-radius:7px;color:#e8c96a;font-size:.62rem;text-decoration:none;margin-bottom:.3rem">🟡 Mixkit</a>
-          <a class="ms-lib-link" data-platform="coverr-v" target="_blank" rel="noopener" style="display:flex;align-items:center;gap:.4rem;padding:.4rem .55rem;background:rgba(168,85,247,.06);border:1px solid rgba(168,85,247,.25);border-radius:7px;color:#d9bbff;font-size:.62rem;text-decoration:none;margin-bottom:.3rem">🟣 Coverr</a>
-          <a class="ms-lib-link" data-platform="pixabay-v" target="_blank" rel="noopener" style="display:flex;align-items:center;gap:.4rem;padding:.4rem .55rem;background:rgba(96,165,250,.06);border:1px solid rgba(96,165,250,.25);border-radius:7px;color:#9bd4ff;font-size:.62rem;text-decoration:none">🔵 Pixabay Video</a>
-        </div>
-        <div style="background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:.7rem">
-          <div style="font-size:.6rem;letter-spacing:.14em;color:#ffc8d4;font-weight:800;margin-bottom:.5rem">🎵 SOUNDS / MUSIK</div>
-          <a class="ms-lib-link" data-platform="pixabay-music" target="_blank" rel="noopener" style="display:flex;align-items:center;gap:.4rem;padding:.4rem .55rem;background:rgba(96,165,250,.06);border:1px solid rgba(96,165,250,.25);border-radius:7px;color:#9bd4ff;font-size:.62rem;text-decoration:none;margin-bottom:.3rem">🎼 Pixabay Music</a>
-          <a class="ms-lib-link" data-platform="mixkit-music" target="_blank" rel="noopener" style="display:flex;align-items:center;gap:.4rem;padding:.4rem .55rem;background:rgba(232,201,106,.06);border:1px solid rgba(232,201,106,.25);border-radius:7px;color:#e8c96a;font-size:.62rem;text-decoration:none;margin-bottom:.3rem">🎶 Mixkit Music</a>
-          <a class="ms-lib-link" data-platform="pixabay-sfx" target="_blank" rel="noopener" style="display:flex;align-items:center;gap:.4rem;padding:.4rem .55rem;background:rgba(96,165,250,.06);border:1px solid rgba(96,165,250,.25);border-radius:7px;color:#9bd4ff;font-size:.62rem;text-decoration:none;margin-bottom:.3rem">🔊 Pixabay SFX</a>
-          <a class="ms-lib-link" data-platform="freesound" target="_blank" rel="noopener" style="display:flex;align-items:center;gap:.4rem;padding:.4rem .55rem;background:rgba(255,158,177,.06);border:1px solid rgba(255,158,177,.25);border-radius:7px;color:#ffc8d4;font-size:.62rem;text-decoration:none">🎤 Freesound</a>
-        </div>
-      </div>
-    </div>
-    <div class="ms-pane" data-pane="templates" style="display:none">
-      <div style="font-size:.66rem;color:#b9a8d4;line-height:1.55;margin-bottom:.7rem;padding:.55rem .7rem;background:rgba(168,85,247,.05);border-left:3px solid rgba(168,85,247,.4);border-radius:6px"><b style="color:#d9bbff">Brand-Voice-Templates</b> — Klick auf eine Karte = ins Marketing-Cockpit übernehmen (Step 5 Caption).</div>
-      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:.6rem">
-        <div class="ms-template-card" data-template="founder_story"><div class="ms-tpl-h">👨‍✈️ Founder Story</div><div class="ms-tpl-preview">"0 Follower. 5 LOIs. 1 Hausboot..."</div><button class="ms-tpl-btn">📋 In Cockpit übernehmen</button></div>
-        <div class="ms-template-card" data-template="loi_celebration"><div class="ms-tpl-h">🤝 LOI-Celebration</div><div class="ms-tpl-preview">"Heute unterschrieben: LOI mit [Partner]..."</div><button class="ms-tpl-btn">📋 In Cockpit übernehmen</button></div>
-        <div class="ms-template-card" data-template="behind_the_scenes"><div class="ms-tpl-h">🔧 Behind The Scenes</div><div class="ms-tpl-preview">"Boot-Umbau Tag 27. Kein Render..."</div><button class="ms-tpl-btn">📋 In Cockpit übernehmen</button></div>
-        <div class="ms-template-card" data-template="sunset_drop"><div class="ms-tpl-h">🌅 Sunset Drop</div><div class="ms-tpl-preview">"Goldene Stunde am Wolzigsee..."</div><button class="ms-tpl-btn">📋 In Cockpit übernehmen</button></div>
-        <div class="ms-template-card" data-template="investor_signal"><div class="ms-tpl-h">💎 Investor-Signal</div><div class="ms-tpl-preview">"BP 03/26: Bruttomarge 71%..."</div><button class="ms-tpl-btn">📋 In Cockpit übernehmen</button></div>
-      </div>
-      <div style="margin-top:.9rem;padding:.7rem;background:rgba(0,212,170,.04);border:1px dashed rgba(0,212,170,.3);border-radius:10px">
-        <div style="font-size:.6rem;letter-spacing:.14em;color:#9af0d8;font-weight:800;margin-bottom:.5rem">🎬 SHOT-STORYBOARDS</div>
-        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:.5rem">
-          <button class="ms-sb-btn" data-sb="founder_intro" style="padding:.55rem .7rem;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.12);border-radius:8px;color:#fff;font-size:.62rem;font-weight:700;cursor:pointer;text-align:left">👨‍✈️ Founder Intro · 4 Shots</button>
-          <button class="ms-sb-btn" data-sb="behind_the_scenes" style="padding:.55rem .7rem;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.12);border-radius:8px;color:#fff;font-size:.62rem;font-weight:700;cursor:pointer;text-align:left">🔧 BTS-Werft · 4 Shots</button>
-          <button class="ms-sb-btn" data-sb="loi_signature" style="padding:.55rem .7rem;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.12);border-radius:8px;color:#fff;font-size:.62rem;font-weight:700;cursor:pointer;text-align:left">🤝 LOI-Signature · 4 Shots</button>
-        </div>
-        <div id="ms-sb-preview" style="margin-top:.7rem;font-size:.65rem;color:#b9a8d4"></div>
-      </div>
-    </div>
-    <div class="ms-pane" data-pane="ai" style="display:none">
-      <div style="font-size:.66rem;color:#b9a8d4;line-height:1.55;margin-bottom:.7rem;padding:.55rem .7rem;background:rgba(168,85,247,.05);border-left:3px solid rgba(168,85,247,.4);border-radius:6px"><b style="color:#d9bbff">AI-Studio</b> — Higgsfield-MCP (Sora/Veo/Kling/Soul · 30+ Modelle), Leonardo, Firefly, ElevenLabs, Suno, CapCut.</div>
-      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:.6rem">
-        <div style="background:linear-gradient(135deg,rgba(168,85,247,.10),rgba(60,20,90,.20));border:1px solid rgba(168,85,247,.45);border-radius:10px;padding:.8rem">
-          <div style="font-size:.55rem;letter-spacing:.16em;color:#d9bbff;font-weight:800;margin-bottom:.3rem">🪄 HIGGSFIELD-MCP · KI-VIDEO</div>
-          <div style="font-size:.7rem;color:#fff;font-weight:800;margin-bottom:.4rem">Sora · Veo · Kling · Soul</div>
-          <div style="font-size:.6rem;color:#b9a8d4;line-height:1.5;margin-bottom:.55rem">30+ Modelle · OAuth via Higgsfield · bis 15s Video, 4K Image</div>
-          <button onclick="window.msAI('higgsfield','marina_sunset_cinematic')" style="display:block;width:100%;padding:.4rem .6rem;background:linear-gradient(135deg,#a855f7,#6b21a8);border:0;border-radius:7px;color:#fff;font-size:.6rem;font-weight:800;cursor:pointer;margin-bottom:.25rem">🎬 Marina Sunset</button>
-          <button onclick="window.msAI('higgsfield','founder_portrait_marina')" style="display:block;width:100%;padding:.4rem .6rem;background:rgba(168,85,247,.18);border:1px solid rgba(168,85,247,.5);border-radius:7px;color:#fff7ff;font-size:.6rem;font-weight:800;cursor:pointer;margin-bottom:.25rem">👨‍✈️ Founder Portrait</button>
-          <button onclick="window.msAI('higgsfield','boat_construction_macro')" style="display:block;width:100%;padding:.4rem .6rem;background:rgba(168,85,247,.18);border:1px solid rgba(168,85,247,.5);border-radius:7px;color:#fff7ff;font-size:.6rem;font-weight:800;cursor:pointer;margin-bottom:.25rem">🔧 Boot-Werft Macro</button>
-          <button onclick="window.msAI('higgsfield','premium_dining_close_up')" style="display:block;width:100%;padding:.4rem .6rem;background:rgba(168,85,247,.18);border:1px solid rgba(168,85,247,.5);border-radius:7px;color:#fff7ff;font-size:.6rem;font-weight:800;cursor:pointer;margin-bottom:.25rem">🍽 Premium Dining</button>
-          <a href="https://higgsfield.ai/mcp" target="_blank" rel="noopener" style="display:block;padding:.35rem .6rem;background:transparent;border:1px solid rgba(168,85,247,.3);border-radius:7px;color:#d9bbff;font-size:.55rem;font-weight:700;text-decoration:none;text-align:center">📖 MCP-Setup ↗</a>
-        </div>
-        <div style="background:linear-gradient(135deg,rgba(0,212,170,.10),rgba(0,80,60,.20));border:1px solid rgba(0,212,170,.45);border-radius:10px;padding:.8rem">
-          <div style="font-size:.55rem;letter-spacing:.16em;color:#9af0d8;font-weight:800;margin-bottom:.3rem">🎨 LEONARDO</div>
-          <div style="font-size:.7rem;color:#fff;font-weight:800;margin-bottom:.4rem">Flux · Phoenix</div>
-          <a href="wavebite-leonardo-studio.html" target="_blank" rel="noopener" style="display:block;padding:.45rem .7rem;background:linear-gradient(135deg,#00d4aa,#0a8a72);color:#fff;font-size:.62rem;font-weight:800;border-radius:7px;text-decoration:none;text-align:center;margin-top:.4rem">🎨 Leonardo ↗</a>
-        </div>
-        <div style="background:linear-gradient(135deg,rgba(255,158,177,.10),rgba(120,40,80,.20));border:1px solid rgba(255,158,177,.45);border-radius:10px;padding:.8rem">
-          <div style="font-size:.55rem;letter-spacing:.16em;color:#ffc8d4;font-weight:800;margin-bottom:.3rem">✨ FIREFLY</div>
-          <div style="font-size:.7rem;color:#fff;font-weight:800;margin-bottom:.4rem">Image · Vector</div>
-          <a href="https://firefly.adobe.com" target="_blank" rel="noopener" style="display:block;padding:.45rem .7rem;background:linear-gradient(135deg,#ff9eb1,#c5497a);color:#fff;font-size:.62rem;font-weight:800;border-radius:7px;text-decoration:none;text-align:center;margin-top:.4rem">✨ Firefly ↗</a>
-        </div>
-        <div style="background:linear-gradient(135deg,rgba(96,165,250,.10),rgba(20,40,90,.20));border:1px solid rgba(96,165,250,.45);border-radius:10px;padding:.8rem">
-          <div style="font-size:.55rem;letter-spacing:.16em;color:#9bd4ff;font-weight:800;margin-bottom:.3rem">🎙 ELEVENLABS</div>
-          <div style="font-size:.7rem;color:#fff;font-weight:800;margin-bottom:.4rem">KI-Stimmen DE</div>
-          <a href="https://elevenlabs.io/app/speech-synthesis" target="_blank" rel="noopener" style="display:block;padding:.45rem .7rem;background:linear-gradient(135deg,#60a5fa,#1e40af);color:#fff;font-size:.62rem;font-weight:800;border-radius:7px;text-decoration:none;text-align:center;margin-top:.4rem">🎙 ElevenLabs ↗</a>
-        </div>
-        <div style="background:linear-gradient(135deg,rgba(253,230,138,.10),rgba(90,70,20,.20));border:1px solid rgba(253,230,138,.45);border-radius:10px;padding:.8rem">
-          <div style="font-size:.55rem;letter-spacing:.16em;color:#fde68a;font-weight:800;margin-bottom:.3rem">🎵 SUNO</div>
-          <div style="font-size:.7rem;color:#fff;font-weight:800;margin-bottom:.4rem">KI-Musik</div>
-          <a href="https://suno.com" target="_blank" rel="noopener" style="display:block;padding:.45rem .7rem;background:linear-gradient(135deg,#fde68a,#c9a84c);color:#1a1a1a;font-size:.62rem;font-weight:800;border-radius:7px;text-decoration:none;text-align:center;margin-top:.4rem">🎵 Suno ↗</a>
-        </div>
-        <div style="background:linear-gradient(135deg,rgba(168,85,247,.08),rgba(80,40,140,.18));border:1px solid rgba(168,85,247,.35);border-radius:10px;padding:.8rem">
-          <div style="font-size:.55rem;letter-spacing:.16em;color:#d9bbff;font-weight:800;margin-bottom:.3rem">🎬 CAPCUT</div>
-          <div style="font-size:.7rem;color:#fff;font-weight:800;margin-bottom:.4rem">Video-Schnitt</div>
-          <a href="https://www.capcut.com/" target="_blank" rel="noopener" style="display:block;padding:.45rem .7rem;background:rgba(168,85,247,.2);border:1px solid rgba(168,85,247,.5);color:#fff;font-size:.62rem;font-weight:800;border-radius:7px;text-decoration:none;text-align:center;margin-top:.4rem">🎬 CapCut ↗</a>
-        </div>
-      </div>
-    </div>
-    <div class="ms-pane" data-pane="calendar" style="display:none">
-      <div style="font-size:.66rem;color:#b9a8d4;line-height:1.55;margin-bottom:.7rem;padding:.55rem .7rem;background:rgba(168,85,247,.05);border-left:3px solid rgba(168,85,247,.4);border-radius:6px"><b style="color:#d9bbff">Posting-Kalender</b> — beste Slots pro Plattform.</div>
-      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:.5rem">
-        <div style="background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);border-radius:8px;padding:.7rem"><div style="font-size:.6rem;letter-spacing:.14em;color:#d9bbff;font-weight:800;margin-bottom:.4rem">📷 INSTAGRAM</div><ul style="margin:0;padding-left:1rem;font-size:.65rem;color:#fff;line-height:1.6"><li>Di 19:00 Reel</li><li>Do 19:00 Reel</li><li>Sa 11:00 Story</li></ul></div>
-        <div style="background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);border-radius:8px;padding:.7rem"><div style="font-size:.6rem;letter-spacing:.14em;color:#9af0d8;font-weight:800;margin-bottom:.4rem">🎵 TIKTOK</div><ul style="margin:0;padding-left:1rem;font-size:.65rem;color:#fff;line-height:1.6"><li>Mi 20:30</li><li>So 18:00</li></ul></div>
-        <div style="background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);border-radius:8px;padding:.7rem"><div style="font-size:.6rem;letter-spacing:.14em;color:#9bd4ff;font-weight:800;margin-bottom:.4rem">💼 LINKEDIN</div><ul style="margin:0;padding-left:1rem;font-size:.65rem;color:#fff;line-height:1.6"><li>Di 08:00</li><li>Mi 12:00</li></ul></div>
-        <div style="background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);border-radius:8px;padding:.7rem"><div style="font-size:.6rem;letter-spacing:.14em;color:#ff4757;font-weight:800;margin-bottom:.4rem">▶️ SHORTS</div><ul style="margin:0;padding-left:1rem;font-size:.65rem;color:#fff;line-height:1.6"><li>Fr 17:00</li><li>Sa 10:00</li></ul></div>
-      </div>
-      <div style="margin-top:.7rem;display:flex;gap:.4rem;flex-wrap:wrap">
-        <a href="https://calendar.google.com" target="_blank" rel="noopener" style="padding:.45rem .8rem;background:rgba(96,165,250,.1);border:1px solid rgba(96,165,250,.4);border-radius:8px;color:#9bd4ff;font-size:.62rem;font-weight:800;text-decoration:none">📅 Google Calendar ↗</a>
-        <a href="https://postiz.com" target="_blank" rel="noopener" style="padding:.45rem .8rem;background:rgba(168,85,247,.1);border:1px solid rgba(168,85,247,.4);border-radius:8px;color:#d9bbff;font-size:.62rem;font-weight:800;text-decoration:none">⏰ Postiz ↗</a>
-      </div>
-    </div>
-    <div class="ms-pane" data-pane="lucy" style="display:none">
-      <div style="display:grid;grid-template-columns:auto 1fr;gap:.7rem;align-items:flex-start;padding:.7rem;background:linear-gradient(180deg,rgba(255,158,177,.12),rgba(60,20,40,.45));border:1px solid rgba(255,158,177,.35);border-radius:12px">
-        <div style="width:64px;height:64px;border-radius:50%;background:radial-gradient(circle at 30% 30%,#ff9eb1,#c5497a 70%,#5b1f3a);display:flex;align-items:center;justify-content:center;font-size:2rem;flex-shrink:0;box-shadow:0 0 0 4px rgba(255,158,177,.18)">🧜🏻‍♀️</div>
-        <div>
-          <div style="font-size:.95rem;font-weight:900;color:#fff">Lucy · Marketing-Modus</div>
-          <div style="font-size:.55rem;letter-spacing:.14em;color:#ffc8d4;font-weight:700;margin-top:.15rem">Co-Pilotin · Brand-Voice · Strategie</div>
-        </div>
-      </div>
-      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:.4rem;margin-top:.7rem">
-        <button onclick="window.officeMarketingAction('brainstorm')" style="padding:.55rem .7rem;background:rgba(168,85,247,.1);border:1px solid rgba(168,85,247,.4);border-radius:8px;color:#d9bbff;font-size:.62rem;font-weight:800;cursor:pointer;text-align:left">💡 5 Reel-Ideen</button>
-        <button onclick="window.officeMarketingAction('audit')" style="padding:.55rem .7rem;background:rgba(96,165,250,.1);border:1px solid rgba(96,165,250,.4);border-radius:8px;color:#9bd4ff;font-size:.62rem;font-weight:800;cursor:pointer;text-align:left">🔍 Audit letzten Post</button>
-        <button onclick="window.officeMarketingAction('trends')" style="padding:.55rem .7rem;background:rgba(0,212,170,.1);border:1px solid rgba(0,212,170,.4);border-radius:8px;color:#9af0d8;font-size:.62rem;font-weight:800;cursor:pointer;text-align:left">🛰 Trends scannen</button>
-        <button onclick="window.officeMarketingAction('brandcheck')" style="padding:.55rem .7rem;background:rgba(255,158,177,.1);border:1px solid rgba(255,158,177,.4);border-radius:8px;color:#ffc8d4;font-size:.62rem;font-weight:800;cursor:pointer;text-align:left">🛡 Brand-Voice prüfen</button>
-        <button onclick="window.officeMarketingAction('calendar')" style="padding:.55rem .7rem;background:rgba(253,230,138,.1);border:1px solid rgba(253,230,138,.4);border-radius:8px;color:#fde68a;font-size:.62rem;font-weight:800;cursor:pointer;text-align:left">📅 7-Tage-Plan</button>
-        <button onclick="try{(window.Lucy||window.Samantha)?.open?.()}catch(e){}" style="padding:.55rem .7rem;background:linear-gradient(135deg,#ff9eb1,#c5497a);border:0;border-radius:8px;color:#fff;font-size:.62rem;font-weight:800;cursor:pointer;text-align:left">🧜🏻‍♀️ Lucy-Panel</button>
+      <div style="display:flex;gap:.4rem;flex-wrap:wrap">
+        <a href="marketing-dashboard-detail.html" target="_blank" rel="noopener" style="padding:.45rem 1rem;background:linear-gradient(135deg,#a855f7,#6b21a8);border-radius:8px;color:#fff;font-size:.65rem;font-weight:800;text-decoration:none;letter-spacing:.05em">📣 COCKPIT ÖFFNEN</a>
+        <button onclick="try{(window.Lucy||window.Samantha)?.open?.()}catch(e){}" style="padding:.45rem 1rem;background:linear-gradient(135deg,rgba(255,158,177,.3),rgba(197,73,122,.15));border:1px solid rgba(255,158,177,.6);border-radius:8px;color:#ffc8d4;font-size:.65rem;font-weight:800;cursor:pointer;letter-spacing:.05em">🧜🏻‍♀️ LUCY FRAGEN</button>
       </div>
     </div>
   </div>
@@ -9142,7 +9205,7 @@ if (typeof window.addMemoryEntry !== 'function') {
 })();
 </script>
 
-<script src="samantha.js?v=2026-05-24-v21.3-studio-mega"></script>
+<script src="samantha.js?v=2026-05-24-v21-lucy-marketing"></script>
 
 <script>
 // ═════════════════════════════════════════════════════════════
@@ -9439,342 +9502,4 @@ if (typeof window.addMemoryEntry !== 'function') {
           <div style="flex:1;min-width:0">
             <div style="font-size:.74rem;font-weight:800;color:${r.color}">${r.name}</div>
             <div style="font-size:.55rem;color:var(--text-muted);margin-top:.15rem">${r.focus}</div>
-            <div style="font-size:.5rem;letter-spacing:.08em;color:var(--text-dim);margin-top:.3rem">${r.kpi}</div>
-          </div>
-        </div>
-        <button onclick="lucyRoleBrief('${r.id}')" style="margin-top:.55rem;width:100%;padding:.32rem;background:${r.color}22;border:1px solid ${r.color}55;border-radius:7px;color:${r.color};font-size:.55rem;font-weight:700;cursor:pointer">🧠 ${r.name.split(' ')[0]} briefen</button>
-      </div>
-    `).join('');
-  }
-
-  function renderLayers() {
-    return AI_LAYERS.map(L => `
-      <div style="display:flex;align-items:center;gap:.7rem;padding:.55rem .7rem;background:rgba(20,28,42,.6);border:1px solid rgba(255,255,255,.06);border-radius:9px;transition:all .2s" onmouseover="this.style.borderColor='rgba(232,201,106,.4)';this.style.background='rgba(232,201,106,.05)'" onmouseout="this.style.borderColor='rgba(255,255,255,.06)';this.style.background='rgba(20,28,42,.6)'">
-        <div style="display:flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:6px;background:rgba(232,201,106,.12);color:#e8c96a;font-size:.65rem;font-weight:800">L${L.n}</div>
-        <div style="font-size:1.1rem">${L.icon}</div>
-        <div style="flex:1;min-width:0">
-          <div style="font-size:.7rem;font-weight:700;color:var(--text)">${L.name}</div>
-          <div style="font-size:.55rem;color:var(--text-muted)">${L.tools}</div>
-        </div>
-      </div>
-    `).join('');
-  }
-
-  function renderPrompts() {
-    const cats = [
-      { key:'video',  label:'🎬 Video Prompts',  color:'#a855f7' },
-      { key:'image',  label:'🎨 Image Prompts',  color:'#e8c96a' },
-      { key:'voice',  label:'🎙 Voice Skripte',  color:'#ff6b9d' },
-      { key:'social', label:'📱 Social Hooks',   color:'#1e6fa8' }
-    ];
-    return cats.map(c => `
-      <div style="margin-bottom:.85rem">
-        <div style="font-size:.6rem;letter-spacing:.12em;color:${c.color};font-weight:700;margin-bottom:.4rem">${c.label}</div>
-        <div style="display:grid;gap:.4rem">
-          ${PROMPT_LIB[c.key].map((p, i) => `
-            <div style="background:rgba(20,28,42,.7);border:1px solid rgba(255,255,255,.08);border-left:2px solid ${c.color};border-radius:8px;padding:.5rem .65rem">
-              <div style="display:flex;justify-content:space-between;align-items:center;gap:.5rem">
-                <div style="font-size:.62rem;font-weight:700;color:var(--text)">${p.title}</div>
-                <div style="display:flex;gap:.3rem">
-                  <button onclick="copyPromptToClip(${i},'${c.key}')" style="padding:.2rem .5rem;background:rgba(232,201,106,.1);border:1px solid rgba(232,201,106,.3);border-radius:5px;color:#e8c96a;font-size:.5rem;cursor:pointer;font-weight:700">📋 Copy</button>
-                  <button onclick="lucyPromptRefine(${i},'${c.key}')" style="padding:.2rem .5rem;background:rgba(0,212,170,.1);border:1px solid rgba(0,212,170,.3);border-radius:5px;color:#9af0d8;font-size:.5rem;cursor:pointer;font-weight:700">🧠 Refine</button>
-                </div>
-              </div>
-              <div style="font-size:.55rem;color:var(--text-muted);margin-top:.3rem;line-height:1.4;font-family:ui-monospace,monospace">${p.text}</div>
-            </div>
-          `).join('')}
-        </div>
-      </div>
-    `).join('');
-  }
-
-  function renderPipeline() {
-    return `
-      <div style="display:flex;gap:.4rem;flex-wrap:wrap;align-items:stretch;margin-bottom:.85rem">
-        ${PIPELINE.map((p, i) => `
-          <div style="flex:1;min-width:90px;background:linear-gradient(145deg,rgba(20,28,42,.85),rgba(10,14,26,.95));border:1px solid rgba(255,255,255,.08);border-radius:9px;padding:.55rem .4rem;text-align:center;position:relative">
-            <div style="position:absolute;top:.25rem;right:.4rem;font-size:.45rem;color:rgba(232,201,106,.6);font-weight:700">${String(p.step).padStart(2,'0')}</div>
-            <div style="font-size:1.4rem;margin-bottom:.2rem">${p.icon}</div>
-            <div style="font-size:.6rem;font-weight:700;color:var(--text)">${p.name}</div>
-            <div style="font-size:.48rem;color:var(--text-muted);margin-top:.15rem">${p.tool}</div>
-            <div style="font-size:.5rem;color:#00d4aa;margin-top:.25rem;font-weight:700">${p.time}</div>
-          </div>
-          ${i < PIPELINE.length - 1 ? '<div style="display:flex;align-items:center;color:rgba(232,201,106,.4);font-size:.85rem">→</div>' : ''}
-        `).join('')}
-      </div>
-      <button onclick="runStudioPipeline()" style="width:100%;padding:.55rem;background:linear-gradient(135deg,rgba(0,212,170,.25),rgba(0,170,140,.1));border:1px solid rgba(0,212,170,.5);border-radius:9px;color:#9af0d8;font-size:.7rem;font-weight:700;cursor:pointer">🚀 Vollständige Pipeline mit Lucy ausführen — Schritt für Schritt</button>
-    `;
-  }
-
-  function renderBrandGate() {
-    return `
-      <div style="background:rgba(232,201,106,.05);border:1px solid rgba(232,201,106,.2);border-radius:10px;padding:.85rem">
-        <div style="display:flex;align-items:center;gap:.5rem;margin-bottom:.6rem">
-          <span style="font-size:1.2rem">🛡</span>
-          <div style="font-size:.7rem;font-weight:800;color:#e8c96a;letter-spacing:.08em">QUALITY GATE — 12-PUNKTE-CHECK VOR JEDEM POST</div>
-        </div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:.35rem .85rem">
-          ${BRAND_GATE.map((c, i) => `
-            <label style="display:flex;align-items:flex-start;gap:.5rem;font-size:.6rem;color:var(--text);cursor:pointer">
-              <input type="checkbox" data-bg-i="${i}" onchange="updateBrandGateProgress()" style="margin-top:.2rem;accent-color:#e8c96a">
-              <span>${c}</span>
-            </label>
-          `).join('')}
-        </div>
-        <div style="margin-top:.7rem;display:flex;align-items:center;gap:.5rem;font-size:.6rem">
-          <span style="color:var(--text-dim)">Fortschritt:</span>
-          <div style="flex:1;height:6px;background:rgba(255,255,255,.06);border-radius:3px;overflow:hidden">
-            <div id="brand-gate-progress" style="height:100%;width:0%;background:linear-gradient(90deg,#e8c96a,#00d4aa);transition:width .35s"></div>
-          </div>
-          <span id="brand-gate-count" style="color:#e8c96a;font-weight:700">0/12</span>
-          <button onclick="lucyBrandCheck()" style="padding:.25rem .65rem;background:rgba(0,212,170,.12);border:1px solid rgba(0,212,170,.4);border-radius:6px;color:#9af0d8;font-size:.55rem;cursor:pointer;font-weight:700">🧠 Lucy prüft</button>
-        </div>
-      </div>
-    `;
-  }
-
-  window.lucyRoleBrief = function(id) {
-    const r = AI_ROLES.find(x => x.id === id);
-    if (r) _lucy('🎭 ROLE-BRIEFING: ' + r.name + '\n\n' + r.prompt);
-  };
-  window.copyPromptToClip = function(i, key) {
-    const p = PROMPT_LIB[key][i];
-    if (p) { navigator.clipboard.writeText(p.text); _toast('📋 In Zwischenablage: ' + p.title); }
-  };
-  window.lucyPromptRefine = function(i, key) {
-    const p = PROMPT_LIB[key][i];
-    if (p) _lucy('✨ PROMPT-REFINE: "' + p.title + '"\n\nOriginal:\n' + p.text + '\n\nMache ihn besser für Wave Bite (mehr Brand-Anker, mehr emotional, mehr conversion-stark). Liefere 3 verfeinerte Varianten.');
-  };
-  window.updateBrandGateProgress = function() {
-    const boxes = document.querySelectorAll('[data-bg-i]');
-    const done = Array.from(boxes).filter(b => b.checked).length;
-    const total = boxes.length;
-    const pct = total ? Math.round(done/total*100) : 0;
-    const bar = document.getElementById('brand-gate-progress');
-    const cnt = document.getElementById('brand-gate-count');
-    if (bar) bar.style.width = pct + '%';
-    if (cnt) cnt.textContent = done + '/' + total;
-  };
-  window.lucyBrandCheck = function() {
-    _lucy('🛡 BRAND-GATE-CHECK\n\nHilf mir alle 12 Quality-Gate-Punkte zu prüfen für einen geplanten Wave Bite Post. Geh die Liste durch und frag mich jede offene Frage. Gib am Ende ein klares Go/No-Go.');
-  };
-  window.lucyStudioFullScan = function() {
-    _lucy('🎬 STUDIO FULL SCAN — der komplette Workflow-Check\n\n1) Pipeline-Status: in welchem Step stehe ich gerade?\n2) Welcher der 13 Tools fehlt mir noch (Setup-Liste)?\n3) Welche der 7 AI-Rollen sollte ich heute aktivieren?\n4) Welches Brand-Gate-Item ist mein größtes Risiko?\n5) Was ist mein nächster konkreter Move (heute, max 30 Min)?');
-  };
-
-  function _toast(msg) {
-    let t = document.getElementById('studio-toast');
-    if (!t) {
-      t = document.createElement('div');
-      t.id = 'studio-toast';
-      t.style.cssText = 'position:fixed;bottom:24px;left:50%;transform:translateX(-50%);padding:.55rem 1rem;background:rgba(0,14,26,.95);border:1px solid rgba(232,201,106,.5);border-radius:10px;color:#e8c96a;font-size:.7rem;font-weight:700;z-index:9999;box-shadow:0 8px 30px rgba(0,0,0,.5);transition:opacity .3s';
-      document.body.appendChild(t);
-    }
-    t.textContent = msg;
-    t.style.opacity = '1';
-    clearTimeout(window._studioToastTo);
-    window._studioToastTo = setTimeout(() => { t.style.opacity = '0'; }, 2200);
-  }
-
-  // TAB SWITCHER
-  const TABS = [
-    { key:'roles',    label:'🎭 7 AI-Rollen',   render: renderRoles,    gridStyle:'grid-template-columns:repeat(4,1fr);gap:.55rem' },
-    { key:'layers',   label:'🏛 8 Layer',       render: renderLayers,   gridStyle:'grid-template-columns:repeat(2,1fr);gap:.5rem' },
-    { key:'prompts',  label:'📚 Prompt-Library', render: renderPrompts,  gridStyle:'' },
-    { key:'pipeline', label:'🔄 Pipeline',       render: renderPipeline, gridStyle:'' },
-    { key:'brand',    label:'🛡 Brand Gate',     render: renderBrandGate, gridStyle:'' }
-  ];
-
-  window.switchStudioTab = function(key) {
-    const tab = TABS.find(t => t.key === key);
-    if (!tab) return;
-    document.querySelectorAll('.studio-tab-btn').forEach(b => {
-      const active = b.dataset.tab === key;
-      b.style.background = active ? 'rgba(232,201,106,.18)' : 'transparent';
-      b.style.borderColor = active ? 'rgba(232,201,106,.5)' : 'rgba(255,255,255,.12)';
-      b.style.color = active ? '#fff7c0' : 'var(--text-dim)';
-    });
-    const panel = document.getElementById('studio-tab-panel');
-    if (panel) {
-      panel.style.display = tab.gridStyle ? 'grid' : 'block';
-      panel.style.cssText = tab.gridStyle || '';
-      panel.innerHTML = tab.render();
-      if (key === 'brand') setTimeout(updateBrandGateProgress, 50);
-    }
-  };
-
-  function injectMaxExpansion() {
-    const studio = document.getElementById('sec-studio');
-    if (!studio) return console.warn('[v18] no sec-studio');
-    if (studio.querySelector('#studio-max-block')) return; // idempotent
-
-    const block = document.createElement('div');
-    block.id = 'studio-max-block';
-    block.style.cssText = 'margin-top:1.1rem;padding-top:1rem;border-top:1px solid rgba(232,201,106,.18);position:relative';
-    block.innerHTML = `
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.6rem;flex-wrap:wrap;gap:.5rem">
-        <div style="font-size:.62rem;letter-spacing:.16em;color:rgba(232,201,106,.85);font-weight:700">🚀 NEXT-GEN STUDIO MAX — INTEGRIERT AUS MARKETING-OS</div>
-        <button onclick="lucyStudioFullScan()" style="padding:.28rem .65rem;background:linear-gradient(135deg,rgba(168,85,247,.25),rgba(120,60,200,.1));border:1px solid rgba(168,85,247,.5);border-radius:7px;color:#d9bbff;font-size:.55rem;font-weight:700;cursor:pointer">🛰 Studio Full-Scan</button>
-      </div>
-      <div style="display:flex;gap:.35rem;margin-bottom:.85rem;flex-wrap:wrap">
-        ${TABS.map((t, i) => `<button class="studio-tab-btn" data-tab="${t.key}" onclick="switchStudioTab('${t.key}')" style="padding:.35rem .85rem;background:${i===0?'rgba(232,201,106,.18)':'transparent'};border:1px solid ${i===0?'rgba(232,201,106,.5)':'rgba(255,255,255,.12)'};border-radius:8px;color:${i===0?'#fff7c0':'var(--text-dim)'};font-size:.62rem;font-weight:700;cursor:pointer;transition:all .2s">${t.label}</button>`).join('')}
-      </div>
-      <div id="studio-tab-panel" style="display:grid;grid-template-columns:repeat(4,1fr);gap:.55rem"></div>
-    `;
-
-    // Append before the Distribution Row (last child)
-    const distRow = studio.querySelector('div[style*="DISTRIBUTION"]');
-    if (distRow && distRow.parentNode) {
-      distRow.parentNode.insertBefore(block, distRow);
-    } else {
-      const innerCard = studio.querySelector('div[style*="border-radius:16px"]') || studio.firstElementChild;
-      if (innerCard) innerCard.appendChild(block); else studio.appendChild(block);
-    }
-
-    // initial fill
-    switchStudioTab('roles');
-  }
-
-  // Inject extra nav-pills (🎬 STUDIO, 📣 MKT-OS) into top nav if not present
-  function injectNavPills() {
-    const nav = document.querySelector('nav');
-    if (!nav) return;
-    if (nav.querySelector('[data-nav="studio"]')) return;
-    const sep = nav.querySelector('.nav-sep');
-    const make = (id, sec, label, color) => {
-      const d = document.createElement('div');
-      d.className = 'nav-pill';
-      d.dataset.nav = id;
-      d.onclick = () => document.getElementById(sec)?.scrollIntoView({behavior:'smooth'});
-      d.innerHTML = label;
-      if (color) d.style.cssText = `border-color:${color};color:${color}`;
-      return d;
-    };
-    const studioPill = make('studio', 'sec-studio', '🎬 STUDIO', 'rgba(232,201,106,0.45)');
-    const mktPill = make('marketing', 'sec-studio', '📣 MARKETING', 'rgba(168,85,247,0.45)');
-    if (sep) { nav.insertBefore(studioPill, sep); nav.insertBefore(mktPill, sep); }
-    else { nav.appendChild(studioPill); nav.appendChild(mktPill); }
-  }
-
-  function boot() {
-    injectNavPills();
-    injectMaxExpansion();
-  }
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);
-  else setTimeout(boot, 100);
-})();
-</script>
-
-
-<!-- V21.3 LUCY · MISSING-FUNCTION POLYFILL + MARKETING STUDIO -->
-<script>
-(function(){
-  function safeToast(msg){
-    var t=document.getElementById('lucy-poly-toast');
-    if(!t){t=document.createElement('div');t.id='lucy-poly-toast';t.style.cssText='position:fixed;bottom:24px;left:50%;transform:translateX(-50%);padding:.55rem 1rem;background:rgba(0,14,26,.95);border:1px solid rgba(168,85,247,.5);border-radius:10px;color:#d9bbff;font-size:.7rem;font-weight:700;z-index:9999;box-shadow:0 8px 30px rgba(0,0,0,.5);transition:opacity .3s';document.body.appendChild(t);}
-    t.textContent=msg;t.style.opacity='1';clearTimeout(window._lucyPolyTo);
-    window._lucyPolyTo=setTimeout(function(){t.style.opacity='0';},2400);
-  }
-  function askLucy(p){ try{ var L=window.Lucy||window.Samantha; if(L && L.open) L.open(); if(L && L.ask) L.ask(p);}catch(_){} }
-
-  if(typeof window.lucyRoleBrief!=='function'){ window.lucyRoleBrief=function(r){ safeToast('🧠 Lucy briefe Rolle ' + r); askLucy('Briefing für Marketing-Rolle ' + r + ' für Wave Bite.'); }; }
-  if(typeof window.switchStudioTab!=='function'){ window.switchStudioTab=function(k){ safeToast('🎬 Studio-Tab ' + k); var s=document.getElementById('sec-marketing'); if(s) s.scrollIntoView({behavior:'smooth'}); }; }
-  ['lucyVoiceover','lucyEditCut','lucyVideoExport','lucyHashtagGen','lucyAutoCaption','lucyPromptRefine'].forEach(function(fn){ if(typeof window[fn]!=='function'){ window[fn]=function(){ askLucy('Aktion: '+fn+'() — bitte ausführen.'); }; } });
-  if(typeof window.copyPromptToClip!=='function'){ window.copyPromptToClip=function(t){ try{ navigator.clipboard.writeText(t||''); safeToast('📋 Kopiert'); }catch(_){ safeToast('⚠ Fehler'); } }; }
-
-  window.officeMarketingAction = function(kind){
-    var prompts = {
-      brainstorm: 'Gib mir 5 starke Reel-Ideen für die nächsten 7 Tage (Wave-Bite-Faktenbuch + aktuelle Blocker).',
-      audit: 'Audit den letzten Wave-Bite-Post: was war gut/schlecht/anders beim nächsten?',
-      trends: 'Scan Trends in Houseboat/BB-Tourismus/Marina-Gastro: 3 Posts die jetzt einschlagen.',
-      calendar: '7-Tage Posting-Plan mit Slots, Themen, Plattformen.',
-      brandcheck: 'Prüfe letzten Post auf verbotene Wörter, Tonalität, CTA.'
-    };
-    safeToast('🧜🏻‍♀️ ' + kind.toUpperCase() + ' — Lucy übernimmt');
-    askLucy(prompts[kind] || 'Marketing-Action: ' + kind);
-  };
-
-  function initStudio(){
-    function $$(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s));}
-    function switchPane(k){
-      $$('.ms-tab').forEach(function(b){ var on=b.dataset.tab===k; b.classList.toggle('active',on); if(on){b.style.background='rgba(168,85,247,.22)';b.style.color='#fff7ff';}else{b.style.background='transparent';b.style.color='#c8c8d4';} });
-      $$('.ms-pane').forEach(function(p){ p.style.display=(p.dataset.pane===k)?'block':'none'; });
-      try{ localStorage.setItem('ms_tab_v213',k); }catch(_){}
-    }
-    $$('.ms-tab').forEach(function(b){ b.addEventListener('click', function(){ switchPane(b.dataset.tab); }); });
-    var saved=(function(){try{return localStorage.getItem('ms_tab_v213')}catch(_){return null}})();
-    if(saved) switchPane(saved);
-
-    var libQuery='marina';
-    var libLinks = {
-      pexels:'https://www.pexels.com/de-de/suche/{q}/', unsplash:'https://unsplash.com/de/s/fotos/{q}', pixabay:'https://pixabay.com/de/images/search/{q}/',
-      'pexels-v':'https://www.pexels.com/de-de/suche/videos/{q}/', 'mixkit-v':'https://mixkit.co/free-stock-video/{q}/', 'coverr-v':'https://coverr.co/stock-video-footage/{q}', 'pixabay-v':'https://pixabay.com/de/videos/search/{q}/',
-      'pixabay-music':'https://pixabay.com/de/music/search/{q}/', 'mixkit-music':'https://mixkit.co/free-stock-music/tag/{q}/', 'pixabay-sfx':'https://pixabay.com/de/sound-effects/search/{q}/', 'freesound':'https://freesound.org/search/?q={q}'
-    };
-    function applyLib(q){
-      libQuery=q||libQuery;
-      var enc=encodeURIComponent(libQuery);
-      $$('.ms-lib-link').forEach(function(a){ var pl=a.dataset.platform; if(!pl) return; var tpl=libLinks[pl]; if(!tpl) return; a.href=tpl.replace('{q}',enc); a.title=libQuery+' auf '+pl; });
-      var lbl=document.getElementById('ms-lib-current-q'); if(lbl) lbl.textContent=libQuery;
-    }
-    $$('.ms-lib-filter').forEach(function(b){ b.addEventListener('click', function(){ $$('.ms-lib-filter').forEach(function(x){x.classList.remove('ms-filter-active');x.style.background='transparent';x.style.color='#c8c8d4';}); b.classList.add('ms-filter-active'); b.style.background='rgba(168,85,247,.22)'; b.style.color='#fff'; applyLib(b.dataset.q); }); });
-    var inp=document.getElementById('ms-lib-search'); if(inp) inp.addEventListener('input', function(e){ if(e.target.value.trim()) applyLib(e.target.value.trim()); });
-    applyLib('marina');
-
-    var TPL = {
-      founder_story: '0 Follower. 5 LOIs. 1 Hausboot, das gerade umgebaut wird.\n\nUnsere Cap Table ist 95/5 - radikal ehrlich.\n\nDM mit BOOT.\n\n#wavebite #hausboot #brandenburg',
-      loi_celebration: 'Heute unterschrieben: LOI mit [Partner].\n\nEchte Partnerschaft. Fünfte LOI in 3 Monaten.\n\nDM mit LOI.\n\n#wavebite #brandenburg',
-      behind_the_scenes: 'Boot-Umbau Tag 27.\n\nKein Render. Eichenholz. 7 cm zu wenig - Pläne geändert.\n\nFolg uns.\n\n#bootbau #wavebite',
-      sunset_drop: 'Goldene Stunde am Wolzigsee.\n\nIn 6 Wochen schwimmt hier ein Restaurant.\n\nDM mit RESERVIERUNG.\n\n#wavebite #wolzigsee',
-      investor_signal: 'BP 03/26: Bruttomarge 71%, EBITDA J1 93.650 €, Forecast 250k€, 5 LOIs, Pre-Money 1,5 Mio.\n\nPitchdeck per DM.\n\n#wavebite #seedstage'
-    };
-    $$('.ms-template-card').forEach(function(card){
-      card.addEventListener('click', function(){
-        var k=card.dataset.template, t=TPL[k]; if(!t) return;
-        try{
-          var sk='wave_bite_mkt_state_v21';
-          var raw=localStorage.getItem(sk); var st=raw?JSON.parse(raw):{};
-          st.idea=st.idea||('Template: '+k);
-          st.brief=st.brief||('# BRIEF ' + k + '\n\n' + t.split('\n')[0]);
-          st.caption=t;
-          st.hashtags=(t.match(/#[a-zA-Z0-9_]+/g)||[]).join(' ');
-          st.activeStep=5;
-          if(!Array.isArray(st.completedSteps)) st.completedSteps=[];
-          [1,2,3,4].forEach(function(n){ if(st.completedSteps.indexOf(n)===-1) st.completedSteps.push(n); });
-          localStorage.setItem(sk, JSON.stringify(st));
-          try{ (window._msBC=window._msBC||new BroadcastChannel('ceo-wave')).postMessage({type:'mkt-set-step',step:5,ts:Date.now()}); }catch(_){}
-          window.open('marketing-dashboard-detail.html#step=5','_blank','noopener');
-          safeToast('📋 Template ' + k + ' ins Cockpit übernommen');
-        }catch(err){ try{ navigator.clipboard.writeText(t); safeToast('📋 Caption kopiert'); }catch(_){} }
-      });
-    });
-
-    var SB = {
-      founder_intro: ['0-3s · Founder im Boot · 95/5. Unsere Cap Table.','3-12s · Cap-Table-Grafik · Kein Investor hat uns ausgesaugt.','12-22s · LOIs · Boot · Sunset · 5 LOIs · 1,5 Mio.','22-30s · Direct-to-Camera · DM mit BOOT.'],
-      behind_the_scenes: ['0-3s · Funkenflug · Tag 27. Werft.','3-15s · Hände an Holz · Schweißnähte. 7 cm zu wenig.','15-25s · Plan-Änderung · Premium aus dem Maschinenraum.','25-30s · CTA · Follow für Tag 28.'],
-      loi_signature: ['0-3s · Stift signiert · Heute unterschrieben.','3-12s · Partner-Logo · Handshake · Partner wird Lieferant.','12-22s · 5 LOIs · Fünfte in 3 Monaten.','22-30s · Selfie + CTA · DM mit LOI.']
-    };
-    $$('.ms-sb-btn').forEach(function(b){ b.addEventListener('click', function(){ var sb=SB[b.dataset.sb]; if(!sb) return; var p=document.getElementById('ms-sb-preview'); if(p) p.innerHTML='<div style="padding:.55rem .7rem;background:rgba(0,212,170,.05);border-left:3px solid rgba(0,212,170,.5);border-radius:6px"><b style="color:#9af0d8">Storyboard '+b.textContent.trim()+'</b><ul style="margin:.3rem 0 0 1rem;padding:0;font-size:.62rem;color:#fff">'+sb.map(function(s){return '<li>'+s+'</li>';}).join('')+'</ul></div>'; }); });
-
-    var HF = {
-      marina_sunset_cinematic: 'A premium houseboat docked at a quiet German lake marina during golden hour, calm water reflecting amber light, slow cinematic dolly-in. Sony FX3, anamorphic, 24fps, 4K.',
-      founder_portrait_marina: 'Confident 35-year-old male founder on houseboat deck at German lake marina, sunset behind him. Documentary realism, Sony FX3, 35mm.',
-      boat_construction_macro: 'Macro shots: sparks from welding, hands carving oak, plans being drawn. Industrial light, cinematic color grading. Slow motion, 4K.',
-      premium_dining_close_up: 'Plated gourmet dish, dim restaurant lighting, candle flicker, wine being poured slow motion. Dolly orbit, food-pornography quality.'
-    };
-    window.msAI = function(provider, key){
-      var prompt = HF[key] || key;
-      try{ navigator.clipboard.writeText(prompt); }catch(_){}
-      safeToast('🪄 ' + provider.toUpperCase() + ' Prompt kopiert');
-      askLucy('Generiere via ' + provider.toUpperCase() + '-MCP für Wave Bite Marketing:\n\n' + prompt);
-    };
-
-    console.log('[v21.3-studio] Marketing Studio Mega-Section bound');
-  }
-  if(document.readyState!=='loading') initStudio();
-  else document.addEventListener('DOMContentLoaded', initStudio);
-})();
-</script>
-
-</body>
-</html>
+            <div style="font-size:.5rem;letter-spacing:.08em;color:var(--text-dim);margin
