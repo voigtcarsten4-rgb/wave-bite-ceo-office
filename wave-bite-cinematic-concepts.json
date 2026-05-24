@@ -1,0 +1,229 @@
+{
+  "_meta": {
+    "version": "V21.4",
+    "purpose": "5 cinematische Werbevideo-Konzepte für Wave Bite auf Premium-Niveau (Coca-Cola, Apple, Patagonia)",
+    "format": "30–60s Reels / Spots, vertikal 9:16 + horizontal 16:9",
+    "lastUpdated": "2026-05-24"
+  },
+
+  "concepts": [
+    {
+      "id": "thursday_evening_lake",
+      "title": "Ein Donnerstag am See",
+      "tagline": "Premium Gastro, wo man sie nicht erwartet.",
+      "tone": "ruhig, cinematic, hopeful · à la Apple-Werbung",
+      "duration_s": 45,
+      "aspect": "16:9 (Hero) + 9:16 (Reel-Cut)",
+      "music": {
+        "style": "Piano + Strings, 80 BPM, melancholisch warm",
+        "ref": "Apple Holiday Spots · Patagonia 'Mother Earth'",
+        "source": "Suno-Prompt: 'Calm piano with warm strings, 80 BPM, hopeful melancholic, ambient water sounds layered'"
+      },
+      "voiceover_de": "Es gibt diesen Moment, wenn das Licht weich wird.\nWenn das Wasser ganz still liegt.\nUnd man denkt: hier könnte man bleiben.\n\nWave Bite. Premium-Gastronomie, wo sie keiner erwartet.\nWolzigsee. Frühjahr 2027.\n\nDM mit „RESERVIERUNG".",
+      "shots": [
+        { "t": "0–3s",   "shot": "Macro: Wassertropfen fällt auf die Bordkante, Slow-Motion 240 fps", "prompt_higgsfield": "Macro shot of a single water droplet hitting the wooden edge of a luxury houseboat at golden hour, slow motion 240fps, anamorphic lens flare, Sony FX3" },
+        { "t": "3–10s",  "shot": "Drohne: Boot dockt am Steg an, Sonnenuntergang, See spiegelt rot-gold", "prompt_higgsfield": "Aerial drone shot of a premium houseboat docking at a wooden pier on a calm German lake, golden hour, water reflecting amber and rose, cinematic 4K Veo style" },
+        { "t": "10–22s", "shot": "Innenraum: Hände decken Tisch, Kerzenlicht, Weingläser, dampfender Teller, alles handcraft", "prompt_higgsfield": "Inside a premium restaurant on a houseboat, hands setting a fine-dining table, candlelight, wine glasses, steam rising from a plated dish, hyper-realistic, cinematic" },
+        { "t": "22–32s", "shot": "Founder Selfie-Ansicht: Carsten am Steuer, lächelt nicht, blickt aufs Wasser", "prompt_higgsfield": "Confident 35-year-old male founder at the wheel of his houseboat at sunset, looking off-camera at the water, not smiling, soft rim light, documentary realism, Sony FX3, 35mm" },
+        { "t": "32–42s", "shot": "Logo-Reveal: Wave Bite Brand mit Wasser-Reflexion, langsame Kamera-Fahrt", "prompt_higgsfield": "Wave Bite logo emerging from water reflection, slow camera dolly, premium cinematic typography reveal, dark navy background with gold accents" },
+        { "t": "42–45s", "shot": "CTA-Text: 'DM mit RESERVIERUNG' · subtle Animation",                  "prompt_higgsfield": "Cinematic title card 'DM mit RESERVIERUNG' on dark background, gold serif typography, subtle particle animation" }
+      ],
+      "cut_plan": "Rhythmus: 3s langsam → 7s medium → schneller bei Tisch-Szene → langsam zum Founder → ruhig zum Outro. Sound-Design: Wasser-Tropfen Foley + Glasklirren + Atmen.",
+      "platforms": {
+        "instagram_reel": "9:16, 45s, Caption mit Hook 'Es gibt diesen Moment...'",
+        "tiktok": "9:16, 30s Cut ohne Founder-Selfie (Plattform-Fokus auf Aesthetik)",
+        "linkedin": "16:9, full 45s, Caption mit B2B-Hook 'Wir bauen Premium-Gastronomie...'",
+        "youtube_pre_roll": "16:9, 30s + 15s cuts"
+      },
+      "brand_voice_check": {
+        "verboten": ["innovativ", "einzigartig", "Lösung", "revolutionär"],
+        "anker": ["Premium", "Brandenburg", "Wolzigsee", "Boot"],
+        "cta": "DM mit RESERVIERUNG"
+      },
+      "production_stack": {
+        "video_generation": "Higgsfield-MCP (Veo 3.1 für 4K Master) oder Sora 2 für Hero",
+        "voiceover": "ElevenLabs DE-Premium-Voice (Hannah Klein / Nico Pham)",
+        "music": "Suno mit obigem Prompt",
+        "edit": "CapCut Web oder Remotion (programmatisch)",
+        "color_grading": "DaVinci Resolve Free + LUT 'Yacht-Sunset'"
+      },
+      "estimated_cost": "0 € (Open Source Stack) oder 50 € (Higgsfield Pro für Veo)",
+      "estimated_time": "4–6 h"
+    },
+
+    {
+      "id": "boot_umbau_zeitraffer",
+      "title": "60 Tage Boot",
+      "tagline": "Was wir bauen, sieht keiner. Bis es schwimmt.",
+      "tone": "industrial, kraftvoll, documentary · à la Patagonia + Tesla Reveal",
+      "duration_s": 60,
+      "aspect": "9:16 (TikTok-First)",
+      "music": {
+        "style": "Build-Up Electronic, 110 BPM, drops bei Sek 30 und Sek 55",
+        "ref": "Daft Punk 'Lose Yourself to Dance' instrumental · Hans Zimmer 'Time'",
+        "source": "Suno: 'Industrial electronic build-up, 110 BPM, anticipation, drops at 30s and 55s, cinematic crescendo'"
+      },
+      "voiceover_de": "Tag 1. Plan.\nTag 7. Stahl.\nTag 14. Holz.\nTag 27. Sieben Zentimeter zu wenig.\nTag 28. Neuer Plan.\nTag 60. Wasser.\n\nDas hier ist nicht für jeden. Aber genau für DICH, wenn du noch nie ein Hausboot-Restaurant gesehen hast.\n\nFolg uns. Tag 61.",
+      "shots": [
+        { "t": "0–3s",   "shot": "Schwarzes Frame, dann: blueprint wird auf Tisch geknallt",           "prompt_higgsfield": "Dark frame, then a detailed houseboat blueprint slammed onto a wooden workshop table, dust particles flying, cinematic top-down shot" },
+        { "t": "3–8s",   "shot": "Zeitraffer: Stahlrahmen wird verschweißt, Funkenflug",                "prompt_higgsfield": "Time-lapse of a houseboat steel frame being welded, sparks flying, industrial workshop, blue-orange contrast, 4K cinematic" },
+        { "t": "8–15s",  "shot": "Zeitraffer: Eichenholz-Planken werden eingepasst, Werkzeug, Hände",  "prompt_higgsfield": "Time-lapse of craftsmen fitting premium oak wood planks into a houseboat interior, hands working with chisel and hammer, warm light" },
+        { "t": "15–22s", "shot": "Close-Up: Plan wird zerrissen, neuer Bleistiftstrich",               "prompt_higgsfield": "Close-up of construction blueprint being torn, then a pencil drawing new measurements, dramatic lighting" },
+        { "t": "22–35s", "shot": "Zeitraffer: Theke wird neu gebaut, perfekt eingepasst",              "prompt_higgsfield": "Time-lapse of a premium bar counter being constructed from oak in a houseboat, perfectly fitted, dust particles in golden sunlight" },
+        { "t": "35–48s", "shot": "Drohne: Boot wird zu Wasser gelassen, Sonnenuntergang",              "prompt_higgsfield": "Aerial drone shot of a premium houseboat being lowered into a German lake at sunset, golden hour, water splashing, cinematic 4K" },
+        { "t": "48–55s", "shot": "Founder steht am Steg, blickt aufs Wasser, Boot im Hintergrund",     "prompt_higgsfield": "35-year-old founder standing on a wooden pier at sunset, looking at his completed premium houseboat in the background, documentary style" },
+        { "t": "55–60s", "shot": "Logo-Reveal + 'Tag 61' Text",                                        "prompt_higgsfield": "Wave Bite logo emerging from water, then 'Tag 61' text, premium cinematic reveal" }
+      ],
+      "cut_plan": "Cuts on every beat (110 BPM = ~0.55s pro Beat). Erste Hälfte: rasche Schnitte, zweite Hälfte: lange Drohnen-Shot. Sound-Design: Schweißen + Säge + Wasser-Plätschern",
+      "platforms": { "tiktok": "9:16, 60s, optimal", "instagram_reel": "9:16, 60s mit Cover", "youtube_shorts": "9:16, 60s" },
+      "brand_voice_check": { "anker": ["Boot", "Werft", "Tag X", "Craftsmanship"], "cta": "Folg uns. Tag 61." },
+      "production_stack": {
+        "video_generation": "Higgsfield Sora 2 für Time-Lapses, Veo für Drone-Shots",
+        "voiceover": "ElevenLabs männliche raue DE-Stimme",
+        "music": "Suno custom",
+        "edit": "CapCut mit Beat-Sync"
+      },
+      "estimated_cost": "0–60 €",
+      "estimated_time": "6–8 h"
+    },
+
+    {
+      "id": "loi_signature_proof",
+      "title": "Fünfte Unterschrift",
+      "tagline": "Wer baut, was Großes? Wir.",
+      "tone": "selbstbewusst, ruhig, premium · à la Apple iPhone Reveal",
+      "duration_s": 30,
+      "aspect": "16:9 (LinkedIn-Hero) + 9:16 (Reel-Cut)",
+      "music": {
+        "style": "Minimal Piano + Crescendo, 75 BPM, ein Drop bei Sek 25",
+        "ref": "Hans Zimmer 'Cornfield Chase' · Apple Keynote-Intro",
+        "source": "Suno: 'Minimal cinematic piano with strings crescendo, 75 BPM, single emotional drop at 25 seconds'"
+      },
+      "voiceover_de": "Heute haben wir unterschrieben.\n\nTransgourmet. Bis zu zehntausend Euro.\nDie fünfte LOI in drei Monaten.\nOhne Promi. Ohne Werbung.\n\nWer baut, was Großes? Wir.\n\nWer mitbauen will: DM mit LOI.",
+      "shots": [
+        { "t": "0–4s",   "shot": "Stift wird aufgehoben, Macro, Tinte glänzt",                       "prompt_higgsfield": "Macro shot of a premium fountain pen being picked up, fresh ink glistening on the tip, cinematic 4K" },
+        { "t": "4–10s",  "shot": "Signatur wird gezogen, Slow-Motion auf Papier",                    "prompt_higgsfield": "Slow motion of a signature being drawn on a formal LOI document, fountain pen, dark navy ink, premium feel" },
+        { "t": "10–18s", "shot": "Cap-Table-Grafik animiert: '95% Carsten / 5% Marcus' + 5 LOI-Logos","prompt_higgsfield": "Animated cap table graphic '95% Carsten / 5% Marcus' on dark navy background with 5 partner logos appearing one by one, premium typography" },
+        { "t": "18–25s", "shot": "Boot im Sonnenuntergang, Drohne fliegt langsam um es herum",       "prompt_higgsfield": "Drone shot orbiting slowly around a premium houseboat at sunset on a German lake, cinematic 4K, golden hour" },
+        { "t": "25–28s", "shot": "Founder direct-to-camera: '15 Sekunden, dass wir Vertrauen haben'", "prompt_higgsfield": "35-year-old founder direct-to-camera at sunset, confident, not smiling, soft rim light, documentary realism" },
+        { "t": "28–30s", "shot": "Logo + 'DM mit LOI'",                                              "prompt_higgsfield": "Wave Bite logo with subtle particle reveal, then 'DM mit LOI' text, premium cinematic" }
+      ],
+      "cut_plan": "Sehr ruhige Cuts (4–7s pro Shot). Musikalischer Drop bei Sek 25 mit Founder-Shot synchron. Keine schnellen Schnitte — wir verkaufen Vertrauen, nicht Hektik.",
+      "platforms": { "linkedin": "16:9, primär — Investor-Zielgruppe", "instagram_feed": "1:1 Square-Cut für Feed", "twitter_x": "16:9 ohne Voiceover, mit Captions" },
+      "brand_voice_check": { "fakten": ["Transgourmet", "10000 Euro", "5 LOI", "95/5 Cap"], "cta": "DM mit LOI" },
+      "production_stack": { "video_generation": "Higgsfield Veo 3.1 für Premium-Look", "voiceover": "ElevenLabs DE-Premium", "music": "Suno cinematic", "edit": "DaVinci Resolve" },
+      "estimated_cost": "0–60 €",
+      "estimated_time": "3–4 h"
+    },
+
+    {
+      "id": "investor_silent_pitch",
+      "title": "Eine Minute Pitch",
+      "tagline": "BP 03/26 in 60 Sekunden.",
+      "tone": "data-driven, premium, ruhig · à la Tesla Investor-Update + Notion Brand-Film",
+      "duration_s": 60,
+      "aspect": "16:9 (Hero für Investoren-DMs + Email-Anhang)",
+      "music": {
+        "style": "Ambient Synth-Pad mit subtilen Glocken, 60 BPM",
+        "ref": "Brian Eno 'An Ending (Ascent)' · Notion Brand-Film Soundtrack",
+        "source": "Suno: 'Ambient synth pad with subtle bell tones, 60 BPM, calm investor presentation feel'"
+      },
+      "voiceover_de": null,
+      "captions_de": [
+        "0–4s:  Wave Bite. Brandenburg.",
+        "4–10s: 95% Carsten · 5% Marcus Börner — vested.",
+        "10–18s: 5 LOIs signiert · davon 1 finanziell konkret bis 10.000€.",
+        "18–28s: BP 03/26 · Bruttomarge 71% · EBITDA J1: 93.650 €.",
+        "28–38s: Forecast J1 250k€ (Pitch) / 180k€ (konservativ).",
+        "38–48s: Pre-Money 1,5 Mio. · Target 450k€ Seed.",
+        "48–56s: Pilot Wolzigsee · 2. Standort Usedom in 3 Jahren.",
+        "56–60s: Pitchdeck per DM."
+      ],
+      "shots": [
+        { "t": "0–4s",   "shot": "Logo + 'Wave Bite. Brandenburg.' Karten-Reveal",                    "prompt_higgsfield": "Premium logo reveal with subtle particle animation, dark navy background, gold accents, cinematic typography" },
+        { "t": "4–18s",  "shot": "Animated Cap-Table-Donut + LOI-Logo-Reihe",                         "prompt_higgsfield": "Animated donut chart showing 95/5 cap table on dark premium background, then 5 partner logos appearing one by one with subtle motion" },
+        { "t": "18–38s", "shot": "Animated Bar-Chart: Bruttomarge, EBITDA, Forecast",                 "prompt_higgsfield": "Animated bar chart showing financial KPIs on dark premium background, smooth ease-out animation, gold accents" },
+        { "t": "38–48s", "shot": "Pre-Money + Funding-Need als Highlight",                            "prompt_higgsfield": "Large premium typography '1,5 Mio €' and '450k€' on dark navy with gold underline animation" },
+        { "t": "48–56s", "shot": "Drone-Shot Wolzigsee + Map mit Usedom-Pin",                         "prompt_higgsfield": "Drone shot of Wolzigsee lake, then transition to map showing Wolzigsee → Usedom with animated pin and dotted line" },
+        { "t": "56–60s", "shot": "QR-Code + 'Pitchdeck per DM'",                                      "prompt_higgsfield": "QR code with premium border, 'Pitchdeck per DM' caption, dark navy background, cinematic" }
+      ],
+      "cut_plan": "Sehr ruhige Übergänge (Fade + Slide), keine Schnitte auf Beat — Investoren-Ton. Dauer pro Shot großzügig (8–14s). Sound: Ambient Pad konstant, leichte Bell-Akzente bei KPI-Wechseln.",
+      "platforms": { "email_attachment": "16:9, MP4 H.264, < 25 MB für Mail", "linkedin_post": "16:9, 60s", "investor_dm": "1:1 cropped für Mobile-View" },
+      "brand_voice_check": { "fakten_only": true, "verboten": ["Hype-Wörter"], "tonalität": "Bilanz-Sprache" },
+      "production_stack": { "video_generation": "Remotion (programmatisch) für KPI-Animations + Higgsfield für Drohne", "voiceover": "Kein (text-only)", "music": "Suno ambient", "edit": "Remotion-Output direkt" },
+      "estimated_cost": "0 €",
+      "estimated_time": "3–5 h (mit Remotion-Template kürzer)"
+    },
+
+    {
+      "id": "sensory_food_porn",
+      "title": "Drei Gänge. Auf dem Wasser.",
+      "tagline": "Wenn Gastronomie schwimmt.",
+      "tone": "sensorisch, lustvoll, premium · à la Magnum Eis-Werbung + Netflix 'Chef's Table'",
+      "duration_s": 30,
+      "aspect": "9:16 (Reel-First) + 1:1 (Feed)",
+      "music": {
+        "style": "Sensual Jazz mit weichem Saxophon, 70 BPM",
+        "ref": "Bonobo 'Cirrus' · Norah Jones Live-Sessions",
+        "source": "Suno: 'Sensual minimal jazz with soft saxophone, 70 BPM, food sensory mood'"
+      },
+      "voiceover_de": null,
+      "captions_de": [
+        "0–3s:  Drei Gänge.",
+        "3–8s:  Auf dem Wasser.",
+        "20–25s: Wave Bite.",
+        "25–30s: Reservierung per DM."
+      ],
+      "shots": [
+        { "t": "0–4s",   "shot": "Macro: Olivenöl tropft auf Brot, Slow-Motion",                       "prompt_higgsfield": "Macro shot of premium olive oil dripping onto fresh sourdough bread, slow motion, golden hour light, food photography quality" },
+        { "t": "4–10s",  "shot": "Hand mit Pinzette setzt Gemüse auf Teller, Close-Up",                "prompt_higgsfield": "Close-up of chef's hand using tweezers to place micro greens on a beautifully plated dish, dark slate plate, candlelight" },
+        { "t": "10–16s", "shot": "Wein wird langsam in Glas eingeschenkt, Sonnenuntergang im Hintergrund","prompt_higgsfield": "Slow motion of red wine being poured into a wine glass, sunset golden hour visible through houseboat window, anamorphic" },
+        { "t": "16–22s", "shot": "Hauptgang: Fisch wird tranchiert, Dampf steigt auf",                  "prompt_higgsfield": "Premium fish dish being plated with steam rising, dark restaurant lighting, candle reflections, food porn cinematic quality" },
+        { "t": "22–27s", "shot": "Dessert: Schokolade läuft über warmes Soufflé",                       "prompt_higgsfield": "Hot chocolate sauce being poured over a warm chocolate soufflé, slow motion, golden light, decadent food photography" },
+        { "t": "27–30s", "shot": "Logo + 'Reservierung per DM'",                                        "prompt_higgsfield": "Wave Bite logo reveal with subtle steam animation, then 'Reservierung per DM' caption, premium cinematic" }
+      ],
+      "cut_plan": "Slow-Motion-Cuts (3–6s pro Shot), kein Voiceover, nur Sound-Design (Tropfen, Glas, Brutzeln) + Jazz. Magnum-Werbung-Vibe.",
+      "platforms": { "instagram_reel": "9:16, 30s, optimal", "instagram_feed": "1:1, 30s mit Cover-Frame", "tiktok": "9:16, 30s mit On-Screen-Caption" },
+      "brand_voice_check": { "kein_voiceover": true, "anker": ["Gastro", "Schwimmend", "Premium"], "cta": "Reservierung per DM" },
+      "production_stack": { "video_generation": "Higgsfield Sora 2 für Food-Macros (beste für Texturen)", "music": "Suno jazz custom", "edit": "DaVinci Resolve mit warmer LUT" },
+      "estimated_cost": "0–50 €",
+      "estimated_time": "5–7 h"
+    }
+  ],
+
+  "production_workflow": {
+    "step_1_concept": "Konzept aus dieser JSON wählen → ins Marketing-Cockpit Step 1+2 übernehmen",
+    "step_2_visual": "Pro Shot: Higgsfield-Prompt kopieren → in Higgsfield-MCP submitten → Video-URL erhalten",
+    "step_3_voiceover": "Voiceover-Text in ElevenLabs eingeben → DE-Premium-Stimme wählen → MP3 generieren",
+    "step_4_music": "Music-Prompt in Suno eingeben → BPM + Style → MP3 generieren",
+    "step_5_edit": "Alle Assets in CapCut/DaVinci/Remotion zusammenführen → Beat-Sync → Color-Grade",
+    "step_6_export": "Multi-Aspect-Export (9:16 + 1:1 + 16:9) → in Marketing-Cockpit Step 4 hochladen",
+    "step_7_caption": "Voiceover-Text + CTA als Caption ins Cockpit Step 5 übernehmen",
+    "step_8_quality_gate": "Brand-Voice-Check + Visual-Check + Plattform-Limits → Cockpit Step 6",
+    "step_9_post": "Postiz/Buffer → Multi-Channel-Distribution"
+  },
+
+  "automation_stack_open_source": {
+    "video_generation": [
+      { "name": "Remotion", "url": "https://github.com/remotion-dev/remotion", "use": "Programmatic video creation with React" },
+      { "name": "Higgsfield-MCP", "url": "https://higgsfield.ai/mcp", "use": "Sora/Veo/Kling AI video generation" },
+      { "name": "ComfyUI", "url": "https://github.com/comfyanonymous/ComfyUI", "use": "Open-source AI image/video workflows" }
+    ],
+    "scheduling": [
+      { "name": "Postiz", "url": "https://github.com/gitroomhq/postiz-app", "use": "Self-hosted social media scheduler (X, Bluesky, Discord, Mastodon)" },
+      { "name": "Mixpost", "url": "https://github.com/inovector/mixpost", "use": "Self-hosted Buffer-Alternative" },
+      { "name": "Trypost", "url": "https://github.com/trypostit/trypost", "use": "MCP-Server für Claude-controlled scheduling" }
+    ],
+    "workflow_automation": [
+      { "name": "n8n", "url": "https://github.com/n8n-io/n8n", "use": "Workflow automation (most popular)" },
+      { "name": "Activepieces", "url": "https://github.com/activepieces/activepieces", "use": "MIT-licensed n8n alternative" },
+      { "name": "Windmill", "url": "https://github.com/windmill-labs/windmill", "use": "Code-first workflow engine" },
+      { "name": "Automatisch", "url": "https://github.com/automatisch/automatisch", "use": "Zapier-like simple workflows" },
+      { "name": "Huginn", "url": "https://github.com/huginn/huginn", "use": "Agent-based monitoring + automation" }
+    ],
+    "voice_music": [
+      { "name": "Coqui-TTS", "url": "https://github.com/coqui-ai/TTS", "use": "Open-source text-to-speech" },
+      { "name": "Suno", "url": "https://suno.com", "use": "AI music generation (commercial)" }
+    ]
+  }
+}

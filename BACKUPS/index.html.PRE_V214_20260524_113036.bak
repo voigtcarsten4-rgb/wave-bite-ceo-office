@@ -1728,9 +1728,6 @@
   .ms-tpl-btn{padding:.35rem .55rem;background:rgba(168,85,247,.18);border:1px solid rgba(168,85,247,.45);border-radius:6px;color:#d9bbff;font-size:.55rem;font-weight:800;cursor:pointer;letter-spacing:.05em;margin-top:auto}
   .ms-sb-btn{transition:all .2s}
   .ms-sb-btn:hover{background:rgba(168,85,247,.12) !important;border-color:rgba(168,85,247,.4) !important;transform:translateY(-1px)}
-  /* V21.4 Cinematic Concept Cards */
-  .ms-cinematic-card{transition:all .25s}
-  .ms-cinematic-card:hover{transform:translateY(-3px);filter:brightness(1.25);box-shadow:0 12px 28px rgba(232,201,106,.25)}
   /* Hover-Glow für nav-pills + nav-tool-btn (sichtbar bei Hover) */
   .nav-pill:hover {
     box-shadow: 0 0 16px rgba(0,200,255,0.5), 0 4px 14px rgba(0,200,255,0.18);
@@ -4537,46 +4534,6 @@
           <div style="font-size:.55rem;letter-spacing:.16em;color:#d9bbff;font-weight:800;margin-bottom:.3rem">🎬 CAPCUT</div>
           <div style="font-size:.7rem;color:#fff;font-weight:800;margin-bottom:.4rem">Video-Schnitt</div>
           <a href="https://www.capcut.com/" target="_blank" rel="noopener" style="display:block;padding:.45rem .7rem;background:rgba(168,85,247,.2);border:1px solid rgba(168,85,247,.5);color:#fff;font-size:.62rem;font-weight:800;border-radius:7px;text-decoration:none;text-align:center;margin-top:.4rem">🎬 CapCut ↗</a>
-        </div>
-        <div style="background:linear-gradient(135deg,rgba(0,212,170,.10),rgba(0,80,60,.20));border:1px solid rgba(0,212,170,.45);border-radius:10px;padding:.8rem">
-          <div style="font-size:.55rem;letter-spacing:.16em;color:#9af0d8;font-weight:800;margin-bottom:.3rem">🎬 REMOTION · CODE-VIDEOS</div>
-          <div style="font-size:.7rem;color:#fff;font-weight:800;margin-bottom:.4rem">React → MP4</div>
-          <div style="font-size:.6rem;color:#b9a8d4;line-height:1.5;margin-bottom:.55rem">Programmatic. npx create-video@latest. 28+ Templates.</div>
-          <button onclick="window.officeMarketingAction('remotion-setup')" style="display:block;width:100%;padding:.4rem .6rem;background:linear-gradient(135deg,#00d4aa,#0a8a72);border:0;border-radius:7px;color:#fff;font-size:.6rem;font-weight:800;cursor:pointer;margin-bottom:.25rem">⚡ Setup-Anleitung</button>
-          <a href="https://www.remotion.dev/docs/" target="_blank" rel="noopener" style="display:block;padding:.35rem .6rem;background:transparent;border:1px solid rgba(0,212,170,.4);border-radius:7px;color:#9af0d8;font-size:.55rem;font-weight:700;text-decoration:none;text-align:center">📖 Docs ↗</a>
-        </div>
-        <div style="background:linear-gradient(135deg,rgba(168,85,247,.10),rgba(60,20,90,.20));border:1px solid rgba(168,85,247,.45);border-radius:10px;padding:.8rem">
-          <div style="font-size:.55rem;letter-spacing:.16em;color:#d9bbff;font-weight:800;margin-bottom:.3rem">📅 POSTIZ · SCHEDULER</div>
-          <div style="font-size:.7rem;color:#fff;font-weight:800;margin-bottom:.4rem">Open-Source Buffer</div>
-          <div style="font-size:.6rem;color:#b9a8d4;line-height:1.5;margin-bottom:.55rem">Self-hosted Multi-Channel-Scheduler.</div>
-          <a href="https://github.com/gitroomhq/postiz-app" target="_blank" rel="noopener" style="display:block;padding:.45rem .7rem;background:linear-gradient(135deg,#a855f7,#6b21a8);color:#fff;font-size:.62rem;font-weight:800;border-radius:7px;text-decoration:none;text-align:center">📦 GitHub Repo ↗</a>
-        </div>
-        <div style="background:linear-gradient(135deg,rgba(255,158,177,.10),rgba(120,40,80,.20));border:1px solid rgba(255,158,177,.45);border-radius:10px;padding:.8rem">
-          <div style="font-size:.55rem;letter-spacing:.16em;color:#ffc8d4;font-weight:800;margin-bottom:.3rem">🔄 N8N · WORKFLOWS</div>
-          <div style="font-size:.7rem;color:#fff;font-weight:800;margin-bottom:.4rem">400+ Integrations</div>
-          <div style="font-size:.6rem;color:#b9a8d4;line-height:1.5;margin-bottom:.55rem">Self-hosted Workflow-Automation.</div>
-          <a href="https://github.com/n8n-io/n8n" target="_blank" rel="noopener" style="display:block;padding:.45rem .7rem;background:linear-gradient(135deg,#ff9eb1,#c5497a);color:#fff;font-size:.62rem;font-weight:800;border-radius:7px;text-decoration:none;text-align:center">📦 n8n ↗</a>
-        </div>
-        <div style="background:linear-gradient(135deg,rgba(96,165,250,.10),rgba(20,40,90,.20));border:1px solid rgba(96,165,250,.45);border-radius:10px;padding:.8rem">
-          <div style="font-size:.55rem;letter-spacing:.16em;color:#9bd4ff;font-weight:800;margin-bottom:.3rem">🤖 ACTIVEPIECES</div>
-          <div style="font-size:.7rem;color:#fff;font-weight:800;margin-bottom:.4rem">MIT-Lic n8n-Alt.</div>
-          <div style="font-size:.6rem;color:#b9a8d4;line-height:1.5;margin-bottom:.55rem">Visual Workflows, permissive License.</div>
-          <a href="https://github.com/activepieces/activepieces" target="_blank" rel="noopener" style="display:block;padding:.45rem .7rem;background:linear-gradient(135deg,#60a5fa,#1e40af);color:#fff;font-size:.62rem;font-weight:800;border-radius:7px;text-decoration:none;text-align:center">📦 Activepieces ↗</a>
-        </div>
-      </div>
-      <div style="margin-top:1rem;padding:.85rem;background:linear-gradient(135deg,rgba(232,201,106,.06),rgba(168,85,247,.04));border:1px dashed rgba(232,201,106,.4);border-radius:10px">
-        <div style="font-size:.65rem;letter-spacing:.14em;color:#fff7c0;font-weight:800;margin-bottom:.5rem">🎬 5 CINEMATIC WERBEVIDEO-KONZEPTE · Premium-Niveau</div>
-        <div style="font-size:.62rem;color:#b9a8d4;line-height:1.55;margin-bottom:.7rem">Fixfertige Konzepte mit Storyboard, Higgsfield-Prompts, Voiceover, Music, Schnitt-Plan. Klick = Lucy-Briefing + Hero-Prompt kopiert.</div>
-        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:.5rem">
-          <button onclick="window.cinematicConcept('thursday_evening_lake')" class="ms-cinematic-card" style="padding:.7rem;background:rgba(232,201,106,.08);border:1px solid rgba(232,201,106,.35);border-radius:10px;color:#fff;cursor:pointer;text-align:left;line-height:1.4"><div style="font-size:.7rem;font-weight:900;color:#fff7c0;margin-bottom:.2rem">🌅 Ein Donnerstag am See</div><div style="font-size:.55rem;color:#b9a8d4">45s · 16:9+9:16 · Apple-Vibe</div></button>
-          <button onclick="window.cinematicConcept('boot_umbau_zeitraffer')" class="ms-cinematic-card" style="padding:.7rem;background:rgba(168,85,247,.08);border:1px solid rgba(168,85,247,.35);border-radius:10px;color:#fff;cursor:pointer;text-align:left;line-height:1.4"><div style="font-size:.7rem;font-weight:900;color:#d9bbff;margin-bottom:.2rem">🔧 60 Tage Boot</div><div style="font-size:.55rem;color:#b9a8d4">60s · 9:16 · Patagonia/Tesla</div></button>
-          <button onclick="window.cinematicConcept('loi_signature_proof')" class="ms-cinematic-card" style="padding:.7rem;background:rgba(0,212,170,.08);border:1px solid rgba(0,212,170,.35);border-radius:10px;color:#fff;cursor:pointer;text-align:left;line-height:1.4"><div style="font-size:.7rem;font-weight:900;color:#9af0d8;margin-bottom:.2rem">🤝 Fünfte Unterschrift</div><div style="font-size:.55rem;color:#b9a8d4">30s · 16:9+9:16 · Apple-Keynote</div></button>
-          <button onclick="window.cinematicConcept('investor_silent_pitch')" class="ms-cinematic-card" style="padding:.7rem;background:rgba(96,165,250,.08);border:1px solid rgba(96,165,250,.35);border-radius:10px;color:#fff;cursor:pointer;text-align:left;line-height:1.4"><div style="font-size:.7rem;font-weight:900;color:#9bd4ff;margin-bottom:.2rem">💎 Eine Minute Pitch</div><div style="font-size:.55rem;color:#b9a8d4">60s · 16:9 · Notion/Tesla</div></button>
-          <button onclick="window.cinematicConcept('sensory_food_porn')" class="ms-cinematic-card" style="padding:.7rem;background:rgba(255,158,177,.08);border:1px solid rgba(255,158,177,.35);border-radius:10px;color:#fff;cursor:pointer;text-align:left;line-height:1.4"><div style="font-size:.7rem;font-weight:900;color:#ffc8d4;margin-bottom:.2rem">🍽 Drei Gänge</div><div style="font-size:.55rem;color:#b9a8d4">30s · 9:16+1:1 · Chef\'s Table</div></button>
-        </div>
-        <div style="margin-top:.7rem;display:flex;gap:.4rem;flex-wrap:wrap">
-          <a href="wave-bite-cinematic-concepts.json" target="_blank" rel="noopener" style="padding:.4rem .8rem;background:rgba(232,201,106,.1);border:1px solid rgba(232,201,106,.4);border-radius:7px;color:#fde68a;font-size:.58rem;font-weight:800;text-decoration:none">📄 Volle JSON ↗</a>
-          <button onclick="try{navigator.clipboard.writeText(\'npx create-video@latest\')}catch(_){};window.officeMarketingAction(\'remotion-setup\')" style="padding:.4rem .8rem;background:rgba(0,212,170,.1);border:1px solid rgba(0,212,170,.4);border-radius:7px;color:#9af0d8;font-size:.58rem;font-weight:800;cursor:pointer">⚡ npx create-video kopieren</button>
         </div>
       </div>
     </div>
@@ -9192,7 +9149,7 @@ if (typeof window.addMemoryEntry !== 'function') {
 })();
 </script>
 
-<script src="samantha.js?v=2026-05-24-v21.4-cinematic"></script>
+<script src="samantha.js?v=2026-05-24-v21.3-studio-mega"></script>
 
 <script>
 // ═════════════════════════════════════════════════════════════
@@ -9811,27 +9768,4 @@ if (typeof window.addMemoryEntry !== 'function') {
       behind_the_scenes: ['0-3s · Funkenflug · Tag 27. Werft.','3-15s · Hände an Holz · Schweißnähte. 7 cm zu wenig.','15-25s · Plan-Änderung · Premium aus dem Maschinenraum.','25-30s · CTA · Follow für Tag 28.'],
       loi_signature: ['0-3s · Stift signiert · Heute unterschrieben.','3-12s · Partner-Logo · Handshake · Partner wird Lieferant.','12-22s · 5 LOIs · Fünfte in 3 Monaten.','22-30s · Selfie + CTA · DM mit LOI.']
     };
-    $$('.ms-sb-btn').forEach(function(b){ b.addEventListener('click', function(){ var sb=SB[b.dataset.sb]; if(!sb) return; var p=document.getElementById('ms-sb-preview'); if(p) p.innerHTML='<div style="padding:.55rem .7rem;background:rgba(0,212,170,.05);border-left:3px solid rgba(0,212,170,.5);border-radius:6px"><b style="color:#9af0d8">Storyboard '+b.textContent.trim()+'</b><ul style="margin:.3rem 0 0 1rem;padding:0;font-size:.62rem;color:#fff">'+sb.map(function(s){return '<li>'+s+'</li>';}).join('')+'</ul></div>'; }); });
-
-    var HF = {
-      marina_sunset_cinematic: 'A premium houseboat docked at a quiet German lake marina during golden hour, calm water reflecting amber light, slow cinematic dolly-in. Sony FX3, anamorphic, 24fps, 4K.',
-      founder_portrait_marina: 'Confident 35-year-old male founder on houseboat deck at German lake marina, sunset behind him. Documentary realism, Sony FX3, 35mm.',
-      boat_construction_macro: 'Macro shots: sparks from welding, hands carving oak, plans being drawn. Industrial light, cinematic color grading. Slow motion, 4K.',
-      premium_dining_close_up: 'Plated gourmet dish, dim restaurant lighting, candle flicker, wine being poured slow motion. Dolly orbit, food-pornography quality.'
-    };
-    window.msAI = function(provider, key){
-      var prompt = HF[key] || key;
-      try{ navigator.clipboard.writeText(prompt); }catch(_){}
-      safeToast('🪄 ' + provider.toUpperCase() + ' Prompt kopiert');
-      askLucy('Generiere via ' + provider.toUpperCase() + '-MCP für Wave Bite Marketing:\n\n' + prompt);
-    };
-
-    console.log('[v21.3-studio] Marketing Studio Mega-Section bound');
-  }
-  if(document.readyState!=='loading') initStudio();
-  else document.addEventListener('DOMContentLoaded', initStudio);
-})();
-</script>
-
-</body>
-</html>
+    $$('.ms-sb-btn').forEach(function(b){ b.addEventListener('click', function(){ var sb=SB[b.dataset.sb]; if(!sb) return; var p=document.getElementById('ms-sb-preview'); if(p) p.innerHTML='<div style="padding:.55rem .7rem;background:rgba(0,212,170,.05);border-left:3px solid rgba(0,212,170,.5);border-radius:6px"><b style="color:#9af0d8">Storyboard '+b.tex
