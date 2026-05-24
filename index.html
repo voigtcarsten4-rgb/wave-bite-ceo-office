@@ -1680,6 +1680,31 @@
     0%,100% { box-shadow: 0 0 12px rgba(0,200,255,0.38), inset 0 0 6px rgba(0,200,255,0.1); }
     50%     { box-shadow: 0 0 22px rgba(0,200,255,0.7),  inset 0 0 12px rgba(0,200,255,0.2); }
   }
+  /* V21 — Highlight-Pulse, wenn eine Section vom Nav angesteuert wird */
+  .section-highlight-pulse {
+    animation: sectionHighlightPulse 1.6s ease-out;
+  }
+  @keyframes sectionHighlightPulse {
+    0%   { box-shadow: 0 0 0 0 rgba(168,85,247,0.55); }
+    60%  { box-shadow: 0 0 0 18px rgba(168,85,247,0); }
+    100% { box-shadow: 0 0 0 0 rgba(168,85,247,0); }
+  }
+  /* V21 — Lucy-Pill spezielles Pulse-Glow */
+  .nav-pill[data-lucy-open] {
+    animation: lucyPillGlow 3s ease-in-out infinite;
+  }
+  @keyframes lucyPillGlow {
+    0%,100% { box-shadow: 0 0 6px rgba(255,158,177,0.35); }
+    50%     { box-shadow: 0 0 14px rgba(255,158,177,0.7), 0 0 24px rgba(255,158,177,0.25); }
+  }
+  /* V21 — Marketing-Pill spezielles Glow */
+  .nav-pill-marketing {
+    background: linear-gradient(135deg,rgba(168,85,247,0.08),rgba(168,85,247,0.04)) !important;
+  }
+  .nav-pill-marketing:hover {
+    background: linear-gradient(135deg,rgba(168,85,247,0.22),rgba(168,85,247,0.10)) !important;
+    box-shadow: 0 0 14px rgba(168,85,247,0.5) !important;
+  }
   /* Hover-Glow für nav-pills + nav-tool-btn (sichtbar bei Hover) */
   .nav-pill:hover {
     box-shadow: 0 0 16px rgba(0,200,255,0.5), 0 4px 14px rgba(0,200,255,0.18);
@@ -1758,29 +1783,101 @@
 <script>
 // v19: Robust Nav-Delegation + Service-Worker Kill (top of body)
 (function(){
-  // Service Worker Kill
+  // Service Worker Kill (einmalig pro Browser via Flag, sonst läuft bei jedem Load)
   if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.getRegistrations().then(rs => rs.forEach(r => r.unregister().catch(()=>{})));
-    if (window.caches && caches.keys) caches.keys().then(keys => keys.forEach(k => caches.delete(k).catch(()=>{})));
+    try {
+      if (!localStorage.getItem('lucy_sw_killed_v21')) {
+        navigator.serviceWorker.getRegistrations().then(function(rs){
+          if (rs.length) console.log('🧹 Lucy: '+rs.length+' alte SW gelöscht (einmalig)');
+          rs.forEach(function(r){ r.unregister().catch(function(){}); });
+        });
+        if (window.caches && caches.keys) caches.keys().then(function(keys){
+          keys.forEach(function(k){ caches.delete(k).catch(function(){}); });
+        });
+        localStorage.setItem('lucy_sw_killed_v21', '1');
+      }
+    } catch(_) {}
   }
-  // Robust nav delegation
+  // Robust nav delegation V21.1 — Lucy edition (active state + Lucy trigger + ScrollSpy mit Lock)
   function bindNav() {
     var nav = document.querySelector('nav');
     if (!nav) { setTimeout(bindNav, 200); return; }
+
+    // Lock-Mechanik: nach manuellem Klick blockt ScrollSpy für 1.4 s (Dauer des Smooth-Scrolls)
+    var spyLockUntil = 0;
+
+    function setActive(pill){
+      try {
+        nav.querySelectorAll('.nav-pill').forEach(function(p){ p.classList.remove('active'); });
+        if (pill) pill.classList.add('active');
+      } catch(_) {}
+    }
+    function lockSpy(ms){ spyLockUntil = Date.now() + (ms||1400); }
+
     nav.addEventListener('click', function(e){
-      var pill = e.target.closest('.nav-pill, [data-target]');
+      var pill = e.target.closest('.nav-pill, [data-target], [data-lucy-open]');
       if (!pill) return;
+      // Lucy open trigger
+      if (pill.hasAttribute('data-lucy-open')) {
+        e.preventDefault();
+        try { (window.Lucy||window.Samantha)?.open?.(); } catch(_) {}
+        setActive(pill);
+        return;
+      }
       var tgt = pill.dataset && pill.dataset.target;
-      if (!tgt && pill.getAttribute && pill.getAttribute('onclick')) {
-        // already has inline handler — let it run
+      if (tgt === 'top') {
+        e.preventDefault();
+        lockSpy(1400);
+        try { window.scrollTo({top:0,behavior:'smooth'}); } catch(_) { window.scrollTo(0,0); }
+        setActive(pill);
         return;
       }
       if (tgt) {
         var sec = document.getElementById(tgt);
-        if (sec) { e.preventDefault(); sec.scrollIntoView({behavior:'smooth', block:'start'}); }
+        if (sec) {
+          e.preventDefault();
+          lockSpy(1800); // länger als smooth scroll für weit entfernte Sections
+          try { sec.scrollIntoView({behavior:'smooth', block:'start'}); }
+          catch(_) { sec.scrollIntoView(true); }
+          setActive(pill);
+          try {
+            sec.classList.add('section-highlight-pulse');
+            setTimeout(function(){ sec.classList.remove('section-highlight-pulse'); }, 1800);
+          } catch(_) {}
+        } else {
+          console.warn('[Lucy-Nav] Section nicht gefunden:', tgt);
+        }
       }
-    }, true); // capture phase
-    console.log('[v19] nav delegation bound on', nav.querySelectorAll('.nav-pill').length, 'pills');
+    }, true);
+
+    // ScrollSpy mit Lock — pausiert direkt nach Klick, damit Smooth-Scroll nicht "überfährt"
+    var pills = Array.prototype.slice.call(nav.querySelectorAll('.nav-pill[data-target]'));
+    function onScroll(){
+      if (Date.now() < spyLockUntil) return;        // ← Lock aktiv → kein Override
+      var y = window.scrollY + 120;
+      var best = null, bestTop = -Infinity;
+      pills.forEach(function(p){
+        var id = p.dataset.target;
+        if (id === 'top') return;
+        var sec = document.getElementById(id);
+        if (!sec) return;
+        var top = sec.getBoundingClientRect().top + window.scrollY;
+        if (top <= y && top > bestTop) { bestTop = top; best = p; }
+      });
+      if (window.scrollY < 80) best = nav.querySelector('.nav-pill[data-target="top"]');
+      if (best) setActive(best);
+    }
+    var raf = null;
+    window.addEventListener('scroll', function(){
+      if (raf) return;
+      raf = requestAnimationFrame(function(){ raf=null; onScroll(); });
+    }, {passive:true});
+    // Auch bei User-Wheel/Touch den Lock früher beenden, damit "freies Scrollen" weiterhin Active updated
+    ['wheel','touchstart'].forEach(function(ev){
+      window.addEventListener(ev, function(){ spyLockUntil = 0; }, {passive:true});
+    });
+    onScroll();
+    console.log('[v21.1-lucy] nav delegation bound on', pills.length, 'pills (scroll-spy-lock aktiv)');
   }
   if (document.readyState !== 'loading') bindNav();
   else document.addEventListener('DOMContentLoaded', bindNav);
@@ -2155,27 +2252,29 @@
   </div>
 </div>
 
-<!-- NAVBAR -->
+<!-- NAVBAR — V21 LUCY · CLEAN · DEDUPED · MARKETING SECTION VERLINKT -->
 <nav>
   <div class="nav-brand">WAVE<span>BITE</span> // JARVIS</div>
-  <a class="nav-pill active" href="#" onclick="scrollTo(0,0);event.preventDefault?event.preventDefault():null;return false;" data-target="top">HOME</a>
-  <a class="nav-pill" href="#sec-calendar" onclick="document.getElementById('sec-calendar').scrollIntoView({behavior:'smooth'});event.preventDefault?event.preventDefault():null;return false;" data-target="sec-calendar" style="background:rgba(0,200,255,0.08);border:1px solid rgba(0,200,255,0.3)">📅 KALENDER</a>
-  <a class="nav-pill" href="#sec-mail-intel" onclick="document.getElementById('sec-mail-intel').scrollIntoView({behavior:'smooth'});event.preventDefault?event.preventDefault():null;return false;" data-target="sec-mail-intel">✉ MAILS</a>
-  <a class="nav-pill" href="#sec-projects" onclick="document.getElementById('sec-projects').scrollIntoView({behavior:'smooth'});event.preventDefault?event.preventDefault():null;return false;" data-target="sec-projects">⚓ PROJEKTE</a>
-  <a class="nav-pill" href="#sec-intel" onclick="document.getElementById('sec-intel').scrollIntoView({behavior:'smooth'});event.preventDefault?event.preventDefault():null;return false;" data-target="sec-intel" style="border-color:rgba(201,168,76,0.35);color:var(--gold)">🤖 JARVIS</a>
-  <a class="nav-pill" href="#sec-finance" onclick="document.getElementById('sec-finance').scrollIntoView({behavior:'smooth'});event.preventDefault?event.preventDefault():null;return false;" data-target="sec-finance">💰 FINANZEN</a>
-  <a class="nav-pill" href="#sec-tools" onclick="document.getElementById('sec-tools').scrollIntoView({behavior:'smooth'});event.preventDefault?event.preventDefault():null;return false;" data-target="sec-tools">🛠 TOOLS</a>
-  <a class="nav-pill" href="#sec-executive" onclick="document.getElementById('sec-executive').scrollIntoView({behavior:'smooth'});event.preventDefault?event.preventDefault():null;return false;" data-target="sec-executive" style="border-color:rgba(0,212,170,0.35);color:var(--teal)">⚡ EXEC</a>
-  <a class="nav-pill" href="#sec-crm" onclick="document.getElementById('sec-crm').scrollIntoView({behavior:'smooth'});event.preventDefault?event.preventDefault():null;return false;" data-target="sec-crm">🤝 CRM</a>
-  <a class="nav-pill" href="#sec-investor" onclick="document.getElementById('sec-investor').scrollIntoView({behavior:'smooth'});event.preventDefault?event.preventDefault():null;return false;" data-target="sec-investor" style="border-color:rgba(201,168,76,0.35);color:var(--gold)">💎 INVEST</a>
-  <a class="nav-pill" href="#sec-ops" onclick="document.getElementById('sec-ops').scrollIntoView({behavior:'smooth'});event.preventDefault?event.preventDefault():null;return false;" data-target="sec-ops">⚙ OPS</a>
-  <a class="nav-pill" href="#sec-risk" onclick="document.getElementById('sec-risk').scrollIntoView({behavior:'smooth'});event.preventDefault?event.preventDefault():null;return false;" data-target="sec-risk" data-target="sec-risk" style="border-color:rgba(255,68,68,0.35);color:#ff4757">🔴 RISK</a>
-  <a class="nav-pill nav-pill-studio" href="#sec-studio" onclick="document.getElementById('sec-studio').scrollIntoView({behavior:'smooth'});event.preventDefault?event.preventDefault():null;return false;" data-target="sec-studio" data-target="sec-studio" style="border-color:rgba(232,201,106,0.55);color:#e8c96a;background:rgba(232,201,106,0.06)">🎬 STUDIO</a>
-  <a class="nav-pill" href="#sec-studio" onclick="document.getElementById('sec-studio').scrollIntoView({behavior:'smooth'});event.preventDefault?event.preventDefault():null;return false;" data-target="sec-studio" data-target="sec-studio" style="border-color:rgba(168,85,247,0.5);color:#d9bbff;background:rgba(168,85,247,0.06)">📣 MARKETING</a>
-  <a class="nav-pill" href="wavebite-ai-marketing-os.html" target="_blank" style="text-decoration:none;border-color:rgba(0,212,170,0.5);color:#9af0d8;background:rgba(0,212,170,0.06);display:inline-flex;align-items:center">⚡ MKT-OS ↗</a>
-  <a class="nav-pill" href="#sec-tasks" onclick="document.getElementById('sec-tasks').scrollIntoView({behavior:'smooth'});event.preventDefault?event.preventDefault():null;return false;" data-target="sec-tasks" data-target="sec-tasks">TASKS</a>
-  <a class="nav-pill" href="#sec-agents" onclick="document.getElementById('sec-agents').scrollIntoView({behavior:'smooth'});event.preventDefault?event.preventDefault():null;return false;" data-target="sec-agents">AGENTEN</a>
-  <a class="nav-pill" href="#sec-console" onclick="document.getElementById('sec-console').scrollIntoView({behavior:'smooth'});event.preventDefault?event.preventDefault():null;return false;" data-target="sec-console">CONSOLE</a>
+  <a class="nav-pill active" href="#" data-target="top">HOME</a>
+  <a class="nav-pill" href="#sec-calendar"    data-target="sec-calendar"  style="background:rgba(0,200,255,0.08);border:1px solid rgba(0,200,255,0.3)">📅 KALENDER</a>
+  <a class="nav-pill" href="#sec-mail-intel"  data-target="sec-mail-intel">✉ MAILS</a>
+  <a class="nav-pill" href="#sec-projects"    data-target="sec-projects">⚓ PROJEKTE</a>
+  <a class="nav-pill" href="#sec-intel"       data-target="sec-intel"      style="border-color:rgba(201,168,76,0.35);color:var(--gold)">🤖 JARVIS</a>
+  <a class="nav-pill" href="#sec-finance"     data-target="sec-finance">💰 FINANZEN</a>
+  <a class="nav-pill" href="#sec-tools"       data-target="sec-tools">🛠 TOOLS</a>
+  <a class="nav-pill" href="#sec-executive"   data-target="sec-executive"  style="border-color:rgba(0,212,170,0.35);color:var(--teal)">⚡ EXEC</a>
+  <a class="nav-pill" href="#sec-crm"         data-target="sec-crm">🤝 CRM</a>
+  <a class="nav-pill" href="#sec-investor"    data-target="sec-investor"   style="border-color:rgba(201,168,76,0.35);color:var(--gold)">💎 INVEST</a>
+  <a class="nav-pill" href="#sec-ops"         data-target="sec-ops">⚙ OPS</a>
+  <a class="nav-pill" href="#sec-risk"        data-target="sec-risk"       style="border-color:rgba(255,68,68,0.35);color:#ff4757">🔴 RISK</a>
+  <a class="nav-pill nav-pill-studio" href="#sec-studio" data-target="sec-studio"   style="border-color:rgba(232,201,106,0.55);color:#e8c96a;background:rgba(232,201,106,0.06)">🎬 STUDIO</a>
+  <a class="nav-pill nav-pill-marketing" href="#sec-marketing" data-target="sec-marketing" style="border-color:rgba(168,85,247,0.5);color:#d9bbff;background:rgba(168,85,247,0.06)">📣 MARKETING</a>
+  <a class="nav-pill" href="marketing-dashboard-detail.html" target="_blank" rel="noopener" style="text-decoration:none;border-color:rgba(168,85,247,0.6);color:#e2c4ff;background:rgba(168,85,247,0.10);display:inline-flex;align-items:center">📣 MKT-DETAIL ↗</a>
+  <a class="nav-pill" href="wavebite-ai-marketing-os.html" target="_blank" rel="noopener" style="text-decoration:none;border-color:rgba(0,212,170,0.5);color:#9af0d8;background:rgba(0,212,170,0.06);display:inline-flex;align-items:center">⚡ MKT-OS ↗</a>
+  <a class="nav-pill" href="#sec-tasks"   data-target="sec-tasks">TASKS</a>
+  <a class="nav-pill" href="#sec-agents"  data-target="sec-agents">AGENTEN</a>
+  <a class="nav-pill" href="#sec-console" data-target="sec-console">CONSOLE</a>
+  <a class="nav-pill" href="javascript:void(0)" data-lucy-open="1" title="Lucy — CEO Co-Pilotin öffnen" style="border-color:rgba(255,158,177,0.55);color:#ffc8d4;background:rgba(255,158,177,0.08)">🧜🏻‍♀️ LUCY</a>
   <div class="nav-sep"></div>
   <!-- QUICK TOOL BUTTONS IN NAV -->
   <a href="https://mail.google.com" target="_blank" class="nav-tool-btn" title="Gmail öffnen">✉ Mail</a>
@@ -4350,7 +4449,8 @@
 <section id="sec-studio" style="margin-bottom:1.5rem">
   <div class="section-title" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.5rem">
     <span style="background:linear-gradient(90deg,#e8c96a,#fff7c0,#e8c96a);-webkit-background-clip:text;background-clip:text;color:transparent;font-weight:800;letter-spacing:.08em">🎬 NEXT-GEN STUDIO // AI MARKETING OS</span>
-    <a href="wavebite-ai-marketing-os.html" target="_blank" style="margin-left:.7rem;padding:.32rem .8rem;background:linear-gradient(135deg,rgba(168,85,247,0.32),rgba(120,60,200,0.14));border:1px solid rgba(168,85,247,0.55);border-radius:8px;color:#fff7c0;font-size:.62rem;font-weight:800;text-decoration:none;letter-spacing:.05em;white-space:nowrap;display:inline-flex;align-items:center;gap:.3rem">📣 MARKETING DETAIL-DASHBOARD ↗</a>
+    <a href="marketing-dashboard-detail.html" target="_blank" rel="noopener" style="margin-left:.7rem;padding:.32rem .8rem;background:linear-gradient(135deg,rgba(168,85,247,0.32),rgba(120,60,200,0.14));border:1px solid rgba(168,85,247,0.55);border-radius:8px;color:#fff7c0;font-size:.62rem;font-weight:800;text-decoration:none;letter-spacing:.05em;white-space:nowrap;display:inline-flex;align-items:center;gap:.3rem">📣 MARKETING DETAIL-DASHBOARD ↗</a>
+    <a href="wavebite-ai-marketing-os.html" target="_blank" rel="noopener" style="margin-left:.3rem;padding:.32rem .8rem;background:linear-gradient(135deg,rgba(0,212,170,0.25),rgba(0,212,170,0.08));border:1px solid rgba(0,212,170,0.45);border-radius:8px;color:#9af0d8;font-size:.62rem;font-weight:800;text-decoration:none;letter-spacing:.05em;white-space:nowrap;display:inline-flex;align-items:center;gap:.3rem">⚡ MKT-OS ↗</a>
     <a href="wavebite-leonardo-studio.html" target="_blank" style="margin-left:.3rem;padding:.32rem .8rem;background:linear-gradient(135deg,rgba(0,212,170,0.25),rgba(0,212,170,0.08));border:1px solid rgba(0,212,170,0.5);border-radius:8px;color:#9af0d8;font-size:.62rem;font-weight:800;text-decoration:none;letter-spacing:.05em;white-space:nowrap;display:inline-flex;align-items:center;gap:.3rem">🎨 LEONARDO STUDIO ↗</a>
     <span style="display:inline-flex;align-items:center;gap:.4rem;padding:.18rem .55rem;background:rgba(0,212,170,.12);border:1px solid rgba(0,212,170,.35);border-radius:99px;font-size:.55rem;letter-spacing:.12em;color:#00d4aa;font-weight:700">● SYSTEM AKTIV</span>
   </div>
@@ -4458,6 +4558,43 @@
       <a href="https://www.youtube.com" target="_blank" class="pc-link" style="font-size:.6rem">▶️ YouTube</a>
       <span style="flex:1"></span>
       <button onclick="lucyMarketingScan()" style="padding:.32rem .7rem;background:linear-gradient(135deg,rgba(0,212,170,.2),rgba(0,170,140,.08));border:1px solid rgba(0,212,170,.45);border-radius:8px;color:#9af0d8;font-size:.6rem;font-weight:700;cursor:pointer">🛰 Marketing Opportunity Scan</button>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     📣 MARKETING COCKPIT — End-to-End: Idee → Post (V21 LUCY)
+     Brücke zur Vollversion: marketing-dashboard-detail.html
+     ═══════════════════════════════════════════════════════════════ -->
+<section id="sec-marketing" style="margin-bottom:1.5rem">
+  <div class="section-title" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.5rem">
+    <span style="background:linear-gradient(90deg,#d9bbff,#fff5ff,#d9bbff);-webkit-background-clip:text;background-clip:text;color:transparent;font-weight:800;letter-spacing:.08em">📣 MARKETING COCKPIT — AUTONOM BIS ZUM POST</span>
+    <a href="marketing-dashboard-detail.html" target="_blank" rel="noopener" style="margin-left:.7rem;padding:.4rem .95rem;background:linear-gradient(135deg,rgba(168,85,247,0.42),rgba(120,60,200,0.18));border:1px solid rgba(168,85,247,0.7);border-radius:9px;color:#fff7ff;font-size:.66rem;font-weight:800;text-decoration:none;letter-spacing:.05em;white-space:nowrap;display:inline-flex;align-items:center;gap:.35rem;box-shadow:0 4px 18px rgba(168,85,247,.28)">🚀 VOLLES MARKETING-DASHBOARD ÖFFNEN ↗</a>
+    <span style="display:inline-flex;align-items:center;gap:.4rem;padding:.18rem .55rem;background:rgba(168,85,247,.14);border:1px solid rgba(168,85,247,.4);border-radius:99px;font-size:.55rem;letter-spacing:.12em;color:#d9bbff;font-weight:700">● LUCY INTEGRIERT</span>
+  </div>
+
+  <div style="background:linear-gradient(135deg,rgba(40,16,60,.32),rgba(7,12,30,.96) 60%,rgba(40,16,60,.18));border:1px solid rgba(168,85,247,.28);border-radius:16px;padding:1.25rem;position:relative;overflow:hidden">
+    <div style="position:absolute;inset:0;background:radial-gradient(800px 240px at 20% -10%,rgba(168,85,247,.12),transparent 60%),radial-gradient(700px 200px at 90% 110%,rgba(255,158,177,.07),transparent 60%);pointer-events:none"></div>
+
+    <!-- 7-STEP PIPELINE -->
+    <div style="position:relative;display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:.6rem;margin-bottom:1rem">
+      <div class="mc-step" data-step="1" style="background:rgba(168,85,247,.08);border:1px solid rgba(168,85,247,.3);border-radius:10px;padding:.7rem;text-align:center"><div style="font-size:1.3rem">💡</div><div style="font-size:.55rem;letter-spacing:.14em;color:#d9bbff;font-weight:700;margin-top:.25rem">1 · IDEE</div><div style="font-size:.62rem;color:#c8c8d4;margin-top:.15rem">Lucy-Brainstorm</div></div>
+      <div class="mc-step" data-step="2" style="background:rgba(168,85,247,.08);border:1px solid rgba(168,85,247,.3);border-radius:10px;padding:.7rem;text-align:center"><div style="font-size:1.3rem">📝</div><div style="font-size:.55rem;letter-spacing:.14em;color:#d9bbff;font-weight:700;margin-top:.25rem">2 · BRIEF</div><div style="font-size:.62rem;color:#c8c8d4;margin-top:.15rem">Auto-Brief</div></div>
+      <div class="mc-step" data-step="3" style="background:rgba(168,85,247,.08);border:1px solid rgba(168,85,247,.3);border-radius:10px;padding:.7rem;text-align:center"><div style="font-size:1.3rem">🎨</div><div style="font-size:.55rem;letter-spacing:.14em;color:#d9bbff;font-weight:700;margin-top:.25rem">3 · VISUAL</div><div style="font-size:.62rem;color:#c8c8d4;margin-top:.15rem">Leonardo / Firefly</div></div>
+      <div class="mc-step" data-step="4" style="background:rgba(168,85,247,.08);border:1px solid rgba(168,85,247,.3);border-radius:10px;padding:.7rem;text-align:center"><div style="font-size:1.3rem">🎬</div><div style="font-size:.55rem;letter-spacing:.14em;color:#d9bbff;font-weight:700;margin-top:.25rem">4 · VIDEO</div><div style="font-size:.62rem;color:#c8c8d4;margin-top:.15rem">Schnitt+Sound+VO</div></div>
+      <div class="mc-step" data-step="5" style="background:rgba(168,85,247,.08);border:1px solid rgba(168,85,247,.3);border-radius:10px;padding:.7rem;text-align:center"><div style="font-size:1.3rem">✍️</div><div style="font-size:.55rem;letter-spacing:.14em;color:#d9bbff;font-weight:700;margin-top:.25rem">5 · CAPTION</div><div style="font-size:.62rem;color:#c8c8d4;margin-top:.15rem">Brand-Voice</div></div>
+      <div class="mc-step" data-step="6" style="background:rgba(168,85,247,.08);border:1px solid rgba(253,230,138,.45);border-radius:10px;padding:.7rem;text-align:center"><div style="font-size:1.3rem">✅</div><div style="font-size:.55rem;letter-spacing:.14em;color:#fde68a;font-weight:700;margin-top:.25rem">6 · QUALITY-GATE</div><div style="font-size:.62rem;color:#c8c8d4;margin-top:.15rem">Brand/Recht/Visual</div></div>
+      <div class="mc-step" data-step="7" style="background:linear-gradient(135deg,rgba(0,212,170,.18),rgba(0,150,120,.06));border:1px solid rgba(0,212,170,.45);border-radius:10px;padding:.7rem;text-align:center"><div style="font-size:1.3rem">🚀</div><div style="font-size:.55rem;letter-spacing:.14em;color:#9af0d8;font-weight:700;margin-top:.25rem">7 · POST</div><div style="font-size:.62rem;color:#c8c8d4;margin-top:.15rem">Postiz / Multi</div></div>
+    </div>
+
+    <div style="display:flex;flex-wrap:wrap;gap:.5rem;justify-content:space-between;align-items:center">
+      <div style="font-size:.7rem;color:#c8c8d4;line-height:1.5;max-width:680px">
+        Vollständiger End-to-End Workflow von Idee bis fertigem Post — autonom mit Lucy-Unterstützung. Quality-Gates verhindern fehlerhafte Veröffentlichungen. Video-Pipeline in optimaler Reihenfolge (Schnitt → Sound → Voiceover → Export). Mobile-optimiert für Posts unterwegs.
+      </div>
+      <div style="display:flex;gap:.4rem;flex-wrap:wrap">
+        <a href="marketing-dashboard-detail.html" target="_blank" rel="noopener" style="padding:.45rem 1rem;background:linear-gradient(135deg,#a855f7,#6b21a8);border-radius:8px;color:#fff;font-size:.65rem;font-weight:800;text-decoration:none;letter-spacing:.05em">📣 COCKPIT ÖFFNEN</a>
+        <button onclick="try{(window.Lucy||window.Samantha)?.open?.()}catch(e){}" style="padding:.45rem 1rem;background:linear-gradient(135deg,rgba(255,158,177,.3),rgba(197,73,122,.15));border:1px solid rgba(255,158,177,.6);border-radius:8px;color:#ffc8d4;font-size:.65rem;font-weight:800;cursor:pointer;letter-spacing:.05em">🧜🏻‍♀️ LUCY FRAGEN</button>
+      </div>
     </div>
   </div>
 </section>
@@ -9041,7 +9178,7 @@ if (typeof window.addMemoryEntry !== 'function') {
 })();
 </script>
 
-<script src="samantha.js?v=2026-05-21-v15-allstations"></script>
+<script src="samantha.js?v=2026-05-24-v21-lucy-marketing"></script>
 
 <script>
 // ═════════════════════════════════════════════════════════════
@@ -9401,168 +9538,4 @@ if (typeof window.addMemoryEntry !== 'function') {
           ${i < PIPELINE.length - 1 ? '<div style="display:flex;align-items:center;color:rgba(232,201,106,.4);font-size:.85rem">→</div>' : ''}
         `).join('')}
       </div>
-      <button onclick="runStudioPipeline()" style="width:100%;padding:.55rem;background:linear-gradient(135deg,rgba(0,212,170,.25),rgba(0,170,140,.1));border:1px solid rgba(0,212,170,.5);border-radius:9px;color:#9af0d8;font-size:.7rem;font-weight:700;cursor:pointer">🚀 Vollständige Pipeline mit Lucy ausführen — Schritt für Schritt</button>
-    `;
-  }
-
-  function renderBrandGate() {
-    return `
-      <div style="background:rgba(232,201,106,.05);border:1px solid rgba(232,201,106,.2);border-radius:10px;padding:.85rem">
-        <div style="display:flex;align-items:center;gap:.5rem;margin-bottom:.6rem">
-          <span style="font-size:1.2rem">🛡</span>
-          <div style="font-size:.7rem;font-weight:800;color:#e8c96a;letter-spacing:.08em">QUALITY GATE — 12-PUNKTE-CHECK VOR JEDEM POST</div>
-        </div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:.35rem .85rem">
-          ${BRAND_GATE.map((c, i) => `
-            <label style="display:flex;align-items:flex-start;gap:.5rem;font-size:.6rem;color:var(--text);cursor:pointer">
-              <input type="checkbox" data-bg-i="${i}" onchange="updateBrandGateProgress()" style="margin-top:.2rem;accent-color:#e8c96a">
-              <span>${c}</span>
-            </label>
-          `).join('')}
-        </div>
-        <div style="margin-top:.7rem;display:flex;align-items:center;gap:.5rem;font-size:.6rem">
-          <span style="color:var(--text-dim)">Fortschritt:</span>
-          <div style="flex:1;height:6px;background:rgba(255,255,255,.06);border-radius:3px;overflow:hidden">
-            <div id="brand-gate-progress" style="height:100%;width:0%;background:linear-gradient(90deg,#e8c96a,#00d4aa);transition:width .35s"></div>
-          </div>
-          <span id="brand-gate-count" style="color:#e8c96a;font-weight:700">0/12</span>
-          <button onclick="lucyBrandCheck()" style="padding:.25rem .65rem;background:rgba(0,212,170,.12);border:1px solid rgba(0,212,170,.4);border-radius:6px;color:#9af0d8;font-size:.55rem;cursor:pointer;font-weight:700">🧠 Lucy prüft</button>
-        </div>
-      </div>
-    `;
-  }
-
-  window.lucyRoleBrief = function(id) {
-    const r = AI_ROLES.find(x => x.id === id);
-    if (r) _lucy('🎭 ROLE-BRIEFING: ' + r.name + '\n\n' + r.prompt);
-  };
-  window.copyPromptToClip = function(i, key) {
-    const p = PROMPT_LIB[key][i];
-    if (p) { navigator.clipboard.writeText(p.text); _toast('📋 In Zwischenablage: ' + p.title); }
-  };
-  window.lucyPromptRefine = function(i, key) {
-    const p = PROMPT_LIB[key][i];
-    if (p) _lucy('✨ PROMPT-REFINE: "' + p.title + '"\n\nOriginal:\n' + p.text + '\n\nMache ihn besser für Wave Bite (mehr Brand-Anker, mehr emotional, mehr conversion-stark). Liefere 3 verfeinerte Varianten.');
-  };
-  window.updateBrandGateProgress = function() {
-    const boxes = document.querySelectorAll('[data-bg-i]');
-    const done = Array.from(boxes).filter(b => b.checked).length;
-    const total = boxes.length;
-    const pct = total ? Math.round(done/total*100) : 0;
-    const bar = document.getElementById('brand-gate-progress');
-    const cnt = document.getElementById('brand-gate-count');
-    if (bar) bar.style.width = pct + '%';
-    if (cnt) cnt.textContent = done + '/' + total;
-  };
-  window.lucyBrandCheck = function() {
-    _lucy('🛡 BRAND-GATE-CHECK\n\nHilf mir alle 12 Quality-Gate-Punkte zu prüfen für einen geplanten Wave Bite Post. Geh die Liste durch und frag mich jede offene Frage. Gib am Ende ein klares Go/No-Go.');
-  };
-  window.lucyStudioFullScan = function() {
-    _lucy('🎬 STUDIO FULL SCAN — der komplette Workflow-Check\n\n1) Pipeline-Status: in welchem Step stehe ich gerade?\n2) Welcher der 13 Tools fehlt mir noch (Setup-Liste)?\n3) Welche der 7 AI-Rollen sollte ich heute aktivieren?\n4) Welches Brand-Gate-Item ist mein größtes Risiko?\n5) Was ist mein nächster konkreter Move (heute, max 30 Min)?');
-  };
-
-  function _toast(msg) {
-    let t = document.getElementById('studio-toast');
-    if (!t) {
-      t = document.createElement('div');
-      t.id = 'studio-toast';
-      t.style.cssText = 'position:fixed;bottom:24px;left:50%;transform:translateX(-50%);padding:.55rem 1rem;background:rgba(0,14,26,.95);border:1px solid rgba(232,201,106,.5);border-radius:10px;color:#e8c96a;font-size:.7rem;font-weight:700;z-index:9999;box-shadow:0 8px 30px rgba(0,0,0,.5);transition:opacity .3s';
-      document.body.appendChild(t);
-    }
-    t.textContent = msg;
-    t.style.opacity = '1';
-    clearTimeout(window._studioToastTo);
-    window._studioToastTo = setTimeout(() => { t.style.opacity = '0'; }, 2200);
-  }
-
-  // TAB SWITCHER
-  const TABS = [
-    { key:'roles',    label:'🎭 7 AI-Rollen',   render: renderRoles,    gridStyle:'grid-template-columns:repeat(4,1fr);gap:.55rem' },
-    { key:'layers',   label:'🏛 8 Layer',       render: renderLayers,   gridStyle:'grid-template-columns:repeat(2,1fr);gap:.5rem' },
-    { key:'prompts',  label:'📚 Prompt-Library', render: renderPrompts,  gridStyle:'' },
-    { key:'pipeline', label:'🔄 Pipeline',       render: renderPipeline, gridStyle:'' },
-    { key:'brand',    label:'🛡 Brand Gate',     render: renderBrandGate, gridStyle:'' }
-  ];
-
-  window.switchStudioTab = function(key) {
-    const tab = TABS.find(t => t.key === key);
-    if (!tab) return;
-    document.querySelectorAll('.studio-tab-btn').forEach(b => {
-      const active = b.dataset.tab === key;
-      b.style.background = active ? 'rgba(232,201,106,.18)' : 'transparent';
-      b.style.borderColor = active ? 'rgba(232,201,106,.5)' : 'rgba(255,255,255,.12)';
-      b.style.color = active ? '#fff7c0' : 'var(--text-dim)';
-    });
-    const panel = document.getElementById('studio-tab-panel');
-    if (panel) {
-      panel.style.display = tab.gridStyle ? 'grid' : 'block';
-      panel.style.cssText = tab.gridStyle || '';
-      panel.innerHTML = tab.render();
-      if (key === 'brand') setTimeout(updateBrandGateProgress, 50);
-    }
-  };
-
-  function injectMaxExpansion() {
-    const studio = document.getElementById('sec-studio');
-    if (!studio) return console.warn('[v18] no sec-studio');
-    if (studio.querySelector('#studio-max-block')) return; // idempotent
-
-    const block = document.createElement('div');
-    block.id = 'studio-max-block';
-    block.style.cssText = 'margin-top:1.1rem;padding-top:1rem;border-top:1px solid rgba(232,201,106,.18);position:relative';
-    block.innerHTML = `
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.6rem;flex-wrap:wrap;gap:.5rem">
-        <div style="font-size:.62rem;letter-spacing:.16em;color:rgba(232,201,106,.85);font-weight:700">🚀 NEXT-GEN STUDIO MAX — INTEGRIERT AUS MARKETING-OS</div>
-        <button onclick="lucyStudioFullScan()" style="padding:.28rem .65rem;background:linear-gradient(135deg,rgba(168,85,247,.25),rgba(120,60,200,.1));border:1px solid rgba(168,85,247,.5);border-radius:7px;color:#d9bbff;font-size:.55rem;font-weight:700;cursor:pointer">🛰 Studio Full-Scan</button>
-      </div>
-      <div style="display:flex;gap:.35rem;margin-bottom:.85rem;flex-wrap:wrap">
-        ${TABS.map((t, i) => `<button class="studio-tab-btn" data-tab="${t.key}" onclick="switchStudioTab('${t.key}')" style="padding:.35rem .85rem;background:${i===0?'rgba(232,201,106,.18)':'transparent'};border:1px solid ${i===0?'rgba(232,201,106,.5)':'rgba(255,255,255,.12)'};border-radius:8px;color:${i===0?'#fff7c0':'var(--text-dim)'};font-size:.62rem;font-weight:700;cursor:pointer;transition:all .2s">${t.label}</button>`).join('')}
-      </div>
-      <div id="studio-tab-panel" style="display:grid;grid-template-columns:repeat(4,1fr);gap:.55rem"></div>
-    `;
-
-    // Append before the Distribution Row (last child)
-    const distRow = studio.querySelector('div[style*="DISTRIBUTION"]');
-    if (distRow && distRow.parentNode) {
-      distRow.parentNode.insertBefore(block, distRow);
-    } else {
-      const innerCard = studio.querySelector('div[style*="border-radius:16px"]') || studio.firstElementChild;
-      if (innerCard) innerCard.appendChild(block); else studio.appendChild(block);
-    }
-
-    // initial fill
-    switchStudioTab('roles');
-  }
-
-  // Inject extra nav-pills (🎬 STUDIO, 📣 MKT-OS) into top nav if not present
-  function injectNavPills() {
-    const nav = document.querySelector('nav');
-    if (!nav) return;
-    if (nav.querySelector('[data-nav="studio"]')) return;
-    const sep = nav.querySelector('.nav-sep');
-    const make = (id, sec, label, color) => {
-      const d = document.createElement('div');
-      d.className = 'nav-pill';
-      d.dataset.nav = id;
-      d.onclick = () => document.getElementById(sec)?.scrollIntoView({behavior:'smooth'});
-      d.innerHTML = label;
-      if (color) d.style.cssText = `border-color:${color};color:${color}`;
-      return d;
-    };
-    const studioPill = make('studio', 'sec-studio', '🎬 STUDIO', 'rgba(232,201,106,0.45)');
-    const mktPill = make('marketing', 'sec-studio', '📣 MARKETING', 'rgba(168,85,247,0.45)');
-    if (sep) { nav.insertBefore(studioPill, sep); nav.insertBefore(mktPill, sep); }
-    else { nav.appendChild(studioPill); nav.appendChild(mktPill); }
-  }
-
-  function boot() {
-    injectNavPills();
-    injectMaxExpansion();
-  }
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);
-  else setTimeout(boot, 100);
-})();
-</script>
-
-</body>
-</html>
+      <button onclick="runStudioPipeline()" style="width:100%;padding:.55rem;background:linear-gradient(135deg,rgba(0,212,170,.25),rgba(0,170,140,.1));border:1px solid rgba(0,212,170,.5);border-radius:9px;color:#9af0d8;font-size:.7rem;font-weight:700;cursor

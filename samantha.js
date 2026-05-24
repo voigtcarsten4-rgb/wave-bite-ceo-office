@@ -21,7 +21,7 @@
           // Behalte nur explizit erlaubte SW (z.B. eigene PWA falls vorhanden)
           await r.unregister();
         }
-        if (regs.length) console.log('🧹 Samantha: '+regs.length+' alte Service-Worker entfernt');
+        if (regs.length) console.log('🧹 Lucy: '+regs.length+' alte Service-Worker entfernt');
       }
       if (window.caches) {
         const keys = await caches.keys();
@@ -140,7 +140,7 @@
       id:'bob_antrag', icon:'💰', title:'ILB/BAB-Förderantrag vorbereiten',
       sub:'Brandenburg-Investitionsbank — Antragspaket aus Förderlogik-Onepager + BP 03/26',
       run: () => {
-        const txt = `# ILB BRANDENBURG — FÖRDERANTRAG WAVE BITE\n\n**Stand:** ${new Date().toLocaleDateString('de-DE')}\n\n## 1. Projektkern (aus Förderlogik-Onepager)\nWave Bite ist eine kombinierte Plattform aus schwimmender Premium-Gastronomie, Eventbetrieb und digitaler App-Infrastruktur mit Skalierungspotenzial (Franchise & Plattformmodell).\n\n## 2. Investitionsstruktur (Pilot 450.000 €)\n- Plattform, Ausbau & Technik: 250.000 €\n- Gastrogeräte & Ausstattung: 150.000 €\n- Marketing & Pre-Opening: 20.000 €\n- Liquidität & Reserven: 30.000 €\n\n## 3. Förderfähige Module\n- [x] Boot & Infrastruktur (Technik, Sicherheit, Energie PV)\n- [x] Gastronomie & Betrieb (Geräte, Küche)\n- [x] Digitalisierung (App, Systeme, Plattform)\n- [x] Marketing & Tourismusintegration\n- [x] Nachhaltigkeit & Energie (PV, Batterie)\n\n## 4. Wirtschaftliche Basis (verifiziert BP 03/26)\n- Ø Bruttomarge: **71%** (67,8% nach Club-Rabatt)\n- Tagesumsatz Plan: ~1.500 €\n- Ziel Jahr 1: **250.000 €** (Investor-Pitch) bzw. 180.000 € konservativ\n- EBITDA J1: 93.650 € · J2: 191.866 € · J3: 363.964 €\n- Break-Even: 72 Verkäufe/Tag · 10.820/Jahr auf 150 Saisontagen\n\n## 5. Rechtsstruktur\n- Wave Bite Holding AG (CH, Laufen BL) — 100% IP-Inhaberin\n- Wave Bite GmbH (DE, Flämingstr. 4, 15738 Zeuthen) — Antragsteller, operativ\n- Lizenzvertrag Holding↔GmbH (% vom Nettoumsatz + Mgmt Fee)\n\n## 6. WIPO-Designschutz\n- DM/248323 EU+CH "Aufbauten für Hausboote" — eingetragen 21.07.2025\n\n## 7. Partner-LOIs (unterzeichnet)\n- Hugentobler (Küchentechnik)\n- Radeberger Gruppe (Getränke-Sachsponsoring)\n- Transgourmet (bis 10.000 € finanziell + Versorgung)\n- TV Dahme-Seenland (Tourismus-Stellungnahme)\n- Gifthüttli (Referenz)\n\n## 8. Eigenmittel & Gesellschafterkapital\n- Eigenkapital eingelegt: 50.000 €\n- Founder: Carsten Voigt 95% + Marcus Börner 5% (voll vested)\n- Plus Bankdarlehen geplant: 350.000 € @ 5% / 5 J = 6.737 €/Monat\n\n## 9. Förderpfad-Kombination (Strategie)\n- ILB (Investitionsförderung Land Brandenburg)\n- BAB Brandenburg (Bürgschaftsbank, falls 350k€-Darlehen)\n- Digitalisierungs-/Plattformförderung\n- Energie & Nachhaltigkeit (PV/Batterie)\n- Regionale Tourismusförderung (TV Dahme-LOI verknüpfen)\n- Optional: BAFA-Beratung (Strukturvorbereitung)\n\n## 10. Offene Klärungspunkte für ILB-Termin\n- [ ] Konkretes ILB-Programm-Mapping (Förderquote je Modul)\n- [ ] Antragspfad & Zeitachse (Frühjahr 2026 vs. Q3)\n- [ ] Sicherheitenanforderungen (Bürgschaftsbank?)\n- [ ] Risiken bei Ablehnung — Plan B (HTGF? Bank only?)\n- [ ] Schnittstelle zu WFB Brandenburg 25k€ (Heiko Schmidt)\n\n## 11. Nächste Schritte\n- [ ] ILB-Erstgespräch-Termin buchen (förderbank-brandenburg.de)\n- [ ] Termin Heiko Schmidt WFB (Status 13.05. Call)\n- [ ] BP 03/26 + Investor-Onepager als Anlage vorbereiten\n- [ ] Förderlogik-Onepager finalisieren\n- [ ] Falls erforderlich: BAB-Bürgschaftsantrag parallel\n\n---\n*Auto-generiert von Samantha aus Förderlogik-Onepager + BP 03/26 + LOI-Bestand.*`;
+        const txt = `# ILB BRANDENBURG — FÖRDERANTRAG WAVE BITE\n\n**Stand:** ${new Date().toLocaleDateString('de-DE')}\n\n## 1. Projektkern (aus Förderlogik-Onepager)\nWave Bite ist eine kombinierte Plattform aus schwimmender Premium-Gastronomie, Eventbetrieb und digitaler App-Infrastruktur mit Skalierungspotenzial (Franchise & Plattformmodell).\n\n## 2. Investitionsstruktur (Pilot 450.000 €)\n- Plattform, Ausbau & Technik: 250.000 €\n- Gastrogeräte & Ausstattung: 150.000 €\n- Marketing & Pre-Opening: 20.000 €\n- Liquidität & Reserven: 30.000 €\n\n## 3. Förderfähige Module\n- [x] Boot & Infrastruktur (Technik, Sicherheit, Energie PV)\n- [x] Gastronomie & Betrieb (Geräte, Küche)\n- [x] Digitalisierung (App, Systeme, Plattform)\n- [x] Marketing & Tourismusintegration\n- [x] Nachhaltigkeit & Energie (PV, Batterie)\n\n## 4. Wirtschaftliche Basis (verifiziert BP 03/26)\n- Ø Bruttomarge: **71%** (67,8% nach Club-Rabatt)\n- Tagesumsatz Plan: ~1.500 €\n- Ziel Jahr 1: **250.000 €** (Investor-Pitch) bzw. 180.000 € konservativ\n- EBITDA J1: 93.650 € · J2: 191.866 € · J3: 363.964 €\n- Break-Even: 72 Verkäufe/Tag · 10.820/Jahr auf 150 Saisontagen\n\n## 5. Rechtsstruktur\n- Wave Bite Holding AG (CH, Laufen BL) — 100% IP-Inhaberin\n- Wave Bite GmbH (DE, Flämingstr. 4, 15738 Zeuthen) — Antragsteller, operativ\n- Lizenzvertrag Holding↔GmbH (% vom Nettoumsatz + Mgmt Fee)\n\n## 6. WIPO-Designschutz\n- DM/248323 EU+CH "Aufbauten für Hausboote" — eingetragen 21.07.2025\n\n## 7. Partner-LOIs (unterzeichnet)\n- Hugentobler (Küchentechnik)\n- Radeberger Gruppe (Getränke-Sachsponsoring)\n- Transgourmet (bis 10.000 € finanziell + Versorgung)\n- TV Dahme-Seenland (Tourismus-Stellungnahme)\n- Gifthüttli (Referenz)\n\n## 8. Eigenmittel & Gesellschafterkapital\n- Eigenkapital eingelegt: 50.000 €\n- Founder: Carsten Voigt 95% + Marcus Börner 5% (voll vested)\n- Plus Bankdarlehen geplant: 350.000 € @ 5% / 5 J = 6.737 €/Monat\n\n## 9. Förderpfad-Kombination (Strategie)\n- ILB (Investitionsförderung Land Brandenburg)\n- BAB Brandenburg (Bürgschaftsbank, falls 350k€-Darlehen)\n- Digitalisierungs-/Plattformförderung\n- Energie & Nachhaltigkeit (PV/Batterie)\n- Regionale Tourismusförderung (TV Dahme-LOI verknüpfen)\n- Optional: BAFA-Beratung (Strukturvorbereitung)\n\n## 10. Offene Klärungspunkte für ILB-Termin\n- [ ] Konkretes ILB-Programm-Mapping (Förderquote je Modul)\n- [ ] Antragspfad & Zeitachse (Frühjahr 2026 vs. Q3)\n- [ ] Sicherheitenanforderungen (Bürgschaftsbank?)\n- [ ] Risiken bei Ablehnung — Plan B (HTGF? Bank only?)\n- [ ] Schnittstelle zu WFB Brandenburg 25k€ (Heiko Schmidt)\n\n## 11. Nächste Schritte\n- [ ] ILB-Erstgespräch-Termin buchen (förderbank-brandenburg.de)\n- [ ] Termin Heiko Schmidt WFB (Status 13.05. Call)\n- [ ] BP 03/26 + Investor-Onepager als Anlage vorbereiten\n- [ ] Förderlogik-Onepager finalisieren\n- [ ] Falls erforderlich: BAB-Bürgschaftsantrag parallel\n\n---\n*Auto-generiert von Lucy aus Förderlogik-Onepager + BP 03/26 + LOI-Bestand.*`;
         const blob = new Blob([txt], {type:'text/markdown'});
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a'); a.href = url; a.download = 'ILB_BAB_Foerderantrag_Wave_Bite_'+new Date().toISOString().slice(0,10)+'.md';
@@ -1583,7 +1583,7 @@ REGELN: Deutsch, präzise, max 8 Sätze Standard. Bei Strategie: erst Schwäche,
   }
 
   function renderActions(body){
-    let html = `<div class="sam-h4">⚡ Alle Samantha-Actions (echte Workflows)</div>`;
+    let html = `<div class="sam-h4">⚡ Alle Lucy-Actions (echte Workflows)</div>`;
     ACTIONS.forEach(a => {
       html += `<div class="sam-action-row" data-action="${a.id}">
         <div class="sam-act-icon">${a.icon}</div>
@@ -1692,7 +1692,7 @@ REGELN: Deutsch, präzise, max 8 Sätze Standard. Bei Strategie: erst Schwäche,
   function renderChat(body){
     const history = loadJSON(CHAT_KEY, []);
     body.innerHTML = `
-      <div class="sam-h4">💬 Sparring mit Samantha</div>
+      <div class="sam-h4">💬 Sparring mit Lucy</div>
       <div class="sam-chat-log" id="sam-chat-log">
         ${history.slice(-20).map(m => `<div class="sam-msg ${m.role}">${escapeHTML(m.text)}${m.source?'<div class="sam-msg-src">'+m.source+'</div>':''}</div>`).join('') || '<div style="color:#9d9db0;font-size:12px;text-align:center;padding:20px">Frag mich was — z.B. "Was ist mein größter Blocker?"</div>'}
       </div>
@@ -1743,7 +1743,7 @@ REGELN: Deutsch, präzise, max 8 Sätze Standard. Bei Strategie: erst Schwäche,
 
   function renderPlugins(body){
     let html = `<div class="sam-h4">🧩 Plugin-Bibliothek (${Object.keys(PLUGINS).length} Plugins · ${Object.values(PLUGINS).reduce((a,b)=>a+b.skills.length,0)}+ Skills)</div>
-      <div style="font-size:11.5px;color:#c8c8d4;margin-bottom:10px">Diese Plugins sind in Carstens System verfügbar. Samantha kann sie kontextuell empfehlen.</div>`;
+      <div style="font-size:11.5px;color:#c8c8d4;margin-bottom:10px">Diese Plugins sind in Carstens System verfügbar. Lucy kann sie kontextuell empfehlen.</div>`;
     Object.entries(PLUGINS).forEach(([k,v]) => {
       html += `<div class="sam-plugin">
         <div class="sam-plugin-h">${v.icon} ${k} <span style="font-size:9.5px;color:#9d9db0;font-weight:400">(${v.skills.length} skills)</span></div>
@@ -1870,7 +1870,7 @@ REGELN: Deutsch, präzise, max 8 Sätze Standard. Bei Strategie: erst Schwäche,
     DOCS.forEach(d => items.push({ kind:'doc', icon:'📄', t:d.name, sub:d.cat+' · '+d.date, cat:'Doc', match:(d.name+' '+d.tags.join(' ')+' '+d.cat).toLowerCase(), run:()=>{closeJarvis(); window.open('docs/'+d.file,'_blank');} }));
     items.push({ kind:'tab', icon:'🌊', t:'Heute-Tab öffnen', sub:'Live-Briefing aus Kalender + Mail', cat:'Nav', match:'heute today', run:()=>{closeJarvis(); document.getElementById('samantha-panel').classList.add('open'); currentTab='today'; renderBody();} });
     items.push({ kind:'tab', icon:'✅', t:'Tasks öffnen', sub:'To-Do-Liste', cat:'Nav', match:'tasks aufgaben', run:()=>{closeJarvis(); document.getElementById('samantha-panel').classList.add('open'); currentTab='tasks'; renderBody();} });
-    items.push({ kind:'tab', icon:'💬', t:'Chat mit Samantha', sub:'Sparring + Strategiefragen', cat:'Nav', match:'chat sparring', run:()=>{closeJarvis(); document.getElementById('samantha-panel').classList.add('open'); currentTab='chat'; renderBody();} });
+    items.push({ kind:'tab', icon:'💬', t:'Chat mit Lucy', sub:'Sparring + Strategiefragen', cat:'Nav', match:'chat sparring lucy', run:()=>{closeJarvis(); document.getElementById('samantha-panel').classList.add('open'); currentTab='chat'; renderBody();} });
     items.push({ kind:'tab', icon:'🧩', t:'Plugin-Übersicht', sub:Object.keys(PLUGINS).length+' Plugins · 200+ Skills', cat:'Nav', match:'plugin skill', run:()=>{closeJarvis(); document.getElementById('samantha-panel').classList.add('open'); currentTab='plugins'; renderBody();} });
     if (!q) return items.slice(0,12);
     return items.filter(i => i.match.includes(q)).slice(0,20);
@@ -1973,5 +1973,26 @@ REGELN: Deutsch, präzise, max 8 Sätze Standard. Bei Strategie: erst Schwäche,
   window.LucyAvatar = LUCY_AVATAR_SVG;
   // Public-API exposed as Lucy + alias Samantha (backwards-compat)
   window.Lucy = window.Samantha;
-  console.log('%c✦ LUCY v4.0 online — 100% cerebral capacity','color:#9af0ff;font-weight:bold;font-size:13px','· '+ACTIONS.length+' Actions · '+Object.keys(PLUGINS).length+' Plugins · Ctrl+J für Command Palette');
+
+  // V21 — BroadcastChannel: Lucy hört auf Marketing-Cockpit-Anfragen
+  try {
+    if ('BroadcastChannel' in window) {
+      const lucyBC = new BroadcastChannel('ceo-wave');
+      lucyBC.onmessage = function(e){
+        if (!e.data) return;
+        if (e.data.type === 'lucy-ask' && e.data.prompt) {
+          try {
+            window.Lucy.open();
+            if (typeof window.Lucy.ask === 'function') {
+              window.Lucy.ask(e.data.prompt);
+            }
+            lucyBC.postMessage({type:'lucy-reply', text:'Lucy hat deine Frage erhalten und antwortet im CEO Office.', ts:Date.now()});
+          } catch(_) {}
+        }
+      };
+      console.log('[v21-lucy] BroadcastChannel "ceo-wave" gebunden');
+    }
+  } catch(_) {}
+
+  console.log('%c✦ LUCY v21.0 online — 100% cerebral capacity','color:#9af0ff;font-weight:bold;font-size:13px','· '+ACTIONS.length+' Actions · '+Object.keys(PLUGINS).length+' Plugins · Ctrl+J für Command Palette · Marketing-Cockpit verbunden');
 })();

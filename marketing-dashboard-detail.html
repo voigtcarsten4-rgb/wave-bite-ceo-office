@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<meta name="theme-color" content="#0a0418" />
+<title>📣 Marketing Cockpit — Wave Bite · V21 Lucy Edition</title>
+<link rel="icon" href="favicon.ico" />
+<style>
+  :root{
+    --bg:#070314;
+    --bg-2:#100926;
+    --panel:rgba(22,12,42,0.78);
+    --panel-2:rgba(30,16,55,0.72);
+    --border:rgba(168,85,247,0.28);
+    --border-strong:rgba(168,85,247,0.55);
+    --text:#f3eaff;
+    --text-dim:#b9a8d4;
+    --muted:#7d6c98;
+    --purple:#a855f7;
+    --purple-soft:#d9bbff;
+    --gold:#c9a84c;
+    --gold-light:#fde68a;
+    --teal:#00d4aa;
+    --lucy:#ff9eb1;
+    --lucy-soft:#ffc8d4;
+    --red:#ff4757;
+    --green:#34d399;
+    --r:14px;
+    --r-sm:10px;
+    --shadow:0 18px 56px rgba(0,0,0,.6),0 0 0 1px rgba(168,85,247,.10);
+  }
+  *,*::before,*::after{box-sizing:border-box}
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Inter,sans-serif;overflow-x:hidden;min-height:100vh}
+  body{
+    background:
+      radial-gradient(1200px 600px at 12% -10%,rgba(168,85,247,.18),transparent 60%),
+      radial-gradient(900px 400px at 100% 110%,rgba(255,158,177,.10),transparent 60%),
+      linear-gradient(160deg,#070314 0%,#0a0420 50%,#100630 100%);
+    background-attachment:fixed;
+  }
+  /* ─── HEADER ───────────────────────────────────────────────── */
+  header{
+    position:sticky;top:0;z-index:50;
+    backdrop-filter:blur(18px);
+    background:linear-gradient(180deg,rgba(7,3,20,.92),rgba(7,3,20,.74));
+    border-bottom:1px solid var(--border);
+    padding:.75rem 1rem;
+  }
+  .h-row{display:flex;align-items:center;gap:.75rem;flex-wrap:wrap;max-width:1500px;margin:0 auto}
+  .brand{
+    font-weight:900;letter-spacing:.08em;
+    background:linear-gradient(90deg,var(--purple-soft),#fff,var(--purple-soft));
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+    font-size:.95rem;
+  }
+  .brand .small{color:var(--text-dim);font-weight:600;letter-spacing:.16em;margin-left:.4rem}
+  .h-actions{margin-left:auto;display:flex;gap:.4rem;flex-wrap:wrap}
+  .h-pill{
+    padding:.38rem .8rem;border-radius:99px;font-size:.62rem;font-weight:800;letter-spacing:.06em;
+    text-decoration:none;cursor:pointer;border:1px solid transparent;
+    transition:transform .15s, box-shadow .15s, background .15s;
+  }
+  .h-pill:hover{transform:translateY(-1px)}
+  .h-pill.purple{background:rgba(168,85,247,.12);border-color:rgba(168,85,247,.5);color:var(--purple-soft)}
+  .h-pill.purple:hover{box-shadow:0 0 16px rgba(168,85,247,.5)}
+  .h-pill.lucy{background:rgba(255,158,177,.10);border-color:rgba(255,158,177,.55);color:var(--lucy-soft)}
+  .h-pill.lucy:hover{box-shadow:0 0 16px rgba(255,158,177,.5)}
+  .h-pill.back{background:rgba(255,255,255,.04);border-color:rgba(255,255,255,.12);color:var(--text-dim)}
+  /* ─── HERO ─────────────────────────────────────────────────── */
+  .hero{
+    max-width:1500px;margin:1.2rem auto 1rem;padding:0 1rem;
+  }
+  .hero-grid{
+    display:grid;grid-template-columns:1.4fr 1fr;gap:1rem;
+  }
+  @media(max-width:900px){.hero-grid{grid-template-columns:1fr}}
+  .hero-card{
+    position:relative;background:var(--panel);border:1px solid var(--border);border-radius:var(--r);
+    padding:1.25rem;box-shadow:var(--shadow);overflow:hidden;
+  }
+  .hero-card::before{
+    content:"";position:absolute;inset:0;
+    background:radial-gradient(700px 200px at 100% 0%,rgba(168,85,247,.16),transparent 60%);
+    pointer-events:none;
+  }
+  .hero-title{font-size:1.65rem;font-weight:900;letter-spacing:-.01em;line-height:1.15;margin:0 0 .5rem}
+  .hero-title .accent{background:linear-gradient(90deg,#d9bbff,#fff5ff);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .hero-sub{color:var(--text-dim);font-size:.85rem;line-height:1.55;margin:0 0 1rem}
+  .badges{display:flex;gap:.4rem;flex-wrap:wrap;margin-top:.6rem}
+  .badge{display:inline-flex;align-items:center;gap:.35rem;padding:.25rem .55rem;background:rgba(168,85,247,.12);border:1px solid rgba(168,85,247,.35);border-radius:99px;font-size:.55rem;letter-spacing:.12em;color:var(--purple-soft);font-weight:700}
+  .badge.live{background:rgba(0,212,170,.12);border-color:rgba(0,212,170,.35);color:var(--teal)}
+  .badge.lucy{background:rgba(255,158,177,.12);border-color:rgba(255,158,177,.4);color:var(--lucy-soft)}
+  /* KPI Row */
+  .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:.55rem;margin-top:1rem}
+  @media(max-width:600px){.kpis{grid-template-columns:repeat(2,1fr)}}
+  .kpi{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);border-radius:var(--r-sm);padding:.7rem;text-align:center}
+  .kpi-v{font-size:1.2rem;font-weight:800;color:#fff}
+  .kpi-l{font-size:.5rem;letter-spacing:.14em;color:var(--muted);text-transform:uppercase;margin-top:.2rem}
+  /* ─── PIPELINE ─────────────────────────────────────────────── */
+  .section{max-width:1500px;margin:1.2rem auto;padding:0 1rem}
+  .s-title{font-size:.75rem;letter-spacing:.16em;color:var(--purple-soft);font-weight:800;margin:0 0 .7rem;display:flex;align-items:center;gap:.5rem}
+  .s-title .num{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;background:linear-gradient(135deg,#a855f7,#6b21a8);color:#fff;font-size:.65rem;font-weight:900}
+  .pipeline{
+    display:grid;grid-template-columns:repeat(7,1fr);gap:.5rem;
+    background:var(--panel);border:1px solid var(--border);border-radius:var(--r);padding:.9rem;
+  }
+  @media(max-width:1100px){.pipeline{grid-template-columns:repeat(4,1fr)}}
+  @media(max-width:600px){.pipeline{grid-template-columns:repeat(2,1fr);gap:.45rem}}
+  .pstep{
+    position:relative;background:rgba(168,85,247,.06);border:1px solid rgba(168,85,247,.25);
+    border-radius:var(--r-sm);padding:.7rem .55rem;text-align:center;cursor:pointer;
+    transition:all .25s;
+  }
+  .pstep:hover{background:rgba(168,85,247,.14);border-color:rgba(168,85,247,.5);transform:translateY(-2px)}
+  .pstep.active{background:linear-gradient(135deg,rgba(168,85,247,.34),rgba(120,60,200,.16));border-color:rgba(168,85,247,.7);box-shadow:0 0 18px rgba(168,85,247,.4)}
+  .pstep.done{background:linear-gradient(135deg,rgba(0,212,170,.18),rgba(0,160,130,.04));border-color:rgba(0,212,170,.5)}
+  .pstep.gate{border-color:rgba(253,230,138,.5);background:rgba(253,230,138,.08)}
+  .pstep.post{background:linear-gradient(135deg,rgba(0,212,170,.2),rgba(0,160,130,.08));border-color:rgba(0,212,170,.55)}
+  .pstep-icon{font-size:1.5rem;line-height:1}
+  .pstep-n{font-size:.45rem;letter-spacing:.14em;color:var(--text-dim);margin:.3rem 0 .1rem;font-weight:800}
+  .pstep-t{font-size:.62rem;color:#fff;font-weight:700}
+  .pstep-s{font-size:.5rem;color:var(--muted);margin-top:.1rem}
+  .pstep-status{position:absolute;top:.35rem;right:.35rem;width:8px;height:8px;border-radius:50%;background:var(--muted)}
+  .pstep.active .pstep-status{background:var(--purple);animation:pulse 1.6s infinite}
+  .pstep.done .pstep-status{background:var(--teal)}
+  .pstep.gate .pstep-status{background:var(--gold-light);animation:pulse 1.6s infinite}
+  .pstep.post .pstep-status{background:var(--teal)}
+  @keyframes pulse{50%{transform:scale(1.5);opacity:.6}}
+  /* ─── WORKSPACE — Step-Detail-Karten ────────────────────────── */
+  .workspace{
+    margin-top:1rem;display:grid;grid-template-columns:1.5fr 1fr;gap:1rem;
+  }
+  @media(max-width:1100px){.workspace{grid-template-columns:1fr}}
+  .ws-card{background:var(--panel);border:1px solid var(--border);border-radius:var(--r);padding:1rem;position:relative;overflow:hidden}
+  .ws-card h3{margin:0 0 .55rem;font-size:.95rem;color:#fff;letter-spacing:.02em;font-weight:800}
+  .ws-card .hint{font-size:.7rem;color:var(--text-dim);line-height:1.55;margin-bottom:.6rem}
+  textarea, input[type=text], select{
+    width:100%;background:rgba(7,3,20,.65);color:#fff;border:1px solid rgba(168,85,247,.3);border-radius:8px;
+    padding:.55rem .65rem;font-size:.78rem;font-family:inherit;outline:none;
+    transition:border-color .15s, box-shadow .15s;
+  }
+  textarea{min-height:130px;resize:vertical;line-height:1.5}
+  textarea:focus, input:focus, select:focus{border-color:var(--purple);box-shadow:0 0 0 3px rgba(168,85,247,.18)}
+  label{display:block;font-size:.55rem;letter-spacing:.14em;color:var(--text-dim);text-transform:uppercase;font-weight:700;margin:.7rem 0 .25rem}
+  .row{display:grid;grid-template-columns:1fr 1fr;gap:.6rem}
+  @media(max-width:520px){.row{grid-template-columns:1fr}}
+  .btn{
+    display:inline-flex;align-items:center;gap:.4rem;padding:.5rem 1rem;border:0;border-radius:9px;
+    cursor:pointer;font-weight:800;letter-spacing:.04em;font-size:.7rem;
+    transition:transform .15s, box-shadow .15s;
+  }
+  .btn:hover{transform:translateY(-1px)}
+  .btn-primary{background:linear-gradient(135deg,#a855f7,#6b21a8);color:#fff}
+  .btn-primary:hover{box-shadow:0 6px 22px rgba(168,85,247,.45)}
+  .btn-lucy{background:linear-gradient(135deg,#ff9eb1,#c5497a);color:#fff}
+  .btn-lucy:hover{box-shadow:0 6px 22px rgba(255,158,177,.4)}
+  .btn-ghost{background:rgba(255,255,255,.04);color:var(--text);border:1px solid rgba(255,255,255,.12)}
+  .btn-ghost:hover{background:rgba(255,255,255,.08)}
+  .btn-gate{background:linear-gradient(135deg,#fde68a,#c9a84c);color:#1a1a1a}
+  .btn-gate:hover{box-shadow:0 6px 22px rgba(253,230,138,.4)}
+  .btn-post{background:linear-gradient(135deg,#00d4aa,#0a8a72);color:#fff}
+  .btn-post:hover{box-shadow:0 6px 22px rgba(0,212,170,.4)}
+  .btn-row{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:.7rem}
+  /* ─── Lucy Side Panel ─────────────────────────────────────── */
+  .lucy-panel{background:linear-gradient(180deg,rgba(255,158,177,.10),rgba(60,20,40,.45));border:1px solid rgba(255,158,177,.35);border-radius:var(--r);padding:1rem;position:relative;overflow:hidden}
+  .lucy-panel::before{content:"";position:absolute;inset:0;background:radial-gradient(400px 200px at 100% 0%,rgba(255,158,177,.18),transparent 60%);pointer-events:none}
+  .lucy-head{display:flex;align-items:center;gap:.65rem;margin-bottom:.6rem;position:relative}
+  .lucy-av{width:48px;height:48px;border-radius:50%;background:radial-gradient(circle at 30% 30%,#ff9eb1,#c5497a 70%,#5b1f3a);display:flex;align-items:center;justify-content:center;font-size:1.5rem;box-shadow:0 0 0 4px rgba(255,158,177,.18)}
+  .lucy-name{font-size:.95rem;font-weight:900;color:#fff}
+  .lucy-role{font-size:.55rem;letter-spacing:.14em;color:var(--lucy-soft);font-weight:700;margin-top:.1rem}
+  .lucy-tips{font-size:.7rem;line-height:1.55;color:var(--text)}
+  .lucy-tips li{margin:.3rem 0}
+  /* ─── Quality-Gate ───────────────────────────────────────── */
+  .gate{display:grid;grid-template-columns:1fr;gap:.4rem;margin-top:.4rem}
+  .check{display:flex;align-items:center;gap:.55rem;padding:.55rem .7rem;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);border-radius:8px;cursor:pointer;transition:all .15s}
+  .check:hover{background:rgba(255,255,255,.06)}
+  .check input{accent-color:var(--gold-light);width:18px;height:18px}
+  .check span{font-size:.72rem;color:var(--text);line-height:1.4}
+  .check .why{font-size:.6rem;color:var(--muted);margin-top:.15rem;display:block}
+  .gate-bar{height:8px;background:rgba(255,255,255,.05);border-radius:99px;overflow:hidden;margin-top:.7rem}
+  .gate-bar-fill{height:100%;background:linear-gradient(90deg,#fde68a,#c9a84c);width:0%;transition:width .35s}
+  .gate-status{font-size:.6rem;color:var(--text-dim);margin-top:.4rem;letter-spacing:.05em}
+  /* ─── Video-Pipeline ─────────────────────────────────────── */
+  .vp-steps{display:grid;grid-template-columns:repeat(5,1fr);gap:.4rem;margin-top:.5rem}
+  @media(max-width:760px){.vp-steps{grid-template-columns:repeat(2,1fr)}}
+  .vp-step{position:relative;background:rgba(255,255,255,.03);border:1px solid rgba(168,85,247,.25);border-radius:8px;padding:.55rem;text-align:center;font-size:.6rem;color:var(--text-dim)}
+  .vp-step.done{background:rgba(0,212,170,.12);border-color:rgba(0,212,170,.4);color:#fff}
+  .vp-step.running{background:rgba(168,85,247,.16);border-color:var(--purple);color:#fff;animation:vpPulse 1.4s infinite}
+  @keyframes vpPulse{50%{box-shadow:0 0 14px rgba(168,85,247,.5)}}
+  .vp-step b{display:block;font-size:.85rem;margin-bottom:.2rem;color:#fff}
+  /* ─── Post-Preview ───────────────────────────────────────── */
+  .platforms{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:.5rem;margin-top:.5rem}
+  .plat{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:.6rem;cursor:pointer;transition:all .15s;display:flex;flex-direction:column;align-items:center;gap:.25rem;position:relative}
+  .plat:hover{border-color:rgba(168,85,247,.5);background:rgba(168,85,247,.08)}
+  .plat.on{border-color:var(--teal);background:rgba(0,212,170,.14)}
+  .plat-ico{font-size:1.5rem}
+  .plat-t{font-size:.65rem;font-weight:700;color:#fff}
+  .plat-c{position:absolute;top:6px;right:6px;width:14px;height:14px;border-radius:50%;border:2px solid rgba(255,255,255,.25);background:transparent}
+  .plat.on .plat-c{background:var(--teal);border-color:var(--teal)}
+  /* ─── Toast ─────────────────────────────────────────────── */
+  #toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:rgba(7,3,20,.95);border:1px solid var(--border-strong);border-radius:12px;padding:.7rem 1.1rem;color:var(--purple-soft);font-size:.75rem;font-weight:700;z-index:99999;box-shadow:0 18px 50px rgba(0,0,0,.6);opacity:0;transition:opacity .25s;pointer-events:none;max-width:90vw;text-align:center}
+  #toast.show{opacity:1}
+  /* ─── Lucy floating button ─────────────────────────────── */
+  #lucy-fab{position:fixed;bottom:20px;right:20px;width:60px;height:60px;border-radius:50%;background:radial-gradient(circle at 30% 30%,#ff9eb1,#c5497a 70%,#5b1f3a);box-shadow:0 8px 24px rgba(197,73,122,.5),0 0 0 4px rgba(255,158,177,.14);cursor:pointer;z-index:9000;display:flex;align-items:center;justify-content:center;font-size:1.7rem;transition:transform .2s, box-shadow .2s}
+  #lucy-fab:hover{transform:scale(1.08);box-shadow:0 12px 32px rgba(197,73,122,.6)}
+  #lucy-fab::after{content:"";position:absolute;inset:-6px;border-radius:50%;border:1px solid rgba(255,158,177,.4);animation:lpulse 2.4s infinite}
+  @keyframes lpulse{0%,100%{box-shadow:0 0 0 0 rgba(255,158,177,.4)}50%{box-shadow:0 0 0 14px rgba(255,158,177,0)}}
+  /* ─── Mobile-Optimierungen ──────────────────────────────── */
+  @media(max-width:520px){
+    .hero-title{font-size:1.35rem}
+    .h-actions{width:100%}
+    .h-pill{font-size:.56rem;padding:.32rem .65rem}
+    .ws-card,.hero-card,.lucy-panel{padding:.85rem}
+    .pipeline{padding:.7rem}
+    .btn{font-size:.65rem;padding:.45rem .8rem}
+    #lucy-fab{width:52px;height:52px;font-size:1.4rem;bottom:14px;right:14px}
+  }
+  /* Print/Export hint */
+  .footer-hint{text-align:center;padding:1.2rem;color:var(--muted);font-size:.6rem;letter-spacing:.12em}
+</style>
+</head>
+<body>
+
+<!-- ─── HEADER ─────────────────────────────────────────────── -->
+<header>
+  <div class="h-row">
+    <div class="brand">📣 MARKETING COCKPIT<span class="small">// V21 · LUCY EDITION</span></div>
+    <div class="h-actions">
+      <a class="h-pill back" href="index.html">← CEO Office</a>
+      <a class="h-pill purple" href="wavebite-ai-marketing-os.html" target="_blank" rel="noopener">⚡ MKT-OS</a>
+      <a class="h-pill purple" href="wavebite-leonardo-studio.html" target="_blank" rel="noopener">🎨 Leonardo</a>
+      <button class="h-pill lucy" id="open-lucy">🧜🏻‍♀️ Lucy fragen</button>
+    </div>
+  </div>
+</header>
+
+<!-- ─── HERO ──────────────────────────────────────────────── -->
+<div class="hero">
+  <div class="hero-grid">
+    <div class="hero-card">
+      <h1 class="hero-title">Von Idee zum fertigen Post — <span class="accent">autonom</span> mit Lucy</h1>
+      <p class="hero-sub">Dein End-to-End Marketing-Cockpit: Pipeline mit Quality-Gates verhindert kaputte Posts. Video-Modul in optimaler Reihenfolge (Schnitt → Sound → Voiceover → Export). Mobile-optimiert für Posts unterwegs. Brand-Voice + Wave-Bite-Faktenbuch integriert. Lucy macht dir den ersten 80%-Wurf — du polierst und drückst auf POST.</p>
+      <div class="badges">
+        <span class="badge live">● SYSTEM AKTIV</span>
+        <span class="badge lucy">🧜🏻‍♀️ LUCY EINGEBUNDEN</span>
+        <span class="badge">7-STEP PIPELINE</span>
+        <span class="badge">QUALITY-GATES</span>
+        <span class="badge">MOBILE-FIRST</span>
+        <span class="badge">MULTI-CHANNEL POST</span>
+      </div>
+      <div class="kpis">
+        <div class="kpi"><div class="kpi-v" id="kpi-step">1/7</div><div class="kpi-l">Aktueller Step</div></div>
+        <div class="kpi"><div class="kpi-v" id="kpi-gate">0%</div><div class="kpi-l">Quality-Gate</div></div>
+        <div class="kpi"><div class="kpi-v" id="kpi-platforms">0</div><div class="kpi-l">Plattformen</div></div>
+        <div class="kpi"><div class="kpi-v" id="kpi-status">Idle</div><div class="kpi-l">Status</div></div>
+      </div>
+    </div>
+    <div class="lucy-panel">
+      <div class="lucy-head">
+        <div class="lucy-av">🧜🏻‍♀️</div>
+        <div>
+          <div class="lucy-name">Lucy</div>
+          <div class="lucy-role">CEO Co-Pilotin · Marketing-Mode</div>
+        </div>
+      </div>
+      <div class="lucy-tips">
+        Ich kenne deine Cap Table, BP 03/26, alle 5 LOIs, die Boot-Story und das Faktenbuch. Ich helfe dir hier:
+        <ul style="margin:.4rem 0 .4rem 1rem;padding:0">
+          <li>Idee → Brief in 30 Sek (Brand-Voice-konform)</li>
+          <li>Hooks, Captions, Hashtags, CTA</li>
+          <li>Video-Storyboard mit Schnitt-Reihenfolge</li>
+          <li>Brand-Gate-Check (vor Post)</li>
+          <li>Optimale Posting-Zeit pro Plattform</li>
+        </ul>
+      </div>
+      <div class="btn-row">
+        <button class="btn btn-lucy" onclick="lucyAsk('Was sollte ich diese Woche posten, basierend auf Wave Bite Faktenbuch + aktuellen Blockern?')">💡 Wochenplan</button>
+        <button class="btn btn-ghost" onclick="lucyAsk('Gib mir 3 starke Hooks für unsere nächste Instagram-Story zum Thema Hausboot-Gastronomie.')">🪝 3 Hooks</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── PIPELINE ──────────────────────────────────────────── -->
+<div class="section">
+  <h2 class="s-title"><span class="num">1</span> 7-STEP MARKETING-PIPELINE — KLICKE EINEN STEP, UM ZU ÖFFNEN</h2>
+  <div class="pipeline" id="pipeline"></div>
+</div>
+
+<!-- ─── WORKSPACE ─────────────────────────────────────────── -->
+<div class="section">
+  <h2 class="s-title"><span class="num">2</span> WORKSPACE — DER AKTIVE STEP</h2>
+  <div class="workspace">
+    <div class="ws-card" id="ws-main"></div>
+    <div class="ws-card" id="ws-side"></div>
+  </div>
+</div>
+
+<!-- ─── PUBLISHING TARGETS ────────────────────────────────── -->
+<div class="section" id="publish-section" style="display:none">
+  <h2 class="s-title"><span class="num">3</span> POSTING-ZIELE — WO SOLL ES RAUS?</h2>
+  <div class="ws-card">
+    <p class="hint">Wähle Plattformen aus. Lucy passt Caption + Format automatisch an (Aspect-Ratio, Hashtags, Länge).</p>
+    <div class="platforms" id="platforms"></div>
+    <div class="btn-row" style="margin-top:1rem">
+      <button class="btn btn-post" id="btn-publish">🚀 An ausgewählte Plattformen senden</button>
+      <button class="btn btn-ghost" onclick="schedulePost()">🕐 Späteren Zeitpunkt planen</button>
+      <button class="btn btn-ghost" onclick="exportDraft()">⬇ Als Entwurf exportieren</button>
+    </div>
+    <div id="publish-result" style="margin-top:.8rem;font-size:.72rem;color:var(--teal)"></div>
+  </div>
+</div>
+
+<div class="footer-hint">📣 MARKETING COCKPIT · V21 LUCY · WAVE BITE / WAVEBYTE · BroadcastChannel-Sync zum CEO Office aktiv</div>
+
+<!-- ─── Lucy FAB ─────────────────────────────────────────── -->
+<div id="lucy-fab" title="Lucy öffnen">🧜🏻‍♀️</div>
+<div id="toast"></div>
+
+<script>
+/* ═══════════════════════════════════════════════════════════
+   📣 MARKETING COCKPIT · V21 LUCY · Wave Bite
+   Stand-alone Logik — kommuniziert via BroadcastChannel mit CEO Office.
+   ═══════════════════════════════════════════════════════════ */
+(function(){
+  'use strict';
+
+  const STORAGE_KEY = 'wave_bite_mkt_state_v21';
+  const CHANNEL = 'ceo-wave';
+  const bc = ('BroadcastChannel' in window) ? new BroadcastChannel(CHANNEL) : null;
+
+  // STATE
+  const defaultState = {
+    activeStep: 1,
+    completedSteps: [],
+    idea: '',
+    brief: '',
+    visualPrompt: '',
+    visualUrl: '',
+    videoConcept: '',
+    videoStage: 0,        // 0 = nicht gestartet, 5 = fertig
+    caption: '',
+    hashtags: '',
+    cta: '',
+    platforms: [],
+    gateChecks: {},
+    posted: false,
+    history: []
+  };
+  let state = loadState();
+
+  function loadState(){
+    try{ const raw=localStorage.getItem(STORAGE_KEY); if(raw) return Object.assign({},defaultState,JSON.parse(raw)); }catch(_){}
+    return Object.assign({},defaultState);
+  }
+  function saveState(){
+    try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }catch(_){}
+    if(bc){ try{ bc.postMessage({type:'mkt-state',state:state, ts:Date.now()}); }catch(_){} }
+    renderKPIs();
+  }
+
+  // STEPS DEFINITION
+  const STEPS = [
+    { n:1, icon:'💡', t:'IDEE',     s:'Lucy-Brainstorm', cls:'' },
+    { n:2, icon:'📝', t:'BRIEF',    s:'Auto-Brief',     cls:'' },
+    { n:3, icon:'🎨', t:'VISUAL',   s:'Leonardo/Firefly',cls:'' },
+    { n:4, icon:'🎬', t:'VIDEO',    s:'Schnitt+Sound+VO',cls:'' },
+    { n:5, icon:'✍️', t:'CAPTION',  s:'Brand-Voice',    cls:'' },
+    { n:6, icon:'✅', t:'QUALITY',  s:'Gate-Check',     cls:'gate' },
+    { n:7, icon:'🚀', t:'POST',     s:'Multi-Channel',  cls:'post' }
+  ];
+
+  const PLATFORMS = [
+    { id:'instagram',ico:'📷',t:'Instagram',aspect:'1:1',maxLen:2200},
+    { id:'tiktok',   ico:'🎵',t:'TikTok',   aspect:'9:16',maxLen:2200},
+    { id:'facebook', ico:'👍',t:'Facebook', aspect:'1.91:1',maxLen:63206},
+    { id:'linkedin', ico:'💼',t:'LinkedIn', aspect:'1.91:1',maxLen:3000},
+    { id:'youtube',  ico:'▶️',t:'YouTube Shorts',aspect:'9:16',maxLen:5000},
+    { id:'x',        ico:'𝕏',t:'X / Twitter',aspect:'16:9',maxLen:280},
+    { id:'web',      ico:'🌐',t:'Website Blog',aspect:'free',maxLen:99999}
+  ];
+
+  // ─── PIPELINE RENDER ────────────────────────────────────────
+  function renderPipeline(){
+    const el = document.getElementById('pipeline');
+    el.innerHTML = STEPS.map(s=>{
+      const isActive = state.activeStep===s.n;
+      const isDone = state.completedSteps.includes(s.n);
+      const cls = ['pstep', s.cls, isActive?'active':'', isDone?'done':''].filter(Boolean).join(' ');
+      return `<div class="${cls}" data-step="${s.n}">
+        <div class="pstep-status"></div>
+        <div class="pstep-icon">${s.icon}</div>
+        <div class="pstep-n">${s.n} · ${s.t}</div>
+        <div class="pstep-s">${s.s}</div>
+      </div>`;
+    }).join('');
+    el.querySelectorAll('.pstep').forEach(el=>{
+      el.addEventListener('click', ()=>{
+        state.activeStep = parseInt(el.dataset.step,10);
+        saveState();
+        renderPipeline();
+        renderWorkspace();
+        document.getElementById('ws-main').scrollIntoView({behavior:'smooth',block:'start'});
+      });
+    });
+  }
+
+  // ─── WORKSPACE RENDER ──────────────────────────────────────
+  function renderWorkspace(){
+    const step = STEPS.find(s=>s.n===state.activeStep);
+    const main = document.getElementById('ws-main');
+    const side = document.getElementById('ws-side');
+    const publishSection = document.getElementById('publish-section');
+    publishSection.style.display = (state.activeStep>=7) ? 'block' : 'none';
+
+    switch(state.activeStep){
+      case 1: renderIdee(main, side); break;
+      case 2: renderBrief(main, side); break;
+      case 3: renderVisual(main, side); break;
+      case 4: renderVideo(main, side); break;
+      case 5: renderCaption(main, side); break;
+      case 6: renderGate(main, side); break;
+      case 7: renderPost(main, side); break;
+    }
+    renderPlatforms();
+  }
+
+  function navBtns(prevHandler, nextHandler, nextLabel){
+    return `<div class="btn-row" style="margin-top:.9rem">
+      ${state.activeStep>1?'<button class="btn btn-ghost" id="btn-prev">← Zurück</button>':''}
+      ${nextHandler?'<button class="btn btn-primary" id="btn-next">'+(nextLabel||'Weiter →')+'</button>':''}
+    </div>`;
+  }
+  function bindNav(prevTo, nextTo, beforeNext){
+    const p=document.getElementById('btn-prev'); if(p) p.onclick=()=>{state.activeStep=prevTo||Math.max(1,state.activeStep-1); saveState(); renderPipeline(); renderWorkspace();};
+    const n=document.getElementById('btn-next'); if(n) n.onclick=()=>{
+      if(beforeNext && beforeNext()===false) return;
+      if(!state.completedSteps.includes(state.activeStep)) state.completedSteps.push(state.activeStep);
+      state.activeStep=nextTo||Math.min(7,state.activeStep+1);
+      saveState(); renderPipeline(); renderWorkspace();
+      toast('✓ Step gespeichert');
+    };
+  }
+
+  // ── STEP 1 : IDEE
+  function renderIdee(main, side){
+    main.innerHTML = `
+      <h3>💡 Step 1 · Idee</h3>
+      <p class="hint">Beschreibe in 1–3 Sätzen, worum es gehen soll. Du kannst auch nur ein Stichwort schreiben — Lucy macht den Rest. Oder klick auf eine Vorschlags-Idee unten.</p>
+      <label>Deine Idee (oder Stichwort)</label>
+      <textarea id="ipt-idea" placeholder="z.B. 'Behind-the-scenes vom Boot-Umbau' oder 'LOI Transgourmet feiern'">${escape(state.idea)}</textarea>
+      <div class="btn-row">
+        <button class="btn btn-lucy" id="btn-ai-ideas">🧜🏻‍♀️ Lucy: gib mir 5 Ideen</button>
+        <button class="btn btn-ghost" id="btn-clear-idea">↺ Reset</button>
+      </div>
+      <div id="lucy-ideas" style="margin-top:.7rem"></div>
+      ${navBtns(null,1,'Idee fixieren · Weiter zum Brief →')}`;
+    document.getElementById('ipt-idea').oninput=e=>{state.idea=e.target.value; saveState();};
+    document.getElementById('btn-clear-idea').onclick=()=>{state.idea=''; saveState(); renderWorkspace();};
+    document.getElementById('btn-ai-ideas').onclick=()=>generateIdeas();
+    bindNav(null,2, ()=>{ if(!state.idea.trim()){toast('⚠ Idee oder Stichwort fehlt'); return false;} });
+    // Side: Lucy-Tipps
+    side.innerHTML = lucySide('Was macht jetzt Impact?', [
+      'Sichtbarkeit aufbauen: 0 Follower → 3 Reels pro Woche',
+      'Founder-Story: dein 100% Cap-Table-Sprung erzählen',
+      'Boot-Umbau visuell dokumentieren (DM-Magnet)',
+      'LOI-Partner als Co-Creator einbinden',
+      'Brandenburg-Tourismus-Angle (TV Dahme)'
+    ]);
+  }
+  function generateIdeas(){
+    const c = document.getElementById('lucy-ideas');
+    c.innerHTML = '<div style="padding:.5rem;color:var(--text-dim);font-size:.7rem">🧜🏻‍♀️ Lucy denkt …</div>';
+    setTimeout(()=>{
+      const ideas = [
+        '🎬 60-Sek-Reel: "Von der Idee zum schwimmenden Restaurant" — 5 Schritte Boot-Umbau',
+        '📸 Carousel: 7 Locations am Wolzigsee, an denen Wave Bite anlegen wird',
+        '💬 Founder-Sprache: warum 95/5 Cap Table radikal ist (Glaubwürdigkeit)',
+        '🔥 Reels-Hook: "Diese 3 LOIs hat noch kein anderes Startup vor uns bekommen"',
+        '☀ Sunset-Aufnahme + Voiceover: BunBo App Vision in 30 Sekunden'
+      ];
+      c.innerHTML = ideas.map((t,i)=>`<button class="btn btn-ghost" style="width:100%;justify-content:flex-start;margin-bottom:.3rem;text-align:left;line-height:1.4;height:auto;padding:.55rem .7rem" data-idea-pick="${i}">${escape(t)}</button>`).join('');
+      c.querySelectorAll('[data-idea-pick]').forEach(b=>b.onclick=()=>{
+        state.idea = ideas[parseInt(b.dataset.ideaPick,10)];
+        saveState(); renderWorkspace(); toast('✓ Idee übernommen');
+      });
+    }, 600);
+  }
+
+  // ── STEP 2 : BRIEF
+  function renderBrief(main, side){
+    if(!state.brief && state.idea) state.brief = autoBrief(state.idea);
+    main.innerHTML = `
+      <h3>📝 Step 2 · Brief</h3>
+      <p class="hint">Aus deiner Idee wurde ein strukturierter Brief generiert. Bearbeite ihn — alles, was hier steht, wird in den nächsten Steps verwendet.</p>
+      <label>Brief (editierbar)</label>
+      <textarea id="ipt-brief" style="min-height:240px">${escape(state.brief)}</textarea>
+      <div class="btn-row">
+        <button class="btn btn-lucy" id="btn-brief-tighten">🧜🏻‍♀️ Lucy: verdichten</button>
+        <button class="btn btn-ghost" id="btn-brief-regen">↺ Brief neu erzeugen</button>
+      </div>
+      ${navBtns(1,3,'Brief OK · Visual planen →')}`;
+    document.getElementById('ipt-brief').oninput=e=>{state.brief=e.target.value; saveState();};
+    document.getElementById('btn-brief-tighten').onclick=()=>{state.brief=tighten(state.brief); saveState(); renderWorkspace(); toast('✓ Verdichtet');};
+    document.getElementById('btn-brief-regen').onclick=()=>{state.brief=autoBrief(state.idea); saveState(); renderWorkspace(); toast('✓ Neu erzeugt');};
+    bindNav(1,3, ()=>{ if(!state.brief.trim()){toast('⚠ Brief leer'); return false;} });
+    side.innerHTML = lucySide('Brief-Best-Practices', [
+      'Ziel klar: "Sichtbarkeit", "DM-Anfrage" oder "Demo-Buchung"?',
+      'EINE Aussage pro Post — nicht 3 mischen',
+      'CTA spezifisch ("DM mit BOOT")',
+      'Wave-Bite-Brand-Anker: Wasser, Premium, Region BB',
+      'Verbotene Wörter: "innovativ", "einzigartig", "Lösung"'
+    ]);
+  }
+  function autoBrief(idea){
+    return `# BRIEF — ${idea.slice(0,80)}\n\n**Ziel:** Sichtbarkeit + DM-Anfragen für Wave Bite\n**Format:** Reel 30–60s (Hochformat 9:16)\n**Tonalität:** ehrlich, Founder-Story, Premium-Marina-Vibe\n**Hook (erste 3 Sek):** "${idea.slice(0,60)}…"\n**Body:** 3 Beats — Aussage / Beweis / Bild\n**CTA:** "DM mit BOOT für Updates"\n**Hashtags-Cluster:** #wavebite #hausboot #brandenburg #foundlife\n**Brand-Anker:** 95/5 Cap Table · 5 LOIs · WIPO-Designschutz · Boot-Umbau\n**Verbote:** generische Phrasen, übertriebene Versprechen, ohne Substanz`;
+  }
+  function tighten(brief){
+    return brief.replace(/\n{3,}/g,'\n\n').replace(/(\*\*|##) /g,'$1').trim();
+  }
+
+  // ── STEP 3 : VISUAL
+  function renderVisual(main, side){
+    if(!state.visualPrompt) state.visualPrompt = derivePrompt(state.brief);
+    main.innerHTML = `
+      <h3>🎨 Step 3 · Visual / Cover</h3>
+      <p class="hint">Generiere ein Visual mit Leonardo oder Firefly. Du kannst auch einen URL deines selbst-erstellten Visuals einsetzen.</p>
+      <label>Image-Prompt (für Leonardo / Firefly)</label>
+      <textarea id="ipt-vprompt" style="min-height:90px">${escape(state.visualPrompt)}</textarea>
+      <div class="row" style="margin-top:.5rem">
+        <button class="btn btn-primary" id="btn-leo">🎨 In Leonardo Studio öffnen</button>
+        <button class="btn btn-ghost" id="btn-firefly">✨ In Firefly öffnen</button>
+      </div>
+      <label>Visual-URL (nach Generierung hier einsetzen)</label>
+      <input id="ipt-vurl" type="text" placeholder="https://..." value="${escape(state.visualUrl)}">
+      <div id="visual-preview" style="margin-top:.6rem">${state.visualUrl?`<img src="${escape(state.visualUrl)}" style="max-width:100%;border-radius:10px;border:1px solid var(--border)"/>`:''}</div>
+      ${navBtns(2,4,'Visual OK · zum Video →')}`;
+    document.getElementById('ipt-vprompt').oninput=e=>{state.visualPrompt=e.target.value; saveState();};
+    document.getElementById('ipt-vurl').oninput=e=>{
+      state.visualUrl=e.target.value; saveState();
+      document.getElementById('visual-preview').innerHTML = state.visualUrl?`<img src="${escape(state.visualUrl)}" style="max-width:100%;border-radius:10px;border:1px solid var(--border)"/>`:'';
+    };
+    document.getElementById('btn-leo').onclick=()=>window.open('wavebite-leonardo-studio.html','_blank');
+    document.getElementById('btn-firefly').onclick=()=>window.open('https://firefly.adobe.com','_blank');
+    bindNav(2,4);
+    side.innerHTML = lucySide('Visual-Guideline', [
+      'Hochformat (9:16) für Reels/Stories, Quadrat (1:1) für Feed',
+      'Wave-Bite-Farbpalette: Dark Marina + Gold + Cyan-Akzente',
+      'Echte Boot-Fotos schlagen jede KI-Generierung',
+      'Kein Stockfoto-Look — Founder-Realismus zeigen',
+      'Subtitle-Overlay in Mitte vermeiden (Story-Reaction-Zone)'
+    ]);
+  }
+  function derivePrompt(brief){
+    return 'Cinematic premium houseboat on a German lake at golden hour, marina dock, branded "Wave Bite" hint, calm water reflections, ultra-realistic, Sony A7IV, 35mm, depth of field, no text, no people foreground — based on brief: '+(brief||'wave bite floating restaurant').slice(0,200);
+  }
+
+  // ── STEP 4 : VIDEO
+  function renderVideo(main, side){
+    main.innerHTML = `
+      <h3>🎬 Step 4 · Video-Pipeline (Schnitt → Sound → Voiceover → Export)</h3>
+      <p class="hint">Lucy führt dich Schritt-für-Schritt durch die Video-Produktion in der besten Reihenfolge. Jeder Step wird hier visuell markiert. Externes Tool: <b>CapCut</b>, <b>Premiere Rush</b> oder <b>Runway</b>.</p>
+      <label>Video-Konzept / Storyboard (Hook · Body · CTA)</label>
+      <textarea id="ipt-vc" style="min-height:130px" placeholder="0–3s Hook:…&#10;3–25s Body:…&#10;25–30s CTA:…">${escape(state.videoConcept)}</textarea>
+      <div class="vp-steps" id="vp-steps"></div>
+      <div class="btn-row" style="margin-top:.7rem">
+        <button class="btn btn-primary" id="btn-vp-next">▶ Nächsten Video-Step starten</button>
+        <button class="btn btn-ghost" id="btn-vp-reset">↺ Video zurücksetzen</button>
+        <button class="btn btn-lucy" id="btn-vp-script">🧜🏻‍♀️ Lucy: Sprecher-Skript</button>
+      </div>
+      ${navBtns(3,5,'Video fertig · zur Caption →')}`;
+    document.getElementById('ipt-vc').oninput=e=>{state.videoConcept=e.target.value; saveState();};
+    renderVP();
+    document.getElementById('btn-vp-next').onclick=()=>{ state.videoStage=Math.min(5,(state.videoStage||0)+1); saveState(); renderVP(); toast('🎬 Step '+state.videoStage+'/5'); };
+    document.getElementById('btn-vp-reset').onclick=()=>{ state.videoStage=0; saveState(); renderVP(); };
+    document.getElementById('btn-vp-script').onclick=()=>{
+      const sc = '🎙 VOICEOVER-SKRIPT\n\n[0–3s] '+(state.idea.slice(0,80)||'Hook hier')+'\n[3–25s] Founder-Story: 95/5 Cap Table, 5 LOIs, Boot-Umbau\n[25–30s] CTA: "DM mit BOOT — wir halten dich auf dem Laufenden."';
+      state.videoConcept = state.videoConcept ? (state.videoConcept+'\n\n'+sc) : sc;
+      saveState(); renderWorkspace(); toast('✓ Skript eingefügt');
+    };
+    bindNav(3,5);
+    side.innerHTML = lucySide('Video-Pipeline-Reihenfolge', [
+      '1. ROHSCHNITT — alle Clips nacheinander, ohne Politur',
+      '2. FEINSCHNITT — Cuts auf Beat, Tempo-Variation',
+      '3. SOUND — Musik unter Voiceover legen (Ducking!)',
+      '4. VOICEOVER — sauber aufnehmen, danach mit Sound mischen',
+      '5. EXPORT — H.264, 9:16, ≤ 60s, ≤ 100 MB'
+    ]);
+  }
+  function renderVP(){
+    const stages = [
+      {b:'1️⃣', t:'Schnitt-Roh'},
+      {b:'2️⃣', t:'Feinschnitt'},
+      {b:'3️⃣', t:'Sound/Musik'},
+      {b:'4️⃣', t:'Voiceover'},
+      {b:'5️⃣', t:'Export'}
+    ];
+    const stage = state.videoStage||0;
+    document.getElementById('vp-steps').innerHTML = stages.map((s,i)=>{
+      const cls = i+1 < stage ? 'done' : (i+1 === stage ? 'running' : '');
+      return `<div class="vp-step ${cls}"><b>${s.b}</b>${s.t}</div>`;
+    }).join('');
+  }
+
+  // ── STEP 5 : CAPTION
+  function renderCaption(main, side){
+    if(!state.caption) state.caption = autoCaption(state.idea, state.brief);
+    if(!state.hashtags) state.hashtags = '#wavebite #hausboot #brandenburg #foundlife #startup #premium #marina';
+    if(!state.cta) state.cta = 'DM mit „BOOT" für Updates.';
+    main.innerHTML = `
+      <h3>✍️ Step 5 · Caption · Hashtags · CTA</h3>
+      <p class="hint">Lucy hat einen brand-konformen Vorschlag gebaut. Editiere frei.</p>
+      <label>Caption</label>
+      <textarea id="ipt-cap" style="min-height:140px">${escape(state.caption)}</textarea>
+      <div class="row">
+        <div>
+          <label>Hashtags</label>
+          <input id="ipt-hash" type="text" value="${escape(state.hashtags)}">
+        </div>
+        <div>
+          <label>CTA</label>
+          <input id="ipt-cta" type="text" value="${escape(state.cta)}">
+        </div>
+      </div>
+      <div class="btn-row">
+        <button class="btn btn-lucy" id="btn-cap-better">🧜🏻‍♀️ Lucy: stärkeren Hook bauen</button>
+        <button class="btn btn-ghost" id="btn-cap-emoji">😎 Emoji-Pass</button>
+      </div>
+      ${navBtns(4,6,'Caption OK · zum Quality-Gate →')}`;
+    document.getElementById('ipt-cap').oninput=e=>{state.caption=e.target.value; saveState();};
+    document.getElementById('ipt-hash').oninput=e=>{state.hashtags=e.target.value; saveState();};
+    document.getElementById('ipt-cta').oninput=e=>{state.cta=e.target.value; saveState();};
+    document.getElementById('btn-cap-better').onclick=()=>{
+      state.caption = '🔥 '+state.caption.replace(/^[🔥✨⚡]?\s*/,''); saveState(); renderWorkspace(); toast('✓ Hook geschärft');
+    };
+    document.getElementById('btn-cap-emoji').onclick=()=>{
+      state.caption = state.caption + '\n\n⛵💎🌊'; saveState(); renderWorkspace();
+    };
+    bindNav(4,6);
+    side.innerHTML = lucySide('Caption-Regeln', [
+      'Erste Zeile = Hook (3–7 Wörter)',
+      'Absätze statt Textwand',
+      'CTA explizit & einfach',
+      '5–10 Hashtags (nicht 30)',
+      'Brand-Voice: ehrlich · Founder · keine Phrasen'
+    ]);
+  }
+  function autoCaption(idea, brief){
+    return (idea||'Update von Wave Bite')+'\n\n3 Beats:\n• Aussage: was ist neu / interessant\n• Beweis: Zahl / LOI / Foto\n• Bild: was siehst du im Visual\n\nWas wir bauen, ist nicht für jeden. Aber genau für DICH — wenn du noch nie ein Hausboot-Restaurant auf einem Brandenburger See gesehen hast.';
+  }
+
+  // ── STEP 6 : QUALITY-GATE
+  const GATE_CHECKS = [
+    { k:'brand',  t:'Brand-Voice OK',          w:'Keine generischen Phrasen, Wave-Bite-Tonalität, keine Versprechen ohne Beleg' },
+    { k:'fact',   t:'Faktenbasiert',           w:'Cap Table / LOIs / Zahlen aus Faktenbuch — nichts ausgedacht' },
+    { k:'legal',  t:'Rechtlich sauber',        w:'Keine Bilder mit Personen ohne Einwilligung, keine fremden Marken' },
+    { k:'visual', t:'Visual qualitativ',       w:'Auflösung ≥ 1080×1920 (9:16) bzw. 1080×1080, kein Pixel-Artefakt' },
+    { k:'caption',t:'Caption ≤ Plattform-Limit',w:'Instagram 2200 / TikTok 2200 / LinkedIn 3000 / X 280' },
+    { k:'cta',    t:'CTA klar & einfach',      w:'Ein spezifischer Call-to-Action, max 6 Wörter' },
+    { k:'hashtag',t:'Hashtags 5–10',           w:'Nicht 30 spammen — Mischung Brand + Nische + Region' },
+    { k:'time',   t:'Posting-Zeit gewählt',    w:'Mo/Di 19–21 Uhr oder Sa 11–13 Uhr (Wave-Bite-Zielgruppe)' }
+  ];
+  function renderGate(main, side){
+    if(!state.gateChecks) state.gateChecks={};
+    main.innerHTML = `
+      <h3>✅ Step 6 · Quality-Gate</h3>
+      <p class="hint">Bevor du auf POST drückst: Lucy zwingt dich, jeden Punkt zu prüfen. Erst bei 100% wird der POST-Button aktiv.</p>
+      <div class="gate" id="gate-list"></div>
+      <div class="gate-bar"><div class="gate-bar-fill" id="gate-fill"></div></div>
+      <div class="gate-status" id="gate-status"></div>
+      ${navBtns(5,7,'Alle Checks grün · POST! →')}`;
+    const gl = document.getElementById('gate-list');
+    gl.innerHTML = GATE_CHECKS.map(c=>`<label class="check"><input type="checkbox" data-gate="${c.k}" ${state.gateChecks[c.k]?'checked':''}><span><b>${escape(c.t)}</b><span class="why">${escape(c.w)}</span></span></label>`).join('');
+    gl.querySelectorAll('input[data-gate]').forEach(inp=>{
+      inp.onchange=()=>{ state.gateChecks[inp.dataset.gate]=inp.checked; saveState(); updateGateUI(); };
+    });
+    updateGateUI();
+    bindNav(5,7, ()=>{
+      const pct = gatePct();
+      if(pct<100){ toast('🚫 Erst alle '+GATE_CHECKS.length+' Checks bestätigen'); return false; }
+    });
+    side.innerHTML = lucySide('Warum Gates?', [
+      'Verhindert peinliche Posts (Tippfehler, falsche LOI-Angaben)',
+      'Schützt Brand (kein Wischiwaschi-Marketing)',
+      'Reduziert Rückzieher (Story löschen)',
+      'Sichert rechtliche Sauberkeit (DSGVO/Bildrecht)',
+      'Erhöht Conversion (klarer CTA bringt 3× mehr DMs)'
+    ]);
+  }
+  function gatePct(){
+    const done = GATE_CHECKS.filter(c=>state.gateChecks[c.k]).length;
+    return Math.round(done/GATE_CHECKS.length*100);
+  }
+  function updateGateUI(){
+    const pct = gatePct();
+    document.getElementById('gate-fill').style.width = pct+'%';
+    document.getElementById('gate-status').textContent = pct+'% bestätigt — '+(pct===100?'✅ Bereit für POST':'⏳ noch '+(GATE_CHECKS.length-Math.round(pct/100*GATE_CHECKS.length))+' offen');
+    renderKPIs();
+  }
+
+  // ── STEP 7 : POST
+  function renderPost(main, side){
+    main.innerHTML = `
+      <h3>🚀 Step 7 · Post</h3>
+      <p class="hint">Final-Check: hier siehst du, was wirklich rausgeht. Plattform-Auswahl darunter.</p>
+      <div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:.7rem">
+        <div style="font-size:.55rem;letter-spacing:.14em;color:var(--text-dim);font-weight:700;margin-bottom:.3rem">PREVIEW · CAPTION</div>
+        <div style="font-size:.78rem;line-height:1.55;white-space:pre-wrap">${escape(state.caption||'(leer)')}</div>
+        <div style="font-size:.7rem;color:var(--purple-soft);margin-top:.4rem">${escape(state.hashtags)}</div>
+        <div style="font-size:.7rem;color:var(--teal);margin-top:.4rem">👉 ${escape(state.cta)}</div>
+      </div>
+      <div style="margin-top:.6rem;font-size:.6rem;color:var(--text-dim);letter-spacing:.05em">Gate-Status: <b>${gatePct()}%</b> · Video-Stage: <b>${state.videoStage||0}/5</b> · Visual: ${state.visualUrl?'<span style="color:var(--teal)">✓</span>':'<span style="color:var(--red)">—</span>'}</div>
+      ${navBtns(6,null,null)}`;
+    bindNav(6,null);
+    side.innerHTML = lucySide('Post-Best-Time (für Wave-Bite-Zielgruppe)', [
+      'Instagram Reel: Di/Do 19:00 oder Sa 11:00',
+      'TikTok: Mi 20:30 oder So 18:00',
+      'LinkedIn: Di 08:00 oder Mi 12:00',
+      'YouTube Shorts: Fr 17:00 oder Sa 10:00',
+      'Wenn unsicher → Postiz nimmt optimale Zeit'
+    ]);
+  }
+
+  // ─── PLATFORMS ──────────────────────────────────────────────
+  function renderPlatforms(){
+    const el = document.getElementById('platforms');
+    if(!el) return;
+    el.innerHTML = PLATFORMS.map(p=>`<div class="plat ${state.platforms.includes(p.id)?'on':''}" data-plat="${p.id}"><div class="plat-ico">${p.ico}</div><div class="plat-t">${p.t}</div><div class="plat-c"></div></div>`).join('');
+    el.querySelectorAll('.plat').forEach(pl=>{
+      pl.onclick=()=>{
+        const id=pl.dataset.plat;
+        const idx=state.platforms.indexOf(id);
+        if(idx===-1) state.platforms.push(id); else state.platforms.splice(idx,1);
+        saveState(); renderPlatforms();
+      };
+    });
+  }
+  document.getElementById('btn-publish').onclick=function(){
+    if(gatePct()<100){ toast('🚫 Quality-Gate noch nicht 100%'); state.activeStep=6; saveState(); renderPipeline(); renderWorkspace(); return; }
+    if(!state.platforms.length){ toast('⚠ Mindestens 1 Plattform wählen'); return; }
+    document.getElementById('publish-result').innerHTML = '<div style="padding:.7rem;background:rgba(0,212,170,.1);border:1px solid rgba(0,212,170,.4);border-radius:10px"><b>✅ Post-Befehl gesendet</b><br><span style="color:var(--text-dim);font-size:.7rem">Plattformen: '+state.platforms.join(', ')+' — der Postiz-Connector / Buffer-Bridge übernimmt von hier.</span></div>';
+    state.posted = true; state.history.push({ ts:Date.now(), idea:state.idea, platforms:[...state.platforms] }); saveState(); toast('🚀 Post gesendet');
+  };
+  window.schedulePost = function(){ toast('🕐 Scheduler — wird in V21.1 mit Postiz/Buffer fest verbunden'); };
+  window.exportDraft = function(){
+    const blob = new Blob([JSON.stringify(state,null,2)], {type:'application/json'});
+    const a = document.createElement('a'); a.href=URL.createObjectURL(blob);
+    a.download='wavebite-post-draft-'+new Date().toISOString().slice(0,16)+'.json';
+    a.click(); toast('⬇ Entwurf exportiert');
+  };
+
+  // ─── LUCY ASK ──────────────────────────────────────────────
+  window.lucyAsk = function(prompt){
+    if(bc){ try{ bc.postMessage({type:'lucy-ask', prompt:prompt, ts:Date.now()}); }catch(_){} }
+    // Versuche parent / opener
+    try{ if(window.opener && !window.opener.closed){ window.opener.focus(); if(window.opener.Lucy?.ask) window.opener.Lucy.ask(prompt); } }catch(_){}
+    toast('🧜🏻‍♀️ Lucy-Anfrage an CEO Office gesendet');
+  };
+  document.getElementById('open-lucy').onclick = ()=>lucyAsk('Ich bin im Marketing-Cockpit, Schritt '+state.activeStep+'. Was würdest du jetzt empfehlen?');
+  document.getElementById('lucy-fab').onclick  = ()=>lucyAsk('Marketing-Cockpit: was übersehe ich gerade?');
+
+  // ─── KPIs ──────────────────────────────────────────────────
+  function renderKPIs(){
+    document.getElementById('kpi-step').textContent = state.activeStep+'/7';
+    document.getElementById('kpi-gate').textContent = gatePct()+'%';
+    document.getElementById('kpi-platforms').textContent = state.platforms.length;
+    document.getElementById('kpi-status').textContent = state.posted ? 'Posted ✓' : (state.activeStep===7 ? 'Ready' : 'Building');
+  }
+
+  // ─── Helpers ──────────────────────────────────────────────
+  function escape(s){ return (s==null?'':String(s)).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+  function toast(msg){
+    const t = document.getElementById('toast');
+    t.textContent = msg; t.classList.add('show');
+    clearTimeout(window._toastTo);
+    window._toastTo = setTimeout(()=>t.classList.remove('show'), 2400);
+  }
+  function lucySide(title, items){
+    return `<div class="lucy-head"><div class="lucy-av" style="width:40px;height:40px;font-size:1.2rem">🧜🏻‍♀️</div><div><div class="lucy-name" style="font-size:.8rem">Lucy · Tipp</div><div class="lucy-role" style="font-size:.5rem">${escape(title)}</div></div></div><ul class="lucy-tips" style="margin:.4rem 0 0 1rem;padding:0">${items.map(i=>'<li>'+escape(i)+'</li>').join('')}</ul>`;
+  }
+
+  // ─── BroadcastChannel listener (vom CEO Office) ────────────
+  if(bc){
+    bc.onmessage = function(e){
+      if(!e.data) return;
+      if(e.data.type==='lucy-reply'){
+        toast('🧜🏻‍♀️ Lucy: '+(e.data.text||'(antwortet im CEO Office)'));
+      }
+      if(e.data.type==='mkt-set-step'){
+        state.activeStep = e.data.step||1; saveState(); renderPipeline(); renderWorkspace();
+      }
+    };
+  }
+
+  // ─── INIT ──────────────────────────────────────────────────
+  renderPipeline();
+  renderWorkspace();
+  renderKPIs();
+  console.log('[V21-Lucy] Marketing Cockpit ready · channel='+CHANNEL);
+})();
+</script>
+</body>
+</html>
