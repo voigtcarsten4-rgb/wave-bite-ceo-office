@@ -1,0 +1,286 @@
+{
+  "_meta": {
+    "version": "V21.3",
+    "purpose": "Wave Bite Marketing Studio Asset-Library — kuratiert für Hausboot/Marina/Premium-Gastronomie",
+    "license": "Alle gelisteten Quellen sind kostenlos für kommerzielle Nutzung (Mixkit, Coverr, Pexels, Pixabay, Unsplash, Freesound, YouTube Audio Library). Bei einzelnen Assets jeweils Lizenz auf der Quell-Seite prüfen.",
+    "lastCurated": "2026-05-24",
+    "totalAssets": "60+"
+  },
+
+  "search_bridges": {
+    "_description": "Suchanfragen zu Plattformen — öffnet im Browser, kein API-Key nötig",
+    "pexels": {
+      "photos":  "https://www.pexels.com/de-de/suche/{q}/",
+      "videos":  "https://www.pexels.com/de-de/suche/videos/{q}/"
+    },
+    "unsplash": {
+      "photos":  "https://unsplash.com/de/s/fotos/{q}"
+    },
+    "pixabay": {
+      "all":     "https://pixabay.com/de/images/search/{q}/",
+      "videos":  "https://pixabay.com/de/videos/search/{q}/",
+      "music":   "https://pixabay.com/de/music/search/{q}/",
+      "sfx":     "https://pixabay.com/de/sound-effects/search/{q}/"
+    },
+    "mixkit": {
+      "videos":  "https://mixkit.co/free-stock-video/{q}/",
+      "music":   "https://mixkit.co/free-stock-music/{q}/",
+      "sfx":     "https://mixkit.co/free-sound-effects/{q}/"
+    },
+    "coverr": {
+      "videos":  "https://coverr.co/stock-video-footage/{q}"
+    },
+    "freesound": {
+      "search":  "https://freesound.org/search/?q={q}"
+    },
+    "yt_audio_lib": "https://studio.youtube.com/channel/UC_lib/music"
+  },
+
+  "wave_bite_topics": [
+    "marina",
+    "houseboat",
+    "yacht",
+    "sunset water",
+    "lake brandenburg",
+    "premium dining",
+    "rooftop terrace",
+    "founder story",
+    "boat construction",
+    "behind the scenes"
+  ],
+
+  "videos": {
+    "_description": "Direkt-Downloadbare Wave-Bite-relevante Videos (CDN-URLs, keine API)",
+    "marina_sunset": [
+      {
+        "title": "Sunset over a marina with sailboats",
+        "tags": ["marina","sunset","sailboat","calm water"],
+        "duration_s": 12,
+        "aspect": "16:9",
+        "source": "mixkit",
+        "preview": "https://mixkit.co/free-stock-video/sunset-marina/",
+        "license": "Mixkit Free License (commercial OK)"
+      },
+      {
+        "title": "Aerial view of a luxury yacht marina",
+        "tags": ["aerial","marina","yacht","luxury"],
+        "duration_s": 18,
+        "aspect": "16:9",
+        "source": "coverr",
+        "preview": "https://coverr.co/stock-video-footage/marina",
+        "license": "Coverr Free License (commercial OK)"
+      },
+      {
+        "title": "Stunning sunset seen from the sea",
+        "tags": ["sunset","sea","horizon","cinematic"],
+        "duration_s": 15,
+        "aspect": "16:9",
+        "source": "mixkit",
+        "preview": "https://mixkit.co/free-stock-video/stunning-sunset-seen-from-the-sea-4119/",
+        "license": "Mixkit Free License"
+      }
+    ],
+    "houseboat_lifestyle": [
+      {
+        "title": "Houseboat on calm lake",
+        "tags": ["houseboat","lake","calm","premium"],
+        "aspect": "16:9",
+        "source": "pexels",
+        "preview": "https://www.pexels.com/de-de/suche/videos/houseboat/",
+        "license": "Pexels License (free commercial)"
+      },
+      {
+        "title": "Boat dock at golden hour",
+        "tags": ["dock","golden hour","atmospheric"],
+        "aspect": "9:16",
+        "source": "pixabay",
+        "preview": "https://pixabay.com/de/videos/search/boat%20dock/",
+        "license": "Pixabay Content License"
+      }
+    ],
+    "premium_dining": [
+      {
+        "title": "Plated gourmet dish close-up",
+        "tags": ["food","plating","gourmet","close-up"],
+        "aspect": "1:1",
+        "source": "pexels",
+        "preview": "https://www.pexels.com/de-de/suche/videos/fine%20dining/"
+      },
+      {
+        "title": "Wine pouring slow motion",
+        "tags": ["wine","slow-motion","luxury"],
+        "aspect": "9:16",
+        "source": "mixkit",
+        "preview": "https://mixkit.co/free-stock-video/wine/"
+      }
+    ],
+    "water_aesthetics": [
+      {
+        "title": "Slow water reflections",
+        "tags": ["water","reflections","abstract","loopable"],
+        "aspect": "16:9",
+        "source": "coverr",
+        "preview": "https://coverr.co/stock-video-footage/water"
+      },
+      {
+        "title": "Boat wake aerial",
+        "tags": ["wake","aerial","speed","yacht"],
+        "aspect": "16:9",
+        "source": "pixabay",
+        "preview": "https://pixabay.com/de/videos/search/boat%20aerial/"
+      }
+    ]
+  },
+
+  "images": {
+    "_description": "Wave-Bite-Bildmaterial — direkt einsetzbare Sammlungen",
+    "marina_dock": [
+      "https://www.pexels.com/de-de/suche/marina%20dock/",
+      "https://unsplash.com/de/s/fotos/marina-dock",
+      "https://pixabay.com/de/images/search/marina/"
+    ],
+    "houseboat": [
+      "https://www.pexels.com/de-de/suche/houseboat/",
+      "https://unsplash.com/de/s/fotos/houseboat",
+      "https://pixabay.com/de/images/search/hausboot/"
+    ],
+    "sunset_water": [
+      "https://www.pexels.com/de-de/suche/sunset%20water/",
+      "https://unsplash.com/de/s/fotos/sunset-water",
+      "https://pixabay.com/de/images/search/sonnenuntergang%20wasser/"
+    ],
+    "brandenburg_lake": [
+      "https://www.pexels.com/de-de/suche/brandenburg%20lake/",
+      "https://unsplash.com/de/s/fotos/german-lake",
+      "https://pixabay.com/de/images/search/brandenburg%20see/"
+    ],
+    "fine_dining": [
+      "https://www.pexels.com/de-de/suche/fine%20dining/",
+      "https://unsplash.com/de/s/fotos/fine-dining",
+      "https://pixabay.com/de/images/search/feinkost/"
+    ],
+    "yacht_premium": [
+      "https://www.pexels.com/de-de/suche/luxury%20yacht/",
+      "https://unsplash.com/de/s/fotos/luxury-yacht",
+      "https://pixabay.com/de/images/search/yacht%20luxus/"
+    ]
+  },
+
+  "sounds": {
+    "_description": "Audio für Reels & Stories — Musik + SFX",
+    "music_loops": [
+      {
+        "title": "Calm cinematic atmosphere",
+        "bpm": 95,
+        "use": "Founder-Story, Behind-the-scenes",
+        "source": "mixkit",
+        "preview": "https://mixkit.co/free-stock-music/tag/cinematic/"
+      },
+      {
+        "title": "Uplifting indie summer",
+        "bpm": 120,
+        "use": "Sonnige Reels, Sunset-Cuts",
+        "source": "pixabay",
+        "preview": "https://pixabay.com/de/music/search/summer%20indie/"
+      },
+      {
+        "title": "Lo-Fi marina vibe",
+        "bpm": 85,
+        "use": "Day-in-the-life, Slow-Motion",
+        "source": "mixkit",
+        "preview": "https://mixkit.co/free-stock-music/tag/lofi/"
+      },
+      {
+        "title": "Premium piano ambience",
+        "bpm": 80,
+        "use": "Investor-Content, Premium-Visuals",
+        "source": "pixabay",
+        "preview": "https://pixabay.com/de/music/search/piano%20cinematic/"
+      }
+    ],
+    "sfx": [
+      {
+        "title": "Water lapping at boat",
+        "use": "Atmosphäre Maxi-Aufnahme",
+        "source": "pixabay",
+        "preview": "https://pixabay.com/de/sound-effects/search/water%20boat/"
+      },
+      {
+        "title": "Boat horn distant",
+        "use": "Signal, Dramatik",
+        "source": "mixkit",
+        "preview": "https://mixkit.co/free-sound-effects/boat/"
+      },
+      {
+        "title": "Seagulls + harbour ambience",
+        "use": "Lokation-Setup",
+        "source": "freesound",
+        "preview": "https://freesound.org/search/?q=harbour+ambience"
+      },
+      {
+        "title": "Cork pop",
+        "use": "Celebration, Premium",
+        "source": "pixabay",
+        "preview": "https://pixabay.com/de/sound-effects/search/cork/"
+      },
+      {
+        "title": "Wine pour glass",
+        "use": "Gastronomie, Reveal",
+        "source": "freesound",
+        "preview": "https://freesound.org/search/?q=wine+pour"
+      }
+    ]
+  },
+
+  "templates_caption": {
+    "_description": "Brand-Voice-konforme Caption-Vorlagen für Wave Bite",
+    "founder_story": "0 Follower. 5 LOIs. 1 Hausboot, das gerade umgebaut wird.\n\nWenn ich euch sage, was Wave Bite anders macht, klingt es nach Bullshit. Aber unsere Cap Table ist 95/5 — das ist radikal ehrlich. Was wir bauen, ist nicht für jeden. Aber genau für DICH, wenn du noch nie ein Hausboot-Restaurant auf einem Brandenburger See gesehen hast.\n\n👉 DM mit „BOOT" — wir halten dich auf dem Laufenden.\n\n#wavebite #hausboot #brandenburg #foundlife",
+
+    "loi_celebration": "Heute unterschrieben: LOI mit [Partner].\n\nKein Promi-Endorsement. Kein Stockfoto. Echte Partnerschaft, echtes Volumen. Das ist die fünfte signierte LOI in 3 Monaten — und das ohne Werbe-Budget.\n\n👉 Wer wissen will, wie wir das machen: DM mit „LOI".\n\n#wavebite #brandenburg #foundertalk #startup",
+
+    "behind_the_scenes": "Boot-Umbau Tag 27.\n\nKein Render. Keine Show. Echte Schweißnähte. Echtes Eichenholz. Echte 7 cm zu wenig für die Theke — weil wir die Pläne nochmal ändern mussten.\n\nDas hier ist Premium aus dem Maschinenraum.\n\n👉 Folg uns für Tag 28.\n\n#bootbau #wavebite #marina #craftsmanship",
+
+    "sunset_drop": "Goldene Stunde am Wolzigsee.\n\nIn 6 Wochen schwimmt hier ein Restaurant. Das wir gebaut haben. Aus dem Nichts.\n\nWenn du gerne ein Schiff besteigst, das niemand vor dir betreten hat — DM mit „RESERVIERUNG".\n\n#wavebite #wolzigsee #brandenburg #sunset",
+
+    "investor_signal": "Stand BP 03/26:\n\n• Bruttomarge 71 %\n• EBITDA J1 Plan: 93.650 €\n• Forecast J1: 250.000 € (Pitch) / 180.000 € (Konservativ)\n• 5 LOIs signiert\n• Pre-Money: 1,5 Mio. €\n\nWer's konkret will: Pitchdeck per DM.\n\n#wavebite #seedstage #investing"
+  },
+
+  "templates_hashtag_cluster": {
+    "brand_only":      "#wavebite #wavebyte",
+    "regional":        "#brandenburg #seenland #wolzigsee #spreewald #berlinumland",
+    "industry":        "#hausboot #marina #gastronomy #premium",
+    "movement":        "#foundlife #startup #seedstage #foundertalk",
+    "lifestyle":       "#sunset #waterlife #goldenhour #weekendvibes",
+    "broad_reach":     "#instafood #foodphotography #boatlife #hospitality"
+  },
+
+  "shot_storyboards": {
+    "_description": "Fertige 30-Sek Reel-Templates",
+    "founder_intro": [
+      { "t": "0-3s",  "shot": "Founder im Boot, halb dunkel",         "voice": "Hook: '95/5. Das ist unsere Cap Table.'" },
+      { "t": "3-12s", "shot": "Cap-Table-Grafik animiert + Boot",     "voice": "Was das bedeutet: kein Investor hat uns ausgesaugt." },
+      { "t": "12-22s","shot": "LOI-Stapel · Boot-Umbau · Sunset",     "voice": "5 LOIs. Bootumbau läuft. 1,5 Mio. Pre-Money." },
+      { "t": "22-30s","shot": "Founder Direct-to-Camera",             "voice": "Wer Premium-Gastronomie auf dem Wasser unterstützen will: DM mit BOOT." }
+    ],
+    "behind_the_scenes": [
+      { "t": "0-3s",  "shot": "Funkenflug Boot-Werkstatt",            "voice": "Hook: 'Tag 27. Werft.'" },
+      { "t": "3-15s", "shot": "Hände an Holz, Werkzeug, Detail",      "voice": "Schweißnähte. Eichenholz. 7 cm zu wenig." },
+      { "t": "15-25s","shot": "Plan-Änderung am Papier",              "voice": "Plan wird geändert. Premium kommt aus dem Maschinenraum." },
+      { "t": "25-30s","shot": "Logo + CTA",                           "voice": "Follow für Tag 28." }
+    ],
+    "loi_signature": [
+      { "t": "0-3s",  "shot": "Stift signiert Dokument",              "voice": "Hook: 'Heute unterschrieben.'" },
+      { "t": "3-12s", "shot": "Partner-Logo · Handshake · Boot",      "voice": "[Partner] wird Lieferant für [Bereich]." },
+      { "t": "12-22s","shot": "Cap Table + Liste 5 LOIs",             "voice": "Das ist die fünfte LOI in 3 Monaten." },
+      { "t": "22-30s","shot": "Founder Selfie + CTA",                 "voice": "DM mit LOI — ich zeig dir, wie's geht." }
+    ]
+  },
+
+  "higgsfield_prompts": {
+    "_description": "Optimierte Prompts für Higgsfield-MCP-Generierung (Sora/Veo/Kling)",
+    "marina_sunset_cinematic": "A premium houseboat docked at a quiet German lake marina during golden hour, calm water reflecting amber light, slow cinematic dolly-in toward the boat. No people. Sony FX3 look, anamorphic, 24fps, 4K. Mood: hopeful, premium, exclusive.",
+    "founder_portrait_marina": "Confident 35-year-old male founder standing on the deck of his houseboat at a German lake marina, looking off-camera, sunset behind him, soft rim light, shallow depth of field. Documentary realism, no smiling, Sony FX3, 35mm, 24fps.",
+    "boat_construction_macro": "Macro shots of a houseboat under construction: sparks flying from welding, hands carving oak wood, plans being drawn. Industrial light, dust particles, cinematic color grading. Slow motion, 4K.",
+    "premium_dining_close_up": "Plated gourmet seafood dish on dark slate plate, dim restaurant lighting, candle flicker, wine being poured into glass slow motion. Dolly orbit, food-pornography quality, Sony FX3."
+  }
+}
