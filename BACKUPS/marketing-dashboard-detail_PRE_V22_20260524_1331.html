@@ -1,0 +1,1030 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<meta name="theme-color" content="#0a0418" />
+<title>📣 Marketing Cockpit · Wave Bite · V21.2 Lucy</title>
+<link rel="icon" href="favicon.ico" />
+<style>
+  :root{
+    --bg:#070314; --bg-2:#100926;
+    --panel:rgba(22,12,42,0.78); --panel-2:rgba(30,16,55,0.72);
+    --border:rgba(168,85,247,0.28); --border-strong:rgba(168,85,247,0.55);
+    --text:#f3eaff; --text-dim:#b9a8d4; --muted:#7d6c98;
+    --purple:#a855f7; --purple-soft:#d9bbff;
+    --gold:#c9a84c; --gold-light:#fde68a;
+    --teal:#00d4aa; --lucy:#ff9eb1; --lucy-soft:#ffc8d4;
+    --red:#ff4757; --green:#34d399; --blue:#60a5fa;
+    --r:14px; --r-sm:10px;
+    --shadow:0 18px 56px rgba(0,0,0,.6),0 0 0 1px rgba(168,85,247,.10);
+  }
+  *,*::before,*::after{box-sizing:border-box}
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Inter,sans-serif;overflow-x:hidden;min-height:100vh}
+  body{
+    background:
+      radial-gradient(1200px 600px at 12% -10%,rgba(168,85,247,.18),transparent 60%),
+      radial-gradient(900px 400px at 100% 110%,rgba(255,158,177,.10),transparent 60%),
+      linear-gradient(160deg,#070314 0%,#0a0420 50%,#100630 100%);
+    background-attachment:fixed;
+  }
+  /* HEADER */
+  header{position:sticky;top:0;z-index:50;backdrop-filter:blur(18px);background:linear-gradient(180deg,rgba(7,3,20,.92),rgba(7,3,20,.74));border-bottom:1px solid var(--border);padding:.75rem 1rem}
+  .h-row{display:flex;align-items:center;gap:.75rem;flex-wrap:wrap;max-width:1500px;margin:0 auto}
+  .brand{font-weight:900;letter-spacing:.08em;background:linear-gradient(90deg,var(--purple-soft),#fff,var(--purple-soft));-webkit-background-clip:text;background-clip:text;color:transparent;font-size:.95rem}
+  .brand .small{color:var(--text-dim);font-weight:600;letter-spacing:.16em;margin-left:.4rem}
+  .h-actions{margin-left:auto;display:flex;gap:.4rem;flex-wrap:wrap}
+  .h-pill{padding:.38rem .8rem;border-radius:99px;font-size:.62rem;font-weight:800;letter-spacing:.06em;text-decoration:none;cursor:pointer;border:1px solid transparent;transition:transform .15s,box-shadow .15s,background .15s}
+  .h-pill:hover{transform:translateY(-1px)}
+  .h-pill.purple{background:rgba(168,85,247,.12);border-color:rgba(168,85,247,.5);color:var(--purple-soft)}
+  .h-pill.purple:hover{box-shadow:0 0 16px rgba(168,85,247,.5)}
+  .h-pill.lucy{background:rgba(255,158,177,.10);border-color:rgba(255,158,177,.55);color:var(--lucy-soft)}
+  .h-pill.lucy:hover{box-shadow:0 0 16px rgba(255,158,177,.5)}
+  .h-pill.back{background:rgba(255,255,255,.04);border-color:rgba(255,255,255,.12);color:var(--text-dim)}
+  .h-pill.save{background:rgba(0,212,170,.10);border-color:rgba(0,212,170,.4);color:var(--teal)}
+  /* HERO */
+  .hero{max-width:1500px;margin:1.2rem auto 1rem;padding:0 1rem}
+  .hero-grid{display:grid;grid-template-columns:1.4fr 1fr;gap:1rem}
+  @media(max-width:900px){.hero-grid{grid-template-columns:1fr}}
+  .hero-card{position:relative;background:var(--panel);border:1px solid var(--border);border-radius:var(--r);padding:1.25rem;box-shadow:var(--shadow);overflow:hidden}
+  .hero-card::before{content:"";position:absolute;inset:0;background:radial-gradient(700px 200px at 100% 0%,rgba(168,85,247,.16),transparent 60%);pointer-events:none}
+  .hero-title{font-size:1.65rem;font-weight:900;letter-spacing:-.01em;line-height:1.15;margin:0 0 .5rem}
+  .hero-title .accent{background:linear-gradient(90deg,#d9bbff,#fff5ff);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .hero-sub{color:var(--text-dim);font-size:.85rem;line-height:1.55;margin:0 0 1rem}
+  .badges{display:flex;gap:.4rem;flex-wrap:wrap;margin-top:.6rem}
+  .badge{display:inline-flex;align-items:center;gap:.35rem;padding:.25rem .55rem;background:rgba(168,85,247,.12);border:1px solid rgba(168,85,247,.35);border-radius:99px;font-size:.55rem;letter-spacing:.12em;color:var(--purple-soft);font-weight:700}
+  .badge.live{background:rgba(0,212,170,.12);border-color:rgba(0,212,170,.35);color:var(--teal)}
+  .badge.lucy{background:rgba(255,158,177,.12);border-color:rgba(255,158,177,.4);color:var(--lucy-soft)}
+  .badge.gold{background:rgba(201,168,76,.14);border-color:rgba(201,168,76,.4);color:var(--gold-light)}
+  /* KPIs */
+  .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:.55rem;margin-top:1rem}
+  @media(max-width:600px){.kpis{grid-template-columns:repeat(2,1fr)}}
+  .kpi{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);border-radius:var(--r-sm);padding:.7rem;text-align:center}
+  .kpi-v{font-size:1.2rem;font-weight:800;color:#fff}
+  .kpi-l{font-size:.5rem;letter-spacing:.14em;color:var(--muted);text-transform:uppercase;margin-top:.2rem}
+  /* PROGRESS BAR */
+  .progress-wrap{margin:1rem 0 0;background:rgba(0,0,0,.25);border:1px solid rgba(168,85,247,.2);border-radius:99px;padding:3px;position:relative}
+  .progress-bar{height:8px;background:linear-gradient(90deg,#a855f7,#d9bbff,#a855f7);border-radius:99px;width:0%;transition:width .55s cubic-bezier(.4,.7,.3,1);box-shadow:0 0 18px rgba(168,85,247,.5)}
+  /* SECTION */
+  .section{max-width:1500px;margin:1.2rem auto;padding:0 1rem}
+  .s-title{font-size:.75rem;letter-spacing:.16em;color:var(--purple-soft);font-weight:800;margin:0 0 .7rem;display:flex;align-items:center;gap:.5rem}
+  .s-title .num{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;background:linear-gradient(135deg,#a855f7,#6b21a8);color:#fff;font-size:.65rem;font-weight:900}
+  /* PIPELINE */
+  .pipeline{display:grid;grid-template-columns:repeat(7,1fr);gap:.5rem;background:var(--panel);border:1px solid var(--border);border-radius:var(--r);padding:.9rem}
+  @media(max-width:1100px){.pipeline{grid-template-columns:repeat(4,1fr)}}
+  @media(max-width:600px){.pipeline{grid-template-columns:repeat(2,1fr);gap:.45rem}}
+  .pstep{position:relative;background:rgba(168,85,247,.06);border:1px solid rgba(168,85,247,.25);border-radius:var(--r-sm);padding:.7rem .55rem;text-align:center;cursor:pointer;transition:all .25s;user-select:none}
+  .pstep:hover:not(.locked){background:rgba(168,85,247,.14);border-color:rgba(168,85,247,.5);transform:translateY(-2px)}
+  .pstep.locked{cursor:not-allowed;opacity:.45;filter:grayscale(.5)}
+  .pstep.locked::after{content:"🔒";position:absolute;top:.35rem;left:.35rem;font-size:.7rem}
+  .pstep.active{background:linear-gradient(135deg,rgba(168,85,247,.34),rgba(120,60,200,.16));border-color:rgba(168,85,247,.7);box-shadow:0 0 18px rgba(168,85,247,.4)}
+  .pstep.done{background:linear-gradient(135deg,rgba(0,212,170,.18),rgba(0,160,130,.04));border-color:rgba(0,212,170,.5)}
+  .pstep.done::before{content:"✓";position:absolute;top:.35rem;left:.4rem;color:var(--teal);font-weight:900;font-size:.8rem}
+  .pstep.gate{border-color:rgba(253,230,138,.5);background:rgba(253,230,138,.08)}
+  .pstep.post{background:linear-gradient(135deg,rgba(0,212,170,.2),rgba(0,160,130,.08));border-color:rgba(0,212,170,.55)}
+  .pstep-icon{font-size:1.5rem;line-height:1}
+  .pstep-n{font-size:.45rem;letter-spacing:.14em;color:var(--text-dim);margin:.3rem 0 .1rem;font-weight:800}
+  .pstep-t{font-size:.62rem;color:#fff;font-weight:700}
+  .pstep-s{font-size:.5rem;color:var(--muted);margin-top:.1rem}
+  .pstep-status{position:absolute;top:.35rem;right:.35rem;width:8px;height:8px;border-radius:50%;background:var(--muted)}
+  .pstep.active .pstep-status{background:var(--purple);animation:pulse 1.6s infinite}
+  .pstep.done .pstep-status{background:var(--teal)}
+  .pstep.gate .pstep-status{background:var(--gold-light);animation:pulse 1.6s infinite}
+  .pstep.post .pstep-status{background:var(--teal)}
+  @keyframes pulse{50%{transform:scale(1.5);opacity:.6}}
+  /* WORKSPACE */
+  .workspace{margin-top:1rem;display:grid;grid-template-columns:1.5fr 1fr;gap:1rem}
+  @media(max-width:1100px){.workspace{grid-template-columns:1fr}}
+  .ws-card{background:var(--panel);border:1px solid var(--border);border-radius:var(--r);padding:1rem;position:relative;overflow:hidden}
+  .ws-card h3{margin:0 0 .55rem;font-size:1rem;color:#fff;letter-spacing:.02em;font-weight:800;display:flex;align-items:center;gap:.5rem}
+  .ws-card h3 .step-pill{font-size:.55rem;background:rgba(168,85,247,.18);color:var(--purple-soft);padding:.18rem .5rem;border-radius:99px;letter-spacing:.1em;font-weight:800}
+  .ws-card .hint{font-size:.72rem;color:var(--text-dim);line-height:1.55;margin-bottom:.6rem;padding:.55rem .7rem;background:rgba(168,85,247,.05);border-left:3px solid rgba(168,85,247,.4);border-radius:6px}
+  .ws-card .hint .why{display:block;color:var(--purple-soft);font-size:.6rem;letter-spacing:.05em;margin-top:.3rem;font-weight:700}
+  textarea,input[type=text],input[type=url],select{width:100%;background:rgba(7,3,20,.65);color:#fff;border:1px solid rgba(168,85,247,.3);border-radius:8px;padding:.55rem .65rem;font-size:.78rem;font-family:inherit;outline:none;transition:border-color .15s,box-shadow .15s}
+  textarea{min-height:130px;resize:vertical;line-height:1.5}
+  textarea:focus,input:focus,select:focus{border-color:var(--purple);box-shadow:0 0 0 3px rgba(168,85,247,.18)}
+  label{display:block;font-size:.55rem;letter-spacing:.14em;color:var(--text-dim);text-transform:uppercase;font-weight:700;margin:.7rem 0 .25rem}
+  .row{display:grid;grid-template-columns:1fr 1fr;gap:.6rem}
+  @media(max-width:520px){.row{grid-template-columns:1fr}}
+  .btn{display:inline-flex;align-items:center;gap:.4rem;padding:.5rem 1rem;border:0;border-radius:9px;cursor:pointer;font-weight:800;letter-spacing:.04em;font-size:.7rem;transition:transform .15s,box-shadow .15s}
+  .btn:hover{transform:translateY(-1px)}
+  .btn-primary{background:linear-gradient(135deg,#a855f7,#6b21a8);color:#fff}
+  .btn-primary:hover{box-shadow:0 6px 22px rgba(168,85,247,.45)}
+  .btn-lucy{background:linear-gradient(135deg,#ff9eb1,#c5497a);color:#fff}
+  .btn-lucy:hover{box-shadow:0 6px 22px rgba(255,158,177,.4)}
+  .btn-ghost{background:rgba(255,255,255,.04);color:var(--text);border:1px solid rgba(255,255,255,.12)}
+  .btn-ghost:hover{background:rgba(255,255,255,.08)}
+  .btn-gate{background:linear-gradient(135deg,#fde68a,#c9a84c);color:#1a1a1a}
+  .btn-gate:hover{box-shadow:0 6px 22px rgba(253,230,138,.4)}
+  .btn-post{background:linear-gradient(135deg,#00d4aa,#0a8a72);color:#fff}
+  .btn-post:hover{box-shadow:0 6px 22px rgba(0,212,170,.4)}
+  .btn-fix{background:rgba(96,165,250,.16);color:var(--blue);border:1px solid rgba(96,165,250,.4)}
+  .btn-row{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:.7rem}
+  .btn[disabled]{opacity:.35;cursor:not-allowed;filter:grayscale(.6)}
+  /* LUCY PANEL */
+  .lucy-panel{background:linear-gradient(180deg,rgba(255,158,177,.10),rgba(60,20,40,.45));border:1px solid rgba(255,158,177,.35);border-radius:var(--r);padding:1rem;position:relative;overflow:hidden}
+  .lucy-panel::before{content:"";position:absolute;inset:0;background:radial-gradient(400px 200px at 100% 0%,rgba(255,158,177,.18),transparent 60%);pointer-events:none}
+  .lucy-head{display:flex;align-items:center;gap:.65rem;margin-bottom:.6rem;position:relative}
+  .lucy-av{width:48px;height:48px;border-radius:50%;background:radial-gradient(circle at 30% 30%,#ff9eb1,#c5497a 70%,#5b1f3a);display:flex;align-items:center;justify-content:center;font-size:1.5rem;box-shadow:0 0 0 4px rgba(255,158,177,.18)}
+  .lucy-name{font-size:.95rem;font-weight:900;color:#fff}
+  .lucy-role{font-size:.55rem;letter-spacing:.14em;color:var(--lucy-soft);font-weight:700;margin-top:.1rem}
+  .lucy-tips{font-size:.7rem;line-height:1.55;color:var(--text)}
+  .lucy-tips li{margin:.3rem 0}
+  /* QUICK SUGGESTIONS */
+  .sugg-list{display:flex;flex-direction:column;gap:.35rem;margin-top:.5rem}
+  .sugg{display:flex;align-items:flex-start;gap:.5rem;padding:.5rem .65rem;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);border-radius:8px;cursor:pointer;transition:all .15s;line-height:1.4}
+  .sugg:hover{background:rgba(168,85,247,.12);border-color:rgba(168,85,247,.4)}
+  .sugg-icon{font-size:1.05rem;flex-shrink:0}
+  .sugg-text{font-size:.7rem;color:var(--text)}
+  /* QUALITY-GATE */
+  .gate{display:grid;grid-template-columns:1fr;gap:.4rem;margin-top:.4rem}
+  .check{display:flex;align-items:center;gap:.55rem;padding:.55rem .7rem;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);border-radius:8px;cursor:pointer;transition:all .15s}
+  .check:hover{background:rgba(255,255,255,.06)}
+  .check input{accent-color:var(--gold-light);width:18px;height:18px;cursor:pointer}
+  .check span{font-size:.72rem;color:var(--text);line-height:1.4}
+  .check .why{font-size:.6rem;color:var(--muted);margin-top:.15rem;display:block}
+  .gate-bar{height:8px;background:rgba(255,255,255,.05);border-radius:99px;overflow:hidden;margin-top:.7rem}
+  .gate-bar-fill{height:100%;background:linear-gradient(90deg,#fde68a,#c9a84c);width:0%;transition:width .35s}
+  .gate-status{font-size:.6rem;color:var(--text-dim);margin-top:.4rem;letter-spacing:.05em}
+  /* VIDEO PIPELINE */
+  .vp-steps{display:grid;grid-template-columns:repeat(5,1fr);gap:.4rem;margin-top:.5rem}
+  @media(max-width:760px){.vp-steps{grid-template-columns:repeat(2,1fr)}}
+  .vp-step{position:relative;background:rgba(255,255,255,.03);border:1px solid rgba(168,85,247,.25);border-radius:8px;padding:.55rem;text-align:center;font-size:.6rem;color:var(--text-dim)}
+  .vp-step.done{background:rgba(0,212,170,.12);border-color:rgba(0,212,170,.4);color:#fff}
+  .vp-step.running{background:rgba(168,85,247,.16);border-color:var(--purple);color:#fff;animation:vpPulse 1.4s infinite}
+  @keyframes vpPulse{50%{box-shadow:0 0 14px rgba(168,85,247,.5)}}
+  .vp-step b{display:block;font-size:.85rem;margin-bottom:.2rem;color:#fff}
+  /* PLATFORMS */
+  .platforms{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:.5rem;margin-top:.5rem}
+  .plat{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:.6rem;cursor:pointer;transition:all .15s;display:flex;flex-direction:column;align-items:center;gap:.25rem;position:relative}
+  .plat:hover{border-color:rgba(168,85,247,.5);background:rgba(168,85,247,.08)}
+  .plat.on{border-color:var(--teal);background:rgba(0,212,170,.14)}
+  .plat-ico{font-size:1.5rem}
+  .plat-t{font-size:.65rem;font-weight:700;color:#fff}
+  .plat-c{position:absolute;top:6px;right:6px;width:14px;height:14px;border-radius:50%;border:2px solid rgba(255,255,255,.25);background:transparent}
+  .plat.on .plat-c{background:var(--teal);border-color:var(--teal)}
+  .plat-aspect{font-size:.5rem;color:var(--text-dim)}
+  /* BRAND-VOICE */
+  .bv-result{margin-top:.7rem;padding:.7rem;border-radius:10px;font-size:.72rem;line-height:1.5}
+  .bv-ok{background:rgba(0,212,170,.12);border:1px solid rgba(0,212,170,.4);color:var(--teal)}
+  .bv-warn{background:rgba(253,230,138,.12);border:1px solid rgba(253,230,138,.4);color:var(--gold-light)}
+  .bv-bad{background:rgba(255,71,87,.12);border:1px solid rgba(255,71,87,.4);color:var(--red)}
+  .bv-score{display:inline-flex;align-items:center;gap:.4rem;padding:.3rem .6rem;border-radius:99px;font-weight:900;font-size:.7rem;margin-right:.4rem}
+  /* TOAST */
+  #toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:rgba(7,3,20,.95);border:1px solid var(--border-strong);border-radius:12px;padding:.7rem 1.1rem;color:var(--purple-soft);font-size:.75rem;font-weight:700;z-index:99999;box-shadow:0 18px 50px rgba(0,0,0,.6);opacity:0;transition:opacity .25s;pointer-events:none;max-width:90vw;text-align:center}
+  #toast.show{opacity:1}
+  /* MODAL */
+  .modal-backdrop{position:fixed;inset:0;background:rgba(0,2,12,.7);backdrop-filter:blur(6px);z-index:9990;display:none;align-items:center;justify-content:center;padding:1rem}
+  .modal-backdrop.on{display:flex}
+  .modal{background:linear-gradient(180deg,rgba(22,12,42,.98),rgba(7,3,20,.98));border:1px solid var(--border-strong);border-radius:14px;padding:1.5rem;max-width:520px;width:100%;max-height:85vh;overflow-y:auto;position:relative}
+  .modal h4{margin:0 0 .6rem;font-size:1rem;color:#fff}
+  .modal-close{position:absolute;top:.5rem;right:.7rem;background:transparent;border:0;color:var(--text-dim);cursor:pointer;font-size:1.6rem}
+  /* LUCY FAB */
+  #lucy-fab{position:fixed;bottom:20px;right:20px;width:60px;height:60px;border-radius:50%;background:radial-gradient(circle at 30% 30%,#ff9eb1,#c5497a 70%,#5b1f3a);box-shadow:0 8px 24px rgba(197,73,122,.5),0 0 0 4px rgba(255,158,177,.14);cursor:pointer;z-index:9000;display:flex;align-items:center;justify-content:center;font-size:1.7rem;transition:transform .2s,box-shadow .2s}
+  #lucy-fab:hover{transform:scale(1.08);box-shadow:0 12px 32px rgba(197,73,122,.6)}
+  #lucy-fab::after{content:"";position:absolute;inset:-6px;border-radius:50%;border:1px solid rgba(255,158,177,.4);animation:lpulse 2.4s infinite}
+  @keyframes lpulse{0%,100%{box-shadow:0 0 0 0 rgba(255,158,177,.4)}50%{box-shadow:0 0 0 14px rgba(255,158,177,0)}}
+  /* AUTO-SAVE TICKER */
+  #auto-save{position:fixed;bottom:20px;left:20px;font-size:.6rem;color:var(--muted);background:rgba(7,3,20,.7);border:1px solid rgba(255,255,255,.08);border-radius:99px;padding:.3rem .7rem;letter-spacing:.06em;font-weight:700;z-index:9000;opacity:0;transition:opacity .35s}
+  #auto-save.on{opacity:1}
+  /* MOBILE */
+  @media(max-width:520px){
+    .hero-title{font-size:1.35rem}
+    .h-actions{width:100%}
+    .h-pill{font-size:.56rem;padding:.32rem .65rem}
+    .ws-card,.hero-card,.lucy-panel{padding:.85rem}
+    .pipeline{padding:.7rem}
+    .btn{font-size:.65rem;padding:.45rem .8rem}
+    #lucy-fab{width:52px;height:52px;font-size:1.4rem;bottom:14px;right:14px}
+  }
+  .footer-hint{text-align:center;padding:1.2rem;color:var(--muted);font-size:.6rem;letter-spacing:.12em}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="h-row">
+    <div class="brand">📣 MARKETING COCKPIT<span class="small">// V21.2 · LUCY EDITION</span></div>
+    <div class="h-actions">
+      <a class="h-pill back" href="index.html">← CEO Office</a>
+      <button class="h-pill save" id="btn-save-version" title="Aktuellen Stand als Version speichern">💾 Speichern</button>
+      <a class="h-pill purple" href="wavebite-leonardo-studio.html" target="_blank" rel="noopener">🎨 Leonardo</a>
+      <button class="h-pill lucy" id="open-lucy">🧜🏻‍♀️ Lucy fragen</button>
+      <button class="h-pill back" id="btn-reset-all" title="Pipeline zurücksetzen">↺ Neu starten</button>
+    </div>
+  </div>
+</header>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-grid">
+    <div class="hero-card">
+      <h1 class="hero-title">Von Idee zum fertigen Post — <span class="accent">autonom</span> mit Lucy</h1>
+      <p class="hero-sub">Dein End-to-End Marketing-Cockpit mit echten Hürden: Jeder Step muss vor dem nächsten freigegeben werden. Lucy schlägt vor, du entscheidest. Auto-Speichern, Versionen, Korrekturen jederzeit. Quality-Gate verhindert kaputte Posts. Video-Pipeline in optimaler Reihenfolge (Schnitt → Sound → Voiceover → Export).</p>
+      <div class="badges">
+        <span class="badge live">● SYSTEM AKTIV</span>
+        <span class="badge lucy">🧜🏻‍♀️ LUCY EINGEBUNDEN</span>
+        <span class="badge">STEP-HÜRDEN</span>
+        <span class="badge gold">QUALITY-GATE</span>
+        <span class="badge">MOBILE-FIRST</span>
+        <span class="badge">AUTO-SAVE</span>
+        <span class="badge">VERSIONIERUNG</span>
+      </div>
+      <div class="progress-wrap"><div class="progress-bar" id="prog-bar"></div></div>
+      <div class="kpis">
+        <div class="kpi"><div class="kpi-v" id="kpi-step">1/7</div><div class="kpi-l">Aktueller Step</div></div>
+        <div class="kpi"><div class="kpi-v" id="kpi-done">0/7</div><div class="kpi-l">Abgeschlossen</div></div>
+        <div class="kpi"><div class="kpi-v" id="kpi-gate">0%</div><div class="kpi-l">Quality-Gate</div></div>
+        <div class="kpi"><div class="kpi-v" id="kpi-platforms">0</div><div class="kpi-l">Plattformen</div></div>
+      </div>
+    </div>
+    <div class="lucy-panel">
+      <div class="lucy-head">
+        <div class="lucy-av">🧜🏻‍♀️</div>
+        <div>
+          <div class="lucy-name">Lucy</div>
+          <div class="lucy-role" id="lucy-role-text">CEO Co-Pilotin · Marketing-Mode</div>
+        </div>
+      </div>
+      <div class="lucy-tips" id="lucy-context-tips">Lade Kontext…</div>
+      <div class="btn-row">
+        <button class="btn btn-lucy" id="btn-lucy-week">💡 Wochenplan</button>
+        <button class="btn btn-ghost" id="btn-lucy-hooks">🪝 3 Hooks</button>
+        <button class="btn btn-ghost" id="btn-lucy-audit">🔍 Audit</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- V21.5 — LUCY READY-TO-POST (3 fertige Vorschläge, nur posten) -->
+<div class="section">
+  <h2 class="s-title"><span class="num">0</span> ⚡ LUCY READY-TO-POST · 3 FERTIGE VORSCHLÄGE — NUR NOCH HOCHLADEN</h2>
+  <div style="background:linear-gradient(135deg,rgba(255,158,177,.08),rgba(168,85,247,.06));border:1px solid rgba(255,158,177,.35);border-radius:14px;padding:1rem">
+    <p style="font-size:.75rem;color:var(--text-dim);margin:0 0 .85rem;line-height:1.5"><b style="color:#ffc8d4">Lucy hat 3 Posts vollständig vorbereitet</b> — basierend auf deinen 30 fertigen Werbespots in <code style="background:rgba(0,0,0,.3);padding:.1rem .3rem;border-radius:4px;font-size:.7rem">Werbung_Wave Bite\19_Final_Videos\</code>. Caption, Hashtags, CTA, Plattform — alles fertig. Klick → kopiert + öffnet Video im Explorer.</p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:.7rem">
+      <div style="background:rgba(96,165,250,.06);border:1px solid rgba(96,165,250,.35);border-radius:12px;padding:.85rem">
+        <div style="font-size:.55rem;letter-spacing:.14em;color:#9bd4ff;font-weight:800;margin-bottom:.3rem">👨‍✈️ FOUNDER · LINKEDIN+REEL</div>
+        <div style="font-size:.85rem;color:#fff;font-weight:800;margin-bottom:.35rem">Die Vision</div>
+        <div style="font-size:.6rem;color:var(--text-dim);font-style:italic;line-height:1.5;margin-bottom:.55rem">"Cap Table 95/5. Fünf LOIs in 3 Monaten. Pre-Money 1,5 Mio. Echte Founder-Story. DM mit BOOT."</div>
+        <div style="background:rgba(0,0,0,.25);padding:.4rem .55rem;border-radius:6px;font-size:.55rem;color:#9bd4ff;margin-bottom:.55rem;word-break:break-all">📁 WAVEBITE_01_Die_Vision_MASTER_v1.mp4</div>
+        <button onclick="window.lucyReadyToPost('founder_vision')" class="btn btn-primary" style="width:100%;margin-bottom:.3rem">📋 Caption+Hashtags kopieren</button>
+        <button onclick="window.openLocalAsset('WAVEBITE_01_Die_Vision_MASTER_v1.mp4')" class="btn btn-ghost" style="width:100%">📂 Video im Explorer öffnen</button>
+        <div style="font-size:.55rem;color:#9bd4ff;margin-top:.4rem;text-align:center;letter-spacing:.08em">⏰ Mi 12:00</div>
+      </div>
+      <div style="background:rgba(168,85,247,.06);border:1px solid rgba(168,85,247,.35);border-radius:12px;padding:.85rem">
+        <div style="font-size:.55rem;letter-spacing:.14em;color:#d9bbff;font-weight:800;margin-bottom:.3rem">🌅 CINEMATIC · IG-REEL+TIKTOK</div>
+        <div style="font-size:.85rem;color:#fff;font-weight:800;margin-bottom:.35rem">Wo Wasser auf Leben trifft</div>
+        <div style="font-size:.6rem;color:var(--text-dim);font-style:italic;line-height:1.5;margin-bottom:.55rem">"Es gibt diesen Moment, wenn das Wasser ganz still liegt. Wave Bite. Brandenburg 2027. DM mit RESERVIERUNG."</div>
+        <div style="background:rgba(0,0,0,.25);padding:.4rem .55rem;border-radius:6px;font-size:.55rem;color:#d9bbff;margin-bottom:.55rem;word-break:break-all">📁 WAVEBITE_03_Wo_Wasser_Auf_Leben_Trifft_MASTER_v1.mp4</div>
+        <button onclick="window.lucyReadyToPost('cinematic_wasser_leben')" class="btn btn-primary" style="width:100%;margin-bottom:.3rem">📋 Caption+Hashtags kopieren</button>
+        <button onclick="window.openLocalAsset('WAVEBITE_03_Wo_Wasser_Auf_Leben_Trifft_MASTER_v1.mp4')" class="btn btn-ghost" style="width:100%">📂 Video im Explorer öffnen</button>
+        <div style="font-size:.55rem;color:#d9bbff;margin-top:.4rem;text-align:center;letter-spacing:.08em">⏰ Sa 11:00</div>
+      </div>
+      <div style="background:rgba(0,212,170,.06);border:1px solid rgba(0,212,170,.35);border-radius:12px;padding:.85rem">
+        <div style="font-size:.55rem;letter-spacing:.14em;color:#9af0d8;font-weight:800;margin-bottom:.3rem">⚡ TIKTOK · HOOK PUNCHY</div>
+        <div style="font-size:.85rem;color:#fff;font-weight:800;margin-bottom:.35rem">TikTok Hook</div>
+        <div style="font-size:.6rem;color:var(--text-dim);font-style:italic;line-height:1.5;margin-bottom:.55rem">"Diese 3 LOIs hat noch kein anderes Startup vor uns bekommen. Transgourmet. Radeberger. Hugentobler. Folg uns."</div>
+        <div style="background:rgba(0,0,0,.25);padding:.4rem .55rem;border-radius:6px;font-size:.55rem;color:#9af0d8;margin-bottom:.55rem;word-break:break-all">📁 TV_Spots/TV_07_TikTok_Hook_SPOT_v1.mp4</div>
+        <button onclick="window.lucyReadyToPost('tiktok_hook')" class="btn btn-primary" style="width:100%;margin-bottom:.3rem">📋 Caption+Hashtags kopieren</button>
+        <button onclick="window.openLocalAsset('TV_Spots/TV_07_TikTok_Hook_SPOT_v1.mp4')" class="btn btn-ghost" style="width:100%">📂 Video im Explorer öffnen</button>
+        <div style="font-size:.55rem;color:#9af0d8;margin-top:.4rem;text-align:center;letter-spacing:.08em">⏰ Mi 20:30</div>
+      </div>
+    </div>
+    <div style="margin-top:.85rem;display:flex;flex-wrap:wrap;gap:.4rem;justify-content:space-between;align-items:center">
+      <div style="font-size:.65rem;color:var(--text-dim);line-height:1.5">📊 <b style="color:#fff">30 fertige Spots</b> · 20 MASTER + 10 TV-Spots + 10 MG + 20 Leonardo-Heroes</div>
+      <a href="wave-bite-local-media-library.json" target="_blank" rel="noopener" class="btn btn-ghost" style="text-decoration:none">📚 Library ↗</a>
+    </div>
+  </div>
+</div>
+
+<!-- PIPELINE -->
+<div class="section">
+  <h2 class="s-title"><span class="num">1</span> 7-STEP MARKETING-PIPELINE — STEPS SIND GESPERRT BIS VORBEDINGUNG ERFÜLLT</h2>
+  <div class="pipeline" id="pipeline"></div>
+</div>
+
+<!-- WORKSPACE -->
+<div class="section">
+  <h2 class="s-title"><span class="num">2</span> WORKSPACE — DER AKTIVE STEP</h2>
+  <div class="workspace">
+    <div class="ws-card" id="ws-main"></div>
+    <div class="ws-card" id="ws-side"></div>
+  </div>
+</div>
+
+<!-- PUBLISH -->
+<div class="section" id="publish-section" style="display:none">
+  <h2 class="s-title"><span class="num">3</span> POSTING-ZIELE — WO SOLL ES RAUS?</h2>
+  <div class="ws-card">
+    <p class="hint">Wähle Plattformen aus. Lucy passt Caption + Format automatisch an (Aspect-Ratio, Hashtags, Länge).</p>
+    <div class="platforms" id="platforms"></div>
+    <div class="btn-row" style="margin-top:1rem">
+      <button class="btn btn-post" id="btn-publish">🚀 An ausgewählte Plattformen senden</button>
+      <button class="btn btn-ghost" id="btn-schedule">🕐 Späteren Zeitpunkt planen</button>
+      <button class="btn btn-ghost" id="btn-export">⬇ Als Entwurf exportieren (JSON)</button>
+    </div>
+    <div id="publish-result" style="margin-top:.8rem;font-size:.72rem;color:var(--teal)"></div>
+  </div>
+</div>
+
+<div class="footer-hint">📣 MARKETING COCKPIT · V21.2 LUCY · WAVE BITE/WAVEBYTE · BroadcastChannel-Sync zum CEO Office · Auto-Save aktiv</div>
+
+<!-- Modals -->
+<div class="modal-backdrop" id="modal-back"><div class="modal"><button class="modal-close" id="modal-close">×</button><div id="modal-body"></div></div></div>
+
+<!-- Lucy FAB + Toast -->
+<div id="lucy-fab" title="Lucy öffnen">🧜🏻‍♀️</div>
+<div id="toast"></div>
+<div id="auto-save">💾 gespeichert</div>
+
+<script>
+/* ═══════════════════════════════════════════════════════════
+   📣 MARKETING COCKPIT · V21.2 LUCY · Wave Bite
+   Klickbare Pipeline mit Step-Hürden + Auto-Save + Versionen
+   ═══════════════════════════════════════════════════════════ */
+(function(){
+  'use strict';
+
+  const STORAGE_KEY = 'wave_bite_mkt_state_v21';
+  const VERSIONS_KEY = 'wave_bite_mkt_versions_v21';
+  const CHANNEL = 'ceo-wave';
+  const bc = ('BroadcastChannel' in window) ? new BroadcastChannel(CHANNEL) : null;
+
+  const defaultState = {
+    activeStep:1, completedSteps:[],
+    idea:'', brief:'',
+    visualPrompt:'', visualUrl:'',
+    videoConcept:'', videoStage:0,
+    caption:'', hashtags:'', cta:'',
+    platforms:[], gateChecks:{},
+    posted:false, history:[],
+    lastSaved:null
+  };
+  let state = loadState();
+
+  function loadState(){
+    try{ const raw=localStorage.getItem(STORAGE_KEY); if(raw) return Object.assign({},defaultState,JSON.parse(raw)); }catch(_){}
+    return Object.assign({},defaultState);
+  }
+  function saveState(showTick){
+    try{
+      state.lastSaved = Date.now();
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    }catch(_){}
+    if(bc){ try{ bc.postMessage({type:'mkt-state',state, ts:Date.now()}); }catch(_){} }
+    renderKPIs();
+    renderProgress();
+    if (showTick !== false) showAutoSave();
+  }
+  function showAutoSave(){
+    const el = document.getElementById('auto-save');
+    el.classList.add('on');
+    clearTimeout(window._asTo);
+    window._asTo = setTimeout(()=>el.classList.remove('on'), 1400);
+  }
+
+  // STEPS — jeder Step hat eine canEnter()-Hürde
+  const STEPS = [
+    { n:1, icon:'💡', t:'IDEE',     s:'Brainstorm', cls:'',     canEnter:()=>true,                                                          done:()=>!!state.idea.trim() },
+    { n:2, icon:'📝', t:'BRIEF',    s:'Auto-Brief', cls:'',     canEnter:()=>!!state.idea.trim(),                                           done:()=>!!state.brief.trim() && state.brief.length>50 },
+    { n:3, icon:'🎨', t:'VISUAL',   s:'Leonardo',   cls:'',     canEnter:()=>state.completedSteps.includes(2) || (state.brief.length>50),    done:()=>!!state.visualUrl || !!state.visualPrompt.trim() },
+    { n:4, icon:'🎬', t:'VIDEO',    s:'Schnitt+VO', cls:'',     canEnter:()=>state.completedSteps.includes(3) || !!state.visualPrompt,       done:()=>state.videoStage>=5 || !!state.videoConcept.trim() },
+    { n:5, icon:'✍️', t:'CAPTION',  s:'Brand-Voice',cls:'',     canEnter:()=>state.completedSteps.includes(4) || !!state.videoConcept.trim(),done:()=>!!state.caption.trim() && state.caption.length>30 },
+    { n:6, icon:'✅', t:'QUALITY',  s:'Gate-Check', cls:'gate', canEnter:()=>state.completedSteps.includes(5) || !!state.caption.trim(),     done:()=>gatePct()===100 },
+    { n:7, icon:'🚀', t:'POST',     s:'Multi-Ch.',  cls:'post', canEnter:()=>state.completedSteps.includes(6) || gatePct()===100,            done:()=>!!state.posted }
+  ];
+
+  const PLATFORMS = [
+    { id:'instagram',ico:'📷',t:'Instagram',aspect:'1:1',  maxLen:2200},
+    { id:'reels',    ico:'🎞',t:'Reels',    aspect:'9:16', maxLen:2200},
+    { id:'tiktok',   ico:'🎵',t:'TikTok',   aspect:'9:16', maxLen:2200},
+    { id:'facebook', ico:'👍',t:'Facebook', aspect:'1.91:1',maxLen:63206},
+    { id:'linkedin', ico:'💼',t:'LinkedIn', aspect:'1.91:1',maxLen:3000},
+    { id:'youtube',  ico:'▶️',t:'YouTube Shorts',aspect:'9:16',maxLen:5000},
+    { id:'x',        ico:'𝕏',t:'X / Twitter',aspect:'16:9',  maxLen:280},
+    { id:'web',      ico:'🌐',t:'Website Blog',aspect:'free', maxLen:99999}
+  ];
+
+  // ─── PIPELINE ─────────────────────────────────────────────
+  function renderPipeline(){
+    const el = document.getElementById('pipeline');
+    el.innerHTML = STEPS.map(s=>{
+      const isActive = state.activeStep===s.n;
+      const isDone = state.completedSteps.includes(s.n) || s.done();
+      const canEnter = s.canEnter();
+      const cls = ['pstep', s.cls, isActive?'active':'', isDone?'done':'', !canEnter?'locked':''].filter(Boolean).join(' ');
+      return `<div class="${cls}" data-step="${s.n}" title="${canEnter?'Klicken zum Öffnen':'Erst vorherigen Step abschließen'}">
+        <div class="pstep-status"></div>
+        <div class="pstep-icon">${s.icon}</div>
+        <div class="pstep-n">${s.n} · ${s.t}</div>
+        <div class="pstep-s">${s.s}</div>
+      </div>`;
+    }).join('');
+    el.querySelectorAll('.pstep').forEach(ps=>{
+      ps.addEventListener('click', ()=>{
+        const n = parseInt(ps.dataset.step,10);
+        const step = STEPS.find(x=>x.n===n);
+        if (!step.canEnter()) {
+          toast('🔒 Step '+n+' ist gesperrt — schließe erst Step '+(n-1)+' ab');
+          shake(ps);
+          return;
+        }
+        state.activeStep = n;
+        saveState();
+        renderPipeline();
+        renderWorkspace();
+        document.getElementById('ws-main').scrollIntoView({behavior:'smooth',block:'start'});
+      });
+    });
+  }
+  function shake(el){ el.style.transition='transform .08s'; let i=0; const iv=setInterval(()=>{ el.style.transform='translateX('+(i%2?'-6px':'6px')+')'; if(++i>5){clearInterval(iv); el.style.transform='';} },70); }
+
+  // ─── WORKSPACE ────────────────────────────────────────────
+  function renderWorkspace(){
+    const main = document.getElementById('ws-main');
+    const side = document.getElementById('ws-side');
+    document.getElementById('publish-section').style.display = (state.activeStep>=7) ? 'block' : 'none';
+    switch(state.activeStep){
+      case 1: renderIdee(main, side); break;
+      case 2: renderBrief(main, side); break;
+      case 3: renderVisual(main, side); break;
+      case 4: renderVideo(main, side); break;
+      case 5: renderCaption(main, side); break;
+      case 6: renderGate(main, side); break;
+      case 7: renderPost(main, side); break;
+    }
+    renderPlatforms();
+    updateLucyContext();
+  }
+
+  function stepPill(n,t){ return '<span class="step-pill">STEP '+n+'/7</span>'; }
+  function navBtns(prevTo, nextTo, nextLabel, opts){
+    opts = opts||{};
+    return `<div class="btn-row" style="margin-top:.9rem;border-top:1px dashed rgba(255,255,255,.08);padding-top:.7rem">
+      ${state.activeStep>1?'<button class="btn btn-ghost" id="btn-prev">← Zurück</button>':''}
+      ${opts.correctLabel?'<button class="btn btn-fix" id="btn-correct">'+opts.correctLabel+'</button>':''}
+      ${nextTo?'<button class="btn btn-primary" id="btn-next">'+(nextLabel||'Weiter →')+'</button>':''}
+    </div>`;
+  }
+  function bindNav(prevTo, nextTo, beforeNext, onCorrect){
+    const p=document.getElementById('btn-prev'); if(p) p.onclick=()=>{state.activeStep=prevTo||Math.max(1,state.activeStep-1); saveState(); renderPipeline(); renderWorkspace();};
+    const n=document.getElementById('btn-next');
+    if(n) n.onclick=()=>{
+      if(beforeNext && beforeNext()===false) return;
+      if(!state.completedSteps.includes(state.activeStep)) state.completedSteps.push(state.activeStep);
+      state.activeStep = nextTo || Math.min(7,state.activeStep+1);
+      saveState(); renderPipeline(); renderWorkspace();
+      toast('✓ Step abgeschlossen — weiter mit '+(STEPS.find(s=>s.n===state.activeStep).t));
+    };
+    const c=document.getElementById('btn-correct'); if(c && onCorrect) c.onclick=onCorrect;
+  }
+
+  // ─── STEP 1 IDEE ─────────────────────────────────────────
+  function renderIdee(main, side){
+    main.innerHTML = `
+      <h3>💡 Idee finden ${stepPill(1)}</h3>
+      <div class="hint">Schreib ein Stichwort, einen Satz oder klick auf einen Vorschlag.<span class="why">→ Voraussetzung für Step 2 (Brief)</span></div>
+      <label>Deine Idee</label>
+      <textarea id="ipt-idea" placeholder="z.B. 'Behind-the-scenes vom Boot-Umbau' oder 'LOI Transgourmet feiern'">${escape(state.idea)}</textarea>
+      <div class="btn-row">
+        <button class="btn btn-lucy" id="btn-ai-ideas">🧜🏻‍♀️ Lucy: 5 Ideen generieren</button>
+        <button class="btn btn-ghost" id="btn-clear-idea">↺ Reset</button>
+      </div>
+      <div id="lucy-ideas" style="margin-top:.7rem"></div>
+      ${navBtns(null,2,'Weiter zu Step 2 (Brief) →')}`;
+    document.getElementById('ipt-idea').oninput=e=>{state.idea=e.target.value; debounceSave();};
+    document.getElementById('btn-clear-idea').onclick=()=>{state.idea=''; saveState(); renderWorkspace();};
+    document.getElementById('btn-ai-ideas').onclick=()=>generateIdeas();
+    bindNav(null,2, ()=>{ if(!state.idea.trim()){toast('⚠ Schreibe mindestens ein Stichwort'); return false;} });
+    side.innerHTML = lucySide('Was macht jetzt Impact?', [
+      'Sichtbarkeit: 0 Follower → 3 Reels pro Woche',
+      'Founder-Story: dein 95/5 Cap-Table-Sprung',
+      'Boot-Umbau visuell dokumentieren (DM-Magnet)',
+      'LOI-Partner als Co-Creator einbinden',
+      'Brandenburg-Tourismus-Angle (TV Dahme)'
+    ]);
+  }
+  function generateIdeas(){
+    const c = document.getElementById('lucy-ideas');
+    c.innerHTML = '<div style="padding:.5rem;color:var(--text-dim);font-size:.7rem">🧜🏻‍♀️ Lucy denkt …</div>';
+    setTimeout(()=>{
+      const ideas = [
+        '🎬 60-Sek-Reel: "Von der Idee zum schwimmenden Restaurant" — 5 Schritte Boot-Umbau',
+        '📸 Carousel: 7 Locations am Wolzigsee, an denen Wave Bite anlegen wird',
+        '💬 Founder-Sprache: warum 95/5 Cap Table radikal ist (Glaubwürdigkeit)',
+        '🔥 Reels-Hook: "Diese 3 LOIs hat noch kein anderes Startup vor uns bekommen"',
+        '☀ Sunset + Voiceover: BunBo App Vision in 30 Sekunden'
+      ];
+      c.innerHTML = '<div class="sugg-list">'+ideas.map((t,i)=>`<div class="sugg" data-idea-pick="${i}"><div class="sugg-icon">✨</div><div class="sugg-text">${escape(t)}</div></div>`).join('')+'</div>';
+      c.querySelectorAll('[data-idea-pick]').forEach(b=>b.onclick=()=>{
+        state.idea = ideas[parseInt(b.dataset.ideaPick,10)];
+        saveState(); renderWorkspace(); toast('✓ Idee übernommen');
+      });
+    }, 600);
+  }
+
+  // ─── STEP 2 BRIEF ────────────────────────────────────────
+  function renderBrief(main, side){
+    if(!state.brief && state.idea) state.brief = autoBrief(state.idea);
+    main.innerHTML = `
+      <h3>📝 Brief schreiben ${stepPill(2)}</h3>
+      <div class="hint">Lucy hat aus deiner Idee einen strukturierten Brief gebaut. Edit / Verdichten / Neu generieren — alles, was hier steht, fließt in die nächsten Steps.<span class="why">→ Voraussetzung für Step 3 (Visual)</span></div>
+      <label>Brief (editierbar)</label>
+      <textarea id="ipt-brief" style="min-height:240px">${escape(state.brief)}</textarea>
+      <div class="btn-row">
+        <button class="btn btn-lucy" id="btn-brief-tighten">🧜🏻‍♀️ Verdichten</button>
+        <button class="btn btn-lucy" id="btn-brief-tone">🎯 Tonalität anpassen</button>
+        <button class="btn btn-ghost" id="btn-brief-regen">↺ Brief neu erzeugen</button>
+        <button class="btn btn-fix" id="btn-brief-copy">📋 Kopieren</button>
+      </div>
+      ${navBtns(1,3,'Brief OK · zum Visual →',{correctLabel:'✏ Idee korrigieren'})}`;
+    document.getElementById('ipt-brief').oninput=e=>{state.brief=e.target.value; debounceSave();};
+    document.getElementById('btn-brief-tighten').onclick=()=>{state.brief=tighten(state.brief); saveState(); renderWorkspace(); toast('✓ Verdichtet');};
+    document.getElementById('btn-brief-tone').onclick=()=>chooseTone();
+    document.getElementById('btn-brief-regen').onclick=()=>{state.brief=autoBrief(state.idea); saveState(); renderWorkspace(); toast('✓ Brief neu');};
+    document.getElementById('btn-brief-copy').onclick=()=>{navigator.clipboard.writeText(state.brief); toast('📋 Brief kopiert');};
+    bindNav(1,3, ()=>{ if(state.brief.length<50){toast('⚠ Brief zu kurz (mind. 50 Zeichen)'); return false;} }, ()=>{ state.activeStep=1; saveState(); renderWorkspace(); });
+    side.innerHTML = lucySide('Brief-Best-Practices', [
+      'Ziel klar: "Sichtbarkeit", "DM-Anfrage", "Demo-Buchung"',
+      'EINE Aussage pro Post — nicht 3 mischen',
+      'CTA spezifisch ("DM mit BOOT")',
+      'Wave-Bite Brand-Anker: Wasser · Premium · Region BB',
+      'Verbotene Wörter: "innovativ", "einzigartig", "Lösung"'
+    ]);
+  }
+  function autoBrief(idea){
+    return `# BRIEF — ${idea.slice(0,80)}\n\n**Ziel:** Sichtbarkeit + DM-Anfragen für Wave Bite\n**Format:** Reel 30–60s (Hochformat 9:16)\n**Tonalität:** ehrlich, Founder-Story, Premium-Marina-Vibe\n**Hook (0–3 s):** "${idea.slice(0,60)}…"\n**Body:** 3 Beats — Aussage / Beweis / Bild\n**CTA:** "DM mit BOOT für Updates"\n**Hashtags-Cluster:** #wavebite #hausboot #brandenburg #foundlife\n**Brand-Anker:** 95/5 Cap Table · 5 LOIs · WIPO-Designschutz · Boot-Umbau\n**Verbote:** generische Phrasen, übertriebene Versprechen, ohne Substanz`;
+  }
+  function tighten(brief){ return brief.replace(/\n{3,}/g,'\n\n').replace(/  +/g,' ').trim(); }
+  function chooseTone(){
+    openModal('🎯 Tonalität wählen', `
+      <p style="color:var(--text-dim);font-size:.78rem;margin-bottom:1rem">Welche Tonalität soll Lucy auf den Brief anwenden?</p>
+      <div class="sugg-list">
+        <div class="sugg" data-tone="founder"><div class="sugg-icon">👨‍✈️</div><div class="sugg-text"><b>Founder · ehrlich</b><br><span style="color:var(--text-dim);font-size:.66rem">Persönlich, direkt, ohne Marketing-Phrasen</span></div></div>
+        <div class="sugg" data-tone="premium"><div class="sugg-icon">💎</div><div class="sugg-text"><b>Premium · zurückhaltend</b><br><span style="color:var(--text-dim);font-size:.66rem">Hochwertig, exklusiv, weniger Emojis</span></div></div>
+        <div class="sugg" data-tone="storyteller"><div class="sugg-icon">📖</div><div class="sugg-text"><b>Storyteller · cinematic</b><br><span style="color:var(--text-dim);font-size:.66rem">Szenisch, bildhaft, narrativer Aufbau</span></div></div>
+        <div class="sugg" data-tone="punchy"><div class="sugg-icon">⚡</div><div class="sugg-text"><b>Punchy · viral</b><br><span style="color:var(--text-dim);font-size:.66rem">Kurz, scharfe Hooks, Emoji-stark</span></div></div>
+      </div>`);
+    document.querySelectorAll('[data-tone]').forEach(b=>b.onclick=()=>{
+      const t = b.dataset.tone;
+      const prefix = { founder:'# BRIEF (Founder-Tonalität)\n', premium:'# BRIEF (Premium-Tonalität)\n', storyteller:'# BRIEF (Storyteller-Tonalität)\n', punchy:'# BRIEF (Punchy-Tonalität)\n' }[t];
+      state.brief = prefix + '\n' + state.brief.replace(/^# BRIEF[^\n]*\n/,'');
+      saveState(); closeModal(); renderWorkspace(); toast('✓ Tonalität: '+t);
+    });
+  }
+
+  // ─── STEP 3 VISUAL ────────────────────────────────────────
+  function renderVisual(main, side){
+    if(!state.visualPrompt) state.visualPrompt = derivePrompt(state.brief);
+    main.innerHTML = `
+      <h3>🎨 Visual / Cover ${stepPill(3)}</h3>
+      <div class="hint">Generiere ein Visual mit Leonardo oder Firefly — oder lade ein echtes Foto hoch. Lucy schlägt den Image-Prompt vor.<span class="why">→ Voraussetzung für Step 4 (Video)</span></div>
+      <label>Image-Prompt (Leonardo / Firefly)</label>
+      <textarea id="ipt-vprompt" style="min-height:90px">${escape(state.visualPrompt)}</textarea>
+      <div class="row" style="margin-top:.5rem">
+        <button class="btn btn-primary" id="btn-leo">🎨 Leonardo Studio öffnen</button>
+        <button class="btn btn-ghost" id="btn-firefly">✨ Firefly öffnen</button>
+      </div>
+      <label>Visual-URL (nach Generierung einsetzen)</label>
+      <input id="ipt-vurl" type="url" placeholder="https://..." value="${escape(state.visualUrl)}">
+      <div id="visual-preview" style="margin-top:.6rem">${state.visualUrl?`<img src="${escape(state.visualUrl)}" style="max-width:100%;border-radius:10px;border:1px solid var(--border)" onerror="this.style.display='none'"/>`:''}</div>
+      <div class="btn-row">
+        <button class="btn btn-lucy" id="btn-vis-improve">🧜🏻‍♀️ Prompt verbessern</button>
+        <button class="btn btn-fix" id="btn-vis-copy">📋 Prompt kopieren</button>
+      </div>
+      ${navBtns(2,4,'Visual OK · zum Video →',{correctLabel:'✏ Brief korrigieren'})}`;
+    document.getElementById('ipt-vprompt').oninput=e=>{state.visualPrompt=e.target.value; debounceSave();};
+    document.getElementById('ipt-vurl').oninput=e=>{
+      state.visualUrl=e.target.value; debounceSave();
+      document.getElementById('visual-preview').innerHTML = state.visualUrl?`<img src="${escape(state.visualUrl)}" style="max-width:100%;border-radius:10px;border:1px solid var(--border)" onerror="this.style.display='none'"/>`:'';
+    };
+    document.getElementById('btn-leo').onclick=()=>window.open('wavebite-leonardo-studio.html','_blank');
+    document.getElementById('btn-firefly').onclick=()=>window.open('https://firefly.adobe.com','_blank');
+    document.getElementById('btn-vis-improve').onclick=()=>{state.visualPrompt = improvePrompt(state.visualPrompt); saveState(); renderWorkspace(); toast('✓ Prompt geschärft');};
+    document.getElementById('btn-vis-copy').onclick=()=>{navigator.clipboard.writeText(state.visualPrompt); toast('📋 Prompt kopiert');};
+    bindNav(2,4, ()=>{ if(!state.visualPrompt.trim()){toast('⚠ Prompt fehlt'); return false;} }, ()=>{ state.activeStep=2; saveState(); renderWorkspace(); });
+    side.innerHTML = lucySide('Visual-Guideline', [
+      'Hochformat 9:16 für Reels/Stories, 1:1 für Feed',
+      'Wave-Bite-Palette: Dark Marina + Gold + Cyan',
+      'Echte Boot-Fotos > KI-Generierungen',
+      'Kein Stockfoto-Look — Founder-Realismus',
+      'Subtitle-Overlay mittig vermeiden (Reactions-Zone)'
+    ]);
+  }
+  function derivePrompt(brief){
+    return 'Cinematic premium houseboat on a German lake at golden hour, marina dock, calm water reflections, ultra-realistic, Sony A7IV, 35mm, depth of field, no text, no people foreground — based on brief: '+(brief||'wave bite').slice(0,200);
+  }
+  function improvePrompt(p){
+    return p + ', shallow depth of field, magic hour light, premium yacht atmosphere, hyperrealistic, 8K, cinematic color grading';
+  }
+
+  // ─── STEP 4 VIDEO ────────────────────────────────────────
+  function renderVideo(main, side){
+    main.innerHTML = `
+      <h3>🎬 Video-Pipeline ${stepPill(4)}</h3>
+      <div class="hint">5 Sub-Steps in optimaler Reihenfolge: <b>Rohschnitt → Feinschnitt → Sound → Voiceover → Export</b>. Klick auf "Nächsten Step" oder springe direkt. Externes Tool: CapCut / Premiere / Runway.<span class="why">→ Voraussetzung für Step 5 (Caption)</span></div>
+      <label>Video-Konzept / Storyboard (Hook · Body · CTA)</label>
+      <textarea id="ipt-vc" style="min-height:130px" placeholder="0–3s Hook:…&#10;3–25s Body:…&#10;25–30s CTA:…">${escape(state.videoConcept)}</textarea>
+      <div class="vp-steps" id="vp-steps"></div>
+      <div class="btn-row" style="margin-top:.7rem">
+        <button class="btn btn-primary" id="btn-vp-next">▶ Nächsten Video-Step</button>
+        <button class="btn btn-ghost" id="btn-vp-reset">↺ Video zurücksetzen</button>
+        <button class="btn btn-lucy" id="btn-vp-script">🧜🏻‍♀️ Sprecher-Skript</button>
+        <button class="btn btn-lucy" id="btn-vp-music">🎵 Musik-Vorschlag</button>
+      </div>
+      ${navBtns(3,5,'Video fertig · zur Caption →',{correctLabel:'✏ Visual korrigieren'})}`;
+    document.getElementById('ipt-vc').oninput=e=>{state.videoConcept=e.target.value; debounceSave();};
+    renderVP();
+    document.getElementById('btn-vp-next').onclick=()=>{ state.videoStage=Math.min(5,(state.videoStage||0)+1); saveState(); renderVP(); toast('🎬 Step '+state.videoStage+'/5'); };
+    document.getElementById('btn-vp-reset').onclick=()=>{ state.videoStage=0; saveState(); renderVP(); };
+    document.getElementById('btn-vp-script').onclick=()=>{
+      const sc = '🎙 VOICEOVER-SKRIPT\n\n[0–3s] '+(state.idea.slice(0,80)||'Hook hier')+'\n[3–25s] Founder-Story: 95/5 Cap Table, 5 LOIs, Boot-Umbau\n[25–30s] CTA: "DM mit BOOT — wir halten dich auf dem Laufenden."';
+      state.videoConcept = state.videoConcept ? (state.videoConcept+'\n\n'+sc) : sc;
+      saveState(); renderWorkspace(); toast('✓ Skript eingefügt');
+    };
+    document.getElementById('btn-vp-music').onclick=()=>openModal('🎵 Musik-Empfehlung', `
+      <p style="color:var(--text-dim);font-size:.75rem;margin-bottom:.7rem">Lucy empfiehlt für Wave-Bite-Reels:</p>
+      <div class="sugg-list">
+        <div class="sugg"><div class="sugg-icon">🎵</div><div class="sugg-text"><b>Atmospheric Cinematic</b> · 90–110 BPM · für Boot/Wasser-Aufnahmen</div></div>
+        <div class="sugg"><div class="sugg-icon">🎵</div><div class="sugg-text"><b>Lo-Fi Marina</b> · 80–95 BPM · für Behind-the-Scenes</div></div>
+        <div class="sugg"><div class="sugg-icon">🎵</div><div class="sugg-text"><b>Uplifting Indie</b> · 110–130 BPM · für Founder-Story</div></div>
+      </div>
+      <p style="font-size:.68rem;color:var(--text-dim);margin-top:.7rem">Tipp: <b>Ducking</b> einsetzen — Musik unter Voiceover -8 dB.</p>`);
+    bindNav(3,5, null, ()=>{ state.activeStep=3; saveState(); renderWorkspace(); });
+    side.innerHTML = lucySide('Video-Reihenfolge (warum)', [
+      '1. ROHSCHNITT — alle Clips zusammenstellen',
+      '2. FEINSCHNITT — Cuts auf Beat, Tempo-Variation',
+      '3. SOUND — Musik unter Voiceover legen (Ducking!)',
+      '4. VOICEOVER — sauber aufnehmen → mit Sound mischen',
+      '5. EXPORT — H.264, 9:16, ≤ 60s, ≤ 100 MB'
+    ]);
+  }
+  function renderVP(){
+    const stages = [
+      {b:'1️⃣', t:'Schnitt-Roh'},{b:'2️⃣', t:'Feinschnitt'},
+      {b:'3️⃣', t:'Sound/Musik'},{b:'4️⃣', t:'Voiceover'},{b:'5️⃣', t:'Export'}
+    ];
+    const stage = state.videoStage||0;
+    document.getElementById('vp-steps').innerHTML = stages.map((s,i)=>{
+      const cls = i+1 < stage ? 'done' : (i+1 === stage ? 'running' : '');
+      return `<div class="vp-step ${cls}"><b>${s.b}</b>${s.t}</div>`;
+    }).join('');
+  }
+
+  // ─── STEP 5 CAPTION ──────────────────────────────────────
+  function renderCaption(main, side){
+    if(!state.caption) state.caption = autoCaption(state.idea, state.brief);
+    if(!state.hashtags) state.hashtags = '#wavebite #hausboot #brandenburg #foundlife #startup #premium #marina';
+    if(!state.cta) state.cta = 'DM mit „BOOT" für Updates.';
+    main.innerHTML = `
+      <h3>✍️ Caption · Hashtags · CTA ${stepPill(5)}</h3>
+      <div class="hint">Lucy hat einen brand-konformen Vorschlag gebaut. Editiere frei. <b>Brand-Voice-Check</b> rechts → klick "Prüfen".<span class="why">→ Voraussetzung für Step 6 (Quality-Gate)</span></div>
+      <label>Caption</label>
+      <textarea id="ipt-cap" style="min-height:140px">${escape(state.caption)}</textarea>
+      <div class="row">
+        <div>
+          <label>Hashtags (5–10 empfohlen)</label>
+          <input id="ipt-hash" type="text" value="${escape(state.hashtags)}">
+        </div>
+        <div>
+          <label>CTA</label>
+          <input id="ipt-cta" type="text" value="${escape(state.cta)}">
+        </div>
+      </div>
+      <div class="btn-row">
+        <button class="btn btn-lucy" id="btn-cap-better">🧜🏻‍♀️ Stärkeren Hook bauen</button>
+        <button class="btn btn-ghost" id="btn-cap-emoji">😎 Emoji-Pass</button>
+        <button class="btn btn-fix" id="btn-cap-bv">🛡 Brand-Voice prüfen</button>
+        <button class="btn btn-ghost" id="btn-cap-copy">📋 Caption kopieren</button>
+      </div>
+      <div id="bv-check"></div>
+      ${navBtns(4,6,'Caption OK · zum Quality-Gate →',{correctLabel:'✏ Video korrigieren'})}`;
+    document.getElementById('ipt-cap').oninput=e=>{state.caption=e.target.value; debounceSave();};
+    document.getElementById('ipt-hash').oninput=e=>{state.hashtags=e.target.value; debounceSave();};
+    document.getElementById('ipt-cta').oninput=e=>{state.cta=e.target.value; debounceSave();};
+    document.getElementById('btn-cap-better').onclick=()=>{state.caption='🔥 '+state.caption.replace(/^[🔥✨⚡]?\s*/,''); saveState(); renderWorkspace(); toast('✓ Hook geschärft');};
+    document.getElementById('btn-cap-emoji').onclick=()=>{state.caption=state.caption+'\n\n⛵💎🌊'; saveState(); renderWorkspace();};
+    document.getElementById('btn-cap-bv').onclick=brandVoiceCheck;
+    document.getElementById('btn-cap-copy').onclick=()=>{navigator.clipboard.writeText(state.caption+'\n\n'+state.hashtags+'\n\n👉 '+state.cta); toast('📋 Komplett kopiert');};
+    bindNav(4,6, ()=>{ if(state.caption.length<30){toast('⚠ Caption zu kurz'); return false;} }, ()=>{ state.activeStep=4; saveState(); renderWorkspace(); });
+    side.innerHTML = lucySide('Caption-Regeln', [
+      'Erste Zeile = Hook (3–7 Wörter)',
+      'Absätze statt Textwand',
+      'CTA explizit & einfach (max 6 Wörter)',
+      '5–10 Hashtags (nicht 30 spammen)',
+      'Brand-Voice: ehrlich · Founder · keine Phrasen'
+    ]);
+  }
+  function autoCaption(idea){ return (idea||'Update von Wave Bite')+'\n\n3 Beats:\n• Aussage: was ist neu / interessant\n• Beweis: Zahl / LOI / Foto\n• Bild: was siehst du im Visual\n\nWas wir bauen, ist nicht für jeden. Aber genau für DICH — wenn du noch nie ein Hausboot-Restaurant auf einem Brandenburger See gesehen hast.'; }
+  function brandVoiceCheck(){
+    const bad = ['innovativ','einzigartig','Lösung','revolutionär','disruptiv','best in class','game changer','State of the Art'];
+    const txt = state.caption.toLowerCase();
+    const found = bad.filter(w=>txt.includes(w.toLowerCase()));
+    const hashCount = (state.hashtags.match(/#/g)||[]).length;
+    const ctaWords = state.cta.split(/\s+/).filter(Boolean).length;
+    const hookLen = (state.caption.split('\n')[0]||'').split(/\s+/).filter(Boolean).length;
+    let score = 100;
+    const issues = [];
+    if (found.length) { score -= found.length*15; issues.push('⚠ Verbotene Wörter: '+found.join(', ')); }
+    if (hashCount<5) { score -= 10; issues.push('⚠ Nur '+hashCount+' Hashtags (5–10 empfohlen)'); }
+    if (hashCount>15) { score -= 10; issues.push('⚠ Zu viele Hashtags ('+hashCount+')'); }
+    if (ctaWords>6) { score -= 10; issues.push('⚠ CTA zu lang ('+ctaWords+' Wörter, max 6)'); }
+    if (hookLen>10) { score -= 10; issues.push('⚠ Hook lang ('+hookLen+' Wörter, max 7 empfohlen)'); }
+    score = Math.max(0, Math.min(100, score));
+    const el = document.getElementById('bv-check');
+    const cls = score>=85?'bv-ok':(score>=60?'bv-warn':'bv-bad');
+    const emoji = score>=85?'✅':(score>=60?'⚠️':'❌');
+    el.innerHTML = `<div class="bv-result ${cls}"><span class="bv-score" style="background:rgba(0,0,0,.25)">${emoji} ${score}/100</span><b>Brand-Voice-Check</b>${issues.length?'<br>'+issues.join('<br>'):'<br>Alles brand-konform.'}</div>`;
+  }
+
+  // ─── STEP 6 QUALITY-GATE ─────────────────────────────────
+  const GATE_CHECKS = [
+    { k:'brand',  t:'Brand-Voice OK',           w:'Keine generischen Phrasen, Wave-Bite-Tonalität, keine Versprechen ohne Beleg' },
+    { k:'fact',   t:'Faktenbasiert',            w:'Cap Table / LOIs / Zahlen aus Faktenbuch — nichts ausgedacht' },
+    { k:'legal',  t:'Rechtlich sauber',         w:'Keine Bilder mit Personen ohne Einwilligung, keine fremden Marken' },
+    { k:'visual', t:'Visual qualitativ',        w:'Auflösung >= 1080x1920 (9:16) bzw. 1080x1080' },
+    { k:'caption',t:'Caption <= Plattform-Limit',w:'Instagram 2200 / TikTok 2200 / LinkedIn 3000 / X 280' },
+    { k:'cta',    t:'CTA klar & einfach',       w:'Ein spezifischer Call-to-Action, max 6 Wörter' },
+    { k:'hashtag',t:'Hashtags 5-10',            w:'Nicht 30 spammen - Mischung Brand + Nische + Region' },
+    { k:'time',   t:'Posting-Zeit gewählt',     w:'Mo/Di 19-21 Uhr oder Sa 11-13 Uhr (Wave-Bite-Zielgruppe)' }
+  ];
+  function renderGate(main, side){
+    if(!state.gateChecks) state.gateChecks={};
+    main.innerHTML = `
+      <h3>✅ Quality-Gate ${stepPill(6)}</h3>
+      <div class="hint">Letzte Hürde vor dem POST. Erst bei 100% wird Step 7 freigeschaltet.<span class="why">→ Voraussetzung für Step 7 (Post)</span></div>
+      <div class="gate" id="gate-list"></div>
+      <div class="gate-bar"><div class="gate-bar-fill" id="gate-fill"></div></div>
+      <div class="gate-status" id="gate-status"></div>
+      <div class="btn-row" style="margin-top:.7rem">
+        <button class="btn btn-fix" id="btn-gate-all">⚡ Alle prüfen (Auto-Check)</button>
+        <button class="btn btn-ghost" id="btn-gate-reset">↺ Alle zurücksetzen</button>
+      </div>
+      ${navBtns(5,7,'Alle Checks grün · POST! →',{correctLabel:'✏ Caption korrigieren'})}`;
+    const gl = document.getElementById('gate-list');
+    gl.innerHTML = GATE_CHECKS.map(c=>`<label class="check"><input type="checkbox" data-gate="${c.k}" ${state.gateChecks[c.k]?'checked':''}><span><b>${escape(c.t)}</b><span class="why">${escape(c.w)}</span></span></label>`).join('');
+    gl.querySelectorAll('input[data-gate]').forEach(inp=>{
+      inp.onchange=()=>{ state.gateChecks[inp.dataset.gate]=inp.checked; saveState(); updateGateUI(); };
+    });
+    document.getElementById('btn-gate-all').onclick=()=>{
+      const auto = autoGateCheck();
+      Object.entries(auto).forEach(([k,v])=>{
+        state.gateChecks[k]=v;
+        const el = gl.querySelector('input[data-gate="'+k+'"]'); if(el) el.checked=v;
+      });
+      saveState(); updateGateUI();
+      const passed = Object.values(auto).filter(Boolean).length;
+      toast('Auto-Check: '+passed+'/'+Object.keys(auto).length+' grün');
+    };
+    document.getElementById('btn-gate-reset').onclick=()=>{state.gateChecks={}; saveState(); renderWorkspace();};
+    updateGateUI();
+    bindNav(5,7, ()=>{ if(gatePct()<100){toast('🚫 Erst alle '+GATE_CHECKS.length+' Checks bestätigen'); return false;} }, ()=>{ state.activeStep=5; saveState(); renderWorkspace(); });
+    side.innerHTML = lucySide('Warum Gates?', [
+      'Verhindert peinliche Posts (Tippfehler, falsche LOI-Angaben)',
+      'Schützt Brand (kein Wischiwaschi-Marketing)',
+      'Reduziert Rückzieher (Story löschen)',
+      'Sichert rechtliche Sauberkeit (DSGVO/Bildrecht)',
+      'Erhöht Conversion (klarer CTA -> 3x mehr DMs)'
+    ]);
+  }
+  function autoGateCheck(){
+    const bad = ['innovativ','einzigartig','Lösung','revolutionär','disruptiv'];
+    const txt = state.caption.toLowerCase();
+    const hashCount = (state.hashtags.match(/#/g)||[]).length;
+    const ctaWords = state.cta.split(/\s+/).filter(Boolean).length;
+    const visualOK = !!state.visualUrl || !!state.visualPrompt;
+    return {
+      brand: !bad.some(w=>txt.includes(w)),
+      fact: state.brief.length>50,
+      legal: true,
+      visual: visualOK,
+      caption: state.caption.length<=2200,
+      cta: ctaWords>0 && ctaWords<=6,
+      hashtag: hashCount>=5 && hashCount<=10,
+      time: false
+    };
+  }
+  function gatePct(){
+    const done = GATE_CHECKS.filter(c=>state.gateChecks[c.k]).length;
+    return Math.round(done/GATE_CHECKS.length*100);
+  }
+  function updateGateUI(){
+    const pct = gatePct();
+    const fill = document.getElementById('gate-fill');
+    const stat = document.getElementById('gate-status');
+    if(fill) fill.style.width = pct+'%';
+    if(stat) stat.textContent = pct+'% bestätigt — '+(pct===100?'✅ Bereit für POST':'⏳ noch '+(GATE_CHECKS.length-Math.round(pct/100*GATE_CHECKS.length))+' offen');
+    renderKPIs();
+  }
+
+  // ─── STEP 7 POST ─────────────────────────────────────────
+  function renderPost(main, side){
+    main.innerHTML = `
+      <h3>🚀 Post ${stepPill(7)}</h3>
+      <div class="hint">Final-Preview. Plattformen unten wählen → Senden / Planen / Exportieren.<span class="why">→ Ziel erreicht!</span></div>
+      <div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:.7rem">
+        <div style="font-size:.55rem;letter-spacing:.14em;color:var(--text-dim);font-weight:700;margin-bottom:.3rem">PREVIEW · CAPTION</div>
+        <div style="font-size:.78rem;line-height:1.55;white-space:pre-wrap">${escape(state.caption||'(leer)')}</div>
+        <div style="font-size:.7rem;color:var(--purple-soft);margin-top:.4rem">${escape(state.hashtags)}</div>
+        <div style="font-size:.7rem;color:var(--teal);margin-top:.4rem">👉 ${escape(state.cta)}</div>
+      </div>
+      <div style="margin-top:.6rem;font-size:.6rem;color:var(--text-dim);letter-spacing:.05em">Gate-Status: <b>${gatePct()}%</b> · Video-Stage: <b>${state.videoStage||0}/5</b> · Visual: ${state.visualUrl?'<span style="color:var(--teal)">✓</span>':'<span style="color:var(--red)">—</span>'}</div>
+      ${navBtns(6,null,null,{correctLabel:'✏ Quality-Gate erneut prüfen'})}`;
+    bindNav(6,null,null,()=>{ state.activeStep=6; saveState(); renderWorkspace(); });
+    side.innerHTML = lucySide('Post-Best-Time (Wave-Bite-Zielgruppe)', [
+      'Instagram Reel: Di/Do 19:00 oder Sa 11:00',
+      'TikTok: Mi 20:30 oder So 18:00',
+      'LinkedIn: Di 08:00 oder Mi 12:00',
+      'YouTube Shorts: Fr 17:00 oder Sa 10:00',
+      'Wenn unsicher → Postiz nimmt optimale Zeit'
+    ]);
+  }
+
+  // ─── PLATFORMS + PUBLISH ─────────────────────────────────
+  function renderPlatforms(){
+    const el = document.getElementById('platforms');
+    if(!el) return;
+    el.innerHTML = PLATFORMS.map(p=>`<div class="plat ${state.platforms.includes(p.id)?'on':''}" data-plat="${p.id}"><div class="plat-ico">${p.ico}</div><div class="plat-t">${p.t}</div><div class="plat-aspect">${p.aspect}</div><div class="plat-c"></div></div>`).join('');
+    el.querySelectorAll('.plat').forEach(pl=>{
+      pl.onclick=()=>{
+        const id=pl.dataset.plat;
+        const idx=state.platforms.indexOf(id);
+        if(idx===-1) state.platforms.push(id); else state.platforms.splice(idx,1);
+        saveState(); renderPlatforms();
+      };
+    });
+  }
+  document.getElementById('btn-publish').onclick=function(){
+    if(gatePct()<100){ toast('🚫 Quality-Gate noch nicht 100%'); state.activeStep=6; saveState(); renderPipeline(); renderWorkspace(); return; }
+    if(!state.platforms.length){ toast('⚠ Mindestens 1 Plattform wählen'); return; }
+    document.getElementById('publish-result').innerHTML = '<div style="padding:.7rem;background:rgba(0,212,170,.1);border:1px solid rgba(0,212,170,.4);border-radius:10px"><b>✅ Post-Befehl gesendet</b><br><span style="color:var(--text-dim);font-size:.7rem">Plattformen: '+state.platforms.join(', ')+' — Postiz-Connector / Buffer-Bridge übernimmt.</span></div>';
+    state.posted=true; state.history.push({ts:Date.now(),idea:state.idea,platforms:[...state.platforms]}); saveState(); toast('🚀 Post gesendet');
+  };
+  document.getElementById('btn-schedule').onclick=()=>openModal('🕐 Späteren Zeitpunkt planen',`<p style="color:var(--text-dim);font-size:.78rem;margin-bottom:.7rem">Wähle eine Zeit (lokal):</p><input id="schedule-time" type="datetime-local" style="margin-bottom:.7rem"><button class="btn btn-primary" id="btn-schedule-save">📅 In Postiz/Buffer planen</button><p style="font-size:.65rem;color:var(--text-dim);margin-top:.7rem">(Verbindung zu Postiz MCP wird in V21.3 fest verkabelt — heute: Entwurf wird mit Zeitstempel exportiert)</p>`);
+  document.addEventListener('click', e=>{
+    if (e.target?.id==='btn-schedule-save'){
+      const t = document.getElementById('schedule-time').value;
+      if(!t){toast('⚠ Zeit wählen'); return;}
+      state.history.push({ts:Date.now(),scheduledFor:t,platforms:[...state.platforms],idea:state.idea});
+      saveState(); closeModal(); toast('📅 Geplant für '+new Date(t).toLocaleString('de-DE'));
+    }
+  });
+  document.getElementById('btn-export').onclick=()=>{
+    const blob = new Blob([JSON.stringify(state,null,2)],{type:'application/json'});
+    const a = document.createElement('a'); a.href=URL.createObjectURL(blob);
+    a.download='wavebite-post-draft-'+new Date().toISOString().slice(0,16).replace(':','-')+'.json';
+    a.click(); toast('⬇ Entwurf exportiert');
+  };
+
+  // ─── LUCY ────────────────────────────────────────────────
+  window.lucyAsk = function(prompt){
+    if(bc){ try{ bc.postMessage({type:'lucy-ask', prompt, ts:Date.now()}); }catch(_){} }
+    try{ if(window.opener && !window.opener.closed){ window.opener.focus(); if(window.opener.Lucy?.ask) window.opener.Lucy.ask(prompt); } }catch(_){}
+    toast('🧜🏻‍♀️ Lucy-Anfrage an CEO Office gesendet');
+  };
+
+  // V21.5 — Lucy Ready-to-Post: 3 fertige Vorschläge
+  const READY_TO_POST = {
+    founder_vision: { title:'Die Vision (Founder)', file:'WAVEBITE_01_Die_Vision_MASTER_v1.mp4', caption:'Ich habe heute unterschrieben.\n\nWave Bite — Premium-Gastronomie auf dem Wasser. Cap Table 95/5. Fünf LOIs in 3 Monaten. Pre-Money 1,5 Mio €.\n\nKein Promi. Kein Stockfoto. Echte Founder-Story.\n\nWer mitbauen will: DM mit BOOT.', hashtags:'#wavebite #hausboot #brandenburg #foundlife #startup #seedstage', cta:'DM mit BOOT' },
+    cinematic_wasser_leben: { title:'Wo Wasser auf Leben trifft', file:'WAVEBITE_03_Wo_Wasser_Auf_Leben_Trifft_MASTER_v1.mp4', caption:'Es gibt diesen Moment, wenn das Wasser ganz still liegt.\n\nUnd man denkt: hier könnte man bleiben.\n\nWave Bite. Brandenburg. Frühjahr 2027.\n\nDM mit RESERVIERUNG.', hashtags:'#wavebite #brandenburg #wolzigsee #goldenhour #premium #waterlife', cta:'DM mit RESERVIERUNG' },
+    tiktok_hook: { title:'TikTok Hook', file:'TV_Spots/TV_07_TikTok_Hook_SPOT_v1.mp4', caption:'Diese 3 LOIs hat noch kein anderes Startup vor uns bekommen 🚢\n\nTransgourmet. Radeberger. Hugentobler.\n\nFolg uns — Tag 60 schwimmt das Boot.', hashtags:'#wavebite #startup #hausboot #brandenburg #foundlife #fyp #waterlife', cta:'Folg uns für Tag 60' }
+  };
+  window.lucyReadyToPost = function(id){
+    const p = READY_TO_POST[id]; if(!p){toast('⚠ Vorschlag nicht gefunden');return;}
+    const full = p.caption+'\n\n'+p.hashtags+'\n\n👉 '+p.cta;
+    try{ navigator.clipboard.writeText(full); toast('✅ "'+p.title+'" — Caption+Hashtags+CTA kopiert'); }catch(_){ toast('⚠ Kopieren fehlgeschlagen'); }
+    try{
+      state.caption=p.caption; state.hashtags=p.hashtags; state.cta=p.cta;
+      state.idea = state.idea || ('Ready-to-Post: '+p.title);
+      state.activeStep = 7;
+      if(!Array.isArray(state.completedSteps)) state.completedSteps=[];
+      [1,2,3,4,5,6].forEach(n=>{ if(state.completedSteps.indexOf(n)===-1) state.completedSteps.push(n); });
+      ['brand','fact','legal','visual','caption','cta','hashtag','time'].forEach(k=>{ state.gateChecks[k]=true; });
+      saveState(); renderPipeline(); renderWorkspace();
+    }catch(e){}
+  };
+  window.openLocalAsset = function(filename){
+    const localPath = 'C:\\Users\\Startklar\\Desktop\\Werbung_Wave Bite\\Werbung_Wave Bite\\19_Final_Videos\\' + filename;
+    try{
+      window.open('file:///'+localPath.replace(/\\/g,'/').replace(/ /g,'%20'),'_blank');
+      toast('📂 Asset im Explorer: '+filename);
+    }catch(_){
+      try{ navigator.clipboard.writeText(localPath); toast('📋 Pfad kopiert: '+filename); }catch(__){toast('⚠ Pfad: '+localPath);}
+    }
+  };
+  document.getElementById('open-lucy').onclick = ()=>lucyAsk('Ich bin im Marketing-Cockpit, Schritt '+state.activeStep+' ('+STEPS.find(s=>s.n===state.activeStep).t+'). Was würdest du jetzt empfehlen?');
+  document.getElementById('lucy-fab').onclick  = ()=>lucyAsk('Marketing-Cockpit Step '+state.activeStep+': was übersehe ich?');
+  document.getElementById('btn-lucy-week').onclick=()=>lucyAsk('Was sollte ich diese Woche posten? Basierend auf Wave-Bite-Faktenbuch + aktuellen Blockern.');
+  document.getElementById('btn-lucy-hooks').onclick=()=>lucyAsk('Gib mir 3 starke Hooks für unseren nächsten Reel zum Thema Hausboot-Gastronomie.');
+  document.getElementById('btn-lucy-audit').onclick=()=>lucyAsk('Audit den letzten Post: was war gut, was schlecht, was würdest du beim nächsten anders machen?');
+
+  function updateLucyContext(){
+    const tipsByStep = {
+      1: ['Beginne mit deinem stärksten Asset (Boot, LOIs, Cap Table)','Wenn unsicher: 5-Ideen-Generator nutzen','Eine Idee = ein Post. Nicht mischen.'],
+      2: ['Brief = Vertrag mit dir selbst','Brand-Anker explizit einbauen','Verbots-Wörter weg → Verdichten-Button'],
+      3: ['Echte Boot-Fotos > KI','Prompt verbessern → automatischer Premium-Boost','9:16 für Reels, 1:1 für Feed'],
+      4: ['Schnitt → Sound → Voiceover (in DIESER Reihenfolge)','Musik unter Voiceover ducken (-8 dB)','Export H.264, ≤ 100 MB'],
+      5: ['Hook in den ersten 3 Wörtern','Brand-Voice-Check vor Caption-Lock','5–10 Hashtags, keine 30'],
+      6: ['Alle 8 Checks Pflicht','Auto-Check beschleunigt','Posting-Zeit aktiv wählen'],
+      7: ['Mehrere Plattformen = Aspect-Anpassung','Postiz/Buffer für Auto-Distribution','Entwurf-Export als Backup']
+    };
+    const t = document.getElementById('lucy-context-tips');
+    const r = document.getElementById('lucy-role-text');
+    if(t){
+      const tips = tipsByStep[state.activeStep]||[];
+      t.innerHTML = 'Tipps für <b>'+STEPS.find(s=>s.n===state.activeStep).t+'</b>:<ul style="margin:.4rem 0 .4rem 1rem;padding:0">'+tips.map(i=>'<li>'+escape(i)+'</li>').join('')+'</ul>';
+    }
+    if(r) r.textContent = 'Step '+state.activeStep+'/7 — '+STEPS.find(s=>s.n===state.activeStep).t;
+  }
+
+  // ─── KPIs / PROGRESS ────────────────────────────────────
+  function renderKPIs(){
+    document.getElementById('kpi-step').textContent = state.activeStep+'/7';
+    document.getElementById('kpi-done').textContent = state.completedSteps.length+'/7';
+    document.getElementById('kpi-gate').textContent = gatePct()+'%';
+    document.getElementById('kpi-platforms').textContent = state.platforms.length;
+  }
+  function renderProgress(){
+    const pct = Math.round((state.completedSteps.length/7)*100);
+    const bar = document.getElementById('prog-bar');
+    if(bar) bar.style.width = pct+'%';
+  }
+
+  // ─── VERSIONS / SAVE ─────────────────────────────────────
+  document.getElementById('btn-save-version').onclick=()=>{
+    const versions = JSON.parse(localStorage.getItem(VERSIONS_KEY)||'[]');
+    versions.push({ts:Date.now(),label:'V'+(versions.length+1)+' '+(state.idea.slice(0,30)||'Entwurf'),state:JSON.parse(JSON.stringify(state))});
+    localStorage.setItem(VERSIONS_KEY, JSON.stringify(versions.slice(-20)));
+    toast('💾 Version gespeichert ('+versions.length+')');
+  };
+  document.getElementById('btn-reset-all').onclick=()=>{
+    if(!confirm('Wirklich alles zurücksetzen? Aktuelle Pipeline geht verloren (Versionen bleiben).')) return;
+    state = Object.assign({},defaultState);
+    saveState(); renderPipeline(); renderWorkspace();
+    toast('↺ Pipeline zurückgesetzt');
+  };
+
+  // ─── MODAL ───────────────────────────────────────────────
+  function openModal(title, html){
+    document.getElementById('modal-body').innerHTML = '<h4>'+title+'</h4>'+html;
+    document.getElementById('modal-back').classList.add('on');
+  }
+  function closeModal(){ document.getElementById('modal-back').classList.remove('on'); }
+  document.getElementById('modal-close').onclick=closeModal;
+  document.getElementById('modal-back').onclick=e=>{ if(e.target.id==='modal-back') closeModal(); };
+
+  // ─── HELPERS ─────────────────────────────────────────────
+  function escape(s){ return (s==null?'':String(s)).replace(/[&<>"\']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+  function toast(msg){
+    const t=document.getElementById('toast');
+    t.textContent=msg; t.classList.add('show');
+    clearTimeout(window._toastTo);
+    window._toastTo=setTimeout(()=>t.classList.remove('show'),2400);
+  }
+  function lucySide(title, items){
+    return `<div class="lucy-head"><div class="lucy-av" style="width:40px;height:40px;font-size:1.2rem">🧜🏻‍♀️</div><div><div class="lucy-name" style="font-size:.8rem">Lucy · Tipp</div><div class="lucy-role" style="font-size:.5rem">${escape(title)}</div></div></div><ul class="lucy-tips" style="margin:.4rem 0 0 1rem;padding:0">${items.map(i=>'<li>'+escape(i)+'</li>').join('')}</ul>`;
+  }
+  let _debounceTo;
+  function debounceSave(){ clearTimeout(_debounceTo); _debounceTo=setTimeout(()=>saveState(),500); }
+
+  // ─── BC LISTENER ─────────────────────────────────────────
+  if(bc){
+    bc.onmessage = function(e){
+      if(!e.data) return;
+      if(e.data.type==='lucy-reply'){ toast('🧜🏻‍♀️ Lucy: '+(e.data.text||'(antwortet im CEO Office)')); }
+      if(e.data.type==='mkt-set-step'){
+        const n = e.data.step||1;
+        const step = STEPS.find(s=>s.n===n);
+        if (step && step.canEnter()) {
+          state.activeStep = n; saveState(); renderPipeline(); renderWorkspace();
+          toast('▶ Step '+n+' geöffnet (vom CEO-Office gesteuert)');
+        }
+      }
+    };
+  }
+
+  // ─── URL-Hash Handler: #step=3 ────────────────────────────
+  function applyHash(){
+    const m = (location.hash||'').match(/step=(\d+)/);
+    if (m) {
+      const n = Math.max(1,Math.min(7,parseInt(m[1],10)));
+      const step = STEPS.find(s=>s.n===n);
+      if (step && step.canEnter()) { state.activeStep = n; saveState(); }
+      else toast('🔒 Step '+n+' noch gesperrt — schließe vorherige ab');
+    }
+  }
+
+  // ─── INIT ────────────────────────────────────────────────
+  applyHash();
+  renderPipeline();
+  renderWorkspace();
+  renderKPIs();
+  renderProgress();
+  window.addEventListener('hashchange', ()=>{ applyHash(); renderPipeline(); renderWorkspace(); });
+
+  console.log('[V21.2-Lucy] Marketing Cockpit ready · channel='+CHANNEL+' · auto-save + step-gates + versions aktiv');
+})();
+</script>
+</body>
+</html>
