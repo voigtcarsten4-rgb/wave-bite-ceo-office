@@ -10,12 +10,12 @@
 <title>WAVE BITE // CAPITÄNS BRIDGE — Lucy Edition</title>
 <meta name="description" content="Wave Bite CEO Command Center — Maritime Intelligence Dashboard mit Lucy v4.0 als 100%-cerebral Co-Pilotin">
 <meta name="robots" content="noindex, nofollow">
-<meta name="build-version" content="v24.1-2026-05-25-MAGIC-PREMIUM-FIX">
+<meta name="build-version" content="v24.2-2026-05-25-INLINE-OVERRIDE">
 <!-- AUTO-VERSION-CHECK: vergleicht beim Boot die lokale Version mit GitHub Raw, force-reload bei Drift -->
 <script>
 (function(){
   try {
-    const LOCAL_VERSION = 'v24.1-2026-05-25-MAGIC-PREMIUM-FIX';
+    const LOCAL_VERSION = 'v24.2-2026-05-25-INLINE-OVERRIDE';
     const VCHECK_KEY = 'wb_vcheck_last';
     const last = parseInt(sessionStorage.getItem(VCHECK_KEY) || '0');
     if (Date.now() - last < 60000) return; // max 1× pro Minute
@@ -2634,6 +2634,77 @@
       background:#fdf8ec !important;
       color:#1f3854 !important;
       border-top:1px solid rgba(184,139,60,0.3) !important;
+    }
+
+    /* ════════════════════════════════════════════════════════════════════ */
+    /* v24.2 INLINE-STYLE OVERRIDE                                          */
+    /* Erzwingt cream-surface über alle inline-style="background:rgba(7..." */
+    /* ════════════════════════════════════════════════════════════════════ */
+    html, body.theme-ivory {
+      background:
+        radial-gradient(ellipse at 0% 0%, rgba(201,168,76,0.06) 0%, transparent 50%),
+        radial-gradient(ellipse at 100% 100%, rgba(96,165,250,0.04) 0%, transparent 50%),
+        linear-gradient(180deg, #fdf8ec 0%, #f7efda 100%) !important;
+    }
+    body.theme-ivory [style*="rgba(7,24,40"],
+    body.theme-ivory [style*="rgba(7, 24, 40"],
+    body.theme-ivory [style*="rgba(4,16,30"],
+    body.theme-ivory [style*="rgba(4, 16, 30"],
+    body.theme-ivory [style*="rgba(2,8,16"],
+    body.theme-ivory [style*="rgba(2, 8, 16"] {
+      background:linear-gradient(180deg,#fdf8ec 0%,#f7efda 100%) !important;
+      border-color:rgba(184,139,60,0.22) !important;
+      color:#1f3854 !important;
+      box-shadow:0 1px 2px rgba(42,37,23,0.04),0 6px 18px rgba(42,37,23,0.06) !important;
+    }
+    /* Inline-styled boxes: child text-colors override */
+    body.theme-ivory [style*="rgba(7,24,40"] *:not(.chip):not([class*="chip-"]):not(.btn-gold):not(.btn-primary),
+    body.theme-ivory [style*="rgba(7, 24, 40"] *:not(.chip):not([class*="chip-"]):not(.btn-gold):not(.btn-primary) {
+      color:inherit;
+    }
+    /* Cyan border + colored text in inline-styles → neutral */
+    body.theme-ivory [style*="rgba(0,200,255"], body.theme-ivory [style*="rgba(0, 200, 255"] {
+      border-color:rgba(184,139,60,0.28) !important;
+    }
+    body.theme-ivory [style*="color:var(--blue)"], body.theme-ivory [style*="color: var(--blue)"] {
+      color:#0e2944 !important;
+    }
+    body.theme-ivory [style*="color:var(--text-dim)"], body.theme-ivory [style*="color: var(--text-dim)"] {
+      color:#5a728a !important;
+    }
+    body.theme-ivory [style*="color:var(--gold)"], body.theme-ivory [style*="color: var(--gold)"] {
+      color:#b88b3c !important;
+    }
+    body.theme-ivory [style*="color:var(--teal)"] {
+      color:#0a6e44 !important;
+    }
+    /* Inline-styled headers (z.B. section-title via inline) */
+    body.theme-ivory h2[style], body.theme-ivory h3[style], body.theme-ivory h4[style] {
+      color:#0e2944 !important;
+    }
+    /* Hero canvas Sterne weicher */
+    body.theme-ivory #sphere-canvas { opacity:0.5 !important; filter:hue-rotate(40deg) saturate(0.6) brightness(1.3) !important; mix-blend-mode:multiply !important; }
+    /* Hero-Title noch klarer */
+    body.theme-ivory .hero-title {
+      filter:drop-shadow(0 2px 8px rgba(184,139,60,0.20)) drop-shadow(0 1px 0 rgba(255,255,255,0.5)) !important;
+    }
+
+    /* Operations Center Boxes besonders auflichten */
+    body.theme-ivory section [style*="rgba(7,24,40,0.7"],
+    body.theme-ivory section [style*="rgba(7, 24, 40, 0.7"] {
+      background:linear-gradient(180deg,#fdf8ec 0%,#f5ead0 100%) !important;
+      border:1px solid rgba(184,139,60,0.24) !important;
+      box-shadow:0 1px 2px rgba(42,37,23,0.04),0 4px 14px rgba(42,37,23,0.08) !important;
+      backdrop-filter:blur(8px) !important;
+    }
+
+    /* Ticker-Scroll Cyan-Text auf Cream → Navy */
+    body.theme-ivory #ticker-scroll, body.theme-ivory .ticker-scroll, body.theme-ivory #ticker * {
+      color:#0e2944 !important;
+    }
+    body.theme-ivory .ticker-label {
+      background:linear-gradient(180deg,#c9a84c,#b88b3c) !important;
+      color:#fdf8ec !important;
     }
   </style>
 
