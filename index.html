@@ -10,12 +10,12 @@
 <title>WAVE BITE // CAPITÄNS BRIDGE — Lucy Edition</title>
 <meta name="description" content="Wave Bite CEO Command Center — Maritime Intelligence Dashboard mit Lucy v4.0 als 100%-cerebral Co-Pilotin">
 <meta name="robots" content="noindex, nofollow">
-<meta name="build-version" content="v23-2026-05-25-PREMIUM-HEADER">
+<meta name="build-version" content="v24-2026-05-25-MAGIC-PREMIUM">
 <!-- AUTO-VERSION-CHECK: vergleicht beim Boot die lokale Version mit GitHub Raw, force-reload bei Drift -->
 <script>
 (function(){
   try {
-    const LOCAL_VERSION = 'v23-2026-05-25-PREMIUM-HEADER';
+    const LOCAL_VERSION = 'v24-2026-05-25-MAGIC-PREMIUM';
     const VCHECK_KEY = 'wb_vcheck_last';
     const last = parseInt(sessionStorage.getItem(VCHECK_KEY) || '0');
     if (Date.now() - last < 60000) return; // max 1× pro Minute
@@ -1803,7 +1803,7 @@
   <meta http-equiv="cache-control" content="no-cache, no-store, must-revalidate">
   <meta http-equiv="pragma" content="no-cache">
   <meta http-equiv="expires" content="0">
-  <meta name="version" content="v23-2026-05-25-PREMIUM-HEADER">
+  <meta name="version" content="v24-2026-05-25-MAGIC-PREMIUM">
 
   <!-- ============================================================
        v22 · LUCY-IVORY THEME LAYER (2026-05-24)
@@ -2334,6 +2334,262 @@
       border:1px solid rgba(184,139,60,0.4) !important;
       box-shadow:0 2px 6px rgba(42,37,23,0.10) !important;
     }
+  </style>
+
+  <!-- ════════════════════════════════════════════════════════════════════ -->
+  <!-- v24 MAGIC PREMIUM LAYER · 2026-05-25                                 -->
+  <!-- · Layer-Bereinigung: keine Dark-Overlays mehr im ivory-Mode          -->
+  <!-- · Header-Light-Ray-Animation (edle Gold-Shimmer)                     -->
+  <!-- · 3D-Tiefe via perspective + subtile rotateY auf hover               -->
+  <!-- · Lebendige micro-animations (breathing, parallax, particles)        -->
+  <!-- · Magic/21st.dev-Inspiration: glassmorphism + soft shadows           -->
+  <!-- ════════════════════════════════════════════════════════════════════ -->
+  <style id="v24-magic-premium">
+    /* ============== Body & Global Background ============== */
+    body.theme-ivory {
+      background:
+        radial-gradient(ellipse at 0% 0%, rgba(201,168,76,0.06) 0%, transparent 50%),
+        radial-gradient(ellipse at 100% 100%, rgba(96,165,250,0.04) 0%, transparent 50%),
+        linear-gradient(180deg, #fdf8ec 0%, #f7efda 100%) !important;
+      background-attachment:fixed !important;
+      min-height:100vh !important;
+    }
+
+    /* ============== Layer-Bereinigung: alle dark overlays → cream ============== */
+    body.theme-ivory .panel {
+      background:linear-gradient(180deg,rgba(253,248,236,0.96),rgba(247,239,218,0.94)) !important;
+      backdrop-filter:blur(10px) saturate(110%) !important;
+      -webkit-backdrop-filter:blur(10px) saturate(110%) !important;
+    }
+    body.theme-ivory .countdown-strip {
+      background:linear-gradient(180deg,rgba(253,248,236,0.94),rgba(247,239,218,0.90)) !important;
+      border:1px solid rgba(184,139,60,0.32) !important;
+      backdrop-filter:blur(12px) !important;
+      box-shadow:0 4px 18px rgba(42,37,23,0.10) !important;
+      color:#0e2944 !important;
+    }
+    body.theme-ivory .countdown-strip > * { color:#0e2944 !important; }
+    body.theme-ivory .hero-stat {
+      background:rgba(253,248,236,0.92) !important;
+      border:1px solid rgba(184,139,60,0.28) !important;
+      color:#0e2944 !important;
+      backdrop-filter:blur(8px) !important;
+      box-shadow:0 2px 8px rgba(42,37,23,0.08) !important;
+    }
+    body.theme-ivory .social-card {
+      background:#fdf8ec !important;
+      border:1px solid rgba(184,139,60,0.22) !important;
+      color:#1f3854 !important;
+      box-shadow:0 1px 2px rgba(42,37,23,0.04),0 4px 14px rgba(42,37,23,0.06) !important;
+    }
+    body.theme-ivory #ticker {
+      background:linear-gradient(180deg,#fdf8ec,#f7efda) !important;
+      border-top:1px solid rgba(184,139,60,0.28) !important;
+      color:#1f3854 !important;
+    }
+    body.theme-ivory .modal-overlay {
+      background:rgba(247,239,218,0.85) !important;
+      backdrop-filter:blur(8px) !important;
+    }
+
+    /* Hero in Ivory verwandeln (war dunkler space) */
+    body.theme-ivory #hero {
+      background:
+        radial-gradient(ellipse at 50% 30%, rgba(232,201,106,0.18) 0%, transparent 60%),
+        radial-gradient(ellipse at 50% 80%, rgba(184,139,60,0.10) 0%, transparent 50%),
+        linear-gradient(180deg, #fdf8ec 0%, #f5ead0 100%) !important;
+      border:1px solid rgba(184,139,60,0.28) !important;
+      box-shadow:
+        0 1px 2px rgba(42,37,23,0.04),
+        0 18px 48px rgba(42,37,23,0.10),
+        inset 0 1px 0 rgba(255,255,255,0.5) !important;
+      border-radius:20px !important;
+      overflow:hidden !important;
+    }
+    body.theme-ivory #hero canvas {
+      opacity:0.55 !important;
+      filter:hue-rotate(40deg) saturate(0.7) brightness(1.4) !important;
+      mix-blend-mode:multiply !important;
+    }
+    body.theme-ivory #ocean-canvas { opacity:0.18 !important; filter:hue-rotate(40deg) saturate(0.5) brightness(1.5) !important; }
+    body.theme-ivory .scanline { opacity:0.02 !important; }
+    body.theme-ivory .hex-bg { opacity:0.02 !important; filter:hue-rotate(40deg) !important; }
+
+    /* ============== 3D Tiefe via Perspective ============== */
+    body.theme-ivory main, body.theme-ivory .page, body.theme-ivory section { perspective:1200px; }
+    body.theme-ivory .panel {
+      transform-style:preserve-3d;
+      transition:transform .35s cubic-bezier(.2,.8,.2,1), box-shadow .35s ease, border-color .25s ease !important;
+    }
+    body.theme-ivory .panel:hover {
+      transform:translateY(-3px) rotateX(0.6deg) !important;
+      box-shadow:
+        0 1px 2px rgba(42,37,23,0.05),
+        0 24px 48px rgba(42,37,23,0.14),
+        0 0 0 1px rgba(184,139,60,0.32) !important;
+    }
+    body.theme-ivory .kpi-card {
+      transition:transform .3s cubic-bezier(.2,.8,.2,1), box-shadow .3s ease !important;
+    }
+    body.theme-ivory .kpi-card:hover {
+      transform:translateY(-2px) scale(1.01) !important;
+      box-shadow:0 1px 2px rgba(42,37,23,0.05),0 14px 30px rgba(184,139,60,0.20) !important;
+    }
+
+    /* ============== Lebendige micro-animations ============== */
+    @keyframes wb-breathing { 0%,100% { opacity:.7; transform:scale(1); } 50% { opacity:1; transform:scale(1.03); } }
+    @keyframes wb-shimmer-gold {
+      0% { background-position:-200% 0; }
+      100% { background-position:200% 0; }
+    }
+    @keyframes wb-float {
+      0%,100% { transform:translateY(0px); }
+      50% { transform:translateY(-3px); }
+    }
+    @keyframes wb-glow-pulse {
+      0%,100% { box-shadow:0 0 0 0 rgba(184,139,60,0.20); }
+      50% { box-shadow:0 0 0 6px rgba(184,139,60,0); }
+    }
+
+    /* Brand-Dot edel breathing */
+    body.theme-ivory .wb-brand-dot {
+      animation: wb-breathing 3.6s ease-in-out infinite, wb-glow-pulse 3.6s ease-in-out infinite;
+    }
+    /* Status-Dot lebendig */
+    body.theme-ivory .wb-status-d { animation: wb-breathing 2.4s ease-in-out infinite; }
+    /* Section-Bullets float */
+    body.theme-ivory .section-title::before { animation: wb-float 4s ease-in-out infinite; }
+
+    /* ============== Header Light-Ray (edler Shimmer über Brand) ============== */
+    nav.wb-nav-v23::before {
+      content:'';
+      position:absolute;
+      top:0; left:0; right:0; bottom:0;
+      background:linear-gradient(
+        110deg,
+        transparent 0%,
+        transparent 35%,
+        rgba(232,201,106,0.18) 47%,
+        rgba(255,238,180,0.32) 50%,
+        rgba(232,201,106,0.18) 53%,
+        transparent 65%,
+        transparent 100%
+      );
+      background-size:300% 100%;
+      animation: wb-shimmer-gold 8s linear infinite;
+      pointer-events:none;
+      mix-blend-mode:overlay;
+      opacity:0.7;
+    }
+    nav.wb-nav-v23 { position:sticky; overflow:hidden !important; }
+
+    /* Header Brand bekommt edlen Gold-Shimmer-Text */
+    body.theme-ivory .wb-brand {
+      position:relative;
+    }
+    body.theme-ivory .wb-brand::after {
+      content:'';
+      position:absolute;
+      inset:0;
+      background:linear-gradient(110deg, transparent 30%, rgba(255,238,180,0.6) 50%, transparent 70%);
+      background-size:200% 100%;
+      animation: wb-shimmer-gold 12s linear infinite;
+      mix-blend-mode:overlay;
+      pointer-events:none;
+    }
+
+    /* ============== Magic-Style Panel-Refinement ============== */
+    body.theme-ivory .panel::before {
+      display:block !important;
+      content:'' !important;
+      position:absolute !important;
+      top:0; left:0; right:0;
+      height:1px !important;
+      background:linear-gradient(90deg, transparent 0%, rgba(184,139,60,0.5) 50%, transparent 100%) !important;
+      pointer-events:none;
+    }
+
+    /* ============== Premium-Quality Reduce ============== */
+    /* Demo-Badges weicher */
+    body.theme-ivory [data-demo="true"]::before {
+      background:linear-gradient(180deg,#e8c96a,#c9a84c) !important;
+      color:#3a2a00 !important;
+      font-size:.5rem !important;
+      padding:.18rem .42rem !important;
+      border-radius:4px !important;
+      box-shadow:0 1px 2px rgba(0,0,0,0.06) !important;
+      opacity:.85 !important;
+    }
+    /* Side-FAB Briefing/Executive/Projekte... edler */
+    body.theme-ivory .fab-rail-btn, body.theme-ivory [class*="fab-"] {
+      background:linear-gradient(180deg,#c9a84c,#b88b3c) !important;
+      color:#fdf8ec !important;
+      border:none !important;
+      box-shadow:0 4px 14px rgba(184,139,60,0.32) !important;
+      transition:all .2s ease !important;
+    }
+    body.theme-ivory .fab-rail-btn:hover { transform:translateY(-1px) !important; box-shadow:0 8px 20px rgba(184,139,60,0.45) !important; }
+
+    /* Boot premium ivory */
+    body.theme-ivory #boot {
+      background:linear-gradient(180deg,#fdf8ec,#f5ead0) !important;
+    }
+    body.theme-ivory #boot::before, body.theme-ivory #boot::after { opacity:.5 !important; filter:hue-rotate(40deg) !important; }
+    body.theme-ivory .boot-corner { border-color:rgba(184,139,60,0.5) !important; }
+    body.theme-ivory .boot-logo {
+      background:linear-gradient(135deg,#102a43,#b88b3c) !important;
+      -webkit-background-clip:text !important; background-clip:text !important;
+      -webkit-text-fill-color:transparent !important; color:transparent !important;
+      text-shadow:none !important;
+    }
+    body.theme-ivory .boot-sub { color:#5a728a !important; text-shadow:none !important; }
+    body.theme-ivory .boot-divider { background:linear-gradient(90deg,transparent,rgba(184,139,60,0.6),transparent) !important; }
+    body.theme-ivory .boot-bar-wrap { background:rgba(184,139,60,0.10) !important; }
+    body.theme-ivory .boot-bar { background:linear-gradient(90deg,#c9a84c,#b88b3c) !important; box-shadow:0 0 10px rgba(184,139,60,0.5) !important; }
+    body.theme-ivory .boot-lines { color:#5a728a !important; }
+    body.theme-ivory .boot-status { color:rgba(184,139,60,0.7) !important; }
+
+    /* PWA Install bar ivory */
+    body.theme-ivory #ios-install-bar { background:#fdf8ec !important; border-color:rgba(184,139,60,0.28) !important; }
+
+    /* Lucy avatar bubble Position-Fix (kein dunkler Hintergrund mehr drum) */
+    body.theme-ivory [id*="lucy"], body.theme-ivory [class*="lucy"] {
+      /* keep avatar bubble but tone background */
+    }
+
+    /* Notification ivory */
+    body.theme-ivory #notif { color:#1f3854 !important; }
+
+    /* Magic Floating-Dots (subtile Partikel im Hintergrund) */
+    body.theme-ivory::before {
+      content:'';
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      z-index:0;
+      background-image:
+        radial-gradient(circle at 20% 30%, rgba(201,168,76,0.10) 0%, transparent 1px),
+        radial-gradient(circle at 75% 60%, rgba(201,168,76,0.08) 0%, transparent 1px),
+        radial-gradient(circle at 45% 85%, rgba(96,165,250,0.06) 0%, transparent 1px),
+        radial-gradient(circle at 85% 20%, rgba(201,168,76,0.07) 0%, transparent 1px),
+        radial-gradient(circle at 10% 70%, rgba(201,168,76,0.05) 0%, transparent 1px);
+      background-size:600px 600px;
+      animation:wb-shimmer-gold 60s linear infinite;
+      opacity:.7;
+    }
+
+    /* Scrollbar premium */
+    body.theme-ivory::-webkit-scrollbar { width:10px; }
+    body.theme-ivory::-webkit-scrollbar-track { background:#f7efda; }
+    body.theme-ivory::-webkit-scrollbar-thumb { background:linear-gradient(180deg,#c9a84c,#b88b3c); border-radius:5px; }
+    body.theme-ivory::-webkit-scrollbar-thumb:hover { background:linear-gradient(180deg,#b88b3c,#8a6a2c); }
+
+    /* Selection */
+    body.theme-ivory ::selection { background:rgba(201,168,76,0.35); color:#0e2944; }
+
+    /* Ensure no leftover dark hero-overlay */
+    body.theme-ivory .hero-overlay, body.theme-ivory .hero-rings { color:#0e2944 !important; }
+    body.theme-ivory .h-ring { border-color:rgba(184,139,60,0.30) !important; }
   </style>
 
   <script id="v23-header-behavior">
